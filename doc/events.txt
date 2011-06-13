@@ -1,0 +1,104 @@
+UI Events:
+  * Account:
+    1) Register:
+      * requires feedback from server: OK | INVALID
+    2) Login:
+      * requires feedback from server: OK | INVALID
+  
+  * Profile:
+    1) Create
+    2) Delete
+    3) Edit:
+      * edit deck
+      * edit talents
+    
+Entity Events:
+  1) Create
+    * outgoing (1 client to server):
+      1) model id
+      2) owner id(the player's puppet)
+    
+    * incoming (server to both clients)
+      # requires feedback: OK | INSUFFICIENT WP | ...
+      on OK:
+        1) new object UID
+        2) model id (then clients poke their Factory to create such an entity)
+        
+  2) Destroy:
+    * outgoing:
+      1) object UID
+    
+    * incoming:
+      # feedback : OK | INVALID UID(how would this happen?) | ...
+      1) object UID
+      
+Puppet Events:
+  1) Draw Spell:
+    * incoming (from server):
+      1) spell model id
+      2) spell object UID
+    * there is no outgoing here, this event is triggered server-side upon start of a puppet's turn
+    
+Unit Events:
+  1) Rest
+    * no feedback required
+    * outgoing: 
+      1) unit UID
+      
+    * incoming:
+      * broadcast to all clients with this unit's UID
+      
+  2) Get up (same as #1 Rest)
+  3) Move (same as Rest)
+  
+  4) Attack:
+    * Requires a target (Entity*)
+    * requires feedback: is this unit Resting ? is it a Team attacker and others are attacking? ...
+    
+    * outgoing:
+      1) attacker UID
+      2) target UID
+      
+    * incoming:
+      1) same args as outgoing
+      
+  5) Block:
+    * Requires a target (Unit*)
+    * requires feedback: is the target an ATTACKING unit ? is this unit resting? ...
+    * outgoing:
+      1) blocker UID
+      2) attacker UID
+    
+    * incoming:
+      1) same args as outgoing
+  
+Spell Events:
+  1) Cast:
+    * requires a caster (Entity*)
+    * requires a target (Entity*)
+    * requires feedback: Puppet has enough WP? Viable target? if caster is unit, is unit Ready?
+    
+Combat Events:
+  1) End Turn
+    * requires no feedback
+    * outgoing:
+      1) nothing
+      
+    * incoming:
+      a) if Puppet is charging with her units for an attack:
+        1) switch Puppet's state to Charging
+        2) switch opponent's state to Being Charged
+        * wait for opponent to click *
+        a) if opponent chooses to block:
+          1) switch opponent's state to Blocking
+          2) switch Puppet's state to Attacking
+        b) if opponent chooses to pass:
+          1) switch opponent's state to Being Attacked
+          2) switch Puppet's state to Attacking
+
+
+      b) if Puppet is not charging: skip to end
+      
+      * in the end *
+        1) toggle puppets turns and reset states
+        

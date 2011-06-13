@@ -1,0 +1,8 @@
+$#include "GameState.h"
+
+class GameState {
+
+	void changeState( GameState *state );
+	void requestShutdown( void );
+
+};

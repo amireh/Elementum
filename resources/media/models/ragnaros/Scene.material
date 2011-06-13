@@ -1,0 +1,225 @@
+material Material_8/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_0/SOLID/TEX/rag_3.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_3.tga
+			}
+		}
+	}
+}
+material Material_2/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_1/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_15/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_10/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_17/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_16/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_3/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_9/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_14/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_4/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_12/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_13/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}
+material Material_11/SOLID/TEX/rag_7.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture rag_7.tga
+			}
+		}
+	}
+}

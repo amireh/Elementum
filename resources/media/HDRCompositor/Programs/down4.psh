@@ -1,0 +1,21 @@
+sampler s0 : register(s0);
+
+struct PS_IN
+{
+	float2 TexC : TEXCOORD0;
+};
+
+float4 PS(PS_IN inp,uniform float2 rcpScreenSize) : COLOR
+{
+    float4 sample = 0.0f;
+
+    for( int y=0; y < 4; y++ )
+    {
+		for( int x=0; x < 4; x++ )
+		{
+			sample += tex2D( s0, inp.TexC + float2( (x - 1.5f)*rcpScreenSize.x, (y - 1.5f)*rcpScreenSize.y) );
+		}
+    }
+    
+    return sample / 16;
+}

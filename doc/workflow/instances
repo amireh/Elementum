@@ -1,0 +1,5 @@
+* client joins match queue 
+* server processes queue, and finds an eligible opponent for client
+* server forks an instance process and lets both clients connect to it
+* game starts
+* server continues processing queue

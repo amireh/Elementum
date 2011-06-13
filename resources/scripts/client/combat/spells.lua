@@ -1,0 +1,54 @@
+--[[
+	combat: spells.lua
+
+	spell routines go here; drawing and casting a spell
+	once a spell is cast it gets propagated to its registered handler
+]]
+
+
+-- type: incoming event handler
+-- job: parses the spell attributes from the given event,
+-- and attaches it to the puppet's hand, and finally calls the UI script
+-- to draw it
+Pixy.Combat.drawSpell = function(inEvt)
+	tolua.cast(inEvt, "Pixy::EntityEvent")
+
+	lSpell = Puppet:getDeck():getSpell(inEvt:getProperty("Name"))
+	if (lSpell == nil) then
+		Pixy.Log("Error! Deck didn't give me a proper spell object named " .. inEvt:getProperty("Name"))
+	end
+
+	lSpell:setId(inEvt:getObjectId())
+	Pixy.Log(inEvt:getOwner() .. " is drawing a spell named " .. lSpell:getName() .. "@" .. lSpell:getId())
+
+	Pixy.UI.Combat.drawSpell(lSpell)
+
+	Active:attachSpell(lSpell)
+	return true
+end
+
+-- type: CEGUI event handler
+-- job: sends a request to the instance with the spell id
+-- awaiting EVT_OK feedback to actually cast it
+Pixy.Combat.reqCastSpell = function(inUIEvt)
+	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
+	lWindow:setText("handled from Lua");
+	local lSpell = Active:getSpell(lWindow:getUserString("SpellId"))
+	--tolua.cast(lSpell, "Pixy::Spell")
+	Pixy.Log( "request to cast a spell named " .. lSpell:getName() .. "@" .. lSpell:getId() )
+	local lEvt = EvtMgr:createEvt("CastSpell")
+	lEvt:setProperty("SpellId", lSpell:getId())
+	EvtMgr:hook(lEvt)
+	lEvt = nil
+end
+
+-- type: incoming event handler
+-- job: locates the spell given in the event and calls its registered handler
+Pixy.Combat.castSpell = function(inEvt)
+	if (inEvt:getFeedback() == Pixy.EVT_OK) then
+		Pixy.Log( "casting a spell" )
+	else
+		Pixy.Log( "request to cast spell was rejected" )
+	end
+
+end

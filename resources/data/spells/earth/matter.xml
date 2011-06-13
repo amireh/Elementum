@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Spells Race="Earth">
+    <Spell Name="Summon: Fetish Zij">
+        <Property Name="Alignment"      Value="Lawful" />
+        <Property Name="Aspect"         Value="Matter" />
+        <Property Name="Requires-Target"Value="No" />
+        <Property Name="Cost"           Value="5" />
+        <Property Name="Dispellable"    Value="No" />
+        <Property Name="Phase"          Value="Passive" />
+        <Effects>
+            <Effect Name="Summoning">
+                <Property Name="Unit-Name" Value="Fetish: Zij" />
+            </Effect>
+        </Effects>
+        <Interface>
+            <Property Name="Imageset" Value="Spells-Fire" />
+            <Property Name="Image" Value="Imp" />
+            <Property Name="Tooltip" Value="Summons a Fetish:Zij with 4/1" />
+        </Interface>
+    </Spell>
+
+    <!--
+    <Spell id="1" Name="Summon Crustling">
+        <Property Name="Alignment"      Value="Lawful" />
+        <Property Name="Aspect"         Value="Matter" />
+        <Property Name="Requires-Target"Value="No" />
+        <Property Name="Cost"           Value="10" />
+        <Property Name="Dispellable"    Value="No" />
+        <Property Name="Phase"          Value="Passive" />
+        <Effects>
+            <Effect Name="Summoning">
+                <Property Name="Unit-Name" Value="Crustling" />
+            </Effect>
+        </Effects>
+        <Interface>
+            <Property Name="Imageset" Value="Spells-Earth" />
+            <Property Name="Image" Value="Crustling" />
+            <Property Name="Tooltip" Value="Summons a Crustling with 4/2" />
+        </Interface>
+    </Spell>
+    
+    <Spell id="2" Name="Summon Stone Golem">
+        <Property Name="Alignment"      Value="Lawful" />
+        <Property Name="Aspect"         Value="Matter" />
+        <Property Name="Requires-Target"Value="No" />
+        <Property Name="Cost"           Value="15" />
+        <Property Name="Dispellable"    Value="No" />
+        <Property Name="Phase"          Value="Passive" />
+        <Effects>
+            <Effect Name="Summoning">
+                <Property Name="Unit-Name" Value="Stone Golem" />
+            </Effect>
+        </Effects>
+        <Interface>
+            <Property Name="Imageset" Value="Spells-Earth" />
+            <Property Name="Image" Value="Stone-Golem" />
+            <Property Name="Tooltip" Value="Summons a Golem with 3/3" />
+        </Interface>
+    </Spell>
+
+    <Spell id="4" Name="Summon Treant">
+        <Property Name="Alignment"      Value="Lawful" />
+        <Property Name="Aspect"         Value="Matter" />
+        <Property Name="Requires-Target"Value="No" />
+        <Property Name="Cost"           Value="20" />
+        <Property Name="Dispellable"    Value="No" />
+        <Property Name="Phase"          Value="Passive" />
+        <Effects>
+            <Effect Name="Summoning">
+                <Property Name="Unit-Name" Value="Treant" />
+            </Effect>
+        </Effects>
+        <Interface>
+            <Property Name="Imageset" Value="Spells-Earth" />
+            <Property Name="Image" Value="Treant" />
+            <Property Name="Tooltip" Value="Summons an Treant with 5/5" />
+        </Interface>
+    </Spell>
+    -->
+</Spells>

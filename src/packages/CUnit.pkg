@@ -1,0 +1,12 @@
+$#include "Renderable.h"
+$#include "CUnit.h"
+$#include "CDeck.h"
+
+class CUnit : public Pixy::Unit
+{
+public:
+  CUnit();
+  virtual ~CUnit();
+  virtual Pixy::Renderable& getRenderable();
+
+};

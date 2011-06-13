@@ -1,0 +1,2 @@
+Client informs server that she's ready
+Server waits for both clients to be ready

@@ -1,0 +1,8 @@
+$#include "Intro.h"
+
+class Intro : public GameState
+{
+
+	static Intro& getSingleton( void );
+  static Intro* getSingletonPtr( void );
+};

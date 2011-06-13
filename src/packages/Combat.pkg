@@ -1,0 +1,12 @@
+$#include "Combat.h"
+$#include "Engine.h"
+
+class Combat : public GameState
+{
+
+	static Combat& getSingleton( void );
+	static Combat* getSingletonPtr( void );
+
+	void registerPuppet(Pixy::Puppet* inPuppet);
+	void updateMe(Pixy::Engine* inEngine);
+};

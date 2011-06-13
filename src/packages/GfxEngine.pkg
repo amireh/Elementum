@@ -1,0 +1,42 @@
+$#include "GfxEngine.h"
+
+class GfxEngine : public Pixy::Engine, public Pixy::EventListener {
+
+public:
+virtual ~GfxEngine();
+static GfxEngine* getSingletonPtr();
+
+bool setupCombat(std::string inPlayer1, std::string inPlayer2);
+
+
+//void setCamera(const Ogre::String& inCameraName);
+
+
+bool attachToScene(Pixy::Renderable* inEntity);
+
+
+void detachFromScene(Pixy::Renderable* inEntity);
+
+
+//bool moveUnit(Pixy::Unit* inUnit, int inDestination);
+
+Ogre::Camera* getCamera();
+Ogre::Root* getRoot();
+Ogre::SceneManager* getSM();
+Ogre::Viewport* getViewport();
+
+void setupSceneManager();
+
+void setupViewports();
+
+void setupCamera();
+
+void setupTerrain();
+
+void setupLights();
+
+void setupNodes();
+
+void setupWaypoints();
+
+};

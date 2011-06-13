@@ -1,0 +1,358 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+\connect postgres
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = off;
+SET escape_string_warning = 'off';
+
+--
+-- Roles
+--
+
+CREATE ROLE elementum;
+ALTER ROLE elementum WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN PASSWORD 'md5f39a1d870af5681342d3f4efbc272d2f';
+CREATE ROLE eleplayer;
+ALTER ROLE eleplayer WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN;
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN;
+CREATE ROLE starcrafting;
+ALTER ROLE starcrafting WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN PASSWORD 'md5f4032c681c493f0632f4b402b86157b8';
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+CREATE DATABASE elementum WITH TEMPLATE = template0 OWNER = elementum ENCODING = 'SQL_ASCII';
+REVOKE ALL ON DATABASE template1 FROM PUBLIC;
+REVOKE ALL ON DATABASE template1 FROM postgres;
+GRANT ALL ON DATABASE template1 TO postgres;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+\connect elementum
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: matches; Type: TABLE; Schema: public; Owner: elementum; Tablespace: 
+--
+
+CREATE TABLE matches (
+    id integer NOT NULL,
+    id_winner integer,
+    id_loser integer,
+    date timestamp without time zone
+);
+
+
+ALTER TABLE public.matches OWNER TO elementum;
+
+--
+-- Name: my_users_sequence; Type: SEQUENCE; Schema: public; Owner: elementum
+--
+
+CREATE SEQUENCE my_users_sequence
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.my_users_sequence OWNER TO elementum;
+
+--
+-- Name: my_users_sequence; Type: SEQUENCE SET; Schema: public; Owner: elementum
+--
+
+SELECT pg_catalog.setval('my_users_sequence', 6, true);
+
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: elementum; Tablespace: 
+--
+
+CREATE TABLE profiles (
+    id integer,
+    name character varying(255) NOT NULL,
+    race character varying(255),
+    intelligence integer DEFAULT 0,
+    vitality integer DEFAULT 0,
+    alignment character varying(255) DEFAULT 0,
+    deck integer[],
+    talents integer[],
+    wins integer DEFAULT 0,
+    losses integer DEFAULT 0
+);
+
+
+ALTER TABLE public.profiles OWNER TO elementum;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: elementum; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    username character varying(255),
+    password character varying(255),
+    isonline boolean DEFAULT false
+);
+
+
+ALTER TABLE public.users OWNER TO elementum;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: elementum
+--
+
+CREATE SEQUENCE users_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO elementum;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: elementum
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: elementum
+--
+
+SELECT pg_catalog.setval('users_id_seq', 629, true);
+
+
+--
+-- Name: users_pk_sequence; Type: SEQUENCE; Schema: public; Owner: elementum
+--
+
+CREATE SEQUENCE users_pk_sequence
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_pk_sequence OWNER TO elementum;
+
+--
+-- Name: users_pk_sequence; Type: SEQUENCE SET; Schema: public; Owner: elementum
+--
+
+SELECT pg_catalog.setval('users_pk_sequence', 5, true);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: elementum
+--
+
+ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: elementum
+--
+
+COPY matches (id, id_winner, id_loser, date) FROM stdin;
+\.
+
+
+--
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: elementum
+--
+
+COPY profiles (id, name, race, intelligence, vitality, alignment, deck, talents, wins, losses) FROM stdin;
+623	tumbak	Water	20	10	Evil	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+625	Hatough	Fire	16	14	Neutral	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+629	Meme	Water	10	20	Evil	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+338	Kandie	Earth	10	20	Evil	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+338	Fubar	Earth	18	12	Good	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+338	Zxzxzx	Earth	20	10	Neutral	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+338	oom	Earth	10	20	Evil	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+338	asdfasd	Earth	20	10	Evil	{0,1,2}	{{0,1},{0,2},{1,0}}	0	0
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: elementum
+--
+
+COPY users (id, username, password, isonline) FROM stdin;
+611	xxx	f561aaf6ef0bf14d4208bb46a4ccb3ad	f
+623	tumbak	68ab9c9332672f35b6727d7493bd64af	t
+610	kandie	9749ce3f74e9fb121d56d307b0740fb2	t
+512	vxvxvx	69ce86ec34390856ee5c2ad71bd83564	f
+617		d41d8cd98f00b204e9800998ecf8427e	f
+338	asd	7815696ecbf1c96e6894b779456d330e	f
+626	keke	fb2dd88be61ca18fe651d52d728f6e79	f
+629	lalala	fb2dd88be61ca18fe651d52d728f6e79	f
+481	asdxxx	ba05d23612ed30b70c339be9ca4ad611	f
+615	asdvvv	f970e2767d0cfe75876ea857f92e319b	f
+621	czcz	8ecf39fb02bd311cd04c72d89cbfb6d7	f
+625	basel	7aaf6c53e9feb6c123b1db536cf7c544	t
+\.
+
+
+--
+-- Name: matches_pkey; Type: CONSTRAINT; Schema: public; Owner: elementum; Tablespace: 
+--
+
+ALTER TABLE ONLY matches
+    ADD CONSTRAINT matches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: elementum; Tablespace: 
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: elementum; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_username_key; Type: CONSTRAINT; Schema: public; Owner: elementum; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- Name: idfk; Type: FK CONSTRAINT; Schema: public; Owner: elementum
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT idfk FOREIGN KEY (id) REFERENCES users(id) MATCH FULL;
+
+
+--
+-- Name: profiles_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: elementum
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES users(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: profiles; Type: ACL; Schema: public; Owner: elementum
+--
+
+REVOKE ALL ON TABLE profiles FROM PUBLIC;
+REVOKE ALL ON TABLE profiles FROM elementum;
+GRANT ALL ON TABLE profiles TO elementum;
+GRANT SELECT ON TABLE profiles TO eleplayer;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect postgres
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- Name: template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template database';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+

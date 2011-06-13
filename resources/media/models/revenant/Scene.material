@@ -1,0 +1,75 @@
+material Material_4/SOLID/TEX/revenant_10.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.000000 0.000000 0.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture revenant_10.tga
+			}
+		}
+	}
+}
+material Material_1/SOLID/TEX/revenant_10.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.000000 0.000000 0.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture revenant_10.tga
+			}
+		}
+	}
+}
+material Material_2/SOLID/TEX/revenant_10.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture revenant_10.tga
+			}
+		}
+	}
+}
+material Material_0/SOLID/TEX/revenant_10.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.000000 0.000000 0.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture revenant_10.tga
+			}
+		}
+	}
+}
+material Material_3/SOLID/TEX/revenant_10.tga
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.000000 0.000000 0.000000
+			specular 0.000000 0.000000 0.000000 0.250000
+			texture_unit
+			{
+				texture revenant_10.tga
+			}
+		}
+	}
+}

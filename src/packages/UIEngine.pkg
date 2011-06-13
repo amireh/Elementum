@@ -1,0 +1,11 @@
+$#include "UIEngine.h"
+
+class UIEngine : public Pixy::Engine, public Pixy::EventListener {
+
+~UIEngine();
+static UIEngine* getSingletonPtr();
+
+bool setup();
+void update(unsigned long lTimeElapsed);
+bool cleanup();
+};

@@ -1,0 +1,17 @@
+$#include "CPuppetFactory.h"
+$#include "PuppetFactory.h"
+
+class CPuppetFactory : public Pixy::PuppetFactory
+{
+
+		static CPuppetFactory* getSingletonPtr();
+
+		virtual CPuppet* createEntity(const int inObjectId,
+		                             const std::string& inName,
+		                             const std::string& inOwner,
+		                             const RACE inRace);
+
+		virtual void destroyEntity(CPuppet* inEntity);
+
+
+};

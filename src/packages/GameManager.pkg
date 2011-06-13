@@ -1,0 +1,11 @@
+$#include "GameManager.h"
+
+class GameManager
+{
+
+void changeState(GameState *inState);
+static GameManager& getSingleton();
+void requestShutdown();
+
+};
+

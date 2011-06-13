@@ -1,0 +1,7 @@
+When a new Event type is created, the following routines need to be updated:
+  1) EventManager::createEvt(EVENT_UID)
+  2) PacketProcessor::parseEvent(Packet* inPkt)
+  3) Event.h: enum{EVENT_UID}
+  4) EventListeners who want to bind, naturally
+  5) Tolua package
+  6) Lua side: add handler

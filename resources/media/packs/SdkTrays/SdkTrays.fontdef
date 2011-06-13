@@ -1,0 +1,15 @@
+SdkTrays/Caption
+{
+	type 		truetype
+	source 		akashi.ttf
+	size 		32
+	resolution 	96
+}
+
+SdkTrays/Value
+{
+	type 		truetype
+	source 		ctrl_freak.ttf
+	size 		26
+	resolution  96
+}

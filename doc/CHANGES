@@ -1,0 +1,28 @@
+may 29, 2010
+* clients can send messages to server now
+* server handles message using MessageProcessor
+* added mode to "vanilla log" .. ie without ctxt and any prependers, used for header logging
+
+
+to construct a player:
+  * intro state has to listen to authentication succession
+  * when it receives the notice, it constructs a player object with
+    GUID = NetMgr->Peer->GetGuidFromSystemAddress(UNASSIGNED_SYSTEM_ADDRESS)
+    Puppet = unassigned
+    Username = received from event
+    
+* joining the queue *
+  * lua transmits msg MSG_MATCH_SEARCH
+  * server receives msg, and passes it to MatchFinder
+  * MatchFinder queues up player
+  
+  
+  
+* added event ctor with name instead of uid
+* subscription is now allowed using names instead of event ids
+
+--- COMBAT ---
+* Server:forceInstance() now pulls a profile using property assigned by player (this would be provided by account info when player properly logs in)
+* Instance:Instance() now broadcasts profile names to all players
+* EntityEvent: new class that holds an Owner id (a string, the one provided by instance), and an ObjectID (assigned by the instance, unique id)
+* Instance:start() now sends an event "CreateProfile" to players to create puppets in game

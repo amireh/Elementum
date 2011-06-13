@@ -1,0 +1,1707 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		37021C5F11255CCA0088F1EC /* GfxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021C5E11255CCA0088F1EC /* GfxEngine.cpp */; };
+		37021C6211255CD10088F1EC /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021C6011255CD10088F1EC /* Lobby.cpp */; };
+		37021C6311255CD10088F1EC /* UIEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021C6111255CD10088F1EC /* UIEngine.cpp */; };
+		37021FE51125D8E50088F1EC /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021FE31125D8E50088F1EC /* Entity.cpp */; };
+		37021FE61125D8E50088F1EC /* Puppet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021FE41125D8E50088F1EC /* Puppet.cpp */; };
+		37022B601126DE3D00747E04 /* PuppetFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37022B5F1126DE3D00747E04 /* PuppetFactory.cpp */; };
+		37025DAF11BAE6C9001DB318 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DA911BAE6C9001DB318 /* tinystr.cpp */; };
+		37025DB011BAE6C9001DB318 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DAB11BAE6C9001DB318 /* tinyxml.cpp */; };
+		37025DB111BAE6C9001DB318 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DAD11BAE6C9001DB318 /* tinyxmlerror.cpp */; };
+		37025DB211BAE6C9001DB318 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DAE11BAE6C9001DB318 /* tinyxmlparser.cpp */; };
+		37025DB311BAE6C9001DB318 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DA911BAE6C9001DB318 /* tinystr.cpp */; };
+		37025DB411BAE6C9001DB318 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DAB11BAE6C9001DB318 /* tinyxml.cpp */; };
+		37025DB511BAE6C9001DB318 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DAD11BAE6C9001DB318 /* tinyxmlerror.cpp */; };
+		37025DB611BAE6C9001DB318 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025DAE11BAE6C9001DB318 /* tinyxmlparser.cpp */; };
+		370ABBA91129B3940041738C /* NetworkManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370ABBA81129B3940041738C /* NetworkManager.cpp */; };
+		370ABCD81129B8F80041738C /* libOIS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 370ABCD71129B8F80041738C /* libOIS.a */; };
+		370ABEC11129B91F0041738C /* libOIS.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 370ABCD71129B8F80041738C /* libOIS.a */; };
+		3713FF2A112E7F4900AAF360 /* ScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3713FF29112E7F4900AAF360 /* ScriptEngine.cpp */; };
+		3713FF66112E810200AAF360 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3713FF65112E810200AAF360 /* liblua.a */; };
+		3713FF67112E810D00AAF360 /* liblua.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3713FF65112E810200AAF360 /* liblua.a */; };
+		371DEA0F112FD3C30008BF07 /* libraknet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 373D7693112F52910074CDDE /* libraknet.a */; };
+		371DEA1D112FD3D50008BF07 /* libraknet.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 373D7693112F52910074CDDE /* libraknet.a */; };
+		371DEAEC113080280008BF07 /* libraknet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 373D7693112F52910074CDDE /* libraknet.a */; };
+		371DEAF7113080990008BF07 /* libraknet.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 373D7693112F52910074CDDE /* libraknet.a */; };
+		371DEB031130893A0008BF07 /* libpqxx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 371DEB011130892F0008BF07 /* libpqxx.a */; };
+		371DEB041130893E0008BF07 /* libpqxx.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 371DEB011130892F0008BF07 /* libpqxx.a */; };
+		371DEB0A113089880008BF07 /* DBManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371DEB09113089880008BF07 /* DBManager.cpp */; };
+		371DEED3113173930008BF07 /* Puppet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021FE41125D8E50088F1EC /* Puppet.cpp */; };
+		371DEF131131776D0008BF07 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37021FE31125D8E50088F1EC /* Entity.cpp */; };
+		371DF0C01131A6060008BF07 /* libpqxx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 371DEB011130892F0008BF07 /* libpqxx.a */; };
+		371DF0C11131A6090008BF07 /* libpqxx.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 371DEB011130892F0008BF07 /* libpqxx.a */; };
+		37270A6011BC03D300C87B1B /* CEGUIBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5811BC03D300C87B1B /* CEGUIBase.framework */; };
+		37270A6111BC03D300C87B1B /* CEGUIFalagardWRBase.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37270A5911BC03D300C87B1B /* CEGUIFalagardWRBase.bundle */; };
+		37270A6211BC03D300C87B1B /* CEGUIFreeImageImageCodec.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37270A5A11BC03D300C87B1B /* CEGUIFreeImageImageCodec.bundle */; };
+		37270A6311BC03D300C87B1B /* CEGUILuaScriptModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5B11BC03D300C87B1B /* CEGUILuaScriptModule.framework */; };
+		37270A6411BC03D300C87B1B /* CEGUIOgreRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5C11BC03D300C87B1B /* CEGUIOgreRenderer.framework */; };
+		37270A6511BC03D300C87B1B /* CEGUITGAImageCodec.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37270A5D11BC03D300C87B1B /* CEGUITGAImageCodec.bundle */; };
+		37270A6611BC03D300C87B1B /* CEGUITinyXMLParser.bundle in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37270A5E11BC03D300C87B1B /* CEGUITinyXMLParser.bundle */; };
+		37270A6711BC03D300C87B1B /* ceguitolua++.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5F11BC03D300C87B1B /* ceguitolua++.framework */; };
+		37270BA911BC03E900C87B1B /* CEGUIBase.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5811BC03D300C87B1B /* CEGUIBase.framework */; };
+		37270BAA11BC03E900C87B1B /* CEGUILuaScriptModule.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5B11BC03D300C87B1B /* CEGUILuaScriptModule.framework */; };
+		37270BAB11BC03E900C87B1B /* CEGUIOgreRenderer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5C11BC03D300C87B1B /* CEGUIOgreRenderer.framework */; };
+		37270BAC11BC03E900C87B1B /* ceguitolua++.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37270A5F11BC03D300C87B1B /* ceguitolua++.framework */; };
+		37270BE711BC0BC800C87B1B /* DotSceneLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37025D6C11BAE4EE001DB318 /* DotSceneLoader.cpp */; };
+		37270C9311BC245E00C87B1B /* libOgreTerrain.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270C9211BC245E00C87B1B /* libOgreTerrain.dylib */; };
+		37270C9411BC246600C87B1B /* libOgreTerrain.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37270C9211BC245E00C87B1B /* libOgreTerrain.dylib */; };
+		37270CA011BC248100C87B1B /* libOgreTerrain.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 37270C9211BC245E00C87B1B /* libOgreTerrain.dylib */; };
+		37270CB511BC25F000C87B1B /* libOgrePaging.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270CB411BC25F000C87B1B /* libOgrePaging.dylib */; };
+		37270CB611BC25F400C87B1B /* libOgrePaging.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 37270CB411BC25F000C87B1B /* libOgrePaging.dylib */; };
+		37270CBC11BC264900C87B1B /* libOgreRTShaderSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37270CBB11BC264900C87B1B /* libOgreRTShaderSystem.dylib */; };
+		37270CBD11BC264E00C87B1B /* libOgreRTShaderSystem.dylib in Copy Components */ = {isa = PBXBuildFile; fileRef = 37270CBB11BC264900C87B1B /* libOgreRTShaderSystem.dylib */; };
+		372C2BC5115A7DA100A3B885 /* liblua.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3713FF65112E810200AAF360 /* liblua.a */; };
+		372C2BC7115A7DF700A3B885 /* libtolua++.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372C2BC6115A7DF700A3B885 /* libtolua++.a */; };
+		372C2BC8115A7E0700A3B885 /* libtolua++.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 372C2BC6115A7DF700A3B885 /* libtolua++.a */; };
+		372C2F6A115A7E2C00A3B885 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3713FF65112E810200AAF360 /* liblua.a */; };
+		37306F7D11B56B500007C193 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37306F7B11B56B500007C193 /* Spell.cpp */; };
+		37306F7E11B56B500007C193 /* SpellParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37306F7C11B56B500007C193 /* SpellParser.cpp */; };
+		37306F7F11B56B500007C193 /* Spell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37306F7B11B56B500007C193 /* Spell.cpp */; };
+		37306F8011B56B500007C193 /* SpellParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37306F7C11B56B500007C193 /* SpellParser.cpp */; };
+		37306F9111B56CD40007C193 /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37306F9011B56CD40007C193 /* Deck.cpp */; };
+		37306F9211B56CD40007C193 /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37306F9011B56CD40007C193 /* Deck.cpp */; };
+		373D72BA112F15260074CDDE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		373D72BB112F15260074CDDE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3748B06211218AB0003B696B /* IOKit.framework */; };
+		373D75AB112F18C30074CDDE /* SMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 373D75AA112F18C30074CDDE /* SMain.cpp */; };
+		373D75AE112F19290074CDDE /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 373D75AD112F19290074CDDE /* Server.cpp */; };
+		3748B06311218AB0003B696B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3748B06211218AB0003B696B /* IOKit.framework */; };
+		3772A77B112B253D00784B8A /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3772A77A112B253D00784B8A /* Ogre.framework */; };
+		3772A77E112B254500784B8A /* Ogre.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3772A77A112B253D00784B8A /* Ogre.framework */; };
+		3786503E11240076005AE1AB /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3786503911240076005AE1AB /* GameManager.cpp */; };
+		3786503F11240076005AE1AB /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3786503A11240076005AE1AB /* GameState.cpp */; };
+		3786504011240076005AE1AB /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3786503B11240076005AE1AB /* InputManager.cpp */; };
+		3786504111240076005AE1AB /* Intro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3786503C11240076005AE1AB /* Intro.cpp */; };
+		3786504211240076005AE1AB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3786503D11240076005AE1AB /* main.cpp */; };
+		3793251E1140515200A1AEAB /* PacketProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F8DE7F113C4E8300F0591B /* PacketProcessor.cpp */; };
+		37BA279911B28311006DB9B4 /* Authenticator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA279811B28311006DB9B4 /* Authenticator.cpp */; };
+		37BA279D11B28421006DB9B4 /* ProfileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA279C11B28421006DB9B4 /* ProfileManager.cpp */; };
+		37CD5594112A048300913D12 /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CD5593112A048300913D12 /* Cg.framework */; };
+		37CD5597112A048600913D12 /* Cg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37CD5593112A048300913D12 /* Cg.framework */; };
+		37D28ED411AC13BD00316BD7 /* PixyLogLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D28EB111AC13BD00316BD7 /* PixyLogLayout.cpp */; };
+		37D28ED511AC13BD00316BD7 /* md5.cc in Sources */ = {isa = PBXBuildFile; fileRef = 37D28EB411AC13BD00316BD7 /* md5.cc */; };
+		37D28EE711AC13BD00316BD7 /* lua_Pixy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D28ECA11AC13BD00316BD7 /* lua_Pixy.cpp */; };
+		37D28EED11AC13BD00316BD7 /* PixyLogLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D28EB111AC13BD00316BD7 /* PixyLogLayout.cpp */; };
+		37D28EEE11AC13BD00316BD7 /* md5.cc in Sources */ = {isa = PBXBuildFile; fileRef = 37D28EB411AC13BD00316BD7 /* md5.cc */; };
+		37DAA3141186BAC000C46EEF /* Plugin_BSPSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA30D1186BAC000C46EEF /* Plugin_BSPSceneManager.dylib */; };
+		37DAA3151186BAC000C46EEF /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA30E1186BAC000C46EEF /* Plugin_CgProgramManager.dylib */; };
+		37DAA3161186BAC000C46EEF /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA30F1186BAC000C46EEF /* Plugin_OctreeSceneManager.dylib */; };
+		37DAA3171186BAC000C46EEF /* Plugin_OctreeZone.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA3101186BAC000C46EEF /* Plugin_OctreeZone.dylib */; };
+		37DAA3181186BAC000C46EEF /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA3111186BAC000C46EEF /* Plugin_ParticleFX.dylib */; };
+		37DAA3191186BAC000C46EEF /* Plugin_PCZSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA3121186BAC000C46EEF /* Plugin_PCZSceneManager.dylib */; };
+		37DAA31A1186BAC000C46EEF /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DAA3131186BAC000C46EEF /* RenderSystem_GL.dylib */; };
+		37DAA31B1186BACF00C46EEF /* Plugin_BSPSceneManager.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA30D1186BAC000C46EEF /* Plugin_BSPSceneManager.dylib */; };
+		37DAA31C1186BACF00C46EEF /* Plugin_CgProgramManager.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA30E1186BAC000C46EEF /* Plugin_CgProgramManager.dylib */; };
+		37DAA31D1186BACF00C46EEF /* Plugin_OctreeSceneManager.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA30F1186BAC000C46EEF /* Plugin_OctreeSceneManager.dylib */; };
+		37DAA31E1186BACF00C46EEF /* Plugin_OctreeZone.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA3101186BAC000C46EEF /* Plugin_OctreeZone.dylib */; };
+		37DAA31F1186BACF00C46EEF /* Plugin_ParticleFX.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA3111186BAC000C46EEF /* Plugin_ParticleFX.dylib */; };
+		37DAA3201186BACF00C46EEF /* Plugin_PCZSceneManager.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA3121186BAC000C46EEF /* Plugin_PCZSceneManager.dylib */; };
+		37DAA3211186BACF00C46EEF /* RenderSystem_GL.dylib in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 37DAA3131186BAC000C46EEF /* RenderSystem_GL.dylib */; };
+		37DB26FB11B17E4F000E6B24 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DB26FA11B17E4F000E6B24 /* Player.cpp */; };
+		37DB26FC11B17E4F000E6B24 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DB26FA11B17E4F000E6B24 /* Player.cpp */; };
+		37DB278711B187A3000E6B24 /* MatchFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DB278611B187A3000E6B24 /* MatchFinder.cpp */; };
+		37DB283911B1A4B7000E6B24 /* Instance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DB283811B1A4B7000E6B24 /* Instance.cpp */; };
+		37DDC32811B7C33C005D15B4 /* EntityEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DDC32711B7C33C005D15B4 /* EntityEvent.cpp */; };
+		37DDC32911B7C33C005D15B4 /* EntityEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DDC32711B7C33C005D15B4 /* EntityEvent.cpp */; };
+		37DDC5B811B81059005D15B4 /* PuppetFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37022B5F1126DE3D00747E04 /* PuppetFactory.cpp */; };
+		37DDC75611B82E15005D15B4 /* lua_PixyInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37DDC75511B82E15005D15B4 /* lua_PixyInstance.cpp */; };
+		37F66B811168B66400419774 /* Combat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F66B801168B66400419774 /* Combat.cpp */; };
+		37F8DC88113C28FF00F0591B /* liblog4cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FE43A211357FA600468F28 /* liblog4cpp.a */; };
+		37F8DE81113C4E8300F0591B /* PacketProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F8DE7F113C4E8300F0591B /* PacketProcessor.cpp */; };
+		37F9867F113D7E2500457423 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F9867E113D7E2500457423 /* Event.cpp */; };
+		37F9876E113D9A0200457423 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F9867E113D7E2500457423 /* Event.cpp */; };
+		37F98775113D9B1100457423 /* EventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F98774113D9B1100457423 /* EventManager.cpp */; };
+		37F98776113D9B1100457423 /* EventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F98774113D9B1100457423 /* EventManager.cpp */; };
+		37FCF9E2113EB64900D662B8 /* EventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FCF9E1113EB64900D662B8 /* EventListener.cpp */; };
+		37FCFBCF113EFC0F00D662B8 /* EventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FCF9E1113EB64900D662B8 /* EventListener.cpp */; };
+		37FE43A311357FA600468F28 /* liblog4cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FE43A211357FA600468F28 /* liblog4cpp.a */; };
+		37FE43A411357FB500468F28 /* liblog4cpp.a in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 37FE43A211357FA600468F28 /* liblog4cpp.a */; };
+		8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
+		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		37270CB011BC256400C87B1B /* Copy Components */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Components;
+			dstSubfolderSpec = 1;
+			files = (
+				37270CBD11BC264E00C87B1B /* libOgreRTShaderSystem.dylib in Copy Components */,
+				37270CB611BC25F400C87B1B /* libOgrePaging.dylib in Copy Components */,
+				37270CA011BC248100C87B1B /* libOgreTerrain.dylib in Copy Components */,
+			);
+			name = "Copy Components";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		373D72CF112F15260074CDDE /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				372C2BC5115A7DA100A3B885 /* liblua.a in Copy Frameworks */,
+				372C2BC8115A7E0700A3B885 /* libtolua++.a in Copy Frameworks */,
+				371DEB041130893E0008BF07 /* libpqxx.a in Copy Frameworks */,
+				371DEA1D112FD3D50008BF07 /* libraknet.a in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3748B37C11218D30003B696B /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				37270C9411BC246600C87B1B /* libOgreTerrain.dylib in Copy Frameworks */,
+				37270BA911BC03E900C87B1B /* CEGUIBase.framework in Copy Frameworks */,
+				37270BAA11BC03E900C87B1B /* CEGUILuaScriptModule.framework in Copy Frameworks */,
+				37270BAB11BC03E900C87B1B /* CEGUIOgreRenderer.framework in Copy Frameworks */,
+				37270BAC11BC03E900C87B1B /* ceguitolua++.framework in Copy Frameworks */,
+				37FE43A411357FB500468F28 /* liblog4cpp.a in Copy Frameworks */,
+				371DF0C11131A6090008BF07 /* libpqxx.a in Copy Frameworks */,
+				371DEAF7113080990008BF07 /* libraknet.a in Copy Frameworks */,
+				3713FF67112E810D00AAF360 /* liblua.a in Copy Frameworks */,
+				3772A77E112B254500784B8A /* Ogre.framework in Copy Frameworks */,
+				37CD5597112A048600913D12 /* Cg.framework in Copy Frameworks */,
+				370ABEC11129B91F0041738C /* libOIS.a in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3748B4EF11219062003B696B /* Copy Plugins */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				37270A6111BC03D300C87B1B /* CEGUIFalagardWRBase.bundle in Copy Plugins */,
+				37270A6211BC03D300C87B1B /* CEGUIFreeImageImageCodec.bundle in Copy Plugins */,
+				37270A6511BC03D300C87B1B /* CEGUITGAImageCodec.bundle in Copy Plugins */,
+				37270A6611BC03D300C87B1B /* CEGUITinyXMLParser.bundle in Copy Plugins */,
+				37DAA31B1186BACF00C46EEF /* Plugin_BSPSceneManager.dylib in Copy Plugins */,
+				37DAA31C1186BACF00C46EEF /* Plugin_CgProgramManager.dylib in Copy Plugins */,
+				37DAA31D1186BACF00C46EEF /* Plugin_OctreeSceneManager.dylib in Copy Plugins */,
+				37DAA31E1186BACF00C46EEF /* Plugin_OctreeZone.dylib in Copy Plugins */,
+				37DAA31F1186BACF00C46EEF /* Plugin_ParticleFX.dylib in Copy Plugins */,
+				37DAA3201186BACF00C46EEF /* Plugin_PCZSceneManager.dylib in Copy Plugins */,
+				37DAA3211186BACF00C46EEF /* RenderSystem_GL.dylib in Copy Plugins */,
+			);
+			name = "Copy Plugins";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0867D6ABFE840B52C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		20286C33FDCF999611CA2CEA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		37021C5A11255CC20088F1EC /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = include/Engine.h; sourceTree = "<group>"; };
+		37021C5B11255CC20088F1EC /* GfxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GfxEngine.h; path = include/GfxEngine.h; sourceTree = "<group>"; };
+		37021C5D11255CC20088F1EC /* UIEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIEngine.h; path = include/UIEngine.h; sourceTree = "<group>"; };
+		37021C5E11255CCA0088F1EC /* GfxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GfxEngine.cpp; path = src/GfxEngine.cpp; sourceTree = "<group>"; };
+		37021C6011255CD10088F1EC /* Lobby.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Lobby.cpp; path = src/Lobby.cpp; sourceTree = "<group>"; };
+		37021C6111255CD10088F1EC /* UIEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIEngine.cpp; path = src/UIEngine.cpp; sourceTree = "<group>"; };
+		37021FE11125D8D60088F1EC /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Entity.h; path = include/Entity.h; sourceTree = "<group>"; };
+		37021FE21125D8D60088F1EC /* Puppet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Puppet.h; path = include/Puppet.h; sourceTree = "<group>"; };
+		37021FE31125D8E50088F1EC /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Entity.cpp; path = src/Entity.cpp; sourceTree = "<group>"; };
+		37021FE41125D8E50088F1EC /* Puppet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Puppet.cpp; path = src/Puppet.cpp; sourceTree = "<group>"; };
+		37022B5D1126DE2100747E04 /* EntityFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityFactory.h; path = include/EntityFactory.h; sourceTree = "<group>"; };
+		37022B5E1126DE2100747E04 /* PuppetFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PuppetFactory.h; path = include/PuppetFactory.h; sourceTree = "<group>"; };
+		37022B5F1126DE3D00747E04 /* PuppetFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PuppetFactory.cpp; path = src/PuppetFactory.cpp; sourceTree = "<group>"; };
+		37025D6C11BAE4EE001DB318 /* DotSceneLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DotSceneLoader.cpp; path = modules/dotscene/DotSceneLoader.cpp; sourceTree = "<group>"; };
+		37025D6D11BAE4EE001DB318 /* DotSceneLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DotSceneLoader.h; path = modules/dotscene/DotSceneLoader.h; sourceTree = "<group>"; };
+		37025DA911BAE6C9001DB318 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = modules/tinyxml/tinystr.cpp; sourceTree = "<group>"; };
+		37025DAA11BAE6C9001DB318 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = modules/tinyxml/tinystr.h; sourceTree = "<group>"; };
+		37025DAB11BAE6C9001DB318 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = modules/tinyxml/tinyxml.cpp; sourceTree = "<group>"; };
+		37025DAC11BAE6C9001DB318 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml.h; path = modules/tinyxml/tinyxml.h; sourceTree = "<group>"; };
+		37025DAD11BAE6C9001DB318 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = modules/tinyxml/tinyxmlerror.cpp; sourceTree = "<group>"; };
+		37025DAE11BAE6C9001DB318 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = modules/tinyxml/tinyxmlparser.cpp; sourceTree = "<group>"; };
+		370ABB9E1129B29C0041738C /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkManager.h; path = include/NetworkManager.h; sourceTree = "<group>"; };
+		370ABBA81129B3940041738C /* NetworkManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkManager.cpp; path = src/NetworkManager.cpp; sourceTree = "<group>"; };
+		370ABCD71129B8F80041738C /* libOIS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOIS.a; path = /Users/kandie/Workspace/Libraries/gamedev/ois/lib/libOIS.a; sourceTree = "<absolute>"; };
+		370ABEE41129B9F30041738C /* UnitFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitFactory.h; path = include/UnitFactory.h; sourceTree = "<group>"; };
+		370ABEE61129BA490041738C /* PhyxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhyxEngine.h; path = include/PhyxEngine.h; sourceTree = "<group>"; };
+		370ABEE71129BA540041738C /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioEngine.h; path = include/AudioEngine.h; sourceTree = "<group>"; };
+		370ABEE91129BA810041738C /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit.h; path = include/Unit.h; sourceTree = "<group>"; };
+		370ABEEA1129BA8B0041738C /* Spell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spell.h; path = include/Spell.h; sourceTree = "<group>"; };
+		370ABEED1129BABC0041738C /* ResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResourceManager.h; path = include/ResourceManager.h; sourceTree = "<group>"; };
+		370ABEEE1129BAE60041738C /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventManager.h; path = include/EventManager.h; sourceTree = "<group>"; };
+		370ABEF31129BB360041738C /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lobby.h; path = include/Lobby.h; sourceTree = "<group>"; };
+		370ABEF41129BB480041738C /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = include/Event.h; sourceTree = "<group>"; };
+		370ABEFA1129BBFB0041738C /* EventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventListener.h; path = include/EventListener.h; sourceTree = "<group>"; };
+		370ABEFB1129BC190041738C /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = include/Deck.h; sourceTree = "<group>"; };
+		370ABEFC1129BC3D0041738C /* SpellEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpellEffect.h; path = include/SpellEffect.h; sourceTree = "<group>"; };
+		370ABF351129BC7C0041738C /* Hero_Casting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero_Casting.h; path = include/Hero_Casting.h; sourceTree = "<group>"; };
+		370ABF361129BC830041738C /* Hero_Charging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero_Charging.h; path = include/Hero_Charging.h; sourceTree = "<group>"; };
+		370ABF371129BC890041738C /* Hero_Attacking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero_Attacking.h; path = include/Hero_Attacking.h; sourceTree = "<group>"; };
+		370ABF381129BC900041738C /* Hero_Blocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero_Blocking.h; path = include/Hero_Blocking.h; sourceTree = "<group>"; };
+		370ABF391129BCA70041738C /* Unit_Ready.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit_Ready.h; path = include/Unit_Ready.h; sourceTree = "<group>"; };
+		370ABF3A1129BCAD0041738C /* Unit_Resting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit_Resting.h; path = include/Unit_Resting.h; sourceTree = "<group>"; };
+		370ABF3B1129BCC50041738C /* Unit_Charging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit_Charging.h; path = include/Unit_Charging.h; sourceTree = "<group>"; };
+		370ABF3C1129BCD10041738C /* Unit_Attacking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit_Attacking.h; path = include/Unit_Attacking.h; sourceTree = "<group>"; };
+		370ABF3D1129BCD80041738C /* Unit_Blocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit_Blocking.h; path = include/Unit_Blocking.h; sourceTree = "<group>"; };
+		370ABF571129BD2E0041738C /* EntityState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityState.h; path = include/EntityState.h; sourceTree = "<group>"; };
+		3713FF28112E7F3B00AAF360 /* ScriptEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScriptEngine.h; path = include/ScriptEngine.h; sourceTree = "<group>"; };
+		3713FF29112E7F4900AAF360 /* ScriptEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptEngine.cpp; path = src/ScriptEngine.cpp; sourceTree = "<group>"; };
+		3713FF65112E810200AAF360 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = /opt/local/lib/liblua.a; sourceTree = "<absolute>"; };
+		371DEB011130892F0008BF07 /* libpqxx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpqxx.a; path = /opt/local/lib/libpqxx.a; sourceTree = "<absolute>"; };
+		371DEB071130897C0008BF07 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBManager.h; path = include/DBManager.h; sourceTree = "<group>"; };
+		371DEB09113089880008BF07 /* DBManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DBManager.cpp; path = src/DBManager.cpp; sourceTree = "<group>"; };
+		371DEEED113174F50008BF07 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = include/Utility.h; sourceTree = "<group>"; };
+		37270A5811BC03D300C87B1B /* CEGUIBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIBase.framework; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUIBase.framework; sourceTree = SOURCE_ROOT; };
+		37270A5911BC03D300C87B1B /* CEGUIFalagardWRBase.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUIFalagardWRBase.bundle; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUIFalagardWRBase.bundle; sourceTree = SOURCE_ROOT; };
+		37270A5A11BC03D300C87B1B /* CEGUIFreeImageImageCodec.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUIFreeImageImageCodec.bundle; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUIFreeImageImageCodec.bundle; sourceTree = SOURCE_ROOT; };
+		37270A5B11BC03D300C87B1B /* CEGUILuaScriptModule.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUILuaScriptModule.framework; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUILuaScriptModule.framework; sourceTree = SOURCE_ROOT; };
+		37270A5C11BC03D300C87B1B /* CEGUIOgreRenderer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUIOgreRenderer.framework; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUIOgreRenderer.framework; sourceTree = SOURCE_ROOT; };
+		37270A5D11BC03D300C87B1B /* CEGUITGAImageCodec.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUITGAImageCodec.bundle; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUITGAImageCodec.bundle; sourceTree = SOURCE_ROOT; };
+		37270A5E11BC03D300C87B1B /* CEGUITinyXMLParser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CEGUITinyXMLParser.bundle; path = ../../Libraries/gamedev/CEGUI/lib/Debug/CEGUITinyXMLParser.bundle; sourceTree = SOURCE_ROOT; };
+		37270A5F11BC03D300C87B1B /* ceguitolua++.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ceguitolua++.framework"; path = "../../Libraries/gamedev/CEGUI/lib/Debug/ceguitolua++.framework"; sourceTree = SOURCE_ROOT; };
+		37270C7111BC225000C87B1B /* rapidxml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = rapidxml.hpp; path = modules/dotscene/rapidxml.hpp; sourceTree = "<group>"; };
+		37270C9211BC245E00C87B1B /* libOgreTerrain.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOgreTerrain.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/libOgreTerrain.dylib"; sourceTree = SOURCE_ROOT; };
+		37270CB411BC25F000C87B1B /* libOgrePaging.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOgrePaging.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/libOgrePaging.dylib"; sourceTree = SOURCE_ROOT; };
+		37270CBB11BC264900C87B1B /* libOgreRTShaderSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOgreRTShaderSystem.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/libOgreRTShaderSystem.dylib"; sourceTree = SOURCE_ROOT; };
+		372710D511BD033200C87B1B /* SdkCameraMan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SdkCameraMan.h; path = include/SdkCameraMan.h; sourceTree = "<group>"; };
+		372C2BC6115A7DF700A3B885 /* libtolua++.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtolua++.a"; path = "/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/lib/libtolua++.a"; sourceTree = "<absolute>"; };
+		37306F7A11B56B2C0007C193 /* SpellParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpellParser.h; path = include/SpellParser.h; sourceTree = "<group>"; };
+		37306F7B11B56B500007C193 /* Spell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spell.cpp; path = src/Spell.cpp; sourceTree = "<group>"; };
+		37306F7C11B56B500007C193 /* SpellParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpellParser.cpp; path = src/SpellParser.cpp; sourceTree = "<group>"; };
+		37306F9011B56CD40007C193 /* Deck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Deck.cpp; path = src/Deck.cpp; sourceTree = "<group>"; };
+		373D72E9112F15260074CDDE /* EServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		373D75AA112F18C30074CDDE /* SMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SMain.cpp; path = src/SMain.cpp; sourceTree = "<group>"; };
+		373D75AC112F191D0074CDDE /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = include/Server.h; sourceTree = "<group>"; };
+		373D75AD112F19290074CDDE /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Server.cpp; path = src/Server.cpp; sourceTree = "<group>"; };
+		373D7693112F52910074CDDE /* libraknet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libraknet.a; path = "/Users/kandie/Workspace/Libraries/gamedev/RakNet-3.719/Lib/libraknet.a"; sourceTree = "<absolute>"; };
+		3748B06211218AB0003B696B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		3772A77A112B253D00784B8A /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = "/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug/Ogre.framework"; sourceTree = "<absolute>"; };
+		378650341124006B005AE1AB /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameManager.h; path = include/GameManager.h; sourceTree = "<group>"; };
+		378650351124006B005AE1AB /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameState.h; path = include/GameState.h; sourceTree = "<group>"; };
+		378650361124006B005AE1AB /* InputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputManager.h; path = include/InputManager.h; sourceTree = "<group>"; };
+		378650371124006B005AE1AB /* Intro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Intro.h; path = include/Intro.h; sourceTree = "<group>"; };
+		378650381124006B005AE1AB /* Pixy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pixy.h; path = include/Pixy.h; sourceTree = "<group>"; };
+		3786503911240076005AE1AB /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameManager.cpp; path = src/GameManager.cpp; sourceTree = "<group>"; };
+		3786503A11240076005AE1AB /* GameState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameState.cpp; path = src/GameState.cpp; sourceTree = "<group>"; };
+		3786503B11240076005AE1AB /* InputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputManager.cpp; path = src/InputManager.cpp; sourceTree = "<group>"; };
+		3786503C11240076005AE1AB /* Intro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Intro.cpp; path = src/Intro.cpp; sourceTree = "<group>"; };
+		3786503D11240076005AE1AB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
+		37ADFEB311B2E96D00E1B627 /* GameManager.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GameManager.pkg; sourceTree = "<group>"; };
+		37ADFEB511B2E9B100E1B627 /* Combat.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Combat.pkg; sourceTree = "<group>"; };
+		37BA279711B28303006DB9B4 /* Authenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Authenticator.h; path = include/Authenticator.h; sourceTree = "<group>"; };
+		37BA279811B28311006DB9B4 /* Authenticator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Authenticator.cpp; path = src/Authenticator.cpp; sourceTree = "<group>"; };
+		37BA279B11B28416006DB9B4 /* ProfileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileManager.h; path = include/ProfileManager.h; sourceTree = "<group>"; };
+		37BA279C11B28421006DB9B4 /* ProfileManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProfileManager.cpp; path = src/ProfileManager.cpp; sourceTree = "<group>"; };
+		37CD5593112A048300913D12 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = "/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Dependencies/Cg.framework"; sourceTree = "<absolute>"; };
+		37D28EB111AC13BD00316BD7 /* PixyLogLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixyLogLayout.cpp; sourceTree = "<group>"; };
+		37D28EB211AC13BD00316BD7 /* PixyLogLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixyLogLayout.h; sourceTree = "<group>"; };
+		37D28EB411AC13BD00316BD7 /* md5.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cc; sourceTree = "<group>"; };
+		37D28EB511AC13BD00316BD7 /* md5.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = md5.hh; sourceTree = "<group>"; };
+		37D28EB811AC13BD00316BD7 /* Entity.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Entity.pkg; sourceTree = "<group>"; };
+		37D28EB911AC13BD00316BD7 /* Event.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Event.pkg; sourceTree = "<group>"; };
+		37D28EBA11AC13BD00316BD7 /* EventListener.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EventListener.pkg; sourceTree = "<group>"; };
+		37D28EBB11AC13BD00316BD7 /* EventManager.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EventManager.pkg; sourceTree = "<group>"; };
+		37D28EBC11AC13BD00316BD7 /* GameState.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GameState.pkg; sourceTree = "<group>"; };
+		37D28EBD11AC13BD00316BD7 /* Puppet.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Puppet.pkg; sourceTree = "<group>"; };
+		37D28EBE11AC13BD00316BD7 /* Intro.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Intro.pkg; sourceTree = "<group>"; };
+		37D28EBF11AC13BD00316BD7 /* Logger.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logger.pkg; sourceTree = "<group>"; };
+		37D28EC011AC13BD00316BD7 /* parser.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = parser.sh; sourceTree = "<group>"; };
+		37D28EC111AC13BD00316BD7 /* Pixy.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pixy.pkg; sourceTree = "<group>"; };
+		37D28EC211AC13BD00316BD7 /* PixyInstance.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PixyInstance.pkg; sourceTree = "<group>"; };
+		37D28EC411AC13BD00316BD7 /* UIEngine.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UIEngine.pkg; sourceTree = "<group>"; };
+		37D28ECA11AC13BD00316BD7 /* lua_Pixy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_Pixy.cpp; sourceTree = "<group>"; };
+		37D28ECC11AC13BD00316BD7 /* required.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = required.h; sourceTree = "<group>"; };
+		37D28F1A11AC143200316BD7 /* doll2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doll2.png; sourceTree = "<group>"; };
+		37D28F1B11AC143200316BD7 /* dolls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dolls.png; sourceTree = "<group>"; };
+		37D28F1D11AC143200316BD7 /* doll2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doll2.png; sourceTree = "<group>"; };
+		37D28F1E11AC143200316BD7 /* dolls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dolls.png; sourceTree = "<group>"; };
+		37D28F1F11AC143200316BD7 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		37D28F2011AC143200316BD7 /* logo.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.psd; sourceTree = "<group>"; };
+		37D28F2111AC143200316BD7 /* drawings_.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = drawings_.zip; sourceTree = "<group>"; };
+		37D28F2211AC143200316BD7 /* flame.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flame.jpg; sourceTree = "<group>"; };
+		37D28F2411AC143200316BD7 /* media.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = media.cfg; sourceTree = "<group>"; };
+		37D28F2511AC143200316BD7 /* plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plugins.cfg; sourceTree = "<group>"; };
+		37D28F2611AC143200316BD7 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resources.cfg; sourceTree = "<group>"; };
+		37D28F2711AC143200316BD7 /* terrain.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain.cfg; sourceTree = "<group>"; };
+		37D28F2A11AC143200316BD7 /* bluebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluebold.ttf; sourceTree = "<group>"; };
+		37D28F2B11AC143200316BD7 /* bluecond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluecond.ttf; sourceTree = "<group>"; };
+		37D28F2C11AC143200316BD7 /* bluehigh.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluehigh.ttf; sourceTree = "<group>"; };
+		37D28F2D11AC143200316BD7 /* bluehighway-10.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "bluehighway-10.font"; sourceTree = "<group>"; };
+		37D28F2E11AC143200316BD7 /* bluehighway-12.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "bluehighway-12.font"; sourceTree = "<group>"; };
+		37D28F2F11AC143200316BD7 /* bluehighway-8.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "bluehighway-8.font"; sourceTree = "<group>"; };
+		37D28F3011AC143200316BD7 /* read_me.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = read_me.html; sourceTree = "<group>"; };
+		37D28F3111AC143200316BD7 /* sample.fontdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.fontdef; sourceTree = "<group>"; };
+		37D28F3211AC143200316BD7 /* solo5.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = solo5.ttf; sourceTree = "<group>"; };
+		37D28F3611AC143200316BD7 /* BeachStones.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BeachStones.jpg; sourceTree = "<group>"; };
+		37D28F3711AC143200316BD7 /* BumpyMetal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BumpyMetal.jpg; sourceTree = "<group>"; };
+		37D28F3811AC143200316BD7 /* cubemapsJS.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = cubemapsJS.zip; sourceTree = "<group>"; };
+		37D28F3911AC143200316BD7 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
+		37D28F3A11AC143200316BD7 /* flaretrail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flaretrail.png; sourceTree = "<group>"; };
+		37D28F3B11AC143200316BD7 /* gras_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gras_02.png; sourceTree = "<group>"; };
+		37D28F3C11AC143200316BD7 /* grass_1024.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grass_1024.jpg; sourceTree = "<group>"; };
+		37D28F3D11AC143200316BD7 /* ring_flare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ring_flare.png; sourceTree = "<group>"; };
+		37D28F3E11AC143200316BD7 /* ring_flare2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ring_flare2.png; sourceTree = "<group>"; };
+		37D28F3F11AC143200316BD7 /* RustySteel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RustySteel.jpg; sourceTree = "<group>"; };
+		37D28F4011AC143200316BD7 /* skybox.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = skybox.zip; sourceTree = "<group>"; };
+		37D28F4111AC143200316BD7 /* Water02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Water02.jpg; sourceTree = "<group>"; };
+		37D28F4211AC143200316BD7 /* WaterNormal1.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterNormal1.tga; sourceTree = "<group>"; };
+		37D28F4311AC143200316BD7 /* bigflame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigflame.png; sourceTree = "<group>"; };
+		37D28F4411AC143200316BD7 /* clouds.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = clouds.jpg; sourceTree = "<group>"; };
+		37D28F4511AC143200316BD7 /* flare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare.png; sourceTree = "<group>"; };
+		37D28F4611AC143200316BD7 /* nskingr.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nskingr.jpg; sourceTree = "<group>"; };
+		37D28F4711AC143200316BD7 /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain.png; sourceTree = "<group>"; };
+		37D28F4811AC143200316BD7 /* terrain_detail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain_detail.jpg; sourceTree = "<group>"; };
+		37D28F4911AC143200316BD7 /* terrain_texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain_texture.jpg; sourceTree = "<group>"; };
+		37D28F4D11AC143200316BD7 /* UI.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UI.lua; sourceTree = "<group>"; };
+		37D28F4F11AC143200316BD7 /* Login.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Login.lua; sourceTree = "<group>"; };
+		37D28F5011AC143200316BD7 /* MainMenu.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MainMenu.lua; sourceTree = "<group>"; };
+		37D28F5211AC143200316BD7 /* New_Info.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = New_Info.lua; sourceTree = "<group>"; };
+		37D28F5311AC143200316BD7 /* New_Stats.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = New_Stats.lua; sourceTree = "<group>"; };
+		37D28F5411AC143200316BD7 /* Profiles.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Profiles.lua; sourceTree = "<group>"; };
+		37D28F5511AC143200316BD7 /* Register.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Register.lua; sourceTree = "<group>"; };
+		37D28F5611AC143200316BD7 /* Pixy.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pixy.lua; sourceTree = "<group>"; };
+		37D28F5711AC143200316BD7 /* Processor.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Processor.lua; sourceTree = "<group>"; };
+		37D28F5911AC143200316BD7 /* DLister.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DLister.lua; sourceTree = "<group>"; };
+		37D28F5A11AC143200316BD7 /* EventProcessor.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EventProcessor.lua; sourceTree = "<group>"; };
+		37D28F5B11AC143200316BD7 /* PixyServer.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PixyServer.lua; sourceTree = "<group>"; };
+		37D28F5D11AC143200316BD7 /* Regenerating.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Regenerating.lua; sourceTree = "<group>"; };
+		37D28F5E11AC143200316BD7 /* Summoning.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Summoning.lua; sourceTree = "<group>"; };
+		37D28F5F11AC143200316BD7 /* SpellProcessor.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SpellProcessor.lua; sourceTree = "<group>"; };
+		37D28F6211AC143200316BD7 /* baemuk.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = baemuk.txt; sourceTree = "<group>"; };
+		37D28F6311AC143200316BD7 /* Batang-26.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Batang-26.font"; sourceTree = "<group>"; };
+		37D28F6411AC143200316BD7 /* batang.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = batang.ttf; sourceTree = "<group>"; };
+		37D28F6511AC143200316BD7 /* DejaVuSans-10.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "DejaVuSans-10.font"; sourceTree = "<group>"; };
+		37D28F6611AC143200316BD7 /* DejaVuSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DejaVuSans.ttf; sourceTree = "<group>"; };
+		37D28F6711AC143200316BD7 /* FairChar-30.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "FairChar-30.font"; sourceTree = "<group>"; };
+		37D28F6811AC143200316BD7 /* fkp-16.font */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "fkp-16.font"; sourceTree = "<group>"; };
+		37D28F6911AC143200316BD7 /* fkp.de.pcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fkp.de.pcf; sourceTree = "<group>"; };
+		37D28F6A11AC143200316BD7 /* Legal.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Legal.txt; sourceTree = "<group>"; };
+		37D28F6C11AC143200316BD7 /* Avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Avatar.png; sourceTree = "<group>"; };
+		37D28F6D11AC143200316BD7 /* DriveIcons.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DriveIcons.imageset; sourceTree = "<group>"; };
+		37D28F6E11AC143200316BD7 /* DriveIcons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DriveIcons.png; sourceTree = "<group>"; };
+		37D28F6F11AC143200316BD7 /* Elements.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Elements.imageset; sourceTree = "<group>"; };
+		37D28F7011AC143200316BD7 /* Elements.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Elements.jpg; sourceTree = "<group>"; };
+		37D28F7111AC143200316BD7 /* Elements.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Elements.png; sourceTree = "<group>"; };
+		37D28F7211AC143200316BD7 /* FairChar.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = FairChar.imageset; sourceTree = "<group>"; };
+		37D28F7311AC143200316BD7 /* FairChar.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = FairChar.tga; sourceTree = "<group>"; };
+		37D28F7411AC143200316BD7 /* GPN-2000-001437.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GPN-2000-001437.tga"; sourceTree = "<group>"; };
+		37D28F7511AC143200316BD7 /* grassWalpha.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = grassWalpha.tga; sourceTree = "<group>"; };
+		37D28F7611AC143200316BD7 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		37D28F7711AC143200316BD7 /* Profiles-Avatars.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Profiles-Avatars.imageset"; sourceTree = "<group>"; };
+		37D28F7811AC143200316BD7 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		37D28F7911AC143200316BD7 /* TaharezLook.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TaharezLook.imageset; sourceTree = "<group>"; };
+		37D28F7A11AC143200316BD7 /* TaharezLook.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TaharezLook.jpg; sourceTree = "<group>"; };
+		37D28F7B11AC143200316BD7 /* TaharezLook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TaharezLook.png; sourceTree = "<group>"; };
+		37D28F7C11AC143200316BD7 /* TaharezLook.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = TaharezLook.tga; sourceTree = "<group>"; };
+		37D28F7D11AC143200316BD7 /* Vanilla.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Vanilla.imageset; sourceTree = "<group>"; };
+		37D28F7E11AC143200316BD7 /* vanilla.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = vanilla.tga; sourceTree = "<group>"; };
+		37D28F7F11AC143200316BD7 /* WindowsLook.imageset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = WindowsLook.imageset; sourceTree = "<group>"; };
+		37D28F8011AC143200316BD7 /* WindowsLook.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = WindowsLook.tga; sourceTree = "<group>"; };
+		37D28F8411AC143200316BD7 /* login.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = login.layout; sourceTree = "<group>"; };
+		37D28F8511AC143200316BD7 /* main_menu.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = main_menu.layout; sourceTree = "<group>"; };
+		37D28F8711AC143200316BD7 /* new_info.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = new_info.layout; sourceTree = "<group>"; };
+		37D28F8811AC143200316BD7 /* new_spells.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = new_spells.layout; sourceTree = "<group>"; };
+		37D28F8911AC143200316BD7 /* new_stats.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = new_stats.layout; sourceTree = "<group>"; };
+		37D28F8A11AC143200316BD7 /* new_talents.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = new_talents.layout; sourceTree = "<group>"; };
+		37D28F8B11AC143200316BD7 /* profiles.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = profiles.layout; sourceTree = "<group>"; };
+		37D28F8C11AC143200316BD7 /* register.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = register.layout; sourceTree = "<group>"; };
+		37D28F8F11AC143200316BD7 /* progress_box.layout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = progress_box.layout; sourceTree = "<group>"; };
+		37D28F9111AC143200316BD7 /* TaharezLook.looknfeel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TaharezLook.looknfeel; sourceTree = "<group>"; };
+		37D28F9211AC143200316BD7 /* Vanilla.looknfeel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Vanilla.looknfeel; sourceTree = "<group>"; };
+		37D28F9311AC143200316BD7 /* WindowsLook.looknfeel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = WindowsLook.looknfeel; sourceTree = "<group>"; };
+		37D28F9511AC143200316BD7 /* TaharezLook.scheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TaharezLook.scheme; sourceTree = "<group>"; };
+		37D28F9611AC143200316BD7 /* TaharezLookWidgetAliases.scheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TaharezLookWidgetAliases.scheme; sourceTree = "<group>"; };
+		37D28F9711AC143200316BD7 /* TaharezLookWidgets.scheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TaharezLookWidgets.scheme; sourceTree = "<group>"; };
+		37D28F9811AC143200316BD7 /* VanillaSkin.scheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VanillaSkin.scheme; sourceTree = "<group>"; };
+		37D28F9911AC143200316BD7 /* WindowsLook.scheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = WindowsLook.scheme; sourceTree = "<group>"; };
+		37D28F9A11AC143200316BD7 /* WindowsLookWidgets.scheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = WindowsLookWidgets.scheme; sourceTree = "<group>"; };
+		37D28F9C11AC143200316BD7 /* CEGUIConfig.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CEGUIConfig.xsd; sourceTree = "<group>"; };
+		37D28F9D11AC143200316BD7 /* Falagard.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Falagard.xsd; sourceTree = "<group>"; };
+		37D28F9E11AC143200316BD7 /* Font.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Font.xsd; sourceTree = "<group>"; };
+		37D28F9F11AC143200316BD7 /* GUILayout.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GUILayout.xsd; sourceTree = "<group>"; };
+		37D28FA011AC143200316BD7 /* GUIScheme.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GUIScheme.xsd; sourceTree = "<group>"; };
+		37D28FA111AC143200316BD7 /* Imageset.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Imageset.xsd; sourceTree = "<group>"; };
+		37DA4C7A11B95A7100EAE11F /* PuppetFactory.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PuppetFactory.pkg; sourceTree = "<group>"; };
+		37DAA30D1186BAC000C46EEF /* Plugin_BSPSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_BSPSceneManager.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/Plugin_BSPSceneManager.dylib"; sourceTree = SOURCE_ROOT; };
+		37DAA30E1186BAC000C46EEF /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/Plugin_CgProgramManager.dylib"; sourceTree = SOURCE_ROOT; };
+		37DAA30F1186BAC000C46EEF /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/Plugin_OctreeSceneManager.dylib"; sourceTree = SOURCE_ROOT; };
+		37DAA3101186BAC000C46EEF /* Plugin_OctreeZone.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeZone.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/Plugin_OctreeZone.dylib"; sourceTree = SOURCE_ROOT; };
+		37DAA3111186BAC000C46EEF /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/Plugin_ParticleFX.dylib"; sourceTree = SOURCE_ROOT; };
+		37DAA3121186BAC000C46EEF /* Plugin_PCZSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_PCZSceneManager.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/Plugin_PCZSceneManager.dylib"; sourceTree = SOURCE_ROOT; };
+		37DAA3131186BAC000C46EEF /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = "../../Libraries/gamedev/ogre-build/lib/Debug/RenderSystem_GL.dylib"; sourceTree = SOURCE_ROOT; };
+		37DB267D11B170A6000E6B24 /* Instance.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instance.pkg; sourceTree = "<group>"; };
+		37DB26DB11B176E0000E6B24 /* MatchFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchFinder.h; path = include/MatchFinder.h; sourceTree = "<group>"; };
+		37DB26DC11B177AD000E6B24 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = include/Player.h; sourceTree = "<group>"; };
+		37DB26FA11B17E4F000E6B24 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = src/Player.cpp; sourceTree = "<group>"; };
+		37DB278611B187A3000E6B24 /* MatchFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MatchFinder.cpp; path = src/MatchFinder.cpp; sourceTree = "<group>"; };
+		37DB283711B1A4AB000E6B24 /* Instance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instance.h; path = include/Instance.h; sourceTree = "<group>"; };
+		37DB283811B1A4B7000E6B24 /* Instance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Instance.cpp; path = src/Instance.cpp; sourceTree = "<group>"; };
+		37DDC32511B7C27B005D15B4 /* EntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityEvent.h; path = include/EntityEvent.h; sourceTree = "<group>"; };
+		37DDC32711B7C33C005D15B4 /* EntityEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EntityEvent.cpp; path = src/EntityEvent.cpp; sourceTree = "<group>"; };
+		37DDC3B411B7CB7E005D15B4 /* EntityEvent.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EntityEvent.pkg; sourceTree = "<group>"; };
+		37DDC47311B7DF71005D15B4 /* GfxEngine.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GfxEngine.pkg; sourceTree = "<group>"; };
+		37DDC75511B82E15005D15B4 /* lua_PixyInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_PixyInstance.cpp; sourceTree = "<group>"; };
+		37DDC7F511B8401C005D15B4 /* Spell.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Spell.pkg; sourceTree = "<group>"; };
+		37DDC82811B84111005D15B4 /* Deck.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Deck.pkg; sourceTree = "<group>"; };
+		37F66B7F1168B66400419774 /* Combat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Combat.h; path = include/Combat.h; sourceTree = "<group>"; };
+		37F66B801168B66400419774 /* Combat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Combat.cpp; path = src/Combat.cpp; sourceTree = "<group>"; };
+		37F8DE7E113C4E7100F0591B /* PacketProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PacketProcessor.h; path = include/PacketProcessor.h; sourceTree = "<group>"; };
+		37F8DE7F113C4E8300F0591B /* PacketProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PacketProcessor.cpp; path = src/PacketProcessor.cpp; sourceTree = "<group>"; };
+		37F98671113D7BD200457423 /* Listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Listener.h; path = include/Listener.h; sourceTree = "<group>"; };
+		37F9867E113D7E2500457423 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Event.cpp; path = src/Event.cpp; sourceTree = "<group>"; };
+		37F98774113D9B1100457423 /* EventManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventManager.cpp; path = src/EventManager.cpp; sourceTree = "<group>"; };
+		37F987C7113D9D7E00457423 /* PixyShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PixyShared.h; path = include/PixyShared.h; sourceTree = "<group>"; };
+		37FCF9D0113EB49A00D662B8 /* EventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventHandler.h; path = include/EventHandler.h; sourceTree = "<group>"; };
+		37FCF9D2113EB50A00D662B8 /* Handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Handler.h; path = include/Handler.h; sourceTree = "<group>"; };
+		37FCF9E1113EB64900D662B8 /* EventListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventListener.cpp; path = src/EventListener.cpp; sourceTree = "<group>"; };
+		37FE43A211357FA600468F28 /* liblog4cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblog4cpp.a; path = /opt/local/lib/liblog4cpp.a; sourceTree = "<absolute>"; };
+		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D0C4E970486CD37000505A6 /* Elementum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elementum.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		373D72B9112F15260074CDDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372C2BC7115A7DF700A3B885 /* libtolua++.a in Frameworks */,
+				372C2F6A115A7E2C00A3B885 /* liblua.a in Frameworks */,
+				37F8DC88113C28FF00F0591B /* liblog4cpp.a in Frameworks */,
+				371DEB031130893A0008BF07 /* libpqxx.a in Frameworks */,
+				371DEA0F112FD3C30008BF07 /* libraknet.a in Frameworks */,
+				373D72BA112F15260074CDDE /* Carbon.framework in Frameworks */,
+				373D72BB112F15260074CDDE /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D0C4E910486CD37000505A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				371DF0C01131A6060008BF07 /* libpqxx.a in Frameworks */,
+				8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */,
+				3748B06311218AB0003B696B /* IOKit.framework in Frameworks */,
+				370ABCD81129B8F80041738C /* libOIS.a in Frameworks */,
+				37CD5594112A048300913D12 /* Cg.framework in Frameworks */,
+				3772A77B112B253D00784B8A /* Ogre.framework in Frameworks */,
+				3713FF66112E810200AAF360 /* liblua.a in Frameworks */,
+				371DEAEC113080280008BF07 /* libraknet.a in Frameworks */,
+				37FE43A311357FA600468F28 /* liblog4cpp.a in Frameworks */,
+				37DAA3141186BAC000C46EEF /* Plugin_BSPSceneManager.dylib in Frameworks */,
+				37DAA3151186BAC000C46EEF /* Plugin_CgProgramManager.dylib in Frameworks */,
+				37DAA3161186BAC000C46EEF /* Plugin_OctreeSceneManager.dylib in Frameworks */,
+				37DAA3171186BAC000C46EEF /* Plugin_OctreeZone.dylib in Frameworks */,
+				37DAA3181186BAC000C46EEF /* Plugin_ParticleFX.dylib in Frameworks */,
+				37DAA3191186BAC000C46EEF /* Plugin_PCZSceneManager.dylib in Frameworks */,
+				37DAA31A1186BAC000C46EEF /* RenderSystem_GL.dylib in Frameworks */,
+				37270A6011BC03D300C87B1B /* CEGUIBase.framework in Frameworks */,
+				37270A6311BC03D300C87B1B /* CEGUILuaScriptModule.framework in Frameworks */,
+				37270A6411BC03D300C87B1B /* CEGUIOgreRenderer.framework in Frameworks */,
+				37270A6711BC03D300C87B1B /* ceguitolua++.framework in Frameworks */,
+				37270C9311BC245E00C87B1B /* libOgreTerrain.dylib in Frameworks */,
+				37270CB511BC25F000C87B1B /* libOgrePaging.dylib in Frameworks */,
+				37270CBC11BC264900C87B1B /* libOgreRTShaderSystem.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		195DF8CFFE9D517E11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D0C4E970486CD37000505A6 /* Elementum.app */,
+				373D72E9112F15260074CDDE /* EServer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20286C29FDCF999611CA2CEA /* Skeleton */ = {
+			isa = PBXGroup;
+			children = (
+				373D75A5112F18920074CDDE /* Server */,
+				3748B6F311219259003B696B /* Headers */,
+				20286C2AFDCF999611CA2CEA /* Sources */,
+				20286C2CFDCF999611CA2CEA /* Resources */,
+				3786504911240093005AE1AB /* Modules */,
+				3748B4DC11219006003B696B /* Plugins */,
+				20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */,
+				195DF8CFFE9D517E11CA2CBB /* Products */,
+			);
+			name = Skeleton;
+			sourceTree = "<group>";
+		};
+		20286C2AFDCF999611CA2CEA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				37306F8111B56B540007C193 /* Parsers */,
+				37F9867D113D7E1800457423 /* Events */,
+				3772A8B1112B260B00784B8A /* Entities */,
+				3772A8B0112B260200784B8A /* Engines */,
+				3772A8AF112B25F700784B8A /* GameStates */,
+				3772A8AE112B25E700784B8A /* Managers */,
+				3772A8AD112B25D000784B8A /* Factories */,
+				3786503D11240076005AE1AB /* main.cpp */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		20286C2CFDCF999611CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F1911AC143200316BD7 /* art */,
+				37D28F2311AC143200316BD7 /* config */,
+				37D28F2811AC143200316BD7 /* media */,
+				37D28F4A11AC143200316BD7 /* scripts */,
+				37D28F6011AC143200316BD7 /* ui */,
+				8D0C4E960486CD37000505A6 /* Info.plist */,
+				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				37270CBB11BC264900C87B1B /* libOgreRTShaderSystem.dylib */,
+				37270CB411BC25F000C87B1B /* libOgrePaging.dylib */,
+				37270C9211BC245E00C87B1B /* libOgreTerrain.dylib */,
+				37270A5811BC03D300C87B1B /* CEGUIBase.framework */,
+				37270A5B11BC03D300C87B1B /* CEGUILuaScriptModule.framework */,
+				37270A5C11BC03D300C87B1B /* CEGUIOgreRenderer.framework */,
+				37270A5F11BC03D300C87B1B /* ceguitolua++.framework */,
+				372C2BC6115A7DF700A3B885 /* libtolua++.a */,
+				37FE43A211357FA600468F28 /* liblog4cpp.a */,
+				371DEB011130892F0008BF07 /* libpqxx.a */,
+				373D7693112F52910074CDDE /* libraknet.a */,
+				3713FF65112E810200AAF360 /* liblua.a */,
+				3772A77A112B253D00784B8A /* Ogre.framework */,
+				37CD5593112A048300913D12 /* Cg.framework */,
+				370ABCD71129B8F80041738C /* libOIS.a */,
+				3748B06211218AB0003B696B /* IOKit.framework */,
+				20286C33FDCF999611CA2CEA /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		37025D6A11BAE4D6001DB318 /* dotscene */ = {
+			isa = PBXGroup;
+			children = (
+				37270C7111BC225000C87B1B /* rapidxml.hpp */,
+				37025D6C11BAE4EE001DB318 /* DotSceneLoader.cpp */,
+				37025D6D11BAE4EE001DB318 /* DotSceneLoader.h */,
+			);
+			name = dotscene;
+			sourceTree = "<group>";
+		};
+		37025DA811BAE6A5001DB318 /* tinyxml */ = {
+			isa = PBXGroup;
+			children = (
+				37025DA911BAE6C9001DB318 /* tinystr.cpp */,
+				37025DAA11BAE6C9001DB318 /* tinystr.h */,
+				37025DAB11BAE6C9001DB318 /* tinyxml.cpp */,
+				37025DAC11BAE6C9001DB318 /* tinyxml.h */,
+				37025DAD11BAE6C9001DB318 /* tinyxmlerror.cpp */,
+				37025DAE11BAE6C9001DB318 /* tinyxmlparser.cpp */,
+			);
+			name = tinyxml;
+			sourceTree = "<group>";
+		};
+		370ABEE21129B9DB0041738C /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				37022B5D1126DE2100747E04 /* EntityFactory.h */,
+				37022B5E1126DE2100747E04 /* PuppetFactory.h */,
+				370ABEE41129B9F30041738C /* UnitFactory.h */,
+			);
+			name = Factories;
+			sourceTree = "<group>";
+		};
+		370ABEE51129BA310041738C /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				37021C5A11255CC20088F1EC /* Engine.h */,
+				370ABEE71129BA540041738C /* AudioEngine.h */,
+				37021C5B11255CC20088F1EC /* GfxEngine.h */,
+				370ABEE61129BA490041738C /* PhyxEngine.h */,
+				37021C5D11255CC20088F1EC /* UIEngine.h */,
+				3713FF28112E7F3B00AAF360 /* ScriptEngine.h */,
+			);
+			name = Engines;
+			sourceTree = "<group>";
+		};
+		370ABEE81129BA6A0041738C /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				370ABEFD1129BC4A0041738C /* EntityStates */,
+				37021FE11125D8D60088F1EC /* Entity.h */,
+				37021FE21125D8D60088F1EC /* Puppet.h */,
+				370ABEE91129BA810041738C /* Unit.h */,
+				370ABEFB1129BC190041738C /* Deck.h */,
+				370ABEEA1129BA8B0041738C /* Spell.h */,
+				370ABEFC1129BC3D0041738C /* SpellEffect.h */,
+				37DB26DC11B177AD000E6B24 /* Player.h */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
+		370ABEEC1129BAAA0041738C /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				378650341124006B005AE1AB /* GameManager.h */,
+				378650361124006B005AE1AB /* InputManager.h */,
+				370ABEED1129BABC0041738C /* ResourceManager.h */,
+				370ABB9E1129B29C0041738C /* NetworkManager.h */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		370ABEEF1129BAFF0041738C /* GameStates */ = {
+			isa = PBXGroup;
+			children = (
+				37F66B7F1168B66400419774 /* Combat.h */,
+				378650351124006B005AE1AB /* GameState.h */,
+				378650371124006B005AE1AB /* Intro.h */,
+				370ABEF31129BB360041738C /* Lobby.h */,
+			);
+			name = GameStates;
+			sourceTree = "<group>";
+		};
+		370ABEF51129BBC30041738C /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				370ABEF41129BB480041738C /* Event.h */,
+				37DDC32511B7C27B005D15B4 /* EntityEvent.h */,
+				370ABEEE1129BAE60041738C /* EventManager.h */,
+				370ABEFA1129BBFB0041738C /* EventListener.h */,
+				37FCF9D0113EB49A00D662B8 /* EventHandler.h */,
+				37F98671113D7BD200457423 /* Listener.h */,
+				37FCF9D2113EB50A00D662B8 /* Handler.h */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+		370ABEFD1129BC4A0041738C /* EntityStates */ = {
+			isa = PBXGroup;
+			children = (
+				370ABF571129BD2E0041738C /* EntityState.h */,
+				370ABEFE1129BC500041738C /* HeroStates */,
+				370ABEFF1129BC550041738C /* UnitStates */,
+			);
+			name = EntityStates;
+			sourceTree = "<group>";
+		};
+		370ABEFE1129BC500041738C /* HeroStates */ = {
+			isa = PBXGroup;
+			children = (
+				370ABF351129BC7C0041738C /* Hero_Casting.h */,
+				370ABF361129BC830041738C /* Hero_Charging.h */,
+				370ABF371129BC890041738C /* Hero_Attacking.h */,
+				370ABF381129BC900041738C /* Hero_Blocking.h */,
+			);
+			name = HeroStates;
+			sourceTree = "<group>";
+		};
+		370ABEFF1129BC550041738C /* UnitStates */ = {
+			isa = PBXGroup;
+			children = (
+				370ABF391129BCA70041738C /* Unit_Ready.h */,
+				370ABF3A1129BCAD0041738C /* Unit_Resting.h */,
+				370ABF3B1129BCC50041738C /* Unit_Charging.h */,
+				370ABF3C1129BCD10041738C /* Unit_Attacking.h */,
+				370ABF3D1129BCD80041738C /* Unit_Blocking.h */,
+			);
+			name = UnitStates;
+			sourceTree = "<group>";
+		};
+		37306F7811B56B1D0007C193 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				37306F7A11B56B2C0007C193 /* SpellParser.h */,
+			);
+			name = Parsers;
+			sourceTree = "<group>";
+		};
+		37306F8111B56B540007C193 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				37306F7C11B56B500007C193 /* SpellParser.cpp */,
+			);
+			name = Parsers;
+			sourceTree = "<group>";
+		};
+		373D75A5112F18920074CDDE /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				373D75A8112F189F0074CDDE /* Sources */,
+				373D75A7112F18960074CDDE /* Headers */,
+			);
+			name = Server;
+			sourceTree = "<group>";
+		};
+		373D75A7112F18960074CDDE /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				373D75AC112F191D0074CDDE /* Server.h */,
+				371DEB071130897C0008BF07 /* DBManager.h */,
+				37F8DE7E113C4E7100F0591B /* PacketProcessor.h */,
+				37DB26DB11B176E0000E6B24 /* MatchFinder.h */,
+				37DB283711B1A4AB000E6B24 /* Instance.h */,
+				37BA279711B28303006DB9B4 /* Authenticator.h */,
+				37BA279B11B28416006DB9B4 /* ProfileManager.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		373D75A8112F189F0074CDDE /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				373D75AA112F18C30074CDDE /* SMain.cpp */,
+				373D75AD112F19290074CDDE /* Server.cpp */,
+				371DEB09113089880008BF07 /* DBManager.cpp */,
+				37F8DE7F113C4E8300F0591B /* PacketProcessor.cpp */,
+				37DB278611B187A3000E6B24 /* MatchFinder.cpp */,
+				37DB283811B1A4B7000E6B24 /* Instance.cpp */,
+				37BA279811B28311006DB9B4 /* Authenticator.cpp */,
+				37BA279C11B28421006DB9B4 /* ProfileManager.cpp */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		3748B4DC11219006003B696B /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				3786583E112439F0005AE1AB /* CEGUI */,
+				3786583D112439EB005AE1AB /* Ogre */,
+			);
+			name = Plugins;
+			sourceTree = "<group>";
+		};
+		3748B6F311219259003B696B /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				372710D511BD033200C87B1B /* SdkCameraMan.h */,
+				370ABEEC1129BAAA0041738C /* Managers */,
+				370ABEE51129BA310041738C /* Engines */,
+				370ABEF51129BBC30041738C /* Events */,
+				370ABEE81129BA6A0041738C /* Entities */,
+				370ABEE21129B9DB0041738C /* Factories */,
+				370ABEEF1129BAFF0041738C /* GameStates */,
+				37306F7811B56B1D0007C193 /* Parsers */,
+				378650381124006B005AE1AB /* Pixy.h */,
+				371DEEED113174F50008BF07 /* Utility.h */,
+				37F987C7113D9D7E00457423 /* PixyShared.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		3772A8AD112B25D000784B8A /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				37022B5F1126DE3D00747E04 /* PuppetFactory.cpp */,
+			);
+			name = Factories;
+			sourceTree = "<group>";
+		};
+		3772A8AE112B25E700784B8A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3786503911240076005AE1AB /* GameManager.cpp */,
+				3786503B11240076005AE1AB /* InputManager.cpp */,
+				370ABBA81129B3940041738C /* NetworkManager.cpp */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		3772A8AF112B25F700784B8A /* GameStates */ = {
+			isa = PBXGroup;
+			children = (
+				3786503A11240076005AE1AB /* GameState.cpp */,
+				3786503C11240076005AE1AB /* Intro.cpp */,
+				37021C6011255CD10088F1EC /* Lobby.cpp */,
+				37F66B801168B66400419774 /* Combat.cpp */,
+			);
+			name = GameStates;
+			sourceTree = "<group>";
+		};
+		3772A8B0112B260200784B8A /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				37021C6111255CD10088F1EC /* UIEngine.cpp */,
+				37021C5E11255CCA0088F1EC /* GfxEngine.cpp */,
+				3713FF29112E7F4900AAF360 /* ScriptEngine.cpp */,
+			);
+			name = Engines;
+			sourceTree = "<group>";
+		};
+		3772A8B1112B260B00784B8A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				37306F9011B56CD40007C193 /* Deck.cpp */,
+				37306F7B11B56B500007C193 /* Spell.cpp */,
+				37021FE31125D8E50088F1EC /* Entity.cpp */,
+				37021FE41125D8E50088F1EC /* Puppet.cpp */,
+				37DB26FA11B17E4F000E6B24 /* Player.cpp */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
+		3786504911240093005AE1AB /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				37025DA811BAE6A5001DB318 /* tinyxml */,
+				37025D6A11BAE4D6001DB318 /* dotscene */,
+				37D28EB011AC13BD00316BD7 /* log4cpp */,
+				37D28EB311AC13BD00316BD7 /* md5 */,
+				37D28EB611AC13BD00316BD7 /* pixy_script */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		3786583D112439EB005AE1AB /* Ogre */ = {
+			isa = PBXGroup;
+			children = (
+				37DAA30D1186BAC000C46EEF /* Plugin_BSPSceneManager.dylib */,
+				37DAA30E1186BAC000C46EEF /* Plugin_CgProgramManager.dylib */,
+				37DAA30F1186BAC000C46EEF /* Plugin_OctreeSceneManager.dylib */,
+				37DAA3101186BAC000C46EEF /* Plugin_OctreeZone.dylib */,
+				37DAA3111186BAC000C46EEF /* Plugin_ParticleFX.dylib */,
+				37DAA3121186BAC000C46EEF /* Plugin_PCZSceneManager.dylib */,
+				37DAA3131186BAC000C46EEF /* RenderSystem_GL.dylib */,
+			);
+			name = Ogre;
+			sourceTree = "<group>";
+		};
+		3786583E112439F0005AE1AB /* CEGUI */ = {
+			isa = PBXGroup;
+			children = (
+				37270A5911BC03D300C87B1B /* CEGUIFalagardWRBase.bundle */,
+				37270A5A11BC03D300C87B1B /* CEGUIFreeImageImageCodec.bundle */,
+				37270A5D11BC03D300C87B1B /* CEGUITGAImageCodec.bundle */,
+				37270A5E11BC03D300C87B1B /* CEGUITinyXMLParser.bundle */,
+			);
+			name = CEGUI;
+			sourceTree = "<group>";
+		};
+		37D28EB011AC13BD00316BD7 /* log4cpp */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EB111AC13BD00316BD7 /* PixyLogLayout.cpp */,
+				37D28EB211AC13BD00316BD7 /* PixyLogLayout.h */,
+			);
+			name = log4cpp;
+			path = modules/log4cpp;
+			sourceTree = "<group>";
+		};
+		37D28EB311AC13BD00316BD7 /* md5 */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EB411AC13BD00316BD7 /* md5.cc */,
+				37D28EB511AC13BD00316BD7 /* md5.hh */,
+			);
+			name = md5;
+			path = modules/md5;
+			sourceTree = "<group>";
+		};
+		37D28EB611AC13BD00316BD7 /* pixy_script */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EB711AC13BD00316BD7 /* packages */,
+				37D28EC911AC13BD00316BD7 /* src */,
+			);
+			name = pixy_script;
+			path = modules/pixy_script;
+			sourceTree = "<group>";
+		};
+		37D28EB711AC13BD00316BD7 /* packages */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EC111AC13BD00316BD7 /* Pixy.pkg */,
+				37D28EC211AC13BD00316BD7 /* PixyInstance.pkg */,
+				37DA4A1F11B9171E00EAE11F /* engines */,
+				37DA4A1E11B9170700EAE11F /* states */,
+				37DA4A1D11B916F300EAE11F /* entities */,
+				37DA4C7811B95A6200EAE11F /* factories */,
+				37DA4A1C11B916E700EAE11F /* events */,
+				37D28EBF11AC13BD00316BD7 /* Logger.pkg */,
+				37DB267D11B170A6000E6B24 /* Instance.pkg */,
+				37D28EC011AC13BD00316BD7 /* parser.sh */,
+				37ADFEB311B2E96D00E1B627 /* GameManager.pkg */,
+			);
+			path = packages;
+			sourceTree = "<group>";
+		};
+		37D28EC911AC13BD00316BD7 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				37DDC75511B82E15005D15B4 /* lua_PixyInstance.cpp */,
+				37D28ECA11AC13BD00316BD7 /* lua_Pixy.cpp */,
+				37D28ECC11AC13BD00316BD7 /* required.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		37D28F1911AC143200316BD7 /* art */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F1A11AC143200316BD7 /* doll2.png */,
+				37D28F1B11AC143200316BD7 /* dolls.png */,
+				37D28F1C11AC143200316BD7 /* drawings_ */,
+				37D28F2111AC143200316BD7 /* drawings_.zip */,
+				37D28F2211AC143200316BD7 /* flame.jpg */,
+			);
+			name = art;
+			path = resources/art;
+			sourceTree = "<group>";
+		};
+		37D28F1C11AC143200316BD7 /* drawings_ */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F1D11AC143200316BD7 /* doll2.png */,
+				37D28F1E11AC143200316BD7 /* dolls.png */,
+				37D28F1F11AC143200316BD7 /* logo.png */,
+				37D28F2011AC143200316BD7 /* logo.psd */,
+			);
+			path = drawings_;
+			sourceTree = "<group>";
+		};
+		37D28F2311AC143200316BD7 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F2411AC143200316BD7 /* media.cfg */,
+				37D28F2511AC143200316BD7 /* plugins.cfg */,
+				37D28F2611AC143200316BD7 /* resources.cfg */,
+				37D28F2711AC143200316BD7 /* terrain.cfg */,
+			);
+			name = config;
+			path = resources/config;
+			sourceTree = "<group>";
+		};
+		37D28F2811AC143200316BD7 /* media */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F2911AC143200316BD7 /* fonts */,
+				37D28F3311AC143200316BD7 /* materials */,
+			);
+			name = media;
+			path = resources/media;
+			sourceTree = "<group>";
+		};
+		37D28F2911AC143200316BD7 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F2A11AC143200316BD7 /* bluebold.ttf */,
+				37D28F2B11AC143200316BD7 /* bluecond.ttf */,
+				37D28F2C11AC143200316BD7 /* bluehigh.ttf */,
+				37D28F2D11AC143200316BD7 /* bluehighway-10.font */,
+				37D28F2E11AC143200316BD7 /* bluehighway-12.font */,
+				37D28F2F11AC143200316BD7 /* bluehighway-8.font */,
+				37D28F3011AC143200316BD7 /* read_me.html */,
+				37D28F3111AC143200316BD7 /* sample.fontdef */,
+				37D28F3211AC143200316BD7 /* solo5.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		37D28F3311AC143200316BD7 /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F3411AC143200316BD7 /* textures */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		37D28F3411AC143200316BD7 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F3511AC143200316BD7 /* bak */,
+				37D28F4311AC143200316BD7 /* bigflame.png */,
+				37D28F4411AC143200316BD7 /* clouds.jpg */,
+				37D28F4511AC143200316BD7 /* flare.png */,
+				37D28F4611AC143200316BD7 /* nskingr.jpg */,
+				37D28F4711AC143200316BD7 /* terrain.png */,
+				37D28F4811AC143200316BD7 /* terrain_detail.jpg */,
+				37D28F4911AC143200316BD7 /* terrain_texture.jpg */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+		37D28F3511AC143200316BD7 /* bak */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F3611AC143200316BD7 /* BeachStones.jpg */,
+				37D28F3711AC143200316BD7 /* BumpyMetal.jpg */,
+				37D28F3811AC143200316BD7 /* cubemapsJS.zip */,
+				37D28F3911AC143200316BD7 /* explosion.png */,
+				37D28F3A11AC143200316BD7 /* flaretrail.png */,
+				37D28F3B11AC143200316BD7 /* gras_02.png */,
+				37D28F3C11AC143200316BD7 /* grass_1024.jpg */,
+				37D28F3D11AC143200316BD7 /* ring_flare.png */,
+				37D28F3E11AC143200316BD7 /* ring_flare2.png */,
+				37D28F3F11AC143200316BD7 /* RustySteel.jpg */,
+				37D28F4011AC143200316BD7 /* skybox.zip */,
+				37D28F4111AC143200316BD7 /* Water02.jpg */,
+				37D28F4211AC143200316BD7 /* WaterNormal1.tga */,
+			);
+			path = bak;
+			sourceTree = "<group>";
+		};
+		37D28F4A11AC143200316BD7 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F4B11AC143200316BD7 /* client */,
+				37D28F5811AC143200316BD7 /* server */,
+			);
+			name = scripts;
+			path = resources/scripts;
+			sourceTree = "<group>";
+		};
+		37D28F4B11AC143200316BD7 /* client */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F4C11AC143200316BD7 /* combat */,
+				37D28F4E11AC143200316BD7 /* intro */,
+				37D28F5611AC143200316BD7 /* Pixy.lua */,
+				37D28F5711AC143200316BD7 /* Processor.lua */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+		37D28F4C11AC143200316BD7 /* combat */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F4D11AC143200316BD7 /* UI.lua */,
+			);
+			path = combat;
+			sourceTree = "<group>";
+		};
+		37D28F4E11AC143200316BD7 /* intro */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F4F11AC143200316BD7 /* Login.lua */,
+				37D28F5011AC143200316BD7 /* MainMenu.lua */,
+				37D28F5111AC143200316BD7 /* profiles */,
+				37D28F5411AC143200316BD7 /* Profiles.lua */,
+				37D28F5511AC143200316BD7 /* Register.lua */,
+			);
+			path = intro;
+			sourceTree = "<group>";
+		};
+		37D28F5111AC143200316BD7 /* profiles */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F5211AC143200316BD7 /* New_Info.lua */,
+				37D28F5311AC143200316BD7 /* New_Stats.lua */,
+			);
+			path = profiles;
+			sourceTree = "<group>";
+		};
+		37D28F5811AC143200316BD7 /* server */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F5911AC143200316BD7 /* DLister.lua */,
+				37D28F5A11AC143200316BD7 /* EventProcessor.lua */,
+				37D28F5B11AC143200316BD7 /* PixyServer.lua */,
+				37D28F5C11AC143200316BD7 /* spell_handlers */,
+				37D28F5F11AC143200316BD7 /* SpellProcessor.lua */,
+			);
+			path = server;
+			sourceTree = "<group>";
+		};
+		37D28F5C11AC143200316BD7 /* spell_handlers */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F5D11AC143200316BD7 /* Regenerating.lua */,
+				37D28F5E11AC143200316BD7 /* Summoning.lua */,
+			);
+			path = spell_handlers;
+			sourceTree = "<group>";
+		};
+		37D28F6011AC143200316BD7 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F6111AC143200316BD7 /* fonts */,
+				37D28F6B11AC143200316BD7 /* imagesets */,
+				37D28F8111AC143200316BD7 /* layouts */,
+				37D28F9011AC143200316BD7 /* looknfeel */,
+				37D28F9411AC143200316BD7 /* schemes */,
+				37D28F9B11AC143200316BD7 /* xml_schemas */,
+			);
+			name = ui;
+			path = resources/ui;
+			sourceTree = "<group>";
+		};
+		37D28F6111AC143200316BD7 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F6211AC143200316BD7 /* baemuk.txt */,
+				37D28F6311AC143200316BD7 /* Batang-26.font */,
+				37D28F6411AC143200316BD7 /* batang.ttf */,
+				37D28F6511AC143200316BD7 /* DejaVuSans-10.font */,
+				37D28F6611AC143200316BD7 /* DejaVuSans.ttf */,
+				37D28F6711AC143200316BD7 /* FairChar-30.font */,
+				37D28F6811AC143200316BD7 /* fkp-16.font */,
+				37D28F6911AC143200316BD7 /* fkp.de.pcf */,
+				37D28F6A11AC143200316BD7 /* Legal.txt */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		37D28F6B11AC143200316BD7 /* imagesets */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F6C11AC143200316BD7 /* Avatar.png */,
+				37D28F6D11AC143200316BD7 /* DriveIcons.imageset */,
+				37D28F6E11AC143200316BD7 /* DriveIcons.png */,
+				37D28F6F11AC143200316BD7 /* Elements.imageset */,
+				37D28F7011AC143200316BD7 /* Elements.jpg */,
+				37D28F7111AC143200316BD7 /* Elements.png */,
+				37D28F7211AC143200316BD7 /* FairChar.imageset */,
+				37D28F7311AC143200316BD7 /* FairChar.tga */,
+				37D28F7411AC143200316BD7 /* GPN-2000-001437.tga */,
+				37D28F7511AC143200316BD7 /* grassWalpha.tga */,
+				37D28F7611AC143200316BD7 /* logo.png */,
+				37D28F7711AC143200316BD7 /* Profiles-Avatars.imageset */,
+				37D28F7811AC143200316BD7 /* ReadMe.txt */,
+				37D28F7911AC143200316BD7 /* TaharezLook.imageset */,
+				37D28F7A11AC143200316BD7 /* TaharezLook.jpg */,
+				37D28F7B11AC143200316BD7 /* TaharezLook.png */,
+				37D28F7C11AC143200316BD7 /* TaharezLook.tga */,
+				37D28F7D11AC143200316BD7 /* Vanilla.imageset */,
+				37D28F7E11AC143200316BD7 /* vanilla.tga */,
+				37D28F7F11AC143200316BD7 /* WindowsLook.imageset */,
+				37D28F8011AC143200316BD7 /* WindowsLook.tga */,
+			);
+			path = imagesets;
+			sourceTree = "<group>";
+		};
+		37D28F8111AC143200316BD7 /* layouts */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F8211AC143200316BD7 /* combat */,
+				37D28F8311AC143200316BD7 /* intro */,
+				37D28F8D11AC143200316BD7 /* lobby */,
+				37D28F8E11AC143200316BD7 /* overlays */,
+			);
+			path = layouts;
+			sourceTree = "<group>";
+		};
+		37D28F8211AC143200316BD7 /* combat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = combat;
+			sourceTree = "<group>";
+		};
+		37D28F8311AC143200316BD7 /* intro */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F8411AC143200316BD7 /* login.layout */,
+				37D28F8511AC143200316BD7 /* main_menu.layout */,
+				37D28F8611AC143200316BD7 /* profiles */,
+				37D28F8B11AC143200316BD7 /* profiles.layout */,
+				37D28F8C11AC143200316BD7 /* register.layout */,
+			);
+			path = intro;
+			sourceTree = "<group>";
+		};
+		37D28F8611AC143200316BD7 /* profiles */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F8711AC143200316BD7 /* new_info.layout */,
+				37D28F8811AC143200316BD7 /* new_spells.layout */,
+				37D28F8911AC143200316BD7 /* new_stats.layout */,
+				37D28F8A11AC143200316BD7 /* new_talents.layout */,
+			);
+			path = profiles;
+			sourceTree = "<group>";
+		};
+		37D28F8D11AC143200316BD7 /* lobby */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lobby;
+			sourceTree = "<group>";
+		};
+		37D28F8E11AC143200316BD7 /* overlays */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F8F11AC143200316BD7 /* progress_box.layout */,
+			);
+			path = overlays;
+			sourceTree = "<group>";
+		};
+		37D28F9011AC143200316BD7 /* looknfeel */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F9111AC143200316BD7 /* TaharezLook.looknfeel */,
+				37D28F9211AC143200316BD7 /* Vanilla.looknfeel */,
+				37D28F9311AC143200316BD7 /* WindowsLook.looknfeel */,
+			);
+			path = looknfeel;
+			sourceTree = "<group>";
+		};
+		37D28F9411AC143200316BD7 /* schemes */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F9511AC143200316BD7 /* TaharezLook.scheme */,
+				37D28F9611AC143200316BD7 /* TaharezLookWidgetAliases.scheme */,
+				37D28F9711AC143200316BD7 /* TaharezLookWidgets.scheme */,
+				37D28F9811AC143200316BD7 /* VanillaSkin.scheme */,
+				37D28F9911AC143200316BD7 /* WindowsLook.scheme */,
+				37D28F9A11AC143200316BD7 /* WindowsLookWidgets.scheme */,
+			);
+			path = schemes;
+			sourceTree = "<group>";
+		};
+		37D28F9B11AC143200316BD7 /* xml_schemas */ = {
+			isa = PBXGroup;
+			children = (
+				37D28F9C11AC143200316BD7 /* CEGUIConfig.xsd */,
+				37D28F9D11AC143200316BD7 /* Falagard.xsd */,
+				37D28F9E11AC143200316BD7 /* Font.xsd */,
+				37D28F9F11AC143200316BD7 /* GUILayout.xsd */,
+				37D28FA011AC143200316BD7 /* GUIScheme.xsd */,
+				37D28FA111AC143200316BD7 /* Imageset.xsd */,
+			);
+			path = xml_schemas;
+			sourceTree = "<group>";
+		};
+		37DA4A1C11B916E700EAE11F /* events */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EB911AC13BD00316BD7 /* Event.pkg */,
+				37DDC3B411B7CB7E005D15B4 /* EntityEvent.pkg */,
+				37D28EBA11AC13BD00316BD7 /* EventListener.pkg */,
+				37D28EBB11AC13BD00316BD7 /* EventManager.pkg */,
+			);
+			name = events;
+			sourceTree = "<group>";
+		};
+		37DA4A1D11B916F300EAE11F /* entities */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EB811AC13BD00316BD7 /* Entity.pkg */,
+				37D28EBD11AC13BD00316BD7 /* Puppet.pkg */,
+				37DDC7F511B8401C005D15B4 /* Spell.pkg */,
+				37DDC82811B84111005D15B4 /* Deck.pkg */,
+			);
+			name = entities;
+			sourceTree = "<group>";
+		};
+		37DA4A1E11B9170700EAE11F /* states */ = {
+			isa = PBXGroup;
+			children = (
+				37D28EBC11AC13BD00316BD7 /* GameState.pkg */,
+				37D28EBE11AC13BD00316BD7 /* Intro.pkg */,
+				37ADFEB511B2E9B100E1B627 /* Combat.pkg */,
+			);
+			name = states;
+			sourceTree = "<group>";
+		};
+		37DA4A1F11B9171E00EAE11F /* engines */ = {
+			isa = PBXGroup;
+			children = (
+				37DDC47311B7DF71005D15B4 /* GfxEngine.pkg */,
+				37D28EC411AC13BD00316BD7 /* UIEngine.pkg */,
+			);
+			name = engines;
+			sourceTree = "<group>";
+		};
+		37DA4C7811B95A6200EAE11F /* factories */ = {
+			isa = PBXGroup;
+			children = (
+				37DA4C7A11B95A7100EAE11F /* PuppetFactory.pkg */,
+			);
+			name = factories;
+			sourceTree = "<group>";
+		};
+		37F9867D113D7E1800457423 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				37F98774113D9B1100457423 /* EventManager.cpp */,
+				37F9867E113D7E2500457423 /* Event.cpp */,
+				37FCF9E1113EB64900D662B8 /* EventListener.cpp */,
+				37DDC32711B7C33C005D15B4 /* EntityEvent.cpp */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		373D7298112F15260074CDDE /* EServer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 373D72E6112F15260074CDDE /* Build configuration list for PBXNativeTarget "EServer" */;
+			buildPhases = (
+				373D7299112F15260074CDDE /* Resources */,
+				373D729D112F15260074CDDE /* Sources */,
+				373D72B9112F15260074CDDE /* Frameworks */,
+				373D72CF112F15260074CDDE /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EServer;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Skeleton;
+			productReference = 373D72E9112F15260074CDDE /* EServer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8D0C4E890486CD37000505A6 /* Elementum */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0E91AC508A95435008D54AB /* Build configuration list for PBXNativeTarget "Elementum" */;
+			buildPhases = (
+				8D0C4E8C0486CD37000505A6 /* Resources */,
+				8D0C4E8F0486CD37000505A6 /* Sources */,
+				8D0C4E910486CD37000505A6 /* Frameworks */,
+				3748B37C11218D30003B696B /* Copy Frameworks */,
+				3748B4EF11219062003B696B /* Copy Plugins */,
+				37270CB011BC256400C87B1B /* Copy Components */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Elementum;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Skeleton;
+			productReference = 8D0C4E970486CD37000505A6 /* Elementum.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		20286C28FDCF999611CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Elementum" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 20286C29FDCF999611CA2CEA /* Skeleton */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D0C4E890486CD37000505A6 /* Elementum */,
+				373D7298112F15260074CDDE /* EServer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		373D7299112F15260074CDDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D0C4E8C0486CD37000505A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		373D729D112F15260074CDDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37DDC5B811B81059005D15B4 /* PuppetFactory.cpp in Sources */,
+				37FCFBCF113EFC0F00D662B8 /* EventListener.cpp in Sources */,
+				373D75AB112F18C30074CDDE /* SMain.cpp in Sources */,
+				373D75AE112F19290074CDDE /* Server.cpp in Sources */,
+				371DEB0A113089880008BF07 /* DBManager.cpp in Sources */,
+				371DEED3113173930008BF07 /* Puppet.cpp in Sources */,
+				371DEF131131776D0008BF07 /* Entity.cpp in Sources */,
+				37F8DE81113C4E8300F0591B /* PacketProcessor.cpp in Sources */,
+				37F9867F113D7E2500457423 /* Event.cpp in Sources */,
+				37F98776113D9B1100457423 /* EventManager.cpp in Sources */,
+				37D28EED11AC13BD00316BD7 /* PixyLogLayout.cpp in Sources */,
+				37D28EEE11AC13BD00316BD7 /* md5.cc in Sources */,
+				37DB26FC11B17E4F000E6B24 /* Player.cpp in Sources */,
+				37DB278711B187A3000E6B24 /* MatchFinder.cpp in Sources */,
+				37DB283911B1A4B7000E6B24 /* Instance.cpp in Sources */,
+				37BA279911B28311006DB9B4 /* Authenticator.cpp in Sources */,
+				37BA279D11B28421006DB9B4 /* ProfileManager.cpp in Sources */,
+				37306F7F11B56B500007C193 /* Spell.cpp in Sources */,
+				37306F8011B56B500007C193 /* SpellParser.cpp in Sources */,
+				37306F9211B56CD40007C193 /* Deck.cpp in Sources */,
+				37DDC32811B7C33C005D15B4 /* EntityEvent.cpp in Sources */,
+				37DDC75611B82E15005D15B4 /* lua_PixyInstance.cpp in Sources */,
+				37025DB311BAE6C9001DB318 /* tinystr.cpp in Sources */,
+				37025DB411BAE6C9001DB318 /* tinyxml.cpp in Sources */,
+				37025DB511BAE6C9001DB318 /* tinyxmlerror.cpp in Sources */,
+				37025DB611BAE6C9001DB318 /* tinyxmlparser.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D0C4E8F0486CD37000505A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3793251E1140515200A1AEAB /* PacketProcessor.cpp in Sources */,
+				37F9876E113D9A0200457423 /* Event.cpp in Sources */,
+				37270BE711BC0BC800C87B1B /* DotSceneLoader.cpp in Sources */,
+				3786503E11240076005AE1AB /* GameManager.cpp in Sources */,
+				3786503F11240076005AE1AB /* GameState.cpp in Sources */,
+				3786504011240076005AE1AB /* InputManager.cpp in Sources */,
+				3786504111240076005AE1AB /* Intro.cpp in Sources */,
+				3786504211240076005AE1AB /* main.cpp in Sources */,
+				37021C5F11255CCA0088F1EC /* GfxEngine.cpp in Sources */,
+				37021C6211255CD10088F1EC /* Lobby.cpp in Sources */,
+				37021C6311255CD10088F1EC /* UIEngine.cpp in Sources */,
+				37021FE51125D8E50088F1EC /* Entity.cpp in Sources */,
+				37021FE61125D8E50088F1EC /* Puppet.cpp in Sources */,
+				37022B601126DE3D00747E04 /* PuppetFactory.cpp in Sources */,
+				370ABBA91129B3940041738C /* NetworkManager.cpp in Sources */,
+				3713FF2A112E7F4900AAF360 /* ScriptEngine.cpp in Sources */,
+				37F98775113D9B1100457423 /* EventManager.cpp in Sources */,
+				37FCF9E2113EB64900D662B8 /* EventListener.cpp in Sources */,
+				37F66B811168B66400419774 /* Combat.cpp in Sources */,
+				37D28ED411AC13BD00316BD7 /* PixyLogLayout.cpp in Sources */,
+				37D28ED511AC13BD00316BD7 /* md5.cc in Sources */,
+				37D28EE711AC13BD00316BD7 /* lua_Pixy.cpp in Sources */,
+				37DB26FB11B17E4F000E6B24 /* Player.cpp in Sources */,
+				37306F7D11B56B500007C193 /* Spell.cpp in Sources */,
+				37306F7E11B56B500007C193 /* SpellParser.cpp in Sources */,
+				37306F9111B56CD40007C193 /* Deck.cpp in Sources */,
+				37DDC32911B7C33C005D15B4 /* EntityEvent.cpp in Sources */,
+				37025DAF11BAE6C9001DB318 /* tinystr.cpp in Sources */,
+				37025DB011BAE6C9001DB318 /* tinyxml.cpp in Sources */,
+				37025DB111BAE6C9001DB318 /* tinyxmlerror.cpp in Sources */,
+				37025DB211BAE6C9001DB318 /* tinyxmlparser.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0867D6ABFE840B52C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		373D72E7112F15260074CDDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"/Users/kandie/Workspace/Libraries/gamedev/CEGUI/lib/Debug\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug/Ogre.framework/Versions/1.7.0/Headers\"",
+					"/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/include",
+					/opt/local/include,
+					"/Users/kandie/Workspace/Libraries/gamedev/Raknet-3.719/Headers",
+				);
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+					"\"$(SRCROOT)/../../Libraries/gamedev/RakNet-3.719/Lib\"",
+					"\"$(SRCROOT)/../../Libraries/gamedev/tolua++-1.0.93/lib\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = EServer;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		373D72E8112F15260074CDDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"/Users/kandie/Workspace/Libraries/gamedev/CEGUI/lib/Debug\"";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug/Ogre.framework/Versions/1.7.0/Headers\"",
+					"/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/include",
+					/opt/local/include,
+					"/Users/kandie/Workspace/Libraries/gamedev/Raknet-3.719/Headers",
+				);
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+					"\"$(SRCROOT)/../../Libraries/gamedev/RakNet-3.719/Lib\"",
+					"\"$(SRCROOT)/../../Libraries/gamedev/tolua++-1.0.93/lib\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = EServer;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C0E91AC608A95435008D54AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Dependencies\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/CEGUI-0.7.1/lib/Debug\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug\"",
+					"\"$(SRCROOT)/../../Libraries/gamedev/CEGUI/projects/Xcode/build/Debug\"",
+					"\"$(SRCROOT)/../../Libraries/gamedev/CEGUI/lib/Debug\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = 4.2;
+				HEADER_SEARCH_PATHS = (
+					"/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/include",
+					"/Users/kandie/Workspace/Libraries/gamedev/RakNet-3.719/Headers",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug/Ogre.framework/Versions/1.7.0/Headers\"",
+					/opt/local/include,
+					/usr/local/include,
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/PlugIns/OctreeSceneManager/include\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Components/Terrain/include\"",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Dependencies/lib/Debug\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ois/lib\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/RakNet-3.719/Lib\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/lib\"",
+					/opt/local/lib,
+					"\"$(SRCROOT)/../../Libraries/gamedev/ogre-build/lib/Debug\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Elementum;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		C0E91AC708A95435008D54AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Dependencies\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/CEGUI-0.7.1/lib/Debug\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug\"",
+					"\"$(SRCROOT)/../../Libraries/gamedev/CEGUI/projects/Xcode/build/Debug\"",
+					"\"$(SRCROOT)/../../Libraries/gamedev/CEGUI/lib/Debug\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = 4.2;
+				HEADER_SEARCH_PATHS = (
+					"/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/include",
+					"/Users/kandie/Workspace/Libraries/gamedev/RakNet-3.719/Headers",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug/Ogre.framework/Versions/1.7.0/Headers\"",
+					/opt/local/include,
+					/usr/local/include,
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/PlugIns/OctreeSceneManager/include\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Components/Terrain/include\"",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-cthuga/Dependencies/lib/Debug\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ois/lib\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/ogre-build/lib/Debug\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/RakNet-3.719/Lib\"",
+					"\"/Users/kandie/Workspace/Libraries/gamedev/tolua++-1.0.93/lib\"",
+					/opt/local/lib,
+					"\"$(SRCROOT)/../../Libraries/gamedev/ogre-build/lib/Debug\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Elementum;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C0E91ACA08A95435008D54AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C0E91ACB08A95435008D54AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		373D72E6112F15260074CDDE /* Build configuration list for PBXNativeTarget "EServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				373D72E7112F15260074CDDE /* Debug */,
+				373D72E8112F15260074CDDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0E91AC508A95435008D54AB /* Build configuration list for PBXNativeTarget "Elementum" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0E91AC608A95435008D54AB /* Debug */,
+				C0E91AC708A95435008D54AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Elementum" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0E91ACA08A95435008D54AB /* Debug */,
+				C0E91ACB08A95435008D54AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 20286C28FDCF999611CA2CEA /* Project object */;
+}

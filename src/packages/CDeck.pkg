@@ -1,0 +1,7 @@
+$#include "CDeck.h"
+
+class CDeck : public Pixy::Deck {
+  virtual void generate();
+
+  Pixy::CSpell* getSpell(std::string inName);
+};

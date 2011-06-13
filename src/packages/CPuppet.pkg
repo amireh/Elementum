@@ -1,0 +1,13 @@
+$#include "Renderable.h"
+$#include "CPuppet.h"
+$#include "CDeck.h"
+
+class CPuppet : public Pixy::Puppet
+{
+public:
+  CPuppet();
+  virtual ~CPuppet();
+  virtual Pixy::CDeck* getDeck();
+  virtual Pixy::Renderable& getRenderable();
+
+};

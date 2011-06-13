@@ -1,0 +1,2 @@
+$#include "ScriptEngine.h"
+static void ScriptEngine::luaLog @ Log(std::string inMsg);

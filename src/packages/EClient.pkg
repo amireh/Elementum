@@ -1,0 +1,48 @@
+// include the header that makes these files generate valid code
+$#include "required.h"
+$#include "Pixy.h"
+
+// start the Pixy namespace and include everything inside that
+namespace Pixy
+{
+
+  enum RACE
+  {
+    EARTH,
+    AIR,
+    WATER,
+    FIRE
+  };
+  enum RANK {
+    INVALID_RANK,
+    UNIT_T1,
+    UNIT_T2,
+    UNIT_T3,
+    UNIT_T4,
+    UNIT_T5,
+    PUPPET
+  };
+
+  $pfile "Renderable.pkg"
+  $pfile "CPuppet.pkg"
+  $pfile "CPuppetFactory.pkg"
+  $pfile "CSpell.pkg"
+  $pfile "CDeck.pkg"
+  $pfile "CUnit.pkg"
+  $pfile "CUnitFactory.pkg"
+  $pfile "GameManager.pkg"
+  $pfile "GameState.pkg"
+  $pfile "Intro.pkg"
+  $pfile "Combat.pkg"
+  $pfile "UIEngine.pkg"
+  $pfile "GfxEngine.pkg"
+  $pfile "Logger.pkg"
+
+  #$pfile "UIEvt.pkg"
+  #$pfile "UIEvt_Register.pkg"
+  #$pfile "UIEvt_Login.pkg"
+  #$pfile "UIEvt_Profile.pkg"
+  #$pfile "SpellEvent.pkg"
+  #$pfile "Message.pkg"
+
+}

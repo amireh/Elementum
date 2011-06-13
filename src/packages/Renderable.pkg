@@ -1,0 +1,15 @@
+$#include "Renderable.h"
+
+class Renderable
+{
+  public:
+    Renderable(Pixy::Entity* inOwner);
+    virtual ~Renderable();
+
+    Pixy::Entity* getEntity();
+
+		virtual void attachSceneNode(Ogre::SceneNode* inNode);
+		virtual Ogre::SceneNode* getSceneNode();
+		virtual void attachSceneObject(Ogre::MovableObject* inObject);
+		virtual Ogre::MovableObject* getSceneObject();
+};

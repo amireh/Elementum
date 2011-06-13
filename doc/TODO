@@ -1,0 +1,14 @@
+-- Deployment --
+* create CMake project
+
+(HIGH)
+* modularize the server; the main server's job is to listen to and process packets, anything else should go into attachable, independent modules
+* simplify the workflow of processes sitting in the pipe between the server and the client as much as possible
+
+(LOW)
+* sanitize input data from ui registration
+* code for setting event id offset is TOO UGLY, refactor!!
+* set EvtMgr to sleep until the current Evt's reference hits a 0, then wake it up and process next evt; this will save us quite some loops since the EvtMgr doesn't have to be updated anymore!
+
+
+* path prefix in scriptengine has to be cross-platform
