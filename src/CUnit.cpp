@@ -9,7 +9,7 @@ namespace Pixy
   };
 
   bool CUnit::live() {
-    mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "CUnit " + mName);
+    mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnit " + mName);
     mLog->infoStream() << "created";
 
     return true;

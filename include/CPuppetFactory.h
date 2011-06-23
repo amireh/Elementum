@@ -10,6 +10,8 @@
  *      By:     Ahmad Amireh
  * ----------------------------------------------- */
 
+#if 0
+
 #ifndef P_CPuppetFactory_H
 #define P_CPuppetFactory_H
 
@@ -65,3 +67,5 @@ namespace Pixy
 } // end of Pixy namespace
 
 #endif // P_PuppetFactory_H
+
+#endif

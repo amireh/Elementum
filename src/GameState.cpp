@@ -9,13 +9,13 @@ namespace Pixy
 		{
 			case OIS::MB_Left:
 				return CEGUI::LeftButton;
-				
+
 			case OIS::MB_Right:
 				return CEGUI::RightButton;
-				
+
 			case OIS::MB_Middle:
 				return CEGUI::MiddleButton;
-				
+
 			default:
 				return CEGUI::LeftButton;
 		}
@@ -34,13 +34,13 @@ namespace Pixy
 	}
 
 	void GameState::requestShutdown( void ) {
-		
+
 		// notify server we're shutting down
-		Event* lEvt = EventManager::getSingleton().createEvt("Logout");
+		/*Event* lEvt = EventManager::getSingleton().createEvt("Logout");
 		EventManager::getSingleton().hook(lEvt);
-		lEvt = NULL;
-		
+		lEvt = NULL;*/
+
 		GameManager::getSingletonPtr()->requestShutdown();
 	}
-	
+
 } // end of namespace Pixy

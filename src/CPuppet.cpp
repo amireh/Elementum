@@ -13,7 +13,7 @@ namespace Pixy
   };
 
   bool CPuppet::live() {
-    mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "CPuppet");
+    mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppet");
     mLog->infoStream() << "created";
 
 	  mDeck = new CDeck(this);

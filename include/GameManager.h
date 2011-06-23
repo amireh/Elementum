@@ -26,6 +26,7 @@
 
 #include "Pixy.h"
 #include "PixyPlatform.h"
+#include "CResourceManager.h"
 
 // OGRE
 #include <Ogre.h>
@@ -111,6 +112,9 @@ namespace Pixy
 		void applyNewSettings(tPixySettings& inSettings);
 
 		bool shuttingDown();
+
+    CResourceManager& getResMgr();
+
 	private:
 		GameManager();
 		GameManager(const GameManager&) {}
@@ -188,6 +192,7 @@ namespace Pixy
 		Ogre::Root			*mRoot;
 		Ogre::RenderWindow	*mRenderWindow;
 		InputManager		*mInputMgr;
+    CResourceManager *mResMgr;
 
 		GameState* mCurrentState;
 		unsigned long lTimeLastFrame, lTimeCurrentFrame, lTimeSinceLastFrame;

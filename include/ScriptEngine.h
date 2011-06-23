@@ -13,7 +13,7 @@
 
 #include "Engine.h"
 #include "EventListener.h"
-//#include "UIEvt.h"
+#include "CPuppet.h"
 #include <Ogre.h>
 #include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
 // LUA
@@ -31,40 +31,47 @@ namespace Pixy {
 	 *	Events fro and to Lua.
 	 */
 	class ScriptEngine : public Engine, public EventListener {
-		
+
 	public:
 		virtual ~ScriptEngine();
 		static ScriptEngine* getSingletonPtr();
 		static ScriptEngine& getSingleton();
-		
+
 		virtual bool setup();
 		virtual void update(unsigned long lTimeElapsed);
 		virtual bool cleanup();
-		
+
 		void runScript(const char* inScript);
 		lua_State* getLuaState();
 		static void luaLog(std::string inMsg);
 		log4cpp::Category* getLuaLog();
-		
+
 		bool passToLua(Event* inEvt);
 
 	protected:
+
+    bool evtAssignPuppets(Event* inEvt);
+    bool evtJoinQueue(Event* inEvt);
+
 		lua_State* mLUA;
 		CEGUI::LuaScriptModule* mCEGUILua;
 		log4cpp::Category *mLuaLog;
 		void loadResources();
-		
+
 		bool setupIntro();
 		bool setupCombat();
-		
+
 		void updateIntro(unsigned long lTimeElapsed);
 		void updateCombat(unsigned long lTimeElapsed);
+
+    std::string mSelfPuppetName;
+    void assignSelfPuppet(CPuppet* inPuppet);
 	private:
 		static ScriptEngine* _myScriptEngine;
 		ScriptEngine();
 		ScriptEngine(const ScriptEngine& src);
 		ScriptEngine& operator=(const ScriptEngine& rhs);
-		
+
 		void (ScriptEngine::*mUpdater)(unsigned long);
 	};
 }

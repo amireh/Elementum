@@ -9,13 +9,13 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 #else
 	int main( int argc, char **argv ) {
 #endif
-		
+
 		GameManager *gameManager = GameManager::getSingletonPtr();
-		
+
 		try {
 			// Initialise the game and switch to the first state
 			gameManager->startGame();
-			
+
 		}
 		catch ( Ogre::Exception& ex ) {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -25,11 +25,11 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 #endif
 		} catch (std::exception& e) {
 			Ogre::String errMsg = e.what();
-			log4cpp::Category::getInstance(CLIENT_LOG_CATEGORY).errorStream() << errMsg;
+			log4cpp::Category::getInstance(PIXY_LOG_CATEGORY).errorStream() << errMsg;
 		}
-		
+
 		delete gameManager;
-		
+
 		return 0;
 	}
-	
+

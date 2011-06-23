@@ -62,6 +62,8 @@ namespace Pixy
     delete ScriptEngine::getSingletonPtr();
     delete NetworkManager::getSingletonPtr();
 
+    delete mResMgr;
+
 		if( mInputMgr )
 		    delete mInputMgr;
 
@@ -213,6 +215,7 @@ namespace Pixy
 		WindowEventUtilities::addWindowEventListener( mRenderWindow, this );
 
 		this->setupResources(lPathResources.str());
+    mResMgr = new CResourceManager();
 
 		mInputMgr->addKeyListener( this, "GameManager" );
 		mInputMgr->addMouseListener( this, "GameManager" );
@@ -271,7 +274,7 @@ namespace Pixy
 		//ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 		// Create needed scenemanagers
-		Ogre::SceneManager *mSceneMgr = mRoot->createSceneManager( "TerrainSceneManager", "LoadingScene" );
+		Ogre::SceneManager *mSceneMgr = mRoot->createSceneManager( "DefaultSceneManager", "LoadingScene" );
 		Ogre::Camera *mCamera = mSceneMgr->createCamera("LoadingCamera");
 		mRenderWindow->addViewport(mCamera, -1);
 
@@ -458,7 +461,7 @@ namespace Pixy
 
 		lApp->setLayout(lHeaderLayout);
 
-		std::string lCatName = CLIENT_LOG_CATEGORY;
+		std::string lCatName = PIXY_LOG_CATEGORY;
 		log4cpp::Category* lCat = &log4cpp::Category::getInstance(lCatName);
 
         lCat->setAdditivity(false);
@@ -477,7 +480,7 @@ namespace Pixy
 		lLayout = 0;
 		lHeaderLayout = 0;
 
-		mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "GameManager");
+		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "GameManager");
 	}
 
 	bool GameManager::shuttingDown() { return fShutdown; };
@@ -546,4 +549,8 @@ namespace Pixy
 	  EventManager* mEvtMgr = EventManager::getSingletonPtr();
 	  mEvtMgr->hook(mEvtMgr->createEvt("SettingsChanged"));
 	};
+
+  CResourceManager& GameManager::getResMgr() {
+    return *mResMgr;
+  }
 } // end of namespace Pixy

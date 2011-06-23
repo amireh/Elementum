@@ -1,24 +1,22 @@
-local nrPlayers = 1 -- DEBUG
-local nrProfilesLoaded = 0
-
 Puppets = {}
+SelfPuppet = nil
 
 -- type: incoming event handler
 -- job: stores the names of the player's puppet and his opponent
 -- and tells the graphics engine about them
-Pixy.Combat.assignPuppets = function(inEvt)
-	Me = inEvt:getProperty("Puppet")
-	Enemy = inEvt:getProperty("EnemyPuppet")
-
-	Pixy.Log("I'm playing " .. Me .. " against " .. Enemy) -- DEBUG
-
-	GfxEngine:setupCombat(Me, "Foobar")
-	return true
+Pixy.Combat.addPuppet = function(inPuppet)
+  table.insert(Puppets, inPuppet)
+  Pixy.Log("Registering a new Puppet to the instance, named: " .. inPuppet:getName())
 end
 
+Pixy.Combat.assignSelfPuppet = function(inPuppet)
+  SelfPuppet = inPuppet
+  Pixy.Log("I'm playing with a puppet named " .. SelfPuppet:getName())
+end
 -- type: incoming event handler
 -- job: parses the puppet from the event, calls the factory for an instance
 -- then generates the deck.. and tells the GfxEngine to render it
+--[[
 Pixy.Combat.createPuppet = function(inEvt)
 	tolua.cast(inEvt, "Pixy::EntityEvent")
 
@@ -63,3 +61,4 @@ Pixy.Combat.createPuppet = function(inEvt)
 	Pixy.Log("Registered puppet " .. lPuppet:getName())
 	return true
 end
+]]

@@ -4,11 +4,12 @@ SET(EClient_SRCS
 
   Renderable.cpp
   CPuppet.cpp
-  CPuppetFactory.cpp
+  #CPuppetFactory.cpp
   CSpell.cpp
   CDeck.cpp
+  CResourceManager.cpp
   CUnit.cpp
-  CUnitFactory.cpp
+  #CUnitFactory.cpp
   Combat.cpp
   GameManager.cpp
   GameState.cpp

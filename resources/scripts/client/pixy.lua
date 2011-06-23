@@ -42,8 +42,8 @@ Pixy.registerGlobals = function()
 	--elseif (state == "Combat") then
 		Puppet, EnemyPuppet, Active, Waiting = nil
 		Combat = Pixy.Combat:getSingletonPtr()
-		PuppetFactory = Pixy.CPuppetFactory:getSingletonPtr()
-		UnitFactory = Pixy.CUnitFactory:getSingletonPtr()
+		--PuppetFactory = Pixy.CPuppetFactory:getSingletonPtr()
+		--UnitFactory = Pixy.CUnitFactory:getSingletonPtr()
 		GfxEngine = Pixy.GfxEngine:getSingletonPtr()
 		Pixy.Combat = {}
 	--end

@@ -25,11 +25,11 @@ namespace Pixy
 
   $pfile "Renderable.pkg"
   $pfile "CPuppet.pkg"
-  $pfile "CPuppetFactory.pkg"
+  //$pfile "CPuppetFactory.pkg"
   $pfile "CSpell.pkg"
   $pfile "CDeck.pkg"
   $pfile "CUnit.pkg"
-  $pfile "CUnitFactory.pkg"
+  //$pfile "CUnitFactory.pkg"
   $pfile "GameManager.pkg"
   $pfile "GameState.pkg"
   $pfile "Intro.pkg"

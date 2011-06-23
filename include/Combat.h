@@ -24,56 +24,65 @@ namespace Pixy
      *  \brief
      *  PEWPEW
      */
-	
-	
+
+
 	class Combat : public GameState {
 	public:
+    typedef std::list<CPuppet*> puppets_t;
+
 		~Combat( void ){ };
-		
+
 		void enter( void );
 		void exit( void );
-		
+
 		void pause( void );
 		void resume( void );
 		void update( unsigned long lTimeElapsed );
-		
+
 		void keyPressed( const OIS::KeyEvent &e );
 		void keyReleased( const OIS::KeyEvent &e );
-		
+
 		void mouseMoved( const OIS::MouseEvent &e );
 		void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 		void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
-		
+
 		static Combat* getSingletonPtr( void );
 		static Combat& getSingleton();
-		
+
 		virtual GAME_STATE getId() const;
-		
-		void registerPuppet(Puppet* inPuppet);
-		
+
+		void registerPuppet(CPuppet* inPuppet);
+
 		void updateMe(Engine* inEngine);
 		void updateGfx();
+
+    puppets_t const& getPuppets();
+    void assignSelfPuppet(CPuppet* inPuppet);
+    CPuppet* getSelfPuppet();
+
 	private:
-		
+
 		Combat( void ) { }
 		Combat( const Combat& ) { }
 		Combat & operator = ( const Combat& );
-		
+
 		GfxEngine			*mGfxEngine;
 		UIEngine			*mUIEngine;
 		CEGUI::System		*mUISystem;
 		ScriptEngine		*mScriptEngine;
 		EventManager		*mEvtMgr;
 		NetworkManager		*mNetMgr;
-		
+
 		static Combat		*mCombat;
-		
-		vector<Puppet*>		mPuppets;
+
+		puppets_t		mPuppets;
+    CPuppet* mSelfPuppet;
+
 		vector<Engine*>		mUpdateQueue;
 		vector<Engine*>::const_iterator mUpdater;
-		
+
 		bool fUpdateGfx;
-		
+
 	};
 } // end of namespace
 #endif

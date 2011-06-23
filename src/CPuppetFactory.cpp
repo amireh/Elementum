@@ -9,7 +9,7 @@ namespace Pixy
 
 	CPuppetFactory::CPuppetFactory()
 	{
-		mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "CPuppetFactory");
+		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppetFactory");
 
 		mEntities.clear();
 	    mLog->infoStream() << "runningzz";

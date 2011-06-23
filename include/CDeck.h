@@ -45,8 +45,6 @@ namespace Pixy
 		int             nrRandom;
 
 		CPuppet*           mPuppet;
-		//CombatManager*  mCombatMgr;
-		SpellParser*    mParser;
 
 	};
 }

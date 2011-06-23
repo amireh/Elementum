@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sun Jun 12 19:44:33 2011.
+** Generated automatically by tolua++-1.0.92 on Thu Jun 23 16:51:23 2011.
 */
 
 #ifndef __cplusplus
@@ -19,15 +19,11 @@ TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 #include "Renderable.h"
 #include "CPuppet.h"
 #include "CDeck.h"
-#include "CPuppetFactory.h"
-#include "PuppetFactory.h"
 #include "CSpell.h"
 #include "CDeck.h"
 #include "Renderable.h"
 #include "CUnit.h"
 #include "CDeck.h"
-#include "CUnitFactory.h"
-#include "UnitFactory.h"
 #include "GameManager.h"
 #include "GameState.h"
 #include "Intro.h"
@@ -87,34 +83,31 @@ static int tolua_collect_Pixy__CUnit (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"Pixy::Spell");
  tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
- tolua_usertype(tolua_S,"Pixy::Spell");
  tolua_usertype(tolua_S,"Ogre::Root");
- tolua_usertype(tolua_S,"Pixy::Puppet");
- tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"Pixy::EventListener");
  tolua_usertype(tolua_S,"Pixy::Deck");
  tolua_usertype(tolua_S,"Pixy::CUnit");
- tolua_usertype(tolua_S,"Pixy::UIEngine");
+ tolua_usertype(tolua_S,"CEGUI::Window");
  tolua_usertype(tolua_S,"Pixy::CSpell");
- tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"Pixy::GfxEngine");
  tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
- tolua_usertype(tolua_S,"Pixy::CUnitFactory");
- tolua_usertype(tolua_S,"Pixy::GameManager");
+ tolua_usertype(tolua_S,"Pixy::EventListener");
+ tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"Pixy::Renderable");
+ tolua_usertype(tolua_S,"Pixy::UIEngine");
+ tolua_usertype(tolua_S,"const");
+ tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"Pixy::Intro");
- tolua_usertype(tolua_S,"Pixy::GameState");
- tolua_usertype(tolua_S,"Pixy::CPuppetFactory");
- tolua_usertype(tolua_S,"Pixy::PuppetFactory");
  tolua_usertype(tolua_S,"Pixy::CDeck");
  tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Pixy::UnitFactory");
+ tolua_usertype(tolua_S,"Pixy::GameState");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
- tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"Ogre::Camera");
 }
 
@@ -515,109 +508,6 @@ static int tolua_EClient_Pixy_CPuppet_getRenderable00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getRenderable'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getSingletonPtr of class  Pixy::CPuppetFactory */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppetFactory_getSingletonPtr00
-static int tolua_EClient_Pixy_CPuppetFactory_getSingletonPtr00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CPuppetFactory",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   Pixy::CPuppetFactory* tolua_ret = (Pixy::CPuppetFactory*)  Pixy::CPuppetFactory::getSingletonPtr();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CPuppetFactory");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSingletonPtr'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: createEntity of class  Pixy::CPuppetFactory */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppetFactory_createEntity00
-static int tolua_EClient_Pixy_CPuppetFactory_createEntity00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CPuppetFactory",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,6,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CPuppetFactory* self = (Pixy::CPuppetFactory*)  tolua_tousertype(tolua_S,1,0);
-  const int inObjectId = ((const int)  tolua_tonumber(tolua_S,2,0));
-  const std::string inName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
-  const std::string inOwner = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
-  const Pixy::RACE inRace = ((const Pixy::RACE) (int)  tolua_tonumber(tolua_S,5,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'", NULL);
-#endif
-  {
-   Pixy::CPuppet* tolua_ret = (Pixy::CPuppet*)  self->createEntity(inObjectId,inName,inOwner,inRace);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CPuppet");
-   tolua_pushcppstring(tolua_S,(const char*)inName);
-   tolua_pushcppstring(tolua_S,(const char*)inOwner);
-  }
- }
- return 3;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'createEntity'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: destroyEntity of class  Pixy::CPuppetFactory */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppetFactory_destroyEntity00
-static int tolua_EClient_Pixy_CPuppetFactory_destroyEntity00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CPuppetFactory",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"Pixy::CPuppet",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CPuppetFactory* self = (Pixy::CPuppetFactory*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::CPuppet* inEntity = ((Pixy::CPuppet*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyEntity'", NULL);
-#endif
-  {
-   self->destroyEntity(inEntity);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'destroyEntity'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1152,109 +1042,6 @@ static int tolua_EClient_Pixy_CUnit_getRenderable00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getSingletonPtr of class  Pixy::CUnitFactory */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnitFactory_getSingletonPtr00
-static int tolua_EClient_Pixy_CUnitFactory_getSingletonPtr00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CUnitFactory",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   Pixy::CUnitFactory* tolua_ret = (Pixy::CUnitFactory*)  Pixy::CUnitFactory::getSingletonPtr();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CUnitFactory");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSingletonPtr'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: createEntity of class  Pixy::CUnitFactory */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnitFactory_createEntity00
-static int tolua_EClient_Pixy_CUnitFactory_createEntity00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CUnitFactory",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,6,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CUnitFactory* self = (Pixy::CUnitFactory*)  tolua_tousertype(tolua_S,1,0);
-  const int inObjectId = ((const int)  tolua_tonumber(tolua_S,2,0));
-  const std::string inName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
-  const std::string inOwner = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
-  const Pixy::RACE inRace = ((const Pixy::RACE) (int)  tolua_tonumber(tolua_S,5,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'", NULL);
-#endif
-  {
-   Pixy::CUnit* tolua_ret = (Pixy::CUnit*)  self->createEntity(inObjectId,inName,inOwner,inRace);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CUnit");
-   tolua_pushcppstring(tolua_S,(const char*)inName);
-   tolua_pushcppstring(tolua_S,(const char*)inOwner);
-  }
- }
- return 3;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'createEntity'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: destroyEntity of class  Pixy::CUnitFactory */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnitFactory_destroyEntity00
-static int tolua_EClient_Pixy_CUnitFactory_destroyEntity00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CUnitFactory",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"Pixy::CUnit",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CUnitFactory* self = (Pixy::CUnitFactory*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::CUnit* inEntity = ((Pixy::CUnit*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyEntity'", NULL);
-#endif
-  {
-   self->destroyEntity(inEntity);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'destroyEntity'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: changeState of class  Pixy::GameManager */
 #ifndef TOLUA_DISABLE_tolua_EClient_Pixy_GameManager_changeState00
 static int tolua_EClient_Pixy_GameManager_changeState00(lua_State* tolua_S)
@@ -1523,67 +1310,33 @@ static int tolua_EClient_Pixy_Combat_getSingletonPtr00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: registerPuppet of class  Pixy::Combat */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Combat_registerPuppet00
-static int tolua_EClient_Pixy_Combat_registerPuppet00(lua_State* tolua_S)
+/* method: getPuppets of class  Pixy::Combat */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Combat_getPuppets00
+static int tolua_EClient_Pixy_Combat_getPuppets00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::Combat",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"Pixy::Puppet",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   Pixy::Combat* self = (Pixy::Combat*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Puppet* inPuppet = ((Pixy::Puppet*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerPuppet'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPuppets'", NULL);
 #endif
   {
-   self->registerPuppet(inPuppet);
+   std::list<Pixy::CPuppet*> const& tolua_ret = (std::list<Pixy::CPuppet*> const&)  self->getPuppets();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'registerPuppet'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: updateMe of class  Pixy::Combat */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Combat_updateMe00
-static int tolua_EClient_Pixy_Combat_updateMe00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Combat",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"Pixy::Engine",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Combat* self = (Pixy::Combat*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Engine* inEngine = ((Pixy::Engine*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateMe'", NULL);
-#endif
-  {
-   self->updateMe(inEngine);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'updateMe'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getPuppets'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2359,12 +2112,6 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getDeck",tolua_EClient_Pixy_CPuppet_getDeck00);
     tolua_function(tolua_S,"getRenderable",tolua_EClient_Pixy_CPuppet_getRenderable00);
    tolua_endmodule(tolua_S);
-   tolua_cclass(tolua_S,"CPuppetFactory","Pixy::CPuppetFactory","Pixy::PuppetFactory",NULL);
-   tolua_beginmodule(tolua_S,"CPuppetFactory");
-    tolua_function(tolua_S,"getSingletonPtr",tolua_EClient_Pixy_CPuppetFactory_getSingletonPtr00);
-    tolua_function(tolua_S,"createEntity",tolua_EClient_Pixy_CPuppetFactory_createEntity00);
-    tolua_function(tolua_S,"destroyEntity",tolua_EClient_Pixy_CPuppetFactory_destroyEntity00);
-   tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"CSpell","Pixy::CSpell","Pixy::Spell",tolua_collect_Pixy__CSpell);
    #else
@@ -2401,12 +2148,6 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"delete",tolua_EClient_Pixy_CUnit_delete00);
     tolua_function(tolua_S,"getRenderable",tolua_EClient_Pixy_CUnit_getRenderable00);
    tolua_endmodule(tolua_S);
-   tolua_cclass(tolua_S,"CUnitFactory","Pixy::CUnitFactory","Pixy::UnitFactory",NULL);
-   tolua_beginmodule(tolua_S,"CUnitFactory");
-    tolua_function(tolua_S,"getSingletonPtr",tolua_EClient_Pixy_CUnitFactory_getSingletonPtr00);
-    tolua_function(tolua_S,"createEntity",tolua_EClient_Pixy_CUnitFactory_createEntity00);
-    tolua_function(tolua_S,"destroyEntity",tolua_EClient_Pixy_CUnitFactory_destroyEntity00);
-   tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"GameManager","Pixy::GameManager","",NULL);
    tolua_beginmodule(tolua_S,"GameManager");
     tolua_function(tolua_S,"changeState",tolua_EClient_Pixy_GameManager_changeState00);
@@ -2427,8 +2168,7 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
    tolua_beginmodule(tolua_S,"Combat");
     tolua_function(tolua_S,"getSingleton",tolua_EClient_Pixy_Combat_getSingleton00);
     tolua_function(tolua_S,"getSingletonPtr",tolua_EClient_Pixy_Combat_getSingletonPtr00);
-    tolua_function(tolua_S,"registerPuppet",tolua_EClient_Pixy_Combat_registerPuppet00);
-    tolua_function(tolua_S,"updateMe",tolua_EClient_Pixy_Combat_updateMe00);
+    tolua_function(tolua_S,"getPuppets",tolua_EClient_Pixy_Combat_getPuppets00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"UIEngine","Pixy::UIEngine","Pixy::Engine",tolua_collect_Pixy__UIEngine);

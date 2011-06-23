@@ -33,7 +33,7 @@ namespace Pixy {
 	}
 
 	GfxEngine::GfxEngine() {
-		mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "GfxEngine");
+		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "GfxEngine");
 		mLog->infoStream() << "firing up";
 		fSetup = false;
 		mPlayers.clear();
@@ -72,7 +72,7 @@ namespace Pixy {
 		//if (mRoot->hasSceneManager(Ogre::ST_GENERIC))
 		//	mSceneMgr     = mRoot->getSceneManager( ST_GENERIC, "CombatScene" );
 		//else
-		mSceneMgr = mRoot->createSceneManager("TerrainSceneManager", "CombatScene");
+		mSceneMgr = mRoot->createSceneManager("OctreeSceneManager", "CombatScene");
 
 
 		mCamera       = mSceneMgr->createCamera("Combat_Camera");
@@ -240,11 +240,6 @@ namespace Pixy {
 
 	  //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
 
-    // skyz0rs
-    //mLog->noticeStream() << "Setting up sky";
-    //mSceneMgr->setSkyDome(true, "Elementum/Sky", 65, 8);
-    //mSceneMgr->setSkyBox(true, "Elementum/Sky", 5000, true);
-
 	  Ogre::Vector3 lPos = mPuppetPos[ME];
 	  mCamera->setPosition(lPos.x, lPos.y+2, lPos.z-20);
 	  mCamera->lookAt(mPuppetPos[ME]);
@@ -353,9 +348,14 @@ namespace Pixy {
 
   void GfxEngine::setupSky() {
     using namespace Caelum;
+
+    // skyz0rs
+    //mLog->noticeStream() << "Setting up sky";
+    //mSceneMgr->setSkyDome(true, "Elementum/Sky", 65, 8);
+    mSceneMgr->setSkyBox(true, "Elementum/Sky", 5000, true);
+
+    return;
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Caelum");
-
-
 
     // Pick components to create in the demo.
     // You can comment any of those and it should still work
@@ -653,7 +653,7 @@ namespace Pixy {
       String entityName = "", nodeName = "", ownerName = "";
 
       //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
-      ownerName = inEntity->getOwner();
+      ownerName = stringify(inEntity->getObjectId());
       if (isPuppet)
       {
         entityName = ownerName + "_entity_puppet";
@@ -697,7 +697,7 @@ namespace Pixy {
         /* TO_DO */
         std::string _meshPath = "";
         mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
-        mEntity->setUserAny(Ogre::Any(inEntity));
+        mEntity->setUserAny(Ogre::Any(inRenderable));
         mNode->attachObject(mEntity);
 
         inRenderable->attachSceneNode(mNode);
@@ -736,7 +736,7 @@ namespace Pixy {
     {
       Entity* inEntity = inRenderable->getEntity();
 
-        Ogre::String ownerName = inEntity->getOwner();// == ID_HOST) ? "host" : "client";
+        Ogre::String ownerName = stringify(inEntity->getObjectId());// == ID_HOST) ? "host" : "client";
         Ogre::String nodeName = ownerName + "_node_";
         Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getObjectId());
         Ogre::SceneNode* mTmpNode = NULL;

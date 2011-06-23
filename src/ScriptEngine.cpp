@@ -35,8 +35,8 @@ namespace Pixy {
 		return *(getSingletonPtr());
 	}
 	ScriptEngine::ScriptEngine()  {
-		mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "ScriptEngine");
-		mLuaLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "Lua");
+		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "ScriptEngine");
+		mLuaLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Lua");
 		fSetup = false;
 	}
 
@@ -66,6 +66,8 @@ namespace Pixy {
     tolua_EClient_open(mLUA);
 
 		bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua);
+    bindToName("AssignPuppets", this, &ScriptEngine::evtAssignPuppets);
+    bindToName("JoinQueue", this, &ScriptEngine::evtJoinQueue);
 
 		bool lSuccess = false;
 		GAME_STATE lGameState = GameManager::getSingleton().getCurrentState()->getId();
@@ -237,4 +239,75 @@ namespace Pixy {
 
 		return result;
 	}
+
+  bool ScriptEngine::evtAssignPuppets(Event* inEvt) {
+    return true;
+
+    Combat::puppets_t lPuppets = Combat::getSingleton().getPuppets();
+    Combat::puppets_t::const_iterator lPuppet;
+    for (lPuppet = lPuppets.begin(); lPuppet != lPuppets.end(); ++lPuppet) {
+
+      if ((*lPuppet)->getName() == mSelfPuppetName) {
+        this->assignSelfPuppet(*lPuppet);
+      }
+
+      lua_getfield(mLUA, LUA_ENVIRONINDEX, "Pixy.Combat.addPuppet");
+      if(!lua_isfunction(mLUA, 1))
+      {
+        mLog->errorStream() << "could not find Lua's addPuppet routine!";
+        lua_pop(mLUA,1);
+        return true;
+      }
+
+      tolua_pushusertype(mLUA,(void*)(*lPuppet),"Pixy::CPuppet");
+      try {
+        lua_call(mLUA, 1, 1);
+      } catch (CEGUI::ScriptException& e) {
+        mLog->errorStream() << "Lua Handler: " << e.what();
+      } catch (std::exception& e) {
+        mLog->errorStream() << "Lua Handler: " << e.what();
+      }
+      //lua_toboolean(mLUA, lua_gettop(mLUA));
+
+      //lua_remove(mLUA, lua_gettop(mLUA));
+    }
+
+    //GfxEngine::getSingleton().setupCombat();
+
+    return true;
+  }
+
+  bool ScriptEngine::evtJoinQueue(Event* inEvt) {
+    if (inEvt->getFeedback() == EVT_OK) {
+      mSelfPuppetName = inEvt->getProperty("PuppetName");
+      mLog->infoStream() << "joined queue with puppet " << mSelfPuppetName;
+    }
+    return true;
+  }
+
+  void ScriptEngine::assignSelfPuppet(CPuppet *inPuppet) {
+    return;
+
+    Combat::getSingleton().assignSelfPuppet(inPuppet);
+
+    lua_getfield(mLUA, LUA_ENVIRONINDEX, "Pixy.Combat.assignSelfPuppet");
+    if(!lua_isfunction(mLUA, 1))
+    {
+      mLog->errorStream() << "could not find Lua's assignSelfPuppet routine!";
+      lua_pop(mLUA,1);
+      return;
+    }
+
+    tolua_pushusertype(mLUA,(void*)inPuppet,"Pixy::CPuppet");
+    try {
+      lua_call(mLUA, 1, 1);
+    } catch (CEGUI::ScriptException& e) {
+      mLog->errorStream() << "Lua Handler: " << e.what();
+    } catch (std::exception& e) {
+      mLog->errorStream() << "Lua Handler: " << e.what();
+    }
+    //lua_toboolean(mLUA, lua_gettop(mLUA));
+
+    //lua_remove(mLUA, lua_gettop(mLUA));
+  }
 }

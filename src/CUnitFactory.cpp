@@ -9,7 +9,7 @@ namespace Pixy
 
 	CUnitFactory::CUnitFactory()
 	{
-		mLog = new log4cpp::FixedContextCategory(CLIENT_LOG_CATEGORY, "CUnitFactory");
+		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnitFactory");
 
 		mEntities.clear();
 	    mLog->infoStream() << "runningzz";
