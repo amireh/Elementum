@@ -1,6 +1,6 @@
 --[[
 	combat: turns.lua
-	
+
 	logic related to game turns is handled here
 ]]
 
@@ -8,7 +8,7 @@
 -- job: requests spells from the instance, and registers
 -- the currently active / waiting puppets
 Pixy.Combat.startTurn = function(inEvt)
-	local lEvt = EvtMgr:createEvt("DrawSpells")
+	local lEvt = EvtMgr:createEvt("StartTurnAck")
 	EvtMgr:hook(lEvt)
 	lEvt = nil
 

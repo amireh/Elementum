@@ -49,7 +49,9 @@ Pixy.registerGlobals = function()
 	--end
 	--Pixy.Log("* State: " .. state)
 
-
+  Puppets = {}
+  SelfPuppet = nil
+  Active = nil
 
 	-- progress box , used for loading
 	PBox = Pixy.UI.attachOverlay("ProgressBox")
@@ -120,4 +122,9 @@ end
 Pixy.UI.doneWaiting = function(keep_box)
 	if (not keep_box or keep_box == false) then PBox:hide() end
 	dontUpdateMe(Pixy.UI.showLoadingBox)
+end
+
+
+function arbitraryFunc(name, argc, ...)
+  Pixy.Combat[name](unpack(arg))
 end

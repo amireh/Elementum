@@ -47,11 +47,12 @@ namespace Pixy {
 		log4cpp::Category* getLuaLog();
 
 		bool passToLua(Event* inEvt);
+    bool passToLua(const char* inFunc, int argc, ...);
 
 	protected:
 
-    bool evtAssignPuppets(Event* inEvt);
-    bool evtJoinQueue(Event* inEvt);
+    //bool evtAssignPuppets(Event* inEvt);
+    //bool evtJoinQueue(Event* inEvt);
 
 		lua_State* mLUA;
 		CEGUI::LuaScriptModule* mCEGUILua;
@@ -64,8 +65,7 @@ namespace Pixy {
 		void updateIntro(unsigned long lTimeElapsed);
 		void updateCombat(unsigned long lTimeElapsed);
 
-    std::string mSelfPuppetName;
-    void assignSelfPuppet(CPuppet* inPuppet);
+    //void assignSelfPuppet(CPuppet* inPuppet);
 	private:
 		static ScriptEngine* _myScriptEngine;
 		ScriptEngine();

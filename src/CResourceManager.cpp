@@ -112,7 +112,7 @@ namespace Pixy {
         parsePuppetsStats(lEntries);
       break;
       case 1:
-        parsePuppetsDecks(lEntries);
+        //parsePuppetsDecks(lEntries);
       break;
     }
   }
@@ -176,6 +176,86 @@ namespace Pixy {
     }
   }
 
+  void CResourceManager::parseSpells(std::vector<std::string>& entries) {
+    CSpell* lSpell;
+    vector<string>::iterator itr;
+    for (itr = entries.begin(); itr != entries.end(); ++itr) {
+      lSpell = new CSpell();
+      vector<string> elements = Utility::split((*itr).c_str(), ';');
+      assert(elements.size() == 10);
+
+      lSpell->setName(elements[0]);
+      lSpell->setRace((RACE)atoi(elements[1].c_str()));
+      lSpell->setDuration(atoi(elements[2].c_str()));
+      lSpell->setCostWP(atoi(elements[3].c_str()));
+      lSpell->setCostHP(atoi(elements[4].c_str()));
+      lSpell->setAspect(elements[5] == "0" ? MATTER : MIND);
+      lSpell->setDispellable(elements[6] == "t");
+      lSpell->setRequiresTarget(elements[7] == "t");
+      lSpell->setPhase((SPELL_PHASE)atoi(elements[8].c_str()));
+      lSpell->setDescription(elements[9]);
+
+      mSpells[lSpell->getRace()].push_back(lSpell);
+
+      lSpell = 0;
+    }
+
+    std::cout << "Registered " << entries.size() << " spells\n";
+
+  }
+  void CResourceManager::parseMinions(std::vector<std::string>& entries) {
+    CUnit* lUnit;
+    vector<string>::iterator itr;
+    for (itr = entries.begin(); itr != entries.end(); ++itr) {
+      lUnit = new CUnit();
+      vector<string> elements = Utility::split((*itr).c_str(), ';');
+      assert(elements.size() == 12);
+
+      lUnit->setName(elements[0]);
+      lUnit->setRace((RACE)atoi(elements[1].c_str()));
+      lUnit->setFaction(elements[2].c_str());
+      lUnit->setAP(atoi(elements[3].c_str()));
+      lUnit->setHP(atoi(elements[4].c_str()));
+      lUnit->setUpkeep(atoi(elements[5].c_str()));
+
+      lUnit->setIsTeamAttacker(elements[6] == "t");
+      lUnit->setIsUnblockable(elements[7] == "t");
+      lUnit->setIsRestless(elements[8] == "t");
+      lUnit->setIsFlying(elements[9] == "t");
+      lUnit->setIsTrampling(elements[10] == "t");
+
+      lUnit->setDescription(elements[11]);
+
+      mUnits[lUnit->getRace()].push_back(lUnit);
+
+      lUnit = 0;
+    }
+
+    std::cout << "Registered " << entries.size() << " minions\n";
+  }
+  void CResourceManager::parseMinionSpells(std::vector<std::string>& entries) {
+   vector<string>::iterator itr;
+    for (itr = entries.begin(); itr != entries.end(); ++itr) {
+      vector<string> elements = Utility::split((*itr).c_str(), ';');
+      assert(elements.size() == 2);
+
+      string lUnitId = elements[0];
+      string lSpellId = elements[1];
+
+      CUnit* lUnit = getModelUnit(lUnitId);
+      CSpell* lSpell = getModelSpell(lSpellId);
+
+      lUnit->addAbility(lSpell);
+
+      //std::cout << "Unit " << lUnit->getName() << " has an ability: " << lSpell->getName() << "\n";
+
+      lUnit = 0;
+      lSpell = 0;
+    }
+
+    std::cout << "Registered " << entries.size() << " minion spells\n";
+  }
+
   CPuppet* CResourceManager::getPuppet(string inName, list<CPuppet*>& inPuppets) {
     list<CPuppet*>::const_iterator itr;
     for (itr = inPuppets.begin(); itr != inPuppets.end(); ++itr)
@@ -189,4 +269,50 @@ namespace Pixy {
     return mPuppets;
   }
 
+  CSpell* const CResourceManager::getSpell(std::string inName) {
+    CSpell* lSpell = 0;
+    for (int i=0; i < WATER; ++i) {
+      lSpell = getSpell(inName, (RACE)i);
+      if (lSpell)
+        return new CSpell(*lSpell);
+    }
+
+    mLog->errorStream() << "couldnt find a spell named " << inName;
+    return 0;
+  }
+  CSpell* const CResourceManager::getSpell(std::string inName, Pixy::RACE inRace) {
+    spells_t::const_iterator itr;
+    spells_t* lSpells = &mSpells[inRace];
+
+    for (itr = (*lSpells).begin(); itr != (*lSpells).end(); ++itr)
+      if ((*itr)->getName() == inName)
+        return new CSpell((**itr));
+
+    return NULL;
+  }
+
+
+  CSpell* CResourceManager::getModelSpell(std::string inName) {
+    spells_t::const_iterator itr;
+
+    for (int i=0; i < 4; ++i)
+      for (itr = mSpells[i].begin(); itr != mSpells[i].end(); ++itr)
+        if ((*itr)->getName() == inName)
+          return (*itr);
+
+    mLog->errorStream() << "couldnt find a spell named " << inName;
+    return NULL;
+  }
+
+  CUnit* CResourceManager::getModelUnit(std::string inName) {
+    units_t::const_iterator itr;
+
+    for (int i=0; i < 4; ++i)
+      for (itr = mUnits[i].begin(); itr != mUnits[i].end(); ++itr)
+        if ((*itr)->getName() == inName)
+          return (*itr);
+
+    mLog->errorStream() << "couldnt find a unit named " << inName;
+    return NULL;
+  }
 }

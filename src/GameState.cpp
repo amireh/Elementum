@@ -21,6 +21,10 @@ namespace Pixy
 		}
 	};
 
+  GAME_STATE GameState::getId() const {
+    return mId;
+  }
+
 	void GameState::changeState( GameState *state ) {
 		GameManager::getSingletonPtr()->changeState( state );
 	}

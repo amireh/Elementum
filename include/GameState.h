@@ -59,10 +59,12 @@ namespace Pixy
 		void popState( void );
 		void requestShutdown( void );
 
-		virtual GAME_STATE getId() const=0;
+		virtual GAME_STATE getId() const;
 	protected:
 		GameState(){ };
 		log4cpp::Category* mLog;
+
+    GAME_STATE mId;
 	private:
 
 		GameState(const GameState&) { }

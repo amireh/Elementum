@@ -2,25 +2,25 @@
 
 <Imageset Name="Spells-Earth" Imagefile="Spells-Earth.png" >
 	<!-- Treant -->
-	<Image Name="Treant_Normal" XPos="0" YPos="0"  Width="64" Height="64" />
-	<Image Name="Treant_Hover"  XPos="0" YPos="0" Width="64" Height="64" />
-	<Image Name="Treant_Pushed" XPos="0" YPos="0" Width="64" Height="64" />
-	<Image Name="Treant_Disabled" XPos="0" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Zij_Normal" XPos="0" YPos="0"  Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Zij_Hover"  XPos="0" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Zij_Pushed" XPos="0" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Zij_Disabled" XPos="0" YPos="0" Width="64" Height="64" />
 	<!-- Crustling -->
-	<Image Name="Crustling_Normal" XPos="64" YPos="0"  Width="64" Height="64" />
-	<Image Name="Crustling_Hover"  XPos="64" YPos="0" Width="64" Height="64" />
-	<Image Name="Crustling_Pushed" XPos="64" YPos="0" Width="64" Height="64" />
-	<Image Name="Crustling_Disabled" XPos="64" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Howler_Normal" XPos="64" YPos="0"  Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Howler_Hover"  XPos="64" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Howler_Pushed" XPos="64" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Howler_Disabled" XPos="64" YPos="0" Width="64" Height="64" />
 	<!-- Stone Golem -->
-	<Image Name="Stone-Golem_Normal" XPos="128" YPos="0"  Width="64" Height="64" />
-	<Image Name="Stone-Golem_Hover"  XPos="128" YPos="0" Width="64" Height="64" />
-	<Image Name="Stone-Golem_Pushed" XPos="128" YPos="0" Width="64" Height="64" />
-	<Image Name="Stone-Golem_Disabled" XPos="128" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Playmaker_Normal" XPos="128" YPos="0"  Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Playmaker_Hover"  XPos="128" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Playmaker_Pushed" XPos="128" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Playmaker_Disabled" XPos="128" YPos="0" Width="64" Height="64" />
 	<!-- Earth Elemental -->
-	<Image Name="Earth-Elemental_Normal" XPos="196" YPos="0"  Width="64" Height="64" />
-	<Image Name="Earth-Elemental_Hover"  XPos="196" YPos="0" Width="64" Height="64" />
-	<Image Name="Earth-Elemental_Pushed" XPos="196" YPos="0" Width="64" Height="64" />
-	<Image Name="Earth-Elemental_Disabled" XPos="196" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Herdkeeper_Normal" XPos="196" YPos="0"  Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Herdkeeper_Hover"  XPos="196" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Herdkeeper_Pushed" XPos="196" YPos="0" Width="64" Height="64" />
+	<Image Name="Summon:_Fetish_Herdkeeper_Disabled" XPos="196" YPos="0" Width="64" Height="64" />
 </Imageset>
 
 

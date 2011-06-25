@@ -7,7 +7,7 @@ class CPuppet : public Pixy::Puppet
 public:
   CPuppet();
   virtual ~CPuppet();
-  virtual Pixy::CDeck* getDeck();
+  virtual Pixy::CSpell* getSpell(int inUID);
   virtual Pixy::Renderable& getRenderable();
 
 };

@@ -48,12 +48,12 @@ namespace Pixy
     //delete mParser;
     //mParser = 0;
 
-    mLog->infoStream() << "cleared successfully!";
+    //mLog->infoStream() << "cleared successfully!";
 
-    if (mLog)
+    /*if (mLog)
       delete mLog;
 
-    mLog = 0;
+    mLog = 0;*/
   };
 
   void CDeck::generate()

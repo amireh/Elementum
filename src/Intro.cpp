@@ -10,12 +10,11 @@ using namespace Ogre;
 namespace Pixy
 {
 
-	Intro* Intro::mIntro;
-
-	GAME_STATE Intro::getId() const { return STATE_INTRO; }
+	Intro* Intro::mIntro = 0;
 
 	Intro::Intro() {
     mLog = 0;
+    mId = STATE_INTRO;
 	}
 
 	Intro::~Intro() {

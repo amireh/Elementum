@@ -13,10 +13,26 @@
 namespace Pixy
 {
 
-	Combat* Combat::mCombat;
-	GAME_STATE Combat::getId() const { return STATE_COMBAT; }
+	Combat* Combat::mCombat = 0;
+
+	Combat* Combat::getSingletonPtr( void ) {
+		if( !mCombat )
+		    mCombat = new Combat();
+
+		return mCombat;
+	}
+
+	Combat& Combat::getSingleton( void ) {
+		return *getSingletonPtr();
+	}
+
+	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
+	 *	Bootstrap
+	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
 	void Combat::enter( void ) {
+
+    mId = STATE_COMBAT;
 
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Combat");
 
@@ -46,10 +62,19 @@ namespace Pixy
 		mScriptEngine->runScript("combat/entry_point.lua");
 
 		mLog->infoStream() << "i'm up!";
-    mSelfPuppet = 0;
+    mPuppet = 0;
 
+    bindToName("JoinQueue", this, &Combat::evtJoinQueue);
+    bindToName("MatchFound", this, &Combat::evtMatchFound);
+    bindToName("CreatePuppets", this, &Combat::evtCreatePuppets);
+    bindToName("StartTurn", this, &Combat::evtStartTurn);
+    bindToName("TurnStarted", this, &Combat::evtTurnStarted);
+
+    /*CSpell* boo = new CSpell();
+    boo->setName("HEHE");
+    mScriptEngine->passToLua("Pixy.Foobar", 2, "Pixy::CSpell", (void*)boo);
+    delete boo;*/
 	}
-
 
 	void Combat::exit( void ) {
 
@@ -73,6 +98,10 @@ namespace Pixy
 
 	}
 
+	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
+	 *	Misc
+	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
+
 	void Combat::updateMe(Engine* inEngine) {
 		mUpdateQueue.push_back(inEngine);
 	}
@@ -80,31 +109,7 @@ namespace Pixy
 		fUpdateGfx = true;
 	}
 
-	void Combat::update( unsigned long lTimeElapsed ) {
-
-		mEvtMgr->update();
-		mNetMgr->update();
-		mGfxEngine->update(lTimeElapsed);
-		mScriptEngine->update(lTimeElapsed);
-		mUIEngine->update(lTimeElapsed);
-
-		/*for (mUpdater = mUpdateQueue.begin();
-			 mUpdater != mUpdateQueue.end();
-			 ++mUpdater) {
-			(*mUpdater)->update(lTimeElapsed);
-		}
-
-		if (fUpdateGfx)
-			mGfxEngine->update(lTimeElapsed);*/
-		/*
-		mUIEngine->update(lTimeElapsed);
-		mGfxEngine->update(lTimeElapsed);
-		mScriptEngine->update(lTimeElapsed);
-		 */
-	}
-
-	void Combat::keyPressed( const OIS::KeyEvent &e )
-	{
+	void Combat::keyPressed( const OIS::KeyEvent &e )	{
 
 		/*mUISystem->injectKeyDown(e.key);
 		mUISystem->injectChar(e.text);
@@ -136,8 +141,7 @@ namespace Pixy
 
 	}
 
-	void Combat::mouseMoved( const OIS::MouseEvent &e )
-	{
+	void Combat::mouseMoved( const OIS::MouseEvent &e )	{
 		mUIEngine->mouseMoved(e);
 		mGfxEngine->mouseMoved(e);
 	}
@@ -158,30 +162,180 @@ namespace Pixy
 	void Combat::resume( void ) {
 	}
 
-	Combat* Combat::getSingletonPtr( void ) {
-		if( !mCombat )
-		    mCombat = new Combat();
+	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
+	 *	Main Routines
+	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
-		return mCombat;
-	}
+	void Combat::update( unsigned long lTimeElapsed ) {
 
-	Combat& Combat::getSingleton( void ) {
-		return *getSingletonPtr();
+		mEvtMgr->update();
+    mNetMgr->update();
+
+    processEvents();
+
+		mGfxEngine->update(lTimeElapsed);
+		mScriptEngine->update(lTimeElapsed);
+		mUIEngine->update(lTimeElapsed);
+
+		/*for (mUpdater = mUpdateQueue.begin();
+			 mUpdater != mUpdateQueue.end();
+			 ++mUpdater) {
+			(*mUpdater)->update(lTimeElapsed);
+		}
+
+		if (fUpdateGfx)
+			mGfxEngine->update(lTimeElapsed);*/
+		/*
+		mUIEngine->update(lTimeElapsed);
+		mGfxEngine->update(lTimeElapsed);
+		mScriptEngine->update(lTimeElapsed);
+		 */
 	}
 
 	void Combat::registerPuppet(CPuppet* inPuppet) {
 		mPuppets.push_back(inPuppet);
+    mScriptEngine->passToLua("addPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
 	}
+
+  void Combat::assignPuppet(CPuppet* inPuppet) {
+    assert(inPuppet);
+    mLog->infoStream() << "I'm playing with a puppet named " << inPuppet->getName();
+    mPuppet = inPuppet;
+    mScriptEngine->passToLua("assignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
+  }
+
+	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
+	 *	Helpers
+	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
+
+  CPuppet* Combat::getPuppet() {
+    return mPuppet;
+  }
 
   Combat::puppets_t const& Combat::getPuppets() {
     return mPuppets;
   }
 
-  void Combat::assignSelfPuppet(CPuppet* inPuppet) {
-    mLog->infoStream() << "I'm playing with a puppet named " << inPuppet->getName();
-    mSelfPuppet = inPuppet;
+  CPuppet* Combat::getPuppet(int inUID) {
+    puppets_t::const_iterator itr;
+    for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
+      if ((*itr)->getObjectId() == inUID)
+        return *itr;
+
+    return 0;
   }
-  CPuppet* Combat::getSelfPuppet() {
-    return mSelfPuppet;
+
+	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
+	 *	Event Handlers
+	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
+
+  bool Combat::evtJoinQueue(Event* inEvt) {
+    // store the name of the puppet the player joined the queue with
+    if (inEvt->getFeedback() == EVT_OK) {
+      mPuppetName = inEvt->getProperty("PuppetName");
+      mLog->infoStream() << "joined queue with puppet " << mPuppetName;
+    }
+    return true;
+  }
+  bool Combat::evtMatchFound(Event* inEvt) {
+
+    return true;
+  }
+
+  bool Combat::evtCreatePuppets(Event* inEvt) {
+
+    // find the puppet we're playing with
+    puppets_t::const_iterator itr;
+    for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
+      if ((*itr)->getName() == mPuppetName) {
+        assignPuppet(*itr);
+        break;
+      }
+
+    // set up the scene
+    mGfxEngine->setupCombat();
+
+    // render all the puppets
+    for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr) {
+      if ((*itr)->getName() == mPuppetName) // is this the puppet we're playing with?
+        mPuppet = (*itr);
+
+      (*itr)->live();
+      mGfxEngine->attachToScene((*itr)->getRenderable());
+    }
+
+    mEvtMgr->hook(mEvtMgr->createEvt("Ready"));
+    return true;
+  }
+
+  bool Combat::evtStartTurn(Event* inEvt) {
+    // acknowledge the order
+    mEvtMgr->hook(mEvtMgr->createEvt("StartTurn"));
+
+    mActivePuppet = mPuppet;
+    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+
+    return true;
+  }
+
+  bool Combat::evtTurnStarted(Event* inEvt) {
+    assert(inEvt->hasProperty("Puppet")); // _DEBUG_
+
+    mActivePuppet = getPuppet(convertTo<int>(inEvt->getProperty("Puppet")));
+    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+
+    assert(mActivePuppet); // _DEBUG_
+
+    mLog->infoStream() << mActivePuppet->getName() << "'s turn has started, not mine";
+
+    return true;
+  }
+
+  void Combat::pktDrawSpells(RakNet::Packet* inPkt) {
+    using RakNet::BitStream;
+    using RakNet::RakString;
+    using std::vector;
+    using std::string;
+
+    mLog->infoStream() << "parsing drawn spells";
+
+    CResourceManager& mResMgr = GameManager::getSingleton().getResMgr();
+
+    BitStream lStream(inPkt->data, inPkt->length, false);
+    lStream.IgnoreBytes(1); // skip the packet identifier
+
+    RakString lData;
+    lStream.Read(lData);
+
+    // parse the spells and add them to our hand
+    {
+      string tmp(lData.C_String());
+      vector<string> elements = Utility::split(tmp, ';');
+
+      int lPuppetUID = convertTo<int>(elements[0].erase(0,1).c_str()); // strip out the leading $
+      Puppet* lPuppet = getPuppet(lPuppetUID);
+      assert(lPuppet); // _DEBUG_
+
+      int nrSpells = convertTo<int>(elements[1].c_str());
+      assert((elements.size()-2)/2 == nrSpells);
+
+      int spellsParsed = 0;
+      int index = 1;
+      while (++spellsParsed <= nrSpells) {
+        CSpell* lSpell = mResMgr.getSpell(elements[++index]);
+        lSpell->setUID(convertTo<int>(elements[++index]));
+        lSpell->setCaster(lPuppet);
+        lPuppet->attachSpell(lSpell);
+
+        /*Event* lEvt = mEvtMgr->createEvt("DrawSpell", true);
+        lEvt->setProperty("Spell", stringify(lSpell->getUID()));
+        mEvtMgr->hook(lEvt);*/
+
+        if (lPuppet == mPuppet)
+          mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
+
+        lSpell = 0;
+      }
+    }
   }
 } // end of namespace

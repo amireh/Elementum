@@ -16,6 +16,7 @@
 //#include <CEGUIBase/CEGUIExceptions.h>
 #include "EntityEvent.h"
 #include "Combat.h"
+#include <stdarg.h>
 
 TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 TOLUA_API int  tolua_EShared_open (lua_State* tolua_S);
@@ -66,8 +67,8 @@ namespace Pixy {
     tolua_EClient_open(mLUA);
 
 		bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua);
-    bindToName("AssignPuppets", this, &ScriptEngine::evtAssignPuppets);
-    bindToName("JoinQueue", this, &ScriptEngine::evtJoinQueue);
+    //bindToName("AssignPuppets", this, &ScriptEngine::evtAssignPuppets);
+    //bindToName("JoinQueue", this, &ScriptEngine::evtJoinQueue);
 
 		bool lSuccess = false;
 		GAME_STATE lGameState = GameManager::getSingleton().getCurrentState()->getId();
@@ -240,7 +241,7 @@ namespace Pixy {
 		return result;
 	}
 
-  bool ScriptEngine::evtAssignPuppets(Event* inEvt) {
+  /*bool ScriptEngine::evtAssignPuppets(Event* inEvt) {
     return true;
 
     Combat::puppets_t lPuppets = Combat::getSingleton().getPuppets();
@@ -278,11 +279,7 @@ namespace Pixy {
   }
 
   bool ScriptEngine::evtJoinQueue(Event* inEvt) {
-    if (inEvt->getFeedback() == EVT_OK) {
-      mSelfPuppetName = inEvt->getProperty("PuppetName");
-      mLog->infoStream() << "joined queue with puppet " << mSelfPuppetName;
-    }
-    return true;
+
   }
 
   void ScriptEngine::assignSelfPuppet(CPuppet *inPuppet) {
@@ -309,5 +306,40 @@ namespace Pixy {
     //lua_toboolean(mLUA, lua_gettop(mLUA));
 
     //lua_remove(mLUA, lua_gettop(mLUA));
+
+  }*/
+
+  bool ScriptEngine::passToLua(const char* inFunc, int argc, ...) {
+    va_list argp;
+    va_start(argp, argc);
+
+		lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitraryFunc");
+		if(!lua_isfunction(mLUA, 1))
+		{
+			mLog->errorStream() << "could not find Lua arbitrary functor!";
+			lua_pop(mLUA,1);
+			return true;
+		}
+
+    lua_pushfstring(mLUA, inFunc);
+    lua_pushinteger(mLUA, argc);
+    for (int i=0; i < argc; ++i) {
+      const char* argtype = (const char*)va_arg(argp, const char*);
+      void* argv = (void*)va_arg(argp, void*);
+      //std::cout << static_cast<Puppet*>(argv)->getName() << "\n";
+      //lua_pushlightuserdata(mLUA, argv);
+      tolua_pushusertype(mLUA,argv,argtype);
+    }
+
+		try {
+			lua_call(mLUA, argc+2, 0);
+		} catch (CEGUI::ScriptException& e) {
+			mLog->errorStream() << "Lua Handler: " << e.what();
+		} catch (std::exception& e) {
+			mLog->errorStream() << "Lua Handler: " << e.what();
+		}
+
+    va_end(argp);
+    return true;
   }
 }

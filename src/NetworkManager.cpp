@@ -28,6 +28,7 @@ namespace Pixy {
 		mPktProcessor = new PacketProcessor(mLog);
 
 		fOnline = false;
+    fGameDataReceived = false;
 
 		mEvtMgr = EventManager::getSingletonPtr();
 		// we'll be handling the EVT_REQ events (outgoing to server)
@@ -77,6 +78,7 @@ namespace Pixy {
 		bindToAll<NetworkManager>(this, &NetworkManager::dispatchToServer);
 		bindToName("Logout", this, &NetworkManager::evtLogout);
 		bindToName("Login", this, &NetworkManager::evtLogin);
+    //bindToName("Connected", this, &NetworkManager::evtLogout);
 	}
 
 	void NetworkManager::bindPacketHandlers() {
@@ -85,6 +87,7 @@ namespace Pixy {
     mPktHandlers.insert(make_pair((MessageID)ID_LOGIN_EVENT, &NetworkManager::eventReceived));
     mPktHandlers.insert(make_pair((MessageID)ID_FETCH_GAME_DATA, &NetworkManager::gameDataReceived));
     mPktHandlers.insert(make_pair((MessageID)ID_FETCH_PUPPETS, &NetworkManager::puppetDataReceived));
+    mPktHandlers.insert(make_pair((MessageID)ID_DRAW_SPELLS, &NetworkManager::passDrawSpells));
 		mPktHandlers.insert(make_pair(ID_CONNECTION_REQUEST_ACCEPTED, &NetworkManager::connAccepted));
 		mPktHandlers.insert(make_pair(ID_CONNECTION_ATTEMPT_FAILED, &NetworkManager::connFailed));
 	}
@@ -115,17 +118,24 @@ namespace Pixy {
 	}
 
 	bool NetworkManager::evtLogin(Event* inEvt) {
-    // download latest game data
-    mStream.Reset();
-    mStream.AssertStreamEmpty();
-    mStream.Write<MessageID>(ID_FETCH_GAME_DATA);
-    mPeer->Send(&mStream, HIGH_PRIORITY, RELIABLE, 0, mServerAddr, false);
+    if (inEvt->getType() == EVT_RESP && inEvt->getFeedback() == EVT_OK && !fGameDataReceived)
+    {
+      // download latest game data
+      mStream.Reset();
+      mStream.AssertStreamEmpty();
+      mStream.Write<MessageID>(ID_FETCH_GAME_DATA);
+      mPeer->Send(&mStream, HIGH_PRIORITY, RELIABLE, 0, mServerAddr, false);
+
+      fGameDataReceived = true;
+    }
 
 		return true;
 	}
 	bool NetworkManager::evtLogout(Event* inEvt) {
 	  /*if (fOnline)
 	    disconnect();*/
+
+    mLog->debugStream() << "handling local evt connected";
 
 		return true;
 	}
@@ -164,8 +174,7 @@ namespace Pixy {
 		mLog->infoStream() << "Connected to Server! my guid is " << mGUID.ToString();
 		{
 			// notify components that we're connected
-			Event* lEvt = mEvtMgr->createEvt("Connected");
-			lEvt->setType(EVT_RESP);
+			Event* lEvt = mEvtMgr->createEvt("Connected", true);
 			mEvtMgr->hook(lEvt);
 			lEvt = NULL;
 		}
@@ -185,7 +194,7 @@ namespace Pixy {
 		mPacket = mPeer->Receive();
 
 		while (mPacket) {
-
+      mLog->debugStream() << "received a packet with id " << (int)mPktProcessor->getPacketIdentifier(mPacket);
 			// the hideous unreadability of the following line is due to
 			// aggressive optimization. what it basically does is it retrieves
 			// our packet handler from the map, then dereferences it and
@@ -206,6 +215,8 @@ namespace Pixy {
 	void NetworkManager::gameDataReceived(Packet* inPkt) {
     using std::string;
     using std::vector;
+
+    mLog->infoStream() << "received game data, populating Resource Manager...";
 
     BitStream lStream(inPkt->data, inPkt->length, false);
 		unsigned char lPktId = mPktProcessor->getPacketIdentifier(inPkt);
@@ -239,7 +250,7 @@ namespace Pixy {
     string raw2str(raw.begin(), raw.end());
 
     std::cout << "packet size: "<< inPkt->length << ", compressed stream size: " << buflen << ", raw stream size: " << raw.size() << "\n";
-    std::cout << "Uncompressed puppet data: " << raw2str << "\n";
+    //std::cout << "Uncompressed puppet data: " << raw2str << "\n";
 
     std::istringstream datastream(raw2str);
     GameManager::getSingleton().getResMgr().populate(datastream);
@@ -249,6 +260,8 @@ namespace Pixy {
     encoded.clear();
     raw.clear();
     free(sum);
+
+
 	}
 
 	void NetworkManager::puppetDataReceived(Packet* inPkt) {
@@ -287,7 +300,7 @@ namespace Pixy {
     string raw2str(raw.begin(), raw.end());
 
     std::cout << "packet size: "<< inPkt->length << ", compressed stream size: " << buflen << ", raw stream size: " << raw.size() << "\n";
-    std::cout << "Uncompressed puppet data: " << raw2str << "\n";
+    //std::cout << "Uncompressed puppet data: " << raw2str << "\n";
 
     std::istringstream datastream(raw2str);
     GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
@@ -300,10 +313,7 @@ namespace Pixy {
 
 		{
 			// notify components that we received puppet data
-			Event* lEvt = mEvtMgr->createEvt("AssignPuppets");
-			lEvt->setType(EVT_RESP);
-			mEvtMgr->hook(lEvt);
-			lEvt = NULL;
+			mEvtMgr->hook(mEvtMgr->createEvt("CreatePuppets", true));
 		}
 
     free(buf);
@@ -311,4 +321,8 @@ namespace Pixy {
     raw.clear();
     free(sum);
 	}
+
+  void NetworkManager::passDrawSpells(Packet* inPkt) {
+    Combat::getSingleton().pktDrawSpells(inPkt);
+  }
 }

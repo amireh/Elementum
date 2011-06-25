@@ -101,17 +101,17 @@ namespace Pixy {
 		return fSetup;
 	}
 
-	bool GfxEngine::setupCombat(std::string inPlayer1, std::string inPlayer2) {
+	bool GfxEngine::setupCombat() {
 
 		mLog->infoStream() << "preparing combat scene";
 
-		mPuppetPos[ME] = Vector3(-500, 5, 500);
+		mPuppetPos[ME] = Vector3(-500, 5, 450);
     mPuppetPos[ENEMY] = Vector3(mPuppetPos[ME].x,
 							 mPuppetPos[ME].y,
-							 mPuppetPos[ME].z - 400);
+							 mPuppetPos[ME].z + 100);
 
-		mPlayers.push_back(inPlayer1);
-		mPlayers.push_back(inPlayer2);
+		mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
+		mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
 
 		setupSceneManager();
     setupViewports();
@@ -123,7 +123,7 @@ namespace Pixy {
     setupNodes();
 
 		std::ostringstream lNodeName;
-		lNodeName << mPlayers.front() << "_node_puppet";
+		lNodeName << Combat::getSingleton().getPuppet()->getName() << "_node_puppet";
 		mCameraMan->setTarget(mSceneMgr->getSceneNode(lNodeName.str()));
 		/*
         setupWaypoints();
@@ -504,6 +504,10 @@ namespace Pixy {
     // Set up the direction to make each faction face the other
     mDirection[ME] = mPuppetPos[ENEMY];
     mDirection[ENEMY] = mPuppetPos[ME];
+    /*Vector3 mDirectionShared =
+      Vector3(mPuppetPos[ME].x,
+              mPuppetPos[ME].y,
+              (mPuppetPos[ME].z + mPuppetPos[ENEMY].z) / 2);*/
 
     // create Puppet nodes
     String ownerName, nodeName;
@@ -524,6 +528,9 @@ namespace Pixy {
       nodeName = ownerName + "_node_puppet";
       Ogre::SceneNode* tmpNode = createNode(nodeName, tmpPos, mPuppetScale, tmpDir);
       mLog->debugStream() << "Node: " << nodeName << " at: (" << tmpPos.x << ", " << tmpPos.y << ", " << tmpPos.z << ")";
+      if (i == ENEMY) {
+        tmpNode->yaw(Ogre::Degree(180));
+      }
       /*
       tmpNode->pitch(Ogre::Degree(-90.0f));
       tmpNode->roll(Ogre::Degree(75.0f));
@@ -581,7 +588,10 @@ namespace Pixy {
 				tmpPos.z = (tmpPos.z == posFrontier) ? posRear : posFrontier;
 				tmpPos.x += unitMargin;
 				nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
-				createNode(nodeName, tmpPos, mUnitScale, tmpDir);
+				SceneNode* tmpNode = createNode(nodeName, tmpPos, mUnitScale, tmpDir);
+        if (owner == ENEMY) {
+          tmpNode->yaw(Ogre::Degree(180));
+        }
 				mLog->debugStream() << "Node: " << nodeName << " at: (" << tmpPos.x << ", " << tmpPos.y << ", " << tmpPos.z << ")";
       }; // end of for(i)
     }; // end of for(owner)
@@ -633,8 +643,8 @@ namespace Pixy {
 
         mNode = inParent->createChildSceneNode(inName, inPosition);
         mNode->setScale(inScale);
-        mNode->lookAt(inDirection, Ogre::Node::TS_WORLD);
-    	//mNode->showBoundingBox(true);
+        //mNode->lookAt(inDirection, Ogre::Node::TS_WORLD);
+        mNode->showBoundingBox(true);
 
         //mNode = NULL;
         return mNode;
@@ -653,7 +663,8 @@ namespace Pixy {
       String entityName = "", nodeName = "", ownerName = "";
 
       //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
-      ownerName = stringify(inEntity->getObjectId());
+      //ownerName = stringify(inEntity->getObjectId());
+      ownerName = inEntity->getOwner()->getName();
       if (isPuppet)
       {
         entityName = ownerName + "_entity_puppet";
@@ -713,13 +724,13 @@ namespace Pixy {
     };
 
 
-    bool GfxEngine::attachToScene(Renderable* inEntity)
+    bool GfxEngine::attachToScene(Renderable& inEntity)
     {
         //bool isPuppet = (inEntity->getRank() == 0) ? true : false;
 
-        assert(inEntity->getEntity() != 0);
+        assert(inEntity.getEntity());
         // render the object
-        renderEntity(inEntity);
+        renderEntity(&inEntity);
 		/*
         // create and attach interface stats overlay
         if (!isPuppet)
@@ -732,14 +743,14 @@ namespace Pixy {
 
 
 
-    void GfxEngine::detachFromScene(Renderable* inRenderable)
+    void GfxEngine::detachFromScene(Renderable& inRenderable)
     {
-      Entity* inEntity = inRenderable->getEntity();
+      Entity* inEntity = inRenderable.getEntity();
 
-        Ogre::String ownerName = stringify(inEntity->getObjectId());// == ID_HOST) ? "host" : "client";
-        Ogre::String nodeName = ownerName + "_node_";
-        Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getObjectId());
-        Ogre::SceneNode* mTmpNode = NULL;
+      Ogre::String ownerName = stringify(inEntity->getObjectId());// == ID_HOST) ? "host" : "client";
+      Ogre::String nodeName = ownerName + "_node_";
+      Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getObjectId());
+      Ogre::SceneNode* mTmpNode = NULL;
 
         //for (int i=0; i<10; i++)
         //{
@@ -747,7 +758,7 @@ namespace Pixy {
 
 		//nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
 		// retrieve our node
-		mTmpNode = inRenderable->getSceneNode();
+		mTmpNode = inRenderable.getSceneNode();
 
 		// retrieve the entity so we can destroy it after we detach it from node
 		//Ogre::Entity* mOgreEntity = (Ogre::Entity*)inEntity->getSceneObject();
@@ -765,11 +776,11 @@ namespace Pixy {
 
 		mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
 		mTmpNode->showBoundingBox(false);
-		mTmpNode->detachObject(inRenderable->getSceneObject());
+		mTmpNode->detachObject(inRenderable.getSceneObject());
 		// destroy entity
 
 		//                LOG("I'm destroying Entity : " + mOgreEntity->getName());
-		mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
+		mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable.getSceneObject());
 
 		// translate the node back to its original position
 		/*
@@ -783,7 +794,7 @@ namespace Pixy {
 		// LOG_F(__FUNCTION__);
         //};
 
-        inEntity = 0;
+      inEntity = 0;
     }
 
     void GfxEngine::setupWaypoints()
@@ -858,6 +869,22 @@ namespace Pixy {
 	void GfxEngine::keyReleased( const OIS::KeyEvent &e ) {
 	  if (mCameraMan)
 			mCameraMan->injectKeyUp(e);
+
+    if (Combat::getSingleton().getPuppet() == 0)
+      return;
+
+    SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable().getSceneNode();
+    switch (e.key) {
+      case OIS::KC_F:
+        tmp->yaw(Ogre::Degree(5));
+      break;
+      case OIS::KC_G:
+        tmp->roll(Ogre::Degree(5));
+      break;
+      case OIS::KC_H:
+        tmp->pitch(Ogre::Degree(5));
+      break;
+    }
 	}
 	void GfxEngine::keyPressed( const OIS::KeyEvent &e ) {
 	  if (mCameraMan)

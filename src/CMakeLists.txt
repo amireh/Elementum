@@ -18,7 +18,7 @@ SET(EClient_SRCS
   HelperLogics.cpp
   InputManager.cpp
   Intro.cpp
-  Lobby.cpp
+  #Lobby.cpp
   NetworkManager.cpp
   ScriptEngine.cpp
   UIEngine.cpp

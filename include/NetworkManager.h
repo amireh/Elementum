@@ -98,7 +98,7 @@ namespace Pixy {
 		RakNetGUID			mServerGUID;
 		SystemAddress		mServerAddr;
 		BitStream			mStream;
-		bool fOnline;
+		bool fOnline, fGameDataReceived;
 
 		map<MessageID, void (NetworkManager::*)(Packet*)> mPktHandlers;
 
@@ -121,6 +121,7 @@ namespace Pixy {
 
     void gameDataReceived(Packet* inPkt);
     void puppetDataReceived(Packet* inPkt);
+    void passDrawSpells(Packet* inPkt);
 
 		/*! \brief
 		 *	stores information about the server, and broadcasts the event "Connected"

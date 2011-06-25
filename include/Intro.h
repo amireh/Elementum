@@ -51,9 +51,6 @@ namespace Pixy
 		static Intro* getSingletonPtr( void );
 		static Intro& getSingleton();
 
-		virtual GAME_STATE getId() const;
-
-
 	protected:
 		void fireLoginEvt();
 	private:

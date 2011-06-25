@@ -45,7 +45,7 @@ namespace Pixy
 
   }
 
-  CDeck* CPuppet::getDeck() {
+  /*CDeck* CPuppet::getDeck() {
     mLog->infoStream() << "returning deck;";
     assert(mDeck != 0);
     CSpell* lSpell = mDeck->getSpell("Summon: Fetish Zij");
@@ -55,6 +55,14 @@ namespace Pixy
       mLog->infoStream() << "Spell name " << lSpell->getName();
     }
     return mDeck;
-  }
+  }*/
 
+  CSpell* CPuppet::getSpell(int inUID) {
+    hand_t::const_iterator lSpell;
+    for (lSpell = mHand.begin(); lSpell != mHand.end(); ++lSpell)
+      if ((*lSpell)->getUID() == inUID)
+        return *lSpell;
+
+    return 0;
+  }
 } // end of namespace

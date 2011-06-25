@@ -61,7 +61,7 @@ namespace Pixy {
 		 * to the given Ogre::Entity for later retrieval, thus,
 		 * linking the GameObject with SceneObject.
 		 */
-		bool attachToScene(Renderable* inEntity);
+		bool attachToScene(Renderable& inEntity);
 
 		//! Detaches a Pixy::Entity from an SceneNode and removes it from Scene
 		/*!
@@ -70,7 +70,7 @@ namespace Pixy {
 		 * stops rendering it. Also detaches Pixy::Entity
 		 * from the Ogre::Entity.
 		 */
-		void detachFromScene(Renderable* inEntity);
+		void detachFromScene(Renderable& inEntity);
 
 		//! Moves a SceneNode to a destination using a Waypoint
 		/*!
@@ -140,7 +140,7 @@ namespace Pixy {
 		 */
 		void setupWaypoints();
 
-		bool setupCombat(std::string inPlayer1, std::string inPlayer2);
+		bool setupCombat();
 
 		void keyPressed( const OIS::KeyEvent &e );
 		void keyReleased( const OIS::KeyEvent &e );

@@ -12,6 +12,7 @@
 
 #include "GameState.h"
 #include "EventManager.h"
+#include "EventListener.h"
 #include "NetworkManager.h"
 #include "UIEngine.h"
 #include "GfxEngine.h"
@@ -26,7 +27,7 @@ namespace Pixy
      */
 
 
-	class Combat : public GameState {
+	class Combat : public GameState, public EventListener {
 	public:
     typedef std::list<CPuppet*> puppets_t;
 
@@ -49,22 +50,29 @@ namespace Pixy
 		static Combat* getSingletonPtr( void );
 		static Combat& getSingleton();
 
-		virtual GAME_STATE getId() const;
-
 		void registerPuppet(CPuppet* inPuppet);
 
 		void updateMe(Engine* inEngine);
 		void updateGfx();
 
     puppets_t const& getPuppets();
-    void assignSelfPuppet(CPuppet* inPuppet);
-    CPuppet* getSelfPuppet();
+    void assignPuppet(CPuppet* inPuppet);
+    CPuppet* getPuppet();
+    CPuppet* getPuppet(int inUID);
+
+    void pktDrawSpells(RakNet::Packet* inPkt);
 
 	private:
 
 		Combat( void ) { }
 		Combat( const Combat& ) { }
 		Combat & operator = ( const Combat& );
+
+    bool evtJoinQueue(Event* inEvt);
+    bool evtMatchFound(Event* inEvt);
+    bool evtCreatePuppets(Event* inEvt);
+    bool evtStartTurn(Event* inEvt);
+    bool evtTurnStarted(Event* inEvt);
 
 		GfxEngine			*mGfxEngine;
 		UIEngine			*mUIEngine;
@@ -76,7 +84,9 @@ namespace Pixy
 		static Combat		*mCombat;
 
 		puppets_t		mPuppets;
-    CPuppet* mSelfPuppet;
+    CPuppet* mPuppet, *mActivePuppet;
+    std::string mPuppetName;
+
 
 		vector<Engine*>		mUpdateQueue;
 		vector<Engine*>::const_iterator mUpdater;

@@ -30,23 +30,19 @@ namespace Pixy
 
     void setImageSet(std::string inName);
     void setImageName(std::string inName);
-    void setTooltip(std::string inTooltip);
     void setButton(CEGUI::Window* inButton);
 
     string  getImageSet();
     string  getImageName();
     CEGUI::Window*  getButton();
-    string getTooltip();
 
     protected:
     void copyFromSrc(const CSpell& src);
 
     // interface info
-    // __NOTE__ : refactor into a UI renderable object
-    std::string          mImageSet;
-    std::string          mImageName;
-    CEGUI::Window*  mButton;
-    std::string          mTooltip; // tooltip desc
+    std::string   mImageSet;
+    std::string   mImageName;
+    CEGUI::Window *mButton;
   };
 }
 

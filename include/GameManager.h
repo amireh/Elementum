@@ -63,7 +63,7 @@ namespace Pixy
 		/*!
 		 *
 		 */
-		void startGame();
+		void startGame(int argc, char** argv);
 
 		//! Shuts down current game state and loads another.
 		/*!

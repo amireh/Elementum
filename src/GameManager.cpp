@@ -160,7 +160,7 @@ namespace Pixy
       mLog->errorStream() << "Unable to create CG Program manager RenderSystem: " << e.getFullDescription();
     }
   }
-	void GameManager::startGame() {
+	void GameManager::startGame(int argc, char** argv) {
 		// init logger
 		initLogger();
 		using std::ostringstream;
@@ -194,7 +194,7 @@ namespace Pixy
 								  "Error - Couldn't initalize OGRE!",
 								  "Vertigo - Error");
 		}
-		loadRenderSystems();
+		//loadRenderSystems();
 
 
 

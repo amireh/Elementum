@@ -7,12 +7,10 @@ class CSpell : public Pixy::Spell
 
   void setImageSet(std::string inName);
   void setImageName(std::string inName);
-  void setTooltip(std::string inTooltip);
   void setButton(CEGUI::Window* inButton);
 
   std::string  getImageSet();
   std::string  getImageName();
   CEGUI::Window*  getButton();
-  std::string getTooltip();
 
 };

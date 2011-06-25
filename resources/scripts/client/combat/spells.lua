@@ -10,20 +10,26 @@
 -- job: parses the spell attributes from the given event,
 -- and attaches it to the puppet's hand, and finally calls the UI script
 -- to draw it
-Pixy.Combat.drawSpell = function(inEvt)
-	tolua.cast(inEvt, "Pixy::EntityEvent")
+Pixy.Combat.DrawSpell = function(Spell)
+  --local Spell = arg[1]
+	--tolua.cast(Spell, "Pixy::CSpell")
+  Pixy.Log("Drawing spell button: " .. Spell:getName())
+  Pixy.UI.Combat.drawSpell(Spell)
+--[[
+  local uid = inEvt:getProperty("Spell")
+  tolua.cast(uid, "int")
 
-	lSpell = Puppet:getDeck():getSpell(inEvt:getProperty("Name"))
+	lSpell = Puppet:getSpell(inEvt:getProperty("Spell"))
 	if (lSpell == nil) then
-		Pixy.Log("Error! Deck didn't give me a proper spell object named " .. inEvt:getProperty("Name"))
+		Pixy.Log("Error! Deck didn't give me a proper spell object named " .. inEvt:getProperty("Spell"))
 	end
 
-	lSpell:setId(inEvt:getObjectId())
-	Pixy.Log(inEvt:getOwner() .. " is drawing a spell named " .. lSpell:getName() .. "@" .. lSpell:getId())
+	--~ lSpell:setId(inEvt:getObjectId())
+	--~ Pixy.Log(inEvt:getOwner() .. " is drawing a spell named " .. lSpell:getName() .. "@" .. lSpell:getId())
 
-	Pixy.UI.Combat.drawSpell(lSpell)
 
-	Active:attachSpell(lSpell)
+
+	--~ Active:attachSpell(lSpell)]]
 	return true
 end
 

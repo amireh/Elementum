@@ -1,5 +1,3 @@
-Puppets = {}
-SelfPuppet = nil
 
 -- type: incoming event handler
 -- job: stores the names of the player's puppet and his opponent
@@ -13,6 +11,11 @@ Pixy.Combat.assignSelfPuppet = function(inPuppet)
   SelfPuppet = inPuppet
   Pixy.Log("I'm playing with a puppet named " .. SelfPuppet:getName())
 end
+Pixy.Combat.assignActivePuppet = function(puppet)
+  Active = puppet
+  Pixy.Log("Current turn is for puppet: " .. Active:getName())
+end
+
 -- type: incoming event handler
 -- job: parses the puppet from the event, calls the factory for an instance
 -- then generates the deck.. and tells the GfxEngine to render it

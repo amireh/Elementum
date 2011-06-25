@@ -21,7 +21,7 @@ Pixy.UI.Combat.configure = function()
 	cfg.SpellButton["Width"] = 48
 
 	-- create our imagesets used for spell buttons
-	CEImagesetMgr:create( "Spells-Fire.imageset" )
+	CEImagesetMgr:create( "Spells-Earth.imageset" )
 end
 
 -- effectively reloads the UI components and sheets
@@ -45,7 +45,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- calculate position
 	lButton["Position"] =
 		CEGUI.UVector2:new(
-			CEGUI.UDim(0, cfg.SpellButton["Width"] * Active:nrSpellsInHand() - 1),
+			CEGUI.UDim(0, cfg.SpellButton["Width"] * SelfPuppet:nrSpellsInHand() - 2),
 			CEGUI.UDim(0, 0)
 		)
 
@@ -57,7 +57,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 		)
 
 	-- generate the button's name
-	lButton["Name"] = "Elementum/Scenes/Combat/SpellPanel/Player/" .. inSpell:getId()
+	lButton["Name"] = "Elementum/Scenes/Combat/SpellPanel/Player/" .. inSpell:getUID()
 
 	Pixy.Log("creating a window named " .. lButton["Name"])
 
@@ -66,21 +66,25 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 
 	-- attach the button to the Pixy::Spell object
 	inSpell:setButton(lButton["Window"])
+  inSpell:setImageSet("Spells-" .. raceToString(inSpell:getRace()))
+  -- sanitize spell name to match image set name
+  local sane_name = string.gsub(inSpell:getName(), "%s", "_")
+  inSpell:setImageName(sane_name)
 
   -- get spell properties
-  local lAspect = aspectToString(inSpell:getAspect())
-  local lRace = raceToString(inSpell:getRace())
+  --local lAspect = aspectToString(inSpell:getAspect())
+  --local lRace = raceToString(inSpell:getRace())
   --local lSpellData = Pixy.Spells[lRace][lAspect][inSpell:getName()]
-  local lSpellData = Pixy.Spells.Earth.Matter["Summon: Fetish Zij"]
+  --local lSpellData = Pixy.Spells.Earth.Matter["Summon: Fetish Zij"]
 	-- draw the image button
-	lButton["Image"] = "set:" .. lSpellData.Interface.Imageset .. " image:" .. lSpellData.Interface.Image
+	lButton["Image"] = "set:" .. inSpell:getImageSet() .. " image:" .. inSpell:getImageName()
 	lButton["Window"]:setProperty("NormalImage", lButton["Image"] .. "_Normal")
 	lButton["Window"]:setProperty("HoverImage", lButton["Image"] .. "_Hover")
 	lButton["Window"]:setProperty("PushedImage", lButton["Image"] .. "_Pushed")
 	lButton["Window"]:setProperty("DisabledImage", lButton["Image"] .. "_Disabled")
 
 	-- attach our spell object to the button...
-	lButton["Window"]:setUserString("SpellId", inSpell:getId())
+	lButton["Window"]:setUserString("Spell", inSpell:getUID())
 
 	-- create tooltip
 	-- ...

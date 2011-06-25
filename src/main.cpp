@@ -14,7 +14,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 
 		try {
 			// Initialise the game and switch to the first state
-			gameManager->startGame();
+			gameManager->startGame(argc, argv);
 
 		}
 		catch ( Ogre::Exception& ex ) {

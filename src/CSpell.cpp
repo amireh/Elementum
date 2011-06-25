@@ -36,7 +36,6 @@ namespace Pixy
     {
       Spell::copyFromSrc(src);
 
-      mTooltip = src.mTooltip;
       mImageName = src.mImageName;
       mImageSet = src.mImageSet;
       mButton = src.mButton;
@@ -45,16 +44,13 @@ namespace Pixy
     CSpell::CSpell(const Spell& src) {
       Spell::copyFromSrc(src);
 
-      mTooltip = "Unset";
       mImageName = "";
       mImageSet = "";
       mButton = 0;
+
+      std::cout << "CSpell cloned from Spell, my name is " << mName << "\n";
     }
 
-
-    void CSpell::setTooltip(std::string inTooltip) {
-      mTooltip = inTooltip;
-    };
     void CSpell::setImageSet(std::string inName) {
         mImageSet = inName;
     }
@@ -66,7 +62,6 @@ namespace Pixy
     }
 
 
-    std::string CSpell::getTooltip() { return mTooltip; };
     std::string CSpell::getImageSet() { return mImageSet; }
     std::string CSpell::getImageName() { return mImageName; }
     CEGUI::Window* CSpell::getButton() { return mButton; }
