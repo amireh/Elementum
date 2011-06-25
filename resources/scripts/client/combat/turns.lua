@@ -26,7 +26,9 @@ end
 -- type: event transmitter
 -- job: hooks an event requesting the turn to end for the current player
 Pixy.Combat.reqEndTurn = function()
-	local lEvt = EvtMgr:createEvt("EndTurn")
-	EvtMgr:hook(lEvt)
-	lEvt = nil
+  if Active:getObjectId() == SelfPuppet:getObjectId() then
+    local lEvt = EvtMgr:createEvt("EndTurn")
+    EvtMgr:hook(lEvt)
+    lEvt = nil
+  end
 end

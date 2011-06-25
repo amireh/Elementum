@@ -1,13 +1,23 @@
 $#include "Renderable.h"
 $#include "CPuppet.h"
 $#include "CDeck.h"
+$#include "CSpell.h"
+$#include "CUnit.h"
 
 class CPuppet : public Pixy::Puppet
 {
 public:
+  typedef list<Pixy::CSpell*> hand_t;
+  typedef list<Pixy::CUnit*> units_t;
+  typedef list<Pixy::CDeck const*> decks_t;
+
   CPuppet();
   virtual ~CPuppet();
   virtual Pixy::CSpell* getSpell(int inUID);
   virtual Pixy::Renderable& getRenderable();
-
+  hand_t& getHand();
+  virtual int nrSpellsInHand();
+  virtual Pixy::CSpell* getSpell(int inUID);
+  virtual void attachSpell(Pixy::CSpell* inSpell);
+  virtual void detachSpell(Pixy::CSpell* inSpell);
 };

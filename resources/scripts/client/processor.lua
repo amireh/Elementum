@@ -14,6 +14,16 @@ function doUpdateMe(inCallback)
 	table.insert(WantUpdates, inCallback)
 end
 
+function removeByValue(inTable, inValue)
+	local i = 1
+	for val in list_iter(inTable) do
+	  if val == inValue then
+	    table.remove(inTable, i)
+			break
+	  end
+	  i = i+1
+	end
+end
 
 function dontUpdateMe(inCallback)
 

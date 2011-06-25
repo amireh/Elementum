@@ -32,7 +32,11 @@ namespace Pixy
     virtual void die();
 
     //virtual CDeck* getDeck();
+		hand_t const& getHand();
+		virtual int nrSpellsInHand();
     virtual CSpell* getSpell(int inUID);
+		virtual void attachSpell(CSpell* inSpell);
+		virtual void detachSpell(CSpell* inSpell);
 
 	protected:
     Renderable* mRenderable;

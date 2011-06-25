@@ -137,6 +137,10 @@ namespace Pixy
 			case OIS::KC_SPACE:
 			  GameManager::getSingleton().changeState(Intro::getSingletonPtr());
 				break;
+      case OIS::KC_RETURN:
+        if (mActivePuppet == mPuppet)
+          mEvtMgr->hook(mEvtMgr->createEvt("EndTurn"));
+      break;
 		}
 
 	}
@@ -296,6 +300,7 @@ namespace Pixy
     using RakNet::RakString;
     using std::vector;
     using std::string;
+    using std::istringstream;
 
     mLog->infoStream() << "parsing drawn spells";
 
@@ -304,37 +309,81 @@ namespace Pixy
     BitStream lStream(inPkt->data, inPkt->length, false);
     lStream.IgnoreBytes(1); // skip the packet identifier
 
-    RakString lData;
-    lStream.Read(lData);
+    RakString tmp;
+    lStream.Read(tmp);
 
-    // parse the spells and add them to our hand
+    istringstream lData(tmp.C_String());
+    string lLine;
+
+    // parse the drawn spells and add them to our hand
     {
-      string tmp(lData.C_String());
-      vector<string> elements = Utility::split(tmp, ';');
+      // how many spells to create
+      getline(lData, lLine);
+      int nrDrawSpells = atoi(Utility::split(lLine, ';').back().c_str());
+
+      // the next line contains the actual string UIDs/names and the owner uid
+      getline(lData, lLine);
+      vector<string> elements = Utility::split(lLine, ';');
 
       int lPuppetUID = convertTo<int>(elements[0].erase(0,1).c_str()); // strip out the leading $
-      Puppet* lPuppet = getPuppet(lPuppetUID);
+      CPuppet* lPuppet = getPuppet(lPuppetUID);
       assert(lPuppet); // _DEBUG_
 
-      int nrSpells = convertTo<int>(elements[1].c_str());
-      assert((elements.size()-2)/2 == nrSpells);
+      //int nrSpells = convertTo<int>(elements[1].c_str());
+      assert((elements.size()-1)/2 == nrDrawSpells);
 
       int spellsParsed = 0;
-      int index = 1;
-      while (++spellsParsed <= nrSpells) {
+      int index = 0;
+      while (++spellsParsed <= nrDrawSpells) {
         CSpell* lSpell = mResMgr.getSpell(elements[++index]);
         lSpell->setUID(convertTo<int>(elements[++index]));
         lSpell->setCaster(lPuppet);
         lPuppet->attachSpell(lSpell);
 
-        /*Event* lEvt = mEvtMgr->createEvt("DrawSpell", true);
-        lEvt->setProperty("Spell", stringify(lSpell->getUID()));
-        mEvtMgr->hook(lEvt);*/
-
         if (lPuppet == mPuppet)
           mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
         lSpell = 0;
+      }
+
+      lPuppet = 0;
+    }
+
+    // parse the spells to be discarded
+    {
+      getline(lData, lLine);
+      int nrDropSpells = atoi(Utility::split(lLine, ';').back().c_str());
+
+      if (nrDropSpells > 0) {
+
+        mLog->debugStream() << "dropping " << nrDropSpells << " spells";
+
+        // the next line contains the actual string UIDs/names and the owner uid
+        getline(lData, lLine);
+        vector<string> elements = Utility::split(lLine, ';');
+
+        int lPuppetUID = convertTo<int>(elements[0].erase(0,1).c_str()); // strip out the leading $
+        CPuppet* lPuppet = getPuppet(lPuppetUID);
+        assert(lPuppet); // _DEBUG_
+
+        //int nrSpells = convertTo<int>(elements[1].c_str());
+        assert((elements.size()-1) == nrDropSpells);
+
+        int spellsParsed = 0;
+        int index = 0;
+        while (++spellsParsed <= nrDropSpells) {
+          CSpell* lSpell = lPuppet->getSpell(convertTo<int>(elements[++index]));
+          mLog->debugStream() << "removing spell with UID " << elements[index];
+          assert(lSpell); // _DEBUG_
+
+          if (lPuppet == mPuppet)
+            mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+
+          lPuppet->detachSpell(lSpell);
+          lSpell = 0;
+        }
+
+        lPuppet = 0;
       }
     }
   }

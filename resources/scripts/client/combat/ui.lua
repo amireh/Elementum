@@ -3,7 +3,7 @@
 
 	cegui event handlers and UI bootstrapping goes here
 ]]
-Pixy.UI.Combat = {}
+Pixy.UI.Combat = { Buttons = {} }
 local cfg = nil
 
 Pixy.UI.Combat.configure = function()
@@ -99,6 +99,19 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- finally, subscribe the button to its event handlers
 	lButton["Window"]:subscribeEvent("Clicked", "Pixy.Combat.reqCastSpell")
 
+  table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
+end
+
+Pixy.UI.Combat.dropSpell = function(inSpell)
+  removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
+  CEWindowMgr:destroyWindow(inSpell:getButton())
+  for button in list_iter(Pixy.UI.Combat.Buttons) do
+    local pos = CEGUI.UVector2:new(
+    	CEGUI.UDim(0, button:getPosition().x.offset - cfg.SpellButton["Width"]),
+			button:getPosition().y)
+
+    button:setPosition(pos)
+  end
 end
 
 -- configure

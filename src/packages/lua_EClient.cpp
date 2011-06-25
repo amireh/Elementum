@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sat Jun 25 01:52:06 2011.
+** Generated automatically by tolua++-1.0.92 on Sat Jun 25 13:38:46 2011.
 */
 
 #ifndef __cplusplus
@@ -19,6 +19,8 @@ TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 #include "Renderable.h"
 #include "CPuppet.h"
 #include "CDeck.h"
+#include "CSpell.h"
+#include "CUnit.h"
 #include "CSpell.h"
 #include "CDeck.h"
 #include "Renderable.h"
@@ -87,27 +89,28 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"Ogre::Root");
+ tolua_usertype(tolua_S,"CEGUI::Window");
  tolua_usertype(tolua_S,"Pixy::Deck");
  tolua_usertype(tolua_S,"Pixy::CUnit");
- tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Pixy::CSpell");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
+ tolua_usertype(tolua_S,"Pixy::CSpell");
+ tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
  tolua_usertype(tolua_S,"Pixy::EventListener");
- tolua_usertype(tolua_S,"Pixy::Engine");
- tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
+ tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"const");
+ tolua_usertype(tolua_S,"Pixy::GameState");
  tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"Pixy::Intro");
  tolua_usertype(tolua_S,"Pixy::CDeck");
- tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Pixy::GameState");
+ tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
- tolua_usertype(tolua_S,"Pixy::GameManager");
+ tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Ogre::Camera");
 }
 
@@ -510,6 +513,165 @@ static int tolua_EClient_Pixy_CPuppet_getRenderable00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getRenderable'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getHand of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppet_getHand00
+static int tolua_EClient_Pixy_CPuppet_getHand00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHand'", NULL);
+#endif
+  {
+    list<Pixy::CSpell*>& tolua_ret = (  list<Pixy::CSpell*>&)  self->getHand();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"list<Pixy::CSpell*>");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getHand'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: nrSpellsInHand of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppet_nrSpellsInHand00
+static int tolua_EClient_Pixy_CPuppet_nrSpellsInHand00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'nrSpellsInHand'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->nrSpellsInHand();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'nrSpellsInHand'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSpell of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppet_getSpell01
+static int tolua_EClient_Pixy_CPuppet_getSpell01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'", NULL);
+#endif
+  {
+   Pixy::CSpell* tolua_ret = (Pixy::CSpell*)  self->getSpell(inUID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CSpell");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_EClient_Pixy_CPuppet_getSpell00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachSpell of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppet_attachSpell00
+static int tolua_EClient_Pixy_CPuppet_attachSpell00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::CSpell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::CSpell* inSpell = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSpell'", NULL);
+#endif
+  {
+   self->attachSpell(inSpell);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'attachSpell'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: detachSpell of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppet_detachSpell00
+static int tolua_EClient_Pixy_CPuppet_detachSpell00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::CSpell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::CSpell* inSpell = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachSpell'", NULL);
+#endif
+  {
+   self->detachSpell(inSpell);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'detachSpell'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2012,6 +2174,11 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"delete",tolua_EClient_Pixy_CPuppet_delete00);
     tolua_function(tolua_S,"getSpell",tolua_EClient_Pixy_CPuppet_getSpell00);
     tolua_function(tolua_S,"getRenderable",tolua_EClient_Pixy_CPuppet_getRenderable00);
+    tolua_function(tolua_S,"getHand",tolua_EClient_Pixy_CPuppet_getHand00);
+    tolua_function(tolua_S,"nrSpellsInHand",tolua_EClient_Pixy_CPuppet_nrSpellsInHand00);
+    tolua_function(tolua_S,"getSpell",tolua_EClient_Pixy_CPuppet_getSpell01);
+    tolua_function(tolua_S,"attachSpell",tolua_EClient_Pixy_CPuppet_attachSpell00);
+    tolua_function(tolua_S,"detachSpell",tolua_EClient_Pixy_CPuppet_detachSpell00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"CSpell","Pixy::CSpell","Pixy::Spell",tolua_collect_Pixy__CSpell);

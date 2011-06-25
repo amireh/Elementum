@@ -11,8 +11,6 @@
 -- and attaches it to the puppet's hand, and finally calls the UI script
 -- to draw it
 Pixy.Combat.DrawSpell = function(Spell)
-  --local Spell = arg[1]
-	--tolua.cast(Spell, "Pixy::CSpell")
   Pixy.Log("Drawing spell button: " .. Spell:getName())
   Pixy.UI.Combat.drawSpell(Spell)
 --[[
@@ -33,19 +31,28 @@ Pixy.Combat.DrawSpell = function(Spell)
 	return true
 end
 
+Pixy.Combat.DropSpell = function(Spell)
+  Pixy.Log("Discarding spell button: " .. Spell:getName())
+  Pixy.UI.Combat.dropSpell(Spell)
+end
+
 -- type: CEGUI event handler
 -- job: sends a request to the instance with the spell id
 -- awaiting EVT_OK feedback to actually cast it
 Pixy.Combat.reqCastSpell = function(inUIEvt)
+  --[[
+
 	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
-	local lSpell = Active:getSpell(lWindow:getUserString("SpellId"))
+	local lSpell = Active:getSpell(lWindow:getUserString("Spell"))
+  assert(lSpell)
+
 	--tolua.cast(lSpell, "Pixy::Spell")
 	Pixy.Log( "request to cast a spell named " .. lSpell:getName() .. "@" .. lSpell:getId() )
 	local lEvt = EvtMgr:createEvt("CastSpell")
 	lEvt:setProperty("SpellId", lSpell:getId())
 	EvtMgr:hook(lEvt)
-	lEvt = nil
+	lEvt = nil]]
 end
 
 -- type: incoming event handler

@@ -16,15 +16,15 @@ namespace Pixy
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppet");
     mLog->infoStream() << "created";
 
-	  mDeck = new CDeck(this);
-	  mDeck->generate();
+	  //mDeck = new CDeck(this);
+	  //mDeck->generate();
 
     return true;
   };
 
   void CPuppet::die() {
-    if (mDeck)
-      delete mDeck;
+    //if (mDeck)
+    //  delete mDeck;
 
     mLog->infoStream() << "dead";
   };
@@ -57,6 +57,12 @@ namespace Pixy
     return mDeck;
   }*/
 
+	std::list<CSpell*> const& CPuppet::getHand(){ return mHand; };
+
+	int CPuppet::nrSpellsInHand() {
+		return mHand.size();
+	}
+
   CSpell* CPuppet::getSpell(int inUID) {
     hand_t::const_iterator lSpell;
     for (lSpell = mHand.begin(); lSpell != mHand.end(); ++lSpell)
@@ -65,4 +71,23 @@ namespace Pixy
 
     return 0;
   }
+	void CPuppet::attachSpell(CSpell* inSpell)
+	{
+		mHand.push_back(inSpell);
+		std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
+	};
+
+	void CPuppet::detachSpell(CSpell* inSpell)
+	{
+		//int i=0;
+		hand_t::iterator it;
+		for(it = mHand.begin(); it != mHand.end(); ++it)
+			if ((*it)->getUID() == inSpell->getUID())
+			{
+				mHand.erase(it);
+				break;
+			}
+
+    delete inSpell;
+	};
 } // end of namespace
