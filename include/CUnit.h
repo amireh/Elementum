@@ -2,7 +2,6 @@
 #define H_CUnit_H
 
 #include "Unit.h"
-#include "Renderable.h"
 #include <list>
 #include <vector>
 
@@ -11,6 +10,7 @@ using std::vector;
 namespace Pixy
 {
 
+  class Renderable;
 	class CUnit : public Unit
 	{
 	public:

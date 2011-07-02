@@ -9,10 +9,22 @@
 
 #include "GfxEngine.h"
 #include "GameManager.h"
+#include "EventManager.h"
 #include "CPuppet.h"
 #include "Renderable.h"
 #include "Combat.h"
 #include "UIEngine.h"
+
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+#include <CEGUIBase/CEGUI.h>
+#include <CEGUIBase/CEGUISystem.h>
+#include <CEGUIBase/CEGUISchemeManager.h>
+#else
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUISchemeManager.h>
+#include <CEGUI/CEGUIInputEvent.h>
+#endif
 
 #include <Ogre.h>
 #include <OGRE/Terrain/OgreTerrain.h>
@@ -840,10 +852,10 @@ namespace Pixy {
 
     // Setup the ray scene query, use CEGUI's mouse position
     Ogre::Ray mouseRay =
-    mCamera->getCameraToViewportRay(
-      mousePos.d_x/float(e.state.width),
-      mousePos.d_y/float(e.state.height)
-    );
+      mCamera->getCameraToViewportRay(
+        mousePos.d_x/float(e.state.width),
+        mousePos.d_y/float(e.state.height)
+      );
 
     Ogre::RaySceneQuery *mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
     mRaySceneQuery->setRay(mouseRay);

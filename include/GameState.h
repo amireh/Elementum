@@ -14,12 +14,7 @@
 #define H_GameState_H
 
 #include "Pixy.h"
-#include <OIS/OISMouse.h>
-#include <OIS/OISKeyboard.h>
-#include <CEGUI/CEGUIInputEvent.h>
-//#include "UIEngine.h"
-//#include "GfxEngine.h"
-
+#include "InputListener.h"
 
 namespace Pixy
 {
@@ -27,7 +22,7 @@ namespace Pixy
      *  \brief
      *  Defines general behaviour of game states such as the Main Menu, and Combat.
      */
-	class GameState {
+	class GameState : public InputListener {
 
 	public:
 		~GameState(){ };
@@ -46,7 +41,7 @@ namespace Pixy
 		virtual void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )  = 0;
 		virtual void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) = 0;
 
-		virtual CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID);
+		//virtual CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID);
 
 		void changeState( GameState *state );
 		void pushState( GameState *state );

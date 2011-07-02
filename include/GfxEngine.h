@@ -12,10 +12,9 @@
 
 #include "Engine.h"
 #include "EventListener.h"
-//#include "InputManager.h"
+#include "InputListener.h"
 
 #include <Ogre.h>
-#include <OIS.h>
 // forward declarations
 /*namespace Ogre {
   class Root;
@@ -53,14 +52,14 @@ namespace Pixy {
 
 
   class Renderable;
-
+  class EventManager;
 	/*! \class GfxEngine
 	 *	\brief
 	 *	Handles all graphics related features of the game, acts as the immediate
 	 *	wrapper over OGRE3D. The game scene is entirely managed by and through
 	 *	this Engine.
 	 */
-	class GfxEngine : public Engine, public EventListener {
+	class GfxEngine : public Engine, public EventListener, public InputListener {
 
 	public:
 		virtual ~GfxEngine();

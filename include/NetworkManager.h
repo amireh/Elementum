@@ -13,30 +13,11 @@
 #include <iostream>
 
 #include "PixyLog.h"
-//#include "Event.hpp"
 #include "EventListener.h"
-//#include "EventProcessor.h"
 
-//#include "RakNetworkFactory.h"
-//#include "RakPeerInterface.h"
-//#include "MessageIdentifiers.h"
-//#include "NetworkIDManager.h"
-//#include "GetTime.h"
-//#include "BitStream.h"
-//#include "RakString.h"
-//#include "RakNetTypes.h"
-
-//#undef __BITSTREAM_NATIVE_END
-
-//using RakNet::BitStream;
-//using RakNet::RakPeerInterface;
-//using RakNet::SocketDescriptor;
-//using RakNet::NetworkIDManager;
-//using RakNet::RakNetGUID;
-//using RakNet::SystemAddress;
 namespace Pixy {
 
-	//class EventProcessor;
+	class EventManager;
 	class Event;
 
 	/*! \class NetworkManager

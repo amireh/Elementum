@@ -3,7 +3,7 @@
 
 #include "Pixy.h"
 #include "ResourceManager.h"
-//#include "CPuppet.h"
+#include "CPuppet.h"
 #include "CSpell.h"
 #include "CUnit.h"
 //#include "CDeck.h"
@@ -14,7 +14,6 @@ using std::list;
 using std::istringstream;
 namespace Pixy
 {
-  class CPuppet;
   //class CSpell;
   //class CUnit;
   class CDeck;

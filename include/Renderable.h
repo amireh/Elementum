@@ -14,11 +14,14 @@
 #define H_Renderable_H
 
 #include "Pixy.h"
-#include "Entity.h"
-#include "Ogre.h"
 
+namespace Ogre {
+  class SceneNode;
+  class MovableObject;
+}
 namespace Pixy
 {
+  class Entity;
 	/*! \class Entity Entity.h "src/Entity.h"
 	 *
 	 * \brief Defines base attributes and actions for GameObjects.

@@ -25,8 +25,7 @@
 #define H_GameManager_H
 
 #include "Pixy.h"
-#include "PixyPlatform.h"
-//#include "CResourceManager.h"
+#include "InputManager.h"
 
 // OGRE
 #include <Ogre.h>
@@ -38,14 +37,10 @@
 #include "OSX/macUtils.h"
 #endif
 
-#include "InputManager.h"
 
-#include "log4cpp/Category.hh"
-#include "log4cpp/FileAppender.hh"
-#include "log4cpp/SimpleLayout.hh"
 
-#include "map"
 
+#include <map>
 namespace Pixy
 {
   typedef std::map<std::string, std::string> tPixySettings;

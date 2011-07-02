@@ -2,9 +2,12 @@
 #include "GameManager.h"
 #include "EventManager.h"
 #include "NetworkManager.h"
-#include "Puppet.h"
-#include "Deck.h"
-#include "Spell.h"
+#include "UIEngine.h"
+#include "GfxEngine.h"
+#include "ScriptEngine.h"
+#include "CPuppet.h"
+#include "CDeck.h"
+#include "CSpell.h"
 #include "Combat.h"
 
 using namespace Ogre;
@@ -45,9 +48,6 @@ namespace Pixy
 
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
-
-		// grab CEGUI handle
-		mUISystem = &CEGUI::System::getSingleton();
 
 		// start the interface chain
 		mScriptEngine->runScript("intro/main_menu.lua");
@@ -108,14 +108,10 @@ namespace Pixy
 	void Intro::keyPressed( const OIS::KeyEvent &e )
 	{
 
-		mUISystem->injectKeyDown(e.key);
-		mUISystem->injectChar(e.text);
 
 	}
 
 	void Intro::keyReleased( const OIS::KeyEvent &e ) {
-
-		mUISystem->injectKeyUp(e.key);
 
 		switch (e.key) {
 			case OIS::KC_ESCAPE:
@@ -132,15 +128,13 @@ namespace Pixy
 	void Intro::mouseMoved( const OIS::MouseEvent &e )
 	{
 		// Update CEGUI with the mouse motion
-		mUISystem->injectMouseMove(e.state.X.rel, e.state.Y.rel);
+
 	}
 
 	void Intro::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		mUISystem->injectMouseButtonDown(convertButton(id));
 	}
 
 	void Intro::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		mUISystem->injectMouseButtonUp(convertButton(id));
 	}
 
 	void Intro::pause( void ) {

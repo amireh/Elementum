@@ -1,4 +1,9 @@
 #include "CSpell.h"
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+#include "CEGUIBase/CEGUIBase.h"
+#else
+#include "CEGUI/CEGUIBase.h"
+#endif
 //#include "Combat.h"
 //#include "Entity.h"
 //#include "Puppet.h"

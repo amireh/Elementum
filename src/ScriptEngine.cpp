@@ -8,15 +8,16 @@
  */
 
 #include "ScriptEngine.h"
+#include "GameState.h"
 #include "EventManager.h"
 #include "tolua++.h"
 #include "GameManager.h"
-#include "UIEngine.h"
-#include "CPuppet.h"
-//#include <CEGUIBase/CEGUISystem.h>
-//#include <CEGUIBase/CEGUIExceptions.h>
+//#include "CPuppet.h"
+#include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
+#include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUIExceptions.h>
 //#include "EntityEvent.h"
-#include "Combat.h"
+//#include "Combat.h"
 #include <stdarg.h>
 
 TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);

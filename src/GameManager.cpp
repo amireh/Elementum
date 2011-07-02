@@ -23,12 +23,14 @@
 
 #include "GameManager.h"
 #include "GameState.h"
+#include "EventManager.h"
 #include "Intro.h"
 #include "Combat.h"
 #include "log4cpp/PixyLogLayout.h"
 
 #include "UIEngine.h"
 #include "GfxEngine.h"
+#include "ScriptEngine.h"
 #include "NetworkManager.h"
 #include "InputManager.h"
 #include "CResourceManager.h"

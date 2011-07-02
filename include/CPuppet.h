@@ -16,7 +16,6 @@ namespace Pixy
 
   class CDeck;
   class CUnit;
-  class CSpell;
   class Renderable;
   /*! \class CPuppet CPuppet.h "src/CPuppet.h"
    *  \brief Represents Combat CPuppet GameObject

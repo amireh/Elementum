@@ -1,8 +1,9 @@
 // Renderable.cpp
 #include "Renderable.h"
 #include "PixyUtility.h"
+#include "Entity.h"
+#include <Ogre.h>
 #include <cstring>
-#include "Ogre.h"
 
 namespace Pixy
 {

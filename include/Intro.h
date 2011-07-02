@@ -14,22 +14,25 @@
 #define H_Intro_H
 
 #include "GameState.h"
-#include "NetworkManager.h"
-#include "UIEngine.h"
-#include "GfxEngine.h"
-#include "ScriptEngine.h"
-//#include "Player.h"
+#include "EventListener.h"
 #include <map>
 #include <list>
 
 namespace Pixy
 {
-    /*! \class Intro
-     *  \brief
-     *  Main Menu state, handles non-Combat game tasks.
-     */
 
-
+  class Engine;
+  class GfxEngine;
+  class UIEngine;
+  class ScriptEngine;
+  class EventManager;
+  class NetworkManager;
+  class CPuppet;
+  /*!
+   * @class Intro
+   * @brief
+   * Main Menu state, handles non-Combat game tasks.
+   */
 	class Intro : public GameState, public EventListener {
 	public:
 
@@ -61,7 +64,6 @@ namespace Pixy
 		GfxEngine		*mGfxEngine;
 		UIEngine		*mUIEngine;
 		ScriptEngine	*mScriptEngine;
-		CEGUI::System	*mUISystem;
 		EventManager	*mEvtMgr;
 		NetworkManager  *mNetMgr;
 		//Player			*mPlayer;

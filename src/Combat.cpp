@@ -182,9 +182,9 @@ namespace Pixy
 
     processEvents();
 
-		mGfxEngine->update(lTimeElapsed);
-		mScriptEngine->update(lTimeElapsed);
-		mUIEngine->update(lTimeElapsed);
+		//mGfxEngine->update(lTimeElapsed);
+		//mScriptEngine->update(lTimeElapsed);
+		//mUIEngine->update(lTimeElapsed);
 
 		/*for (mUpdater = mUpdateQueue.begin();
 			 mUpdater != mUpdateQueue.end();

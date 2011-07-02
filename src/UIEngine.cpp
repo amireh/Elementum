@@ -8,8 +8,23 @@
  */
 
 #include "UIEngine.h"
-#include "ScriptEngine.h"
-#include "Combat.h"
+#include "EventManager.h"
+// CEGUI
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+#include <CEGUIBase/CEGUI.h>
+#include <CEGUIBase/CEGUISystem.h>
+#include <CEGUIBase/CEGUISchemeManager.h>
+//#include "CEGUIBase/ScriptingModules/LuaScriptModule/CEGUILua.h"
+#include "CEGUIBase/RendererModules/Ogre/CEGUIOgreRenderer.h"
+#else
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUISchemeManager.h>
+//#include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
+#include "CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h"
+#endif
+#include <Ogre.h>
+//#include "Combat.h"
 
 namespace Pixy {
 	UIEngine* UIEngine::_myUIEngine = NULL;

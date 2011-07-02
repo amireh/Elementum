@@ -4,13 +4,11 @@
 #include "Pixy.h"
 #include "Spell.h"
 
-#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-#include "CEGUIBase/CEGUIBase.h"
-#else
-#include "CEGUI/CEGUIBase.h"
-#endif
 #include <string>
 
+namespace CEGUI {
+  class Window;
+}
 using std::string;
 namespace Pixy
 {

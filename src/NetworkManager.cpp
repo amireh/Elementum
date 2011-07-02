@@ -8,6 +8,7 @@
  */
 
 #include "NetworkManager.h"
+#include "EventManager.h"
 #include "Archiver.h"
 #include "GameManager.h"
 #include "Combat.h"

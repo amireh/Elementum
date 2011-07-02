@@ -2,8 +2,7 @@
  *  Filename: InputManager.h
  *  Date Created: ??/2009
  *
- *  Original Author:
- *      IMPORTANT : GET AUTHOR NAME FROM OGRE WIKI
+ *  Original Author: spacegaier <http://www.spacegaier.de>
  *
  *  Last Update:
  *      Date:   20/4/2009
@@ -13,16 +12,18 @@
 #ifndef H_InputManager_H
 #define H_InputManager_H
 
-#ifndef H_Pixy_H
 #include "Pixy.h"
-#endif
 
 // OIS
 #include <OIS/OIS.h>
 #include <OIS/OISMouse.h>
 #include <OIS/OISKeyboard.h>
 #include <OIS/OISInputManager.h>
-#include <Ogre.h>
+
+namespace Ogre {
+  class RenderWindow;
+}
+
 namespace Pixy
 {
     /*! \class InputManager
@@ -35,7 +36,7 @@ namespace Pixy
 
 			//! Initializes OIS input system and sets Ogre window as the event capturing context.
 			void initialise( Ogre::RenderWindow *renderWindow );
-		
+
 			//! Grabs the input & dispatches events
 			void capture( void );
 

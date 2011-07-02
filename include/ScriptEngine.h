@@ -13,9 +13,10 @@
 
 #include "Engine.h"
 #include "EventListener.h"
-//#include "CPuppet.h"
-#include <Ogre.h>
-#include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
+
+namespace CEGUI {
+  class LuaScriptModule;
+}
 // LUA
 extern "C" {
 	#include "lua.h"

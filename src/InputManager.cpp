@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <Ogre.h>
 
 namespace Pixy
 {
