@@ -2,9 +2,9 @@
 #define H_CPuppet_H
 
 #include "Puppet.h"
-#include "Renderable.h"
-#include "CDeck.h"
-#include "CUnit.h"
+//#include "Renderable.h"
+//#include "CDeck.h"
+//#include "CUnit.h"
 #include "CSpell.h"
 #include <list>
 #include <vector>
@@ -13,6 +13,11 @@ using std::list;
 using std::vector;
 namespace Pixy
 {
+
+  class CDeck;
+  class CUnit;
+  class CSpell;
+  class Renderable;
   /*! \class CPuppet CPuppet.h "src/CPuppet.h"
    *  \brief Represents Combat CPuppet GameObject
    */

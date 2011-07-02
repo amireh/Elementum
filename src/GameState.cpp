@@ -1,5 +1,12 @@
 #include "GameState.h"
+#include "GameManager.h"
 #include "EventManager.h"
+#include "InputManager.h"
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include "CEGUIBase/CEGUI.h"
+#else
+#include "CEGUI/CEGUI.h"
+#endif
 
 namespace Pixy
 {

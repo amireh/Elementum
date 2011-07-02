@@ -26,7 +26,7 @@
 
 #include "Pixy.h"
 #include "PixyPlatform.h"
-#include "CResourceManager.h"
+//#include "CResourceManager.h"
 
 // OGRE
 #include <Ogre.h>
@@ -49,6 +49,9 @@
 namespace Pixy
 {
   typedef std::map<std::string, std::string> tPixySettings;
+
+  //class InputManager;
+  class CResourceManager;
 	class GameState;
 	/*! \class GameManager
 	 *  \brief

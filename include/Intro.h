@@ -18,7 +18,6 @@
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "ScriptEngine.h"
-#include "PuppetFactory.h"
 //#include "Player.h"
 #include <map>
 #include <list>

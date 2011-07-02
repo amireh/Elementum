@@ -8,7 +8,14 @@
  */
 
 #include "Combat.h"
+#include "GameManager.h"
 #include "Intro.h"
+#include "CPuppet.h"
+#include "EventManager.h"
+#include "NetworkManager.h"
+#include "UIEngine.h"
+#include "GfxEngine.h"
+#include "ScriptEngine.h"
 
 namespace Pixy
 {
@@ -52,8 +59,6 @@ namespace Pixy
 		mUIEngine = UIEngine::getSingletonPtr();
 		mUIEngine->setup();
 
-		// grab CEGUI handle
-		mUISystem = &CEGUI::System::getSingleton();
 
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
@@ -64,11 +69,11 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    bindToName("JoinQueue", this, &Combat::evtJoinQueue);
-    bindToName("MatchFound", this, &Combat::evtMatchFound);
-    bindToName("CreatePuppets", this, &Combat::evtCreatePuppets);
-    bindToName("StartTurn", this, &Combat::evtStartTurn);
-    bindToName("TurnStarted", this, &Combat::evtTurnStarted);
+    //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
+    //bindToName("MatchFound", this, &Combat::evtMatchFound);
+    //bindToName("CreatePuppets", this, &Combat::evtCreatePuppets);
+    //bindToName("StartTurn", this, &Combat::evtStartTurn);
+    //bindToName("TurnStarted", this, &Combat::evtTurnStarted);
 
     /*CSpell* boo = new CSpell();
     boo->setName("HEHE");
@@ -139,7 +144,7 @@ namespace Pixy
 				break;
       case OIS::KC_RETURN:
         if (mActivePuppet == mPuppet)
-          mEvtMgr->hook(mEvtMgr->createEvt("EndTurn"));
+          //mEvtMgr->hook(mEvtMgr->createEvt("EndTurn")); //__DISABLED__
       break;
 		}
 
@@ -223,7 +228,7 @@ namespace Pixy
   CPuppet* Combat::getPuppet(int inUID) {
     puppets_t::const_iterator itr;
     for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
-      if ((*itr)->getObjectId() == inUID)
+      if ((*itr)->getUID() == inUID)
         return *itr;
 
     return 0;
@@ -235,7 +240,7 @@ namespace Pixy
 
   bool Combat::evtJoinQueue(Event* inEvt) {
     // store the name of the puppet the player joined the queue with
-    if (inEvt->getFeedback() == EVT_OK) {
+    if (inEvt->Feedback == EventFeedback::Ok) {
       mPuppetName = inEvt->getProperty("PuppetName");
       mLog->infoStream() << "joined queue with puppet " << mPuppetName;
     }
@@ -268,13 +273,13 @@ namespace Pixy
       mGfxEngine->attachToScene((*itr)->getRenderable());
     }
 
-    mEvtMgr->hook(mEvtMgr->createEvt("Ready"));
+    //mEvtMgr->hook(mEvtMgr->createEvt("Ready")); __DISABLED__
     return true;
   }
 
   bool Combat::evtStartTurn(Event* inEvt) {
     // acknowledge the order
-    mEvtMgr->hook(mEvtMgr->createEvt("StartTurn"));
+    //mEvtMgr->hook(mEvtMgr->createEvt("StartTurn")); __DISABLED__
 
     mActivePuppet = mPuppet;
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
@@ -295,6 +300,7 @@ namespace Pixy
     return true;
   }
 
+#if 0
   void Combat::pktDrawSpells(RakNet::Packet* inPkt) {
     using RakNet::BitStream;
     using RakNet::RakString;
@@ -387,4 +393,5 @@ namespace Pixy
       }
     }
   }
+#endif //__DISABLED__
 } // end of namespace

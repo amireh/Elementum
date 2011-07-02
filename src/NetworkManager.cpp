@@ -12,12 +12,12 @@
 #include "GameManager.h"
 #include "Combat.h"
 
-using RakNet::BitStream;
-using RakNet::RakPeerInterface;
-using RakNet::SocketDescriptor;
-using RakNet::NetworkIDManager;
-using RakNet::RakNetGUID;
-using RakNet::SystemAddress;
+//~ using RakNet::BitStream;
+//~ using RakNet::RakPeerInterface;
+//~ using RakNet::SocketDescriptor;
+//~ using RakNet::NetworkIDManager;
+//~ using RakNet::RakNetGUID;
+//~ using RakNet::SystemAddress;
 namespace Pixy {
 
 	NetworkManager* NetworkManager::mInstance = NULL;
@@ -25,24 +25,24 @@ namespace Pixy {
 	NetworkManager::NetworkManager() {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "NetMgr");
 
-		mPktProcessor = new PacketProcessor(mLog);
+		//~ mPktProcessor = new EventProcessor(mLog);
 
 		fOnline = false;
     fGameDataReceived = false;
 
 		mEvtMgr = EventManager::getSingletonPtr();
 		// we'll be handling the EVT_REQ events (outgoing to server)
-		mEvtMgr->subscribeNetworkDispatcher(this);
+		//~ mEvtMgr->subscribeNetworkDispatcher(this);
 
-		// fire up our RakPeerInterface and its socket
-		mPeer = RakNet::RakPeerInterface::GetInstance();
-		//mPeer->SetNetworkIDManager(&mNetIDMgr);
-		mSock = new SocketDescriptor();
-		//mPeer->Startup(1, 10, mSock, 1);
-		mPeer->Startup(1, mSock, 1);
-
-		bindEventHandlers();
-		bindPacketHandlers();
+		//~ // fire up our RakPeerInterface and its socket
+		//~ mPeer = RakNet::RakPeerInterface::GetInstance();
+		//~ //mPeer->SetNetworkIDManager(&mNetIDMgr);
+		//~ mSock = new SocketDescriptor();
+		//~ //mPeer->Startup(1, 10, mSock, 1);
+		//~ mPeer->Startup(1, mSock, 1);
+//~
+		//~ bindEventHandlers();
+		//~ bindEventHandlers();
 
 		mLog->infoStream() << "up and running";
 	}
@@ -53,12 +53,12 @@ namespace Pixy {
 
 
 
-		if (mPktProcessor)
-			delete mPktProcessor;
+		//~ if (mPktProcessor)
+			//~ delete mPktProcessor;
 
-		RakNet::RakPeerInterface::DestroyInstance(mPeer);
+		//~ RakNet::RakPeerInterface::DestroyInstance(mPeer);
 
-		mPktProcessor = 0;
+		//~ mPktProcessor = 0;
 
 		mLog->infoStream() << "shutting down";
 		if (mLog)
@@ -74,22 +74,21 @@ namespace Pixy {
 		return mInstance;
 	}
 
-	void NetworkManager::bindEventHandlers() {
-		bindToAll<NetworkManager>(this, &NetworkManager::dispatchToServer);
-		bindToName("Logout", this, &NetworkManager::evtLogout);
-		bindToName("Login", this, &NetworkManager::evtLogin);
-    //bindToName("Connected", this, &NetworkManager::evtLogout);
-	}
 
-	void NetworkManager::bindPacketHandlers() {
-		mPktHandlers.insert(make_pair((MessageID)ID_EVENT, &NetworkManager::eventReceived));
-		mPktHandlers.insert(make_pair((MessageID)ID_ENTITY_EVENT, &NetworkManager::eventReceived));
-    mPktHandlers.insert(make_pair((MessageID)ID_LOGIN_EVENT, &NetworkManager::eventReceived));
-    mPktHandlers.insert(make_pair((MessageID)ID_FETCH_GAME_DATA, &NetworkManager::gameDataReceived));
-    mPktHandlers.insert(make_pair((MessageID)ID_FETCH_PUPPETS, &NetworkManager::puppetDataReceived));
-    mPktHandlers.insert(make_pair((MessageID)ID_DRAW_SPELLS, &NetworkManager::passDrawSpells));
-		mPktHandlers.insert(make_pair(ID_CONNECTION_REQUEST_ACCEPTED, &NetworkManager::connAccepted));
-		mPktHandlers.insert(make_pair(ID_CONNECTION_ATTEMPT_FAILED, &NetworkManager::connFailed));
+	void NetworkManager::bindEventHandlers() {
+		//~ bindToAll<NetworkManager>(this, &NetworkManager::dispatchToServer);
+		//~ bindToName("Logout", this, &NetworkManager::evtLogout);
+		//~ bindToName("Login", this, &NetworkManager::evtLogin);
+    //bindToName("Connected", this, &NetworkManager::evtLogout);
+
+		//~ mPktHandlers.insert(make_pair((MessageID)ID_EVENT, &NetworkManager::eventReceived));
+		//~ mPktHandlers.insert(make_pair((MessageID)ID_ENTITY_EVENT, &NetworkManager::eventReceived));
+    //~ mPktHandlers.insert(make_pair((MessageID)ID_LOGIN_EVENT, &NetworkManager::eventReceived));
+    //~ mPktHandlers.insert(make_pair((MessageID)ID_FETCH_GAME_DATA, &NetworkManager::gameDataReceived));
+    //~ mPktHandlers.insert(make_pair((MessageID)ID_FETCH_PUPPETS, &NetworkManager::puppetDataReceived));
+    //~ mPktHandlers.insert(make_pair((MessageID)ID_DRAW_SPELLS, &NetworkManager::passDrawSpells));
+		//~ mPktHandlers.insert(make_pair(ID_CONNECTION_REQUEST_ACCEPTED, &NetworkManager::connAccepted));
+		//~ mPktHandlers.insert(make_pair(ID_CONNECTION_ATTEMPT_FAILED, &NetworkManager::connFailed));
 	}
 
 	bool NetworkManager::connect() {
@@ -98,7 +97,7 @@ namespace Pixy {
 
     mLog->infoStream() << "Connecting to server";
 
-		mPeer->Connect(SERVER_ADDRESS, SERVER_PORT,0,0);
+		//~ mPeer->Connect(SERVER_ADDRESS, SERVER_PORT,0,0);
 
 		return true;
 	}
@@ -109,25 +108,25 @@ namespace Pixy {
 
     mLog->infoStream() << "Disconnecting from server";
 
-    mPeer->CloseConnection(mServerAddr, true);
-    sleep(1);
-		RakNet::RakPeerInterface::DestroyInstance(mPeer);
-		mPeer = 0;
+    //~ mPeer->CloseConnection(mServerAddr, true);
+    //~ sleep(1);
+		//~ RakNet::RakPeerInterface::DestroyInstance(mPeer);
+		//~ mPeer = 0;
 		fOnline = false;
 		return true;
 	}
 
 	bool NetworkManager::evtLogin(Event* inEvt) {
-    if (inEvt->getType() == EVT_RESP && inEvt->getFeedback() == EVT_OK && !fGameDataReceived)
-    {
-      // download latest game data
-      mStream.Reset();
-      mStream.AssertStreamEmpty();
-      mStream.Write<MessageID>(ID_FETCH_GAME_DATA);
-      mPeer->Send(&mStream, HIGH_PRIORITY, RELIABLE, 0, mServerAddr, false);
-
-      fGameDataReceived = true;
-    }
+    //~ if (inEvt->getType() == EVT_RESP && inEvt->getFeedback() == EVT_OK && !fGameDataReceived)
+    //~ {
+      //~ // download latest game data
+      //~ mStream.Reset();
+      //~ mStream.AssertStreamEmpty();
+      //~ mStream.Write<MessageID>(ID_FETCH_GAME_DATA);
+      //~ mPeer->Send(&mStream, HIGH_PRIORITY, RELIABLE, 0, mServerAddr, false);
+//~
+      //~ fGameDataReceived = true;
+    //~ }
 
 		return true;
 	}
@@ -142,84 +141,85 @@ namespace Pixy {
 
 	bool NetworkManager::dispatchToServer(Event* inEvt) {
 
-		if (!fOnline)
-			return true;
-
-		if (inEvt->getType() == EVT_RESP || inEvt->isLocal())
-			return true;
-
-		mStream.Reset();
-		mPktProcessor->dumpEvent(inEvt, mStream);
-
-		//mLog->infoStream() << "sending pkt to server data with length " << mStream.GetNumberOfBytesUsed();
-		mPeer->Send(&mStream, HIGH_PRIORITY, RELIABLE, 0, mServerAddr, false);
-
-		mStream.Reset();
-		mStream.AssertStreamEmpty();
+		//~ if (!fOnline)
+			//~ return true;
+//~
+		//~ if (inEvt->getType() == EVT_RESP || inEvt->isLocal())
+			//~ return true;
+//~
+		//~ mStream.Reset();
+		//~ mPktProcessor->dumpEvent(inEvt, mStream);
+//~
+		//~ //mLog->infoStream() << "sending pkt to server data with length " << mStream.GetNumberOfBytesUsed();
+		//~ mPeer->Send(&mStream, HIGH_PRIORITY, RELIABLE, 0, mServerAddr, false);
+//~
+		//~ mStream.Reset();
+		//~ mStream.AssertStreamEmpty();
 
 		return true;
 	}
 
-	void NetworkManager::eventReceived(Packet* inPkt) {
-		Event* lEvt = mPktProcessor->parseEvent(mPacket);
-		mEvtMgr->hook(lEvt);
-		lEvt = 0;
+	void NetworkManager::eventReceived(Event* inPkt) {
+		//~ Event* lEvt = mPktProcessor->parseEvent(mEvent);
+		//~ mEvtMgr->hook(lEvt);
+		//~ lEvt = 0;
 	}
 
 
-	void NetworkManager::connAccepted(Packet* inPkt) {
-		mServerAddr = mPacket->systemAddress;
-		mServerGUID = mPacket->guid;
-		mGUID = mPeer->GetGuidFromSystemAddress(RakNet::UNASSIGNED_SYSTEM_ADDRESS);
-		mLog->infoStream() << "Connected to Server! my guid is " << mGUID.ToString();
+	void NetworkManager::connAccepted(Event* inPkt) {
+		//~ mServerAddr = mEvent->systemAddress;
+		//~ mServerGUID = mEvent->guid;
+		//~ mGUID = mPeer->GetGuidFromSystemAddress(RakNet::UNASSIGNED_SYSTEM_ADDRESS);
+		//~ mLog->infoStream() << "Connected to Server! my guid is " << mGUID.ToString();
 		{
 			// notify components that we're connected
-			Event* lEvt = mEvtMgr->createEvt("Connected", true);
-			mEvtMgr->hook(lEvt);
-			lEvt = NULL;
+			//~ Event* lEvt = mEvtMgr->createEvt("Connected", true);
+			//~ mEvtMgr->hook(lEvt);
+			//~ lEvt = NULL;
 		}
 		fOnline = true;
 	}
 
-	void NetworkManager::connFailed(Packet* inPkt) {
+	void NetworkManager::connFailed(Event* inPkt) {
 		mLog->infoStream() << "Connection Failed!";
 		fOnline = false;
 	}
 
 	void NetworkManager::update() {
-
+/*
 		if (!mPeer)
 			return;
 
-		mPacket = mPeer->Receive();
+		mEvent = mPeer->Receive();
 
-		while (mPacket) {
-      mLog->debugStream() << "received a packet with id " << (int)mPktProcessor->getPacketIdentifier(mPacket);
+		while (mEvent) {
+      mLog->debugStream() << "received a Event with id " << (int)mPktProcessor->getEventIdentifier(mEvent);
 			// the hideous unreadability of the following line is due to
 			// aggressive optimization. what it basically does is it retrieves
-			// our packet handler from the map, then dereferences it and
-			// passes it our packet
-			if (mPktHandlers.find(mPktProcessor->getPacketIdentifier(mPacket)) != mPktHandlers.end())
-				(this->*(mPktHandlers.find(mPktProcessor->getPacketIdentifier(mPacket))->second))(mPacket);
+			// our Event handler from the map, then dereferences it and
+			// passes it our Event
+			if (mPktHandlers.find(mPktProcessor->getEventIdentifier(mEvent)) != mPktHandlers.end())
+				(this->*(mPktHandlers.find(mPktProcessor->getEventIdentifier(mEvent))->second))(mEvent);
 
-			mPeer->DeallocatePacket(mPacket);
-			mPacket = 0;
+			mPeer->DeallocateEvent(mEvent);
+			mEvent = 0;
 		}
 
 		//if (!fOnline)
 		//	return;
 
-		processEvents();
+		processEvents();*/
 	}
 
-	void NetworkManager::gameDataReceived(Packet* inPkt) {
+#if 0 // __DISABLED__ no longer usign raknet
+	void NetworkManager::gameDataReceived(Event* inPkt) {
     using std::string;
     using std::vector;
 
     mLog->infoStream() << "received game data, populating Resource Manager...";
 
     BitStream lStream(inPkt->data, inPkt->length, false);
-		unsigned char lPktId = mPktProcessor->getPacketIdentifier(inPkt);
+		unsigned char lPktId = mPktProcessor->getEventIdentifier(inPkt);
 
     lStream.IgnoreBytes(1);
 
@@ -249,7 +249,7 @@ namespace Pixy {
 
     string raw2str(raw.begin(), raw.end());
 
-    std::cout << "packet size: "<< inPkt->length << ", compressed stream size: " << buflen << ", raw stream size: " << raw.size() << "\n";
+    std::cout << "Event size: "<< inPkt->length << ", compressed stream size: " << buflen << ", raw stream size: " << raw.size() << "\n";
     //std::cout << "Uncompressed puppet data: " << raw2str << "\n";
 
     std::istringstream datastream(raw2str);
@@ -264,12 +264,12 @@ namespace Pixy {
 
 	}
 
-	void NetworkManager::puppetDataReceived(Packet* inPkt) {
+	void NetworkManager::puppetDataReceived(Event* inPkt) {
     using std::string;
     using std::vector;
 
     BitStream lStream(inPkt->data, inPkt->length, false);
-		unsigned char lPktId = mPktProcessor->getPacketIdentifier(inPkt);
+		unsigned char lPktId = mPktProcessor->getEventIdentifier(inPkt);
 
     lStream.IgnoreBytes(1);
 
@@ -299,7 +299,7 @@ namespace Pixy {
 
     string raw2str(raw.begin(), raw.end());
 
-    std::cout << "packet size: "<< inPkt->length << ", compressed stream size: " << buflen << ", raw stream size: " << raw.size() << "\n";
+    std::cout << "Event size: "<< inPkt->length << ", compressed stream size: " << buflen << ", raw stream size: " << raw.size() << "\n";
     //std::cout << "Uncompressed puppet data: " << raw2str << "\n";
 
     std::istringstream datastream(raw2str);
@@ -322,7 +322,8 @@ namespace Pixy {
     free(sum);
 	}
 
-  void NetworkManager::passDrawSpells(Packet* inPkt) {
+  void NetworkManager::passDrawSpells(Event* inPkt) {
     Combat::getSingleton().pktDrawSpells(inPkt);
   }
+#endif // __DISABLED__
 }

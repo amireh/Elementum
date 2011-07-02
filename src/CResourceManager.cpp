@@ -1,4 +1,8 @@
 #include "CResourceManager.h"
+#include "CPuppet.h"
+#include "CSpell.h"
+#include "CUnit.h"
+#include "CDeck.h"
 
 using std::vector;
 using std::string;
@@ -126,7 +130,7 @@ namespace Pixy {
       assert(elements.size() == 7);
 
       lPuppet->setName(elements[0]);
-      lPuppet->setObjectId(atoi(elements[1].c_str()));
+      lPuppet->setUID(atoi(elements[1].c_str()));
       lPuppet->setRace((RACE)atoi(elements[2].c_str()));
       lPuppet->setLevel(atoi(elements[3].c_str()));
       lPuppet->setIntelligence(atoi(elements[4].c_str()));

@@ -9,8 +9,17 @@
 
 #include "GfxEngine.h"
 #include "GameManager.h"
+#include "CPuppet.h"
+#include "Renderable.h"
 #include "Combat.h"
 #include "UIEngine.h"
+
+#include <Ogre.h>
+#include <OGRE/Terrain/OgreTerrain.h>
+#include <OGRE/Terrain/OgreTerrainGroup.h>
+#include <OGRE/Plugins/OctreeSceneManager/OgreOctreeSceneManager.h>
+#include <OGRE/Plugins/Hydrax/Hydrax.h>
+#include <OGRE/Plugins/Caelum/Caelum.h>
 #include "Plugins/Hydrax/Hydrax.h"
 #include "Plugins/Hydrax/Noise/FFT/FFT.h"
 #include "Plugins/Hydrax/Noise/Perlin/Perlin.h"
@@ -19,7 +28,12 @@
 #include "Plugins/Hydrax/Modules/RadialGrid/RadialGrid.h"
 #include "Plugins/Hydrax/Modules/SimpleGrid/SimpleGrid.h"
 #include "Plugins/Caelum/CaelumSystem.h"
-#include "HelperLogics.h"
+
+#include "dotscene/DotSceneLoader.h"
+#include "ogre/HelperLogics.h"
+#include "ogre/SdkCameraMan.h"
+#include "ogre/HDRCompositor.h"
+
 namespace Pixy {
 
 	GfxEngine* GfxEngine::_myGfxEngine = NULL;
@@ -93,7 +107,7 @@ namespace Pixy {
 		/*if (GameManager::getSingleton().currentState()->getId() == STATE_COMBAT)
 		  setupCombat();*/
 
-		bindToName("EntitySelected", this, &GfxEngine::evtEntitySelected);
+		//bindToName("EntitySelected", this, &GfxEngine::evtEntitySelected); // __DISABLED__
 
 		mUpdate = &GfxEngine::updateNothing;
 		mSelected = 0;
@@ -663,7 +677,7 @@ namespace Pixy {
       String entityName = "", nodeName = "", ownerName = "";
 
       //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
-      //ownerName = stringify(inEntity->getObjectId());
+      //ownerName = stringify(inEntity->getUID());
       ownerName = inEntity->getOwner()->getName();
       if (isPuppet)
       {
@@ -688,7 +702,7 @@ namespace Pixy {
       };
 
       // handle units
-      entityName = ownerName + "_entity_" + stringify<int>(inEntity->getObjectId());
+      entityName = ownerName + "_entity_" + stringify<int>(inEntity->getUID());
       // now we need to locate the nearest empty SceneNode
       // to render our Entity in
       int idNode;
@@ -747,9 +761,9 @@ namespace Pixy {
     {
       Entity* inEntity = inRenderable.getEntity();
 
-      Ogre::String ownerName = stringify(inEntity->getObjectId());// == ID_HOST) ? "host" : "client";
+      Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
       Ogre::String nodeName = ownerName + "_node_";
-      Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getObjectId());
+      Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());
       Ogre::SceneNode* mTmpNode = NULL;
 
         //for (int i=0; i<10; i++)
@@ -847,9 +861,10 @@ namespace Pixy {
          (itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "") {
 
-        Event* lEvt = mEvtMgr->createEvt("EntitySelected", true);
-        lEvt->setAny((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
-        mEvtMgr->hook(lEvt);
+        // __DISABLED__
+        //~ Event* lEvt = mEvtMgr->createEvt("EntitySelected", true);
+        //~ lEvt->setAny((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
+        //~ mEvtMgr->hook(lEvt);
 
         break;
 
@@ -906,14 +921,15 @@ namespace Pixy {
 	};
 
   bool GfxEngine::evtEntitySelected(Event* inEvt) {
-    Pixy::Renderable* lEntity = static_cast<Pixy::Renderable*>(inEvt->getAny());
+    // __DISABLED__
+    //~ Pixy::Renderable* lEntity = static_cast<Pixy::Renderable*>(inEvt->getAny());
 
      // double click on an entity
-    if (mSelected && mSelected == lEntity) {
-
-    }
-
-    highlight(lEntity);
+    //~ if (mSelected && mSelected == lEntity) {
+//~
+    //~ }
+//~
+    //~ highlight(lEntity);
 
     return true;
   }

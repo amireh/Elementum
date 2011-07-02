@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES(include include/dotscene include/tinyxmlresource)
+INCLUDE_DIRECTORIES(include include/dotscene include/ogre include/tinyxmlresource)
 # add sources
 SET(EClient_Modules_SRCS
 
@@ -6,6 +6,9 @@ SET(EClient_Modules_SRCS
 
   src/tinyxmlresource/TinyXMLResource.cpp
   src/tinyxmlresource/TinyXMLResourceManager.cpp
+
+  src/ogre/HDRCompositor.cpp
+  src/ogre/HelperLogics.cpp
 )
 
 

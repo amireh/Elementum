@@ -11,13 +11,7 @@
 #define H_Combat_H
 
 #include "GameState.h"
-#include "EventManager.h"
 #include "EventListener.h"
-#include "NetworkManager.h"
-#include "UIEngine.h"
-#include "GfxEngine.h"
-#include "ScriptEngine.h"
-#include "Puppet.h"
 
 namespace Pixy
 {
@@ -26,7 +20,13 @@ namespace Pixy
      *  PEWPEW
      */
 
-
+  class GfxEngine;
+  class UIEngine;
+  class ScriptEngine;
+  class EventManager;
+  class NetworkManager;
+  class CPuppet;
+  class Engine;
 	class Combat : public GameState, public EventListener {
 	public:
     typedef std::list<CPuppet*> puppets_t;
@@ -60,7 +60,7 @@ namespace Pixy
     CPuppet* getPuppet();
     CPuppet* getPuppet(int inUID);
 
-    void pktDrawSpells(RakNet::Packet* inPkt);
+    //~ void pktDrawSpells(RakNet::Packet* inPkt);
 
 	private:
 
@@ -76,7 +76,6 @@ namespace Pixy
 
 		GfxEngine			*mGfxEngine;
 		UIEngine			*mUIEngine;
-		CEGUI::System		*mUISystem;
 		ScriptEngine		*mScriptEngine;
 		EventManager		*mEvtMgr;
 		NetworkManager		*mNetMgr;

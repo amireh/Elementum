@@ -3,7 +3,6 @@
 #include "CPuppet.h"
 //#include "UIEngine.h"
 #include "CSpell.h"
-#include "SpellParser.h"
 
 namespace Pixy
 {

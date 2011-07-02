@@ -1,5 +1,8 @@
 #include "CPuppet.h"
+#include "Renderable.h"
 #include "CDeck.h"
+#include "CUnit.h"
+#include "CSpell.h"
 
 namespace Pixy
 {

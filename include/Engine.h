@@ -18,23 +18,23 @@ namespace Pixy
 	/*! \brief
 	 *	Skeleton Engine that defines the base behaviour of all game Engines.
 	 */
-    class Engine
-		{
-        public:
-            inline virtual ~Engine() { mLog = NULL; fSetup = false; };
-			
-            virtual bool setup()=0;
-            virtual void update(unsigned long lTimeElapsed)=0;
-            virtual bool cleanup()=0;
-			
-        protected:
-			inline Engine() { mLog = NULL; fSetup = false; };
-            Engine(const Engine& src);
-            Engine& operator=(const Engine& rhs);
-			
-			log4cpp::Category* mLog;
-			bool fSetup;
-		};
+  class Engine
+  {
+    public:
+    inline virtual ~Engine() { mLog = NULL; fSetup = false; };
+
+    virtual bool setup()=0;
+    virtual void update(unsigned long lTimeElapsed)=0;
+    virtual bool cleanup()=0;
+
+    protected:
+    inline Engine() { mLog = NULL; fSetup = false; };
+    Engine(const Engine& src) = delete;
+    Engine& operator=(const Engine& rhs) = delete;
+
+    log4cpp::Category* mLog;
+    bool fSetup;
+  };
 };
 
 

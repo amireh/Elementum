@@ -14,8 +14,6 @@ SET(EClient_SRCS
   GameManager.cpp
   GameState.cpp
   GfxEngine.cpp
-  HDRCompositor.cpp
-  HelperLogics.cpp
   InputManager.cpp
   Intro.cpp
   #Lobby.cpp
@@ -29,7 +27,8 @@ SET(EClient_SRCS
 )
 
 SET(PROJECT_LIBS
-  ${RakNet_LIBRARIES}
+  #~ ${RakNet_LIBRARIES}
+  ${Boost_LIBRARIES}
   ${LOG4CPP_LIBRARIES}
   ${LUA_LIBRARIES}
   ${ESHARED_LIBRARIES}
@@ -53,7 +52,7 @@ SET(PROJECT_LIBS
 LINK_DIRECTORIES(${OGRE_LIBRARY_DIRS}
                  ${OIS_LIBRARY_DIRS}
                  ${CEGUI_LIBRARY_DIRS}
-                 ${RakNet_LIBRARY_DIRS}
+                 #~ ${RakNet_LIBRARY_DIRS}
                  ${OPENAL_LIBRARY_DIRS}
                  ${OGG_INCLUDE_DIRS}
                  ${VORBISFILE_INCLUDE_DIRS}

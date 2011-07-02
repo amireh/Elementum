@@ -12,18 +12,36 @@
 
 #include "Engine.h"
 #include "EventListener.h"
-#include "Renderable.h"
+//#include "InputManager.h"
+
 #include <Ogre.h>
-#include <Plugins/OctreeSceneManager/OgreOctreeSceneManager.h>
-#include "OGRE/Terrain/OgreTerrain.h"
-#include "OGRE/Terrain/OgreTerrainGroup.h"
-#include "CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h"
-#include "ogre/SdkCameraMan.h"
-#include "InputManager.h"
-#include "dotscene/DotSceneLoader.h"
-#include "OGRE/Plugins/Hydrax/Hydrax.h"
-#include "OGRE/Plugins/Caelum/Caelum.h"
-#include "HDRCompositor.h"
+#include <OIS.h>
+// forward declarations
+/*namespace Ogre {
+  class Root;
+  class Camera;
+  class SceneManager;
+  class Viewport;
+  class RenderWindow;
+  class OverlayManager;
+  class Overlay;
+  class Vector3;
+  class Real;
+  class SceneNode;
+  class String;
+}*/
+namespace Hydrax {
+  class Hydrax;
+}
+namespace Caelum {
+  class CaelumSystem;
+}
+namespace OgreBites {
+  class SdkCameraMan;
+}
+
+class HDRCompositor;
+class DotSceneLoader;
 
 using Ogre::Vector3;
 using Ogre::Real;
@@ -31,8 +49,10 @@ using Ogre::SceneNode;
 using Ogre::String;
 using OgreBites::SdkCameraMan;
 using Hydrax::Hydrax;
-//using Ogre::DotSceneLoader;
 namespace Pixy {
+
+
+  class Renderable;
 
 	/*! \class GfxEngine
 	 *	\brief

@@ -3,13 +3,13 @@
 
 #include "Pixy.h"
 #include "Deck.h"
-#include "CSpell.h"
+//#include "CSpell.h"
 //#include "CPuppet.h"
 
 using std::vector;
 namespace Pixy
 {
-  //class CSpell;
+  class CSpell;
   class CPuppet;
   //class CombatManager;
 
@@ -43,7 +43,6 @@ namespace Pixy
 		//vector<CSpell*>  mSpells;
 		static int      idCounter;
 		int             nrRandom;
-
 		CPuppet*           mPuppet;
 
 	};

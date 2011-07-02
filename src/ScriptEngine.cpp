@@ -12,9 +12,10 @@
 #include "tolua++.h"
 #include "GameManager.h"
 #include "UIEngine.h"
+#include "CPuppet.h"
 //#include <CEGUIBase/CEGUISystem.h>
 //#include <CEGUIBase/CEGUIExceptions.h>
-#include "EntityEvent.h"
+//#include "EntityEvent.h"
 #include "Combat.h"
 #include <stdarg.h>
 
@@ -66,7 +67,7 @@ namespace Pixy {
     tolua_EShared_open(mLUA);
     tolua_EClient_open(mLUA);
 
-		bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua);
+		//~ bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua); // __DISABLED__
     //bindToName("AssignPuppets", this, &ScriptEngine::evtAssignPuppets);
     //bindToName("JoinQueue", this, &ScriptEngine::evtJoinQueue);
 

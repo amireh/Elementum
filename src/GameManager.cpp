@@ -30,6 +30,8 @@
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "NetworkManager.h"
+#include "InputManager.h"
+#include "CResourceManager.h"
 #include "ogre/OgreSdkTrays.h"
 //#include "SfxEngine.h"
 //#include "PhyxEngine.h"
@@ -547,7 +549,7 @@ namespace Pixy
 	  mSettings = inSettings;
 	  this->saveConfig();
 	  EventManager* mEvtMgr = EventManager::getSingletonPtr();
-	  mEvtMgr->hook(mEvtMgr->createEvt("SettingsChanged"));
+	  //~ mEvtMgr->hook(mEvtMgr->createEvt("SettingsChanged")); __DISABLED__
 	};
 
   CResourceManager& GameManager::getResMgr() {

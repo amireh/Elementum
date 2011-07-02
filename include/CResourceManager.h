@@ -3,10 +3,10 @@
 
 #include "Pixy.h"
 #include "ResourceManager.h"
-#include "CPuppet.h"
+//#include "CPuppet.h"
 #include "CSpell.h"
 #include "CUnit.h"
-#include "CDeck.h"
+//#include "CDeck.h"
 
 using std::string;
 using std::vector;
@@ -14,6 +14,10 @@ using std::list;
 using std::istringstream;
 namespace Pixy
 {
+  class CPuppet;
+  //class CSpell;
+  //class CUnit;
+  class CDeck;
 	class CResourceManager : public ResourceManager {
     public:
       typedef std::list<CSpell*> spells_t;

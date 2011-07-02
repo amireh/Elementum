@@ -13,19 +13,13 @@
 #ifndef H_GameState_H
 #define H_GameState_H
 
-#ifndef H_GameManager_H
-#include "GameManager.h"
-#endif
-#ifndef H_InputManager_H
-#include "InputManager.h"
-#endif
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#include "CEGUIBase/CEGUI.h"
-#else
-#include "CEGUI/CEGUI.h"
-#endif
+#include "Pixy.h"
+#include <OIS/OISMouse.h>
+#include <OIS/OISKeyboard.h>
+#include <CEGUI/CEGUIInputEvent.h>
 //#include "UIEngine.h"
 //#include "GfxEngine.h"
+
 
 namespace Pixy
 {

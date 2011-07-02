@@ -1,4 +1,5 @@
 #include "Intro.h"
+#include "GameManager.h"
 #include "EventManager.h"
 #include "NetworkManager.h"
 #include "Puppet.h"

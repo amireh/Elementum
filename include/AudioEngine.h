@@ -17,13 +17,15 @@
 
 namespace Pixy
 {
-	
+
+  class Engine;
+  class EventListener;
 	/*! \class AudioEngine
 	 *	\brief
 	 *	Provides audio support, loads sound resources, and handles all sound
 	 *	related events.
 	 */
-    class AudioEngine : public Engine, public EventListener
+  class AudioEngine : public Engine, public EventListener
 	{
 	};
 };

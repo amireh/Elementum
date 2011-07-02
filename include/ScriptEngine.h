@@ -13,7 +13,7 @@
 
 #include "Engine.h"
 #include "EventListener.h"
-#include "CPuppet.h"
+//#include "CPuppet.h"
 #include <Ogre.h>
 #include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
 // LUA
@@ -25,6 +25,7 @@ extern "C" {
 //#include "luabind/luabind.hpp"
 namespace Pixy {
 
+  class CPuppet;
 	/*! \class ScriptEngine
 	 *	\brief
 	 *	Manages the Lua module, loads Script resources, listens to and passes off
