@@ -69,6 +69,8 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
+    bind(EventUID::Connected, [&](const Event& evt) -> bool { mLog->infoStream() << "got connected evt !"; return true; });
+
     //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
     //bindToName("MatchFound", this, &Combat::evtMatchFound);
     //bindToName("CreatePuppets", this, &Combat::evtCreatePuppets);
@@ -182,9 +184,9 @@ namespace Pixy
 
     processEvents();
 
-		//mGfxEngine->update(lTimeElapsed);
-		//mScriptEngine->update(lTimeElapsed);
-		//mUIEngine->update(lTimeElapsed);
+		mGfxEngine->update(lTimeElapsed);
+		mScriptEngine->update(lTimeElapsed);
+		mUIEngine->update(lTimeElapsed);
 
 		/*for (mUpdater = mUpdateQueue.begin();
 			 mUpdater != mUpdateQueue.end();

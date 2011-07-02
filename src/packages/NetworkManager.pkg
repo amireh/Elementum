@@ -1,0 +1,8 @@
+$#include "NetworkManager.h"
+
+class NetworkManager
+{
+static NetworkManager& getSingleton();
+void send(const Pixy::Event&);
+};
+

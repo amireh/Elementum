@@ -19,10 +19,11 @@
 //#include "EntityEvent.h"
 //#include "Combat.h"
 #include <stdarg.h>
+#include <boost/bind.hpp>
 
 TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 TOLUA_API int  tolua_EShared_open (lua_State* tolua_S);
-
+TOLUA_API int  tolua_Event_open (lua_State* tolua_S);
 namespace Pixy {
 	ScriptEngine* ScriptEngine::_myScriptEngine = NULL;
 
@@ -67,6 +68,9 @@ namespace Pixy {
 		mLUA = mCEGUILua->getLuaState();
     tolua_EShared_open(mLUA);
     tolua_EClient_open(mLUA);
+    tolua_Event_open(mLUA);
+
+    bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
 
 		//~ bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua); // __DISABLED__
     //bindToName("AssignPuppets", this, &ScriptEngine::evtAssignPuppets);
@@ -191,9 +195,9 @@ namespace Pixy {
 		}
 	}
 
-	bool ScriptEngine::passToLua(Event* inEvt) {
+	bool ScriptEngine::passToLua(const Event& inEvt) {
 
-		//mLog->debugStream() << "dispatching evt to lua";
+		mLog->debugStream() << "dispatching evt to lua";
 
 		//mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
 
@@ -210,7 +214,7 @@ namespace Pixy {
 			return true;
 		}
 
-		tolua_pushusertype(mLUA,(void*)inEvt,"Pixy::Event");
+		tolua_pushusertype(mLUA,(void*)&inEvt,"Pixy::Event");
 		try {
 			lua_call(mLUA, 1, 1);
 		} catch (CEGUI::ScriptException& e) {

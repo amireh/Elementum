@@ -1,78 +1,54 @@
-/*
- *  NetworkManager.cpp
- *  Elementum
- *
- *  Created by Ahmad Amireh on 2/15/10.
- *  Copyright 2010 JU. All rights reserved.
- *
- */
-
 #include "NetworkManager.h"
-#include "EventManager.h"
-#include "Archiver.h"
+
 #include "GameManager.h"
 #include "Combat.h"
 
-//~ using RakNet::BitStream;
-//~ using RakNet::RakPeerInterface;
-//~ using RakNet::SocketDescriptor;
-//~ using RakNet::NetworkIDManager;
-//~ using RakNet::RakNetGUID;
-//~ using RakNet::SystemAddress;
+
 namespace Pixy {
 
 	NetworkManager* NetworkManager::mInstance = NULL;
 
-	NetworkManager::NetworkManager() {
-		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "NetMgr");
-
-		//~ mPktProcessor = new EventProcessor(mLog);
-
-		fOnline = false;
-    fGameDataReceived = false;
-
-		mEvtMgr = EventManager::getSingletonPtr();
-		// we'll be handling the EVT_REQ events (outgoing to server)
-		//~ mEvtMgr->subscribeNetworkDispatcher(this);
-
-		//~ // fire up our RakPeerInterface and its socket
-		//~ mPeer = RakNet::RakPeerInterface::GetInstance();
-		//~ //mPeer->SetNetworkIDManager(&mNetIDMgr);
-		//~ mSock = new SocketDescriptor();
-		//~ //mPeer->Startup(1, 10, mSock, 1);
-		//~ mPeer->Startup(1, mSock, 1);
-//~
-		//~ bindEventHandlers();
-		//~ bindEventHandlers();
+	NetworkManager::NetworkManager()
+  : io_service_(),
+    work_(io_service_),
+    timer_(io_service_),
+    fOnline(false),
+    fGameDataReceived(false),
+    mLog(new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "NetMgr"))
+  {
+    poller_ = new boost::thread(boost::bind(&boost::asio::io_service::run, &io_service_));
 
 		mLog->infoStream() << "up and running";
 	}
 
 	NetworkManager::~NetworkManager() {
+
 	  if (fOnline)
 	    disconnect();
 
+    io_service_.stop();
+    poller_->join();
+    delete poller_;
+    poller_ = 0;
 
-
-		//~ if (mPktProcessor)
-			//~ delete mPktProcessor;
-
-		//~ RakNet::RakPeerInterface::DestroyInstance(mPeer);
-
-		//~ mPktProcessor = 0;
 
 		mLog->infoStream() << "shutting down";
+
 		if (mLog)
 			delete mLog;
 		mLog = 0;
 		fOnline = false;
 	}
 
-	NetworkManager* NetworkManager::getSingletonPtr() {
+  NetworkManager& NetworkManager::getSingleton() {
 		if (!mInstance)
 			mInstance = new NetworkManager();
 
-		return mInstance;
+		return *mInstance;
+	}
+
+	NetworkManager* NetworkManager::getSingletonPtr() {
+		return &getSingleton();
 	}
 
 
@@ -93,12 +69,32 @@ namespace Pixy {
 	}
 
 	bool NetworkManager::connect() {
-	  if (fOnline)
+    if (fOnline)
 	    return true;
 
     mLog->infoStream() << "Connecting to server";
 
-		//~ mPeer->Connect(SERVER_ADDRESS, SERVER_PORT,0,0);
+    conn_.reset(new Connection(io_service_, SERVER_ADDRESS, SERVER_PORT));
+    if (!conn_->connect() ) {
+      mLog->errorStream() << "couldnt start the conn .. ";
+      return false;
+    }
+    try {
+      conn_->start();
+    } catch (std::exception& e) {
+      mLog->errorStream() << "a connection error occured: " << e.what();
+    }
+
+    conn_->get_dispatcher().bind(EventUID::Unassigned, this, &NetworkManager::eventReceived);
+
+		{
+			// notify components that we're connected
+      Event evt(EventUID::Connected);
+      EventManager::getSingleton().hook(evt);
+		}
+		fOnline = true;
+
+    mLog->infoStream() << "connected";
 
 		return true;
 	}
@@ -109,13 +105,18 @@ namespace Pixy {
 
     mLog->infoStream() << "Disconnecting from server";
 
-    //~ mPeer->CloseConnection(mServerAddr, true);
-    //~ sleep(1);
-		//~ RakNet::RakPeerInterface::DestroyInstance(mPeer);
-		//~ mPeer = 0;
+    conn_->stop();
+    conn_.reset();
+
 		fOnline = false;
 		return true;
 	}
+
+  void NetworkManager::send(const Event& inEvt) {
+    mLog->debugStream() << "sending an event " << (int)inEvt.UID;
+    inEvt.dump();
+    conn_->send(inEvt);
+  }
 
 	bool NetworkManager::evtLogin(Event* inEvt) {
     //~ if (inEvt->getType() == EVT_RESP && inEvt->getFeedback() == EVT_OK && !fGameDataReceived)
@@ -160,31 +161,12 @@ namespace Pixy {
 		return true;
 	}
 
-	void NetworkManager::eventReceived(Event* inPkt) {
+	void NetworkManager::eventReceived(const Event& inPkt) {
 		//~ Event* lEvt = mPktProcessor->parseEvent(mEvent);
 		//~ mEvtMgr->hook(lEvt);
 		//~ lEvt = 0;
 	}
 
-
-	void NetworkManager::connAccepted(Event* inPkt) {
-		//~ mServerAddr = mEvent->systemAddress;
-		//~ mServerGUID = mEvent->guid;
-		//~ mGUID = mPeer->GetGuidFromSystemAddress(RakNet::UNASSIGNED_SYSTEM_ADDRESS);
-		//~ mLog->infoStream() << "Connected to Server! my guid is " << mGUID.ToString();
-		{
-			// notify components that we're connected
-			//~ Event* lEvt = mEvtMgr->createEvt("Connected", true);
-			//~ mEvtMgr->hook(lEvt);
-			//~ lEvt = NULL;
-		}
-		fOnline = true;
-	}
-
-	void NetworkManager::connFailed(Event* inPkt) {
-		mLog->infoStream() << "Connection Failed!";
-		fOnline = false;
-	}
 
 	void NetworkManager::update() {
 /*

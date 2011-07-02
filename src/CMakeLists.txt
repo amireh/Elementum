@@ -2,6 +2,8 @@
 SET(EClient_SRCS
   ${EClient_SRCS}
 
+  Connection.cpp
+
   Renderable.cpp
   CPuppet.cpp
   #CPuppetFactory.cpp

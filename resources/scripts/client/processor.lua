@@ -43,38 +43,42 @@ function setupEvtMap()
 end
 
 -- registers a handler to an event
-function subscribeToEvt(inName, inHandler)
+function subscribeToEvt(inUID, inHandler)
 
 	-- init handler table for event if it doesnt exist
-	if (EventMap[inName] == nil) then
-		EventMap[inName] = {}
+	if (EventMap[inUID] == nil) then
+		EventMap[inUID] = {}
 	end
 
-	table.insert(EventMap[inName], inHandler)
+	table.insert(EventMap[inUID], inHandler)
 
-	Pixy.Log("Subscribed handler to " .. inName)
+	Pixy.Log("Subscribed handler to " .. inUID)
 end
 bind = subscribeToEvt -- an alias
 
 -- calls handlers and returns status
 function processEvt(inEvt)
+  --tolua.cast(inEvt, "Pixy::Event")
+  --tolua.cast(inEvt.UID, "Pixy::EventUID")
+  if (inEvt.UID == Pixy.EventUID.Connected) then Pixy.Log("There's a connected evt!") end
 
+  --Pixy.Log("Handling an event " .. inEvt.UID)
 	done = true
 
-	if (not EventMap[inEvt:getName()]) then return true end
+	if (not EventMap[inEvt.UID]) then return true end
 
 	-- register handlers
 	if (not tracking) then
 
 		local nrHandlers = 0
-		for id,handler in ipairs(EventMap[inEvt:getName()]) do
+		for id,handler in ipairs(EventMap[inEvt.UID]) do
 			table.insert(Tracker, id, false)
 			nrHandlers = nrHandlers+1
 		end
 
 		-- there are no handlers for this evt, we're done
 		if (nrHandlers == 0) then
-			Pixy.Log("Oops! Found no handlers for event " .. inEvt:getName())
+			Pixy.Log("Oops! Found no handlers for event " .. inEvt.UID)
 			return true
 		end
 
@@ -90,7 +94,7 @@ function processEvt(inEvt)
 	for id,status in ipairs(Tracker) do
 		-- call handler if it's not done
 		if (not status) then
-			Tracker[id] = EventMap[inEvt:getName()][id](inEvt)
+			Tracker[id] = EventMap[inEvt.UID][id](inEvt)
 			if (not Tracker[id]) then done = false end
 		end
 
@@ -98,14 +102,14 @@ function processEvt(inEvt)
 
 	-- we're done, empty the tracker and return true
 	if (done) then
-		for id,handler in ipairs(EventMap[inEvt:getName()]) do
+		for id,handler in ipairs(EventMap[inEvt.UID]) do
 			Tracker[id] = nil
 		end
 		tracking = false
 		return true
 	end
 
-	Pixy.Log("handling evt " .. inEvt:getName())
+	Pixy.Log("handling evt " .. inEvt.UID)
 
 	return false
 end

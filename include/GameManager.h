@@ -26,6 +26,7 @@
 
 #include "Pixy.h"
 #include "InputManager.h"
+#include "EventManager.h"
 
 // OGRE
 #include <Ogre.h>

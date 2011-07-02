@@ -37,6 +37,7 @@ Pixy.registerGlobals = function()
 
 	EvtMgr = Pixy.EventManager:getSingletonPtr()
 	GameMgr = Pixy.GameManager:getSingleton()
+  NetMgr = Pixy.NetworkManager:getSingleton()
 	--if (state == "Intro") then
 		Intro = Pixy.Intro:getSingletonPtr()
 	--elseif (state == "Combat") then
@@ -61,6 +62,8 @@ Pixy.registerGlobals = function()
 
 	Pixy.Log( "* Launched successfully!                        *")
 	Pixy.Log( "*************************************************")
+
+  Pixy.Log("Test: EventUID::Connected => " .. Pixy.EventUID.Connected)
 
 	Pixy.Launched = true
 

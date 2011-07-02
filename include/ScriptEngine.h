@@ -48,7 +48,7 @@ namespace Pixy {
 		static void luaLog(std::string inMsg);
 		log4cpp::Category* getLuaLog();
 
-		bool passToLua(Event* inEvt);
+		bool passToLua(const Event& inEvt);
     bool passToLua(const char* inFunc, int argc, ...);
 
 	protected:

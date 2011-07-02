@@ -13,11 +13,11 @@
 #include <iostream>
 
 #include "PixyLog.h"
-#include "EventListener.h"
+#include "Connection.hpp"
+#include <boost/thread.hpp>
 
 namespace Pixy {
 
-	class EventManager;
 	class Event;
 
 	/*! \class NetworkManager
@@ -26,10 +26,11 @@ namespace Pixy {
 	 *	This class also intercepts all events meant to be sent to the server and
 	 *	does the actual sending
 	 */
-	class NetworkManager : public EventListener {
+	class NetworkManager {
 
 	public:
 		static NetworkManager* getSingletonPtr();
+    static NetworkManager& getSingleton();
 		virtual ~NetworkManager();
 		/*! \brief
 		 *	initiates connection to the master server, result of the attempt
@@ -47,6 +48,8 @@ namespace Pixy {
 		 *	wrap up their work, then severes the connection with the MS
 		 */
 		bool disconnect();
+
+    void send(const Event&);
 
 	protected:
 		/*! \brief
@@ -68,26 +71,13 @@ namespace Pixy {
 		// connect
 		bool evtLogin(Event* inEvt);
 
-		//~ RakPeerInterface	*mPeer;
-		//~ SocketDescriptor	*mSock;
-		//~ Event				*mEvent;
-		//~ NetworkIDManager	mNetIDMgr;
-		EventManager		*mEvtMgr;
-		//~ EventProcessor		*mPktProcessor;
 		log4cpp::Category	*mLog;
-		//~ RakNetGUID			mGUID;
-		//~ RakNetGUID			mServerGUID;
-		//~ SystemAddress		mServerAddr;
-		//~ BitStream			mStream;
+
 		bool fOnline, fGameDataReceived;
 
 		//~ map<MessageID, void (NetworkManager::*)(Event*)> mPktHandlers;
 
 	private:
-		/*! \brief
-		 *	methods that will handle outgoing events, and the Logout event
-		 */
-		//void bindEventHandlers();
 
 		/*! \brief
 		 *	populates the mPktHandlers map with the methods that will handle each
@@ -98,25 +88,21 @@ namespace Pixy {
 		/*! \brief
 		 *	uses dispatchEvent() method to broadcast an incoming event
 		 */
-		void eventReceived(Event* inPkt);
+		void eventReceived(const Event& inEvt);
 
-    void gameDataReceived(Event* inPkt);
-    void puppetDataReceived(Event* inPkt);
-    void passDrawSpells(Event* inPkt);
-
-		/*! \brief
-		 *	stores information about the server, and broadcasts the event "Connected"
-		 *	to local modules
-		 */
-		void connAccepted(Event* inPkt);
-
-		/*! \brief
-		 *	does nothing really, just logs a warning
-		 */
-		void connFailed(Event* inPkt);
+    void gameDataReceived(const Event& inEvt);
+    void puppetDataReceived(const Event& inEvt);
+    void passDrawSpells(const Event& inEvt);
 
 		static NetworkManager* mInstance;
 		NetworkManager();
+
+    Connection_ptr conn_;
+
+    boost::asio::io_service io_service_;
+    boost::asio::io_service::work work_;
+    boost::asio::deadline_timer timer_;
+    boost::thread* poller_;
 
 	};
 }

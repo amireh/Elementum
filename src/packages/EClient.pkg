@@ -37,6 +37,7 @@ namespace Pixy
   $pfile "UIEngine.pkg"
   $pfile "GfxEngine.pkg"
   $pfile "Logger.pkg"
+  $pfile "NetworkManager.pkg"
 
   #$pfile "UIEvt.pkg"
   #$pfile "UIEvt_Register.pkg"

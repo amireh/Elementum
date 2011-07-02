@@ -8,12 +8,14 @@
 MyPuppetName = "Kandie"
 
 Pixy.Combat.login = function()
-	local lEvt = EvtMgr:createEvt("Login")
-  lEvt:_setMsgId(Pixy.ID_LOGIN_EVENT)
+  Pixy.Log("Sending login event")
+	local lEvt = Pixy.Event:new()
+  lEvt.UID = Pixy.EventUID.Login
 	lEvt:setProperty("Username", "Kandie")
 	lEvt:setProperty("Password", "tuonela")
-	EvtMgr:hook(lEvt)
-	lEvt = nil
+	NetMgr:send(lEvt)
+
+  return true
 end
 
 Pixy.Combat.loginResult = function(inEvt)

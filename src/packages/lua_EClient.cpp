@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sat Jun 25 13:38:46 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Jul  3 02:10:44 2011.
 */
 
 #ifndef __cplusplus
@@ -34,6 +34,7 @@ TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "ScriptEngine.h"
+#include "NetworkManager.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
@@ -85,11 +86,13 @@ static int tolua_collect_Pixy__CUnit (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Spell");
  tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"Ogre::Root");
- tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::Deck");
  tolua_usertype(tolua_S,"Pixy::CUnit");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
@@ -110,7 +113,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
- tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"Pixy::NetworkManager");
  tolua_usertype(tolua_S,"Ogre::Camera");
 }
 
@@ -2126,6 +2129,67 @@ static int tolua_EClient_Pixy_Log00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getSingleton of class  Pixy::NetworkManager */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_NetworkManager_getSingleton00
+static int tolua_EClient_Pixy_NetworkManager_getSingleton00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::NetworkManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::NetworkManager& tolua_ret = (Pixy::NetworkManager&)  Pixy::NetworkManager::getSingleton();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Pixy::NetworkManager");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSingleton'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: send of class  Pixy::NetworkManager */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_NetworkManager_send00
+static int tolua_EClient_Pixy_NetworkManager_send00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::NetworkManager",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Pixy::Event",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::NetworkManager* self = (Pixy::NetworkManager*)  tolua_tousertype(tolua_S,1,0);
+  const Pixy::Event* tolua_var_1 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'", NULL);
+#endif
+  {
+   self->send(*tolua_var_1);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'send'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
 {
@@ -2273,6 +2337,11 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__GfxEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
    tolua_function(tolua_S,"Log",tolua_EClient_Pixy_Log00);
+   tolua_cclass(tolua_S,"NetworkManager","Pixy::NetworkManager","",NULL);
+   tolua_beginmodule(tolua_S,"NetworkManager");
+    tolua_function(tolua_S,"getSingleton",tolua_EClient_Pixy_NetworkManager_getSingleton00);
+    tolua_function(tolua_S,"send",tolua_EClient_Pixy_NetworkManager_send00);
+   tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

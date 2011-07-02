@@ -12,6 +12,8 @@
 
 #include "GameState.h"
 #include "EventListener.h"
+#include "Archiver.h"
+#include "EventManager.h"
 
 namespace Pixy
 {
