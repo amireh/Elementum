@@ -40,7 +40,7 @@ end
 -- job: sends a request to the instance with the spell id
 -- awaiting EVT_OK feedback to actually cast it
 Pixy.Combat.reqCastSpell = function(inUIEvt)
-  --[[
+
 
 	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
@@ -48,11 +48,11 @@ Pixy.Combat.reqCastSpell = function(inUIEvt)
   assert(lSpell)
 
 	--tolua.cast(lSpell, "Pixy::Spell")
-	Pixy.Log( "request to cast a spell named " .. lSpell:getName() .. "@" .. lSpell:getId() )
-	local lEvt = EvtMgr:createEvt("CastSpell")
-	lEvt:setProperty("SpellId", lSpell:getId())
-	EvtMgr:hook(lEvt)
-	lEvt = nil]]
+	Pixy.Log( "request to cast a spell named " .. lSpell:getName() .. "@" .. lSpell:getUID() )
+  local evt = Pixy.Event:new()
+  evt.UID = Pixy.EventUID.CastSpell
+  evt:setProperty("Spell", lSpell:getUID())
+  NetMgr:send(evt)
 end
 
 -- type: incoming event handler

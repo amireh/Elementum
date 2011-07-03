@@ -70,11 +70,13 @@ namespace Pixy
 		Combat( const Combat& ) { }
 		Combat & operator = ( const Combat& );
 
-    bool evtJoinQueue(Event* inEvt);
-    bool evtMatchFound(Event* inEvt);
-    bool evtCreatePuppets(Event* inEvt);
-    bool evtStartTurn(Event* inEvt);
-    bool evtTurnStarted(Event* inEvt);
+    bool onSyncGameData(const Event&);
+    bool onJoinQueue(const Event& inEvt);
+    bool onMatchFound(const Event& inEvt);
+    bool onSyncPuppetData(const Event& inEvt);
+    bool onStartTurn(const Event& inEvt);
+    bool onTurnStarted(const Event& inEvt);
+    bool onDrawSpells(const Event&);
 
 		GfxEngine			*mGfxEngine;
 		UIEngine			*mUIEngine;

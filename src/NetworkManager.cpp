@@ -118,6 +118,13 @@ namespace Pixy {
     conn_->send(inEvt);
   }
 
+	void NetworkManager::eventReceived(const Event& inEvt) {
+    EventManager::getSingleton().hook(inEvt);
+		//~ Event* lEvt = mPktProcessor->parseEvent(mEvent);
+		//~ mEvtMgr->hook(lEvt);
+		//~ lEvt = 0;
+	}
+
 	bool NetworkManager::evtLogin(Event* inEvt) {
     //~ if (inEvt->getType() == EVT_RESP && inEvt->getFeedback() == EVT_OK && !fGameDataReceived)
     //~ {
@@ -161,11 +168,7 @@ namespace Pixy {
 		return true;
 	}
 
-	void NetworkManager::eventReceived(const Event& inPkt) {
-		//~ Event* lEvt = mPktProcessor->parseEvent(mEvent);
-		//~ mEvtMgr->hook(lEvt);
-		//~ lEvt = 0;
-	}
+
 
 
 	void NetworkManager::update() {

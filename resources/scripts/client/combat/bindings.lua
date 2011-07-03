@@ -1,5 +1,5 @@
 bind(Pixy.EventUID.Connected, Pixy.Combat.login)
-bind(Pixy.EventUID.Login, Pixy.Combat.loginResult)
+bind(Pixy.EventUID.Login, Pixy.Combat.on_login)
 --bind("AssignPuppets", Pixy.Combat.assignPuppets)
 --bind("CreatePuppet", Pixy.Combat.createPuppet)
 --bind("GameStarted", Pixy.Combat.gameStarted)

@@ -77,6 +77,7 @@ namespace Pixy
 	void CPuppet::attachSpell(CSpell* inSpell)
 	{
 		mHand.push_back(inSpell);
+    inSpell->setCaster(this);
 		std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
 	};
 

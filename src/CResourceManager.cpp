@@ -249,7 +249,7 @@ namespace Pixy {
       CUnit* lUnit = getModelUnit(lUnitId);
       CSpell* lSpell = getModelSpell(lSpellId);
 
-      lUnit->addAbility(lSpell);
+      lUnit->attachSpell(lSpell);
 
       //std::cout << "Unit " << lUnit->getName() << " has an ability: " << lSpell->getName() << "\n";
 

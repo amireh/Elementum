@@ -16,6 +16,7 @@
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "ScriptEngine.h"
+#include "CResourceManager.h"
 
 namespace Pixy
 {
@@ -69,7 +70,18 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    bind(EventUID::Connected, [&](const Event& evt) -> bool { mLog->infoStream() << "got connected evt !"; return true; });
+    // sync the game data when we're connected
+    bind(EventUID::Connected, [&](const Event& evt) -> bool {
+      mNetMgr->send(Event(EventUID::SyncGameData));
+      return true;
+    });
+
+    bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
+    bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
+    bind(EventUID::SyncPuppetData, boost::bind(&Combat::onSyncPuppetData, this, _1));
+    bind(EventUID::StartTurn, boost::bind(&Combat::onStartTurn, this, _1));
+    bind(EventUID::TurnStarted, boost::bind(&Combat::onTurnStarted, this, _1));
+    bind(EventUID::DrawSpells, boost::bind(&Combat::onDrawSpells, this, _1));
 
     //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
     //bindToName("MatchFound", this, &Combat::evtMatchFound);
@@ -145,8 +157,9 @@ namespace Pixy
 			  GameManager::getSingleton().changeState(Intro::getSingletonPtr());
 				break;
       case OIS::KC_RETURN:
+      case OIS::KC_E:
         if (mActivePuppet == mPuppet)
-          //mEvtMgr->hook(mEvtMgr->createEvt("EndTurn")); //__DISABLED__
+          mNetMgr->send(Event(EventUID::EndTurn));
       break;
 		}
 
@@ -206,6 +219,8 @@ namespace Pixy
 	void Combat::registerPuppet(CPuppet* inPuppet) {
 		mPuppets.push_back(inPuppet);
     mScriptEngine->passToLua("addPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
+    if (inPuppet->getName() == mPuppetName)
+      assignPuppet(inPuppet);
 	}
 
   void Combat::assignPuppet(CPuppet* inPuppet) {
@@ -240,59 +255,101 @@ namespace Pixy
 	 *	Event Handlers
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
-  bool Combat::evtJoinQueue(Event* inEvt) {
+  bool Combat::onSyncGameData(const Event& evt) {
+    using std::string;
+    using std::vector;
+
+    mLog->infoStream() << "received game data, populating Resource Manager...";
+
+    std::string senc = evt.getProperty("Data");
+
+    vector<unsigned char> encoded(senc.begin(), senc.end());
+    vector<unsigned char> raw;
+
+    if (Archiver::decodeLzma(raw, encoded, evt.Rawsize) != 1) {
+      std::cerr << "decoding failed!! \n";
+    }
+
+    string raw2str(raw.begin(), raw.end());
+
+    std::istringstream datastream(raw2str);
+
+    GameManager::getSingleton().getResMgr().populate(datastream);
+
+    return true;
+  }
+
+  bool Combat::onJoinQueue(const Event& inEvt) {
     // store the name of the puppet the player joined the queue with
-    if (inEvt->Feedback == EventFeedback::Ok) {
-      mPuppetName = inEvt->getProperty("PuppetName");
+    if (inEvt.Feedback == EventFeedback::Ok) {
+      mPuppetName = inEvt.getProperty("Puppet");
       mLog->infoStream() << "joined queue with puppet " << mPuppetName;
     }
     return true;
   }
-  bool Combat::evtMatchFound(Event* inEvt) {
+  bool Combat::onMatchFound(const Event& inEvt) {
 
     return true;
   }
 
-  bool Combat::evtCreatePuppets(Event* inEvt) {
+  bool Combat::onSyncPuppetData(const Event& inEvt) {
 
-    // find the puppet we're playing with
-    puppets_t::const_iterator itr;
-    for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
-      if ((*itr)->getName() == mPuppetName) {
-        assignPuppet(*itr);
-        break;
-      }
+    using std::string;
+    using std::vector;
+
+    //string senc(inEvt.getProperty("Data"));
+    /*vector<unsigned char> encoded(senc.begin(), senc.end());
+    vector<unsigned char> raw;
+
+    if (Archiver::decodeLzma(raw, encoded, inEvt.Rawsize) != 1) {
+      std::cerr << "decoding failed!! \n";
+    }
+
+    string raw2str(raw.begin(), raw.end());
+
+    std::cout << "Uncompressed puppet data: " << raw2str << "\n";*/
+
+    std::istringstream datastream(inEvt.getProperty("Data"));
+    list<CPuppet*> lPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
+    datastream.clear();
+
+    for (auto puppet : lPuppets)
+      this->registerPuppet(puppet);
 
     // set up the scene
     mGfxEngine->setupCombat();
 
     // render all the puppets
-    for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr) {
-      if ((*itr)->getName() == mPuppetName) // is this the puppet we're playing with?
-        mPuppet = (*itr);
+    for (auto puppet : mPuppets) {
+      if (puppet->getName() == mPuppetName) // is this the puppet we're playing with?
+        mPuppet = puppet;
 
-      (*itr)->live();
-      mGfxEngine->attachToScene((*itr)->getRenderable());
+      puppet->live();
+      mGfxEngine->attachToScene(puppet->getRenderable());
     }
 
+    mNetMgr->send(Event(EventUID::Ready));
     //mEvtMgr->hook(mEvtMgr->createEvt("Ready")); __DISABLED__
     return true;
   }
 
-  bool Combat::evtStartTurn(Event* inEvt) {
+  bool Combat::onStartTurn(const Event& inEvt) {
     // acknowledge the order
     //mEvtMgr->hook(mEvtMgr->createEvt("StartTurn")); __DISABLED__
 
     mActivePuppet = mPuppet;
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
+    // send the event back, effectively acknowledging the order
+    mNetMgr->send(inEvt);
+
     return true;
   }
 
-  bool Combat::evtTurnStarted(Event* inEvt) {
-    assert(inEvt->hasProperty("Puppet")); // _DEBUG_
+  bool Combat::onTurnStarted(const Event& inEvt) {
+    assert(inEvt.hasProperty("Puppet")); // _DEBUG_
 
-    mActivePuppet = getPuppet(convertTo<int>(inEvt->getProperty("Puppet")));
+    mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("Puppet")));
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     assert(mActivePuppet); // _DEBUG_
@@ -302,10 +359,8 @@ namespace Pixy
     return true;
   }
 
-#if 0
-  void Combat::pktDrawSpells(RakNet::Packet* inPkt) {
-    using RakNet::BitStream;
-    using RakNet::RakString;
+
+  bool Combat::onDrawSpells(const Event& inEvt) {
     using std::vector;
     using std::string;
     using std::istringstream;
@@ -314,13 +369,13 @@ namespace Pixy
 
     CResourceManager& mResMgr = GameManager::getSingleton().getResMgr();
 
-    BitStream lStream(inPkt->data, inPkt->length, false);
-    lStream.IgnoreBytes(1); // skip the packet identifier
+    //BitStream lStream(inPkt->data, inPkt->length, false);
+    //lStream.IgnoreBytes(1); // skip the packet identifier
 
-    RakString tmp;
-    lStream.Read(tmp);
+    //RakString tmp;
+    //lStream.Read(tmp);
 
-    istringstream lData(tmp.C_String());
+    istringstream lData(inEvt.getProperty("Data"));
     string lLine;
 
     // parse the drawn spells and add them to our hand
@@ -347,6 +402,8 @@ namespace Pixy
         lSpell->setUID(convertTo<int>(elements[++index]));
         lSpell->setCaster(lPuppet);
         lPuppet->attachSpell(lSpell);
+
+        mLog->debugStream() << "attaching spell with UID: " << lSpell->getUID() << " to puppet " << lPuppet->getUID();
 
         if (lPuppet == mPuppet)
           mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
@@ -381,7 +438,7 @@ namespace Pixy
         int index = 0;
         while (++spellsParsed <= nrDropSpells) {
           CSpell* lSpell = lPuppet->getSpell(convertTo<int>(elements[++index]));
-          mLog->debugStream() << "removing spell with UID " << elements[index];
+          mLog->debugStream() << "removing spell with UID " << elements[index] << " from puppet " << lPuppet->getUID();;
           assert(lSpell); // _DEBUG_
 
           if (lPuppet == mPuppet)
@@ -395,5 +452,5 @@ namespace Pixy
       }
     }
   }
-#endif //__DISABLED__
+
 } // end of namespace
