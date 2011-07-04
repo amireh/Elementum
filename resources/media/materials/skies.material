@@ -1,0 +1,35 @@
+//
+/*material Elementum/Sky
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				texture 406.bmp
+				//scroll_anim 0.05 -0.05
+			}
+		}
+	}
+}*/
+
+material Elementum/Sky
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				cubic_texture BLU_F.png BLU_B.png BLU_R.png BLU_L.png BLU_U.png BLU_D.png separateUV
+			}
+		}
+	}
+}
