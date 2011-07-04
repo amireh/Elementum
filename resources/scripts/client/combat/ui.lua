@@ -17,8 +17,8 @@ Pixy.UI.Combat.configure = function()
 
 	-- spell button config
 	cfg.SpellButton = {}
-	cfg.SpellButton["Height"] = 48
-	cfg.SpellButton["Width"] = 48
+	cfg.SpellButton["Height"] = 128
+	cfg.SpellButton["Width"] = 128
 
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "Spells-Earth.imageset" )
@@ -36,16 +36,21 @@ Pixy.UI.Combat.reload = function()
 	-- TODO repopulate puppet hand after reloading ui
 end
 
+firstButton = true
+
 -- draws a CEGUI::ImageButton element representing the given spell
 -- and attaches it to the Puppet's hand
 Pixy.UI.Combat.drawSpell = function(inSpell)
 
 	local lButton = {}
 
+  local margin = 5
+    if (firstButton) then margin = 0; firstButton = false end
+
 	-- calculate position
 	lButton["Position"] =
 		CEGUI.UVector2:new(
-			CEGUI.UDim(0, cfg.SpellButton["Width"] * SelfPuppet:nrSpellsInHand() - 2),
+			CEGUI.UDim(0, cfg.SpellButton["Width"] * (SelfPuppet:nrSpellsInHand() - 2) + (margin*SelfPuppet:nrSpellsInHand())),
 			CEGUI.UDim(0, 0)
 		)
 

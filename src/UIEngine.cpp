@@ -122,11 +122,11 @@ namespace Pixy {
 
 
 		// load font and setup default if not loaded via scheme
-		CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
+		//CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
 
 		// set up defaults
-		CEGUI::System::getSingleton().setDefaultMouseCursor("WindowsLook", "MouseArrow");
-		CEGUI::System::getSingleton().setDefaultFont("DejaVuSans-10");
+		CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
+		//CEGUI::System::getSingleton().setDefaultFont("DejaVuSans-10");
 
 		mLog->infoStream() << "Set up!";
 
