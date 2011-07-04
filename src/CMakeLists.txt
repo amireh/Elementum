@@ -17,11 +17,13 @@ SET(EClient_SRCS
   GameState.cpp
   GfxEngine.cpp
   InputManager.cpp
-  Intro.cpp
+  #Intro.cpp
   #Lobby.cpp
   NetworkManager.cpp
   ScriptEngine.cpp
   UIEngine.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/UI/RenderInterfaceOgre3D.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/UI/SystemInterfaceOgre3D.cpp
 
   main.cpp
 
@@ -36,24 +38,27 @@ SET(PROJECT_LIBS
   ${ESHARED_LIBRARIES}
   ${OGRE_LIBRARIES}
   ${OIS_LIBRARIES}
-  ${CEGUI_LIBRARIES}
+  #${CEGUI_LIBRARIES}
   ${OPENAL_LIBRARIES}
   ${OGG_LIBRARIES}
   ${VORBISFILE_LIBRARIES}
   pqxx
   tolua++
-  CEGUIOgreRenderer
-  CEGUILuaScriptModule
+  #CEGUIOgreRenderer
+  #CEGUILuaScriptModule
   OgreOggSound
   ParticleUniverse
   Caelum
   #PagedGeometry
   OgreTerrain
+  RocketCore
+  RocketControls
+  RocketDebugger
 )
 
 LINK_DIRECTORIES(${OGRE_LIBRARY_DIRS}
                  ${OIS_LIBRARY_DIRS}
-                 ${CEGUI_LIBRARY_DIRS}
+                 #${CEGUI_LIBRARY_DIRS}
                  #~ ${RakNet_LIBRARY_DIRS}
                  ${OPENAL_LIBRARY_DIRS}
                  ${OGG_INCLUDE_DIRS}

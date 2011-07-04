@@ -13,9 +13,9 @@
 #include "tolua++.h"
 #include "GameManager.h"
 //#include "CPuppet.h"
-#include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
-#include <CEGUI/CEGUISystem.h>
-#include <CEGUI/CEGUIExceptions.h>
+//#include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
+//#include <CEGUI/CEGUISystem.h>
+//#include <CEGUI/CEGUIExceptions.h>
 //#include "EntityEvent.h"
 //#include "Combat.h"
 #include <stdarg.h>
@@ -48,7 +48,7 @@ namespace Pixy {
 		//cleanup();
 		mLog->infoStream() << "shutting down.";
 		if (fSetup) {
-			mLUA = NULL; mCEGUILua = NULL;
+			mLua = NULL; //mCEGUILua = NULL;
 			fSetup = false;
 			delete mLog;
 			delete mLuaLog;
@@ -62,13 +62,16 @@ namespace Pixy {
 
 		mLog->infoStream() << "Setting up";
 
-		mCEGUILua = &CEGUI::LuaScriptModule::create();
-		CEGUI::System::getSingleton().setScriptingModule(mCEGUILua);
+		//mCEGUILua = &CEGUI::LuaScriptModule::create();
+		//CEGUI::System::getSingleton().setScriptingModule(mCEGUILua);
 
-		mLUA = mCEGUILua->getLuaState();
-    tolua_EShared_open(mLUA);
-    tolua_EClient_open(mLUA);
-    tolua_Event_open(mLUA);
+		//mLua = mCEGUILua->getLuaState();
+    mLua = lua_open();
+
+		luaL_openlibs(mLua);
+    tolua_EShared_open(mLua);
+    tolua_EClient_open(mLua);
+    tolua_Event_open(mLua);
 
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
 
@@ -102,11 +105,11 @@ namespace Pixy {
 		//loadResources();
 
 		// init lua state
-		//mLUA = lua_open();
+		//mLua = lua_open();
 
-		//luaL_openlibs(mLUA);
+		//luaL_openlibs(mLua);
 
-		//luabind::open(mLUA);
+		//luabind::open(mLua);
 
 		// -------------------
 		// BINDERS
@@ -118,7 +121,7 @@ namespace Pixy {
 		/*
 		 char _filePath[PATH_MAX];
 		 sprintf(_filePath,  "%s/%s/MainMenu.lua", PROJECT_ROOT, PROJECT_SCRIPTS );
-		 luaL_dofile(mLUA, _filePath);
+		 luaL_dofile(mLua, _filePath);
 		 */
 
 		//CEGUI::System::getSingleton().executeScriptFile("MainMenu.lua");
@@ -139,11 +142,11 @@ namespace Pixy {
 
 	void ScriptEngine::updateIntro(unsigned long lTimeElapsed) {
 		// update Lua
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
-		if(lua_isfunction(mLUA, 1))
+		lua_getfield(mLua, LUA_GLOBALSINDEX, "update");
+		if(lua_isfunction(mLua, 1))
 		{
 			try {
-				lua_call(mLUA, 0, 0);
+				lua_call(mLua, 0, 0);
 			} catch (...) { // do nothing
 			}
 		} else
@@ -175,7 +178,7 @@ namespace Pixy {
 	}
 
 	lua_State* ScriptEngine::getLuaState() {
-		return mLUA;
+		return mLua;
 	}
 
 	log4cpp::Category* ScriptEngine::getLuaLog() { return mLuaLog; }
@@ -185,58 +188,64 @@ namespace Pixy {
 	}
 
 	void ScriptEngine::runScript(const char* inScript) {
-		try {
+    std::string path = std::string("../resources/scripts/client/") + std::string(inScript);
+    int lErrorCode = luaL_dofile(mLua, path.c_str());
+		if (lErrorCode == 1) {
+			mLog->errorStream() << "Lua: " << lua_tostring(mLua, -1);
+			lua_pop(mLua, -1);
+		}
+		/*try {
 			CEGUI::System::getSingleton().executeScriptFile(inScript);
 		} catch (CEGUI::Exception& e) {
 			mLog->errorStream() << "Could not execute script " << inScript << "; " << e.what();
 		} catch (std::exception& e) {
 			mLog->errorStream() << "Could not execute script `" << inScript
 				<< "' out of an unexpected exception; " << e.what();
-		}
+		}*/
 	}
 
 	bool ScriptEngine::passToLua(const Event& inEvt) {
 
 		mLog->debugStream() << "dispatching evt to lua";
 
-		//mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
+		//mLog->debugStream() << "Lua stack is " << lua_gettop(mLua) << " big";
 
 		/*
 		if (inEvt->getMsgId() == ID_ENTITY_EVENT) {
 			mLog->infoStream() << "got an entity event to pass to lua!";
 		}
 		 */
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "processEvt");
-		if(!lua_isfunction(mLUA, 1))
+		lua_getfield(mLua, LUA_GLOBALSINDEX, "processEvt");
+		if(!lua_isfunction(mLua, 1))
 		{
 			mLog->errorStream() << "could not find Lua event processor!";
-			lua_pop(mLUA,1);
+			lua_pop(mLua,1);
 			return true;
 		}
 
-		tolua_pushusertype(mLUA,(void*)&inEvt,"Pixy::Event");
+		tolua_pushusertype(mLua,(void*)&inEvt,"Pixy::Event");
 		try {
-			lua_call(mLUA, 1, 1);
-		} catch (CEGUI::ScriptException& e) {
+			lua_call(mLua, 1, 1);
+		} /*catch (CEGUI::ScriptException& e) {
 			mLog->errorStream() << "Lua Handler: " << e.what();
-		} catch (std::exception& e) {
+		} */catch (std::exception& e) {
 			mLog->errorStream() << "Lua Handler: " << e.what();
 		}
 
 		/*
-		mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
-		if (lua_isboolean(mLUA, lua_gettop(mLUA)))
+		mLog->debugStream() << "Lua stack is " << lua_gettop(mLua) << " big";
+		if (lua_isboolean(mLua, lua_gettop(mLua)))
 			mLog->infoStream() << "Lua returned a boolean";
 		else
 			mLog->errorStream() << "Lua did NOT return a boolean";
 		*/
 
-		bool result = lua_toboolean(mLUA, lua_gettop(mLUA));
+		bool result = lua_toboolean(mLua, lua_gettop(mLua));
 
-		lua_remove(mLUA, lua_gettop(mLUA));
+		lua_remove(mLua, lua_gettop(mLua));
 
 		/*
-		mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
+		mLog->debugStream() << "Lua stack is " << lua_gettop(mLua) << " big";
 
 		if (result)
 			mLog->infoStream() << "Lua is done";
@@ -258,25 +267,25 @@ namespace Pixy {
         this->assignSelfPuppet(*lPuppet);
       }
 
-      lua_getfield(mLUA, LUA_ENVIRONINDEX, "Pixy.Combat.addPuppet");
-      if(!lua_isfunction(mLUA, 1))
+      lua_getfield(mLua, LUA_ENVIRONINDEX, "Pixy.Combat.addPuppet");
+      if(!lua_isfunction(mLua, 1))
       {
         mLog->errorStream() << "could not find Lua's addPuppet routine!";
-        lua_pop(mLUA,1);
+        lua_pop(mLua,1);
         return true;
       }
 
-      tolua_pushusertype(mLUA,(void*)(*lPuppet),"Pixy::CPuppet");
+      tolua_pushusertype(mLua,(void*)(*lPuppet),"Pixy::CPuppet");
       try {
-        lua_call(mLUA, 1, 1);
+        lua_call(mLua, 1, 1);
       } catch (CEGUI::ScriptException& e) {
         mLog->errorStream() << "Lua Handler: " << e.what();
       } catch (std::exception& e) {
         mLog->errorStream() << "Lua Handler: " << e.what();
       }
-      //lua_toboolean(mLUA, lua_gettop(mLUA));
+      //lua_toboolean(mLua, lua_gettop(mLua));
 
-      //lua_remove(mLUA, lua_gettop(mLUA));
+      //lua_remove(mLua, lua_gettop(mLua));
     }
 
     //GfxEngine::getSingleton().setupCombat();
@@ -293,25 +302,25 @@ namespace Pixy {
 
     Combat::getSingleton().assignSelfPuppet(inPuppet);
 
-    lua_getfield(mLUA, LUA_ENVIRONINDEX, "Pixy.Combat.assignSelfPuppet");
-    if(!lua_isfunction(mLUA, 1))
+    lua_getfield(mLua, LUA_ENVIRONINDEX, "Pixy.Combat.assignSelfPuppet");
+    if(!lua_isfunction(mLua, 1))
     {
       mLog->errorStream() << "could not find Lua's assignSelfPuppet routine!";
-      lua_pop(mLUA,1);
+      lua_pop(mLua,1);
       return;
     }
 
-    tolua_pushusertype(mLUA,(void*)inPuppet,"Pixy::CPuppet");
+    tolua_pushusertype(mLua,(void*)inPuppet,"Pixy::CPuppet");
     try {
-      lua_call(mLUA, 1, 1);
+      lua_call(mLua, 1, 1);
     } catch (CEGUI::ScriptException& e) {
       mLog->errorStream() << "Lua Handler: " << e.what();
     } catch (std::exception& e) {
       mLog->errorStream() << "Lua Handler: " << e.what();
     }
-    //lua_toboolean(mLUA, lua_gettop(mLUA));
+    //lua_toboolean(mLua, lua_gettop(mLua));
 
-    //lua_remove(mLUA, lua_gettop(mLUA));
+    //lua_remove(mLua, lua_gettop(mLua));
 
   }*/
 
@@ -319,29 +328,29 @@ namespace Pixy {
     va_list argp;
     va_start(argp, argc);
 
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitraryFunc");
-		if(!lua_isfunction(mLUA, 1))
+		lua_getfield(mLua, LUA_GLOBALSINDEX, "arbitraryFunc");
+		if(!lua_isfunction(mLua, 1))
 		{
 			mLog->errorStream() << "could not find Lua arbitrary functor!";
-			lua_pop(mLUA,1);
+			lua_pop(mLua,1);
 			return true;
 		}
 
-    lua_pushfstring(mLUA, inFunc);
-    lua_pushinteger(mLUA, argc);
+    lua_pushfstring(mLua, inFunc);
+    lua_pushinteger(mLua, argc);
     for (int i=0; i < argc; ++i) {
       const char* argtype = (const char*)va_arg(argp, const char*);
       void* argv = (void*)va_arg(argp, void*);
       //std::cout << static_cast<Puppet*>(argv)->getName() << "\n";
-      //lua_pushlightuserdata(mLUA, argv);
-      tolua_pushusertype(mLUA,argv,argtype);
+      //lua_pushlightuserdata(mLua, argv);
+      tolua_pushusertype(mLua,argv,argtype);
     }
 
 		try {
-			lua_call(mLUA, argc+2, 0);
-		} catch (CEGUI::ScriptException& e) {
+			lua_call(mLua, argc+2, 0);
+		} /*catch (CEGUI::ScriptException& e) {
 			mLog->errorStream() << "Lua Handler: " << e.what();
-		} catch (std::exception& e) {
+		} */catch (std::exception& e) {
 			mLog->errorStream() << "Lua Handler: " << e.what();
 		}
 

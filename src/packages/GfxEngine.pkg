@@ -16,7 +16,7 @@ void detachFromScene(Pixy::Renderable& inEntity);
 
 Ogre::Camera* getCamera();
 Ogre::Root* getRoot();
-Ogre::SceneManager* getSM();
+Ogre::SceneManager* getSceneMgr();
 Ogre::Viewport* getViewport();
 
 void setupSceneManager();

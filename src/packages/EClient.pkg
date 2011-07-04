@@ -32,7 +32,7 @@ namespace Pixy
   //$pfile "CUnitFactory.pkg"
   $pfile "GameManager.pkg"
   $pfile "GameState.pkg"
-  $pfile "Intro.pkg"
+  //$pfile "Intro.pkg"
   $pfile "Combat.pkg"
   $pfile "UIEngine.pkg"
   $pfile "GfxEngine.pkg"

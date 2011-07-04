@@ -121,6 +121,13 @@ namespace Pixy {
 
 		//bindToName("EntitySelected", this, &GfxEngine::evtEntitySelected); // __DISABLED__
 
+		setupSceneManager();
+    setupViewports();
+    setupCamera();
+
+    //setupTerrain();
+    setupLights();
+
 		mUpdate = &GfxEngine::updateNothing;
 		mSelected = 0;
 		fSetup = true;
@@ -139,12 +146,7 @@ namespace Pixy {
 		mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
 		mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
 
-		setupSceneManager();
-    setupViewports();
-    setupCamera();
 
-    //setupTerrain();
-    setupLights();
 
     setupNodes();
 
@@ -176,9 +178,13 @@ namespace Pixy {
 		return mRoot;
 	}
 
-	Ogre::SceneManager* GfxEngine::getSM() {
+	Ogre::SceneManager* GfxEngine::getSceneMgr() {
 		return mSceneMgr;
 	}
+
+  Ogre::RenderWindow* GfxEngine::getWindow() {
+    return mRenderWindow;
+  }
 
 	Ogre::Viewport* GfxEngine::getViewport() {
 		return mViewport;
@@ -258,11 +264,11 @@ namespace Pixy {
 	  mViewport = mRenderWindow->addViewport(mCamera);
 
 
-	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
-		compMgr.registerCompositorLogic("HDR", new HDRLogic);
-
-	  Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
-	  Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
+	  //Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
+		//compMgr.registerCompositorLogic("HDR", new HDRLogic);
+    //
+	  //Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
+	  //Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 
 	  //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
 
@@ -845,7 +851,8 @@ namespace Pixy {
 		if (mCameraMan)
 			mCameraMan->injectMouseDown(e, id);
 
-    CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+    return;
+    /*CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 
     if (id != OIS::MB_Left)
       return;
@@ -884,7 +891,7 @@ namespace Pixy {
         // ignore any terrain selection
         dehighlight();
       }
-    }
+    }*/
 	}
 
 	void GfxEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )

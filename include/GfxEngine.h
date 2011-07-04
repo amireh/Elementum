@@ -102,7 +102,8 @@ namespace Pixy {
 		SdkCameraMan* getCameraMan();
 		Ogre::Camera* getCamera();
 		Ogre::Root* getRoot();
-		Ogre::SceneManager* getSM();
+		Ogre::SceneManager* getSceneMgr();
+    Ogre::RenderWindow *getWindow();
 		Ogre::Viewport* getViewport();
 
 		//! Sets up OGRE SceneManager

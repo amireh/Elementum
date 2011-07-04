@@ -56,8 +56,8 @@ namespace Pixy {
     //bool evtAssignPuppets(Event* inEvt);
     //bool evtJoinQueue(Event* inEvt);
 
-		lua_State* mLUA;
-		CEGUI::LuaScriptModule* mCEGUILua;
+		lua_State* mLua;
+		//CEGUI::LuaScriptModule* mCEGUILua;
 		log4cpp::Category *mLuaLog;
 		void loadResources();
 
