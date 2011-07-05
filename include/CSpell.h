@@ -6,9 +6,14 @@
 
 #include <string>
 
-namespace CEGUI {
-  class Window;
+namespace Rocket {
+namespace Core {
+
+class Element;
+
 }
+}
+
 using std::string;
 namespace Pixy
 {
@@ -26,21 +31,21 @@ namespace Pixy
 
     virtual ~CSpell();
 
-    void setImageSet(std::string inName);
-    void setImageName(std::string inName);
-    void setButton(CEGUI::Window* inButton);
+    //~ void setImageSet(std::string inName);
+    //~ void setImageName(std::string inName);
+    void setButton(Rocket::Core::Element*inButton);
 
-    string  getImageSet();
-    string  getImageName();
-    CEGUI::Window*  getButton();
+    //string  getImageSet();
+    //string  getImageName();
+    Rocket::Core::Element*  getButton();
 
     protected:
     void copyFromSrc(const CSpell& src);
 
     // interface info
-    std::string   mImageSet;
-    std::string   mImageName;
-    CEGUI::Window *mButton;
+    //std::string   mImageSet;
+    //std::string   mImageName;
+    Rocket::Core::Element *mButton;
   };
 }
 

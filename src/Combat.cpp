@@ -352,6 +352,7 @@ namespace Pixy
     mActivePuppet = mPuppet;
     //mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
+    mUIEngine->onTurnStarted(mPuppet);
     // send the event back, effectively acknowledging the order
     mNetMgr->send(inEvt);
 
@@ -362,6 +363,7 @@ namespace Pixy
     assert(inEvt.hasProperty("Puppet")); // _DEBUG_
 
     mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("Puppet")));
+    mUIEngine->onTurnStarted(mActivePuppet);
     //mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     assert(mActivePuppet); // _DEBUG_
@@ -417,7 +419,8 @@ namespace Pixy
 
         mLog->debugStream() << "attaching spell with UID: " << lSpell->getUID() << " to puppet " << lPuppet->getUID();
 
-        //if (lPuppet == mPuppet)
+        if (lPuppet == mPuppet)
+          mUIEngine->drawSpell(lSpell);
         //  mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
         lSpell = 0;
@@ -453,7 +456,8 @@ namespace Pixy
           mLog->debugStream() << "removing spell with UID " << elements[index] << " from puppet " << lPuppet->getUID();;
           assert(lSpell); // _DEBUG_
 
-          //if (lPuppet == mPuppet)
+          if (lPuppet == mPuppet)
+            mUIEngine->dropSpell(lSpell);
           //  mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
           lPuppet->detachSpell(lSpell);

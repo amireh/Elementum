@@ -13,9 +13,13 @@
 #include "Engine.h"
 #include "EventListener.h"
 #include "InputListener.h"
+#include "CPuppet.h"
+#include "CSpell.h"
 
 #include <Rocket/Core/String.h>
 #include <Rocket/Core/Context.h>
+#include <Rocket/Core/EventListener.h>
+#include <Rocket/Core/Event.h>
 #include <Ogre.h>
 //#include <CEGUI/CEGUIInputEvent.h>
 
@@ -42,7 +46,12 @@ namespace Pixy {
 	 *	At the moment, the UIEngine acts as a manager for UISheets, however,
 	 *	the sheets are ought to be handled from within the LUA subsystem.
 	 */
-	class UIEngine : public Ogre::RenderQueueListener, public Engine, public EventListener, public InputListener {
+	class UIEngine :
+    public  Rocket::Core::EventListener,
+    public Ogre::RenderQueueListener,
+    public Engine,
+    public EventListener,
+    public InputListener {
 
 	public:
 		virtual ~UIEngine();
@@ -64,11 +73,23 @@ namespace Pixy {
 		/// Called from Ogre after a queue group is rendered.
     virtual void renderQueueEnded(uint8_t queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation);
 
+    void drawSpell(CSpell*);
+    void dropSpell(CSpell*);
+
+    void ProcessEvent( Rocket::Core::Event&);
+
+    void onTurnStarted(const Puppet* inPuppet);
+
+    static std::string saneSpellName(const std::string&);
+
 	protected:
 
 		bool loadResources();
 
     EventManager			*mEvtMgr;
+
+
+
 
 		void createScene();
 		void destroyScene();
@@ -84,6 +105,8 @@ namespace Pixy {
 		Rocket::Core::String sample_path;
 
 		Rocket::Core::Context* context;
+    Rocket::Core::ElementDocument* mDocument;
+    Rocket::Core::Element* mSpellPanel;
 
 		SystemInterfaceOgre3D* ogre_system;
 		RenderInterfaceOgre3D* ogre_renderer;

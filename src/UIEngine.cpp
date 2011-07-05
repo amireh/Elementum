@@ -16,6 +16,9 @@
 #include "UI/SystemInterfaceOgre3D.h"
 #include "UI/RenderInterfaceOgre3D.h"
 #include "GfxEngine.h"
+#include <algorithm>
+#include <string>
+#include <locale>
 //#include "Combat.h"
 
 namespace Pixy {
@@ -29,7 +32,10 @@ namespace Pixy {
 		return _myUIEngine;
 	}
 
-	UIEngine::UIEngine()  {
+	UIEngine::UIEngine()
+  : mDocument(0),
+    context(0),
+    mSpellPanel(0) {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "UIEngine");
 		mLog->infoStream() << "firing up";
 
@@ -37,27 +43,7 @@ namespace Pixy {
     ogre_system = NULL;
     ogre_renderer = NULL;
 
-	// Switch the working directory to Ogre's bin directory.
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-    char path[MAX_PATH];
-    rocket_path = getcwd(path, MAX_PATH);
-    rocket_path += "/../resources/ui/";
-
-    // Normalise the path. This path is used to specify the resource location (see line 56 below).
-    _fullpath(path, rocket_path.CString(), MAX_PATH);
-    rocket_path = Rocket::Core::String(path).Replace("\\", "/");
-
-    // The sample path is the path to the Ogre3D sample directory. All resources are loaded
-    // relative to this path.
-    /*sample_path = getcwd(path, MAX_PATH);
-    sample_path += "/../Samples/basic/ogre3d/";
-#   if OGRE_DEBUG_MODE
-      chdir((Ogre::String(getenv("OGRE_HOME")) + "\\bin\\debug\\").c_str());
-#   else
-      chdir((Ogre::String(getenv("OGRE_HOME")) + "\\bin\\release\\").c_str());
-#   endif*/
     sample_path = "/home/kandie/Workspace/Projects/Elementum/Client/resources/ui/";
-#endif
 
     BuildKeyMaps();
 
@@ -123,21 +109,30 @@ namespace Pixy {
 
     context = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(mWindow->getWidth(), mWindow->getHeight()));
     Rocket::Debugger::Initialise(context);
+    //Rocket::Debugger::SetVisible(true);
 
     // Load the mouse cursor and release the caller's reference.
     Rocket::Core::ElementDocument* cursor = context->LoadMouseCursor("/home/kandie/Workspace/Projects/Elementum/Client/resources/ui/assets/cursor.rml");
     if (cursor)
       cursor->RemoveReference();
 
-    Rocket::Core::ElementDocument* document = context->LoadDocument("/home/kandie/Workspace/Projects/Elementum/Client/resources/ui/assets/demo.rml");
-    if (document)
+    mDocument = context->LoadDocument("/home/kandie/Workspace/Projects/Elementum/Client/resources/ui/assets/demo.rml");
+    if (mDocument)
     {
-      document->Show();
-      document->RemoveReference();
+      mDocument->Show();
+      //document->RemoveReference();
     } else {
       mLog->errorStream() << "couldn't create Rocket element document!";
     }
 
+    mSpellPanel = mDocument->GetElementById("hand");
+    assert(mSpellPanel);
+    mSpellPanel->AddReference();
+
+    Rocket::Core::ElementScroll* scroll = mSpellPanel->GetElementScroll();
+    scroll->EnableScrollbar(Rocket::Core::ElementScroll::Orientation::HORIZONTAL, 400);
+    scroll->DisableScrollbar(Rocket::Core::ElementScroll::Orientation::VERTICAL);
+    scroll->FormatScrollbars();
     // Add the application as a listener to Ogre's render queue so we can render during the overlay.
     GfxEngine::getSingletonPtr()->getSceneMgr()->addRenderQueueListener(this);
   }
@@ -145,6 +140,8 @@ namespace Pixy {
   void UIEngine::destroyScene()
   {
     // Shutdown Rocket.
+    mDocument->RemoveReference();
+    mSpellPanel->RemoveReference();
     context->RemoveReference();
     Rocket::Core::Shutdown();
 
@@ -508,4 +505,61 @@ namespace Pixy {
   }
 
 
+  void UIEngine::onTurnStarted(const Puppet* inPuppet) {
+    mDocument->GetElementById("active_puppet")->SetInnerRML(inPuppet->getName().c_str());
+  }
+
+  std::string UIEngine::saneSpellName(const std::string& inName) {
+    std::string str(inName);
+
+    std::locale loc;
+    const int length = str.length();
+    for(int i=0; i < length; ++i)
+    {
+      if (!isalpha(str[i], loc))
+        str[i] = '_';
+      else
+        str[i] = std::tolower(str[i]);
+    }
+
+    return str;
+  }
+
+  void UIEngine::drawSpell(CSpell* inSpell) {
+    mLog->infoStream() << "drawing a spell button : " << inSpell->getName();
+    Rocket::Core::XMLAttributes attributes;
+    attributes.Set("class", Rocket::Core::String(saneSpellName(inSpell->getName()).c_str()));
+    Rocket::Core::Element* el =
+      Rocket::Core::Factory::InstanceElement(0,"button","button", attributes);
+    assert(el);
+    mSpellPanel->AppendChild(el);
+    assert(el->IsVisible());
+    //el->SetClass("summon_fetish_zij", true);
+
+    Rocket::Core::ElementScroll* scroll = mSpellPanel->GetElementScroll();
+    scroll->EnableScrollbar(Rocket::Core::ElementScroll::Orientation::HORIZONTAL, 400);
+    scroll->DisableScrollbar(Rocket::Core::ElementScroll::Orientation::VERTICAL);
+    scroll->FormatScrollbars();
+    scroll = 0;
+
+    el->AddEventListener("mouseover", this);
+    el->AddEventListener("mouseout", this);
+    el->AddEventListener("click", this);
+
+    inSpell->setButton(el);
+    el->RemoveReference();
+  }
+
+  void UIEngine::dropSpell(CSpell* inSpell) {
+    mSpellPanel->RemoveChild(inSpell->getButton());
+  }
+
+  void UIEngine::ProcessEvent( Rocket::Core::Event& e) {
+    if (e == "mouseover")
+      std::cout << "got a hover event!\n";
+    else if (e == "mouseout")
+      std::cout << "got a mouse leave event!\n";
+    else if (e == "click")
+      std::cout << "spell got clicked\n";
+  }
 }
