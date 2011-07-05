@@ -139,6 +139,11 @@ namespace Pixy {
 
   void UIEngine::destroyScene()
   {
+    for (auto button_pair : mSpellButtons)
+      button_pair.first->RemoveReference();
+
+    mSpellButtons.clear();
+
     // Shutdown Rocket.
     mDocument->RemoveReference();
     mSpellPanel->RemoveReference();
@@ -308,6 +313,11 @@ namespace Pixy {
 
     if (key_identifier != Rocket::Core::Input::KI_UNKNOWN)
       context->ProcessKeyUp(key_identifier, GetKeyModifierState());
+    if (e.key == OIS::KC_P)
+      if (Rocket::Debugger::IsVisible())
+        Rocket::Debugger::SetVisible(false);
+      else
+        Rocket::Debugger::SetVisible(true);
 
     return;
   }
@@ -546,20 +556,43 @@ namespace Pixy {
     el->AddEventListener("mouseout", this);
     el->AddEventListener("click", this);
 
+    mSpellButtons.insert( std::make_pair(el, inSpell) );
+
     inSpell->setButton(el);
-    el->RemoveReference();
+    //el->SetAttribute<CSpell*>("spell", inSpell);
+    //el->RemoveReference();
   }
 
   void UIEngine::dropSpell(CSpell* inSpell) {
+    for (auto button_pair : mSpellButtons)
+      if (button_pair.second == inSpell) {
+        button_pair.first->RemoveReference();
+        mSpellButtons.erase(button_pair.first);
+        break;
+      }
     mSpellPanel->RemoveChild(inSpell->getButton());
   }
 
   void UIEngine::ProcessEvent( Rocket::Core::Event& e) {
-    if (e == "mouseover")
-      std::cout << "got a hover event!\n";
-    else if (e == "mouseout")
+    CSpell* lSpell = mSpellButtons.find(e.GetTargetElement())->second;
+    assert(lSpell);
+    if (e == "mouseover") {
+      std::cout << "got a hover event over " << lSpell->getName() << "!\n";
+      mDocument->GetElementById("tooltip")->SetInnerRML(lSpell->getTooltip().c_str());
+      mDocument->GetElementById("tooltip_container")->SetProperty("visibility", "visible");
+      //~ std::cout << lSpell->getTooltip() << "\n";
+    }
+    else if (e == "mouseout") {
       std::cout << "got a mouse leave event!\n";
-    else if (e == "click")
+      mDocument->GetElementById("tooltip_container")->SetProperty("visibility", "hidden");
+    }
+    else if (e == "click") {
       std::cout << "spell got clicked\n";
+      Combat::getSingleton().castSpell(lSpell);
+    }
+
+    lSpell = 0;
   }
+
+
 }

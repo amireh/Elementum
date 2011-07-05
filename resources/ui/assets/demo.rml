@@ -6,12 +6,19 @@
     <link type="text/rcss" href="invader.rcss" />
 	</head>
 	<body>
+    <div id="tooltip_container" class="shaded">
+      <div id="tooltip">
+        <p><h2>Foo</h2></p><p>This is a tooltip.</p><br />test
+      </div>
+    </div>
+
     <div id="active_puppet" class="shaded">Active Puppet</div>
+
 
     <div id="buttons">
 
-      <div id="tooltip" class="shaded">This is a tooltip.</div>
-      <div id="hand" class="shaded">
+
+      <div id="hand" class="hand">
 <!--
         <button class="summon__fetish_howler">hehe</button>
         <button class="summon__fetish_howler">hehe</button>

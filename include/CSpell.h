@@ -39,12 +39,16 @@ namespace Pixy
     //string  getImageName();
     Rocket::Core::Element*  getButton();
 
+    const std::string& getTooltip() const;
+
     protected:
     void copyFromSrc(const CSpell& src);
+    void generateTooltip();
 
     // interface info
     //std::string   mImageSet;
     //std::string   mImageName;
+    std::string mTooltip;
     Rocket::Core::Element *mButton;
   };
 }

@@ -108,6 +108,9 @@ namespace Pixy {
     Rocket::Core::ElementDocument* mDocument;
     Rocket::Core::Element* mSpellPanel;
 
+    typedef std::map<Rocket::Core::Element*, CSpell*> spell_buttons_t;
+    spell_buttons_t mSpellButtons;
+
 		SystemInterfaceOgre3D* ogre_system;
 		RenderInterfaceOgre3D* ogre_renderer;
 

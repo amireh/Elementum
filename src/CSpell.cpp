@@ -12,8 +12,9 @@
 namespace Pixy
 {
     CSpell::CSpell()
+    : mButton(0),
+      mTooltip("")
     {
-      mButton = NULL;
       std::cout << "CSpell is being created\n";
     }
 
@@ -64,6 +65,22 @@ namespace Pixy
     //~ }
     void CSpell::setButton(Rocket::Core::Element* inButton) {
         mButton = inButton;
+    }
+
+    const std::string& CSpell::getTooltip() const {
+      if (mTooltip.empty()) {
+        ((CSpell*)this)->generateTooltip();
+      }
+
+      return mTooltip;
+    }
+
+    void CSpell::generateTooltip() {
+      std::ostringstream s;
+      s << "<p><h2>" << mName << "</h2></p><p>" << mDescription << "</p><p>";
+      s << "Cost: " << mCostWP << "wp</p>";
+
+      mTooltip = s.str();
     }
 
 

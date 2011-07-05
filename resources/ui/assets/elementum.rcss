@@ -43,26 +43,61 @@ div#buttons {
 
 .shaded {
   background-decorator: image;
+  background-image-src: black_trans0.png;
+  background-image-t: 0 100%;
+  background-image-s: 0 100%;
+}
+.hand {
+  background-decorator: image;
   background-image-src: hand2.png;
   background-image-t: 0 100%;
   background-image-s: 0 100%;
 }
 div#active_puppet {
   position: relative;
-  top: 50px;
+  top: 0px;
   display: block;
   text-align: center;
-  padding: 10px 20px;
+  padding: 30px 20px;
   width: auto;
-  max-width: 200px;
+  width: 100%;
   margin: 0 auto;
+  font-size: 24;
+}
+div#tooltip_container {
+  display: block;
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  max-width: 200px;
+  overflow: auto;
+  padding: 100px 10px 20px 10px;
+  visibility: hidden;
+
+/*
+  border-width: 2;
+  border-color: rgb(100%, 100%, 100%);
+  background-color: rgb(0%, 0%, 0%);
+*/
+
+  height: 100%;
+}
+div#tooltip h2 {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 18;
+  display: block;
+  clear: both;
 }
 div#tooltip {
 
   display: inline;
-  text-align: center;
-  padding: 10px 20px;
-  text-align: center;
+
+/*
+  visibility: hidden;
+*/
 
   /*border-width: 2;
   border-color: rgb(100%, 100%, 100%);
