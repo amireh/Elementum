@@ -19,7 +19,7 @@
 #include <algorithm>
 #include <string>
 #include <locale>
-//#include "Combat.h"
+#include "Combat.h"
 
 namespace Pixy {
 	UIEngine* UIEngine::_myUIEngine = NULL;
@@ -295,8 +295,11 @@ namespace Pixy {
       return;
     }
 
+    bool consumed = false;
     if (key_identifier != Rocket::Core::Input::KI_UNKNOWN)
-      context->ProcessKeyDown(key_identifier, GetKeyModifierState());
+      consumed = context->ProcessKeyDown(key_identifier, GetKeyModifierState());
+
+    std::cout << "UIengine: event consumed? " << (consumed ? "yes" : "no") << "\n";
 
     // Send through the ASCII value as text input if it is printable.
     if (e.text >= 32)

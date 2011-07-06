@@ -278,7 +278,7 @@ namespace Pixy {
     for (int i=0; i < WATER; ++i) {
       lSpell = getSpell(inName, (RACE)i);
       if (lSpell)
-        return new CSpell(*lSpell);
+        return lSpell;
     }
 
     mLog->errorStream() << "couldnt find a spell named " << inName;
@@ -292,9 +292,32 @@ namespace Pixy {
       if ((*itr)->getName() == inName)
         return new CSpell((**itr));
 
-    return NULL;
+    assert(false);
+    return 0;
   }
 
+  CUnit* const CResourceManager::getUnit(std::string inName) {
+    CUnit* lUnit = 0;
+    for (int i=0; i < WATER; ++i) {
+      lUnit = getUnit(inName, (RACE)i);
+      if (lUnit)
+        return lUnit;
+    }
+
+    mLog->errorStream() << "couldnt find a spell named " << inName;
+    return 0;
+  }
+  CUnit* const CResourceManager::getUnit(std::string inName, Pixy::RACE inRace) {
+    units_t::const_iterator itr;
+    units_t* lUnits = &mUnits[inRace];
+
+    for (itr = (*lUnits).begin(); itr != (*lUnits).end(); ++itr)
+      if ((*itr)->getName() == inName)
+        return new CUnit((**itr));
+
+    assert(false);
+    return 0;
+  }
 
   CSpell* CResourceManager::getModelSpell(std::string inName) {
     spells_t::const_iterator itr;
@@ -305,7 +328,7 @@ namespace Pixy {
           return (*itr);
 
     mLog->errorStream() << "couldnt find a spell named " << inName;
-    return NULL;
+    return 0;
   }
 
   CUnit* CResourceManager::getModelUnit(std::string inName) {
@@ -317,6 +340,6 @@ namespace Pixy {
           return (*itr);
 
     mLog->errorStream() << "couldnt find a unit named " << inName;
-    return NULL;
+    return 0;
   }
 }

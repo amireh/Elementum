@@ -1,0 +1,4 @@
+* select a unit
+* move a unit
+* attack a puppet
+* block a unit

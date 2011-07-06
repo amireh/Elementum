@@ -22,6 +22,8 @@ namespace Ogre {
 namespace Pixy
 {
   class Entity;
+  class CUnit;
+  class CPuppet;
 	/*! \class Entity Entity.h "src/Entity.h"
 	 *
 	 * \brief Defines base attributes and actions for GameObjects.
@@ -51,6 +53,12 @@ namespace Pixy
     virtual Entity* getEntity();
 
 		protected:
+      friend class CPuppet;
+      friend class CUnit;
+
+      void setOwner(Pixy::Entity* inOwner) {
+        mOwner = inOwner;
+      }
 
 		Ogre::SceneNode         *mSceneNode;
 		Ogre::MovableObject     *mSceneObject;

@@ -3,6 +3,7 @@
 #include "CDeck.h"
 #include "CUnit.h"
 #include "CSpell.h"
+#include "PixyUtility.h"
 
 namespace Pixy
 {
@@ -43,8 +44,8 @@ namespace Pixy
     mRenderable = 0;
   };
 
-  Renderable& CPuppet::getRenderable() {
-    return *mRenderable;
+  Renderable* CPuppet::getRenderable() {
+    return mRenderable;
 
   }
 
@@ -72,6 +73,7 @@ namespace Pixy
       if ((*lSpell)->getUID() == inUID)
         return *lSpell;
 
+    throw invalid_uid("couldn't find a spell with uid" + stringify(inUID));
     return 0;
   }
 	void CPuppet::attachSpell(CSpell* inSpell)
@@ -81,17 +83,55 @@ namespace Pixy
 		std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
 	};
 
-	void CPuppet::detachSpell(CSpell* inSpell)
+	void CPuppet::detachSpell(int inUID)
 	{
-		//int i=0;
+		CSpell* lSpell = 0;
 		hand_t::iterator it;
 		for(it = mHand.begin(); it != mHand.end(); ++it)
-			if ((*it)->getUID() == inSpell->getUID())
+			if ((*it)->getUID() == inUID)
 			{
+        lSpell = *it;
 				mHand.erase(it);
 				break;
 			}
 
-    delete inSpell;
+    assert(lSpell);
+    delete lSpell;
 	};
+
+	/* ------------------------
+	 * UNITS
+	 * ------------------------ */
+  void CPuppet::attachUnit(CUnit* inUnit) {
+    mUnits.push_back(inUnit);
+    inUnit->setOwner(this);
+
+    std::cout
+      << mUID << " attached a cunit to my control: "
+      << inUnit->getName() << "#" << inUnit->getUID() << "\n";
+
+    assert(inUnit->getOwner());
+  }
+  void CPuppet::detachUnit(int inUID) {
+    CUnit* lUnit = 0;
+		units_t::iterator it;
+		for(it = mUnits.begin(); it != mUnits.end(); ++it)
+			if ((*it)->getUID() == inUID)
+			{
+        lUnit = *it;
+				mUnits.erase(it);
+				break;
+			}
+
+    assert(lUnit);
+    delete lUnit;
+  }
+  CUnit* CPuppet::getUnit(const int inUID) {
+    units_t::iterator lUnit = mUnits.begin();
+		for (lUnit; lUnit != mUnits.end(); ++lUnit)
+			if ((*lUnit)->getUID() == inUID)
+				return *lUnit;
+
+    throw invalid_uid("couldn't find a unit with uid" + stringify(inUID));
+  }
 } // end of namespace

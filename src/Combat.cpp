@@ -11,6 +11,7 @@
 #include "GameManager.h"
 //#include "Intro.h"
 #include "CPuppet.h"
+#include "CSpell.h"
 #include "EventManager.h"
 #include "NetworkManager.h"
 #include "UIEngine.h"
@@ -89,6 +90,9 @@ namespace Pixy
     bind(EventUID::StartTurn, boost::bind(&Combat::onStartTurn, this, _1));
     bind(EventUID::TurnStarted, boost::bind(&Combat::onTurnStarted, this, _1));
     bind(EventUID::DrawSpells, boost::bind(&Combat::onDrawSpells, this, _1));
+    bind(EventUID::CastSpell, boost::bind(&Combat::onCastSpell, this, _1));
+    bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
+    bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
 
     //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
     //bindToName("MatchFound", this, &Combat::evtMatchFound);
@@ -460,7 +464,7 @@ namespace Pixy
             mUIEngine->dropSpell(lSpell);
           //  mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
-          lPuppet->detachSpell(lSpell);
+          lPuppet->detachSpell(lSpell->getUID());
           lSpell = 0;
         }
 
@@ -469,4 +473,80 @@ namespace Pixy
     }
   }
 
+  void Combat::castSpell(CSpell* inSpell) {
+    if (mActivePuppet != mPuppet) {
+      mLog->errorStream() << "attempting to cast spell while it's not my turn";
+      return;
+    }
+
+    Event evt(EventUID::CastSpell);
+    evt.setProperty("Spell", inSpell->getUID());
+    mNetMgr->send(evt);
+  }
+
+  bool Combat::onCastSpell(const Event& evt) {
+    if (evt.Feedback == EventFeedback::InvalidRequest) {
+      // the UID was invalid
+      std::cout << "my request to cast a spell was rejected!\n";
+      return true;
+    }
+
+    // it's ok, let's find the spell
+    CSpell* _spell = 0;
+    CPuppet* _puppet = 0;
+    for (auto puppet : mPuppets)
+      try {
+        _spell = puppet->getSpell(convertTo<int>(evt.getProperty("Spell")));
+        _puppet = puppet;
+        break;
+      } catch (...) { _spell = 0; }
+    assert(_spell && _puppet);
+    // ...
+    std::cout << "casted a spell! " << _spell->getName() << "#" << _spell->getUID() << "\n";
+    // remove it from the UI
+    mUIEngine->dropSpell(_spell);
+    // remove it from the puppet's hand
+    _puppet->detachSpell(_spell->getUID());
+
+
+    return true;
+  }
+
+  bool Combat::onCreateUnit(const Event& evt) {
+    assert(evt.hasProperty("Name") && evt.hasProperty("OUID") && evt.hasProperty("UID"));
+
+    CPuppet* _owner = getPuppet(convertTo<int>(evt.getProperty("OUID")));
+    assert(_owner);
+
+    std::cout << "CreateUnit name: " << evt.getProperty("Name") << "\n";
+    CResourceManager& rmgr_ = GameManager::getSingleton().getResMgr();
+    CUnit* _unit = rmgr_.getUnit(evt.getProperty("Name"), _owner->getRace());
+    assert(_unit);
+
+    _unit->fromEvent(evt);
+    _owner->attachUnit(_unit);
+
+    std::cout << "new units UID=" << _unit->getUID() << "\n";
+    assert(_unit->getOwner());
+
+    mGfxEngine->attachToScene(_unit->getRenderable());
+
+    _unit = 0;
+    _owner = 0;
+
+    return true;
+  }
+
+  bool Combat::onUpdatePuppet(const Event& evt) {
+    assert(evt.hasProperty("UID"));
+
+    CPuppet* _puppet = getPuppet(convertTo<int>(evt.getProperty("UID")));
+    assert(_puppet);
+
+    std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
+
+    _puppet->updateFromEvent(evt);
+
+    return true;
+  }
 } // end of namespace

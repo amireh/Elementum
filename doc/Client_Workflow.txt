@@ -1,0 +1,66 @@
+1) validate client
+2) login
+3) fetch game data, populate resource manager with it
+4) join queue
+5) when match is found:
+  # fetch puppet data and populate Combat with it
+  # create scene
+  # send Ready event to server
+  # wait for MatchStarted event
+  # receive StartTurn event:
+    # send reply TurnStarted
+    # start local timer
+    # send whatever actions to server
+    # send EndTurn to server
+
+* What Lua really needs to handle:
+  1) spell handlers:
+    # fire particle systems
+    # move units
+    # toggle entity animations
+  2) update UI
+  3) handle input
+  4) convert input to events and hook them
+
+* Every object created in the game will be assigned a UID by the server
+* All objects will be represented using this UID
+* The events that could be triggered within a match:
+
+* [OUTBOUND EVENTS]
+  # Spell events:
+    * CastSpell:
+      { Spell UID }
+  # Puppet events:
+    * EndTurn:
+      { }
+    * Pass:
+      { }
+    * Forfeit:
+      { }
+  # Unit events:
+    * Attack, CancelAttack
+      { Attacker UID }
+    * Block, CancelBlock
+      { Blocker UID, Attacker UID }
+
+* [INBOUND EVENTS]
+
+  # Spell events:
+    * CastSpell (broadcast)
+      { Spell UID }
+    * ChangeStats (broadcast)
+      { Object UID, stats }
+  # Puppet events:
+    * StartTurn (broadcast)
+      { Puppet UID }
+    * TurnEnded (broadcast)
+      { Puppet UID }
+    * DrawSpell:
+      { Spell model name, object UID, Puppet UID }
+    * Pass:
+      { Puppet UID }
+  # Unit events:
+    * AttackPuppet
+    * Block:
+      { Blocker UID, Attacker UID, Order }
+

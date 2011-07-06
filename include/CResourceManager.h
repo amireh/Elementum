@@ -3,9 +3,9 @@
 
 #include "Pixy.h"
 #include "ResourceManager.h"
+#include "CUnit.h"
 #include "CPuppet.h"
 #include "CSpell.h"
-#include "CUnit.h"
 //#include "CDeck.h"
 
 using std::string;
@@ -27,6 +27,8 @@ namespace Pixy
 
       virtual CSpell* const getSpell(std::string inName);
       virtual CSpell* const getSpell(std::string inName, Pixy::RACE inRace);
+      virtual CUnit* const getUnit(std::string inName);
+      virtual CUnit* const getUnit(std::string inName, Pixy::RACE inRace);
       list<CPuppet*> puppetsFromStream(istringstream &stream);
       list<CPuppet*>& getPuppets();
 
