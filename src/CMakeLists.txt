@@ -17,7 +17,7 @@ SET(EClient_SRCS
   GameState.cpp
   GfxEngine.cpp
   InputManager.cpp
-  Intro.cpp
+  #Intro.cpp
   #Lobby.cpp
   NetworkManager.cpp
   ScriptEngine.cpp

@@ -22,6 +22,7 @@ namespace Pixy
      *  PEWPEW
      */
 
+  class CSpell;
   class GfxEngine;
   class UIEngine;
   class ScriptEngine;
@@ -64,6 +65,10 @@ namespace Pixy
 
     //~ void pktDrawSpells(RakNet::Packet* inPkt);
 
+  protected:
+    friend class UIEngine;
+    void castSpell(CSpell*);
+
 	private:
 
 		Combat( void ) { }
@@ -77,6 +82,9 @@ namespace Pixy
     bool onStartTurn(const Event& inEvt);
     bool onTurnStarted(const Event& inEvt);
     bool onDrawSpells(const Event&);
+    bool onCastSpell(const Event&);
+    bool onCreateUnit(const Event&);
+    bool onUpdatePuppet(const Event&);
 
 		GfxEngine			*mGfxEngine;
 		UIEngine			*mUIEngine;

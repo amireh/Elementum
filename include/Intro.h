@@ -9,7 +9,7 @@
  *      Date:   20/4/2009
  *      By:     Ahmad Amireh
  * ----------------------------------------------- */
-
+#if 0
 #ifndef H_Intro_H
 #define H_Intro_H
 
@@ -72,4 +72,5 @@ namespace Pixy
 
 	};
 } // end of namespace
+#endif
 #endif

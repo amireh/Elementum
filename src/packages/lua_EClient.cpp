@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sun Jul  3 02:10:44 2011.
+** Generated automatically by tolua++-1.0.92 on Tue Jul  5 13:17:03 2011.
 */
 
 #ifndef __cplusplus
@@ -28,7 +28,6 @@ TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 #include "CDeck.h"
 #include "GameManager.h"
 #include "GameState.h"
-#include "Intro.h"
 #include "Combat.h"
 #include "Engine.h"
 #include "UIEngine.h"
@@ -86,31 +85,29 @@ static int tolua_collect_Pixy__CUnit (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Spell");
- tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
- tolua_usertype(tolua_S,"Ogre::Root");
+ tolua_usertype(tolua_S,"Pixy::GameManager");
+ tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::Deck");
  tolua_usertype(tolua_S,"Pixy::CUnit");
- tolua_usertype(tolua_S,"Pixy::GfxEngine");
+ tolua_usertype(tolua_S,"Ogre::Root");
  tolua_usertype(tolua_S,"Pixy::CSpell");
- tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
  tolua_usertype(tolua_S,"Pixy::EventListener");
- tolua_usertype(tolua_S,"Pixy::UIEngine");
+ tolua_usertype(tolua_S,"Pixy::GfxEngine");
  tolua_usertype(tolua_S,"Pixy::Renderable");
- tolua_usertype(tolua_S,"const");
- tolua_usertype(tolua_S,"Pixy::GameState");
+ tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"Pixy::UIEngine");
  tolua_usertype(tolua_S,"Pixy::Puppet");
- tolua_usertype(tolua_S,"Pixy::Intro");
+ tolua_usertype(tolua_S,"const");
  tolua_usertype(tolua_S,"Pixy::CDeck");
  tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Pixy::GameManager");
+ tolua_usertype(tolua_S,"Pixy::GameState");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
  tolua_usertype(tolua_S,"Pixy::NetworkManager");
@@ -508,8 +505,8 @@ static int tolua_EClient_Pixy_CPuppet_getRenderable00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRenderable'", NULL);
 #endif
   {
-   Pixy::Renderable& tolua_ret = (Pixy::Renderable&)  self->getRenderable();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Pixy::Renderable");
+   Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getRenderable();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Renderable");
   }
  }
  return 1;
@@ -655,7 +652,7 @@ static int tolua_EClient_Pixy_CPuppet_detachSpell00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"Pixy::CSpell",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -663,12 +660,12 @@ static int tolua_EClient_Pixy_CPuppet_detachSpell00(lua_State* tolua_S)
 #endif
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::CSpell* inSpell = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachSpell'", NULL);
 #endif
   {
-   self->detachSpell(inSpell);
+   self->detachSpell(inUID);
   }
  }
  return 0;
@@ -761,201 +758,6 @@ static int tolua_EClient_Pixy_CSpell_delete00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setImageSet of class  Pixy::CSpell */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_setImageSet00
-static int tolua_EClient_Pixy_CSpell_setImageSet00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
-  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setImageSet'", NULL);
-#endif
-  {
-   self->setImageSet(inName);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setImageSet'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setImageName of class  Pixy::CSpell */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_setImageName00
-static int tolua_EClient_Pixy_CSpell_setImageName00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
-  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setImageName'", NULL);
-#endif
-  {
-   self->setImageName(inName);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setImageName'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setButton of class  Pixy::CSpell */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_setButton00
-static int tolua_EClient_Pixy_CSpell_setButton00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CEGUI::Window",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* inButton = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setButton'", NULL);
-#endif
-  {
-   self->setButton(inButton);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setButton'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getImageSet of class  Pixy::CSpell */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_getImageSet00
-static int tolua_EClient_Pixy_CSpell_getImageSet00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getImageSet'", NULL);
-#endif
-  {
-   std::string tolua_ret = (std::string)  self->getImageSet();
-   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getImageSet'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getImageName of class  Pixy::CSpell */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_getImageName00
-static int tolua_EClient_Pixy_CSpell_getImageName00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getImageName'", NULL);
-#endif
-  {
-   std::string tolua_ret = (std::string)  self->getImageName();
-   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getImageName'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getButton of class  Pixy::CSpell */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_getButton00
-static int tolua_EClient_Pixy_CSpell_getButton00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getButton'", NULL);
-#endif
-  {
-   CEGUI::Window* tolua_ret = (CEGUI::Window*)  self->getButton();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CEGUI::Window");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getButton'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1131,8 +933,8 @@ static int tolua_EClient_Pixy_CUnit_getRenderable00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRenderable'", NULL);
 #endif
   {
-   Pixy::Renderable& tolua_ret = (Pixy::Renderable&)  self->getRenderable();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Pixy::Renderable");
+   Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getRenderable();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Renderable");
   }
  }
  return 1;
@@ -1295,62 +1097,6 @@ static int tolua_EClient_Pixy_GameState_requestShutdown00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'requestShutdown'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getSingleton of class  Pixy::Intro */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Intro_getSingleton00
-static int tolua_EClient_Pixy_Intro_getSingleton00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"Pixy::Intro",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   Pixy::Intro& tolua_ret = (Pixy::Intro&)  Pixy::Intro::getSingleton();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Pixy::Intro");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSingleton'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getSingletonPtr of class  Pixy::Intro */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Intro_getSingletonPtr00
-static int tolua_EClient_Pixy_Intro_getSingletonPtr00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"Pixy::Intro",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  {
-   Pixy::Intro* tolua_ret = (Pixy::Intro*)  Pixy::Intro::getSingletonPtr();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Intro");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSingletonPtr'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1680,7 +1426,7 @@ static int tolua_EClient_Pixy_GfxEngine_attachToScene00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::GfxEngine",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Pixy::Renderable",0,&tolua_err)) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::Renderable",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -1693,7 +1439,7 @@ static int tolua_EClient_Pixy_GfxEngine_attachToScene00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachToScene'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->attachToScene(*inEntity);
+   bool tolua_ret = (bool)  self->attachToScene(inEntity);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
@@ -1714,7 +1460,7 @@ static int tolua_EClient_Pixy_GfxEngine_detachFromScene00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::GfxEngine",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Pixy::Renderable",0,&tolua_err)) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::Renderable",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -1727,7 +1473,7 @@ static int tolua_EClient_Pixy_GfxEngine_detachFromScene00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachFromScene'", NULL);
 #endif
   {
-   self->detachFromScene(*inEntity);
+   self->detachFromScene(inEntity);
   }
  }
  return 0;
@@ -1803,9 +1549,9 @@ static int tolua_EClient_Pixy_GfxEngine_getRoot00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getSM of class  Pixy::GfxEngine */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_GfxEngine_getSM00
-static int tolua_EClient_Pixy_GfxEngine_getSM00(lua_State* tolua_S)
+/* method: getSceneMgr of class  Pixy::GfxEngine */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_GfxEngine_getSceneMgr00
+static int tolua_EClient_Pixy_GfxEngine_getSceneMgr00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -1819,17 +1565,17 @@ static int tolua_EClient_Pixy_GfxEngine_getSM00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSM'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneMgr'", NULL);
 #endif
   {
-   Ogre::SceneManager* tolua_ret = (Ogre::SceneManager*)  self->getSM();
+   Ogre::SceneManager* tolua_ret = (Ogre::SceneManager*)  self->getSceneMgr();
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::SceneManager");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSM'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getSceneMgr'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2254,12 +2000,6 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"new_local",tolua_EClient_Pixy_CSpell_new00_local);
     tolua_function(tolua_S,".call",tolua_EClient_Pixy_CSpell_new00_local);
     tolua_function(tolua_S,"delete",tolua_EClient_Pixy_CSpell_delete00);
-    tolua_function(tolua_S,"setImageSet",tolua_EClient_Pixy_CSpell_setImageSet00);
-    tolua_function(tolua_S,"setImageName",tolua_EClient_Pixy_CSpell_setImageName00);
-    tolua_function(tolua_S,"setButton",tolua_EClient_Pixy_CSpell_setButton00);
-    tolua_function(tolua_S,"getImageSet",tolua_EClient_Pixy_CSpell_getImageSet00);
-    tolua_function(tolua_S,"getImageName",tolua_EClient_Pixy_CSpell_getImageName00);
-    tolua_function(tolua_S,"getButton",tolua_EClient_Pixy_CSpell_getButton00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"CDeck","Pixy::CDeck","Pixy::Deck",NULL);
    tolua_beginmodule(tolua_S,"CDeck");
@@ -2288,11 +2028,6 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
    tolua_beginmodule(tolua_S,"GameState");
     tolua_function(tolua_S,"changeState",tolua_EClient_Pixy_GameState_changeState00);
     tolua_function(tolua_S,"requestShutdown",tolua_EClient_Pixy_GameState_requestShutdown00);
-   tolua_endmodule(tolua_S);
-   tolua_cclass(tolua_S,"Intro","Pixy::Intro","Pixy::GameState",NULL);
-   tolua_beginmodule(tolua_S,"Intro");
-    tolua_function(tolua_S,"getSingleton",tolua_EClient_Pixy_Intro_getSingleton00);
-    tolua_function(tolua_S,"getSingletonPtr",tolua_EClient_Pixy_Intro_getSingletonPtr00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Combat","Pixy::Combat","Pixy::GameState",NULL);
    tolua_beginmodule(tolua_S,"Combat");
@@ -2325,7 +2060,7 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"detachFromScene",tolua_EClient_Pixy_GfxEngine_detachFromScene00);
     tolua_function(tolua_S,"getCamera",tolua_EClient_Pixy_GfxEngine_getCamera00);
     tolua_function(tolua_S,"getRoot",tolua_EClient_Pixy_GfxEngine_getRoot00);
-    tolua_function(tolua_S,"getSM",tolua_EClient_Pixy_GfxEngine_getSM00);
+    tolua_function(tolua_S,"getSceneMgr",tolua_EClient_Pixy_GfxEngine_getSceneMgr00);
     tolua_function(tolua_S,"getViewport",tolua_EClient_Pixy_GfxEngine_getViewport00);
     tolua_function(tolua_S,"setupSceneManager",tolua_EClient_Pixy_GfxEngine_setupSceneManager00);
     tolua_function(tolua_S,"setupViewports",tolua_EClient_Pixy_GfxEngine_setupViewports00);

@@ -15,15 +15,18 @@ namespace Pixy
 	{
 	public:
     CUnit();
+    CUnit(const CUnit& src);
+    CUnit& operator=(const CUnit& rhs);
     virtual ~CUnit();
 
-    virtual Renderable& getRenderable();
+    virtual Renderable* getRenderable();
 
     virtual bool live();
     virtual void die();
 
 	protected:
     Renderable* mRenderable;
+    virtual void copyFrom(const CUnit& src);
 
 	};
 } // end of namespace

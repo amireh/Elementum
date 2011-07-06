@@ -4,7 +4,7 @@ class CSpell : public Pixy::Spell
 {
   CSpell();
   virtual ~CSpell();
-
+/*
   void setImageSet(std::string inName);
   void setImageName(std::string inName);
   void setButton(CEGUI::Window* inButton);
@@ -12,5 +12,5 @@ class CSpell : public Pixy::Spell
   std::string  getImageSet();
   std::string  getImageName();
   CEGUI::Window*  getButton();
-
+*/
 };

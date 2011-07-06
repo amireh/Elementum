@@ -80,7 +80,7 @@ namespace Pixy {
 		 * to the given Ogre::Entity for later retrieval, thus,
 		 * linking the GameObject with SceneObject.
 		 */
-		bool attachToScene(Renderable& inEntity);
+		bool attachToScene(Renderable* inEntity);
 
 		//! Detaches a Pixy::Entity from an SceneNode and removes it from Scene
 		/*!
@@ -89,7 +89,7 @@ namespace Pixy {
 		 * stops rendering it. Also detaches Pixy::Entity
 		 * from the Ogre::Entity.
 		 */
-		void detachFromScene(Renderable& inEntity);
+		void detachFromScene(Renderable* inEntity);
 
 		//! Moves a SceneNode to a destination using a Waypoint
 		/*!
@@ -102,7 +102,8 @@ namespace Pixy {
 		SdkCameraMan* getCameraMan();
 		Ogre::Camera* getCamera();
 		Ogre::Root* getRoot();
-		Ogre::SceneManager* getSM();
+		Ogre::SceneManager* getSceneMgr();
+    Ogre::RenderWindow *getWindow();
 		Ogre::Viewport* getViewport();
 
 		//! Sets up OGRE SceneManager

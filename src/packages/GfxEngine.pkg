@@ -8,15 +8,15 @@ static GfxEngine* getSingletonPtr();
 //void setCamera(const Ogre::String& inCameraName);
 
 
-bool attachToScene(Pixy::Renderable& inEntity);
-void detachFromScene(Pixy::Renderable& inEntity);
+bool attachToScene(Pixy::Renderable* inEntity);
+void detachFromScene(Pixy::Renderable* inEntity);
 
 
 //bool moveUnit(Pixy::Unit* inUnit, int inDestination);
 
 Ogre::Camera* getCamera();
 Ogre::Root* getRoot();
-Ogre::SceneManager* getSM();
+Ogre::SceneManager* getSceneMgr();
 Ogre::Viewport* getViewport();
 
 void setupSceneManager();

@@ -102,9 +102,9 @@ namespace Pixy {
 
 
 		mCamera       = mSceneMgr->createCamera("Combat_Camera");
-		mCamera2      = mSceneMgr->createCamera("Combat_Camera_2");
-		mCamera3      = mSceneMgr->createCamera("Combat_Camera_3");
-		mCamera4      = mSceneMgr->createCamera("Combat_Camera_4");
+		//mCamera2      = mSceneMgr->createCamera("Combat_Camera_2");
+		//mCamera3      = mSceneMgr->createCamera("Combat_Camera_3");
+		//mCamera4      = mSceneMgr->createCamera("Combat_Camera_4");
 
 		mRenderWindow = mRoot->getAutoCreatedWindow();
 
@@ -121,6 +121,20 @@ namespace Pixy {
 
 		//bindToName("EntitySelected", this, &GfxEngine::evtEntitySelected); // __DISABLED__
 
+		mPuppetPos[ME] = Vector3(-500, 5, 450);
+    mPuppetPos[ENEMY] =
+      Vector3(mPuppetPos[ME].x,
+							mPuppetPos[ME].y,
+							mPuppetPos[ME].z + 100);
+
+		setupSceneManager();
+    setupViewports();
+    setupCamera();
+	  setupSky();
+	  //setupWater();
+    setupTerrain();
+    setupLights();
+
 		mUpdate = &GfxEngine::updateNothing;
 		mSelected = 0;
 		fSetup = true;
@@ -131,20 +145,8 @@ namespace Pixy {
 
 		mLog->infoStream() << "preparing combat scene";
 
-		mPuppetPos[ME] = Vector3(-500, 5, 450);
-    mPuppetPos[ENEMY] = Vector3(mPuppetPos[ME].x,
-							 mPuppetPos[ME].y,
-							 mPuppetPos[ME].z + 100);
-
 		mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
 		mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
-
-		setupSceneManager();
-    setupViewports();
-    setupCamera();
-
-    //setupTerrain();
-    setupLights();
 
     setupNodes();
 
@@ -176,9 +178,13 @@ namespace Pixy {
 		return mRoot;
 	}
 
-	Ogre::SceneManager* GfxEngine::getSM() {
+	Ogre::SceneManager* GfxEngine::getSceneMgr() {
 		return mSceneMgr;
 	}
+
+  Ogre::RenderWindow* GfxEngine::getWindow() {
+    return mRenderWindow;
+  }
 
 	Ogre::Viewport* GfxEngine::getViewport() {
 		return mViewport;
@@ -258,17 +264,17 @@ namespace Pixy {
 	  mViewport = mRenderWindow->addViewport(mCamera);
 
 
-	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
-		compMgr.registerCompositorLogic("HDR", new HDRLogic);
-
-	  Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
-	  Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
+	  //Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
+		//compMgr.registerCompositorLogic("HDR", new HDRLogic);
+    //
+	  //Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
+	  //Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 
 	  //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
 
 	  Ogre::Vector3 lPos = mPuppetPos[ME];
-	  mCamera->setPosition(lPos.x, lPos.y+2, lPos.z-20);
-	  mCamera->lookAt(mPuppetPos[ME]);
+	  //mCamera->setPosition(lPos.x, lPos.y+2, lPos.z-20);
+	  //mCamera->lookAt(mPuppetPos[ME]);
 
 	  mCameraMan = new OgreBites::SdkCameraMan(mCamera);
 	  //mCameraMan->setTopSpeed(50);
@@ -276,19 +282,10 @@ namespace Pixy {
 
 	  //mCamera->yaw(Ogre::Radian(-45));
 
-    //mSceneMgr->setWorldGeometry("terrain.cfg");
-	  mSceneLoader = new DotSceneLoader();
-	  mSceneLoader->parseDotScene("Elementum.scene",
-								  "General",
-								  mSceneMgr);
-		//mCamera = mSceneMgr->getCamera("Camera#0");
-	  //parseDotScene("Elementum.xml","General",mSceneMgr);
+
 	  //mWindow->setDebugText(getProperty("Robot","Life"));
 
 	  //mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_MODULATIVE);
-
-	  setupSky();
-	  //setupWater();
   };
 
   void GfxEngine::setupViewports()
@@ -296,9 +293,7 @@ namespace Pixy {
 		mLog->debugStream() << "setting up viewports";
     //mViewport->setBackgroundColour(Ogre::ColourValue(255,255,255));
     // Alter the camera aspect ratio to match the viewport
-    //mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
-
-
+    mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
   };
 
   void GfxEngine::setupLights()
@@ -477,32 +472,40 @@ namespace Pixy {
     /*lCamPos = mPuppetPos[ME];
     lCamPos.y += 800;
     lCamPos.z += 1000;
-    */
+
     lCamPos.x = 99;
     lCamPos.y = 189;
     lCamPos.z = -150;
     mCamera->setPosition(lCamPos);
-    mCamera->lookAt(mPuppetPos[ME]);
+    mCamera->lookAt(mPuppetPos[ME]);*/
 	};
 
-    void GfxEngine::setupTerrain()
-    {
+  void GfxEngine::setupTerrain()
+  {
 
-      /*
-      char* lTerrainCfgPath = (char*)malloc(sizeof(char) * (strlen(PROJECT_ROOT) + 18));
-      sprintf(lTerrainCfgPath, "%s/Resources/Config", PROJECT_ROOT);
-      Ogre::ResourceGroupManager::getSingleton().addResourceLocation(lTerrainCfgPath, "FileSystem");
+    //mSceneMgr->setWorldGeometry("terrain.cfg");
+	  mSceneLoader = new DotSceneLoader();
+	  mSceneLoader->parseDotScene("Elementum.scene",
+								  "General",
+								  mSceneMgr);
+		//mCamera = mSceneMgr->getCamera("Camera#0");
+	  //parseDotScene("Elementum.xml","General",mSceneMgr);
 
-      Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    /*
+    char* lTerrainCfgPath = (char*)malloc(sizeof(char) * (strlen(PROJECT_ROOT) + 18));
+    sprintf(lTerrainCfgPath, "%s/Resources/Config", PROJECT_ROOT);
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(lTerrainCfgPath, "FileSystem");
+
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 
 
-      mLog->noticeStream() << "Setting world geometry";
-      mSceneMgr->setWorldGeometry("terrain.cfg");*/
+    mLog->noticeStream() << "Setting world geometry";
+    mSceneMgr->setWorldGeometry("terrain.cfg");*/
 
 
 
-    };
+  };
 
 
 
@@ -661,178 +664,178 @@ namespace Pixy {
   };
 
 
-    Ogre::SceneNode* GfxEngine::createNode(String& inName, Vector3& inPosition, Vector3& inScale, Vector3& inDirection, Ogre::SceneNode* inParent)
+  Ogre::SceneNode* GfxEngine::createNode(String& inName, Vector3& inPosition, Vector3& inScale, Vector3& inDirection, Ogre::SceneNode* inParent)
+  {
+      Ogre::SceneNode* mNode;
+      if (!inParent)
+          inParent = mSceneMgr->getRootSceneNode();
+
+      mNode = inParent->createChildSceneNode(inName, inPosition);
+      mNode->setScale(inScale);
+      //mNode->lookAt(inDirection, Ogre::Node::TS_WORLD);
+      mNode->showBoundingBox(true);
+
+      //mNode = NULL;
+      return mNode;
+  };
+
+  Ogre::SceneNode* GfxEngine::renderEntity(Renderable* inRenderable)
+  {
+    Entity* inEntity = inRenderable->getEntity();
+    mLog->debugStream() << "rendering entity " << inEntity->getName();
+
+    bool isPuppet = inEntity->getRank() == PUPPET;
+    bool found = false;
+    SceneNode* mNode;
+    Ogre::Entity* mEntity;
+
+    String entityName = "", nodeName = "", ownerName = "";
+
+    //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
+    //ownerName = stringify(inEntity->getUID());
+    ownerName = inEntity->getOwner()->getName();
+    if (isPuppet)
     {
-        Ogre::SceneNode* mNode;
-        if (!inParent)
-            inParent = mSceneMgr->getRootSceneNode();
+      entityName = ownerName + "_entity_puppet";
+      nodeName = ownerName + "_node_puppet";
+      /* TO_DO: add functionality to retrieve entitie's mesh pathes from factory */
 
-        mNode = inParent->createChildSceneNode(inName, inPosition);
-        mNode->setScale(inScale);
-        //mNode->lookAt(inDirection, Ogre::Node::TS_WORLD);
-        mNode->showBoundingBox(true);
+      mLog->debugStream() << "puppet node name " << nodeName;
+      mNode = mSceneMgr->getSceneNode(nodeName);
 
-        //mNode = NULL;
-        return mNode;
+      mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+
+      mLog->debugStream() << "attaching user data to ogre entity";
+      mEntity->setUserAny(Ogre::Any(inRenderable));
+
+      mLog->infoStream() << "Attaching puppet entity " << mEntity->getName() << " to node " << mNode->getName();
+      mNode->attachObject(mEntity);
+
+      inRenderable->attachSceneNode(mNode);
+      inRenderable->attachSceneObject(mEntity);
+      return mSceneMgr->getSceneNode(nodeName);
     };
 
-    Ogre::SceneNode* GfxEngine::renderEntity(Renderable* inRenderable)
+    // handle units
+    entityName = ownerName + "_entity_" + stringify<int>(inEntity->getUID());
+    // now we need to locate the nearest empty SceneNode
+    // to render our Entity in
+    int idNode;
+    for (int i=0; i<10; i++)
     {
-      Entity* inEntity = inRenderable->getEntity();
-		  mLog->debugStream() << "rendering entity " << inEntity->getName();
+      nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
+      mNode = mSceneMgr->getSceneNode(nodeName);
+      if (mNode->numAttachedObjects() == 0) {
+        found = true;
+        break;
+      }
+    };
 
-      bool isPuppet = inEntity->getRank() == PUPPET;
-      bool found = false;
-      SceneNode* mNode;
-      Ogre::Entity* mEntity;
+    // now we've got our Node, create the Entity & attach
+    if (found)
+    {
+      /* TO_DO */
+      std::string _meshPath = "";
+      mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+      mEntity->setUserAny(Ogre::Any(inRenderable));
+      mNode->attachObject(mEntity);
 
-      String entityName = "", nodeName = "", ownerName = "";
+      inRenderable->attachSceneNode(mNode);
+      inRenderable->attachSceneObject(mEntity);
 
-      //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
-      //ownerName = stringify(inEntity->getUID());
-      ownerName = inEntity->getOwner()->getName();
-      if (isPuppet)
-      {
-        entityName = ownerName + "_entity_puppet";
-        nodeName = ownerName + "_node_puppet";
-        /* TO_DO: add functionality to retrieve entitie's mesh pathes from factory */
+      return mNode;
+      //mSceneMgr->getSceneNode(nodeName)->setUserAny(
+    } else {
+      mLog->errorStream() << "Could not attach Entity! No empty SceneNodes available";
+      return NULL;
+    }
+    //LOG_F(__FUNCTION__);
+  };
 
-        mLog->debugStream() << "puppet node name " << nodeName;
-        mNode = mSceneMgr->getSceneNode(nodeName);
 
-        mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+  bool GfxEngine::attachToScene(Renderable* inEntity)
+  {
+      //bool isPuppet = (inEntity->getRank() == 0) ? true : false;
 
-        mLog->debugStream() << "attaching user data to ogre entity";
-        mEntity->setUserAny(Ogre::Any(inRenderable));
+      assert(inEntity->getEntity());
+      // render the object
+      renderEntity(inEntity);
+  /*
+      // create and attach interface stats overlay
+      if (!isPuppet)
+          inEntity->attachSceneOverlay( mInterface->createUnitOverlay(inEntity) );
+      else
+          inEntity->attachSceneOverlay( mInterface->createPuppetOverlay(inEntity) );
+  */
+  return true;
+  };
 
-        mLog->infoStream() << "Attaching puppet entity " << mEntity->getName() << " to node " << mNode->getName();
-        mNode->attachObject(mEntity);
 
-        inRenderable->attachSceneNode(mNode);
-        inRenderable->attachSceneObject(mEntity);
-        return mSceneMgr->getSceneNode(nodeName);
-      };
 
-      // handle units
-      entityName = ownerName + "_entity_" + stringify<int>(inEntity->getUID());
-      // now we need to locate the nearest empty SceneNode
-      // to render our Entity in
-      int idNode;
+  void GfxEngine::detachFromScene(Renderable* inRenderable)
+  {
+    Entity* inEntity = inRenderable->getEntity();
+
+    Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
+    Ogre::String nodeName = ownerName + "_node_";
+    Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());
+    Ogre::SceneNode* mTmpNode = NULL;
+
+      //for (int i=0; i<10; i++)
+      //{
+  //LOG("I'm loooping now.");
+
+  //nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
+  // retrieve our node
+  mTmpNode = inRenderable->getSceneNode();
+
+  // retrieve the entity so we can destroy it after we detach it from node
+  //Ogre::Entity* mOgreEntity = (Ogre::Entity*)inEntity->getSceneObject();
+  //Pixy::Entity* mUnit = Ogre::any_cast<Pixy::Entity*> (mOgreEntity->getUserAny());
+  // first let's check if our entity belongs to this scenenode
+  //if (mUnit->getIdEntity() == inEntity->getIdEntity())
+  //if (mOgreEntity->getParentSceneNode() == mTmpNode)
+  //{
+  // this is our node
+
+  //Ogre::MovableObject* mOgreEntity = mTmpNode->getAttachedObject(entityName);
+  // detach from node
+  //mInterface->destroyUnitOverlay(inEntity->getSceneObject());
+
+
+  mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
+  mTmpNode->showBoundingBox(false);
+  mTmpNode->detachObject(inRenderable->getSceneObject());
+  // destroy entity
+
+  //                LOG("I'm destroying Entity : " + mOgreEntity->getName());
+  mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
+
+  // translate the node back to its original position
+  /*
+  int idNode = parseIdNodeFromName(mTmpNode->getName());
+  deque<Vector3>* mWalklist = (inEntity->getOwner() == ID_HOST) ? &hWalklist[idNode] : &cWalklist[idNode];
+  mTmpNode->setPosition((*mWalklist).at(POS_PASSIVE));
+  */
+  //break;
+  //mTmpNode->setUserAny((Ogre::Any)NULL);
+  //};
+  // LOG_F(__FUNCTION__);
+      //};
+
+    inEntity = 0;
+  }
+
+  void GfxEngine::setupWaypoints()
+  {
+  /*
       for (int i=0; i<10; i++)
       {
-        nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
-        mNode = mSceneMgr->getSceneNode(nodeName);
-        if (mNode->numAttachedObjects() == 0) {
-          found = true;
-          break;
-        }
+          createWaypoint(ME, i);
+          createWaypoint(ENEMY, i);
       };
-
-      // now we've got our Node, create the Entity & attach
-      if (found)
-      {
-        /* TO_DO */
-        std::string _meshPath = "";
-        mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
-        mEntity->setUserAny(Ogre::Any(inRenderable));
-        mNode->attachObject(mEntity);
-
-        inRenderable->attachSceneNode(mNode);
-        inRenderable->attachSceneObject(mEntity);
-
-        return mNode;
-        //mSceneMgr->getSceneNode(nodeName)->setUserAny(
-      } else {
-        mLog->errorStream() << "Could not attach Entity! No empty SceneNodes available";
-        return NULL;
-      }
-      //LOG_F(__FUNCTION__);
-    };
-
-
-    bool GfxEngine::attachToScene(Renderable& inEntity)
-    {
-        //bool isPuppet = (inEntity->getRank() == 0) ? true : false;
-
-        assert(inEntity.getEntity());
-        // render the object
-        renderEntity(&inEntity);
-		/*
-        // create and attach interface stats overlay
-        if (!isPuppet)
-            inEntity->attachSceneOverlay( mInterface->createUnitOverlay(inEntity) );
-        else
-            inEntity->attachSceneOverlay( mInterface->createPuppetOverlay(inEntity) );
-		*/
-		return true;
-    };
-
-
-
-    void GfxEngine::detachFromScene(Renderable& inRenderable)
-    {
-      Entity* inEntity = inRenderable.getEntity();
-
-      Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
-      Ogre::String nodeName = ownerName + "_node_";
-      Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());
-      Ogre::SceneNode* mTmpNode = NULL;
-
-        //for (int i=0; i<10; i++)
-        //{
-		//LOG("I'm loooping now.");
-
-		//nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
-		// retrieve our node
-		mTmpNode = inRenderable.getSceneNode();
-
-		// retrieve the entity so we can destroy it after we detach it from node
-		//Ogre::Entity* mOgreEntity = (Ogre::Entity*)inEntity->getSceneObject();
-		//Pixy::Entity* mUnit = Ogre::any_cast<Pixy::Entity*> (mOgreEntity->getUserAny());
-		// first let's check if our entity belongs to this scenenode
-		//if (mUnit->getIdEntity() == inEntity->getIdEntity())
-		//if (mOgreEntity->getParentSceneNode() == mTmpNode)
-		//{
-		// this is our node
-
-		//Ogre::MovableObject* mOgreEntity = mTmpNode->getAttachedObject(entityName);
-		// detach from node
-		//mInterface->destroyUnitOverlay(inEntity->getSceneObject());
-
-
-		mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
-		mTmpNode->showBoundingBox(false);
-		mTmpNode->detachObject(inRenderable.getSceneObject());
-		// destroy entity
-
-		//                LOG("I'm destroying Entity : " + mOgreEntity->getName());
-		mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable.getSceneObject());
-
-		// translate the node back to its original position
-		/*
-		int idNode = parseIdNodeFromName(mTmpNode->getName());
-		deque<Vector3>* mWalklist = (inEntity->getOwner() == ID_HOST) ? &hWalklist[idNode] : &cWalklist[idNode];
-		mTmpNode->setPosition((*mWalklist).at(POS_PASSIVE));
-		*/
-		//break;
-		//mTmpNode->setUserAny((Ogre::Any)NULL);
-		//};
-		// LOG_F(__FUNCTION__);
-        //};
-
-      inEntity = 0;
-    }
-
-    void GfxEngine::setupWaypoints()
-    {
-		/*
-        for (int i=0; i<10; i++)
-        {
-            createWaypoint(ME, i);
-            createWaypoint(ENEMY, i);
-        };
-		 */
-    };
+   */
+  };
 
 	void GfxEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
@@ -845,7 +848,8 @@ namespace Pixy {
 		if (mCameraMan)
 			mCameraMan->injectMouseDown(e, id);
 
-    CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+    return;
+    /*CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 
     if (id != OIS::MB_Left)
       return;
@@ -884,7 +888,7 @@ namespace Pixy {
         // ignore any terrain selection
         dehighlight();
       }
-    }
+    }*/
 	}
 
 	void GfxEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )
@@ -900,7 +904,7 @@ namespace Pixy {
     if (Combat::getSingleton().getPuppet() == 0)
       return;
 
-    SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable().getSceneNode();
+    SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable()->getSceneNode();
     switch (e.key) {
       case OIS::KC_F:
         tmp->yaw(Ogre::Degree(5));

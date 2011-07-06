@@ -1,9 +1,9 @@
 #include "CSpell.h"
-#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-#include "CEGUIBase/CEGUIBase.h"
-#else
-#include "CEGUI/CEGUIBase.h"
-#endif
+//#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+//#include "CEGUIBase/CEGUIBase.h"
+//#else
+//#include "CEGUI/CEGUIBase.h"
+//#endif
 //#include "Combat.h"
 //#include "Entity.h"
 //#include "Puppet.h"
@@ -12,8 +12,9 @@
 namespace Pixy
 {
     CSpell::CSpell()
+    : mButton(0),
+      mTooltip("")
     {
-      mButton = NULL;
       std::cout << "CSpell is being created\n";
     }
 
@@ -41,33 +42,49 @@ namespace Pixy
     {
       Spell::copyFromSrc(src);
 
-      mImageName = src.mImageName;
-      mImageSet = src.mImageSet;
+      //~ mImageName = src.mImageName;
+      //~ mImageSet = src.mImageSet;
       mButton = src.mButton;
 
     }
     CSpell::CSpell(const Spell& src) {
       Spell::copyFromSrc(src);
 
-      mImageName = "";
-      mImageSet = "";
+      //~ mImageName = "";
+      //~ mImageSet = "";
       mButton = 0;
 
       std::cout << "CSpell cloned from Spell, my name is " << mName << "\n";
     }
 
-    void CSpell::setImageSet(std::string inName) {
-        mImageSet = inName;
-    }
-    void CSpell::setImageName(std::string inName) {
-        mImageName = inName;
-    }
-    void CSpell::setButton(CEGUI::Window* inButton) {
+    //~ void CSpell::setImageSet(std::string inName) {
+        //~ mImageSet = inName;
+    //~ }
+    //~ void CSpell::setImageName(std::string inName) {
+        //~ mImageName = inName;
+    //~ }
+    void CSpell::setButton(Rocket::Core::Element* inButton) {
         mButton = inButton;
     }
 
+    const std::string& CSpell::getTooltip() const {
+      if (mTooltip.empty()) {
+        ((CSpell*)this)->generateTooltip();
+      }
 
-    std::string CSpell::getImageSet() { return mImageSet; }
-    std::string CSpell::getImageName() { return mImageName; }
-    CEGUI::Window* CSpell::getButton() { return mButton; }
+      return mTooltip;
+    }
+
+    void CSpell::generateTooltip() {
+      std::ostringstream s;
+      s << "<p><h2>" << mName << "</h2></p><p>" << mDescription << "</p><p>";
+      s << "Cost: " << mCostWP << "wp</p>";
+
+      mTooltip = s.str();
+    }
+
+
+    //~ std::string CSpell::getImageSet() { return mImageSet; }
+    //~ std::string CSpell::getImageName() { return mImageName; }
+    Rocket::Core::Element* CSpell::getButton() { return mButton; }
 }

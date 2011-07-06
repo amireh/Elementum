@@ -508,11 +508,3 @@ scrollbarvertical sliderarrowinc
 	icon-decorator: image;
 	icon-image: invader.tga 28px 152px 55px 176px;
 }
-
-
-
-scrollbarhorizontal
-{
-	width: 0px;
-	height: 0px;
-}
