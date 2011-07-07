@@ -19,6 +19,7 @@
 namespace CEGUI {
   class System;
   class OgreRenderer;
+  class UBox;
 }
 
 namespace Pixy {
@@ -51,6 +52,8 @@ namespace Pixy {
 		void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
 		CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID);
+
+    void setMargin(CEGUI::Window*, CEGUI::UBox&);
 
 	protected:
 		const char* getDataPathPrefix() const;

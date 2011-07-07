@@ -25,7 +25,7 @@ SET(EClient_SRCS
 
   main.cpp
 
-  #${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_EClient.cpp
+  #${CMAKE_CURRENT_SOURCE_DIR}/UI/Tooltip.cpp
 )
 
 SET(PROJECT_LIBS

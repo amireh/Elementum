@@ -33,10 +33,3 @@ Pixy.Combat.reqEndTurn = function()
   end
 end
 
-Pixy.Combat.onTurnStarted = function(evt)
-  Pixy.UI.Combat.disableHand()
-end
-
-Pixy.Combat.onStartTurn = function(evt)
-  Pixy.UI.Combat.enableHand()
-end

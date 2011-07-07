@@ -37,7 +37,7 @@ namespace Pixy
     //Rocket::Core::Element*  getButton();
     CEGUI::Window* getButton();
 
-    const std::string& getTooltip() const;
+    std::string getTooltip() const;
 
     protected:
     void copyFromSrc(const CSpell& src);

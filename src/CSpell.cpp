@@ -67,7 +67,7 @@ namespace Pixy
         mButton = inButton;
     }
 
-    const std::string& CSpell::getTooltip() const {
+    std::string CSpell::getTooltip() const {
       if (mTooltip.empty()) {
         ((CSpell*)this)->generateTooltip();
       }
@@ -77,8 +77,8 @@ namespace Pixy
 
     void CSpell::generateTooltip() {
       std::ostringstream s;
-      s << "<p><h2>" << mName << "</h2></p><p>" << mDescription << "</p><p>";
-      s << "Cost: " << mCostWP << "wp</p>";
+      s << "[padding='l:0 t:100 r:0 b:20']" << mName << "\n[padding='l:0 t:0 r:0 b:0']" << mDescription;
+      s << "\n[padding='l:0 t:20 r:0 b:0']Cost: " << mCostWP << "wp[padding='l:0 t:0 r:0 b:0']";
 
       mTooltip = s.str();
     }

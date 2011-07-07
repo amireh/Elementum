@@ -1,4 +1,6 @@
 $#include "UIEngine.h"
+$#include <CEGUI/CEGUI.h>
+$#include <CEGUI/CEGUISystem.h>
 
 class UIEngine : public Pixy::Engine, public Pixy::EventListener {
 
@@ -8,4 +10,6 @@ static UIEngine* getSingletonPtr();
 bool setup();
 void update(unsigned long lTimeElapsed);
 bool cleanup();
+
+void setMargin(CEGUI::Window*, CEGUI::UBox);
 };

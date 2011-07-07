@@ -128,6 +128,11 @@ namespace Pixy {
 		CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 		//CEGUI::System::getSingleton().setDefaultFont("DejaVuSans-10");
 
+    // Create default ToolTip item
+    CEGUI::System::getSingleton().setDefaultTooltip( (CEGUI::utf8*)"TaharezLook/Tooltip" );
+    CEGUI::Tooltip* ttip = CEGUI::System::getSingleton().getDefaultTooltip();
+    ttip->setMaxSize(CEGUI::UVector2(CEGUI::UDim(0, 600), CEGUI::UDim(0, 400)));
+
 		mLog->infoStream() << "Set up!";
 
 		//Combat::getSingletonPtr()->updateMe(getSingletonPtr());
@@ -200,7 +205,7 @@ namespace Pixy {
 
 
 	void UIEngine::update( unsigned long lTimeElapsed ) {
-		mUISystem->injectTimePulse(lTimeElapsed);
+		mUISystem->injectTimePulse(lTimeElapsed * 0.001f);
 		processEvents();
 	}
 
@@ -223,5 +228,11 @@ namespace Pixy {
 	void UIEngine::keyPressed( const OIS::KeyEvent &e ) {
 
 	}
+
+  void UIEngine::setMargin(CEGUI::Window* win, CEGUI::UBox& margin) {
+    using CEGUI::UDim;
+    //win->setMargin(CEGUI::UBox(UDim(0,0),UDim(0,0),UDim(0,0),UDim(0,5)));
+    win->setMargin(margin);
+  }
 
 }

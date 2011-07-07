@@ -3,26 +3,34 @@
 
 	cegui event handlers and UI bootstrapping goes here
 ]]
-Pixy.UI.Combat = { Buttons = {} }
-local cfg = nil
+if (Pixy.UI.Combat == nil) then
+  Pixy.UI.Combat = { Buttons = {}, Labels = {}, Config = {} }
+
+end
 
 Pixy.UI.Combat.configure = function()
 	-- register the globals
-	Pixy.UI.Combat.Config = {}
-
 	cfg = Pixy.UI.Combat.Config
 
-	-- path to our layout sheet
-	cfg.LayoutPath = "combat/ui.layout"
+  -- path to our layout sheet
+  cfg.LayoutPath = "combat/ui.layout"
 
 	-- spell button config
 	cfg.SpellButton = {}
-	cfg.SpellButton["Height"] = 128
-	cfg.SpellButton["Width"] = 128
+	cfg.SpellButton["Height"] = 96
+	cfg.SpellButton["Width"] = 96
 
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "spells_earth.imageset" )
   CEImagesetMgr:create( "huds.imageset" )
+
+end
+
+Pixy.UI.Combat.registerGlobals = function()
+  Pixy.UI.Combat.Labels["Turns"] = CEWindowMgr:getWindow("Elementum/Scenes/Combat/Effects/Turns/Text")
+  Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Labels/Tooltip")
+
+
 end
 
 -- effectively reloads the UI components and sheets
@@ -96,6 +104,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	lButton["Window"]:setUserString("Spell", inSpell:getUID())
 
 	-- create tooltip
+  --lButton["Window"]:setTooltipText(inSpell:getTooltip())
 	-- ...
 
 	-- attach the window to our layout
@@ -107,6 +116,12 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
   --CEGUI.toListbox(list)
   --list:addItem(list_item)
 	lButton["Window"]:setSize(lButton["Dimensions"])
+  UIEngine:setMargin(lButton["Window"],
+    CEGUI.UBox(
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,5)))
   --list_item:setSize(lButton["Dimensions"])
 	--lButton["Window"]:setPosition(lButton["Position"])
 	lButton["Window"]:moveToFront()
@@ -114,6 +129,8 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 
 	-- finally, subscribe the button to its event handlers
 	lButton["Window"]:subscribeEvent("Clicked", "Pixy.Combat.reqCastSpell")
+  lButton["Window"]:subscribeEvent("MouseEnter", "Pixy.UI.Combat.ShowTooltip")
+  lButton["Window"]:subscribeEvent("MouseLeave", "Pixy.UI.Combat.HideTooltip")
 
   table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
 end
@@ -130,23 +147,33 @@ Pixy.UI.Combat.dropSpell = function(inSpell)
   end
 end
 
-Pixy.UI.Combat.enableHand = function()
-  Pixy.Log("Enabling hand")
+Pixy.UI.Combat.onStartTurn = function()
+  Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
+
   --CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):enable()
   for button in list_iter(Pixy.UI.Combat.Buttons) do
-    Pixy.Log("enabling a button")
     button:enable()
   end
 end
 
-Pixy.UI.Combat.disableHand = function()
-  Pixy.Log("Disabling hand")
+Pixy.UI.Combat.onTurnStarted = function()
+  Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
+
   --CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):disable()
   for button in list_iter(Pixy.UI.Combat.Buttons) do
-    Pixy.Log("disabling a button")
     button:disable()
   end
 end
 
+Pixy.UI.Combat.ShowTooltip = function(e)
+	local win = CEGUI.toWindowEventArgs(e).window
+	local spell = SelfPuppet:getSpell(win:getUserString("Spell"))
+  assert(spell)
+
+  Pixy.UI.Combat.Labels["Tooltip"]:setText(spell:getTooltip())
+end
+Pixy.UI.Combat.HideTooltip = function(e)
+  Pixy.UI.Combat.Labels["Tooltip"]:setText("")
+end
 -- configure
 Pixy.UI.Combat.configure()

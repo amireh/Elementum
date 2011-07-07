@@ -9,46 +9,81 @@
   	<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
   	<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
 
-	    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Reload" >
-    		<Property Name="Text" Value="Reload UI" />
-    		<Property Name="UnifiedPosition" Value="{{0.8,0},{0.1,0}}" />
-    		<Property Name="UnifiedSize" Value="{{0,120},{0,35}}" />
-    		<Property Name="Visible" Value="True" />
-    		<Property Name="Disabled" Value="False" />
-    		<Event Name="Clicked" Function="Pixy.UI.Combat.reload" />
-	    </Window>
-	    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/ReloadScripts" >
-    		<Property Name="Text" Value="Reload Scripts" />
-    		<Property Name="UnifiedPosition" Value="{{0.8,-20},{0.1,40}}" />
-    		<Property Name="UnifiedSize" Value="{{0,160},{0,35}}" />
-    		<Property Name="Visible" Value="True" />
-    		<Property Name="Disabled" Value="False" />
-    		<Event Name="Clicked" Function="Pixy.Combat.reloadScripts" />
-	    </Window>
+    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Reload" >
+      <Property Name="Text" Value="Reload UI" />
+      <Property Name="UnifiedPosition" Value="{{0.8,0},{0.1,0}}" />
+      <Property Name="UnifiedSize" Value="{{0,120},{0,35}}" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="Disabled" Value="False" />
+      <Event Name="Clicked" Function="Pixy.UI.Combat.reload" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/ReloadScripts" >
+      <Property Name="Text" Value="Reload Scripts" />
+      <Property Name="UnifiedPosition" Value="{{0.8,-20},{0.1,40}}" />
+      <Property Name="UnifiedSize" Value="{{0,160},{0,35}}" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="Disabled" Value="False" />
+      <Event Name="Clicked" Function="Pixy.Combat.reloadScripts" />
+    </Window>
 
   	<!-- Turn panel -->
   	<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/Menu">
-  		<Property Name="UnifiedSize" Value="{{0.2,0},{0.05,0}}" />
-  		<Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.01,0},{0.95,0},{0.06.0}}" />
+  		<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.025.0}}" />
   		<Property Name="Visible" Value="True" />
-  		<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/PlayerTurn">
-  			<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-  			<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1.0}}" />
-  			<Property Name="Visible" Value="False" />
-  			<Property Name="Text" Value="Player Turn" />
+      <Property Name="HorizontalAlignment" Value="Left" />
+      <Property Name="VerticalAlignment" Value="Top" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+
+      <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/Effects/Turns/BG">
+        <Property Name="AlwaysOnTop" Value="False" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="Image" Value="set:HUDs image:DarkBG" />
+      </Window>
+  		<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/Text">
+  			<Property Name="Visible" Value="True" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="HorizontalAlignment" Value="Centre" />
+        <Property Name="HorzFormatting" Value="HorzCentred" />
+        <Property Name="VerticalAlignment" Value="Centre" />
   		</Window> <!-- Player end turn button -->
-  		<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/EnemyTurn">
-  			<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-  			<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1.0}}" />
-  			<Property Name="Visible" Value="False" />
-  			<Property Name="Text" Value="Enemy Turn" />
-  		</Window> <!-- Enemy end turn button -->
+
   	</Window> <!-- Menu bar -->
 
+  	<!-- Tooltip panel -->
+  	<Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/Tooltip">
+  		<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.2,0},{1,0}}" />
+  		<Property Name="Visible" Value="True" />
+      <Property Name="HorizontalAlignment" Value="Left" />
+      <Property Name="VerticalAlignment" Value="Top" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+
+      <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/Tooltip/BG">
+        <Property Name="AlwaysOnTop" Value="False" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="Image" Value="set:HUDs image:DarkBG" />
+      </Window>
+  		<Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Labels/Tooltip">
+  			<Property Name="Visible" Value="True" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="HorizontalAlignment" Value="Left" />
+        <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
+        <Property Name="VertFormatting" Value="TopAligned" />
+        <Property Name="VerticalAlignment" Value="Top" />
+  		</Window> <!-- Player end turn button -->
+
+  	</Window> <!-- Menu bar -->
 	<!-- our Player panel -->
 	<!-- Player Active Sheet -->
 	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Player/Active">
-	<Property Name="Visible" Value="True" />
+	<Property Name="Visible" Value="False" />
 	<Property Name="AlwaysOnTop" Value="True" />
  	<Property Name="TitlebarEnabled" Value="False" />
 	<Property Name="FrameEnabled" Value="False" />
@@ -125,13 +160,13 @@
 		<Property Name="Alpha" Value="1" />
 		<Property Name="UnifiedMaxSize" Value="{{0.35,0},{0.05,0}}" />
 		<Property Name="UnifiedAreaRect" Value="{{0.25,0},{0,0},{0.75,0},{0.2,0}}" />
-		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Idle/Waiting" >
+    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Idle/Waiting" >
 			<Property Name="Text" Value="Waiting" />
 			<Property Name="UnifiedMaxSize" Value="{{0.5,0},{0.5,0}}" />
 			<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
 			<Property Name="Visible" Value="True" />
 			<Property Name="Disabled" Value="True" />
-		    </Window>
+    </Window>
 	</Window>
 
 
@@ -143,71 +178,23 @@
 		<Property Name="Alpha" Value="1" />
     <Property Name="HorizontalAlignment" Value="Centre" />
     <Property Name="VerticalAlignment" Value="Middle" />
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-176},{0,512},{1,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-176},{0,656},{1,0}}" />
+    <Property Name="ContentPaneAutoSized" Value="True" />
 
     <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/SpellPanel/Player/BG">
       <Property Name="AlwaysOnTop" Value="False" />
       <Property Name="BackgroundEnabled" Value="False" />
       <Property Name="FrameEnabled" Value="false" />
       <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-      <Property Name="Image" Value="set:HUDs image:Hand" />
+      <Property Name="Image" Value="set:HUDs image:Hand2" />
     </Window>
     <Window Type="HorizontalLayoutContainer" Name="Elementum/Scenes/Combat/SpellPanel/Player/Hand">
       <Property Name="Visible" Value="True" />
       <Property Name="AlwaysOnTop" Value="True" />
       <Property Name="HorizontalAlignment" Value="Centre" />
-      <Property Name="VerticalAlignment" Value="Middle" />
-      <Property Name="ForceHorzScrollbar" Value="True" />
-<!--
-      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
--->
+      <Property Name="VerticalAlignment" Value="Centre" />
     </Window>
-
-<!--
-    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Events/SomeSpellShizzle" >
-      <Property Name="Text" Value="Main Menu" />
-      <Property Name="UnifiedSize" Value="{{0,128},{0,128}}" />
-      <Property Name="UnifiedPosition" Value="{{0,0},{0,0}}" />
-      <Property Name="Visible" Value="True" />
-      <Property Name="Disabled" Value="False" />
-      <Property Name="HorizontalAlignment" Value="Centre" />
-      <Property Name="Margin" Value="{{0,0},{0,0},{0,0},{0,15}}" />
-    </Window>
-    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Events/SomeSpellShizzle2" >
-      <Property Name="Text" Value="Main Menu" />
-      <Property Name="UnifiedSize" Value="{{0,128},{0,128}}" />
-      <Property Name="UnifiedPosition" Value="{{0,128},{0,0}}" />
-      <Property Name="Visible" Value="True" />
-      <Property Name="HorizontalAlignment" Value="Centre" />
-      <Property Name="Disabled" Value="False" />
-    </Window>
-    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Events/SomeSpellShizzle3" >
-      <Property Name="Text" Value="Main Menu" />
-      <Property Name="UnifiedSize" Value="{{0,128},{0,128}}" />
-      <Property Name="UnifiedPosition" Value="{{0,256},{0,0}}" />
-      <Property Name="Visible" Value="True" />
-      <Property Name="HorizontalAlignment" Value="Centre" />
-      <Property Name="Disabled" Value="False" />
-    </Window>
-    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Events/SomeSpellShizzle4" >
-      <Property Name="Text" Value="Main Menu" />
-      <Property Name="UnifiedSize" Value="{{0,128},{0,128}}" />
-      <Property Name="UnifiedPosition" Value="{{0,384},{0,0}}" />
-      <Property Name="Visible" Value="True" />
-      <Property Name="HorizontalAlignment" Value="Centre" />
-      <Property Name="Disabled" Value="False" />
-    </Window>
--->
   </Window>
-
-	<!-- enemy Spell panel -->
-	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Scenes/Combat/SpellPanel/Enemy">
-		<Property Name="AlwaysOnTop" Value="True" />
-		<Property Name="ForceHorzScrollbar" Value="False" />
-		<Property Name="Alpha" Value="1" />
-		<Property Name="UnifiedMaxSize" Value="{{0.65,0},{0.15,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0.01,0},{0.1,0},{1,0},{0.3,0}}" />
-		</Window>
 
 	<!-- BLOCK PHASE SHEET -->
 	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Player/Block">
@@ -228,31 +215,6 @@
 			<Property Name="Disabled" Value="False" />
 		    </Window>
 		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Player/Block/Pass" >
-			<Property Name="Text" Value="Pass" />
-			<Property Name="UnifiedPosition" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="UnifiedSize" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="Visible" Value="True" />
-			<Property Name="Disabled" Value="False" />
-		    </Window>
-	</Window>
-	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Enemy/Block">
-		<Property Name="Visible" Value="False" />
-		<Property Name="AlwaysOnTop" Value="True" />
-	 	<Property Name="TitlebarEnabled" Value="False" />
-		<Property Name="FrameEnabled" Value="False" />
-		<Property Name="CloseButtonEnabled" Value="False" />
-		<Property Name="DragMovingEnabled" Value="False" />
-		<Property Name="Alpha" Value="1" />
-		<Property Name="UnifiedMaxSize" Value="{{0.35,0},{0.05,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0.45,0},{0,0},{0.65,0},{0.2,0}}" />
-		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Block/Block" >
-			<Property Name="Text" Value="Block" />
-			<Property Name="UnifiedPosition" Value="{{0,0},{0,0}}" />
-			<Property Name="UnifiedSize" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="Visible" Value="True" />
-			<Property Name="Disabled" Value="False" />
-		    </Window>
-		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Block/Pass" >
 			<Property Name="Text" Value="Pass" />
 			<Property Name="UnifiedPosition" Value="{{0.5,0},{0.5,0}}" />
 			<Property Name="UnifiedSize" Value="{{0.5,0},{0.5,0}}" />
