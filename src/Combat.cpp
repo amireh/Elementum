@@ -209,7 +209,7 @@ namespace Pixy
     processEvents();
 
 		mGfxEngine->update(lTimeElapsed);
-		//mScriptEngine->update(lTimeElapsed);
+		mScriptEngine->update(lTimeElapsed);
 		mUIEngine->update(lTimeElapsed);
 
 		/*for (mUpdater = mUpdateQueue.begin();
@@ -229,7 +229,7 @@ namespace Pixy
 
 	void Combat::registerPuppet(CPuppet* inPuppet) {
 		mPuppets.push_back(inPuppet);
-    //mScriptEngine->passToLua("addPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
+    mScriptEngine->passToLua("addPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
     if (inPuppet->getName() == mPuppetName)
       assignPuppet(inPuppet);
 	}
@@ -238,7 +238,7 @@ namespace Pixy
     assert(inPuppet);
     mLog->infoStream() << "I'm playing with a puppet named " << inPuppet->getName();
     mPuppet = inPuppet;
-    //mScriptEngine->passToLua("assignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
+    mScriptEngine->passToLua("assignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
   }
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
@@ -354,7 +354,7 @@ namespace Pixy
     //mEvtMgr->hook(mEvtMgr->createEvt("StartTurn")); __DISABLED__
 
     mActivePuppet = mPuppet;
-    //mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     //mUIEngine->onTurnStarted(mPuppet);
     // send the event back, effectively acknowledging the order
@@ -368,7 +368,7 @@ namespace Pixy
 
     mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("Puppet")));
     //mUIEngine->onTurnStarted(mActivePuppet);
-    //mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     assert(mActivePuppet); // _DEBUG_
 
@@ -423,9 +423,9 @@ namespace Pixy
 
         mLog->debugStream() << "attaching spell with UID: " << lSpell->getUID() << " to puppet " << lPuppet->getUID();
 
-        //if (lPuppet == mPuppet)
+        if (lPuppet == mPuppet)
           //mUIEngine->drawSpell(lSpell);
-        //  mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
+          mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
         lSpell = 0;
       }
@@ -460,9 +460,9 @@ namespace Pixy
           mLog->debugStream() << "removing spell with UID " << elements[index] << " from puppet " << lPuppet->getUID();;
           assert(lSpell); // _DEBUG_
 
-          //if (lPuppet == mPuppet)
+          if (lPuppet == mPuppet)
             //mUIEngine->dropSpell(lSpell);
-          //  mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+            mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
           lPuppet->detachSpell(lSpell->getUID());
           lSpell = 0;
@@ -504,6 +504,8 @@ namespace Pixy
     // ...
     std::cout << "casted a spell! " << _spell->getName() << "#" << _spell->getUID() << "\n";
     // remove it from the UI
+    if (_puppet == mPuppet)
+      mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)_spell);
     //mUIEngine->dropSpell(_spell);
     // remove it from the puppet's hand
     _puppet->detachSpell(_spell->getUID());

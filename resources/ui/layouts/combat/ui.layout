@@ -142,7 +142,26 @@
 		<Property Name="ForceHorzScrollbar" Value="True" />
 		<Property Name="Alpha" Value="1" />
     <Property Name="HorizontalAlignment" Value="Centre" />
-    <Property Name="UnifiedAreaRect" Value="{{0.5,-768},{1,-128},{0.5,768},{1,128}}" />
+    <Property Name="VerticalAlignment" Value="Middle" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-176},{0,512},{1,0}}" />
+
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/SpellPanel/Player/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="false" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:Hand" />
+    </Window>
+    <Window Type="HorizontalLayoutContainer" Name="Elementum/Scenes/Combat/SpellPanel/Player/Hand">
+      <Property Name="Visible" Value="True" />
+      <Property Name="AlwaysOnTop" Value="True" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
+      <Property Name="VerticalAlignment" Value="Middle" />
+      <Property Name="ForceHorzScrollbar" Value="True" />
+<!--
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+-->
+    </Window>
 
 <!--
     <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Events/SomeSpellShizzle" >

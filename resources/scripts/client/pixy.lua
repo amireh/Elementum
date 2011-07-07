@@ -39,7 +39,7 @@ Pixy.registerGlobals = function()
 	GameMgr = Pixy.GameManager:getSingleton()
   NetMgr = Pixy.NetworkManager:getSingleton()
 	--if (state == "Intro") then
-		Intro = Pixy.Intro:getSingletonPtr()
+		--Intro = Pixy.Intro:getSingletonPtr()
 	--elseif (state == "Combat") then
 		Puppet, EnemyPuppet, Active, Waiting = nil
 		Combat = Pixy.Combat:getSingletonPtr()

@@ -6,12 +6,8 @@
 
 #include <string>
 
-namespace Rocket {
-namespace Core {
-
-class Element;
-
-}
+namespace CEGUI {
+class Window;
 }
 
 using std::string;
@@ -31,13 +27,15 @@ namespace Pixy
 
     virtual ~CSpell();
 
-    //~ void setImageSet(std::string inName);
-    //~ void setImageName(std::string inName);
-    void setButton(Rocket::Core::Element*inButton);
+    void setImageSet(std::string inName);
+    void setImageName(std::string inName);
+    //void setButton(Rocket::Core::Element*inButton);
+    void setButton(CEGUI::Window*);
 
-    //string  getImageSet();
-    //string  getImageName();
-    Rocket::Core::Element*  getButton();
+    string  getImageSet();
+    string  getImageName();
+    //Rocket::Core::Element*  getButton();
+    CEGUI::Window* getButton();
 
     const std::string& getTooltip() const;
 
@@ -46,10 +44,10 @@ namespace Pixy
     void generateTooltip();
 
     // interface info
-    //std::string   mImageSet;
-    //std::string   mImageName;
+    std::string   mImageSet;
+    std::string   mImageName;
     std::string mTooltip;
-    Rocket::Core::Element *mButton;
+    CEGUI::Window *mButton;
   };
 }
 

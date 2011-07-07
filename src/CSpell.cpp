@@ -42,28 +42,28 @@ namespace Pixy
     {
       Spell::copyFromSrc(src);
 
-      //~ mImageName = src.mImageName;
-      //~ mImageSet = src.mImageSet;
+      mImageName = src.mImageName;
+      mImageSet = src.mImageSet;
       mButton = src.mButton;
 
     }
     CSpell::CSpell(const Spell& src) {
       Spell::copyFromSrc(src);
 
-      //~ mImageName = "";
-      //~ mImageSet = "";
+      mImageName = "";
+      mImageSet = "";
       mButton = 0;
 
       std::cout << "CSpell cloned from Spell, my name is " << mName << "\n";
     }
 
-    //~ void CSpell::setImageSet(std::string inName) {
-        //~ mImageSet = inName;
-    //~ }
-    //~ void CSpell::setImageName(std::string inName) {
-        //~ mImageName = inName;
-    //~ }
-    void CSpell::setButton(Rocket::Core::Element* inButton) {
+    void CSpell::setImageSet(std::string inName) {
+        mImageSet = inName;
+    }
+    void CSpell::setImageName(std::string inName) {
+        mImageName = inName;
+    }
+    void CSpell::setButton(CEGUI::Window* inButton) {
         mButton = inButton;
     }
 
@@ -84,7 +84,7 @@ namespace Pixy
     }
 
 
-    //~ std::string CSpell::getImageSet() { return mImageSet; }
-    //~ std::string CSpell::getImageName() { return mImageName; }
-    Rocket::Core::Element* CSpell::getButton() { return mButton; }
+    std::string CSpell::getImageSet() { return mImageSet; }
+    std::string CSpell::getImageName() { return mImageName; }
+    CEGUI::Window* CSpell::getButton() { return mButton; }
 }

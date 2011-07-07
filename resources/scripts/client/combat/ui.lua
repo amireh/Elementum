@@ -21,7 +21,8 @@ Pixy.UI.Combat.configure = function()
 	cfg.SpellButton["Width"] = 128
 
 	-- create our imagesets used for spell buttons
-	CEImagesetMgr:create( "Spells-Earth.imageset" )
+	CEImagesetMgr:create( "spells_earth.imageset" )
+  CEImagesetMgr:create( "huds.imageset" )
 end
 
 -- effectively reloads the UI components and sheets
@@ -50,7 +51,8 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- calculate position
 	lButton["Position"] =
 		CEGUI.UVector2:new(
-			CEGUI.UDim(0, cfg.SpellButton["Width"] * (SelfPuppet:nrSpellsInHand() - 2) + (margin*SelfPuppet:nrSpellsInHand())),
+			--CEGUI.UDim(0, cfg.SpellButton["Width"] * (SelfPuppet:nrSpellsInHand() - 2) + (margin*SelfPuppet:nrSpellsInHand())),
+      CEGUI.UDim(0, cfg.SpellButton["Width"] * (SelfPuppet:nrSpellsInHand() - 2)),
 			CEGUI.UDim(0, 0)
 		)
 
@@ -67,11 +69,13 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	Pixy.Log("creating a window named " .. lButton["Name"])
 
 	-- create the actual button element
+  --local list_item = CEWindowMgr:createWindow("TaharezLook/ListboxItem", lButton["Name"] .. "/ListItem")
 	lButton["Window"] = CEWindowMgr:createWindow("TaharezLook/ImageButton", lButton["Name"])
+  --list_item:addChildWindow(lButton["Window"])
 
 	-- attach the button to the Pixy::Spell object
 	inSpell:setButton(lButton["Window"])
-  inSpell:setImageSet("Spells-" .. raceToString(inSpell:getRace()))
+  inSpell:setImageSet("Spells_" .. raceToString(inSpell:getRace()))
   -- sanitize spell name to match image set name
   local sane_name = string.gsub(inSpell:getName(), "%s", "_")
   inSpell:setImageName(sane_name)
@@ -95,9 +99,16 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- ...
 
 	-- attach the window to our layout
-	CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):addChildWindow(lButton["Window"])
+	CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand"):addChildWindow(lButton["Window"])
+
+  --local item = lButton["Window"]
+	--CEGUI.toItemEntry(list_item)
+  --local list = CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand")
+  --CEGUI.toListbox(list)
+  --list:addItem(list_item)
 	lButton["Window"]:setSize(lButton["Dimensions"])
-	lButton["Window"]:setPosition(lButton["Position"])
+  --list_item:setSize(lButton["Dimensions"])
+	--lButton["Window"]:setPosition(lButton["Position"])
 	lButton["Window"]:moveToFront()
 	lButton["Window"]:show()
 
@@ -116,6 +127,24 @@ Pixy.UI.Combat.dropSpell = function(inSpell)
 			button:getPosition().y)
 
     button:setPosition(pos)
+  end
+end
+
+Pixy.UI.Combat.enableHand = function()
+  Pixy.Log("Enabling hand")
+  --CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):enable()
+  for button in list_iter(Pixy.UI.Combat.Buttons) do
+    Pixy.Log("enabling a button")
+    button:enable()
+  end
+end
+
+Pixy.UI.Combat.disableHand = function()
+  Pixy.Log("Disabling hand")
+  --CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):disable()
+  for button in list_iter(Pixy.UI.Combat.Buttons) do
+    Pixy.Log("disabling a button")
+    button:disable()
   end
 end
 
