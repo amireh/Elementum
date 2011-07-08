@@ -55,6 +55,8 @@ namespace Pixy {
 
     void setMargin(CEGUI::Window*, CEGUI::UBox&);
 
+    void refreshSize();
+
 	protected:
 		const char* getDataPathPrefix() const;
 

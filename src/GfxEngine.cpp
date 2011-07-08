@@ -11,9 +11,11 @@
 #include "GameManager.h"
 #include "EventManager.h"
 #include "CPuppet.h"
+#include "CUnit.h"
 #include "Renderable.h"
 #include "Combat.h"
 #include "UIEngine.h"
+#include "NetworkManager.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUIBase/CEGUI.h>
@@ -62,11 +64,11 @@ namespace Pixy {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "GfxEngine");
 		mLog->infoStream() << "firing up";
 		fSetup = false;
-		mPlayers.clear();
+		//mPlayers.clear();
 		mCameraMan = 0;
-		mFallVelocity = 0;
 		mSceneLoader = 0;
-
+    mPlayer = 0;
+    mEnemy = 0;
 	}
 
 	GfxEngine::~GfxEngine() {
@@ -119,7 +121,8 @@ namespace Pixy {
 		/*if (GameManager::getSingleton().currentState()->getId() == STATE_COMBAT)
 		  setupCombat();*/
 
-		//bindToName("EntitySelected", this, &GfxEngine::evtEntitySelected); // __DISABLED__
+		bind(EventUID::EntitySelected, boost::bind(&GfxEngine::onEntitySelected, this, _1));
+    bind(EventUID::Charge, boost::bind(&GfxEngine::onCharge, this, _1));
 
 		mPuppetPos[ME] = Vector3(-500, 5, 450);
     mPuppetPos[ENEMY] =
@@ -145,17 +148,25 @@ namespace Pixy {
 
 		mLog->infoStream() << "preparing combat scene";
 
-		mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
-		mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
+    mPlayer = Combat::getSingleton().getPuppet();
+    for (auto puppet : Combat::getSingleton().getPuppets())
+      if (puppet != mPlayer) {
+        mEnemy = puppet;
+        break;
+      }
+
+    assert(mPlayer && mEnemy);
+
+		//mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
+		//mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
 
     setupNodes();
+    setupWaypoints();
 
 		std::ostringstream lNodeName;
-		lNodeName << Combat::getSingleton().getPuppet()->getName() << "_node_puppet";
+		lNodeName << mPlayer->getName() << "_node_puppet";
 		mCameraMan->setTarget(mSceneMgr->getSceneNode(lNodeName.str()));
-		/*
-        setupWaypoints();
-		 */
+
 		//Combat::getSingleton().updateGfx();
 		mUpdate = &GfxEngine::updateCombat;
 
@@ -198,6 +209,20 @@ namespace Pixy {
 		mCameraMan->update(lTimeElapsed);
 
 		using namespace Ogre;
+
+    // clean up updatees marked for removal
+    updatees_t::iterator itr = mUpdatees.begin();
+    for (itr; itr != mUpdatees.end(); ++itr)
+      if ((itr->second) == false) {
+        mUpdatees.erase(itr);
+        if (mUpdatees.size() == 0)
+          break;
+        else
+        itr = mUpdatees.begin();
+      }
+
+    for (itr = mUpdatees.begin(); itr != mUpdatees.end(); ++itr)
+      itr->first->update(lTimeElapsed);
 
 
 		//mCaelumSystem->updateSubcomponents(lTimeElapsed);
@@ -545,11 +570,11 @@ namespace Pixy {
     {
       if (i == ME)
       {
-        ownerName = mPlayers.front();
+        ownerName = mPlayer->getName();
         tmpPos = mPuppetPos[ME];
         tmpDir = mDirection[ME];
       } else {
-        ownerName = mPlayers.back();
+        ownerName = mEnemy->getName();
         tmpPos = mPuppetPos[ENEMY];
         tmpDir = mDirection[ENEMY];
       }
@@ -573,19 +598,19 @@ namespace Pixy {
       if (owner == ME)
       {
         // start by creating client's nodes
-        ownerName = mPlayers.front();
+        ownerName = mPlayer->getName();
         // define the starting position of the first node
         tmpPos = mPuppetPos[ME];
         tmpDir = mDirection[ME];
       } else {
-        ownerName = mPlayers.back();
+        ownerName = mEnemy->getName();
         // define the starting position of the opponent first node
         tmpPos = mPuppetPos[ENEMY];
         tmpDir = mDirection[ENEMY];
       }
 
       tmpPos.x += 10; // margin from the puppet
-      tmpPos.z -= 50;
+      tmpPos.z += (owner == ME) ? -50 : 50;
 
       unitMargin = 10; // separate units by unitMargin space units on X axis
       packMargin = 75; // separate "packs" of units by packMargin space units on X axis
@@ -641,20 +666,30 @@ namespace Pixy {
             mPuppetPos[ME].y,
             (mPuppetPos[ME].z+mPuppetPos[ENEMY].z)/2);
 
+    //~ defensePos[ME] =
+    //~ Vector3(mPuppetPos[ME].x,
+            //~ mPuppetPos[ME].y,
+            //~ mPuppetPos[ME].z+5);
+
+    //~ defensePos[ENEMY] =
+    //~ Vector3(mPuppetPos[ENEMY].x,
+            //~ mPuppetPos[ENEMY].y,
+            //~ mPuppetPos[ENEMY].z-5);
+
     defensePos[ME] =
-    Vector3(mPuppetPos[ME].x,
-            mPuppetPos[ME].y,
-            mPuppetPos[ME].z-100);
+    Vector3(offensePos.x,
+            offensePos.y,
+            offensePos.z-5);
 
     defensePos[ENEMY] =
-    Vector3(mPuppetPos[ENEMY].x,
-            mPuppetPos[ENEMY].y,
-            mPuppetPos[ENEMY].z+100);
+    Vector3(offensePos.x,
+            offensePos.y,
+            offensePos.z+5);
 
     Ogre::String tmpName[3] = {
 	    "shared_node_offense",
-	    mPlayers.front() + "_node_defense",
-	    mPlayers.back() + "_node_defense"
+	    mPlayer->getName() + "_node_defense",
+	    mEnemy->getName() + "_node_defense"
 		};
 
     createNode(tmpName[0],   offensePos,        mUnitScale, mDirection[ME]);
@@ -663,6 +698,75 @@ namespace Pixy {
 
   };
 
+/* MOVING FUNCTIONS */
+  void GfxEngine::createWaypoint(
+    int inOwner,
+    int inNode,
+    std::string inOwnerName,
+    std::string inOpponentName)
+  {
+    // Create the walking list
+    // every unit "node" has 5 spots to move to
+    // 1) Passive position (default, starts at it)
+    // 2) Charging position (moved to when unit is told to attack/defend)
+    // 3) Defensive position (1 shared node for all units under hero's control for defense)
+    // 4) Offensive position (shared throughout the combat objects, there can be only 1 attacker at a time)
+    // 5) Attack position (which is the defensive spot for the opponent hero in relation to the unit)
+    //std::cout<<"Im setting up waypoints for"<<nodeOwner<<"@"<<nodeID<<"\n";
+
+    std::vector<Ogre::Vector3>* mWalklist = &mWaypoints[inOwner][inNode];
+
+    Vector3 passivePos, chargingPos, defensePos, offensePos, attackPos;
+    Ogre::Real margin = 100;
+    Ogre::String nodeName, heroNodeName;
+
+    if (inOwner == ME)
+    {
+     //ownerName = Combat::getSingletonPtr()->getPuppetName();
+     //opponentName = "enemy";
+     margin *= -1;
+     //~ mWalklist = &hWalklist[inIdNode];
+    } else {
+     //ownerName = "enemy";
+     //opponentName = "player";
+     //~ mWalklist = &cWalklist[inIdNode];
+    }
+
+    nodeName = inOwnerName + "_node_" + Ogre::StringConverter::toString(inNode);
+    heroNodeName = inOwnerName + "_node_puppet";
+
+    // Passive position
+    passivePos = mSceneMgr->getSceneNode(nodeName)->getPosition();
+
+    // Charging position
+    chargingPos = passivePos;
+    chargingPos.z = mSceneMgr->getSceneNode(inOwnerName + "_node_puppet")->getPosition().z;
+
+    // Defence position
+    defensePos = mSceneMgr->getSceneNode(inOwnerName + "_node_defense")->getPosition();
+
+    // Offence position
+    offensePos = mSceneMgr->getSceneNode("shared_node_offense")->getPosition();
+
+    // Attack position
+    attackPos = mSceneMgr->getSceneNode(inOpponentName + "_node_puppet")->getPosition();
+    attackPos.z += (inOwner == ME) ? -5 : 5;
+    attackPos.y = offensePos.y;
+
+    std::cout
+      << "Waypoint for node: " << inOwner << "#" << inNode << ":\n"
+      << "\tIdle: " << passivePos.x << "," << passivePos.y << "," << passivePos.z << "\n"
+      << "\tCharging: " << chargingPos.x << "," << chargingPos.y << "," << chargingPos.z << "\n"
+      << "\tBlock: " << defensePos.x << "," << defensePos.y << "," << defensePos.z << "\n"
+      << "\tOffense: " << offensePos.x << "," << offensePos.y << "," << offensePos.z << "\n"
+      << "\tAttack: " << attackPos.x << "," << attackPos.y << "," << attackPos.z << "\n";
+
+    (*mWalklist).push_back(passivePos);
+    (*mWalklist).push_back(chargingPos);
+    (*mWalklist).push_back(defensePos);
+    (*mWalklist).push_back(offensePos);
+    (*mWalklist).push_back(attackPos);
+  };
 
   Ogre::SceneNode* GfxEngine::createNode(String& inName, Vector3& inPosition, Vector3& inScale, Vector3& inDirection, Ogre::SceneNode* inParent)
   {
@@ -673,7 +777,7 @@ namespace Pixy {
       mNode = inParent->createChildSceneNode(inName, inPosition);
       mNode->setScale(inScale);
       //mNode->lookAt(inDirection, Ogre::Node::TS_WORLD);
-      mNode->showBoundingBox(true);
+      //~ mNode->showBoundingBox(true);
 
       //mNode = NULL;
       return mNode;
@@ -726,6 +830,7 @@ namespace Pixy {
       nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
       mNode = mSceneMgr->getSceneNode(nodeName);
       if (mNode->numAttachedObjects() == 0) {
+        idNode = i;
         found = true;
         break;
       }
@@ -742,6 +847,9 @@ namespace Pixy {
 
       inRenderable->attachSceneNode(mNode);
       inRenderable->attachSceneObject(mEntity);
+
+      static_cast<CUnit*>(inEntity)->
+        setWaypoints(&mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode]);
 
       return mNode;
       //mSceneMgr->getSceneNode(nodeName)->setUserAny(
@@ -828,13 +936,11 @@ namespace Pixy {
 
   void GfxEngine::setupWaypoints()
   {
-  /*
-      for (int i=0; i<10; i++)
-      {
-          createWaypoint(ME, i);
-          createWaypoint(ENEMY, i);
-      };
-   */
+    for (int i=0; i<10; i++)
+    {
+      createWaypoint(ME, i, mPlayer->getName(), mEnemy->getName());
+      createWaypoint(ENEMY, i, mEnemy->getName(), mPlayer->getName());
+    };
   };
 
 	void GfxEngine::mouseMoved( const OIS::MouseEvent &e )
@@ -848,8 +954,8 @@ namespace Pixy {
 		if (mCameraMan)
 			mCameraMan->injectMouseDown(e, id);
 
-    return;
-    /*CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+    //~ return;
+    CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 
     if (id != OIS::MB_Left)
       return;
@@ -870,6 +976,7 @@ namespace Pixy {
 
 
     //dehighlight(); // remove any unit selection
+    bool found = false;
     for (itr = result.begin(); itr != result.end(); itr++)
     {
       //mLog->infoStream() << "Ray target name: " << itr->movable->getName();
@@ -877,18 +984,19 @@ namespace Pixy {
          (itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "") {
 
-        // __DISABLED__
-        //~ Event* lEvt = mEvtMgr->createEvt("EntitySelected", true);
-        //~ lEvt->setAny((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
-        //~ mEvtMgr->hook(lEvt);
+        Event e(EventUID::EntitySelected);
+        e.Any = ((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
+        mEvtMgr->hook(e);
+
+        found = true;
 
         break;
 
-      } else {
-        // ignore any terrain selection
-        dehighlight();
       }
-    }*/
+    }
+    if (!found)
+      // ignore any terrain selection
+      dehighlight();
 	}
 
 	void GfxEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )
@@ -915,6 +1023,21 @@ namespace Pixy {
       case OIS::KC_H:
         tmp->pitch(Ogre::Degree(5));
       break;
+      case OIS::KC_E:
+        static_cast<CUnit*>(mSelected->getEntity())->move(POS_READY);
+        break;
+      case OIS::KC_R:
+        static_cast<CUnit*>(mSelected->getEntity())->move(POS_CHARGING);
+        break;
+      case OIS::KC_T:
+        static_cast<CUnit*>(mSelected->getEntity())->move(POS_DEFENCE);
+        break;
+      case OIS::KC_Y:
+        static_cast<CUnit*>(mSelected->getEntity())->move(POS_OFFENCE);
+        break;
+      case OIS::KC_U:
+        static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
+        break;
     }
 	}
 	void GfxEngine::keyPressed( const OIS::KeyEvent &e ) {
@@ -936,17 +1059,43 @@ namespace Pixy {
 	  mSelected = 0;
 	};
 
-  bool GfxEngine::evtEntitySelected(Event* inEvt) {
-    // __DISABLED__
-    //~ Pixy::Renderable* lEntity = static_cast<Pixy::Renderable*>(inEvt->getAny());
+  bool GfxEngine::onEntitySelected(const Event& inEvt) {
+    Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
+    Pixy::Entity* lEntity = lRend->getEntity();
 
+    std::cout << "selected a unit with UID: " << lEntity->getUID() << "\n";
      // double click on an entity
-    //~ if (mSelected && mSelected == lEntity) {
-//~
-    //~ }
-//~
-    //~ highlight(lEntity);
+    if (mSelected && mSelected->getEntity()->getUID() == lEntity->getUID()) {
+      std::cout << "got a double click\n";
+      if (lEntity->getRank() != PUPPET) {
+        Event req(EventUID::Charge);
+        req.setProperty("UID", lEntity->getUID());
+        NetworkManager::getSingleton().send(req);
+
+        static_cast<CUnit*>(lEntity)->move(POS_CHARGING);
+
+        dehighlight();
+      }
+
+      return true;
+    }
+
+    highlight(lRend);
 
     return true;
+  }
+
+  bool GfxEngine::onCharge(const Event& inEvt) {
+    mLog->infoStream() << "charging with a unit";
+
+    return true;
+  }
+
+  void GfxEngine::updateMe(CUnit* inUnit) {
+    mUpdatees.insert(std::make_pair(inUnit, true));
+  }
+
+  void GfxEngine::stopUpdatingMe(CUnit* inUnit) {
+    mUpdatees.find(inUnit)->second = false;
   }
 }

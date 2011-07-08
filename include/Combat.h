@@ -30,6 +30,7 @@ namespace Pixy
   class NetworkManager;
   class CPuppet;
   class Engine;
+  class CUnit;
 	class Combat : public GameState, public EventListener {
 	public:
     typedef std::list<CPuppet*> puppets_t;
@@ -86,6 +87,13 @@ namespace Pixy
     bool onCreateUnit(const Event&);
     bool onUpdatePuppet(const Event&);
 
+    bool onCharge(const Event&);
+    bool onCancelCharge(const Event&);
+    bool onStartBlockPhase(const Event&);
+    bool onBlock(const Event&);
+    bool onCancelBlock(const Event&);
+    bool onEndBlockPhase(const Event&);
+
 		GfxEngine			*mGfxEngine;
 		UIEngine			*mUIEngine;
 		ScriptEngine		*mScriptEngine;
@@ -95,8 +103,17 @@ namespace Pixy
 		static Combat		*mCombat;
 
 		puppets_t		mPuppets;
-    CPuppet* mPuppet, *mActivePuppet;
+    CPuppet* mPuppet, *mActivePuppet, *mWaitingPuppet;
     std::string mPuppetName;
+
+    typedef std::list<CUnit*> attackers_t;
+    attackers_t mAttackers;
+
+    // key is the attacker, value is the list of blockers in order
+    typedef std::map<CUnit*, std::list<CUnit*> > blockers_t;
+    blockers_t mBlockers;
+
+    bool inBlockPhase;
 
 
 		vector<Engine*>		mUpdateQueue;

@@ -235,4 +235,12 @@ namespace Pixy {
     win->setMargin(margin);
   }
 
+  void UIEngine::refreshSize() {
+    using namespace CEGUI;
+    Window* sp = CEGUI::WindowManager::getSingletonPtr()->getWindow("Elementum/Scenes/Combat/SpellPanel/Player");
+    UVector2 sz(sp->getSize());
+    sp->setSize(UVector2(UDim(0,0),UDim(0,0)));
+    sp->setSize(sz);
+  }
+
 }

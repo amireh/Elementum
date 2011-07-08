@@ -50,7 +50,8 @@ using OgreBites::SdkCameraMan;
 using Hydrax::Hydrax;
 namespace Pixy {
 
-
+  class CUnit;
+  class CPuppet;
   class Renderable;
   class EventManager;
 	/*! \class GfxEngine
@@ -170,6 +171,10 @@ namespace Pixy {
 		void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
 		Renderable* getSelected();
+
+    void updateMe(CUnit*);
+    void stopUpdatingMe(CUnit*);
+
 	protected:
 	  void (GfxEngine::*mUpdate)(unsigned long);
 
@@ -190,6 +195,8 @@ namespace Pixy {
 		Caelum::CaelumSystem *mCaelumSystem;
 		HDRCompositor *mHDRComp;
 
+    CPuppet *mPlayer, *mEnemy;
+
 		Renderable* mSelected; // selected entity
 
 		//! used for setting Puppetes' starting positions in Scene
@@ -197,21 +204,8 @@ namespace Pixy {
 		//! used for setting Objects' direction in Scene
 		Vector3 mDirection[2];
 
-		// the following are concerned with SceneNode movement process
-		//! used by moveUnit() and nextLocation() for tracking the Node's destination
-		Vector3 mDestination;
-		//! used by moveUnit() and nextLocation() for tracking and updating Node's direction while moving
-		Vector3 mMoveDirection;
-		//! used by nextLocation() for calculating how much distance left to travel
-		Real mMoveDistance;
-		//! fixed speed to be used later by mMoveSpeed
-		Real mWalkSpeed;
-		//! regulates the movement speed by (mWalkSpeed * mTimeElapsed) keeping it consistent
-		Real mMoveSpeed;
-
-		Real mFallVelocity;
-
-		std::vector<std::string> mPlayers;
+    typedef std::map<CUnit*, bool> updatees_t;
+    updatees_t mUpdatees;
 
 		/*!
 		 * \brief Creates an Ogre::Entity and renders it in an
@@ -228,7 +222,22 @@ namespace Pixy {
 		 */
 		SceneNode* createNode(String& inName, Vector3& inPosition, Vector3& inScale, Vector3& inDirection, SceneNode* inParent=NULL);
 
-	  bool evtEntitySelected(Event* inEvt);
+    /*!
+     * \brief Creates a list of 5 Waypoints for a matching SceneNode
+     *
+     * The waypoints are determined in relation to
+     * the owner's Hero position, this way, if a Hero's
+     * position changes, all the waypoints for Units are
+     * changed accordingly.
+     * \note used by setupWaypoints()
+     */
+    void createWaypoint(int inOwner, int inNode, std::string, std::string);
+
+    std::vector<Ogre::Vector3> mWaypoints[2][10];
+
+	  bool onEntitySelected(const Event&);
+    bool onCharge(const Event&);
+
 	  void highlight(Renderable* inEntity);
 	  void dehighlight();
 

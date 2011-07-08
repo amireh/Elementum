@@ -11,6 +11,7 @@
 #include "GameManager.h"
 //#include "Intro.h"
 #include "CPuppet.h"
+#include "CUnit.h"
 #include "CSpell.h"
 #include "EventManager.h"
 #include "NetworkManager.h"
@@ -94,6 +95,8 @@ namespace Pixy
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
 
+    bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
+
     //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
     //bindToName("MatchFound", this, &Combat::evtMatchFound);
     //bindToName("CreatePuppets", this, &Combat::evtCreatePuppets);
@@ -168,10 +171,13 @@ namespace Pixy
 			  //GameManager::getSingleton().changeState(Intro::getSingletonPtr());
 				break;
       case OIS::KC_RETURN:
-      case OIS::KC_E:
+      //~ case OIS::KC_E:
         if (mActivePuppet == mPuppet)
           mNetMgr->send(Event(EventUID::EndTurn));
       break;
+      case OIS::KC_F:
+        if (inBlockPhase)
+          mNetMgr->send(Event(EventUID::EndBlockPhase));
 		}
 
 	}
@@ -423,9 +429,12 @@ namespace Pixy
 
         mLog->debugStream() << "attaching spell with UID: " << lSpell->getUID() << " to puppet " << lPuppet->getUID();
 
-        if (lPuppet == mPuppet)
+        if (lPuppet == mPuppet) {
           //mUIEngine->drawSpell(lSpell);
           mScriptEngine->passToLua("DrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
+
+          mUIEngine->refreshSize();
+        }
 
         lSpell = 0;
       }
@@ -548,6 +557,24 @@ namespace Pixy
     std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
 
     _puppet->updateFromEvent(evt);
+
+    return true;
+  }
+
+  bool Combat::onCharge(const Event& evt) {
+    CUnit *attacker = 0;
+
+    assert(evt.hasProperty("UID"));
+    try {
+      attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
+    } catch (invalid_uid& e) {
+      std::cout  << "invalid charge event parameters : " << e.what();
+    }
+
+    // move the unit
+    std::cout << evt.getProperty("UID") << " is charging for an attack\n";
+
+    mAttackers.push_back(attacker);
 
     return true;
   }

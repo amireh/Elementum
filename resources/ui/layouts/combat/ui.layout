@@ -125,61 +125,18 @@
 		    </Window>
 	</Window>
 
-	<!-- our enemy actions panel -->
-	<!-- Enemy Active Sheet -->
-	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Enemy/Active">
-		<Property Name="Visible" Value="False" />
-		<Property Name="AlwaysOnTop" Value="True" />
-	 	<Property Name="TitlebarEnabled" Value="False" />
-		<Property Name="FrameEnabled" Value="False" />
-		<Property Name="CloseButtonEnabled" Value="False" />
-		<Property Name="DragMovingEnabled" Value="False" />
-		<Property Name="Alpha" Value="1" />
-		<Property Name="UnifiedMaxSize" Value="{{0.35,0},{0.05,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0.15,0},{0,0},{1,0},{0.2,0}}" />
-		<!-- define our buttons -->
-		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Active/Attack" >
-			<Property Name="Text" Value="Attack" />
-			<Property Name="UnifiedMaxSize" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.5,0},{1,0}}" />
-		    </Window>
-		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Active/EndTurn" >
-			<Property Name="Text" Value="End Turn" />
-			<Property Name="UnifiedMaxSize" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="UnifiedAreaRect" Value="{{0.5,0},{0,0},{1,0},{1,0}}" />
-		    </Window>
-	</Window>
-	<!-- Enemy Idle Sheet -->
-	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Enemy/Idle">
-		<Property Name="Visible" Value="False" />
-		<Property Name="AlwaysOnTop" Value="True" />
-	 	<Property Name="TitlebarEnabled" Value="False" />
-		<Property Name="FrameEnabled" Value="False" />
-		<Property Name="CloseButtonEnabled" Value="False" />
-		<Property Name="DragMovingEnabled" Value="False" />
-		<Property Name="Alpha" Value="1" />
-		<Property Name="UnifiedMaxSize" Value="{{0.35,0},{0.05,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0.25,0},{0,0},{0.75,0},{0.2,0}}" />
-    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Enemy/Idle/Waiting" >
-			<Property Name="Text" Value="Waiting" />
-			<Property Name="UnifiedMaxSize" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-			<Property Name="Visible" Value="True" />
-			<Property Name="Disabled" Value="True" />
-    </Window>
-	</Window>
-
 
 	<!-- player Spell panel -->
 	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Scenes/Combat/SpellPanel/Player">
 	  <Property Name="Visible" Value="True" />
 		<Property Name="AlwaysOnTop" Value="True" />
-		<Property Name="ForceHorzScrollbar" Value="True" />
 		<Property Name="Alpha" Value="1" />
     <Property Name="HorizontalAlignment" Value="Centre" />
     <Property Name="VerticalAlignment" Value="Middle" />
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-176},{0,656},{1,0}}" />
-    <Property Name="ContentPaneAutoSized" Value="True" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-176},{0,666},{1,0}}" />
+<!--
+    <Property Name="ContentPaneAutoSized" Value="False" />
+-->
 
     <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/SpellPanel/Player/BG">
       <Property Name="AlwaysOnTop" Value="False" />
