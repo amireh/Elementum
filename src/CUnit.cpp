@@ -58,6 +58,8 @@ namespace Pixy
   }
 
   bool CUnit::live() {
+    Unit::live();
+
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnit " + mName);
     mLog->infoStream() << "created";
 
@@ -67,6 +69,7 @@ namespace Pixy
   };
 
   void CUnit::die() {
+    Unit::die();
 
     mLog->infoStream() << "dead";
   };
@@ -185,7 +188,12 @@ namespace Pixy
       updateTextOverlay();
   }
   void CUnit::updateTextOverlay() {
-    mRenderable->getText()->setCaption(stringify(mCurrentAP) + "/" + stringify(mCurrentHP));
+    std::string cap = "";
+    if (mAttackOrder != 0) {
+      cap += "[" + stringify(mAttackOrder) + "]\n";
+    }
+    cap += stringify(mCurrentAP) + "/" + stringify(mCurrentHP);
+    mRenderable->getText()->setCaption(cap);
   }
 
   bool CUnit::attack(Pixy::CPuppet* inTarget) {
@@ -194,34 +202,104 @@ namespace Pixy
     updateTextOverlay();
   }
 
-  bool CUnit::attack(Pixy::CUnit* inTarget) {
-    Unit::attack(inTarget);
+  bool CUnit::attack(Pixy::CUnit* inTarget, bool block) {
+    Unit::attack(inTarget, block);
 
     updateTextOverlay();
   }
 
-  void CUnit::moveAndAttack(Entity* inTarget) {
+  void CUnit::moveAndAttack(CPuppet* inTarget) {
     this->reset();
 
     mAttackTarget = inTarget;
-    if (inTarget->getRank() == PUPPET) {
-      this->move(POS_ATTACK, [&](CUnit* me) -> void {
-        this->attack(static_cast<CPuppet*>(this->mAttackTarget));
+    this->move(POS_ATTACK, [&](CUnit* me) -> void {
+      this->attack(static_cast<CPuppet*>(this->mAttackTarget));
 
-        // __DEBUG__
-        static_cast<CPuppet*>(mAttackTarget)->updateTextOverlay();
-        this->updateTextOverlay();
+      // __DEBUG__
+      static_cast<CPuppet*>(mAttackTarget)->updateTextOverlay();
+      this->updateTextOverlay();
 
-        this->mAttackTarget = 0;
+      this->mAttackTarget = 0;
 
-        std::cout << "I attacked puppet, going back now\n";
+      std::cout << "I attacked puppet, going back now\n";
 
-        this->move(POS_CHARGING, [&](CUnit*) -> void {
-          std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
-          Combat::getSingleton().unitAttacked(this);
-          Combat::getSingleton().doBattle();
-        });
+      this->move(POS_CHARGING, [&](CUnit*) -> void {
+        std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
+        Combat::getSingleton().unitAttacked(this);
+        Combat::getSingleton().doBattle();
       });
+    });
+  }
+
+  void CUnit::moveAndAttack(std::list<CUnit*> inBlockers) {
+    // move to offense position
+    fDoneBlocking = false;
+
+    this->reset();
+    this->move(POS_OFFENCE, boost::bind(&CUnit::doAttack, this, inBlockers));
+  }
+
+  void CUnit::doAttack(std::list<CUnit*> inBlockers) {
+
+    /*
+     * for every blocker X in blockers do:
+     *  - move(X,POS_DEFENSE)
+     *  - attack(this,X)
+     *  - if X is not dead, move(X,POS_CHARGING)
+     *  - if this is dead, mark for removal and abort
+     * if trample && currentAP > 0
+     *  - move(this,POS_ATTACK)
+     *  - attack(this,puppet)
+     * move(this,POS_CHARGING)
+     * mark as done
+     */
+
+    if (isDead() || fDoneBlocking) {
+      Combat::getSingleton().unitAttacked(this);
+      Combat::getSingleton().doBattle();
+
+      return;
     }
+
+    // we're done with blockers
+    if (inBlockers.empty()) {
+      // if this is a trampling unit, and we still got AP left,
+      // proceed to hitting the puppet
+      if (fIsTrampling && mCurrentAP > 0) {
+        move(POS_ATTACK, [&](CUnit*) -> void {
+          this->attack(static_cast<CPuppet*>((Entity*)inBlockers.front()->getOwner()));
+
+          // now move back
+          move(POS_CHARGING, [&](CUnit*) -> void {
+            // and mark us as done
+            Combat::getSingleton().unitAttacked(this);
+            Combat::getSingleton().doBattle();
+          });
+        });
+      } else { // no trample, just move back and mark as done
+        move(POS_CHARGING);
+
+        Combat::getSingleton().unitAttacked(this);
+        Combat::getSingleton().doBattle();
+
+        return;
+      }
+    }
+
+    // get the next blocker, move it to the defense position, and attack it
+    auto blocker = inBlockers.front();
+    inBlockers.pop_front();
+    blocker->move(POS_DEFENCE, [&, blocker, inBlockers](CUnit*) -> void {
+      this->attack(blocker, true);
+
+      // if the blocker didn't die, it means we ran out of AP and/or dead,
+      // but anyway we're done
+      if (!blocker->isDead()) {
+        blocker->move(POS_CHARGING);
+        this->fDoneBlocking = true;
+      }
+
+      return this->doAttack(inBlockers);
+    });
   }
 } // end of namespace

@@ -244,13 +244,20 @@ namespace Pixy {
     MovableTextOverlayAttributes* attrs;
 
 	  bool onEntitySelected(const Event&);
+    bool onEntitySelectedAttack(const Event&);
+    bool onEntitySelectedBlock(const Event&);
+
     bool onCharge(const Event&);
     bool onCancelCharge(const Event&);
+    bool onBlock(const Event&);
+    bool onCancelBlock(const Event&);
     bool onStartBlockPhase(const Event&);
     bool onEndBlockPhase(const Event&);
 
 	  void highlight(Renderable* inEntity);
 	  void dehighlight();
+
+    bool inBlockPhase;
 
 	private:
 		static GfxEngine* _myGfxEngine;

@@ -5,7 +5,7 @@
 #include <Ogre.h>
 #include <cstring>
 #include "ogre/MovableTextOverlay.h"
-
+#include "GfxEngine.h"
 namespace Pixy
 {
 
@@ -16,6 +16,8 @@ namespace Pixy
 	};
 
   Renderable::~Renderable() {
+    GfxEngine::getSingletonPtr()->detachFromScene(this);
+
     mOwner = 0;
 
 		mSceneNode = 0;

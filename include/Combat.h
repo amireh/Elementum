@@ -63,6 +63,7 @@ namespace Pixy
     void assignPuppet(CPuppet* inPuppet);
     CPuppet* getPuppet();
     CPuppet* getPuppet(int inUID);
+    CPuppet* getActivePuppet();
 
     CUnit* getUnit(int inUID);
 
@@ -91,9 +92,9 @@ namespace Pixy
     bool onCreateUnit(const Event&);
     bool onUpdatePuppet(const Event&);
 
+    bool onStartBlockPhase(const Event&);
     bool onCharge(const Event&);
     bool onCancelCharge(const Event&);
-    bool onStartBlockPhase(const Event&);
     bool onBlock(const Event&);
     bool onCancelBlock(const Event&);
     bool onEndBlockPhase(const Event&);
@@ -117,6 +118,10 @@ namespace Pixy
     // key is the attacker, value is the list of blockers in order
     typedef std::map<CUnit*, std::list<CUnit*> > blockers_t;
     blockers_t mBlockers;
+
+
+    typedef std::vector<CUnit*> death_list_t;
+    death_list_t mDeathlist;
 
     bool inBlockPhase;
 

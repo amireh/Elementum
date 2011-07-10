@@ -95,8 +95,11 @@ namespace Pixy
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
 
+    bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
     bind(EventUID::CancelCharge, boost::bind(&Combat::onCancelCharge, this, _1));
+    bind(EventUID::Block, boost::bind(&Combat::onBlock, this, _1));
+    bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
     //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
@@ -109,6 +112,8 @@ namespace Pixy
     boo->setName("HEHE");
     mScriptEngine->passToLua("Pixy.Foobar", 2, "Pixy::CSpell", (void*)boo);
     delete boo;*/
+
+    inBlockPhase = false;
 	}
 
 	void Combat::exit( void ) {
@@ -176,6 +181,8 @@ namespace Pixy
       //~ case OIS::KC_E:
         if (mActivePuppet == mPuppet)
           mNetMgr->send(Event(EventUID::EndTurn));
+        //~ else
+          //~ mNetMgr->send(Event(EventUID::EndBlockPhase));
       break;
       case OIS::KC_F:
         if (inBlockPhase)
@@ -216,6 +223,13 @@ namespace Pixy
 
     processEvents();
 
+    if (!mDeathlist.empty()) {
+      for (auto unit : mDeathlist)
+        static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
+
+      mDeathlist.clear();
+    }
+
 		mGfxEngine->update(lTimeElapsed);
 		mScriptEngine->update(lTimeElapsed);
 		mUIEngine->update(lTimeElapsed);
@@ -255,6 +269,9 @@ namespace Pixy
 
   CPuppet* Combat::getPuppet() {
     return mPuppet;
+  }
+  CPuppet* Combat::getActivePuppet() {
+    return mActivePuppet;
   }
 
   Combat::puppets_t const& Combat::getPuppets() {
@@ -579,6 +596,13 @@ namespace Pixy
     return true;
   }
 
+  bool Combat::onStartBlockPhase(const Event& evt) {
+    if (mActivePuppet != mPuppet)
+      inBlockPhase = true;
+
+    return true;
+  }
+
   bool Combat::onCharge(const Event& evt) {
     CUnit *attacker = 0;
 
@@ -616,7 +640,48 @@ namespace Pixy
     return true;
   }
 
+  bool Combat::onBlock(const Event& evt) {
+    CUnit *attacker, *blocker = 0;
+
+    assert(evt.hasProperty("B") && evt.hasProperty("A"));
+    try {
+      attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("A")));
+      blocker = mWaitingPuppet->getUnit(convertTo<int>(evt.getProperty("B")));
+    } catch (invalid_uid& e) {
+      std::cout  << "invalid block event parameters : " << e.what();
+    }
+
+    // does the attacker have any other units blocking?
+    blockers_t::iterator blockers = mBlockers.find(attacker);
+    if (blockers == mBlockers.end()) {
+      // this is the first blocker
+      blockers = mBlockers.insert( std::make_pair(attacker, std::list<CUnit*>()) ).first;
+    }
+    blockers->second.push_back(blocker);
+    blocker->setAttackOrder(blockers->second.size());
+
+    return true;
+  }
+
+  bool Combat::onCancelBlock(const Event& evt) {
+    CUnit *blocker = 0;
+
+    assert(evt.hasProperty("UID"));
+    try {
+      blocker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
+    } catch (invalid_uid& e) {
+      mLog->errorStream() << "invalid charge event parameters : " << e.what();
+      return true;
+    }
+
+    // move the unit
+
+    return true;
+  }
+
   bool Combat::onEndBlockPhase(const Event& evt) {
+    if (mActivePuppet != mPuppet)
+      inBlockPhase = false;
 
     doBattle();
 
@@ -627,8 +692,28 @@ namespace Pixy
 
     // move them back
     if (mAttackers.empty()) {
-      for (auto unit : mChargers)
-        unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->reset(); });
+
+      // move the blockers first
+      for (auto pair : mBlockers)
+        for (auto unit : pair.second) {
+          if (!unit->isDead())
+            unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->reset(); });
+          else {
+            //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
+            mDeathlist.push_back(unit);
+          }
+        }
+
+      for (auto unit : mChargers) {
+        if (!unit->isDead())
+          unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->reset(); });
+        else {
+          //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
+          mDeathlist.push_back(unit);
+        }
+      }
+
+
 
       mChargers.clear();
       mBlockers.clear();
@@ -637,14 +722,14 @@ namespace Pixy
       if (mActivePuppet == mPuppet)
         mNetMgr->send(Event(EventUID::EndTurn));
 
-      std::cout << "battle is over\n";
+      mLog->infoStream() << "battle is over";
       return;
     }
 
     // simulate the battle
-    std::cout << "simulating battle with : "
+    mLog->infoStream() << "simulating battle with : "
       << mAttackers.size() << " attacking units and "
-      << mBlockers.size() << " units being blocked\n";
+      << mBlockers.size() << " units being blocked";
 
     // go through every attacking unit:
     for (auto unit : mAttackers) {
@@ -654,6 +739,8 @@ namespace Pixy
       if (mBlockers.find(unit) == mBlockers.end()) {
         unit->moveAndAttack(mWaitingPuppet);
         break;
+      } else {
+        unit->moveAndAttack(mBlockers.find(unit)->second);
       }
     }
 
@@ -662,6 +749,7 @@ namespace Pixy
   void Combat::unitAttacked(CUnit* inUnit) {
     mAttackers.remove(inUnit);
     mChargers.push_back(inUnit);
+    mLog->infoStream() << "a unit is done, " << mAttackers.size() << " left";
   }
 
 } // end of namespace

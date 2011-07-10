@@ -71,6 +71,7 @@ namespace Pixy {
 		mSceneLoader = 0;
     mPlayer = 0;
     mEnemy = 0;
+    inBlockPhase = false;
 	}
 
 	GfxEngine::~GfxEngine() {
@@ -127,8 +128,13 @@ namespace Pixy {
 		  setupCombat();*/
 
 		bind(EventUID::EntitySelected, boost::bind(&GfxEngine::onEntitySelected, this, _1));
+    bind(EventUID::StartBlockPhase, boost::bind(&GfxEngine::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&GfxEngine::onCharge, this, _1));
     bind(EventUID::CancelCharge, boost::bind(&GfxEngine::onCancelCharge, this, _1));
+    bind(EventUID::Block, boost::bind(&GfxEngine::onBlock, this, _1));
+    bind(EventUID::CancelBlock, boost::bind(&GfxEngine::onCancelBlock, this, _1));
+    bind(EventUID::EndBlockPhase, boost::bind(&GfxEngine::onEndBlockPhase, this, _1));
+
 
 
     attrs =
@@ -1045,6 +1051,8 @@ namespace Pixy {
 
   void GfxEngine::detachFromScene(Renderable* inRenderable)
   {
+    dehighlight();
+
     Entity* inEntity = inRenderable->getEntity();
 
     Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
@@ -1073,6 +1081,8 @@ namespace Pixy {
   // detach from node
   //mInterface->destroyUnitOverlay(inEntity->getSceneObject());
 
+  // move the node back to its original spot
+  mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
 
   mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
   mTmpNode->showBoundingBox(false);
@@ -1081,6 +1091,12 @@ namespace Pixy {
 
   //                LOG("I'm destroying Entity : " + mOgreEntity->getName());
   mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
+
+  mRenderables.remove(inRenderable);
+
+  if (inRenderable->getEntity()->getRank() != PUPPET)
+    mUpdatees.erase(static_cast<CUnit*>(inRenderable->getEntity()));
+
 
   // translate the node back to its original position
   /*
@@ -1224,6 +1240,9 @@ namespace Pixy {
 	};
 
   bool GfxEngine::onEntitySelected(const Event& inEvt) {
+    return inBlockPhase ? onEntitySelectedBlock(inEvt) : onEntitySelectedAttack(inEvt);
+  }
+  bool GfxEngine::onEntitySelectedAttack(const Event& inEvt) {
     Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
     Pixy::Entity* lEntity = lRend->getEntity();
 
@@ -1268,6 +1287,52 @@ namespace Pixy {
 
     return true;
   }
+  bool GfxEngine::onEntitySelectedBlock(const Event& inEvt) {
+    Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
+    Pixy::Entity* lEntity = lRend->getEntity();
+
+    // if it's a puppet, just de-select
+    if (lEntity->getRank() == PUPPET) {
+      highlight(lRend);
+      return true;
+    }
+
+    CUnit* lUnit = static_cast<CUnit*>(lEntity);
+
+    // if an own unit is double-clicked and is blocking, cancel the block
+    if (mSelected && mSelected == lRend) {
+      if (lUnit->getOwner() == mPlayer && lUnit->getPosition() == POS_CHARGING) {
+        Event req(EventUID::CancelBlock);
+        req.setProperty("UID", lUnit->getUID());
+        NetworkManager::getSingleton().send(req);
+      }
+      return true;
+    }
+
+    // only when an own unit is chosen and then a charging unit is chosen
+    // will we trigger the block event
+    if (mSelected &&
+        mSelected->getEntity()->getOwner() == mPlayer &&
+        lUnit->getOwner() != mPlayer)
+    {
+      Event req(EventUID::Block);
+      req.setProperty("B", mSelected->getEntity()->getUID());
+      req.setProperty("A", lUnit->getUID());
+      NetworkManager::getSingleton().send(req);
+    } else
+      highlight(lRend);
+
+    return true;
+  }
+
+  bool GfxEngine::onStartBlockPhase(const Event& inEvt) {
+    if (Combat::getSingleton().getActivePuppet() != mPlayer) {
+      inBlockPhase = true;
+      mLog->debugStream() << "entered blocking phase";
+    }
+
+    return true;
+  }
 
   bool GfxEngine::onCharge(const Event& inEvt) {
     mLog->infoStream() << "charging with a unit";
@@ -1280,11 +1345,40 @@ namespace Pixy {
   }
 
   bool GfxEngine::onCancelCharge(const Event& inEvt) {
-    mLog->infoStream() << "charging with a unit";
+    mLog->infoStream() << "no longer charging with a unit";
 
     CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
 
     lUnit->move(POS_READY);
+
+    return true;
+  }
+
+  bool GfxEngine::onBlock(const Event& inEvt) {
+    mLog->infoStream() << "blocking with a unit";
+
+    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("B")));
+
+    lUnit->move(POS_CHARGING);
+
+    return true;
+  }
+
+  bool GfxEngine::onCancelBlock(const Event& inEvt) {
+    mLog->infoStream() << "no longer blocking with a unit";
+
+    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
+
+    lUnit->move(POS_READY);
+
+    return true;
+  }
+
+  bool GfxEngine::onEndBlockPhase(const Event& inEvt) {
+    if (Combat::getSingleton().getActivePuppet() != mPlayer) {
+      inBlockPhase = false;
+      mLog->debugStream() << "no longer in blocking phase";
+    }
 
     return true;
   }
@@ -1301,4 +1395,6 @@ namespace Pixy {
   void GfxEngine::stopUpdatingMe(CUnit* inUnit) {
     mUpdatees.find(inUnit)->second = false;
   }
+
+
 }

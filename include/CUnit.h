@@ -15,7 +15,7 @@ using Ogre::Real;
 using Ogre::Vector3;
 namespace Pixy
 {
-
+  class GfxEngine;
   class Renderable;
   class CPuppet;
 	class CUnit : public Unit
@@ -32,7 +32,8 @@ namespace Pixy
     virtual void die();
 
     void move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback=0);
-    void moveAndAttack(Entity* inTarget);
+    void moveAndAttack(CPuppet* inTarget);
+    void moveAndAttack(std::list<CUnit*> inBlockers);
 
     void update(unsigned long);
 
@@ -51,14 +52,16 @@ namespace Pixy
       mWaypoints = inWp;
     }
 
-    virtual bool attack(Pixy::CUnit* inTarget);
     virtual bool attack(Pixy::CPuppet* inTarget);
+    virtual bool attack(Pixy::CUnit* inTarget, bool block=false);
 
     void updateTextOverlay();
 
     virtual void reset();
 
 	protected:
+    friend class GfxEngine;
+
     Renderable* mRenderable;
     virtual void copyFrom(const CUnit& src);
 
@@ -67,6 +70,9 @@ namespace Pixy
     }
 
     bool doMove(unsigned long);
+
+    // recursively goes through all the blockers and attacks them
+    void doAttack(std::list<CUnit*> inBlockers);
 
     /*!
      * \brief Informs whether the SceneNode has
@@ -92,6 +98,8 @@ namespace Pixy
     Real mWalkSpeed;
     //! regulates the movement speed by (mWalkSpeed * mTimeElapsed) keeping it consistent
     Real mMoveSpeed;
+
+    bool fDoneBlocking;
 
     boost::function<void(CUnit*)> mCallback;
 	};
