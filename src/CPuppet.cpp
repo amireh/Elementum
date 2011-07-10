@@ -142,6 +142,10 @@ namespace Pixy
   void CPuppet::updateFromEvent(const Event& evt) {
     Puppet::updateFromEvent(evt);
 
+    updateTextOverlay();
+  }
+
+  void CPuppet::updateTextOverlay() {
     mRenderable->getText()->setCaption(stringify(mHP));
   }
 } // end of namespace

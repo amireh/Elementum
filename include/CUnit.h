@@ -50,6 +50,12 @@ namespace Pixy
       mWaypoints = inWp;
     }
 
+    virtual bool attackTarget(Pixy::Entity* inTarget);
+
+    void updateTextOverlay();
+
+    virtual void reset();
+
 	protected:
     Renderable* mRenderable;
     virtual void copyFrom(const CUnit& src);

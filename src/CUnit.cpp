@@ -61,7 +61,7 @@ namespace Pixy
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnit " + mName);
     mLog->infoStream() << "created";
 
-    mRenderable->getText()->setCaption(stringify(mAP) + "/" + stringify(mHP));
+    reset();
 
     return true;
   };
@@ -124,23 +124,6 @@ namespace Pixy
 
   }
 
-  void CUnit::update(unsigned long lTimeElapsed) {
-    // keep moving
-    if (!doMove(lTimeElapsed)) {
-      // we arrived
-      GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
-      mPosition = mPDestination;
-
-      std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
-
-      // is there a callback?
-      if (mCallback)
-        mCallback(this);
-
-      //mCallback = 0;
-    }
-  }
-
   bool CUnit::doMove(unsigned long mTimeElapsed)
   {
       Ogre::SceneNode* mNode = mRenderable->getSceneNode();
@@ -177,17 +160,51 @@ namespace Pixy
       return fIsMoving;
   };
 
+
+  void CUnit::update(unsigned long lTimeElapsed) {
+    // keep moving
+    if (!doMove(lTimeElapsed)) {
+      // we arrived
+      GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
+      mPosition = mPDestination;
+
+      std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
+
+      // is there a callback?
+      if (mCallback)
+        mCallback(this);
+
+      //mCallback = 0;
+    }
+  }
+
+  void CUnit::reset() {
+    Unit::reset();
+
+    if (mRenderable->getText())
+      updateTextOverlay();
+  }
+  void CUnit::updateTextOverlay() {
+    mRenderable->getText()->setCaption(stringify(mCurrentAP) + "/" + stringify(mCurrentHP));
+  }
+
+  bool CUnit::attackTarget(Pixy::Entity* inTarget) {
+    Unit::attackTarget(inTarget);
+
+    updateTextOverlay();
+  }
+
   void CUnit::moveAndAttack(Entity* inTarget) {
     this->reset();
 
     mAttackTarget = inTarget;
     if (inTarget->getRank() == PUPPET) {
       this->move(POS_ATTACK, [&](CUnit* me) -> void {
-        this->attackTarget(*static_cast<CPuppet*>(this->mAttackTarget));
+        this->attackTarget(static_cast<CPuppet*>(this->mAttackTarget));
 
         // __DEBUG__
-        static_cast<CPuppet*>(mAttackTarget)
-          ->getRenderable()->getText()->setCaption(stringify(mAttackTarget->getHP()));
+        static_cast<CPuppet*>(mAttackTarget)->updateTextOverlay();
+        this->updateTextOverlay();
 
         this->mAttackTarget = 0;
 

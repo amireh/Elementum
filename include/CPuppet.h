@@ -49,6 +49,8 @@ namespace Pixy
 
     virtual void updateFromEvent(const Event& evt);
 
+    void updateTextOverlay();
+
 	protected:
     Renderable* mRenderable;
     CDeck *mDeck;
