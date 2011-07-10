@@ -1,9 +1,9 @@
 #ifndef H_CPuppet_H
 #define H_CPuppet_H
 
-#include "CUnit.h"
 #include "Puppet.h"
 //#include "Renderable.h"
+#include "CUnit.h"
 //#include "CDeck.h"
 #include "CSpell.h"
 #include <list>
@@ -22,9 +22,9 @@ namespace Pixy
 	class CPuppet : public Puppet
 	{
 	public:
-		typedef list<CSpell*> hand_t;
-		typedef list<CUnit*> units_t;
-    typedef list<CDeck const*> decks_t;
+		typedef std::list<CSpell*> hand_t;
+		typedef std::list<CUnit*> units_t;
+    typedef std::list<CDeck const*> decks_t;
 
     CPuppet();
     virtual ~CPuppet();
@@ -45,7 +45,9 @@ namespace Pixy
 		virtual void attachUnit(CUnit* inUnit);
 		virtual void detachUnit(int inUID);
 		virtual CUnit* getUnit(int inUID);
-		//virtual units_t& getUnits();
+		units_t const& getUnits() const;
+
+    virtual void updateFromEvent(const Event& evt);
 
 	protected:
     Renderable* mRenderable;

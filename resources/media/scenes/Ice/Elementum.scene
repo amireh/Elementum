@@ -24,7 +24,7 @@
     </environment>
     <terrain worldSize="512" mapSize="129" pagenameprefix="Page" colourmapEnabled="false" colourMapTextureSize="128" tuningCompositeMapDistance="2000" tuningMaxPixelError="3" tuningMinBatchSize="33" tuningMaxBatchSize="65">
         <terrainPages>
-            <terrainPage name="Page_ffffffff.ogt" pageX="-1" pageY="-1" />
+            <terrainPage name="Page_ffffffff.ogt" pageX="0" pageY="0" />
         </terrainPages>
     </terrain>
     <nodes>

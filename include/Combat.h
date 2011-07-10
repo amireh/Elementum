@@ -64,7 +64,11 @@ namespace Pixy
     CPuppet* getPuppet();
     CPuppet* getPuppet(int inUID);
 
-    //~ void pktDrawSpells(RakNet::Packet* inPkt);
+    CUnit* getUnit(int inUID);
+
+    void doBattle();
+
+    void unitAttacked(CUnit*);
 
   protected:
     friend class UIEngine;
@@ -108,6 +112,7 @@ namespace Pixy
 
     typedef std::list<CUnit*> attackers_t;
     attackers_t mAttackers;
+    attackers_t mChargers;
 
     // key is the attacker, value is the list of blockers in order
     typedef std::map<CUnit*, std::list<CUnit*> > blockers_t;
@@ -116,8 +121,8 @@ namespace Pixy
     bool inBlockPhase;
 
 
-		vector<Engine*>		mUpdateQueue;
-		vector<Engine*>::const_iterator mUpdater;
+		std::vector<Engine*>		mUpdateQueue;
+		std::vector<Engine*>::const_iterator mUpdater;
 
 		bool fUpdateGfx;
 

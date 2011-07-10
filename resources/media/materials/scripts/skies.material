@@ -1,5 +1,5 @@
 //
-/*material Elementum/Sky
+material Elementum/Sky
 {
 	technique
 	{
@@ -8,16 +8,18 @@
 			lighting off
 			depth_write off
 
+         cull_hardware none
+         cull_software none
 			texture_unit
 			{
-				texture 406.bmp
-				//scroll_anim 0.05 -0.05
+				texture sky5.jpg
+				scroll_anim 0.01 0
 			}
 		}
 	}
-}*/
+}
 
-material Elementum/Sky
+/*material Elementum/Sky
 {
 	technique
 	{
@@ -33,3 +35,4 @@ material Elementum/Sky
 		}
 	}
 }
+*/

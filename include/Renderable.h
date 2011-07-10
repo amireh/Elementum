@@ -19,6 +19,9 @@ namespace Ogre {
   class SceneNode;
   class MovableObject;
 }
+
+class MovableTextOverlay;
+
 namespace Pixy
 {
   class Entity;
@@ -52,6 +55,9 @@ namespace Pixy
 
     virtual Entity* getEntity();
 
+    MovableTextOverlay* getText() const;
+    void setText(MovableTextOverlay* inT);
+
 		protected:
       friend class CPuppet;
       friend class CUnit;
@@ -62,6 +68,7 @@ namespace Pixy
 
 		Ogre::SceneNode         *mSceneNode;
 		Ogre::MovableObject     *mSceneObject;
+    MovableTextOverlay       *mText;
     Pixy::Entity* mOwner;
 
 		//! helper method for copy/assignment methods

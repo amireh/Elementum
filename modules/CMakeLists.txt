@@ -9,6 +9,7 @@ SET(EClient_Modules_SRCS
 
   src/ogre/HDRCompositor.cpp
   src/ogre/HelperLogics.cpp
+  src/ogre/MovableTextOverlay.cpp
 )
 
 

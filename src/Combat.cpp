@@ -96,6 +96,8 @@ namespace Pixy
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
 
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
+    bind(EventUID::CancelCharge, boost::bind(&Combat::onCancelCharge, this, _1));
+    bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
     //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
     //bindToName("MatchFound", this, &Combat::evtMatchFound);
@@ -268,6 +270,15 @@ namespace Pixy
     return 0;
   }
 
+  CUnit* Combat::getUnit(int inUID) {
+    for (auto puppet : mPuppets)
+      for (auto unit : puppet->getUnits())
+        if (unit->getUID() == inUID)
+          return unit;
+
+    throw invalid_uid("in Combat::getUnit() : " + stringify(inUID));
+  }
+
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
 	 *	Event Handlers
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
@@ -346,8 +357,8 @@ namespace Pixy
       if (puppet->getName() == mPuppetName) // is this the puppet we're playing with?
         mPuppet = puppet;
 
-      puppet->live();
       mGfxEngine->attachToScene(puppet->getRenderable());
+      puppet->live();
     }
 
     mNetMgr->send(Event(EventUID::Ready));
@@ -360,6 +371,11 @@ namespace Pixy
     //mEvtMgr->hook(mEvtMgr->createEvt("StartTurn")); __DISABLED__
 
     mActivePuppet = mPuppet;
+    if (mPuppet == mPuppets.front())
+      mWaitingPuppet = mPuppets.back();
+    else
+      mWaitingPuppet = mPuppets.front();
+
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     //mUIEngine->onTurnStarted(mPuppet);
@@ -372,6 +388,7 @@ namespace Pixy
   bool Combat::onTurnStarted(const Event& inEvt) {
     assert(inEvt.hasProperty("Puppet")); // _DEBUG_
 
+    mWaitingPuppet = mActivePuppet;
     mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("Puppet")));
     //mUIEngine->onTurnStarted(mActivePuppet);
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
@@ -541,6 +558,7 @@ namespace Pixy
     assert(_unit->getOwner());
 
     mGfxEngine->attachToScene(_unit->getRenderable());
+    _unit->live();
 
     _unit = 0;
     _owner = 0;
@@ -578,4 +596,69 @@ namespace Pixy
 
     return true;
   }
+
+  bool Combat::onCancelCharge(const Event& evt) {
+    CUnit *attacker = 0;
+
+    assert(evt.hasProperty("UID"));
+    try {
+      attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
+    } catch (invalid_uid& e) {
+      mLog->errorStream() << "invalid charge event parameters : " << e.what();
+      return true;
+    }
+
+    // move the unit
+    std::cout << evt.getProperty("UID") << " is no longer charging\n";
+
+    mAttackers.remove(attacker);
+
+    return true;
+  }
+
+  bool Combat::onEndBlockPhase(const Event& evt) {
+
+    doBattle();
+
+    return true;
+  }
+
+  void Combat::doBattle() {
+
+    // move them back
+    if (mAttackers.empty()) {
+      for (auto unit : mChargers)
+        unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->reset(); });
+
+      mChargers.clear();
+      mBlockers.clear();
+      mAttackers.clear();
+
+      std::cout << "battle is over\n";
+      return;
+    }
+
+    // simulate the battle
+    std::cout << "simulating battle with : "
+      << mAttackers.size() << " attacking units and "
+      << mBlockers.size() << " units being blocked\n";
+
+    // go through every attacking unit:
+    for (auto unit : mAttackers) {
+
+      // if it's being blocked, go through every blocker
+      // else, let it attack the puppet
+      if (mBlockers.find(unit) == mBlockers.end()) {
+        unit->moveAndAttack(mWaitingPuppet);
+        break;
+      }
+    }
+
+  }
+
+  void Combat::unitAttacked(CUnit* inUnit) {
+    mAttackers.remove(inUnit);
+    mChargers.push_back(inUnit);
+  }
+
 } // end of namespace

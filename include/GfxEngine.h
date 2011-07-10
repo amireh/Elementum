@@ -15,6 +15,8 @@
 #include "InputListener.h"
 
 #include <Ogre.h>
+
+
 // forward declarations
 /*namespace Ogre {
   class Root;
@@ -41,6 +43,8 @@ namespace OgreBites {
 
 class HDRCompositor;
 class DotSceneLoader;
+class MovableTextOverlay;
+class MovableTextOverlayAttributes;
 
 using Ogre::Vector3;
 using Ogre::Real;
@@ -235,8 +239,13 @@ namespace Pixy {
 
     std::vector<Ogre::Vector3> mWaypoints[2][10];
 
+    std::list<Renderable*> mRenderables;
+
+    MovableTextOverlayAttributes* attrs;
+
 	  bool onEntitySelected(const Event&);
     bool onCharge(const Event&);
+    bool onCancelCharge(const Event&);
 
 	  void highlight(Renderable* inEntity);
 	  void dehighlight();

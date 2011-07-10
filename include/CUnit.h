@@ -5,6 +5,7 @@
 #include <Ogre.h>
 #include <list>
 #include <vector>
+#include <boost/function.hpp>
 
 using std::list;
 using std::vector;
@@ -29,7 +30,9 @@ namespace Pixy
     virtual bool live();
     virtual void die();
 
-    void move(UNIT_POS inDestination);
+    void move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback=0);
+    void moveAndAttack(Entity* inTarget);
+
     void update(unsigned long);
 
     bool isMoving() const {
@@ -81,6 +84,8 @@ namespace Pixy
     Real mWalkSpeed;
     //! regulates the movement speed by (mWalkSpeed * mTimeElapsed) keeping it consistent
     Real mMoveSpeed;
+
+    boost::function<void(CUnit*)> mCallback;
 	};
 } // end of namespace
 #endif

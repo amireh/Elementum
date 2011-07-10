@@ -1,6 +1,9 @@
 #include "CUnit.h"
+#include "CPuppet.h"
 #include "Renderable.h"
 #include "GfxEngine.h"
+#include "ogre/MovableTextOverlay.h"
+#include "Combat.h"
 
 namespace Pixy
 {
@@ -10,8 +13,9 @@ namespace Pixy
     mPosition(POS_READY),
     mWaypoints(0),
     mMoveDistance(0),
-    mWalkSpeed(3.5),
-    mMoveSpeed(0)
+    mWalkSpeed(0.35f),
+    mMoveSpeed(0),
+    mCallback(0)
   {
     mRenderable = new Renderable(this);
   };
@@ -56,6 +60,8 @@ namespace Pixy
   bool CUnit::live() {
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnit " + mName);
     mLog->infoStream() << "created";
+
+    mRenderable->getText()->setCaption(stringify(mAP) + "/" + stringify(mHP));
 
     return true;
   };
@@ -109,7 +115,9 @@ namespace Pixy
     return true;
   } // nextLocation()
 
-  void CUnit::move(UNIT_POS inDestination) {
+  void CUnit::move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback) {
+    mCallback = callback;
+
     std::cout << "Unit " << mUID << " moving to position: " << inDestination << "\n";
     mPDestination = inDestination;
     GfxEngine::getSingletonPtr()->updateMe(this);
@@ -124,6 +132,12 @@ namespace Pixy
       mPosition = mPDestination;
 
       std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
+
+      // is there a callback?
+      if (mCallback)
+        mCallback(this);
+
+      //mCallback = 0;
     }
   }
 
@@ -162,4 +176,29 @@ namespace Pixy
 
       return fIsMoving;
   };
+
+  void CUnit::moveAndAttack(Entity* inTarget) {
+    this->reset();
+
+    mAttackTarget = inTarget;
+    if (inTarget->getRank() == PUPPET) {
+      this->move(POS_ATTACK, [&](CUnit* me) -> void {
+        this->attackTarget(*static_cast<CPuppet*>(this->mAttackTarget));
+
+        // __DEBUG__
+        static_cast<CPuppet*>(mAttackTarget)
+          ->getRenderable()->getText()->setCaption(stringify(mAttackTarget->getHP()));
+
+        this->mAttackTarget = 0;
+
+        std::cout << "I attacked puppet, going back now\n";
+
+        this->move(POS_CHARGING, [&](CUnit*) -> void {
+          std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
+          Combat::getSingleton().unitAttacked(this);
+          Combat::getSingleton().doBattle();
+        });
+      });
+    }
+  }
 } // end of namespace

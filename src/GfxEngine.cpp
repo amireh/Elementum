@@ -47,6 +47,8 @@
 #include "ogre/HelperLogics.h"
 #include "ogre/SdkCameraMan.h"
 #include "ogre/HDRCompositor.h"
+#include "ogre/MovableTextOverlay.h"
+#include "ogre/RectLayoutManager.h"
 
 namespace Pixy {
 
@@ -79,6 +81,9 @@ namespace Pixy {
 			mCamera = mCamera2 = mCamera3 = mCamera4 = 0;
 			mViewport = 0;
 			mRenderWindow = 0;
+
+      delete attrs;
+
 			delete mLog;
 			mLog = 0;
 
@@ -123,8 +128,16 @@ namespace Pixy {
 
 		bind(EventUID::EntitySelected, boost::bind(&GfxEngine::onEntitySelected, this, _1));
     bind(EventUID::Charge, boost::bind(&GfxEngine::onCharge, this, _1));
+    bind(EventUID::CancelCharge, boost::bind(&GfxEngine::onCancelCharge, this, _1));
 
-		mPuppetPos[ME] = Vector3(-500, 5, 450);
+
+    attrs =
+      new MovableTextOverlayAttributes(
+        "Attrs1",
+        mCamera,
+        "DejaVuSans",16,ColourValue::White,"RedTransparent");
+
+		mPuppetPos[ME] = Vector3(0, 5, -50);
     mPuppetPos[ENEMY] =
       Vector3(mPuppetPos[ME].x,
 							mPuppetPos[ME].y,
@@ -162,6 +175,7 @@ namespace Pixy {
 
     setupNodes();
     setupWaypoints();
+
 
 		std::ostringstream lNodeName;
 		lNodeName << mPlayer->getName() << "_node_puppet";
@@ -212,17 +226,54 @@ namespace Pixy {
 
     // clean up updatees marked for removal
     updatees_t::iterator itr = mUpdatees.begin();
-    for (itr; itr != mUpdatees.end(); ++itr)
+    /*while (!cleaned) {
       if ((itr->second) == false) {
         mUpdatees.erase(itr);
-        if (mUpdatees.size() == 0)
-          break;
-        else
         itr = mUpdatees.begin();
       }
 
+      if (itr == mUpdatees.end())
+        cleaned = true;
+
+      ++itr;
+    }*/
+
     for (itr = mUpdatees.begin(); itr != mUpdatees.end(); ++itr)
-      itr->first->update(lTimeElapsed);
+      if (itr->second)
+        itr->first->update(lTimeElapsed);
+
+    RectLayoutManager m(0,0,
+      mCamera->getViewport()->getActualWidth(),
+      mCamera->getViewport()->getActualHeight());
+    m.setDepth(0);
+
+    int visible=0;
+    MovableTextOverlay *p=0;
+    std::list<Renderable*>::const_iterator r;
+    for (r = mRenderables.begin(); r != mRenderables.end(); ++r) {
+      p = (*r)->getText();
+      p->update(lTimeElapsed);
+
+      if (p->isOnScreen()) {
+      visible++;
+
+      RectLayoutManager::Rect r(	p->getPixelsLeft(),
+                p->getPixelsTop()+10,
+                p->getPixelsRight(),
+                p->getPixelsBottom()+10);
+
+      RectLayoutManager::RectList::iterator it = m.addData(r);
+      if (it != m.getListEnd())
+      {
+      //~ p->setPixelsTop((*it).getTop());
+      p->enable(true);
+      }
+      else
+      p->enable(false);
+      }
+      else
+      p->enable(false);
+    }
 
 
 		//mCaelumSystem->updateSubcomponents(lTimeElapsed);
@@ -392,13 +443,106 @@ namespace Pixy {
 	 light->setSpecularColour(1.0, 1.0, 1.0);*/
   };
 
+  void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16)
+ {
+   using namespace Ogre;
+     MeshPtr pSphere = MeshManager::getSingleton().createManual(strName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+     SubMesh *pSphereVertex = pSphere->createSubMesh();
+
+     pSphere->sharedVertexData = new VertexData();
+     VertexData* vertexData = pSphere->sharedVertexData;
+
+     // define the vertex format
+     VertexDeclaration* vertexDecl = vertexData->vertexDeclaration;
+     size_t currOffset = 0;
+     // positions
+     vertexDecl->addElement(0, currOffset, VET_FLOAT3, VES_POSITION);
+     currOffset += VertexElement::getTypeSize(VET_FLOAT3);
+     // normals
+     vertexDecl->addElement(0, currOffset, VET_FLOAT3, VES_NORMAL);
+     currOffset += VertexElement::getTypeSize(VET_FLOAT3);
+     // two dimensional texture coordinates
+     vertexDecl->addElement(0, currOffset, VET_FLOAT2, VES_TEXTURE_COORDINATES, 0);
+     currOffset += VertexElement::getTypeSize(VET_FLOAT2);
+
+     // allocate the vertex buffer
+     vertexData->vertexCount = (nRings + 1) * (nSegments+1);
+     HardwareVertexBufferSharedPtr vBuf = HardwareBufferManager::getSingleton().createVertexBuffer(vertexDecl->getVertexSize(0), vertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, false);
+     VertexBufferBinding* binding = vertexData->vertexBufferBinding;
+     binding->setBinding(0, vBuf);
+     float* pVertex = static_cast<float*>(vBuf->lock(HardwareBuffer::HBL_DISCARD));
+
+     // allocate index buffer
+     pSphereVertex->indexData->indexCount = 6 * nRings * (nSegments + 1);
+     pSphereVertex->indexData->indexBuffer = HardwareBufferManager::getSingleton().createIndexBuffer(HardwareIndexBuffer::IT_16BIT, pSphereVertex->indexData->indexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, false);
+     HardwareIndexBufferSharedPtr iBuf = pSphereVertex->indexData->indexBuffer;
+     unsigned short* pIndices = static_cast<unsigned short*>(iBuf->lock(HardwareBuffer::HBL_DISCARD));
+
+     float fDeltaRingAngle = (Math::PI / nRings);
+     float fDeltaSegAngle = (2 * Math::PI / nSegments);
+     unsigned short wVerticeIndex = 0 ;
+
+     // Generate the group of rings for the sphere
+     for( int ring = 0; ring <= nRings; ring++ ) {
+         float r0 = r * sinf (ring * fDeltaRingAngle);
+         float y0 = r * cosf (ring * fDeltaRingAngle);
+
+         // Generate the group of segments for the current ring
+         for(int seg = 0; seg <= nSegments; seg++) {
+             float x0 = r0 * sinf(seg * fDeltaSegAngle);
+             float z0 = r0 * cosf(seg * fDeltaSegAngle);
+
+             // Add one vertex to the strip which makes up the sphere
+             *pVertex++ = x0;
+             *pVertex++ = y0;
+             *pVertex++ = z0;
+
+             Vector3 vNormal = Vector3(x0, y0, z0).normalisedCopy();
+             *pVertex++ = vNormal.x;
+             *pVertex++ = vNormal.y;
+             *pVertex++ = vNormal.z;
+
+             *pVertex++ = (float) seg / (float) nSegments;
+             *pVertex++ = (float) ring / (float) nRings;
+
+             if (ring != nRings) {
+                                // each vertex (except the last) has six indices pointing to it
+                 *pIndices++ = wVerticeIndex + nSegments + 1;
+                 *pIndices++ = wVerticeIndex;
+                 *pIndices++ = wVerticeIndex + nSegments;
+                 *pIndices++ = wVerticeIndex + nSegments + 1;
+                 *pIndices++ = wVerticeIndex + 1;
+                 *pIndices++ = wVerticeIndex;
+                 wVerticeIndex ++;
+             }
+         }; // end for seg
+     } // end for ring
+
+     // Unlock
+     vBuf->unlock();
+     iBuf->unlock();
+     // Generate face list
+     pSphereVertex->useSharedVertices = true;
+
+     // the original code was missing this line:
+     pSphere->_setBounds( AxisAlignedBox( Vector3(-r, -r, -r), Vector3(r, r, r) ), false );
+     pSphere->_setBoundingSphereRadius(r);
+         // this line makes clear the mesh is loaded (avoids memory leaks)
+         pSphere->load();
+  }
   void GfxEngine::setupSky() {
     using namespace Caelum;
 
     // skyz0rs
     //mLog->noticeStream() << "Setting up sky";
-    //mSceneMgr->setSkyDome(true, "Elementum/Sky", 65, 8);
-    mSceneMgr->setSkyBox(true, "Elementum/Sky", 5000, true);
+    //mSceneMgr->setSkyDome(true, "Elementum/Sky", 1, 1,5000,true);
+    //mSceneMgr->setSkyBox(true, "Elementum/Sky", 5000, true);
+
+    createSphere("mySphereMesh", 1000, 64, 64);
+    Ogre::Entity* sphereEntity = mSceneMgr->createEntity("mySphereEntity", "mySphereMesh");
+    Ogre::SceneNode* sphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    sphereEntity->setMaterialName("Elementum/Sky");
+    sphereNode->attachObject(sphereEntity);
 
     return;
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Caelum");
@@ -815,8 +959,18 @@ namespace Pixy {
       mLog->infoStream() << "Attaching puppet entity " << mEntity->getName() << " to node " << mNode->getName();
       mNode->attachObject(mEntity);
 
+      MovableTextOverlay *p =
+        new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
+      p->enable(false); // make it invisible for now
+      p->setUpdateFrequency(0.01);// set update frequency to 0.01 seconds
+      inRenderable->setText(p);
+      p = 0;
+
       inRenderable->attachSceneNode(mNode);
       inRenderable->attachSceneObject(mEntity);
+
+      mRenderables.push_back(inRenderable);
+
       return mSceneMgr->getSceneNode(nodeName);
     };
 
@@ -845,11 +999,20 @@ namespace Pixy {
       mEntity->setUserAny(Ogre::Any(inRenderable));
       mNode->attachObject(mEntity);
 
+      MovableTextOverlay *p =
+        new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
+      p->enable(false); // make it invisible for now
+      p->setUpdateFrequency(0.01);// set update frequency to 0.01 seconds
+      inRenderable->setText(p);
+      p = 0;
+
       inRenderable->attachSceneNode(mNode);
       inRenderable->attachSceneObject(mEntity);
 
       static_cast<CUnit*>(inEntity)->
         setWaypoints(&mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode]);
+
+      mRenderables.push_back(inRenderable);
 
       return mNode;
       //mSceneMgr->getSceneNode(nodeName)->setUserAny(
@@ -982,7 +1145,8 @@ namespace Pixy {
       //mLog->infoStream() << "Ray target name: " << itr->movable->getName();
       if (itr->movable &&
          (itr->movable->getName().substr(0,6) != "Caelum") &&
-         itr->movable->getName() != "") {
+         itr->movable->getName() != "" &&
+         itr->movable->getName() != "mySphereEntity") {
 
         Event e(EventUID::EntitySelected);
         e.Any = ((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
@@ -1068,12 +1232,32 @@ namespace Pixy {
     if (mSelected && mSelected->getEntity()->getUID() == lEntity->getUID()) {
       std::cout << "got a double click\n";
       if (lEntity->getRank() != PUPPET) {
-        Event req(EventUID::Charge);
-        req.setProperty("UID", lEntity->getUID());
-        NetworkManager::getSingleton().send(req);
+        CUnit *lUnit = static_cast<CUnit*>(lEntity);
 
-        static_cast<CUnit*>(lEntity)->move(POS_CHARGING);
+        // make sure the unit is owned by the player not the opponent
+        if (lUnit->getOwner() != mPlayer) {
+          return true;
+        }
 
+        // if the unit is moving to anywhere, don't do anything
+        if (lUnit->isMoving())
+          return true;
+
+        // if the unit is passive, make it charge
+        if (lUnit->getPosition() == POS_READY) {
+          Event req(EventUID::Charge);
+          req.setProperty("UID", lEntity->getUID());
+          NetworkManager::getSingleton().send(req);
+
+
+        } else if (lUnit->getPosition() == POS_CHARGING) {
+          Event req(EventUID::CancelCharge);
+          req.setProperty("UID", lEntity->getUID());
+          NetworkManager::getSingleton().send(req);
+
+        }
+
+        lUnit = 0;
         dehighlight();
       }
 
@@ -1088,10 +1272,29 @@ namespace Pixy {
   bool GfxEngine::onCharge(const Event& inEvt) {
     mLog->infoStream() << "charging with a unit";
 
+    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
+
+    lUnit->move(POS_CHARGING);
+
+    return true;
+  }
+
+  bool GfxEngine::onCancelCharge(const Event& inEvt) {
+    mLog->infoStream() << "charging with a unit";
+
+    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
+
+    lUnit->move(POS_READY);
+
     return true;
   }
 
   void GfxEngine::updateMe(CUnit* inUnit) {
+    if (mUpdatees.find(inUnit) != mUpdatees.end()) {
+      mUpdatees.find(inUnit)->second = true;
+      return;
+    }
+
     mUpdatees.insert(std::make_pair(inUnit, true));
   }
 

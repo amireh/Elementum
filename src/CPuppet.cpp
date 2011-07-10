@@ -4,6 +4,7 @@
 #include "CUnit.h"
 #include "CSpell.h"
 #include "PixyUtility.h"
+#include "ogre/MovableTextOverlay.h"
 
 namespace Pixy
 {
@@ -20,6 +21,7 @@ namespace Pixy
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppet");
     mLog->infoStream() << "created";
 
+    mRenderable->getText()->setCaption(stringify(mHP));
 	  //mDeck = new CDeck(this);
 	  //mDeck->generate();
 
@@ -133,5 +135,13 @@ namespace Pixy
 				return *lUnit;
 
     throw invalid_uid("couldn't find a unit with uid" + stringify(inUID));
+  }
+
+  CPuppet::units_t const& CPuppet::getUnits() const { return mUnits; }
+
+  void CPuppet::updateFromEvent(const Event& evt) {
+    Puppet::updateFromEvent(evt);
+
+    mRenderable->getText()->setCaption(stringify(mHP));
   }
 } // end of namespace
