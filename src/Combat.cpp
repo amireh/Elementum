@@ -634,6 +634,9 @@ namespace Pixy
       mBlockers.clear();
       mAttackers.clear();
 
+      if (mActivePuppet == mPuppet)
+        mNetMgr->send(Event(EventUID::EndTurn));
+
       std::cout << "battle is over\n";
       return;
     }

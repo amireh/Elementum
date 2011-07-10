@@ -188,8 +188,14 @@ namespace Pixy
     mRenderable->getText()->setCaption(stringify(mCurrentAP) + "/" + stringify(mCurrentHP));
   }
 
-  bool CUnit::attackTarget(Pixy::Entity* inTarget) {
-    Unit::attackTarget(inTarget);
+  bool CUnit::attack(Pixy::CPuppet* inTarget) {
+    Unit::attack(inTarget);
+
+    updateTextOverlay();
+  }
+
+  bool CUnit::attack(Pixy::CUnit* inTarget) {
+    Unit::attack(inTarget);
 
     updateTextOverlay();
   }
@@ -200,7 +206,7 @@ namespace Pixy
     mAttackTarget = inTarget;
     if (inTarget->getRank() == PUPPET) {
       this->move(POS_ATTACK, [&](CUnit* me) -> void {
-        this->attackTarget(static_cast<CPuppet*>(this->mAttackTarget));
+        this->attack(static_cast<CPuppet*>(this->mAttackTarget));
 
         // __DEBUG__
         static_cast<CPuppet*>(mAttackTarget)->updateTextOverlay();

@@ -246,6 +246,8 @@ namespace Pixy {
 	  bool onEntitySelected(const Event&);
     bool onCharge(const Event&);
     bool onCancelCharge(const Event&);
+    bool onStartBlockPhase(const Event&);
+    bool onEndBlockPhase(const Event&);
 
 	  void highlight(Renderable* inEntity);
 	  void dehighlight();

@@ -17,6 +17,7 @@ namespace Pixy
 {
 
   class Renderable;
+  class CPuppet;
 	class CUnit : public Unit
 	{
 	public:
@@ -50,7 +51,8 @@ namespace Pixy
       mWaypoints = inWp;
     }
 
-    virtual bool attackTarget(Pixy::Entity* inTarget);
+    virtual bool attack(Pixy::CUnit* inTarget);
+    virtual bool attack(Pixy::CPuppet* inTarget);
 
     void updateTextOverlay();
 

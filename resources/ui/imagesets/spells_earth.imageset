@@ -7,10 +7,10 @@
 	<Image Name="Summon:_Fetish_Zij_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
 	<Image Name="Summon:_Fetish_Zij_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
 	<!-- Crustling -->
-	<Image Name="Summon:_Fetish_Howler_Normal" XPos="256" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Howler_Hover"  XPos="256" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Howler_Pushed" XPos="256" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Howler_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Fetish_Hurler_Normal" XPos="256" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Fetish_Hurler_Hover"  XPos="256" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Fetish_Hurler_Pushed" XPos="256" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Fetish_Hurler_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
 	<!-- Stone Golem -->
 	<Image Name="Summon:_Fetish_Playmaker_Normal" XPos="512" YPos="0"  Width="256" Height="256" />
 	<Image Name="Summon:_Fetish_Playmaker_Hover"  XPos="512" YPos="256" Width="256" Height="256" />

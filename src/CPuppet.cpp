@@ -21,7 +21,7 @@ namespace Pixy
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppet");
     mLog->infoStream() << "created";
 
-    mRenderable->getText()->setCaption(stringify(mHP));
+    updateTextOverlay();
 	  //mDeck = new CDeck(this);
 	  //mDeck->generate();
 
