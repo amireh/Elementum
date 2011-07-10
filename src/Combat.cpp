@@ -698,6 +698,14 @@ namespace Pixy
         unit->setAttackOrder(++i);
         unit->updateTextOverlay();
       }
+
+      for (auto pair : mBlockers) {
+        int i = 0;
+        for (auto unit : pair.second) {
+          unit->setAttackOrder(++i);
+          unit->updateTextOverlay();
+        }
+      }
     }
     // move them back
     if (mAttackers.empty()) {
