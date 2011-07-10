@@ -12,6 +12,8 @@ namespace Pixy
 	Renderable::Renderable(Pixy::Entity* inOwner)
 	{
     mOwner = inOwner;
+    mSceneNode = 0;
+    mSceneObject = 0;
     mText = 0;
 	};
 
@@ -26,7 +28,7 @@ namespace Pixy
     mText = 0;
 	};
 
-  Renderable::Renderable(const Renderable& src)
+  /*Renderable::Renderable(const Renderable& src)
   {
 
     copyFrom(src);
@@ -51,7 +53,7 @@ namespace Pixy
     mSceneObject = src.mSceneObject;
     mOwner = src.mOwner;
     mText = src.mText;
-  };
+  };*/
 
 	void Renderable::attachSceneNode(Ogre::SceneNode* inNode) { mSceneNode = inNode; }
   void Renderable::attachSceneObject(Ogre::MovableObject* inObject) { mSceneObject = inObject; }

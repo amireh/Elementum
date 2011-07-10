@@ -9,8 +9,9 @@
 namespace Pixy
 {
 
-  CPuppet::CPuppet() {
-    mRenderable = new Renderable(this);
+  CPuppet::CPuppet()
+  : mRenderable(0) {
+
     /*mSceneObject = 0;
     mSceneNode = 0;
     mEntity = this;
@@ -20,6 +21,8 @@ namespace Pixy
   bool CPuppet::live() {
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppet");
     mLog->infoStream() << "created";
+
+    mRenderable = new Renderable(this);
 
     updateTextOverlay();
 	  //mDeck = new CDeck(this);
@@ -146,6 +149,7 @@ namespace Pixy
   }
 
   void CPuppet::updateTextOverlay() {
-    mRenderable->getText()->setCaption(stringify(mHP));
+    if (mRenderable && mRenderable->getText())
+      mRenderable->getText()->setCaption(stringify(mHP));
   }
 } // end of namespace

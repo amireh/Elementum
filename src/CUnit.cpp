@@ -13,11 +13,11 @@ namespace Pixy
     mPosition(POS_READY),
     mWaypoints(0),
     mMoveDistance(0),
-    mWalkSpeed(0.35f),
+    mWalkSpeed(0.15f),
     mMoveSpeed(0),
-    mCallback(0)
+    mCallback(0),
+    mRenderable(0)
   {
-    mRenderable = new Renderable(this);
   };
 
 
@@ -37,8 +37,9 @@ namespace Pixy
   };
 
   CUnit::~CUnit() {
+    if (mRenderable)
+      delete mRenderable;
 
-    delete mRenderable;
     mRenderable = 0;
 
   };
@@ -46,8 +47,9 @@ namespace Pixy
   void CUnit::copyFrom(const CUnit& src) {
     Unit::copyFrom(src);
 
-    this->mRenderable = new Renderable(*src.mRenderable);
-    this->mRenderable->setOwner(this);
+    //this->mRenderable = new Renderable(*src.mRenderable);
+    //this->mRenderable->setOwner(this);
+    this->mRenderable = 0;
 
     mPosition = src.mPosition;
     fIsMoving = src.fIsMoving;
@@ -62,6 +64,8 @@ namespace Pixy
 
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnit " + mName);
     mLog->infoStream() << "created";
+
+    mRenderable = new Renderable(this);
 
     reset();
 
@@ -184,13 +188,14 @@ namespace Pixy
   void CUnit::reset() {
     Unit::reset();
 
-    if (mRenderable->getText())
+    if (mRenderable && mRenderable->getText())
       updateTextOverlay();
   }
+
   void CUnit::updateTextOverlay() {
     std::string cap = "";
     if (mAttackOrder != 0) {
-      cap += "[" + stringify(mAttackOrder) + "]\n";
+      cap += "[" + stringify(mAttackOrder) + "] ";
     }
     cap += stringify(mCurrentAP) + "/" + stringify(mCurrentHP);
     mRenderable->getText()->setCaption(cap);

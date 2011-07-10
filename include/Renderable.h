@@ -43,8 +43,8 @@ namespace Pixy
 		 *!  Initializes all attributes with default settings.
 		 */
 		Renderable(Entity* inOwner);
-		Renderable& operator=(const Renderable& rhs);
-		Renderable(const Renderable& src);
+		Renderable& operator=(const Renderable& rhs) = delete;
+		Renderable(const Renderable& src) = delete;
 		virtual ~Renderable();
 
 		virtual void attachSceneNode(Ogre::SceneNode* inNode);
@@ -73,7 +73,7 @@ namespace Pixy
 
 		//! helper method for copy/assignment methods
 		//! copies all data from src and sets it into this entity
-		virtual void copyFrom(const Renderable& src);
+		//~ virtual void copyFrom(const Renderable& src);
 
 	}; // end of Entity class
 } // end of Pixy namespace

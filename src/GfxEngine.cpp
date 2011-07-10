@@ -72,6 +72,7 @@ namespace Pixy {
     mPlayer = 0;
     mEnemy = 0;
     inBlockPhase = false;
+    mSelected = 0;
 	}
 
 	GfxEngine::~GfxEngine() {
@@ -975,6 +976,8 @@ namespace Pixy {
       inRenderable->attachSceneNode(mNode);
       inRenderable->attachSceneObject(mEntity);
 
+      static_cast<CPuppet*>(inEntity)->updateTextOverlay();
+
       mRenderables.push_back(inRenderable);
 
       return mSceneMgr->getSceneNode(nodeName);
@@ -1017,6 +1020,8 @@ namespace Pixy {
 
       static_cast<CUnit*>(inEntity)->
         setWaypoints(&mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode]);
+
+      static_cast<CUnit*>(inEntity)->updateTextOverlay();
 
       mRenderables.push_back(inRenderable);
 

@@ -13,6 +13,20 @@ namespace Pixy {
 	}
 
 	CResourceManager::~CResourceManager() {
+    for (int i=0; i < 4; ++i) {
+      while (!mSpells[i].empty()) {
+        // delete only the spells that aren't minion abilities
+        if (mSpells[i].back()->getCaster() == 0)
+          delete mSpells[i].back();
+
+        mSpells[i].pop_back();
+      }
+
+      while (!mUnits[i].empty()) {
+        delete mUnits[i].back();
+        mUnits[i].pop_back();
+      }
+    }
 	}
 
 /*

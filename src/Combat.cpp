@@ -374,8 +374,8 @@ namespace Pixy
       if (puppet->getName() == mPuppetName) // is this the puppet we're playing with?
         mPuppet = puppet;
 
-      mGfxEngine->attachToScene(puppet->getRenderable());
       puppet->live();
+      mGfxEngine->attachToScene(puppet->getRenderable());
     }
 
     mNetMgr->send(Event(EventUID::Ready));
@@ -574,8 +574,8 @@ namespace Pixy
     std::cout << "new units UID=" << _unit->getUID() << "\n";
     assert(_unit->getOwner());
 
-    mGfxEngine->attachToScene(_unit->getRenderable());
     _unit->live();
+    mGfxEngine->attachToScene(_unit->getRenderable());
 
     _unit = 0;
     _owner = 0;
@@ -690,15 +690,27 @@ namespace Pixy
 
   void Combat::doBattle() {
 
+    // first call
+    if (mChargers.empty()) {
+      // assign attack orders and display them
+      int i=0;
+      for (auto unit : mAttackers) {
+        unit->setAttackOrder(++i);
+        unit->updateTextOverlay();
+      }
+    }
     // move them back
     if (mAttackers.empty()) {
 
       // move the blockers first
       for (auto pair : mBlockers)
         for (auto unit : pair.second) {
-          if (!unit->isDead())
-            unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->reset(); });
-          else {
+          if (!unit->isDead()) {
+            unit->move(POS_READY, [&](CUnit* inUnit) -> void {
+              inUnit->setAttackOrder(0);
+              inUnit->reset();
+            });
+          } else {
             //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
             mDeathlist.push_back(unit);
           }
@@ -706,14 +718,12 @@ namespace Pixy
 
       for (auto unit : mChargers) {
         if (!unit->isDead())
-          unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->reset(); });
+          unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->setAttackOrder(0); inUnit->reset(); });
         else {
           //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
           mDeathlist.push_back(unit);
         }
       }
-
-
 
       mChargers.clear();
       mBlockers.clear();
@@ -733,7 +743,6 @@ namespace Pixy
 
     // go through every attacking unit:
     for (auto unit : mAttackers) {
-
       // if it's being blocked, go through every blocker
       // else, let it attack the puppet
       if (mBlockers.find(unit) == mBlockers.end()) {
