@@ -261,7 +261,7 @@ namespace Pixy {
       string lSpellId = elements[1];
 
       CUnit* lUnit = getModelUnit(lUnitId);
-      CSpell* lSpell = getModelSpell(lSpellId);
+      CSpell* lSpell = getSpell(lSpellId);
 
       lUnit->attachSpell(lSpell);
 

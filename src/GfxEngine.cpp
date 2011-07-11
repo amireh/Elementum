@@ -258,6 +258,8 @@ namespace Pixy {
     MovableTextOverlay *p=0;
     std::list<Renderable*>::const_iterator r;
     for (r = mRenderables.begin(); r != mRenderables.end(); ++r) {
+      (*r)->updateAnimations(lTimeElapsed);
+
       p = (*r)->getText();
       p->update(lTimeElapsed);
 
@@ -702,7 +704,7 @@ namespace Pixy {
 		 */
 
 		using Ogre::String;
-    Vector3 mPuppetScale, mUnitScale; // mPuppetPos[2], mDirection[2],
+    //Vector3 mPuppetScale, mUnitScale; // mPuppetPos[2], mDirection[2],
 
     // Define the scale to which the Models will be resized to
     mPuppetScale = Vector3(2.0f, 2.0f, 2.0f);
@@ -890,6 +892,7 @@ namespace Pixy {
 
     // Passive position
     passivePos = mSceneMgr->getSceneNode(nodeName)->getPosition();
+    //passivePos.y /= (mPuppetScale.y);
 
     // Charging position
     chargingPos = passivePos;
@@ -897,9 +900,11 @@ namespace Pixy {
 
     // Defence position
     defensePos = mSceneMgr->getSceneNode(inOwnerName + "_node_defense")->getPosition();
+    defensePos.y = passivePos.y;
 
     // Offence position
     offensePos = mSceneMgr->getSceneNode("shared_node_offense")->getPosition();
+    offensePos.y = passivePos.y;
 
     // Attack position
     attackPos = mSceneMgr->getSceneNode(inOpponentName + "_node_puppet")->getPosition();
@@ -978,6 +983,8 @@ namespace Pixy {
       inRenderable->attachSceneNode(mNode);
       inRenderable->attachSceneObject(mEntity);
 
+      inRenderable->setup(mSceneMgr);
+
       static_cast<CPuppet*>(inEntity)->updateTextOverlay();
 
       mRenderables.push_back(inRenderable);
@@ -1019,6 +1026,8 @@ namespace Pixy {
 
       inRenderable->attachSceneNode(mNode);
       inRenderable->attachSceneObject(mEntity);
+
+      inRenderable->setup(mSceneMgr);
 
       static_cast<CUnit*>(inEntity)->
         setWaypoints(&mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode]);
@@ -1165,7 +1174,7 @@ namespace Pixy {
     bool found = false;
     for (itr = result.begin(); itr != result.end(); itr++)
     {
-      //mLog->infoStream() << "Ray target name: " << itr->movable->getName();
+      mLog->infoStream() << "Ray target name: " << itr->movable->getName();
       if (itr->movable &&
          (itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "" &&

@@ -14,6 +14,8 @@
 #include "EventListener.h"
 #include "Archiver.h"
 #include "EventManager.h"
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 namespace Pixy
 {
@@ -71,15 +73,18 @@ namespace Pixy
 
     void unitAttacked(CUnit*);
 
+    boost::asio::io_service& getIOService();
+    boost::asio::strand& getStrand();
+
   protected:
     friend class UIEngine;
     void castSpell(CSpell*);
 
 	private:
 
-		Combat( void ) { }
-		Combat( const Combat& ) { }
-		Combat & operator = ( const Combat& );
+		Combat( void );
+		Combat( const Combat& ) = delete;
+		Combat& operator=( const Combat& ) = delete;
 
     bool onSyncGameData(const Event&);
     bool onJoinQueue(const Event& inEvt);
@@ -130,6 +135,11 @@ namespace Pixy
 		std::vector<Engine*>::const_iterator mUpdater;
 
 		bool fUpdateGfx;
+
+    boost::asio::io_service mIOService;
+    boost::asio::strand mStrand;
+    boost::asio::io_service::work mWork;
+    boost::thread* mWorker;
 
 	};
 } // end of namespace

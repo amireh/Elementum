@@ -2,10 +2,12 @@
 #define H_CUnit_H
 
 #include "Unit.h"
+#include "CSpell.h"
 #include <Ogre.h>
 #include <list>
 #include <vector>
 #include <boost/function.hpp>
+#include <boost/asio.hpp>
 
 using std::list;
 using std::vector;
@@ -21,6 +23,8 @@ namespace Pixy
 	class CUnit : public Unit
 	{
 	public:
+    typedef std::list<CSpell*> spells_t;
+
     CUnit();
     CUnit(const CUnit& src);
     CUnit& operator=(const CUnit& rhs);
@@ -52,8 +56,20 @@ namespace Pixy
       mWaypoints = inWp;
     }
 
-    virtual bool attack(Pixy::CPuppet* inTarget);
-    virtual bool attack(Pixy::CUnit* inTarget, bool block=false);
+    /// @note entities are responsible for destroying the spell objects they own
+		spells_t const& getSpells();
+		virtual int nrSpells();
+		virtual CSpell* getSpell(int inUID);
+    /// @warn ownership of the Spell pointer is transferred to the entity
+    /// which means you can't invalidate throughout the lifetime of this entity
+		virtual void attachSpell(CSpell* inSpell);
+		virtual void detachSpell(int inUID);
+
+    virtual bool attack(Pixy::CPuppet* inTarget, boost::function<void()> callback);
+    virtual bool attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block=false);
+
+    //~ virtual bool attack(Pixy::CPuppet* inTarget);
+    //~ virtual bool attack(Pixy::CUnit* inTarget, bool block=false);
 
     void updateTextOverlay();
 
@@ -105,6 +121,10 @@ namespace Pixy
     blockers_t mBlockers;
 
     boost::function<void(CUnit*)> mCallback;
+
+    boost::asio::deadline_timer* mTimer;
+
+    spells_t mSpells;
 	};
 } // end of namespace
 #endif

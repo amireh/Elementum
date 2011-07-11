@@ -23,6 +23,13 @@
 namespace Pixy
 {
 
+  Combat::Combat()
+  : mIOService(),
+    mStrand(mIOService),
+    mWork(mIOService),
+    mWorker(0) {
+
+  }
 	Combat* Combat::mCombat = 0;
 
 	Combat* Combat::getSingletonPtr( void ) {
@@ -41,6 +48,8 @@ namespace Pixy
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
 	void Combat::enter( void ) {
+
+    mWorker = new boost::thread(boost::bind(&boost::asio::io_service::run, &mIOService));
 
     mId = STATE_COMBAT;
 
@@ -118,6 +127,7 @@ namespace Pixy
 
 	void Combat::exit( void ) {
 
+
 		puppets_t::iterator lPuppet;
 		for (lPuppet = mPuppets.begin(); lPuppet != mPuppets.end(); ++lPuppet) {
 			delete (*lPuppet);
@@ -136,6 +146,9 @@ namespace Pixy
 		delete mLog;
 		mLog = 0;
 
+    mIOService.stop();
+    mWorker->join();
+    delete mWorker;
 	}
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
@@ -211,6 +224,13 @@ namespace Pixy
 
 	void Combat::resume( void ) {
 	}
+
+  boost::asio::io_service& Combat::getIOService() {
+    return mIOService;
+  }
+  boost::asio::strand& Combat::getStrand() {
+    return mStrand;
+  }
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
 	 *	Main Routines
@@ -384,8 +404,6 @@ namespace Pixy
   }
 
   bool Combat::onStartTurn(const Event& inEvt) {
-    // acknowledge the order
-    //mEvtMgr->hook(mEvtMgr->createEvt("StartTurn")); __DISABLED__
 
     mActivePuppet = mPuppet;
     if (mPuppet == mPuppets.front())
@@ -396,7 +414,7 @@ namespace Pixy
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     //mUIEngine->onTurnStarted(mPuppet);
-    // send the event back, effectively acknowledging the order
+    // send the event back, acknowledging the order
     mNetMgr->send(inEvt);
 
     return true;
@@ -742,8 +760,8 @@ namespace Pixy
       mBlockers.clear();
       mAttackers.clear();
 
-      if (mActivePuppet == mPuppet)
-        mNetMgr->send(Event(EventUID::EndTurn));
+      // tell the server we're done simulating the battle
+      mNetMgr->send(Event(EventUID::BattleOver));
 
       mLog->infoStream() << "battle is over";
       return;

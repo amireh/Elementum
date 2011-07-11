@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Thu Jul  7 17:36:21 2011.
+** Generated automatically by tolua++-1.0.92 on Mon Jul 11 11:50:56 2011.
 */
 
 #ifndef __cplusplus
@@ -90,30 +90,30 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::Root");
  tolua_usertype(tolua_S,"CEGUI::UBox");
  tolua_usertype(tolua_S,"Pixy::Spell");
- tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"Pixy::CDeck");
  tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::Deck");
  tolua_usertype(tolua_S,"Pixy::CUnit");
- tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
  tolua_usertype(tolua_S,"Pixy::CSpell");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
  tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
  tolua_usertype(tolua_S,"Pixy::EventListener");
- tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"CEGUI::Window");
  tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
  tolua_usertype(tolua_S,"const");
  tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"Pixy::GameState");
- tolua_usertype(tolua_S,"Pixy::CDeck");
- tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
+ tolua_usertype(tolua_S,"Ogre::Entity");
+ tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Combat");
  tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"Pixy::Unit");
- tolua_usertype(tolua_S,"Ogre::MovableObject");
+ tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"Pixy::NetworkManager");
  tolua_usertype(tolua_S,"Ogre::Camera");
 }
@@ -313,7 +313,7 @@ static int tolua_EClient_Pixy_Renderable_attachSceneObject00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"Ogre::MovableObject",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::Entity",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -321,7 +321,7 @@ static int tolua_EClient_Pixy_Renderable_attachSceneObject00(lua_State* tolua_S)
 #endif
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::MovableObject* inObject = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
+  Ogre::Entity* inObject = ((Ogre::Entity*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneObject'", NULL);
 #endif
@@ -357,8 +357,8 @@ static int tolua_EClient_Pixy_Renderable_getSceneObject00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneObject'", NULL);
 #endif
   {
-   Ogre::MovableObject* tolua_ret = (Ogre::MovableObject*)  self->getSceneObject();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::MovableObject");
+   Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->getSceneObject();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Entity");
   }
  }
  return 1;

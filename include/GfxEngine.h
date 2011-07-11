@@ -207,6 +207,7 @@ namespace Pixy {
 		Vector3 mPuppetPos[2];
 		//! used for setting Objects' direction in Scene
 		Vector3 mDirection[2];
+    Vector3 mPuppetScale, mUnitScale;
 
     typedef std::map<CUnit*, bool> updatees_t;
     updatees_t mUpdatees;
