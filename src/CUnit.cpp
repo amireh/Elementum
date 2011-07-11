@@ -108,7 +108,7 @@ namespace Pixy
     mMoveDirection = mDestination - mNode->getPosition();
     mMoveDistance = mMoveDirection.normalise();
 
-    Vector3 src = mNode->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+    Vector3 src = mNode->getOrientation() * Vector3::UNIT_Z;
     if ((1.0f + src.dotProduct(mMoveDirection)) < 0.0001f)
     {
         mNode->yaw(Ogre::Degree(180));
@@ -153,6 +153,10 @@ namespace Pixy
           {
               mNode->setPosition(mDestination);
               mMoveDirection = Vector3::ZERO;
+
+              if (mPDestination == POS_READY) {
+                mNode->yaw(Ogre::Degree(180));
+              }
               //Vector3 mLookDirection = (inIdOwner == ID_HOST) ? mHeroPos[ID_CLIENT] : mHeroPos[];
 
               //mNode->lookAt(mMoveDirection[this->getOwner()], Ogre::Node::TS_WORLD);
@@ -240,11 +244,13 @@ namespace Pixy
     // move to offense position
     fDoneBlocking = false;
 
+    mBlockers = inBlockers;
+
     this->reset();
-    this->move(POS_OFFENCE, boost::bind(&CUnit::doAttack, this, inBlockers));
+    this->move(POS_OFFENCE, boost::bind(&CUnit::doAttack, this, boost::ref(mBlockers)));
   }
 
-  void CUnit::doAttack(std::list<CUnit*> inBlockers) {
+  void CUnit::doAttack(std::list<CUnit*>& inBlockers) {
 
     /*
      * for every blocker X in blockers do:
@@ -294,7 +300,7 @@ namespace Pixy
     // get the next blocker, move it to the defense position, and attack it
     auto blocker = inBlockers.front();
     inBlockers.pop_front();
-    blocker->move(POS_DEFENCE, [&, blocker, inBlockers](CUnit*) -> void {
+    blocker->move(POS_DEFENCE, [&, blocker, &inBlockers](CUnit*) -> void {
       this->attack(blocker, true);
 
       // if the blocker didn't die, it means we ran out of AP and/or dead,

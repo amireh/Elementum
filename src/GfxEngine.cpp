@@ -551,6 +551,8 @@ namespace Pixy {
     sphereEntity->setMaterialName("Elementum/Sky");
     sphereNode->attachObject(sphereEntity);
 
+    sphereNode->roll(Ogre::Degree(180));
+
     return;
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Caelum");
 
@@ -902,7 +904,7 @@ namespace Pixy {
     // Attack position
     attackPos = mSceneMgr->getSceneNode(inOpponentName + "_node_puppet")->getPosition();
     attackPos.z += (inOwner == ME) ? -5 : 5;
-    attackPos.y = offensePos.y;
+    attackPos.y = passivePos.y;
 
     std::cout
       << "Waypoint for node: " << inOwner << "#" << inNode << ":\n"

@@ -692,6 +692,11 @@ namespace Pixy
 
     // first call
     if (mChargers.empty()) {
+      // simulate the battle
+      mLog->infoStream() << "simulating battle with : "
+      << mAttackers.size() << " attacking units and "
+      << mBlockers.size() << " units being blocked";
+
       // assign attack orders and display them
       int i=0;
       for (auto unit : mAttackers) {
@@ -744,22 +749,20 @@ namespace Pixy
       return;
     }
 
-    // simulate the battle
-    mLog->infoStream() << "simulating battle with : "
-      << mAttackers.size() << " attacking units and "
-      << mBlockers.size() << " units being blocked";
+
 
     // go through every attacking unit:
-    for (auto unit : mAttackers) {
+    auto unit = mAttackers.front();
+    //for (auto unit : mAttackers) {
       // if it's being blocked, go through every blocker
       // else, let it attack the puppet
       if (mBlockers.find(unit) == mBlockers.end()) {
         unit->moveAndAttack(mWaitingPuppet);
-        break;
+        //~ break;
       } else {
         unit->moveAndAttack(mBlockers.find(unit)->second);
       }
-    }
+    //}
 
   }
 

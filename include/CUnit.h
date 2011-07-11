@@ -72,7 +72,7 @@ namespace Pixy
     bool doMove(unsigned long);
 
     // recursively goes through all the blockers and attacks them
-    void doAttack(std::list<CUnit*> inBlockers);
+    void doAttack(std::list<CUnit*>& inBlockers);
 
     /*!
      * \brief Informs whether the SceneNode has
@@ -100,6 +100,9 @@ namespace Pixy
     Real mMoveSpeed;
 
     bool fDoneBlocking;
+
+    typedef std::list<CUnit*> blockers_t;
+    blockers_t mBlockers;
 
     boost::function<void(CUnit*)> mCallback;
 	};
