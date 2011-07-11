@@ -31,18 +31,23 @@
   class SceneNode;
   class String;
 }*/
+
+/*
 namespace Hydrax {
   class Hydrax;
 }
 namespace Caelum {
   class CaelumSystem;
 }
+class DotSceneLoader;
+*/
 namespace OgreBites {
   class SdkCameraMan;
+  class SdkTrayManager;
 }
 
 class HDRCompositor;
-class DotSceneLoader;
+
 class MovableTextOverlay;
 class MovableTextOverlayAttributes;
 
@@ -51,7 +56,7 @@ using Ogre::Real;
 using Ogre::SceneNode;
 using Ogre::String;
 using OgreBites::SdkCameraMan;
-using Hydrax::Hydrax;
+using OgreBites::SdkTrayManager;
 namespace Pixy {
 
   class CUnit;
@@ -194,10 +199,14 @@ namespace Pixy {
 		Ogre::Overlay        *mOverlay;
 		EventManager		 *mEvtMgr;
 		SdkCameraMan		 *mCameraMan;
-		DotSceneLoader		 *mSceneLoader;
-		Hydrax::Hydrax *mHydrax;
-		Caelum::CaelumSystem *mCaelumSystem;
+		//DotSceneLoader		 *mSceneLoader;
+		//Hydrax::Hydrax *mHydrax;
+		//Caelum::CaelumSystem *mCaelumSystem;
 		HDRCompositor *mHDRComp;
+
+    SdkTrayManager *mTrayMgr;
+
+    Ogre::FrameEvent evt;
 
     CPuppet *mPlayer, *mEnemy;
 

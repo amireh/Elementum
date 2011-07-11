@@ -16,6 +16,7 @@
 #include "Combat.h"
 #include "UIEngine.h"
 #include "NetworkManager.h"
+#include "InputManager.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUIBase/CEGUI.h>
@@ -29,26 +30,28 @@
 #endif
 
 #include <Ogre.h>
-#include <OGRE/Terrain/OgreTerrain.h>
-#include <OGRE/Terrain/OgreTerrainGroup.h>
-#include <OGRE/Plugins/OctreeSceneManager/OgreOctreeSceneManager.h>
-#include <OGRE/Plugins/Hydrax/Hydrax.h>
-#include <OGRE/Plugins/Caelum/Caelum.h>
-#include "Plugins/Hydrax/Hydrax.h"
-#include "Plugins/Hydrax/Noise/FFT/FFT.h"
-#include "Plugins/Hydrax/Noise/Perlin/Perlin.h"
-#include "Plugins/Hydrax/Noise/Real/Real.h"
-#include "Plugins/Hydrax/Modules/ProjectedGrid/ProjectedGrid.h"
-#include "Plugins/Hydrax/Modules/RadialGrid/RadialGrid.h"
-#include "Plugins/Hydrax/Modules/SimpleGrid/SimpleGrid.h"
-#include "Plugins/Caelum/CaelumSystem.h"
+//#include <OGRE/Terrain/OgreTerrain.h>
+//#include <OGRE/Terrain/OgreTerrainGroup.h>
+//#include <OGRE/Plugins/OctreeSceneManager/OgreOctreeSceneManager.h>
+//#include <OGRE/Plugins/Hydrax/Hydrax.h>
+//#include <OGRE/Plugins/Caelum/Caelum.h>
+//#include "Plugins/Hydrax/Hydrax.h"
+//#include "Plugins/Hydrax/Noise/FFT/FFT.h"
+//#include "Plugins/Hydrax/Noise/Perlin/Perlin.h"
+//#include "Plugins/Hydrax/Noise/Real/Real.h"
+//#include "Plugins/Hydrax/Modules/ProjectedGrid/ProjectedGrid.h"
+//#include "Plugins/Hydrax/Modules/RadialGrid/RadialGrid.h"
+//#include "Plugins/Hydrax/Modules/SimpleGrid/SimpleGrid.h"
+//#include "Plugins/Caelum/CaelumSystem.h"
 
-#include "dotscene/DotSceneLoader.h"
+//#include "dotscene/DotSceneLoader.h"
 #include "ogre/HelperLogics.h"
 #include "ogre/SdkCameraMan.h"
 #include "ogre/HDRCompositor.h"
 #include "ogre/MovableTextOverlay.h"
 #include "ogre/RectLayoutManager.h"
+#include "ogre/OgreSdkTrays.h"
+
 
 namespace Pixy {
 
@@ -68,7 +71,7 @@ namespace Pixy {
 		fSetup = false;
 		//mPlayers.clear();
 		mCameraMan = 0;
-		mSceneLoader = 0;
+		//mSceneLoader = 0;
     mPlayer = 0;
     mEnemy = 0;
     inBlockPhase = false;
@@ -89,8 +92,8 @@ namespace Pixy {
 			delete mLog;
 			mLog = 0;
 
-			if (mSceneLoader)
-				delete mSceneLoader;
+			//if (mSceneLoader)
+			//	delete mSceneLoader;
 
 			fSetup = false;
 		}
@@ -157,6 +160,8 @@ namespace Pixy {
 	  //setupWater();
     setupTerrain();
     setupLights();
+
+    mTrayMgr = new SdkTrayManager("Elementum", mRenderWindow, InputManager::getSingletonPtr()->getMouse(), 0);
 
 		mUpdate = &GfxEngine::updateNothing;
 		mSelected = 0;
@@ -228,6 +233,9 @@ namespace Pixy {
 
 	void GfxEngine::updateCombat(unsigned long lTimeElapsed) {
 		mCameraMan->update(lTimeElapsed);
+		// update our good tray manager
+    evt.timeSinceLastFrame = evt.timeSinceLastEvent = lTimeElapsed;
+    mTrayMgr->frameRenderingQueued(evt);
 
 		using namespace Ogre;
 
@@ -329,9 +337,6 @@ namespace Pixy {
 		processEvents();
 
 		(this->*mUpdate)(lTimeElapsed);
-
-
-
 	}
 
 	bool GfxEngine::cleanup() {
@@ -344,9 +349,6 @@ namespace Pixy {
   void GfxEngine::setupSceneManager()
   {
 	  mLog->debugStream() << "setting up SceneManager";
-
-
-
 
 
 
@@ -551,7 +553,6 @@ namespace Pixy {
          pSphere->load();
   }
   void GfxEngine::setupSky() {
-    using namespace Caelum;
 
     // skyz0rs
     //mLog->noticeStream() << "Setting up sky";
@@ -565,8 +566,8 @@ namespace Pixy {
     //~ sphereNode->attachObject(sphereEntity);
 
     //~ sphereNode->roll(Ogre::Degree(180));
+#if 0 // __DISABLED__ not using Caelum
 
-    return;
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Caelum");
 
     // Pick components to create in the demo.
@@ -602,7 +603,7 @@ namespace Pixy {
     //CaelumPlugin::getSingleton().loadCaelumSystemFromScript(mCaelumSystem, "Eclipse");
 
     //mCaelumSystem->attachViewport(mViewport);
-
+#endif
 
   };
 
@@ -1314,6 +1315,13 @@ namespace Pixy {
           mRenderables.front()->show();
         else
           mRenderables.front()->hide();
+        break;
+      case OIS::KC_K:
+        if (mTrayMgr->areFrameStatsVisible())
+          mTrayMgr->hideFrameStats();
+        else
+          mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMRIGHT);
+        break;
         break;
     }
 	}

@@ -274,11 +274,12 @@ namespace Pixy
 			mRenderable->setBaseAnimation(Renderable::ANIM_IDLE_BASE);
 			if (mRenderable->mTopAnimID == Renderable::ANIM_RUN_TOP)
         mRenderable->setTopAnimation(Renderable::ANIM_IDLE_TOP);
-      // unsheathe the swords if were drawn
-      if (mRenderable->mSwordsDrawn) {
-          mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
-          mRenderable->mTimer = 0;
-        }
+
+      // if we came back from an attack or a block, unsheathe our swords
+      if (mPosition == POS_READY && mRenderable->mSwordsDrawn) {
+        mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
+        mRenderable->mTimer = 0;
+      }
 
       std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
 
@@ -299,13 +300,24 @@ namespace Pixy
 
   void CUnit::updateTextOverlay() {
     std::string cap = "";
+    /*
+     * if the unit is blocking a target, we show the attacker's ID and our
+     * attack order since an attacker can have multiple blockers. format:
+     * [AID -> BID] AP/HP
+     */
     if (mBlockTarget) {
       std::ostringstream s;
       s << "[" << mBlockTarget->getAttackOrder() << "->" << mAttackOrder << "] ";
       cap += s.str();
-    } else if (mAttackOrder != 0) {
+    }
+    /*
+     * unit is attacking, show attack order. format:
+     * [AID] AP/HP
+     */
+    else if (mAttackOrder != 0) {
       cap += "[" + stringify(mAttackOrder) + "] ";
     }
+    // show stats (AP/HP)
     cap += stringify(mCurrentAP) + "/" + stringify(mCurrentHP);
     mRenderable->getText()->setCaption(cap);
   }
@@ -330,10 +342,20 @@ namespace Pixy
 
     boost::function<bool(Unit*, bool)> attack_func = boost::bind(&Unit::attack, this, _1, _2);
 
+    // @note
+    // we're using a timer so we give the animation time to finish
+    // TODO: use actual animation length
     mTimer->expires_from_now(boost::posix_time::seconds(1));
     mTimer->async_wait(
     [&, inTarget, callback, block, attack_func](boost::system::error_code e) -> void {
+
+      // actually attack the target (see Unit::attack())
+      // @note
+      // the reason we pass block=false here is that we're running a special
+      // version of the attack function (this one) that deals with rendering
       attack_func(inTarget, false);
+
+      // if the target is required to block us and it's not dead, make it hit us back
       if (block && !inTarget->isDead()) {
         inTarget->attack(this, [&, callback]() -> void {
           updateTextOverlay();
@@ -396,6 +418,7 @@ namespace Pixy
      * mark as done
      */
 
+    // we're dead, tell Combat we're done and to process the next unit
     if (isDead()) {
       Combat::getSingleton().unitAttacked(this);
       Combat::getSingleton().doBattle();
@@ -431,18 +454,38 @@ namespace Pixy
 
     // get the next blocker, move it to the defense position, and attack it
     auto blocker = inBlockers.front();
-    blocker->move(POS_DEFENCE, [&, blocker, &inBlockers](CUnit*) -> void {
-      this->attack(blocker, [&]() -> void {
-        // if the blocker didn't die, it means we ran out of AP and/or dead,
-        // but anyway we're done
-        if (!blocker->isDead()) {
-          blocker->move(POS_CHARGING);
-          //this->fDoneBlocking = true;
-        }
+    blocker->move(POS_DEFENCE, [&, blocker](CUnit*) -> void {
 
-        inBlockers.pop_front();
-        return this->doAttack(inBlockers);
-      }, true);
+      /*
+       * basically,
+       *  1) if we ran out of AP, then only the blocker hits us
+       * otherwise,
+       *  2) we hit the blocker, if they're not dead, they hit us back
+       */
+
+      if (mCurrentAP <= 0) {
+        blocker->attack(this, [&, blocker]() -> void {
+          blocker->move(POS_CHARGING);
+
+          inBlockers.pop_front();
+
+          return this->doAttack(inBlockers);
+        }, false);
+      } else {
+        this->attack(blocker, [&, blocker]() -> void {
+          // if the blocker didn't die, it means we ran out of AP and/or dead,
+          // but anyway we're done
+          if (!blocker->isDead()) {
+            blocker->move(POS_CHARGING);
+          }
+
+          inBlockers.pop_front();
+
+          // repeat until we're done
+          return this->doAttack(inBlockers);
+        }, true);
+
+      }
     });
   }
 } // end of namespace
