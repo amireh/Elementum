@@ -261,6 +261,10 @@ namespace Pixy {
       (*r)->updateAnimations(lTimeElapsed);
 
       p = (*r)->getText();
+
+      if (p->isHidden())
+        continue;
+
       p->update(lTimeElapsed);
 
       if (p->isOnScreen()) {
@@ -349,11 +353,11 @@ namespace Pixy {
 	  mViewport = mRenderWindow->addViewport(mCamera);
 
 
-	  //Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
-		//compMgr.registerCompositorLogic("HDR", new HDRLogic);
-    //
-	  //Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
-	  //Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
+	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
+		compMgr.registerCompositorLogic("HDR", new HDRLogic);
+
+	  Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
+	  Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 
 	  //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
 
@@ -376,7 +380,7 @@ namespace Pixy {
   void GfxEngine::setupViewports()
   {
 		mLog->debugStream() << "setting up viewports";
-    //mViewport->setBackgroundColour(Ogre::ColourValue(255,255,255));
+    mViewport->setBackgroundColour(Ogre::ColourValue(255,255,255));
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
   };
@@ -386,11 +390,15 @@ namespace Pixy {
 
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
 
+    Ogre::ColourValue fadeColour(0, 0, 0);
+    mSceneMgr->setFog(Ogre::FOG_EXP2, fadeColour, 0.0022);
+
     Ogre::Vector3 pos;
-    Ogre::ColourValue col(1, 1, 1);
+    Ogre::ColourValue dcol(0.9f,0.9f,0.9f);
+    Ogre::ColourValue scol(0.6f,0.6f,0.6f);
 
     pos = mPuppetPos[ME];
-    pos.y += 50;
+    pos.y += 450;
 	  mLog->debugStream() << "setting up lights";
     Ogre::Light *light;
     /* now let's setup our light so we can see the shizzle */
@@ -398,36 +406,39 @@ namespace Pixy {
     light->setType(Ogre::Light::LT_POINT);
     light->setPosition(pos);
     //light->setDirection(pos.x, 0, pos.z);
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);
+    light->setDiffuseColour(dcol);
+    light->setSpecularColour(scol);
+
+    light = mSceneMgr->createLight("Lightzz");
+    light->setType(Ogre::Light::LT_DIRECTIONAL);
+    light->setDirection(Vector3(0,1,0));
+    light->setDiffuseColour(dcol);
+    light->setSpecularColour(scol);
 
 	  light = mSceneMgr->createLight("Light2");
-    light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(0, 50, 500);
-    //light->setDirection(0,0,500);
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);
-
-    light = mSceneMgr->createLight("Light3");
-    light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(500, 50, 500);
-    //light->setDirection(500,0,500);
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);
+    light->setType(Ogre::Light::LT_SPOTLIGHT);
+    pos = Vector3(0,250, 0);
+    //pos.y += 250;
+    light->setPosition(pos);
+    light->setDiffuseColour(dcol);
+    light->setSpecularColour(scol);
 
 	  light = mSceneMgr->createLight("Light4");
     light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(0, 50, 100);
+    pos = mPuppetPos[ENEMY];
+    pos.y += 250;
+    pos.z -= 50;
+    light->setPosition(pos);
     //light->setDirection(0,0,100);
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);
+    light->setDiffuseColour(dcol);
+    light->setSpecularColour(scol);
 
-    light = mSceneMgr->createLight("Light5");
+    /*light = mSceneMgr->createLight("Light5");
     light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(500, 50, 100);
+    light->setPosition(500, 350, 100);
     //light->setDirection(500,0,100);
     light->setDiffuseColour(col);
-    light->setSpecularColour(col);
+    light->setSpecularColour(col);*/
 
 	  /*col = Ogre::ColourValue(1, 0.4f, 0.4f);
     light = mSceneMgr->createLight("LightDirectional");
@@ -547,13 +558,13 @@ namespace Pixy {
     //mSceneMgr->setSkyDome(true, "Elementum/Sky", 1, 1,5000,true);
     //mSceneMgr->setSkyBox(true, "Elementum/Sky", 5000, true);
 
-    createSphere("mySphereMesh", 1000, 64, 64);
-    Ogre::Entity* sphereEntity = mSceneMgr->createEntity("mySphereEntity", "mySphereMesh");
-    Ogre::SceneNode* sphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    sphereEntity->setMaterialName("Elementum/Sky");
-    sphereNode->attachObject(sphereEntity);
+    //~ createSphere("mySphereMesh", 1000, 64, 64);
+    //~ Ogre::Entity* sphereEntity = mSceneMgr->createEntity("mySphereEntity", "mySphereMesh");
+    //~ Ogre::SceneNode* sphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    //~ sphereEntity->setMaterialName("Elementum/Sky");
+    //~ sphereNode->attachObject(sphereEntity);
 
-    sphereNode->roll(Ogre::Degree(180));
+    //~ sphereNode->roll(Ogre::Degree(180));
 
     return;
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Caelum");
@@ -664,10 +675,10 @@ namespace Pixy {
   {
 
     //mSceneMgr->setWorldGeometry("terrain.cfg");
-	  mSceneLoader = new DotSceneLoader();
-	  mSceneLoader->parseDotScene("Elementum.scene",
-								  "General",
-								  mSceneMgr);
+	  //~ mSceneLoader = new DotSceneLoader();
+	  //~ mSceneLoader->parseDotScene("Elementum.scene",
+								  //~ "General",
+								  //~ mSceneMgr);
 		//mCamera = mSceneMgr->getCamera("Camera#0");
 	  //parseDotScene("Elementum.xml","General",mSceneMgr);
 
@@ -683,8 +694,60 @@ namespace Pixy {
     mLog->noticeStream() << "Setting world geometry";
     mSceneMgr->setWorldGeometry("terrain.cfg");*/
 
+    using namespace Ogre;
+    Ogre::SceneNode* node;
+    // create a floor mesh resource
+		MeshManager::getSingleton().createPlane("floor", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 0), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Z);
+		MeshManager::getSingleton().createPlane("ceiling", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 1024), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Z);
+		MeshManager::getSingleton().createPlane("lwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_X, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
+		MeshManager::getSingleton().createPlane("rwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_X, -512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
+    MeshManager::getSingleton().createPlane("fwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Z, -512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
+    MeshManager::getSingleton().createPlane("bwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Z, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
 
+		// create a floor entity, give it a material, and place it at the origin
+    Ogre::Entity* ent = mSceneMgr->createEntity("Floor", "floor");
+    ent->setMaterialName("Elementum/Terrain/Floor");
+		ent->setCastShadows(false);
+    mSceneMgr->getRootSceneNode()->attachObject(ent);
 
+    ent = mSceneMgr->createEntity("Ceiling", "ceiling");
+    ent->setMaterialName("Elementum/Terrain/Floor");
+		ent->setCastShadows(false);
+    mSceneMgr->getRootSceneNode()->attachObject(ent);
+
+    ent = mSceneMgr->createEntity("LeftWall", "lwall");
+    ent->setMaterialName("Elementum/Terrain/Floor");
+		ent->setCastShadows(false);
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    node->setPosition(Vector3(0,512,0));
+    node->attachObject(ent);
+
+    ent = mSceneMgr->createEntity("RightWall", "rwall");
+    ent->setMaterialName("Elementum/Terrain/Floor");
+		ent->setCastShadows(false);
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    node->setPosition(Vector3(0,512,0));
+    node->attachObject(ent);
+
+    ent = mSceneMgr->createEntity("FrontWall", "fwall");
+    ent->setMaterialName("Elementum/Terrain/Floor");
+		ent->setCastShadows(false);
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    node->setPosition(Vector3(0,512,0));
+    node->attachObject(ent);
+
+    ent = mSceneMgr->createEntity("BackWall", "bwall");
+    ent->setMaterialName("Elementum/Terrain/Floor");
+		ent->setCastShadows(false);
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    node->setPosition(Vector3(0,512,0));
+    node->attachObject(ent);
   };
 
 
@@ -1003,6 +1066,12 @@ namespace Pixy {
       mNode = mSceneMgr->getSceneNode(nodeName);
       if (mNode->numAttachedObjects() == 0) {
         idNode = i;
+        if (i < 5 &&
+          mSceneMgr->getSceneNode(ownerName + "_node_" + Ogre::StringConverter::toString(i+5))->numAttachedObjects() == 0
+        ) {
+          idNode += 5;
+          mNode = mSceneMgr->getSceneNode(ownerName + "_node_" + Ogre::StringConverter::toString(i+5));
+        }
         found = true;
         break;
       }
@@ -1178,7 +1247,13 @@ namespace Pixy {
       if (itr->movable &&
          (itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "" &&
-         itr->movable->getName() != "mySphereEntity") {
+         //~ itr->movable->getName() != "mySphereEntity" &&
+         itr->movable->getName() != "Floor" &&
+         itr->movable->getName() != "Ceiling" &&
+         itr->movable->getName() != "LeftWall" &&
+         itr->movable->getName() != "RightWall" &&
+         itr->movable->getName() != "FrontWall" &&
+         itr->movable->getName() != "BackWall") {
 
         Event e(EventUID::EntitySelected);
         e.Any = ((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
@@ -1234,6 +1309,12 @@ namespace Pixy {
       case OIS::KC_U:
         static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
         break;
+      case OIS::KC_I:
+        if (mRenderables.front()->getText()->isHidden())
+          mRenderables.front()->show();
+        else
+          mRenderables.front()->hide();
+        break;
     }
 	}
 	void GfxEngine::keyPressed( const OIS::KeyEvent &e ) {
@@ -1276,6 +1357,10 @@ namespace Pixy {
 
         // if the unit is moving to anywhere, don't do anything
         if (lUnit->isMoving())
+          return true;
+
+        // if the unit has 0 AP, don't do anything
+        if (lUnit->getAP() == 0)
           return true;
 
         // if the unit is passive, make it charge

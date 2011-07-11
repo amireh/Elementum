@@ -1,0 +1,27 @@
+//
+material Elementum/Terrain/Floor
+{
+	technique
+	{
+		pass
+		{
+			ambient 1 1 1
+			//scene_blend add
+			depth_write on
+			cull_software none
+			cull_hardware none
+
+			texture_unit
+			{
+				texture HUD_Ice.jpg
+				scroll_anim 0.1 0
+			}
+
+			texture_unit
+			{
+				texture Dante_Afterlife.jpg
+				//scroll_anim 0.1 0
+			}
+		}
+	}
+}

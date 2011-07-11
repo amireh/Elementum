@@ -115,7 +115,7 @@ namespace Pixy
     //! regulates the movement speed by (mWalkSpeed * mTimeElapsed) keeping it consistent
     Real mMoveSpeed;
 
-    bool fDoneBlocking;
+    //~ bool fDoneBlocking;
 
     typedef std::list<CUnit*> blockers_t;
     blockers_t mBlockers;

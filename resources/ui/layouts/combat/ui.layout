@@ -10,18 +10,18 @@
   	<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
 
     <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Reload" >
+      <Property Name="Visible" Value="False" />
       <Property Name="Text" Value="Reload UI" />
       <Property Name="UnifiedPosition" Value="{{0.8,0},{0.1,0}}" />
       <Property Name="UnifiedSize" Value="{{0,120},{0,35}}" />
-      <Property Name="Visible" Value="True" />
       <Property Name="Disabled" Value="False" />
       <Event Name="Clicked" Function="Pixy.UI.Combat.reload" />
     </Window>
     <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/ReloadScripts" >
+      <Property Name="Visible" Value="False" />
       <Property Name="Text" Value="Reload Scripts" />
       <Property Name="UnifiedPosition" Value="{{0.8,-20},{0.1,40}}" />
       <Property Name="UnifiedSize" Value="{{0,160},{0,35}}" />
-      <Property Name="Visible" Value="True" />
       <Property Name="Disabled" Value="False" />
       <Event Name="Clicked" Function="Pixy.Combat.reloadScripts" />
     </Window>
@@ -132,8 +132,10 @@
 		<Property Name="AlwaysOnTop" Value="True" />
 		<Property Name="Alpha" Value="1" />
     <Property Name="HorizontalAlignment" Value="Centre" />
+<!--
     <Property Name="VerticalAlignment" Value="Middle" />
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-176},{0,666},{1,0}}" />
+-->
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.83,0},{0.52,0},{1,0}}" />
 <!--
     <Property Name="ContentPaneAutoSized" Value="False" />
 -->
@@ -144,6 +146,7 @@
       <Property Name="FrameEnabled" Value="false" />
       <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
       <Property Name="Image" Value="set:HUDs image:Hand2" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
     </Window>
     <Window Type="HorizontalLayoutContainer" Name="Elementum/Scenes/Combat/SpellPanel/Player/Hand">
       <Property Name="Visible" Value="True" />

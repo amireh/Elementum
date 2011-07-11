@@ -19,6 +19,7 @@ namespace Pixy
 	};
 
   Renderable::~Renderable() {
+    mSceneNode->setVisible(true);
     GfxEngine::getSingletonPtr()->detachFromScene(this);
 
     mOwner = 0;
@@ -66,6 +67,20 @@ namespace Pixy
   MovableTextOverlay* Renderable::getText() const { return mText; }
   void Renderable::setText(MovableTextOverlay* inT) { mText = inT; }
 
+  void Renderable::hide() {
+    mSceneNode->setVisible(false);
+    mText->hide(true);
+    mText->enable(false);
+    mText->update(1);
+  }
+
+  void Renderable::show() {
+    mSceneNode->setVisible(true);
+    mText->hide(false);
+    mText->enable(true);
+    mText->update(1);
+  }
+
   void Renderable::setup(Ogre::SceneManager* inSceneMgr) {
     mSceneMgr = inSceneMgr;
 
@@ -100,6 +115,7 @@ namespace Pixy
 		mSwordTrail->setMaterialName("Examples/LightRibbonTrail");
 		mSwordTrail->setTrailLength(20);
 		mSwordTrail->setVisible(false);
+    static_cast<Ogre::MovableObject*>(mSwordTrail)->setUserAny(Ogre::Any(this));
 		mSceneMgr->getRootSceneNode()->attachObject(mSwordTrail);
 
 

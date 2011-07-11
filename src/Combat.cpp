@@ -200,6 +200,18 @@ namespace Pixy
       case OIS::KC_F:
         if (inBlockPhase)
           mNetMgr->send(Event(EventUID::EndBlockPhase));
+      break;
+      case OIS::KC_A:
+        if (mActivePuppet == mPuppet) {
+          for (auto unit : mPuppet->getUnits()) {
+            if (unit->getAP() > 0) {
+              Event req(EventUID::Charge);
+              req.setProperty("UID", unit->getUID());
+              mNetMgr->send(req);
+            }
+          }
+        }
+      break;
 		}
 
 	}
@@ -635,6 +647,9 @@ namespace Pixy
     std::cout << evt.getProperty("UID") << " is charging for an attack\n";
 
     mAttackers.push_back(attacker);
+    attacker->setAttackOrder(mAttackers.size());
+
+    attacker->updateTextOverlay();
 
     return true;
   }
@@ -652,8 +667,9 @@ namespace Pixy
 
     // move the unit
     std::cout << evt.getProperty("UID") << " is no longer charging\n";
-
+    attacker->setAttackOrder(0);
     mAttackers.remove(attacker);
+    attacker->updateTextOverlay();
 
     return true;
   }
@@ -677,6 +693,9 @@ namespace Pixy
     }
     blockers->second.push_back(blocker);
     blocker->setAttackOrder(blockers->second.size());
+    blocker->setBlockTarget(attacker);
+
+    blocker->updateTextOverlay();
 
     return true;
   }

@@ -57,10 +57,12 @@ public:
 	const Ogre::Real getUpdateFrequency() const {return mUpdateFrequency;}
 	const bool isOnScreen() const {return mOnScreen;}
 	const bool isEnabled() const {return mEnabled;}
+  const bool isHidden() const { return mHidden; }
 	const MovableTextOverlayAttributes* getAttributes() const {return mAttrs;}
 
 	void enable(bool enable);
 	void update(Ogre::Real timeSincelastFrame);
+  void hide(bool hidden);
 
 	// Needed for RectLayoutManager.
 	int getPixelsTop() {return Ogre::OverlayManager::getSingleton().getViewportHeight() * (mpOvContainer->getTop());}
@@ -86,6 +88,10 @@ protected:
 
 	// true if mpOvContainer is visible, false otherwise
 	bool mEnabled;
+
+  // true if Pixy::Renderable is hidden and GfxEngine will not update this
+  // overlay
+  bool mHidden;
 
 	// true if mTextWidth needs to be recalculated
 	bool mNeedUpdate;

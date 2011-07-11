@@ -16,6 +16,7 @@ MovableTextOverlay::MovableTextOverlay(const Ogre::String & name, const Ogre::St
 , mNeedUpdate(true)
 , mOnScreen(false)
 , mEnabled(false)
+, mHidden(false)
 {
 	if (name == "")
         Ogre::Exception(Ogre::Exception::ERR_INVALIDPARAMS, "Trying to create MovableTextOverlay without name", "MovableTextOverlay::MovableTextOverlay");
@@ -190,6 +191,13 @@ void MovableTextOverlay::enable(bool enable)
 		mpOv->hide();
 }
 
+void MovableTextOverlay::hide(bool hidden)
+{
+	if (mHidden == hidden)
+		return;
+
+	mHidden = hidden;
+}
 void MovableTextOverlay::update(Real timeSincelastFrame)
 {
 	static Real timeTillUpdate = 0;

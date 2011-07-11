@@ -3,19 +3,19 @@
  This source file is part of OGRE
  (Object-oriented Graphics Rendering Engine)
  For the latest info, see http://www.ogre3d.org/
- 
+
  Copyright (c) 2000-2009 Torus Knot Software Ltd
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -63,8 +63,11 @@ namespace OgreBites
 		, mGoingUp(false)
 		, mGoingDown(false)
 		, mFastMove(false)
+    , MAX_PITCH(1.4f)
+    , MIN_PITCH(0.25f)
+    , MAX_Y(100)
+    , MIN_Y(30)
 		{
-
 			setCamera(cam);
 			setStyle(CS_FREELOOK);
 		}
@@ -180,6 +183,19 @@ namespace OgreBites
 		virtual bool update(unsigned long lTimeElapsed)
 		//virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt)
 		{
+
+      //if (mCamera->getOrientation().getPitch() > MAX_PITCH)
+      //  mCamera->pitch(MAX_PITCH);
+      //else if (mCamera->getOrientation().getPitch() < MIN_PITCH)
+      //  mCamera->pitch(MIN_PITCH);
+      //
+      //Vector3 pos(mCamera->getPosition());
+      //if (pos.y < MIN_Y)
+      //  mCamera->setPosition(Ogre::Vector3(pos.x, MIN_Y, pos.z));
+      //else if (pos.y > MAX_Y)
+      //  mCamera->setPosition(Ogre::Vector3(pos.x, MAX_Y, pos.z));
+
+      //mCamera->moveRelative(Vector3(0, MAX_Y, 0));
 			if (mStyle == CS_FREELOOK)
 			{
 				// build our acceleration vector based on keyboard input composite
@@ -260,6 +276,10 @@ namespace OgreBites
 		{
 			if (mStyle == CS_ORBIT)
 			{
+        int MAX_Y = 100;
+        int MIN_Y = 30;
+        Ogre::Radian MAX_PITCH(1.4f);
+        Ogre::Radian MIN_PITCH(0.25f);
 				Ogre::Real dist = (mCamera->getPosition() - mTarget->_getDerivedPosition()).length();
 
 				if (mOrbiting)   // yaw around the target, and pitch locally
@@ -267,21 +287,43 @@ namespace OgreBites
 					mCamera->setPosition(mTarget->_getDerivedPosition());
 
 					mCamera->yaw(Ogre::Degree(-evt.state.X.rel * 0.25f));
+
+          //~ std::cout << "camera pitch: " << mCamera->getOrientation().getPitch() << "\n";
+          if ((mCamera->getOrientation().getPitch() > MIN_PITCH && evt.state.Y.rel < 0) ||
+            (mCamera->getOrientation().getPitch() < MAX_PITCH && evt.state.Y.rel > 0))
 					mCamera->pitch(Ogre::Degree(-evt.state.Y.rel * 0.25f));
 
-					mCamera->moveRelative(Ogre::Vector3(0, 0, dist));
+
+          mCamera->moveRelative(Ogre::Vector3(0, 0, dist));
+
 
 					// don't let the camera go over the top or around the bottom of the target
 				}
 				else if (mZooming)  // move the camera toward or away from the target
 				{
+          // zooming in
+          if (evt.state.Y.rel < 0 && mCamera->getPosition().y <= MIN_Y)
+            return;
+          // zooming out
+          if (evt.state.Y.rel > 0  && mCamera->getPosition().y >= MAX_Y)
+            return;
+
+          std::cout << "Event: " << evt.state.X.rel << "," << evt.state.Y.rel << "," << evt.state.Z.rel << "\n";
 					// the further the camera is, the faster it moves
 					mCamera->moveRelative(Ogre::Vector3(0, 0, evt.state.Y.rel * 0.004f * dist));
 				}
 				else if (evt.state.Z.rel != 0)  // move the camera toward or away from the target
 				{
+
+          Vector3 pos = mCamera->getPosition();
+          //~ std::cout << "Camera now at : " << pos.x << "," << pos.y << "," << pos.z << "\n";
 					// the further the camera is, the faster it moves
-					mCamera->moveRelative(Ogre::Vector3(0, 0, -evt.state.Z.rel * 0.0008f * dist));
+          if (mCamera->getPosition().y >= MAX_Y && evt.state.Z.rel < 0)
+            return;
+          else if (mCamera->getPosition().y <= MIN_Y && evt.state.Z.rel > 0)
+            return;
+
+          mCamera->moveRelative(Ogre::Vector3(0, 0, -evt.state.Z.rel * 0.0008f * dist));
 				}
 			}
 			else if (mStyle == CS_FREELOOK)
@@ -353,6 +395,11 @@ namespace OgreBites
 		bool mGoingUp;
 		bool mGoingDown;
 		bool mFastMove;
+
+    int MAX_Y;
+    int MIN_Y;
+    Ogre::Radian MAX_PITCH;
+    Ogre::Radian MIN_PITCH;
     };
 }
 

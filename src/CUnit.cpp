@@ -145,8 +145,9 @@ namespace Pixy
 
   void CUnit::die() {
     Unit::die();
-
     delete mTimer;
+
+    mRenderable->hide();
 
     mLog->infoStream() << "dead";
   };
@@ -206,7 +207,7 @@ namespace Pixy
     mRenderable->setBaseAnimation(Renderable::ANIM_RUN_BASE, true);
     if (mRenderable->mTopAnimID == Renderable::ANIM_IDLE_TOP) {
       // when charging, run with swords sheathed
-      if (inDestination == POS_CHARGING || inDestination == POS_READY) {
+      if (inDestination == POS_READY) {
         mRenderable->setTopAnimation(Renderable::ANIM_RUN_TOP, true);
 
       } else {
@@ -298,7 +299,11 @@ namespace Pixy
 
   void CUnit::updateTextOverlay() {
     std::string cap = "";
-    if (mAttackOrder != 0) {
+    if (mBlockTarget) {
+      std::ostringstream s;
+      s << "[" << mBlockTarget->getAttackOrder() << "->" << mAttackOrder << "] ";
+      cap += s.str();
+    } else if (mAttackOrder != 0) {
       cap += "[" + stringify(mAttackOrder) + "] ";
     }
     cap += stringify(mCurrentAP) + "/" + stringify(mCurrentHP);
@@ -368,7 +373,7 @@ namespace Pixy
 
   void CUnit::moveAndAttack(std::list<CUnit*> inBlockers) {
     // move to offense position
-    fDoneBlocking = false;
+    //fDoneBlocking = false;
 
     mBlockers = inBlockers;
 
@@ -391,7 +396,7 @@ namespace Pixy
      * mark as done
      */
 
-    if (isDead() || fDoneBlocking) {
+    if (isDead()) {
       Combat::getSingleton().unitAttacked(this);
       Combat::getSingleton().doBattle();
 
@@ -426,16 +431,16 @@ namespace Pixy
 
     // get the next blocker, move it to the defense position, and attack it
     auto blocker = inBlockers.front();
-    inBlockers.pop_front();
     blocker->move(POS_DEFENCE, [&, blocker, &inBlockers](CUnit*) -> void {
       this->attack(blocker, [&]() -> void {
         // if the blocker didn't die, it means we ran out of AP and/or dead,
         // but anyway we're done
         if (!blocker->isDead()) {
           blocker->move(POS_CHARGING);
-          this->fDoneBlocking = true;
+          //this->fDoneBlocking = true;
         }
 
+        inBlockers.pop_front();
         return this->doAttack(inBlockers);
       }, true);
     });

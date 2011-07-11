@@ -67,8 +67,8 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- assign dimensions
 	lButton["Dimensions"] =
 		CEGUI.UVector2:new(
-			CEGUI.UDim(0, cfg.SpellButton["Width"]),
-			CEGUI.UDim(0, cfg.SpellButton["Height"])
+			CEGUI.UDim(0.147,0),-- cfg.SpellButton["Width"]),
+			CEGUI.UDim(0.67,0)-- cfg.SpellButton["Height"])
 		)
 
 	-- generate the button's name

@@ -68,6 +68,9 @@ namespace Pixy
     MovableTextOverlay* getText() const;
     void setText(MovableTextOverlay* inT);
 
+    void hide();
+    void show();
+
 		protected:
 
     friend class CPuppet;
