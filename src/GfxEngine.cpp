@@ -1478,8 +1478,7 @@ namespace Pixy {
   bool GfxEngine::onCancelBlock(const Event& inEvt) {
     mLog->infoStream() << "no longer blocking with a unit";
 
-    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
-
+    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("B")));
     lUnit->move(POS_READY);
 
     return true;

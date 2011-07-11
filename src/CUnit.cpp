@@ -365,8 +365,8 @@ namespace Pixy
       // version of the attack function (this one) that deals with rendering
       attack_func(inTarget, false);
 
-      // if the target is required to block us and it's not dead, make it hit us back
-      if (block && !inTarget->isDead()) {
+      // if the target is required to block us, is not dead, and has AP, make it hit us back
+      if (block && !inTarget->isDead() && inTarget->getAP() > 0) {
         inTarget->attack(this, [&, callback]() -> void {
           updateTextOverlay();
           callback();
@@ -466,6 +466,16 @@ namespace Pixy
 
     // get the next blocker, move it to the defense position, and attack it
     auto blocker = inBlockers.front();
+
+    // there's a special case where the attacker has 0 AP left, and the blocker
+    // has 0 base AP, then there's no point moving it to defense pos, we should
+    // just skip it
+    if (mCurrentAP <= 0 && blocker->getAP() == 0) {
+      inBlockers.pop_front();
+
+      return this->doAttack(inBlockers);
+    }
+
     blocker->move(POS_DEFENCE, [&, blocker](CUnit*) -> void {
 
       /*
@@ -476,17 +486,19 @@ namespace Pixy
        */
 
       if (mCurrentAP <= 0) {
-        blocker->attack(this, [&, blocker]() -> void {
-          blocker->move(POS_CHARGING);
+        if (blocker->getAP() > 0) { // can the blocker attack?
+          blocker->attack(this, [&, blocker]() -> void {
+            blocker->move(POS_CHARGING);
 
-          inBlockers.pop_front();
+            inBlockers.pop_front();
 
-          return this->doAttack(inBlockers);
-        }, false);
+            return this->doAttack(inBlockers);
+          }, false);
+        }
       } else {
         this->attack(blocker, [&, blocker]() -> void {
           // if the blocker didn't die, it means we ran out of AP and/or dead,
-          // but anyway we're done
+          // but anyway we're done with this guy
           if (!blocker->isDead()) {
             blocker->move(POS_CHARGING);
           }

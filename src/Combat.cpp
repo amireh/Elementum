@@ -665,11 +665,18 @@ namespace Pixy
       return true;
     }
 
-    // move the unit
     std::cout << evt.getProperty("UID") << " is no longer charging\n";
-    attacker->setAttackOrder(0);
     mAttackers.remove(attacker);
+
+    // recalculate attack orders and display them
+    attacker->setAttackOrder(0);
     attacker->updateTextOverlay();
+
+    int i=0;
+    for (auto unit : mAttackers) {
+      unit->setAttackOrder(++i);
+      unit->updateTextOverlay();
+    }
 
     return true;
   }
@@ -701,17 +708,44 @@ namespace Pixy
   }
 
   bool Combat::onCancelBlock(const Event& evt) {
-    CUnit *blocker = 0;
+    CUnit *blocker, *attacker = 0;
 
-    assert(evt.hasProperty("UID"));
+    assert(evt.hasProperty("B") && evt.hasProperty("A"));
     try {
-      blocker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
+      blocker = mWaitingPuppet->getUnit(convertTo<int>(evt.getProperty("B")));
+      attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("A")));
     } catch (invalid_uid& e) {
       mLog->errorStream() << "invalid charge event parameters : " << e.what();
       return true;
     }
 
-    // move the unit
+    assert(blocker && attacker);
+
+    /*
+     * 1) remove blocker from blockers list
+     * 2) if no blockers r left, remove the entry, otherwise
+     *    recalculate attack orders
+     */
+    blockers_t::iterator entry = mBlockers.find(attacker);
+
+    assert(entry != mBlockers.end());
+
+    entry->second.remove(blocker);
+
+    if (entry->second.empty()) {
+      mBlockers.erase(entry);
+    } else {
+      int i=0;
+      for (auto blocker : entry->second) {
+        blocker->setAttackOrder(++i);
+        blocker->updateTextOverlay();
+      }
+    }
+
+    // reset the blocker
+    blocker->setAttackOrder(0);
+    blocker->setBlockTarget(0);
+    blocker->updateTextOverlay();
 
     return true;
   }
