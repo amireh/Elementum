@@ -192,6 +192,8 @@ namespace Pixy {
 		std::ostringstream lNodeName;
 		lNodeName << mPlayer->getName() << "_node_puppet";
 		mCameraMan->setTarget(mSceneMgr->getSceneNode(lNodeName.str()));
+    mCameraMan->setYawPitchDist(Ogre::Degree(180), Ogre::Degree(15), 150);
+    //mCamera->yaw(Ogre::Degree(-180));
 
 		//Combat::getSingleton().updateGfx();
 		mUpdate = &GfxEngine::updateCombat;
@@ -382,7 +384,7 @@ namespace Pixy {
   void GfxEngine::setupViewports()
   {
 		mLog->debugStream() << "setting up viewports";
-    mViewport->setBackgroundColour(Ogre::ColourValue(255,255,255));
+    mViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
   };
@@ -700,7 +702,7 @@ namespace Pixy {
     // create a floor mesh resource
 		MeshManager::getSingleton().createPlane("floor", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Plane(Vector3::UNIT_Y, 0), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Z);
-		MeshManager::getSingleton().createPlane("ceiling", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		/*MeshManager::getSingleton().createPlane("ceiling", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Plane(Vector3::UNIT_Y, 1024), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Z);
 		MeshManager::getSingleton().createPlane("lwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Plane(Vector3::UNIT_X, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
@@ -709,7 +711,7 @@ namespace Pixy {
     MeshManager::getSingleton().createPlane("fwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Plane(Vector3::UNIT_Z, -512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
     MeshManager::getSingleton().createPlane("bwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_Z, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
+			Plane(Vector3::UNIT_Z, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);*/
 
 		// create a floor entity, give it a material, and place it at the origin
     Ogre::Entity* ent = mSceneMgr->createEntity("Floor", "floor");
@@ -717,7 +719,7 @@ namespace Pixy {
 		ent->setCastShadows(false);
     mSceneMgr->getRootSceneNode()->attachObject(ent);
 
-    ent = mSceneMgr->createEntity("Ceiling", "ceiling");
+    /*ent = mSceneMgr->createEntity("Ceiling", "ceiling");
     ent->setMaterialName("Elementum/Terrain/Floor");
 		ent->setCastShadows(false);
     mSceneMgr->getRootSceneNode()->attachObject(ent);
@@ -748,7 +750,7 @@ namespace Pixy {
 		ent->setCastShadows(false);
     node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     node->setPosition(Vector3(0,512,0));
-    node->attachObject(ent);
+    node->attachObject(ent);*/
   };
 
 
@@ -834,7 +836,7 @@ namespace Pixy {
       unitMargin = 10; // separate units by unitMargin space units on X axis
       packMargin = 75; // separate "packs" of units by packMargin space units on X axis
       posFrontier = tmpPos.z;
-      posRear = posFrontier+25; // more on this below
+      posRear = posFrontier+15; // more on this below
 
       for (int i=0; i<10; i++)
       {

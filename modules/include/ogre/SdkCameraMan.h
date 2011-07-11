@@ -276,10 +276,6 @@ namespace OgreBites
 		{
 			if (mStyle == CS_ORBIT)
 			{
-        int MAX_Y = 100;
-        int MIN_Y = 30;
-        Ogre::Radian MAX_PITCH(1.4f);
-        Ogre::Radian MIN_PITCH(0.25f);
 				Ogre::Real dist = (mCamera->getPosition() - mTarget->_getDerivedPosition()).length();
 
 				if (mOrbiting)   // yaw around the target, and pitch locally

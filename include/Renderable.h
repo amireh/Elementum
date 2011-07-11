@@ -106,6 +106,7 @@ namespace Pixy
     AnimID mBaseAnimID;                   // current base (full- or lower-body) animation
     AnimID mTopAnimID;                    // current top (upper-body) animation
     Ogre::Real mTimer;
+    Ogre::AnimationState* mAnims[NUM_ANIMS];    // master animation list
 
     private:
 
@@ -125,7 +126,6 @@ namespace Pixy
     Ogre::Entity* mSword1;
     Ogre::Entity* mSword2;
     Ogre::RibbonTrail* mSwordTrail;
-    Ogre::AnimationState* mAnims[NUM_ANIMS];    // master animation list
     bool mFadingIn[NUM_ANIMS];            // which animations are fading in
     bool mFadingOut[NUM_ANIMS];           // which animations are fading out
     bool mSwordsDrawn;

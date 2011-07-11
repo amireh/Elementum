@@ -135,11 +135,6 @@ namespace Pixy
 
     mTimer = new boost::asio::deadline_timer(Combat::getSingleton().getIOService());
 
-    mTimer->expires_from_now(boost::posix_time::seconds(1));
-    mTimer->async_wait([&](boost::system::error_code e) -> void {
-      std::cout << "*************THE TIMER WORKS*****************\n";
-    });
-
     return true;
   };
 
@@ -162,14 +157,6 @@ namespace Pixy
   bool CUnit::nextLocation(int inDestination)
   {
     Ogre::SceneNode* mNode = mRenderable->getSceneNode();
-    //~ int idNode = parseIdNodeFromName(mNode->getName());
-//~
-    //~ std::deque<Vector3>* mWalklist;
-    //~ mWalklist = (inUnit->getOwner() == ID_HOST) ? &hWalklist[idNode] : &cWalklist[idNode];
-//~
-    //~ if ((*mWalklist).empty())
-        //~ return false;
-
 
     mDestination = mWaypoints->at(inDestination);  // get walkpoint to our required destination
     //~ std::cout
@@ -266,22 +253,29 @@ namespace Pixy
   void CUnit::update(unsigned long lTimeElapsed) {
     // keep moving
     if (!doMove(lTimeElapsed)) {
+
       // we arrived
       GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
-      mPosition = mPDestination;
+
+      // if we came back from an attack and still waiting at the charging spot
+      // turn around 180 degrees to face the enemy
+      if (mPosition != POS_READY && mPDestination == POS_CHARGING)
+        mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
 
 			// stop running if already moving and the player doesn't want to move
 			mRenderable->setBaseAnimation(Renderable::ANIM_IDLE_BASE);
 			if (mRenderable->mTopAnimID == Renderable::ANIM_RUN_TOP)
         mRenderable->setTopAnimation(Renderable::ANIM_IDLE_TOP);
 
+
       // if we came back from an attack or a block, unsheathe our swords
-      if (mPosition == POS_READY && mRenderable->mSwordsDrawn) {
+      if (mPDestination == POS_READY && mRenderable->mSwordsDrawn) {
         mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
         mRenderable->mTimer = 0;
       }
 
       std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
+      mPosition = mPDestination;
 
       // is there a callback?
       if (mCallback)
@@ -323,12 +317,21 @@ namespace Pixy
   }
 
   bool CUnit::attack(Pixy::CPuppet* inTarget, boost::function<void()> callback) {
-    mRenderable->setTopAnimation(Renderable::ANIM_SLICE_VERTICAL, true);
+    Renderable::AnimID anim = (rand() % 2 == 0)
+      ? Renderable::ANIM_SLICE_VERTICAL
+      : Renderable::ANIM_SLICE_HORIZONTAL;
+    float length_sec = mRenderable->mAnims[anim]->getLength();
+
+    std::cout
+    << "Animation is " << (anim == Renderable::ANIM_SLICE_HORIZONTAL ? "horz" : "vert")
+    << " and length is " << length_sec << "\n";
+
+    mRenderable->setTopAnimation(anim, true);
     mRenderable->mTimer = 0;
 
     boost::function<bool(Puppet*)> attack_func = boost::bind(&Unit::attack, this, _1);
 
-    mTimer->expires_from_now(boost::posix_time::seconds(1));
+    mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait([&, callback, attack_func, inTarget](boost::system::error_code e) -> void {
       attack_func(inTarget);
       updateTextOverlay();
@@ -337,15 +340,22 @@ namespace Pixy
   }
 
   bool CUnit::attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block) {
-    mRenderable->setTopAnimation(Renderable::ANIM_SLICE_VERTICAL, true);
+    Renderable::AnimID anim = (rand() % 2 == 0)
+      ? Renderable::ANIM_SLICE_VERTICAL
+      : Renderable::ANIM_SLICE_HORIZONTAL;
+    float length_sec = mRenderable->mAnims[anim]->getLength();
+
+    mRenderable->setTopAnimation(anim, true);
     mRenderable->mTimer = 0;
 
+    // wrap the base class function using boost function because we can't call it
+    // inside the lambda
     boost::function<bool(Unit*, bool)> attack_func = boost::bind(&Unit::attack, this, _1, _2);
 
     // @note
     // we're using a timer so we give the animation time to finish
     // TODO: use actual animation length
-    mTimer->expires_from_now(boost::posix_time::seconds(1));
+    mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait(
     [&, inTarget, callback, block, attack_func](boost::system::error_code e) -> void {
 
@@ -404,6 +414,8 @@ namespace Pixy
   }
 
   void CUnit::doAttack(std::list<CUnit*>& inBlockers) {
+
+    updateTextOverlay();
 
     /*
      * for every blocker X in blockers do:
