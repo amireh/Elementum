@@ -13,6 +13,7 @@ SET(EClient_SRCS
   CUnit.cpp
   #CUnitFactory.cpp
   Combat.cpp
+  FxEngine.cpp
   GameManager.cpp
   GameState.cpp
   GfxEngine.cpp
@@ -45,7 +46,7 @@ SET(PROJECT_LIBS
   CEGUIOgreRenderer
   CEGUILuaScriptModule
   OgreOggSound
-  ParticleUniverse
+  Plugin_ParticleUniverse
   Caelum
   #PagedGeometry
   OgreTerrain

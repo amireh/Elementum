@@ -46,6 +46,7 @@ Pixy.registerGlobals = function()
 		--PuppetFactory = Pixy.CPuppetFactory:getSingletonPtr()
 		--UnitFactory = Pixy.CUnitFactory:getSingletonPtr()
 		GfxEngine = Pixy.GfxEngine:getSingletonPtr()
+    FxEngine = Pixy.FxEngine:getSingleton()
     UIEngine = Pixy.UIEngine:getSingletonPtr()
 		Pixy.Combat = {}
 	--end

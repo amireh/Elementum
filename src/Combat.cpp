@@ -17,6 +17,7 @@
 #include "NetworkManager.h"
 #include "UIEngine.h"
 #include "GfxEngine.h"
+#include "FxEngine.h"
 #include "ScriptEngine.h"
 #include "CResourceManager.h"
 
@@ -68,9 +69,11 @@ namespace Pixy
 		mGfxEngine = GfxEngine::getSingletonPtr();
 		mGfxEngine->setup();
 
+    mFxEngine = FxEngine::getSingletonPtr();
+    mFxEngine->setup();
+
 		mUIEngine = UIEngine::getSingletonPtr();
 		mUIEngine->setup();
-
 
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
@@ -110,17 +113,6 @@ namespace Pixy
     bind(EventUID::Block, boost::bind(&Combat::onBlock, this, _1));
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
-
-    //bindToName("JoinQueue", this, &Combat::evtJoinQueue);
-    //bindToName("MatchFound", this, &Combat::evtMatchFound);
-    //bindToName("CreatePuppets", this, &Combat::evtCreatePuppets);
-    //bindToName("StartTurn", this, &Combat::evtStartTurn);
-    //bindToName("TurnStarted", this, &Combat::evtTurnStarted);
-
-    /*CSpell* boo = new CSpell();
-    boo->setName("HEHE");
-    mScriptEngine->passToLua("Pixy.Foobar", 2, "Pixy::CSpell", (void*)boo);
-    delete boo;*/
 
     inBlockPhase = false;
 	}
@@ -263,6 +255,7 @@ namespace Pixy
     }
 
 		mGfxEngine->update(lTimeElapsed);
+    mFxEngine->update(lTimeElapsed);
 		mScriptEngine->update(lTimeElapsed);
 		mUIEngine->update(lTimeElapsed);
 

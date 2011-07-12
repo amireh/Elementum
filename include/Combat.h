@@ -26,6 +26,7 @@ namespace Pixy
 
   class CSpell;
   class GfxEngine;
+  class FxEngine;
   class UIEngine;
   class ScriptEngine;
   class EventManager;
@@ -105,6 +106,7 @@ namespace Pixy
     bool onEndBlockPhase(const Event&);
 
 		GfxEngine			*mGfxEngine;
+    FxEngine      *mFxEngine;
 		UIEngine			*mUIEngine;
 		ScriptEngine		*mScriptEngine;
 		EventManager		*mEvtMgr;

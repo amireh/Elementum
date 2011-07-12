@@ -17,6 +17,7 @@
 #include "UIEngine.h"
 #include "NetworkManager.h"
 #include "InputManager.h"
+#include "FxEngine.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUIBase/CEGUI.h>
@@ -228,6 +229,10 @@ namespace Pixy {
 	Ogre::Viewport* GfxEngine::getViewport() {
 		return mViewport;
 	}
+
+  Renderable* GfxEngine::getSelected() {
+    return mSelected;
+  }
 
 	void GfxEngine::updateNothing(unsigned long lTimeElapsed) {
 
@@ -1248,7 +1253,10 @@ namespace Pixy {
     {
       mLog->infoStream() << "Ray target name: " << itr->movable->getName();
       if (itr->movable &&
-         (itr->movable->getName().substr(0,6) != "Caelum") &&
+          (itr->movable->getName().find(mPlayer->getName()) != std::string::npos ||
+          itr->movable->getName().find(mEnemy->getName()) != std::string::npos ||
+          itr->movable->getName().find("Fx") != std::string::npos)
+         /*(itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "" &&
          //~ itr->movable->getName() != "mySphereEntity" &&
          itr->movable->getName() != "Floor" &&
@@ -1256,7 +1264,7 @@ namespace Pixy {
          itr->movable->getName() != "LeftWall" &&
          itr->movable->getName() != "RightWall" &&
          itr->movable->getName() != "FrontWall" &&
-         itr->movable->getName() != "BackWall") {
+         itr->movable->getName() != "BackWall"*/) {
 
         Event e(EventUID::EntitySelected);
         e.Any = ((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
@@ -1268,9 +1276,12 @@ namespace Pixy {
 
       }
     }
-    if (!found)
+    if (!found) {
       // ignore any terrain selection
       dehighlight();
+      FxEngine::getSingleton().dehighlight();
+    }
+
 	}
 
 	void GfxEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )
@@ -1335,14 +1346,14 @@ namespace Pixy {
 	void GfxEngine::highlight(Renderable* inEntity) {
 	  dehighlight();
 	  mSelected = inEntity;
-	  mSelected->getSceneNode()->showBoundingBox(true);
+	  //~ mSelected->getSceneNode()->showBoundingBox(true);
 	};
 
 	void GfxEngine::dehighlight() {
 	  if (!mSelected)
 	    return;
 
-	  mSelected->getSceneNode()->showBoundingBox(false);
+	  //~ mSelected->getSceneNode()->showBoundingBox(false);
 	  mSelected = 0;
 	};
 

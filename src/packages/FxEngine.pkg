@@ -1,0 +1,13 @@
+$#include "FxEngine.h"
+
+class FxEngine : public Pixy::Engine, public Pixy::EventListener {
+
+public:
+virtual ~FxEngine();
+static FxEngine* getSingletonPtr();
+static FxEngine& getSingleton();
+
+void loadEffect(std::string name);
+void registerHighlightEffect(std::string inName);
+
+};

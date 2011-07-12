@@ -14,3 +14,5 @@ require("combat/bindings")
 -- and attach UI layout!
 Pixy.UI.attach(Pixy.UI.Combat.Config.LayoutPath)
 Pixy.UI.Combat.registerGlobals()
+
+require("combat/effects")

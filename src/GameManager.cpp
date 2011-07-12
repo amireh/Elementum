@@ -30,6 +30,7 @@
 
 #include "UIEngine.h"
 #include "GfxEngine.h"
+#include "FxEngine.h"
 #include "ScriptEngine.h"
 #include "NetworkManager.h"
 #include "InputManager.h"
@@ -60,6 +61,7 @@ namespace Pixy
     mLog->infoStream() << "tearing down all engines";
 
     delete GfxEngine::getSingletonPtr();
+    delete FxEngine::getSingletonPtr();
     //delete SfxEngine::getSingletonPtr();
     //delete PhyxEngine::getSingletonPtr();
     delete UIEngine::getSingletonPtr();

@@ -30,6 +30,7 @@ namespace Pixy
   $pfile "CDeck.pkg"
   $pfile "CUnit.pkg"
   //$pfile "CUnitFactory.pkg"
+  $pfile "FxEngine.pkg"
   $pfile "GameManager.pkg"
   $pfile "GameState.pkg"
   //$pfile "Intro.pkg"
