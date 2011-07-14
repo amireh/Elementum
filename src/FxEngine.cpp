@@ -12,6 +12,8 @@
 #include "GfxEngine.h"
 #include "Renderable.h"
 #include "Entity.h"
+#include "CPuppet.h"
+#include "CUnit.h"
 
 namespace Pixy {
 	FxEngine* FxEngine::__instance = NULL;
@@ -61,6 +63,7 @@ namespace Pixy {
 		mLog->infoStream() << "Setting up";
 
     bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
+    bind(EventUID::EntityAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
 
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
     mFxMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -82,7 +85,9 @@ namespace Pixy {
     ParticleUniverse::ParticleSystem* effect = 0;
     effect =
       mFxMgr->createParticleSystem( inName + "_", inName, mSceneMgr);
+    effect->setRenderQueueGroup(Ogre::RENDER_QUEUE_MAX);
     effect->prepare();
+
     mEffects.insert(std::make_pair(inName, effect));
 
     effect = 0;
@@ -142,6 +147,64 @@ namespace Pixy {
     }
 
     highlight(lRend);
+
+    return true;
+  }
+
+  bool FxEngine::onEntityAttacked(const Event& inEvt) {
+    assert(inEvt.Any);
+
+    Renderable* lEntity = static_cast<Renderable*>(inEvt.Any);
+
+    assert(lEntity);
+
+    // if it's a puppet and it died, play the blood spray effect
+    if (lEntity->getEntity()->getRank() == PUPPET && lEntity->getEntity()->isDead())
+    {
+      ParticleUniverse::ParticleSystem* lEffect =
+        mEffects.find("Elementum/Fx/BloodSplat")->second;
+      //if (!lEffect->isAttached()) {
+        playEffect(lEffect, lEntity);
+        return true;
+      //}
+    }
+
+    mLog->infoStream() << "on entity attacked";
+
+    // try any of the following effects, whichever is not being played
+    bool played = false;
+    if (mEffects.find("Elementum/Fx/BloodStrike2") != mEffects.end()) {
+      ParticleUniverse::ParticleSystem* lEffect =
+        mEffects.find("Elementum/Fx/BloodStrike2")->second;
+      if (lEffect->getState() != ParticleUniverse::ParticleSystem::PSS_STARTED) {
+        playEffect(lEffect, lEntity);
+        played = true;
+      }
+    }
+
+    if (played)
+      return true;
+
+    if (mEffects.find("Elementum/Fx/BloodStrike3") != mEffects.end()) {
+      ParticleUniverse::ParticleSystem* lEffect =
+        mEffects.find("Elementum/Fx/BloodStrike3")->second;
+      if (lEffect->getState() != ParticleUniverse::ParticleSystem::PSS_STARTED) {
+        playEffect(lEffect, lEntity);
+        played = true;
+      }
+    }
+
+    /*if (played)
+      return true;
+
+    if (mEffects.find("Elementum/Fx/BloodSpray") != mEffects.end()) {
+      ParticleUniverse::ParticleSystem* lEffect =
+        mEffects.find("Elementum/Fx/BloodSpray")->second;
+      if (lEffect->getState() != ParticleUniverse::ParticleSystem::PSS_STARTED) {
+        playEffect(lEffect, lEntity);
+        played = true;
+      }
+    }*/
 
     return true;
   }

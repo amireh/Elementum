@@ -14,6 +14,8 @@ Pixy.Combat.startTurn = function(inEvt)
 
 	--Active = Puppet
 	--Waiting = EnemyPuppet
+
+
 end
 
 -- type: incoming event handler
@@ -33,3 +35,6 @@ Pixy.Combat.reqEndTurn = function()
   end
 end
 
+Pixy.Combat.onMatchFinished = function(wuid)
+  Pixy.UI.Combat.onMatchFinished(wuid)
+end

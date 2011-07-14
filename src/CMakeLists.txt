@@ -46,7 +46,7 @@ SET(PROJECT_LIBS
   CEGUIOgreRenderer
   CEGUILuaScriptModule
   OgreOggSound
-  Plugin_ParticleUniverse
+  ParticleUniverse
   Caelum
   #PagedGeometry
   OgreTerrain

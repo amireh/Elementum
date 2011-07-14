@@ -70,6 +70,7 @@ namespace Pixy {
     tolua_EClient_open(mLUA);
     tolua_Event_open(mLUA);
 
+    bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
 
 		//~ bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua); // __DISABLED__
@@ -260,7 +261,7 @@ namespace Pixy {
 		}
 
     lua_pushfstring(mLUA, inFunc);
-    lua_pushinteger(mLUA, argc);
+    //lua_pushinteger(mLUA, argc);
     for (int i=0; i < argc; ++i) {
       const char* argtype = (const char*)va_arg(argp, const char*);
       void* argv = (void*)va_arg(argp, void*);
@@ -270,7 +271,7 @@ namespace Pixy {
     }
 
 		try {
-			lua_call(mLUA, argc+2, 0);
+			lua_call(mLUA, argc+1, 0);
 		} catch (CEGUI::ScriptException& e) {
 			mLog->errorStream() << "Lua Handler: " << e.what();
 		} catch (std::exception& e) {
@@ -278,6 +279,15 @@ namespace Pixy {
 		}
 
     va_end(argp);
+    return true;
+  }
+
+  bool ScriptEngine::onMatchFinished(const Event& inEvt) {
+    lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitraryFunc");
+    lua_pushfstring(mLUA, "onMatchFinished");
+    lua_pushinteger(mLUA, convertTo<int>(inEvt.getProperty("W")));
+    lua_call(mLUA, 2, 0);
+
     return true;
   }
 }

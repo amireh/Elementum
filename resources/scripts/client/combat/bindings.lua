@@ -5,6 +5,8 @@
 --bind("GameStarted", Pixy.Combat.gameStarted)
 bind(Pixy.EventUID.StartTurn, Pixy.UI.Combat.onStartTurn)
 bind(Pixy.EventUID.TurnStarted, Pixy.UI.Combat.onTurnStarted)
+bind(Pixy.EventUID.StartBlockPhase, Pixy.UI.Combat.onStartBlockPhase)
+--bind(Pixy.EventUID.MatchFinished, Pixy.UI.Combat.onMatchFinished)
 --bind("EndTurn", Pixy.Combat.endTurn)
 --bind(Pixy.EventUID.DrawSpells, Pixy.Combat.drawSpell)
 --bind("CastSpell", Pixy.Combat.castSpell)

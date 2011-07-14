@@ -16,4 +16,10 @@ DejaVuSans
 	resolution 	96
 }
 
-
+DejaVuSans96
+{
+	type 		truetype
+	source 		DejaVuSans.ttf
+	size 		96
+	resolution 	96
+}

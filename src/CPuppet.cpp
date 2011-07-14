@@ -25,15 +25,14 @@ namespace Pixy
     mRenderable = new Renderable(this);
 
     updateTextOverlay();
-	  //mDeck = new CDeck(this);
-	  //mDeck->generate();
 
     return true;
   };
 
   void CPuppet::die() {
-    //if (mDeck)
-    //  delete mDeck;
+    Puppet::die();
+
+    mRenderable->hide();
 
     mLog->infoStream() << "dead";
   };
@@ -152,4 +151,13 @@ namespace Pixy
     if (mRenderable && mRenderable->getText())
       mRenderable->getText()->setCaption(stringify(mHP));
   }
+
+  void CPuppet::onVictory() {
+
+		mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
+		mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+		// disable hand animation because the dance controls hands
+		mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
+  }
+
 } // end of namespace

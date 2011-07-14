@@ -40,10 +40,9 @@ end
 -- job: sends a request to the instance with the spell id
 -- awaiting EVT_OK feedback to actually cast it
 Pixy.Combat.reqCastSpell = function(inUIEvt)
-
-
 	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
+
 	local lSpell = Active:getSpell(lWindow:getUserString("Spell"))
   assert(lSpell)
 

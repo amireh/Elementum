@@ -75,6 +75,11 @@ namespace Pixy
 
     virtual void reset();
 
+    void onVictory();
+
+    virtual void rest();
+    virtual void getUp();
+
 	protected:
     friend class GfxEngine;
 
@@ -89,6 +94,8 @@ namespace Pixy
 
     // recursively goes through all the blockers and attacks them
     void doAttack(std::list<CUnit*>& inBlockers);
+
+
 
     /*!
      * \brief Informs whether the SceneNode has

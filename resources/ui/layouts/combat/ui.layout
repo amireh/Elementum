@@ -26,105 +26,64 @@
       <Event Name="Clicked" Function="Pixy.Combat.reloadScripts" />
     </Window>
 
-  	<!-- Turn panel -->
-  	<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/Menu">
-  		<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.025.0}}" />
-  		<Property Name="Visible" Value="True" />
-      <Property Name="HorizontalAlignment" Value="Left" />
-      <Property Name="VerticalAlignment" Value="Top" />
+  <!-- Turn panel -->
+  <Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/Menu">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.025.0}}" />
+    <Property Name="Visible" Value="True" />
+    <Property Name="HorizontalAlignment" Value="Left" />
+    <Property Name="VerticalAlignment" Value="Top" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="False" />
+
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/Effects/Turns/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
       <Property Name="BackgroundEnabled" Value="False" />
       <Property Name="FrameEnabled" Value="False" />
-
-      <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/Effects/Turns/BG">
-        <Property Name="AlwaysOnTop" Value="False" />
-        <Property Name="BackgroundEnabled" Value="False" />
-        <Property Name="FrameEnabled" Value="False" />
-        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-        <Property Name="Image" Value="set:HUDs image:DarkBG" />
-      </Window>
-  		<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/Text">
-  			<Property Name="Visible" Value="True" />
-        <Property Name="BackgroundEnabled" Value="False" />
-        <Property Name="FrameEnabled" Value="False" />
-        <Property Name="HorizontalAlignment" Value="Centre" />
-        <Property Name="HorzFormatting" Value="HorzCentred" />
-        <Property Name="VerticalAlignment" Value="Centre" />
-  		</Window> <!-- Player end turn button -->
-
-  	</Window> <!-- Menu bar -->
-
-  	<!-- Tooltip panel -->
-  	<Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/Tooltip">
-  		<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.2,0},{1,0}}" />
-  		<Property Name="Visible" Value="True" />
-      <Property Name="HorizontalAlignment" Value="Left" />
-      <Property Name="VerticalAlignment" Value="Top" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:DarkBG" />
+    </Window>
+    <Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Effects/Turns/Text">
+      <Property Name="Visible" Value="True" />
       <Property Name="BackgroundEnabled" Value="False" />
       <Property Name="FrameEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
+      <Property Name="HorzFormatting" Value="HorzCentred" />
+      <Property Name="VerticalAlignment" Value="Centre" />
+    </Window> <!-- Player end turn button -->
 
-      <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/Tooltip/BG">
-        <Property Name="AlwaysOnTop" Value="False" />
-        <Property Name="BackgroundEnabled" Value="False" />
-        <Property Name="FrameEnabled" Value="False" />
-        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-        <Property Name="Image" Value="set:HUDs image:DarkBG" />
-      </Window>
-  		<Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Labels/Tooltip">
-  			<Property Name="Visible" Value="True" />
-        <Property Name="BackgroundEnabled" Value="False" />
-        <Property Name="FrameEnabled" Value="False" />
-        <Property Name="HorizontalAlignment" Value="Left" />
-        <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
-        <Property Name="VertFormatting" Value="TopAligned" />
-        <Property Name="VerticalAlignment" Value="Top" />
-  		</Window> <!-- Player end turn button -->
+  </Window> <!-- Menu bar -->
 
-  	</Window> <!-- Menu bar -->
-	<!-- our Player panel -->
-	<!-- Player Active Sheet -->
-	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Player/Active">
-	<Property Name="Visible" Value="False" />
-	<Property Name="AlwaysOnTop" Value="True" />
- 	<Property Name="TitlebarEnabled" Value="False" />
-	<Property Name="FrameEnabled" Value="False" />
-	<Property Name="CloseButtonEnabled" Value="False" />
-	<Property Name="DragMovingEnabled" Value="False" />
-	<Property Name="Alpha" Value="1" />
-	<!--<Property Name="UnifiedMaxSize" Value="{{0,240},{0,35}}" />-->
-	<Property Name="UnifiedAreaRect" Value="{{0,0},{0.8,0},{1,0},{1,0}}" />
-	  <!--<Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Player/Active/Logout" >
-    		<Property Name="Text" Value="Logout" />
-    		<Property Name="UnifiedPosition" Value="{{0,0},{0,0}}" />
-  		  <Property Name="UnifiedSize" Value="{{0,120},{0,35}}" />
-    		<Event Name="Clicked" Function="Pixy.Combat.logOut" />
-	  </Window>-->
-	  <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Player/Active/EndTurn" >
-  		<Property Name="Text" Value="End Turn" />
-  		<Property Name="UnifiedPosition" Value="{{0.5,-60},{0,0}}" />
-  		<Property Name="UnifiedSize" Value="{{0,120},{0,60}}" />
-  		<Event Name="Clicked" Function="Pixy.Combat.reqEndTurn" />
-	  </Window>
-	</Window>
-	<!-- Player Idle Sheet -->
-	<Window Type="TaharezLook/FrameWindow" Name="Elementum/Scenes/Combat/Player/Idle">
-		<Property Name="Visible" Value="False" />
-		<Property Name="AlwaysOnTop" Value="True" />
-	 	<Property Name="TitlebarEnabled" Value="False" />
-		<Property Name="FrameEnabled" Value="False" />
-		<Property Name="CloseButtonEnabled" Value="False" />
-		<Property Name="DragMovingEnabled" Value="False" />
-		<Property Name="Alpha" Value="1" />
-		<Property Name="UnifiedMaxSize" Value="{{0.35,0},{0.05,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0.25,0},{0.8,0},{0.75,0},{1,0}}" />
-		    <Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Player/Idle/Waiting" >
-			<Property Name="Text" Value="Waiting" />
-			<Property Name="UnifiedMaxSize" Value="{{0.5,0},{0.5,0}}" />
-			<Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-			<Property Name="Visible" Value="True" />
-			<Property Name="Disabled" Value="True" />
-		    </Window>
-	</Window>
+  <!-- Tooltip panel -->
+  <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/Tooltip">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.2,0},{1,0}}" />
+<!--
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.6,0},{0.52,0},{0.8,0}}" />
+-->
+    <Property Name="Visible" Value="True" />
+    <Property Name="HorizontalAlignment" Value="Left" />
+    <Property Name="VerticalAlignment" Value="Top" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="False" />
 
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/Tooltip/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:DarkBG" />
+    </Window>
+    <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Labels/Tooltip">
+      <Property Name="Font" Value="Alice-12" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Left" />
+      <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
+      <Property Name="VertFormatting" Value="TopAligned" />
+      <Property Name="VerticalAlignment" Value="Top" />
+    </Window> <!-- Player end turn button -->
+
+  </Window> <!-- Menu bar -->
 
 	<!-- player Spell panel -->
 	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Scenes/Combat/SpellPanel/Player">
@@ -232,23 +191,65 @@
 		</Window>
 	</Window>
 
-    <!--</Window>-->
-	<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/TextEvents/WinnerSheet" >
-		<Property Name="Visible" Value="False" />
-	    <Property Name="BackgroundEnabled" Value="True" />
-	    <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
-	    <Property Name="UnifiedMaxSize" Value="{{0.5,0},{0.5,0}}" />
-	    <Property Name="VertFormatting" Value="TopAligned" />
-		<Property Name="UnifiedPosition" Value="{{0.5,0},{0.5,0}}" />
-	    <Property Name="UnifiedSize" Value="{{0.2,0},{0.1,0}}" />
-	</Window>
-	<Window Type="TaharezLook/Button" Name="Elementum/Scenes/Combat/Events/Leave" >
-		<Property Name="Text" Value="Leave" />
-		<Property Name="AlwaysOnTop" Value="True" />
-		<Property Name="UnifiedSize" Value="{{0.1,0},{0.05,0}}" />
-		<Property Name="UnifiedPosition" Value="{{0.5,0},{0.7,0}}" />
-		<Property Name="Visible" Value="False" />
-		<Property Name="Disabled" Value="False" />
-	</Window>
+    <!-- match score -->
+  	<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Containers/Victory">
+  		<Property Name="UnifiedAreaRect" Value="{{0,0},{0.4,0},{1,0},{0.6.0}}" />
+  		<Property Name="Visible" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Left" />
+      <Property Name="VerticalAlignment" Value="Top" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+
+      <Window Type="TaharezLook/StaticImage" Name="Elementum/Scenes/Combat/Containers/Victory/BG">
+        <Property Name="AlwaysOnTop" Value="False" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="Image" Value="set:HUDs image:DarkBG" />
+      </Window>
+  		<Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Text/Victory">
+  			<Property Name="Font" Value="Alice" />
+        <Property Name="Visible" Value="True" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="HorizontalAlignment" Value="Centre" />
+        <Property Name="HorzFormatting" Value="HorzCentred" />
+        <Property Name="VerticalAlignment" Value="Centre" />
+        <Property Name="Text" Value="Victory!" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+  		</Window>
+  	</Window> <!-- Match score -->
+
+
+  <!-- temporary text -->
+  <Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Containers/TempText">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.4,0},{1,0},{0.6.0}}" />
+    <Property Name="Visible" Value="False" />
+    <Property Name="HorizontalAlignment" Value="Left" />
+    <Property Name="VerticalAlignment" Value="Top" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="False" />
+
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/Containers/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:DarkBG" />
+    </Window>
+
+    <Window Type="TaharezLook/StaticText" Name="Elementum/Scenes/Combat/Text/TempText">
+      <Property Name="Font" Value="Alice" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
+      <Property Name="HorzFormatting" Value="HorzCentred" />
+      <Property Name="VerticalAlignment" Value="Centre" />
+      <Property Name="Text" Value="Victory!" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+    </Window>
+  </Window> <!-- temporary text -->
+
 </Window>
 </GUILayout>

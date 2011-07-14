@@ -263,6 +263,7 @@ namespace Pixy {
     bool onCancelBlock(const Event&);
     bool onStartBlockPhase(const Event&);
     bool onEndBlockPhase(const Event&);
+    bool onMatchFinished(const Event&);
 
 	  void highlight(Renderable* inEntity);
 	  void dehighlight();

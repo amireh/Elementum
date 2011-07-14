@@ -130,6 +130,6 @@ Pixy.UI.doneWaiting = function(keep_box)
 end
 
 
-function arbitraryFunc(name, argc, ...)
+function arbitraryFunc(name, ...)
   Pixy.Combat[name](unpack(arg))
 end

@@ -16,6 +16,7 @@ namespace Pixy
     mSceneObject = 0;
     mText = 0;
     mSceneMgr = 0;
+    nrHandlers = 0;
 	};
 
   Renderable::~Renderable() {
@@ -28,6 +29,7 @@ namespace Pixy
     mSceneObject = 0;
     delete mText;
     mText = 0;
+    nrHandlers = 0;
 	};
 
   /*Renderable::Renderable(const Renderable& src)
@@ -299,6 +301,28 @@ namespace Pixy
 			// don't sway hips from side to side when slicing. that's just embarrassing.
 			if (mBaseAnimID == ANIM_IDLE_BASE) baseAnimSpeed = 0;
 		}
+
+    		else if (mBaseAnimID == ANIM_JUMP_START)
+		{
+			if (mTimer >= mAnims[mBaseAnimID]->getLength())
+			{
+				// takeoff animation finished, so time to leave the ground!
+				setBaseAnimation(ANIM_JUMP_LOOP, true);
+				// apply a jump acceleration to the character
+				mVerticalVelocity = JUMP_ACCEL;
+			}
+		}
+		else if (mBaseAnimID == ANIM_JUMP_END)
+		{
+			if (mTimer >= mAnims[mBaseAnimID]->getLength())
+			{
+				// safely landed, so go back to running or idling
+        setBaseAnimation(ANIM_IDLE_BASE);
+				setTopAnimation(ANIM_IDLE_TOP);
+
+			}
+		}
+
 		// increment the current base and top animation times
 		if (mBaseAnimID != ANIM_NONE) mAnims[mBaseAnimID]->addTime(deltaTime * baseAnimSpeed);
 		if (mTopAnimID != ANIM_NONE) mAnims[mTopAnimID]->addTime(deltaTime * topAnimSpeed);
@@ -306,4 +330,27 @@ namespace Pixy
 		// apply smooth transitioning between our animations
 		fadeAnimations(deltaTime);
   }
+
+	void Renderable::updateBody(unsigned long dt)
+	{
+		mGoalDirection = Ogre::Vector3::ZERO;   // we will calculate this
+    Ogre::Real deltaTime = dt * 0.001f;
+		if (mBaseAnimID == ANIM_JUMP_LOOP)
+		{
+			// if we're jumping, add a vertical offset too, and apply gravity
+			mSceneNode->translate(0, mVerticalVelocity * deltaTime, 0, Ogre::Node::TS_LOCAL);
+			mVerticalVelocity -= GRAVITY * deltaTime;
+
+			Ogre::Vector3 pos = mSceneNode->getPosition();
+			if (pos.y <= CHAR_HEIGHT)
+			{
+				// if we've hit the ground, change to landing state
+				pos.y = CHAR_HEIGHT;
+				mSceneNode->setPosition(pos);
+				setBaseAnimation(ANIM_JUMP_END, true);
+				mTimer = 0;
+			}
+		}
+	}
+
 } // end of namespace

@@ -12,4 +12,6 @@ void update(unsigned long lTimeElapsed);
 bool cleanup();
 
 void setMargin(CEGUI::Window*, CEGUI::UBox);
+void connectAnimation(CEGUI::Window*, std::string);
+void refreshTooltipSize(CEGUI::Window* inWindow, CSpell* inSpell);
 };

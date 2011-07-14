@@ -192,7 +192,7 @@ namespace Pixy
 
     // start running if not already moving and the player wants to move
     mRenderable->setBaseAnimation(Renderable::ANIM_RUN_BASE, true);
-    if (mRenderable->mTopAnimID == Renderable::ANIM_IDLE_TOP) {
+    //if (mRenderable->mTopAnimID == Renderable::ANIM_IDLE_TOP) {
       // when charging, run with swords sheathed
       if (inDestination == POS_READY) {
         mRenderable->setTopAnimation(Renderable::ANIM_RUN_TOP, true);
@@ -205,7 +205,7 @@ namespace Pixy
           mRenderable->mTimer = 0;
         }
       }
-    }
+    //}
 
   }
 
@@ -294,12 +294,15 @@ namespace Pixy
 
   void CUnit::updateTextOverlay() {
     std::string cap = "";
+    if (isResting()) {
+      cap += "[zZz] ";
+    }
     /*
      * if the unit is blocking a target, we show the attacker's ID and our
      * attack order since an attacker can have multiple blockers. format:
      * [AID -> BID] AP/HP
      */
-    if (mBlockTarget) {
+    else if (mBlockTarget) {
       std::ostringstream s;
       s << "[" << mBlockTarget->getAttackOrder() << "->" << mAttackOrder << "] ";
       cap += s.str();
@@ -334,6 +337,10 @@ namespace Pixy
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait([&, callback, attack_func, inTarget](boost::system::error_code e) -> void {
       attack_func(inTarget);
+      Event evt(EventUID::EntityAttacked);
+      evt.Any = (void*)inTarget->getRenderable();
+      EventManager::getSingleton().hook(evt);
+
       updateTextOverlay();
       callback();
     });
@@ -364,6 +371,10 @@ namespace Pixy
       // the reason we pass block=false here is that we're running a special
       // version of the attack function (this one) that deals with rendering
       attack_func(inTarget, false);
+      // inform other components so they can render particles or w/e
+      Event evt(EventUID::EntityAttacked);
+      evt.Any = (void*)inTarget->getRenderable();
+      EventManager::getSingleton().hook(evt);
 
       // if the target is required to block us, is not dead, and has AP, make it hit us back
       if (block && !inTarget->isDead() && inTarget->getAP() > 0) {
@@ -381,6 +392,12 @@ namespace Pixy
   void CUnit::moveAndAttack(CPuppet* inTarget) {
     this->reset();
 
+    if (inTarget->isDead()) {
+      Combat::getSingleton().unitAttacked(this);
+      Combat::getSingleton().doBattle();
+
+      return;
+    }
 
     mAttackTarget = inTarget;
     this->move(POS_ATTACK, [&](CUnit* me) -> void {
@@ -511,5 +528,36 @@ namespace Pixy
 
       }
     });
+  }
+
+  void CUnit::onVictory() {
+
+		mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
+		mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+		// disable hand animation because the dance controls hands
+		mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
+
+    GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
+  }
+
+  void CUnit::rest() {
+    if (isResting())
+      return;
+
+    Unit::rest();
+    updateTextOverlay();
+  }
+
+  void CUnit::getUp() {
+    if (!isResting())
+      return;
+
+    Unit::getUp();
+
+    mRenderable->setBaseAnimation(Renderable::ANIM_JUMP_START, true);
+    mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+    mRenderable->mTimer = 0;
+
+    updateTextOverlay();
   }
 } // end of namespace

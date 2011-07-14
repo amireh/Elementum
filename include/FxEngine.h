@@ -40,6 +40,7 @@ namespace Pixy {
     friend class GfxEngine;
 
     bool onEntitySelected(const Event& inEvt);
+    bool onEntityAttacked(const Event& inEvt);
 
     void highlight(Renderable*);
     void dehighlight();

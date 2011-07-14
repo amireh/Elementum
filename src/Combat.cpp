@@ -196,7 +196,7 @@ namespace Pixy
       case OIS::KC_A:
         if (mActivePuppet == mPuppet) {
           for (auto unit : mPuppet->getUnits()) {
-            if (unit->getAP() > 0) {
+            if (unit->getAP() > 0 && !unit->isResting() && !unit->isMoving() && !unit->getPosition() == POS_CHARGING) {
               Event req(EventUID::Charge);
               req.setProperty("UID", unit->getUID());
               mNetMgr->send(req);
@@ -214,11 +214,17 @@ namespace Pixy
 	}
 
 	void Combat::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    if (!mPuppet) // game hasn't started
+      return;
+
 		mUIEngine->mousePressed(e, id);
 		mGfxEngine->mousePressed(e, id);
 	}
 
 	void Combat::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    if (!mPuppet) // game hasn't started
+      return;
+
 		mUIEngine->mouseReleased(e, id);
 		mGfxEngine->mouseReleased(e, id);
 	}
@@ -247,17 +253,17 @@ namespace Pixy
 
     processEvents();
 
+		mGfxEngine->update(lTimeElapsed);
+    mFxEngine->update(lTimeElapsed);
+		mScriptEngine->update(lTimeElapsed);
+		mUIEngine->update(lTimeElapsed);
+
     if (!mDeathlist.empty()) {
       for (auto unit : mDeathlist)
         static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
 
       mDeathlist.clear();
     }
-
-		mGfxEngine->update(lTimeElapsed);
-    mFxEngine->update(lTimeElapsed);
-		mScriptEngine->update(lTimeElapsed);
-		mUIEngine->update(lTimeElapsed);
 
 		/*for (mUpdater = mUpdateQueue.begin();
 			 mUpdater != mUpdateQueue.end();
@@ -422,6 +428,9 @@ namespace Pixy
     // send the event back, acknowledging the order
     mNetMgr->send(inEvt);
 
+    for (auto unit : mActivePuppet->getUnits())
+      unit->getUp();
+
     return true;
   }
 
@@ -434,6 +443,9 @@ namespace Pixy
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     assert(mActivePuppet); // _DEBUG_
+
+    for (auto unit : mActivePuppet->getUnits())
+      unit->getUp();
 
     mLog->infoStream() << mActivePuppet->getName() << "'s turn has started, not mine";
 
@@ -795,7 +807,11 @@ namespace Pixy
 
       for (auto unit : mChargers) {
         if (!unit->isDead())
-          unit->move(POS_READY, [&](CUnit* inUnit) -> void { inUnit->setAttackOrder(0); inUnit->reset(); });
+          unit->move(POS_READY, [&](CUnit* inUnit) -> void {
+            inUnit->setAttackOrder(0);
+            inUnit->rest();
+            inUnit->reset();
+          });
         else {
           //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
           mDeathlist.push_back(unit);

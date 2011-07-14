@@ -53,6 +53,8 @@ namespace Pixy {
 
 	protected:
 
+    bool onMatchFinished(const Event& inEvt);
+
     //bool evtAssignPuppets(Event* inEvt);
     //bool evtJoinQueue(Event* inEvt);
 

@@ -1,0 +1,69 @@
+<Animations>
+  <AnimationDefinition name="Testing" duration="1" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.0" value="1.0" />
+      <KeyFrame position="1.0" value="0.0" />
+    </Affector>
+    <Affector property="YRotation" interpolator="float">
+      <KeyFrame position="0.0" value="0" />
+      <KeyFrame position="1.0" value="360" />
+    </Affector>
+    <!--<Subscription event="Shown" action="Start" />-->
+  </AnimationDefinition>
+
+  <AnimationDefinition name="Fade" duration="2" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.0" value="0.0" />
+      <KeyFrame position="1.0" value="1.0" />
+      <KeyFrame position="2.0" value="0.0" />
+    </Affector>
+  </AnimationDefinition>
+
+  <AnimationDefinition name="QuickFadeIn" duration="0.5" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.0" value="0.0" />
+      <KeyFrame position="0.5" value="1.0" />
+    </Affector>
+  </AnimationDefinition>
+  <AnimationDefinition name="QuickFadeOut" duration="0.5" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.0" value="1.0" />
+      <KeyFrame position="0.5" value="0.0" />
+    </Affector>
+  </AnimationDefinition>
+
+  <AnimationDefinition name="LongFade" duration="5" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.0" value="0.0" />
+      <KeyFrame position="1.0" value="1.0" />
+      <KeyFrame position="5.0" value="0.0" />
+    </Affector>
+  </AnimationDefinition>
+
+  <AnimationDefinition name="DropSpell" duration="0.5" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.0" value="1.0" />
+      <KeyFrame position="0.5" value="0.0" />
+    </Affector>
+<!--
+    <Affector property="YRotation" interpolator="float">
+      <KeyFrame position="0.0" value="0" />
+      <KeyFrame position="0.5" value="360" />
+    </Affector>
+-->
+  </AnimationDefinition>
+
+  <AnimationDefinition name="DrawSpell" duration="0.5" replayMode="once">
+    <Affector property="Alpha" interpolator="float">
+      <KeyFrame position="0.001" value="0.1" />
+      <KeyFrame position="0.5" value="1.0" progression="quadratic decelerating" />
+    </Affector>
+<!--
+    <Affector property="YRotation" interpolator="float">
+      <KeyFrame position="0.0" value="360" progression="quadratic decelerating" />
+      <KeyFrame position="0.5" value="0" />
+    </Affector>
+-->
+
+  </AnimationDefinition>
+</Animations>

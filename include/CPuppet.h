@@ -51,6 +51,8 @@ namespace Pixy
 
     void updateTextOverlay();
 
+    void onVictory();
+
 	protected:
     Renderable* mRenderable;
     CDeck *mDeck;

@@ -18,7 +18,12 @@
 
 #define NUM_ANIMS 13           // number of animations the character has
 #define CHAR_HEIGHT 5          // height of character's center of mass above ground
+#define CAM_HEIGHT 2           // height of camera above character's center of mass
+#define RUN_SPEED 17           // character running speed in units per second
+#define TURN_SPEED 500.0f      // character turning in degrees per second
 #define ANIM_FADE_SPEED 7.5f   // animation crossfade speed in % of full weight per second
+#define JUMP_ACCEL 30.0f       // character jump acceleration in upward units per squared second
+#define GRAVITY 90.0f          // gravity in downward units per squared second
 
 /*namespace Ogre {
   class SceneNode;
@@ -62,6 +67,7 @@ namespace Pixy
 
     void setup(Ogre::SceneManager*);
     void updateAnimations(unsigned long deltaTime);
+    void updateBody(unsigned long deltaTime);
 
     virtual Entity* getEntity();
 
@@ -70,6 +76,8 @@ namespace Pixy
 
     void hide();
     void show();
+
+    int nrHandlers;
 
 		protected:
 
@@ -129,8 +137,9 @@ namespace Pixy
     bool mFadingIn[NUM_ANIMS];            // which animations are fading in
     bool mFadingOut[NUM_ANIMS];           // which animations are fading out
     bool mSwordsDrawn;
+    Ogre::Vector3 mKeyDirection;      // player's local intended direction based on WASD keys
+    Ogre::Vector3 mGoalDirection;     // actual intended direction in world-space
     Ogre::Real mVerticalVelocity;     // for jumping
-
 
 		//! helper method for copy/assignment methods
 		//! copies all data from src and sets it into this entity

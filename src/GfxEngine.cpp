@@ -88,6 +88,8 @@ namespace Pixy {
 			mViewport = 0;
 			mRenderWindow = 0;
 
+      delete mTrayMgr;
+
       delete attrs;
 
 			delete mLog;
@@ -139,6 +141,7 @@ namespace Pixy {
     bind(EventUID::Block, boost::bind(&GfxEngine::onBlock, this, _1));
     bind(EventUID::CancelBlock, boost::bind(&GfxEngine::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&GfxEngine::onEndBlockPhase, this, _1));
+    bind(EventUID::MatchFinished, boost::bind(&GfxEngine::onMatchFinished, this, _1));
 
 
 
@@ -163,6 +166,7 @@ namespace Pixy {
     setupLights();
 
     mTrayMgr = new SdkTrayManager("Elementum", mRenderWindow, InputManager::getSingletonPtr()->getMouse(), 0);
+    mTrayMgr->hideCursor();
 
 		mUpdate = &GfxEngine::updateNothing;
 		mSelected = 0;
@@ -274,6 +278,7 @@ namespace Pixy {
     std::list<Renderable*>::const_iterator r;
     for (r = mRenderables.begin(); r != mRenderables.end(); ++r) {
       (*r)->updateAnimations(lTimeElapsed);
+      (*r)->updateBody(lTimeElapsed);
 
       p = (*r)->getText();
 
@@ -362,11 +367,14 @@ namespace Pixy {
 	  mViewport = mRenderWindow->addViewport(mCamera);
 
 
-	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
-		compMgr.registerCompositorLogic("HDR", new HDRLogic);
+	  //Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
+		//compMgr.registerCompositorLogic("HDR", new HDRLogic);
+    //
+	  //Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
+	  //Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 
-	  Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR", 0);
-	  Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
+    //compMgr.addCompositor(mViewport, "Bloom");
+    //compMgr.setCompositorEnabled(mViewport, "Bloom", true);
 
 	  //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
 
@@ -383,7 +391,7 @@ namespace Pixy {
 
 	  //mWindow->setDebugText(getProperty("Robot","Life"));
 
-	  //mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_MODULATIVE);
+	  //~ mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_MODULATIVE);
   };
 
   void GfxEngine::setupViewports()
@@ -404,7 +412,7 @@ namespace Pixy {
 
     Ogre::Vector3 pos;
     Ogre::ColourValue dcol(0.9f,0.9f,0.9f);
-    Ogre::ColourValue scol(0.6f,0.6f,0.6f);
+    Ogre::ColourValue scol(0.9f,0.9f,0.9f);
 
     pos = mPuppetPos[ME];
     pos.y += 450;
@@ -424,13 +432,21 @@ namespace Pixy {
     light->setDiffuseColour(dcol);
     light->setSpecularColour(scol);
 
+    light = mSceneMgr->createLight("Lightzzz");
+    light->setType(Ogre::Light::LT_DIRECTIONAL);
+    light->setDirection(Vector3(0,0,1));
+    light->setDiffuseColour(Ogre::ColourValue(0.5f,0.5f,0.5f));
+    light->setSpecularColour(Ogre::ColourValue(0.5f,0.5f,0.5f));
+
 	  light = mSceneMgr->createLight("Light2");
     light->setType(Ogre::Light::LT_SPOTLIGHT);
-    pos = Vector3(0,250, 0);
+    pos = Vector3(mPuppetPos[ME].x,mPuppetPos[ME].y+50, mPuppetPos[ME].z);
     //pos.y += 250;
+    light->setDirection(Vector3(0,-1,0));
     light->setPosition(pos);
     light->setDiffuseColour(dcol);
     light->setSpecularColour(scol);
+
 
 	  light = mSceneMgr->createLight("Light4");
     light->setType(Ogre::Light::LT_POINT);
@@ -722,6 +738,7 @@ namespace Pixy {
     Ogre::Entity* ent = mSceneMgr->createEntity("Floor", "floor");
     ent->setMaterialName("Elementum/Terrain/Floor");
 		ent->setCastShadows(false);
+    ent->setRenderQueueGroup( Ogre::RENDER_QUEUE_BACKGROUND );
     mSceneMgr->getRootSceneNode()->attachObject(ent);
 
     /*ent = mSceneMgr->createEntity("Ceiling", "ceiling");
@@ -1251,11 +1268,13 @@ namespace Pixy {
     bool found = false;
     for (itr = result.begin(); itr != result.end(); itr++)
     {
-      mLog->infoStream() << "Ray target name: " << itr->movable->getName();
+      if (itr->movable)
+        mLog->infoStream() << "Ray target name: " << itr->movable->getName();
       if (itr->movable &&
           (itr->movable->getName().find(mPlayer->getName()) != std::string::npos ||
           itr->movable->getName().find(mEnemy->getName()) != std::string::npos ||
-          itr->movable->getName().find("Fx") != std::string::npos)
+          (itr->movable->getName().find("Fx") != std::string::npos &&
+           itr->movable->getName().find("Blood") == std::string::npos))
          /*(itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "" &&
          //~ itr->movable->getName() != "mySphereEntity" &&
@@ -1299,7 +1318,7 @@ namespace Pixy {
 
     SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable()->getSceneNode();
     switch (e.key) {
-      case OIS::KC_F:
+      /*case OIS::KC_F:
         tmp->yaw(Ogre::Degree(5));
       break;
       case OIS::KC_G:
@@ -1328,7 +1347,7 @@ namespace Pixy {
           mRenderables.front()->show();
         else
           mRenderables.front()->hide();
-        break;
+        break;*/
       case OIS::KC_K:
         if (mTrayMgr->areFrameStatsVisible())
           mTrayMgr->hideFrameStats();
@@ -1372,7 +1391,7 @@ namespace Pixy {
         CUnit *lUnit = static_cast<CUnit*>(lEntity);
 
         // make sure the unit is owned by the player not the opponent
-        if (lUnit->getOwner() != mPlayer) {
+        if (lUnit->getOwner() != mPlayer || lUnit->isResting()) {
           return true;
         }
 
@@ -1435,7 +1454,8 @@ namespace Pixy {
     // will we trigger the block event
     if (mSelected &&
         mSelected->getEntity()->getOwner() == mPlayer &&
-        lUnit->getOwner() != mPlayer)
+        lUnit->getOwner() != mPlayer &&
+        !lUnit->isResting())
     {
       Event req(EventUID::Block);
       req.setProperty("B", mSelected->getEntity()->getUID());
@@ -1500,6 +1520,23 @@ namespace Pixy {
       inBlockPhase = false;
       mLog->debugStream() << "no longer in blocking phase";
     }
+
+    return true;
+  }
+
+  bool GfxEngine::onMatchFinished(const Event& inEvt) {
+    int wuid = convertTo<int>(inEvt.getProperty("W"));
+    CPuppet* lWinner = 0;
+    if (wuid == mPlayer->getUID())
+      lWinner = mPlayer;
+    else
+      lWinner = mEnemy;
+
+    mLog->infoStream() << "game is over! the winner is " << lWinner->getName();
+    for (auto unit : lWinner->getUnits()) {
+      unit->onVictory();
+    }
+    lWinner->onVictory();
 
     return true;
   }

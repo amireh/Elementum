@@ -26,6 +26,7 @@ namespace Pixy {
 
   class Event;
   class EventManager;
+  class CSpell;
 	/*	\class UIEngine
 	 *	\brief
 	 *	Loads and unloads UISheets, manages CEGUI system, and handles UI related operations
@@ -56,6 +57,9 @@ namespace Pixy {
     void setMargin(CEGUI::Window*, CEGUI::UBox&);
 
     void refreshSize();
+
+    void connectAnimation(CEGUI::Window*, std::string inAnim);
+    void refreshTooltipSize(CEGUI::Window* inWindow, CSpell* inSpell);
 
 	protected:
 		const char* getDataPathPrefix() const;

@@ -8,6 +8,7 @@ material Elementum/Terrain/Floor
 			ambient 1 1 1
 			//scene_blend add
 			depth_write on
+      depth_check off
 			cull_software none
 			cull_hardware none
 

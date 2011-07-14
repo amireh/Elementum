@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Tue Jul 12 04:35:00 2011.
+** Generated automatically by tolua++-1.0.92 on Thu Jul 14 16:45:44 2011.
 */
 
 #ifndef __cplusplus
@@ -1787,6 +1787,76 @@ static int tolua_EClient_Pixy_UIEngine_setMargin00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: connectAnimation of class  Pixy::UIEngine */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_UIEngine_connectAnimation00
+static int tolua_EClient_Pixy_UIEngine_connectAnimation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::UIEngine",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CEGUI::Window",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
+  CEGUI::Window* tolua_var_3 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  std::string tolua_var_4 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'connectAnimation'", NULL);
+#endif
+  {
+   self->connectAnimation(tolua_var_3,tolua_var_4);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'connectAnimation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: refreshTooltipSize of class  Pixy::UIEngine */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_UIEngine_refreshTooltipSize00
+static int tolua_EClient_Pixy_UIEngine_refreshTooltipSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::UIEngine",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CEGUI::Window",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"Pixy::CSpell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
+  CEGUI::Window* inWindow = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::CSpell* inSpell = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'refreshTooltipSize'", NULL);
+#endif
+  {
+   self->refreshTooltipSize(inWindow,inSpell);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'refreshTooltipSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: __Pixy of class  Pixy::UIEngine */
 #ifndef TOLUA_DISABLE_tolua_get_Pixy__UIEngine___Pixy__EventListener__
 static int tolua_get_Pixy__UIEngine___Pixy__EventListener__(lua_State* tolua_S)
@@ -2362,12 +2432,12 @@ static int tolua_EClient_Pixy_NetworkManager_send00(lua_State* tolua_S)
 #endif
  {
   Pixy::NetworkManager* self = (Pixy::NetworkManager*)  tolua_tousertype(tolua_S,1,0);
-  const Pixy::Event* tolua_var_3 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+  const Pixy::Event* tolua_var_5 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'", NULL);
 #endif
   {
-   self->send(*tolua_var_3);
+   self->send(*tolua_var_5);
   }
  }
  return 0;
@@ -2510,6 +2580,8 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"update",tolua_EClient_Pixy_UIEngine_update00);
     tolua_function(tolua_S,"cleanup",tolua_EClient_Pixy_UIEngine_cleanup00);
     tolua_function(tolua_S,"setMargin",tolua_EClient_Pixy_UIEngine_setMargin00);
+    tolua_function(tolua_S,"connectAnimation",tolua_EClient_Pixy_UIEngine_connectAnimation00);
+    tolua_function(tolua_S,"refreshTooltipSize",tolua_EClient_Pixy_UIEngine_refreshTooltipSize00);
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__UIEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus

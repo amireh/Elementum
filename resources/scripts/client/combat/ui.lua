@@ -4,7 +4,7 @@
 	cegui event handlers and UI bootstrapping goes here
 ]]
 if (Pixy.UI.Combat == nil) then
-  Pixy.UI.Combat = { Buttons = {}, Labels = {}, Config = {} }
+  Pixy.UI.Combat = { Buttons = {}, Labels = {}, Config = {}, Containers = {}}
 
 end
 
@@ -27,9 +27,14 @@ Pixy.UI.Combat.configure = function()
 end
 
 Pixy.UI.Combat.registerGlobals = function()
+  Pixy.UI.Combat.Containers["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Containers/Tooltip")
   Pixy.UI.Combat.Labels["Turns"] = CEWindowMgr:getWindow("Elementum/Scenes/Combat/Effects/Turns/Text")
   Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Labels/Tooltip")
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/Victory"), "Testing")
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"), "Fade")
 
+  --CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/Victory"):show()
+  --:subscribeEvent("Clicked", "Start")
 
 end
 
@@ -46,6 +51,10 @@ Pixy.UI.Combat.reload = function()
 end
 
 firstButton = true
+
+function foobar()
+  Pixy.Log("Animation has stopped")
+end
 
 -- draws a CEGUI::ImageButton element representing the given spell
 -- and attaches it to the Puppet's hand
@@ -99,6 +108,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	lButton["Window"]:setProperty("HoverImage", lButton["Image"] .. "_Hover")
 	lButton["Window"]:setProperty("PushedImage", lButton["Image"] .. "_Pushed")
 	lButton["Window"]:setProperty("DisabledImage", lButton["Image"] .. "_Disabled")
+  lButton["Window"]:setProperty("Alpha", "0.0")
 
 	-- attach our spell object to the button...
 	lButton["Window"]:setUserString("Spell", inSpell:getUID())
@@ -124,44 +134,104 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
       CEGUI.UDim(0,5)))
   --list_item:setSize(lButton["Dimensions"])
 	--lButton["Window"]:setPosition(lButton["Position"])
-	lButton["Window"]:moveToFront()
-	lButton["Window"]:show()
 
-	-- finally, subscribe the button to its event handlers
+  -- finally, subscribe the button to its event handlers
+  --lButton["Window"]:subscribeEvent("Shown", "Pixy.UI.Combat.DrawSpell")
 	lButton["Window"]:subscribeEvent("Clicked", "Pixy.Combat.reqCastSpell")
   lButton["Window"]:subscribeEvent("MouseEnter", "Pixy.UI.Combat.ShowTooltip")
   lButton["Window"]:subscribeEvent("MouseLeave", "Pixy.UI.Combat.HideTooltip")
+  lButton["Window"]:subscribeEvent("AlphaChanged", "Pixy.UI.Combat.RemoveSpell")
+  --lButton["Window"]:subscribeEvent("Clicked", "Pixy.UI.Combat.castSpellAnimation")
+
+  lButton["Window"]:moveToFront()
+	lButton["Window"]:show()
+
+  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation("DrawSpell")
+  instance:setTargetWindow(inSpell:getButton())
+  if (not instance:isRunning()) then instance:start() end
 
   table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
 end
 
-Pixy.UI.Combat.dropSpell = function(inSpell)
-  removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
-  CEWindowMgr:destroyWindow(inSpell:getButton())
-  for button in list_iter(Pixy.UI.Combat.Buttons) do
-    local pos = CEGUI.UVector2:new(
-    	CEGUI.UDim(0, button:getPosition().x.offset - cfg.SpellButton["Width"]),
-			button:getPosition().y)
 
-    button:setPosition(pos)
+Pixy.UI.Combat.dropSpell = function(inSpell)
+  Pixy.UI.Combat.HideTooltip(nil)
+  removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
+  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation("DropSpell")
+  instance:setTargetWindow(inSpell:getButton())
+  if (not instance:isRunning()) then instance:start() end
+
+  inSpell:getButton():removeEvent("Clicked")
+  inSpell:getButton():removeEvent("MouseEnter")
+  inSpell:getButton():removeEvent("MouseLeave")
+  --CEWindowMgr:destroyWindow(inSpell:getButton())
+  --for button in list_iter(Pixy.UI.Combat.Buttons) do
+  --  local pos = CEGUI.UVector2:new(
+  --  	CEGUI.UDim(0, button:getPosition().x.offset - cfg.SpellButton["Width"]),
+	--		button:getPosition().y)
+  --
+  --  button:setPosition(pos)
+  --end
+end
+
+Pixy.UI.Combat.RemoveSpell = function(e)
+  local win = CEGUI.toWindowEventArgs(e).window
+  if (win and tonumber(win:getProperty("Alpha")) == 0) then
+    --~ win:removeEvent("AlphaChanged")
+    CEWindowMgr:destroyWindow(win)
   end
 end
 
 Pixy.UI.Combat.onStartTurn = function()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Attacking Phase")
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+
   Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
 
-  --CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):enable()
-  for button in list_iter(Pixy.UI.Combat.Buttons) do
-    button:enable()
-  end
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand"):enable()
+  --for button in list_iter(Pixy.UI.Combat.Buttons) do
+  --  button:enable()
+  --end
 end
 
 Pixy.UI.Combat.onTurnStarted = function()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Waiting")
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+
   Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
 
-  --CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player"):disable()
-  for button in list_iter(Pixy.UI.Combat.Buttons) do
-    button:disable()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand"):disable()
+  --for button in list_iter(Pixy.UI.Combat.Buttons) do
+  --  button:disable()
+  --end
+end
+
+Pixy.UI.Combat.onStartBlockPhase = function()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Blocking Phase")
+  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+
+  Pixy.UI.Combat.Labels["Turns"]:setText("Blocking Phase")
+end
+
+Pixy.UI.Combat.onMatchFinished = function(wuid)
+  local suid = tonumber(SelfPuppet:getUID())
+  Pixy.Log("Winner's UID : " .. wuid .. " mine: " .. suid)
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"), "LongFade")
+  if (wuid == suid) then
+    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
+    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Victory")
+    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+
+    Pixy.UI.Combat.Labels["Turns"]:setText("")
+  else
+    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
+    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Loss")
+    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+
+    Pixy.UI.Combat.Labels["Turns"]:setText("")
   end
 end
 
@@ -170,7 +240,14 @@ Pixy.UI.Combat.ShowTooltip = function(e)
 	local spell = SelfPuppet:getSpell(win:getUserString("Spell"))
   assert(spell)
 
-  Pixy.UI.Combat.Labels["Tooltip"]:setText(spell:getTooltip())
+  local label = Pixy.UI.Combat.Labels["Tooltip"]
+  label:setText(spell:getTooltip())
+  --UIEngine:refreshTooltipSize(win, spell)
+
+  --~ label:setSize(
+    --~ CEGUI.UVector2:new(
+      --~ CEGUI.UDim(0, label:getHorizontalTextExtent()),
+      --~ CEGUI.UDim(0, label:getVerticalTextExtent())))
 end
 Pixy.UI.Combat.HideTooltip = function(e)
   Pixy.UI.Combat.Labels["Tooltip"]:setText("")
