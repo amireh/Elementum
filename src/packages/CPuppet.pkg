@@ -20,4 +20,9 @@ public:
   virtual Pixy::CSpell* getSpell(int inUID);
   virtual void attachSpell(Pixy::CSpell* inSpell);
   virtual void detachSpell(int inUID);
+
+  void attachUnit(Pixy::CUnit* inUnit);
+  void detachUnit(int inUID, bool);
+  Pixy::CUnit* getUnit(int inUID);
+  units_t& getUnits();
 };

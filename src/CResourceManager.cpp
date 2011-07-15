@@ -232,7 +232,9 @@ namespace Pixy {
       lUnit->setName(elements[0]);
       lUnit->setRace((RACE)atoi(elements[1].c_str()));
       lUnit->setFaction(elements[2].c_str());
+      lUnit->setBaseAP(atoi(elements[3].c_str()));
       lUnit->setAP(atoi(elements[3].c_str()));
+      lUnit->setBaseHP(atoi(elements[4].c_str()));
       lUnit->setHP(atoi(elements[4].c_str()));
       lUnit->setUpkeep(atoi(elements[5].c_str()));
 

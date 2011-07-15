@@ -37,9 +37,9 @@ namespace Pixy
 		virtual void keyPressed( const OIS::KeyEvent &e ) = 0;
 		virtual void keyReleased( const OIS::KeyEvent &e ) = 0;
 
-		virtual void mouseMoved( const OIS::MouseEvent &e ) = 0;
-		virtual void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )  = 0;
-		virtual void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) = 0;
+		virtual bool mouseMoved( const OIS::MouseEvent &e ) = 0;
+		virtual bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )  = 0;
+		virtual bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) = 0;
 
 		//virtual CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID);
 

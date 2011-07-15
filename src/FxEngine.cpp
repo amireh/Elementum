@@ -75,6 +75,11 @@ namespace Pixy {
 
 	void FxEngine::update( unsigned long lTimeElapsed ) {
 		processEvents();
+    for (auto node : mDeathlist) {
+      node->detachAllObjects();
+      mSceneMgr->destroySceneNode(node);
+    }
+    mDeathlist.clear();
 	}
 
   void FxEngine::loadEffect(std::string inName) {
@@ -85,7 +90,7 @@ namespace Pixy {
     ParticleUniverse::ParticleSystem* effect = 0;
     effect =
       mFxMgr->createParticleSystem( inName + "_", inName, mSceneMgr);
-    effect->setRenderQueueGroup(Ogre::RENDER_QUEUE_MAX);
+    //effect->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY);
     effect->prepare();
 
     mEffects.insert(std::make_pair(inName, effect));
@@ -104,6 +109,7 @@ namespace Pixy {
       inEffect->getParentSceneNode()->detachObject(inEffect);
 
     inEffect->setUserAny(Ogre::Any(inEntity));
+    //~ inEffect->setScale(inEntity->getSceneNode()->getScale());
     inEntity->getSceneNode()->attachObject(inEffect);
     inEffect->start();
 	};
@@ -112,6 +118,23 @@ namespace Pixy {
     assert(mEffects.find(inEffect) != mEffects.end());
 
     playEffect(mEffects.find(inEffect)->second, inEntity);
+  }
+
+  void FxEngine::playEffect(std::string inEffect, Ogre::Vector3 pos) {
+    Ogre::SceneNode* mNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    mNode->setPosition(pos);
+
+    ParticleUniverse::ParticleSystem* mEffect = mEffects.find(inEffect)->second;
+    if (mEffect->isAttached())
+      mEffect->getParentSceneNode()->detachObject(mEffect);
+
+    mNode->attachObject(mEffect);
+    mEffect->addParticleSystemListener(this);
+    mEffect->start();
+
+    mLog->infoStream() << "created a portable effect node";
+
+    mPortableEffects.push_back(mNode);
   }
 
   void FxEngine::highlight(Renderable* inEntity) {
@@ -208,4 +231,35 @@ namespace Pixy {
 
     return true;
   }
+
+
+  void FxEngine::handleParticleSystemEvent(
+    ParticleUniverse::ParticleSystem* inSystem,
+    ParticleUniverse::ParticleUniverseEvent& inEvt)
+  {
+    using namespace ParticleUniverse;
+
+    mLog->debugStream() << "got a PU event: " << (int)inEvt.eventType;
+    switch(inEvt.eventType)
+    {
+      case PU_EVT_SYSTEM_STOPPED:
+        // if the system is attached to a portable effect node, we need to destroy it
+        for (auto node : mPortableEffects) {
+          try {
+            if (node->getAttachedObject(inSystem->getName())) {
+              //node->detachObject(inSystem);
+              inSystem->removeParticleSystemListener(this);
+              mPortableEffects.remove(node);
+              mDeathlist.push_back(node);
+
+              mLog->infoStream() << "destroyed a portable effect node";
+              break;
+            }
+          } catch (Ogre::Exception& e) {
+          }
+        }
+      break;
+    }
+  }
+
 }

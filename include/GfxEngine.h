@@ -175,14 +175,16 @@ namespace Pixy {
 		void keyPressed( const OIS::KeyEvent &e );
 		void keyReleased( const OIS::KeyEvent &e );
 
-		void mouseMoved( const OIS::MouseEvent &e );
-		void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
-		void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseMoved( const OIS::MouseEvent &e );
+		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
 		Renderable* getSelected();
 
     void updateMe(CUnit*);
     void stopUpdatingMe(CUnit*);
+
+    void changeOwnership(Pixy::CUnit*);
 
 	protected:
 	  void (GfxEngine::*mUpdate)(unsigned long);

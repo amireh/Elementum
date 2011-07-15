@@ -21,6 +21,21 @@
 	<Image Name="Summon:_Fetish_Herdkeeper_Hover"  XPos="768" YPos="256" Width="256" Height="256" />
 	<Image Name="Summon:_Fetish_Herdkeeper_Pushed" XPos="768" YPos="512" Width="256" Height="256" />
 	<Image Name="Summon:_Fetish_Herdkeeper_Disabled" XPos="768" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Comet_Normal"    XPos="1024" YPos="0"  Width="256" Height="256" />
+	<Image Name="Comet_Hover"     XPos="1024" YPos="256" Width="256" Height="256" />
+	<Image Name="Comet_Pushed"    XPos="1024" YPos="512" Width="256" Height="256" />
+	<Image Name="Comet_Disabled"  XPos="1024" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Nourish_Normal"    XPos="1280" YPos="0"  Width="256" Height="256" />
+	<Image Name="Nourish_Hover"     XPos="1280" YPos="256" Width="256" Height="256" />
+	<Image Name="Nourish_Pushed"    XPos="1280" YPos="512" Width="256" Height="256" />
+	<Image Name="Nourish_Disabled"  XPos="1280" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Chains_of_Command_Normal" XPos="256" YPos="0"  Width="256" Height="256" />
+	<Image Name="Chains_of_Command_Hover"  XPos="256" YPos="256" Width="256" Height="256" />
+	<Image Name="Chains_of_Command_Pushed" XPos="256" YPos="512" Width="256" Height="256" />
+	<Image Name="Chains_of_Command_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
 </Imageset>
 
 

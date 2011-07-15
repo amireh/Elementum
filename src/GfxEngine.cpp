@@ -1130,6 +1130,13 @@ namespace Pixy {
 
       mRenderables.push_back(inRenderable);
 
+      /* ugly 3-legged monkey hack: because I don't know what's happening,
+       * some units scenenodes are getting translated to undefined positions
+       * after units die and are re-attached, so here we force the node back
+       * to its original position
+       */
+      mNode->setPosition(mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode][POS_READY]);
+
       return mNode;
       //mSceneMgr->getSceneNode(nodeName)->setUserAny(
     } else {
@@ -1162,6 +1169,7 @@ namespace Pixy {
   void GfxEngine::detachFromScene(Renderable* inRenderable)
   {
     dehighlight();
+    FxEngine::getSingleton().dehighlight();
 
     Entity* inEntity = inRenderable->getEntity();
 
@@ -1170,57 +1178,74 @@ namespace Pixy {
     Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());
     Ogre::SceneNode* mTmpNode = NULL;
 
-      //for (int i=0; i<10; i++)
-      //{
-  //LOG("I'm loooping now.");
+    mTmpNode = inRenderable->getSceneNode();
 
-  //nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
-  // retrieve our node
-  mTmpNode = inRenderable->getSceneNode();
+    // move the node back to its original spot
+    mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
 
-  // retrieve the entity so we can destroy it after we detach it from node
-  //Ogre::Entity* mOgreEntity = (Ogre::Entity*)inEntity->getSceneObject();
-  //Pixy::Entity* mUnit = Ogre::any_cast<Pixy::Entity*> (mOgreEntity->getUserAny());
-  // first let's check if our entity belongs to this scenenode
-  //if (mUnit->getIdEntity() == inEntity->getIdEntity())
-  //if (mOgreEntity->getParentSceneNode() == mTmpNode)
-  //{
-  // this is our node
+    mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
+    mTmpNode->showBoundingBox(false);
+    mTmpNode->detachObject(inRenderable->getSceneObject());
 
-  //Ogre::MovableObject* mOgreEntity = mTmpNode->getAttachedObject(entityName);
-  // detach from node
-  //mInterface->destroyUnitOverlay(inEntity->getSceneObject());
+    // destroy entity
+    mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
 
-  // move the node back to its original spot
-  mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
+    mRenderables.remove(inRenderable);
 
-  mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
-  mTmpNode->showBoundingBox(false);
-  mTmpNode->detachObject(inRenderable->getSceneObject());
-  // destroy entity
+    if (inRenderable->getEntity()->getRank() != PUPPET)
+      mUpdatees.erase(static_cast<CUnit*>(inRenderable->getEntity()));
+      inEntity = 0;
+  }
 
-  //                LOG("I'm destroying Entity : " + mOgreEntity->getName());
-  mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
+  void GfxEngine::changeOwnership(Pixy::CUnit* inUnit) {
 
-  mRenderables.remove(inRenderable);
+    Renderable* inRenderable = inUnit->getRenderable();
 
-  if (inRenderable->getEntity()->getRank() != PUPPET)
-    mUpdatees.erase(static_cast<CUnit*>(inRenderable->getEntity()));
+    std::string ownerName = inUnit->getOwner()->getName();
+    std::string entityName = ownerName + "_entity_" + stringify<int>(inUnit->getUID());
+    // now we need to locate the nearest empty SceneNode
+    // to render our Entity in
+    int idNode=0;
+    bool found = false;
+    std::string nodeName = "";
+    Ogre::SceneNode* mNode = 0;
+    for (int i=0; i<10; i++)
+    {
+      nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
+      mNode = mSceneMgr->getSceneNode(nodeName);
+      if (mNode->numAttachedObjects() == 0) {
+        idNode = i;
+        if (i < 5 &&
+          mSceneMgr->getSceneNode(ownerName + "_node_" + Ogre::StringConverter::toString(i+5))->numAttachedObjects() == 0
+        ) {
+          idNode += 5;
+          mNode = mSceneMgr->getSceneNode(ownerName + "_node_" + Ogre::StringConverter::toString(i+5));
+        }
+        found = true;
+        break;
+      }
+    };
 
+    if (found)
+    {
+      // move the new node to the unit's current position
+      Ogre::SceneNode* oldNode = inRenderable->getSceneNode();
+      Ogre::Vector3 oldPos(oldNode->getPosition());
+      mNode->setPosition(oldPos);
 
-  // translate the node back to its original position
-  /*
-  int idNode = parseIdNodeFromName(mTmpNode->getName());
-  deque<Vector3>* mWalklist = (inEntity->getOwner() == ID_HOST) ? &hWalklist[idNode] : &cWalklist[idNode];
-  mTmpNode->setPosition((*mWalklist).at(POS_PASSIVE));
-  */
-  //break;
-  //mTmpNode->setUserAny((Ogre::Any)NULL);
-  //};
-  // LOG_F(__FUNCTION__);
-      //};
+      // detach the unit from its current node and transfer to the new node
+      inRenderable->getSceneNode()->detachObject(inRenderable->getSceneObject());
+      mNode->attachObject(inRenderable->getSceneObject());
+      inRenderable->attachSceneNode(mNode);
+      oldNode->setPosition((*inUnit->mWaypoints)[POS_READY]);
 
-    inEntity = 0;
+      // move to the new ready position
+      inUnit->setWaypoints(&mWaypoints[inUnit->getOwner() == mPlayer ? 0 : 1][idNode]);
+      inUnit->move(POS_READY);
+
+    } else {
+      mLog->errorStream() << "Could not change Unit's ownership! No empty SceneNodes available";
+    }
   }
 
   void GfxEngine::setupWaypoints()
@@ -1232,22 +1257,28 @@ namespace Pixy {
     };
   };
 
-	void GfxEngine::mouseMoved( const OIS::MouseEvent &e )
+	bool GfxEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
 		if (mCameraMan)
 			mCameraMan->injectMouseMove(e);
+
+    return true;
 	}
 
-	void GfxEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )
+	bool GfxEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )
 	{
+    // check if the mouse is over the UI hand (spell buttons)
+    CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
+    if (window && window->getName().find("SpellPanel") != CEGUI::String::npos)
+      return false;
+
 		if (mCameraMan)
 			mCameraMan->injectMouseDown(e, id);
 
-    //~ return;
     CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 
     if (id != OIS::MB_Left)
-      return;
+      return false;
 
     // Setup the ray scene query, use CEGUI's mouse position
     Ogre::Ray mouseRay =
@@ -1301,12 +1332,16 @@ namespace Pixy {
       FxEngine::getSingleton().dehighlight();
     }
 
+    return true;
+
 	}
 
-	void GfxEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )
+	bool GfxEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id )
 	{
 		if (mCameraMan)
 			mCameraMan->injectMouseUp(e, id);
+
+    return true;
 	}
 
 	void GfxEngine::keyReleased( const OIS::KeyEvent &e ) {
@@ -1400,7 +1435,7 @@ namespace Pixy {
           return true;
 
         // if the unit has 0 AP, don't do anything
-        if (lUnit->getAP() == 0)
+        if (lUnit->getBaseAP() == 0)
           return true;
 
         // if the unit is passive, make it charge
@@ -1453,9 +1488,10 @@ namespace Pixy {
     // only when an own unit is chosen and then a charging unit is chosen
     // will we trigger the block event
     if (mSelected &&
+        mSelected->getEntity()->getRank() != PUPPET &&
         mSelected->getEntity()->getOwner() == mPlayer &&
         lUnit->getOwner() != mPlayer &&
-        !lUnit->isResting())
+        !static_cast<CUnit*>(mSelected->getEntity())->isResting())
     {
       Event req(EventUID::Block);
       req.setProperty("B", mSelected->getEntity()->getUID());

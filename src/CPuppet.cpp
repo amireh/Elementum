@@ -19,7 +19,7 @@ namespace Pixy
   };
 
   bool CPuppet::live() {
-    mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CPuppet");
+    mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, mName);
     mLog->infoStream() << "created";
 
     mRenderable = new Renderable(this);
@@ -110,13 +110,13 @@ namespace Pixy
     mUnits.push_back(inUnit);
     inUnit->setOwner(this);
 
-    std::cout
+    mLog->infoStream()
       << mUID << " attached a cunit to my control: "
-      << inUnit->getName() << "#" << inUnit->getUID() << "\n";
+      << inUnit->getName() << "#" << inUnit->getUID();
 
     assert(inUnit->getOwner());
   }
-  void CPuppet::detachUnit(int inUID) {
+  void CPuppet::detachUnit(int inUID, bool remove) {
     CUnit* lUnit = 0;
 		units_t::iterator it;
 		for(it = mUnits.begin(); it != mUnits.end(); ++it)
@@ -128,7 +128,10 @@ namespace Pixy
 			}
 
     assert(lUnit);
-    delete lUnit;
+    if (remove)
+      delete lUnit;
+    else
+      mLog->infoStream() << "softly removed a unit from my control " << inUID;
   }
   CUnit* CPuppet::getUnit(const int inUID) {
     units_t::iterator lUnit = mUnits.begin();

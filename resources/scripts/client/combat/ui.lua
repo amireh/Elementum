@@ -27,21 +27,26 @@ Pixy.UI.Combat.configure = function()
 end
 
 Pixy.UI.Combat.registerGlobals = function()
+  Pixy.UI.Combat.Containers["Error"] = CEWindowMgr:getWindow("Elementum/Combat/Containers/Error")
   Pixy.UI.Combat.Containers["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Containers/Tooltip")
-  Pixy.UI.Combat.Labels["Turns"] = CEWindowMgr:getWindow("Elementum/Scenes/Combat/Effects/Turns/Text")
-  Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Labels/Tooltip")
-  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/Victory"), "Testing")
-  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"), "Fade")
+  Pixy.UI.Combat.Containers["Message"] = CEWindowMgr:getWindow("Elementum/Combat/Containers/Message")
 
-  --CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/Victory"):show()
-  --:subscribeEvent("Clicked", "Start")
+  assert(Pixy.UI.Combat.Containers["Error"])
+
+  Pixy.UI.Combat.Labels["Turns"] = CEWindowMgr:getWindow("Elementum/Combat/Effects/Turns/Text")
+  Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Labels/Tooltip")
+  Pixy.UI.Combat.Labels["Error"] = CEWindowMgr:getWindow("Elementum/Combat/Text/Error")
+
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Victory"), "Testing")
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"), "Fade")
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Error"), "LongFadeOut")
 
 end
 
 -- effectively reloads the UI components and sheets
 -- NOTE: this destroys all currently drawn spell buttons too!
 Pixy.UI.Combat.reload = function()
-	CEWindowMgr:destroyWindow(CEWindowMgr:getWindow("Elementum/Scenes/Combat"))
+	CEWindowMgr:destroyWindow(CEWindowMgr:getWindow("Elementum/Combat"))
 
 	local lLayout = CEWindowMgr:loadWindowLayout(Pixy.UI.Combat.Config.LayoutPath)
 	lLayout:setAlwaysOnTop(true)
@@ -81,7 +86,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 		)
 
 	-- generate the button's name
-	lButton["Name"] = "Elementum/Scenes/Combat/SpellPanel/Player/" .. inSpell:getUID()
+	lButton["Name"] = "Elementum/Combat/SpellPanel/Player/" .. inSpell:getUID()
 
 	Pixy.Log("creating a window named " .. lButton["Name"])
 
@@ -118,11 +123,11 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- ...
 
 	-- attach the window to our layout
-	CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand"):addChildWindow(lButton["Window"])
+	CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):addChildWindow(lButton["Window"])
 
   --local item = lButton["Window"]
 	--CEGUI.toItemEntry(list_item)
-  --local list = CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand")
+  --local list = CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand")
   --CEGUI.toListbox(list)
   --list:addItem(list_item)
 	lButton["Window"]:setSize(lButton["Dimensions"])
@@ -183,35 +188,35 @@ Pixy.UI.Combat.RemoveSpell = function(e)
 end
 
 Pixy.UI.Combat.onStartTurn = function()
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Attacking Phase")
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
+  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Attacking Phase")
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
 
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand"):enable()
+  CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):enable()
   --for button in list_iter(Pixy.UI.Combat.Buttons) do
   --  button:enable()
   --end
 end
 
 Pixy.UI.Combat.onTurnStarted = function()
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Waiting")
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
+  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Waiting")
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
 
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/SpellPanel/Player/Hand"):disable()
+  CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):disable()
   --for button in list_iter(Pixy.UI.Combat.Buttons) do
   --  button:disable()
   --end
 end
 
 Pixy.UI.Combat.onStartBlockPhase = function()
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Blocking Phase")
-  CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
+  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Blocking Phase")
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Blocking Phase")
 end
@@ -219,17 +224,17 @@ end
 Pixy.UI.Combat.onMatchFinished = function(wuid)
   local suid = tonumber(SelfPuppet:getUID())
   Pixy.Log("Winner's UID : " .. wuid .. " mine: " .. suid)
-  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"), "LongFade")
+  UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"), "LongFade")
   if (wuid == suid) then
-    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
-    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Victory")
-    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
+    CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Victory")
+    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
 
     Pixy.UI.Combat.Labels["Turns"]:setText("")
   else
-    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):hide()
-    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Text/TempText"):setText("Loss")
-    CEWindowMgr:getWindow("Elementum/Scenes/Combat/Containers/TempText"):show()
+    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
+    CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Loss")
+    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
 
     Pixy.UI.Combat.Labels["Turns"]:setText("")
   end
@@ -252,5 +257,12 @@ end
 Pixy.UI.Combat.HideTooltip = function(e)
   Pixy.UI.Combat.Labels["Tooltip"]:setText("")
 end
+
+Pixy.UI.Combat.ShowError = function(txt)
+  Pixy.UI.Combat.Containers["Error"]:hide()
+  Pixy.UI.Combat.Labels["Error"]:setText(txt)
+  Pixy.UI.Combat.Containers["Error"]:show()
+end
+
 -- configure
 Pixy.UI.Combat.configure()

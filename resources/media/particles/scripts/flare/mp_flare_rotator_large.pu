@@ -6,11 +6,12 @@
 // Usage of this program is licensed under the terms of the Particle Universe Commercial License Media Pack 1.
 // You can find a copy of the Commercial License in the Media Pack 1 package.
 //-----------------------------------------------------------------------------------------------------------------------
-system Flare/mp_rotator
+system Elementum/Fx/MindControlzz
  {
     keep_local                                  true
     fast_forward                                1 0.1
-    technique 
+    scale 0.05 0.05 0.05
+    technique
     {
         visual_particle_quota                   300
         emitted_emitter_quota                   60
@@ -20,7 +21,7 @@ system Flare/mp_rotator
         }
         emitter                                 Circle CircleEmitter
         {
-            emission_rate                       50
+            emission_rate                       150
             time_to_live                        1
             emits                               emitter_particle PointEmitter
             auto_direction                      true
@@ -30,7 +31,7 @@ system Flare/mp_rotator
         emitter                                 Box PointEmitter
         {
             angle                               0
-            time_to_live                        10
+            time_to_live                        5
             velocity                            0
             duration                            1
             all_particle_dimensions             dyn_random
@@ -43,19 +44,19 @@ system Flare/mp_rotator
             box_height                          60
             box_depth                           30
         }
-        affector                                Vortex 
+        affector                                Vortex
         {
-            rotation_axis                       0 1 0
-            rotation_speed                      0.6
+            rotation_axis                       0 0 1
+            rotation_speed                      3.6
         }
-        affector                                Colour 
+        affector                                Colour
         {
             time_colour                         0    1 1 1 1
             time_colour                         0.9  1 1 1 1
             time_colour                         1    0 0 0 1
             colour_operation                    multiply
         }
-        affector                                Scale 
+        affector                                Scale
         {
             xyz_scale                           dyn_oscillate
             {
@@ -66,9 +67,9 @@ system Flare/mp_rotator
                 oscillate_type                  sine
             }
         }
-        observer                                OnClear 
+        observer                                OnClear
         {
-            handler                             DoStopSystem 
+            handler                             DoStopSystem
             {
             }
         }

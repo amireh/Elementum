@@ -5,6 +5,7 @@
 	once a spell is cast it gets propagated to its registered handler
 ]]
 
+local Handlers = {}
 
 -- type: incoming event handler
 -- job: parses the spell attributes from the given event,
@@ -51,16 +52,40 @@ Pixy.Combat.reqCastSpell = function(inUIEvt)
   local evt = Pixy.Event:new()
   evt.UID = Pixy.EventUID.CastSpell
   evt:setProperty("Spell", lSpell:getUID())
+  if (lSpell:requiresTarget()) then
+    local target = GfxEngine:getSelected()
+    if (not target) then
+      Pixy.UI.Combat.ShowError("You need to select a target")
+      evt:delete()
+      return false
+    end
+    evt:setProperty("T", target:getEntity():getUID())
+  end
   NetMgr:send(evt)
 end
 
 -- type: incoming event handler
 -- job: locates the spell given in the event and calls its registered handler
-Pixy.Combat.castSpell = function(inEvt)
-	if (inEvt:getFeedback() == Pixy.EVT_OK) then
-		Pixy.Log( "casting a spell" )
-	else
-		Pixy.Log( "request to cast spell was rejected" )
-	end
+Pixy.Combat.CastSpell = function(inCaster, inTarget, inSpell)
+	local spellHandler = Handlers[inSpell:getName()]
 
+	if not spellHandler then return false else return spellHandler(inCaster, inTarget, inSpell) end
+end
+
+function subscribe_spell(inSpellName, inMethod)
+	Pixy.Log("subscribing to " .. inSpellName)
+	Handlers[inSpellName] = inMethod
+end
+
+require("d_lister")
+path_to_handlers = "../resources/scripts/client/combat/spell_handlers"
+races = {"earth", "air", "fire", "water"}
+package.path = package.path .. ";" .. path_to_handlers .. "/?.lua"
+for race in list_iter(races) do
+  for filename in dirtree(path_to_handlers .. "/" .. race) do
+    stripped_name = string.gsub(filename, path_to_handlers .. "/", "")
+    stripped_name = string.gsub(stripped_name, ".lua", "")
+
+    require(stripped_name)
+  end
 end

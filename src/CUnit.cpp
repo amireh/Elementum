@@ -42,7 +42,13 @@ namespace Pixy
     if (mRenderable)
       delete mRenderable;
 
+    if (mTimer)
+      delete mTimer;
+
     mRenderable = 0;
+
+    if (mLog)
+      mLog->infoStream() << " i'm destroyed!\n";
 
   };
 
@@ -126,7 +132,7 @@ namespace Pixy
   bool CUnit::live() {
     Unit::live();
 
-    mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "CUnit " + mName);
+    mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, mName + stringify(mUID));
     mLog->infoStream() << "created";
 
     mRenderable = new Renderable(this);
@@ -140,7 +146,7 @@ namespace Pixy
 
   void CUnit::die() {
     Unit::die();
-    delete mTimer;
+
 
     mRenderable->hide();
 
@@ -294,7 +300,10 @@ namespace Pixy
 
   void CUnit::updateTextOverlay() {
     std::string cap = "";
-    if (isResting()) {
+    if (hasSummoningSickness()) {
+      cap += "[S] ";
+    }
+    else if (isResting()) {
       cap += "[zZz] ";
     }
     /*
@@ -315,7 +324,7 @@ namespace Pixy
       cap += "[" + stringify(mAttackOrder) + "] ";
     }
     // show stats (AP/HP)
-    cap += stringify(mCurrentAP) + "/" + stringify(mCurrentHP);
+    cap += stringify(mAP) + "/" + stringify(mHP);
     mRenderable->getText()->setCaption(cap);
   }
 
@@ -459,7 +468,7 @@ namespace Pixy
     if (inBlockers.empty()) {
       // if this is a trampling unit, and we still got AP left,
       // proceed to hitting the puppet
-      if (fIsTrampling && mCurrentAP > 0) {
+      if (fIsTrampling && mAP > 0) {
         move(POS_ATTACK, [&](CUnit*) -> void {
           this->attack(static_cast<CPuppet*>((Entity*)inBlockers.front()->getOwner()),
           [&]() -> void {
@@ -487,7 +496,7 @@ namespace Pixy
     // there's a special case where the attacker has 0 AP left, and the blocker
     // has 0 base AP, then there's no point moving it to defense pos, we should
     // just skip it
-    if (mCurrentAP <= 0 && blocker->getAP() == 0) {
+    if (mAP <= 0 && blocker->getAP() == 0) {
       inBlockers.pop_front();
 
       return this->doAttack(inBlockers);
@@ -502,8 +511,8 @@ namespace Pixy
        *  2) we hit the blocker, if they're not dead, they hit us back
        */
 
-      if (mCurrentAP <= 0) {
-        if (blocker->getAP() > 0) { // can the blocker attack?
+      if (mAP <= 0) {
+        if (blocker->getBaseAP() > 0) { // can the blocker attack?
           blocker->attack(this, [&, blocker]() -> void {
             blocker->move(POS_CHARGING);
 
@@ -557,6 +566,12 @@ namespace Pixy
     mRenderable->setBaseAnimation(Renderable::ANIM_JUMP_START, true);
     mRenderable->setTopAnimation(Renderable::ANIM_NONE);
     mRenderable->mTimer = 0;
+
+    updateTextOverlay();
+  }
+
+  void CUnit::updateFromEvent(const Event& evt) {
+    Unit::updateFromEvent(evt);
 
     updateTextOverlay();
   }

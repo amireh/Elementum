@@ -213,18 +213,22 @@ namespace Pixy {
 		processEvents();
 	}
 
-	void UIEngine::mouseMoved( const OIS::MouseEvent &e )
+	bool UIEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
-		mUISystem->injectMouseMove(e.state.X.rel, e.state.Y.rel);
+		return mUISystem->injectMouseMove(e.state.X.rel, e.state.Y.rel);
 	}
 
-	void UIEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		mUISystem->injectMouseButtonDown(convertButton(id));
+	bool UIEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+		return mUISystem->injectMouseButtonDown(convertButton(id));
+    // CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
+    // return (window && window->isVisible() && window->getAlpha() > 0.0f && (window->getType() != "DefaultWindow"));
 	}
 
-	void UIEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		mUISystem->injectMouseButtonUp(convertButton(id));
-	}
+	bool UIEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+		return mUISystem->injectMouseButtonUp(convertButton(id));
+    //CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
+    //return (window && window->isVisible() && window->getAlpha() > 0.0f && (window->getType() != "DefaultWindow"));
+  }
 
 	void UIEngine::keyReleased( const OIS::KeyEvent &e ) {
 
@@ -240,11 +244,11 @@ namespace Pixy {
   }
 
   void UIEngine::refreshSize() {
-    using namespace CEGUI;
-    Window* sp = CEGUI::WindowManager::getSingletonPtr()->getWindow("Elementum/Scenes/Combat/SpellPanel/Player");
-    UVector2 sz(sp->getSize());
-    sp->setSize(UVector2(UDim(0,0),UDim(0,0)));
-    sp->setSize(sz);
+    //~ using namespace CEGUI;
+    //~ Window* sp = CEGUI::WindowManager::getSingletonPtr()->getWindow("Elementum/Combat/SpellPanel/Player");
+    //~ UVector2 sz(sp->getSize());
+    //~ sp->setSize(UVector2(UDim(0,0),UDim(0,0)));
+    //~ sp->setSize(sz);
   }
 
   CEGUI::Rect getStaticTextArea(const CEGUI::Window* static_text)

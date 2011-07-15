@@ -304,7 +304,7 @@ namespace OgreBites
           if (evt.state.Y.rel > 0  && mCamera->getPosition().y >= MAX_Y)
             return;
 
-          std::cout << "Event: " << evt.state.X.rel << "," << evt.state.Y.rel << "," << evt.state.Z.rel << "\n";
+          //~ std::cout << "Event: " << evt.state.X.rel << "," << evt.state.Y.rel << "," << evt.state.Z.rel << "\n";
 					// the further the camera is, the faster it moves
 					mCamera->moveRelative(Ogre::Vector3(0, 0, evt.state.Y.rel * 0.004f * dist));
 				}

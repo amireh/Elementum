@@ -9,6 +9,7 @@
 system Elementum/Fx/Aurora
  {
   scale 0.1 0.1 0.1
+
     technique
     {
         visual_particle_quota                   20

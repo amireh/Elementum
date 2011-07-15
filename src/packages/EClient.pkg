@@ -48,3 +48,11 @@ namespace Pixy
   #$pfile "Message.pkg"
 
 }
+
+namespace Ogre {
+  class Vector3 {
+  }
+  class SceneNode {
+    Vector3& getPosition() const;
+  }
+}

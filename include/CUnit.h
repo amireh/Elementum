@@ -80,6 +80,8 @@ namespace Pixy
     virtual void rest();
     virtual void getUp();
 
+    virtual void updateFromEvent(const Event& evt);
+
 	protected:
     friend class GfxEngine;
 

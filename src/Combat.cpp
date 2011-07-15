@@ -106,6 +106,7 @@ namespace Pixy
     bind(EventUID::CastSpell, boost::bind(&Combat::onCastSpell, this, _1));
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
+    bind(EventUID::UpdateUnit, boost::bind(&Combat::onUpdateUnit, this, _1));
 
     bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
@@ -208,25 +209,36 @@ namespace Pixy
 
 	}
 
-	void Combat::mouseMoved( const OIS::MouseEvent &e )	{
+	bool Combat::mouseMoved( const OIS::MouseEvent &e )	{
 		mUIEngine->mouseMoved(e);
 		mGfxEngine->mouseMoved(e);
+
+    return true;
 	}
 
-	void Combat::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+	bool Combat::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
     if (!mPuppet) // game hasn't started
-      return;
+      return false;
 
-		mUIEngine->mousePressed(e, id);
+		//~ if (mUIEngine->mousePressed(e, id))
+      //~ return true;
+    mUIEngine->mousePressed(e, id);
 		mGfxEngine->mousePressed(e, id);
+
+    return true;
 	}
 
-	void Combat::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+	bool Combat::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
     if (!mPuppet) // game hasn't started
-      return;
+      return false;
 
-		mUIEngine->mouseReleased(e, id);
+		//~ if (mUIEngine->mouseReleased(e, id))
+      //~ return true;
+
+    mUIEngine->mouseReleased(e, id);
 		mGfxEngine->mouseReleased(e, id);
+
+    return true;
 	}
 
 	void Combat::pause( void ) {
@@ -315,7 +327,7 @@ namespace Pixy
       if ((*itr)->getUID() == inUID)
         return *itr;
 
-    return 0;
+    throw invalid_uid("in Combat::getPuppet() : " + stringify(inUID));
   }
 
   CUnit* Combat::getUnit(int inUID) {
@@ -562,31 +574,62 @@ namespace Pixy
     mNetMgr->send(evt);
   }
 
-  bool Combat::onCastSpell(const Event& evt) {
-    if (evt.Feedback == EventFeedback::InvalidRequest) {
+  bool Combat::onCastSpell(const Event& inEvt) {
+    if (inEvt.Feedback == EventFeedback::InvalidRequest) {
       // the UID was invalid
       std::cout << "my request to cast a spell was rejected!\n";
       return true;
     }
 
-    // it's ok, let's find the spell
-    CSpell* _spell = 0;
-    CPuppet* _puppet = 0;
+    // it's ok, let's find the spell, the caster, and the target
+    CSpell* lSpell = 0;
+    CPuppet* lCaster = 0;
+
     for (auto puppet : mPuppets)
       try {
-        _spell = puppet->getSpell(convertTo<int>(evt.getProperty("Spell")));
-        _puppet = puppet;
+        lSpell = puppet->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
+        lCaster = puppet;
         break;
-      } catch (...) { _spell = 0; }
-    assert(_spell && _puppet);
+      } catch (...) { lSpell = 0; }
+
+    assert(lSpell && lCaster);
+    Entity* _lTarget = 0;
+    Renderable* lTarget = 0;
+    if (inEvt.hasProperty("T")) {
+      try {
+        // is the target a puppet?
+        _lTarget = getPuppet(convertTo<int>(inEvt.getProperty("T")));
+        mLog->debugStream() << "target: " << _lTarget->getUID() << "#" << _lTarget->getName();
+      } catch (invalid_uid& e) {
+        try {
+          // a unit?
+          _lTarget = getUnit(convertTo<int>(inEvt.getProperty("T")));
+        } catch (invalid_uid& e) {
+          // invalid UID
+          mLog->errorStream() << "couldn't find spell target with id " << inEvt.getProperty("T");
+          return true;
+        }
+      }
+
+      lTarget =
+        (_lTarget->getRank() == PUPPET)
+          ? getPuppet(_lTarget->getUID())->getRenderable()
+          : getUnit(_lTarget->getUID())->getRenderable();
+    }
+
+    mScriptEngine->passToLua(
+      "CastSpell", 3,
+      "Pixy::Renderable", lCaster->getRenderable(),
+      "Pixy::Renderable", lTarget,
+      "Pixy::CSpell", lSpell);
     // ...
-    std::cout << "casted a spell! " << _spell->getName() << "#" << _spell->getUID() << "\n";
+    std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
     // remove it from the UI
-    if (_puppet == mPuppet)
-      mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)_spell);
+    if (lCaster == mPuppet)
+      mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
     //mUIEngine->dropSpell(_spell);
     // remove it from the puppet's hand
-    _puppet->detachSpell(_spell->getUID());
+    lCaster->detachSpell(lSpell->getUID());
 
 
     return true;
@@ -612,6 +655,8 @@ namespace Pixy
     _unit->live();
     mGfxEngine->attachToScene(_unit->getRenderable());
 
+    mScriptEngine->passToLua("CreateUnit", 1, "Pixy::CUnit", (void*)_unit);
+
     _unit = 0;
     _owner = 0;
 
@@ -631,9 +676,29 @@ namespace Pixy
     return true;
   }
 
+  bool Combat::onUpdateUnit(const Event& evt) {
+    assert(evt.hasProperty("UID"));
+
+    CUnit* _unit = getUnit(convertTo<int>(evt.getProperty("UID")));
+    assert(_unit);
+
+    std::cout << "Updating unit named: " << _unit->getName() << "#" << _unit->getUID() << "\n";
+
+    _unit->updateFromEvent(evt);
+    if (_unit->isDead())
+      markForDeath(_unit);
+
+    return true;
+  }
+
   bool Combat::onStartBlockPhase(const Event& evt) {
     if (mActivePuppet != mPuppet)
       inBlockPhase = true;
+
+    // get up all the opponent units with summoning sickness
+    for (auto unit : mWaitingPuppet->getUnits())
+      if (unit->hasSummoningSickness())
+        unit->getUp();
 
     return true;
   }
@@ -852,4 +917,12 @@ namespace Pixy
     mLog->infoStream() << "a unit is done, " << mAttackers.size() << " left";
   }
 
+  void Combat::markForDeath(CUnit* inUnit) {
+    // add the unit to the deathlist only if it's not there
+    for (auto unit : mDeathlist)
+      if (unit->getUID() == inUnit->getUID())
+        return;
+
+    mDeathlist.push_back(inUnit);
+  }
 } // end of namespace

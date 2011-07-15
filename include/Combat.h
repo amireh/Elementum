@@ -50,9 +50,9 @@ namespace Pixy
 		void keyPressed( const OIS::KeyEvent &e );
 		void keyReleased( const OIS::KeyEvent &e );
 
-		void mouseMoved( const OIS::MouseEvent &e );
-		void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
-		void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseMoved( const OIS::MouseEvent &e );
+		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
 		static Combat* getSingletonPtr( void );
 		static Combat& getSingleton();
@@ -73,6 +73,8 @@ namespace Pixy
     void doBattle();
 
     void unitAttacked(CUnit*);
+
+    void markForDeath(CUnit*);
 
     boost::asio::io_service& getIOService();
     boost::asio::strand& getStrand();
@@ -97,6 +99,7 @@ namespace Pixy
     bool onCastSpell(const Event&);
     bool onCreateUnit(const Event&);
     bool onUpdatePuppet(const Event&);
+    bool onUpdateUnit(const Event&);
 
     bool onStartBlockPhase(const Event&);
     bool onCharge(const Event&);

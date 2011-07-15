@@ -43,7 +43,7 @@ namespace Pixy
 		virtual void detachSpell(int inUID);
 
 		virtual void attachUnit(CUnit* inUnit);
-		virtual void detachUnit(int inUID);
+		virtual void detachUnit(int inUID, bool remove=true);
 		virtual CUnit* getUnit(int inUID);
 		units_t const& getUnits() const;
 

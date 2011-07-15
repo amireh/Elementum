@@ -6,10 +6,11 @@
 // Usage of this program is licensed under the terms of the Particle Universe Commercial License Media Pack 1.
 // You can find a copy of the Commercial License in the Media Pack 1 package.
 //-----------------------------------------------------------------------------------------------------------------------
-system Flare/mp_flare_07
+system Elementum/Fx/MindControl
  {
     keep_local                                  true
-    technique 
+    scale 0.1 0.1 0.1
+    technique
     {
         visual_particle_quota                   55
         emitted_emitter_quota                   100
@@ -24,26 +25,26 @@ system Flare/mp_flare_07
         {
             emission_rate                       50
             velocity                            0
-            colour                              0.301961 0.984314 0.984314 1
+            colour                              0.801961 0.484314 0.084314 1
             force_emission                      true
             radius                              180
             step                                0.15
             emit_random                         false
             normal                              0 1 0
         }
-        affector                                Colour 
+        affector                                Colour
         {
             time_colour                         0    1 1 1 1
             time_colour                         0.5  1 1 1 1
             time_colour                         1    0 0 0 1
             colour_operation                    multiply
         }
-        affector                                Vortex 
+        affector                                Vortex
         {
             rotation_axis                       0 1 0
             rotation_speed                      -6
         }
-        affector                                TextureRotator 
+        affector                                TextureRotator
         {
             use_own_rotation                    true
             rotation                            dyn_random
@@ -53,9 +54,9 @@ system Flare/mp_flare_07
             }
             rotation_speed                      -6
         }
-        observer                                OnClear 
+        observer                                OnClear
         {
-            handler                             DoStopSystem 
+            handler                             DoStopSystem
             {
             }
         }

@@ -10,7 +10,7 @@ static GfxEngine* getSingletonPtr();
 
 bool attachToScene(Pixy::Renderable* inEntity);
 void detachFromScene(Pixy::Renderable* inEntity);
-
+Renderable* getSelected();
 
 //bool moveUnit(Pixy::Unit* inUnit, int inDestination);
 
@@ -33,4 +33,5 @@ void setupNodes();
 
 void setupWaypoints();
 
+void changeOwnership(Pixy::CUnit* inUnit);
 };
