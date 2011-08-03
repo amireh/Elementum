@@ -17,6 +17,7 @@ namespace Pixy
   *  \brief
   *  Defines Spell GameObjects that are used by Puppet objects.
   */
+  class Renderable;
   class CSpell : public Spell
   {
     public:
@@ -39,6 +40,19 @@ namespace Pixy
 
     std::string getTooltip() const;
 
+    void setCaster(Renderable* inCaster) {
+      mCaster = inCaster;
+    }
+    void setTarget(Renderable* inTarget) {
+      mTarget = inTarget;
+    };
+    Renderable* getCaster() const {
+      return mCaster;
+    };
+    Renderable* getTarget() const {
+      return mTarget;
+    };
+
     protected:
     void copyFromSrc(const CSpell& src);
     void generateTooltip();
@@ -48,6 +62,9 @@ namespace Pixy
     std::string   mImageName;
     std::string mTooltip;
     CEGUI::Window *mButton;
+
+    Renderable* mCaster;
+    Renderable* mTarget;
   };
 }
 

@@ -63,7 +63,12 @@ namespace Pixy
     /// @warn ownership of the Spell pointer is transferred to the entity
     /// which means you can't invalidate throughout the lifetime of this entity
 		virtual void attachSpell(CSpell* inSpell);
-		virtual void detachSpell(int inUID);
+		virtual void detachSpell(int inUID, bool remove=true);
+
+    spells_t const& getBuffs() const;
+    virtual void attachBuff(CSpell*);
+    virtual void detachBuff(int inUID);
+    virtual bool hasBuff(int inUID);
 
     virtual bool attack(Pixy::CPuppet* inTarget, boost::function<void()> callback);
     virtual bool attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block=false);
@@ -134,6 +139,7 @@ namespace Pixy
     boost::asio::deadline_timer* mTimer;
 
     spells_t mSpells;
+    spells_t mBuffs;
 	};
 } // end of namespace
 #endif

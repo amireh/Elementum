@@ -8,6 +8,7 @@ class CPuppet : public Pixy::Puppet
 {
 public:
   typedef list<Pixy::CSpell*> hand_t;
+  typedef list<Pixy::CSpell*> spells_t;
   typedef list<Pixy::CUnit*> units_t;
   typedef list<Pixy::CDeck const*> decks_t;
 
@@ -25,4 +26,10 @@ public:
   void detachUnit(int inUID, bool);
   Pixy::CUnit* getUnit(int inUID);
   units_t& getUnits();
+
+  virtual void attachBuff(CSpell*);
+  virtual void detachBuff(int inUID);
+  virtual bool hasBuff(int inUID);
+
+  void updateTextOverlay();
 };

@@ -23,6 +23,7 @@ namespace Pixy
 	{
 	public:
 		typedef std::list<CSpell*> hand_t;
+    typedef std::list<CSpell*> spells_t;
 		typedef std::list<CUnit*> units_t;
     typedef std::list<CDeck const*> decks_t;
 
@@ -40,7 +41,12 @@ namespace Pixy
     //~ virtual spells_t const& getSpells();
     virtual CSpell* getSpell(int inUID);
 		virtual void attachSpell(CSpell* inSpell);
-		virtual void detachSpell(int inUID);
+		virtual void detachSpell(int inUID, bool remove=true);
+
+    spells_t const& getBuffs() const;
+    virtual void attachBuff(CSpell*);
+    virtual void detachBuff(int inUID);
+    virtual bool hasBuff(int inUID);
 
 		virtual void attachUnit(CUnit* inUnit);
 		virtual void detachUnit(int inUID, bool remove=true);
@@ -58,6 +64,7 @@ namespace Pixy
     CDeck *mDeck;
     decks_t   mDecks;
 		hand_t			mHand;
+    spells_t    mBuffs;
 		units_t     mUnits;
 	};
 } // end of namespace

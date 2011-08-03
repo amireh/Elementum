@@ -12,15 +12,15 @@ material Elementum/Terrain/Floor
 			cull_software none
 			cull_hardware none
 
-			texture_unit
+			/*texture_unit
 			{
 				texture HUD_Ice.jpg
 				scroll_anim 0.1 0
-			}
+			}*/
 
 			texture_unit
 			{
-				texture Dante_Afterlife.jpg
+				texture Raw_Ruby.jpg
 				//scroll_anim 0.1 0
 			}
 		}

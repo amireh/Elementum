@@ -68,8 +68,19 @@ end
 -- job: locates the spell given in the event and calls its registered handler
 Pixy.Combat.CastSpell = function(inCaster, inTarget, inSpell)
 	local spellHandler = Handlers[inSpell:getName()]
+  if not inSpell:getCaster() then
+    Pixy.Log("Spell has no assigned caster!! returning")
+    return false
+  end
 
-	if not spellHandler then return false else return spellHandler(inCaster, inTarget, inSpell) end
+	if not spellHandler then return false else
+    local caster_is_self = false
+    if (inSpell:getCaster():getEntity():getOwner():getUID() == SelfPuppet:getUID()) then
+      caster_is_self = true
+    end
+    Pixy.UI.Combat.LogSpellCast(inSpell,caster_is_self)
+    return spellHandler(inCaster, inTarget, inSpell)
+  end
 end
 
 function subscribe_spell(inSpellName, inMethod)

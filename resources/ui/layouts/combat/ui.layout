@@ -49,43 +49,56 @@
       <Property Name="HorizontalAlignment" Value="Centre" />
       <Property Name="HorzFormatting" Value="HorzCentred" />
       <Property Name="VerticalAlignment" Value="Centre" />
-    </Window> <!-- Player end turn button -->
-
-  </Window> <!-- Menu bar -->
-
-  <!-- Tooltip panel -->
-  <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/Tooltip">
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.2,0},{1,0}}" />
-<!--
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.6,0},{0.52,0},{0.8,0}}" />
--->
-    <Property Name="Visible" Value="True" />
-    <Property Name="HorizontalAlignment" Value="Left" />
-    <Property Name="VerticalAlignment" Value="Top" />
-    <Property Name="BackgroundEnabled" Value="False" />
-    <Property Name="FrameEnabled" Value="False" />
-
-    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/Tooltip/BG">
-      <Property Name="AlwaysOnTop" Value="False" />
-      <Property Name="BackgroundEnabled" Value="False" />
-      <Property Name="FrameEnabled" Value="False" />
-      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-      <Property Name="Image" Value="set:HUDs image:DarkBG" />
-    </Window>
-    <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Labels/Tooltip">
       <Property Name="Font" Value="Alice-12" />
-      <Property Name="Visible" Value="True" />
-      <Property Name="BackgroundEnabled" Value="False" />
-      <Property Name="FrameEnabled" Value="False" />
-      <Property Name="HorizontalAlignment" Value="Left" />
-      <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
-      <Property Name="VertFormatting" Value="TopAligned" />
-      <Property Name="VerticalAlignment" Value="Top" />
+
     </Window> <!-- Player end turn button -->
 
   </Window> <!-- Menu bar -->
 
-	<!-- player Spell panel -->
+
+  <!-- Player Spell log panel -->
+	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Combat/Containers/SpellLog/Player_">
+	  <Property Name="Visible" Value="True" />
+		<Property Name="AlwaysOnTop" Value="True" />
+		<Property Name="Alpha" Value="1" />
+    <Property Name="HorizontalAlignment" Value="Left" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.025,0},{0.52,0},{0.15,0}}" />
+
+
+    <Window Type="HorizontalLayoutContainer" Name="Elementum/Combat/Containers/SpellLog/Player">
+      <Property Name="Visible" Value="True" />
+      <Property Name="AlwaysOnTop" Value="True" />
+      <Property Name="HorizontalAlignment" Value="Left" />
+      <Property Name="VerticalAlignment" Value="Centre" />
+    </Window>
+  </Window> <!-- Player Spell log panel  -->
+
+  <!-- Enemy Spell log panel -->
+	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Combat/Containers/SpellLog/Enemy_">
+	  <Property Name="Visible" Value="True" />
+		<Property Name="AlwaysOnTop" Value="True" />
+		<Property Name="Alpha" Value="1" />
+    <Property Name="HorizontalAlignment" Value="Right" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.025,0},{0.52,0},{0.15,0}}" />
+
+
+    <Window Type="HorizontalLayoutContainer" Name="Elementum/Combat/Containers/SpellLog/Enemy">
+      <Property Name="Visible" Value="True" />
+      <Property Name="AlwaysOnTop" Value="True" />
+      <Property Name="HorizontalAlignment" Value="Right" />
+      <Property Name="VerticalAlignment" Value="Centre" />
+    </Window>
+  </Window> <!-- Enemy Spell log panel  -->
+
+  <!-- player Spell panel -->
+  <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/SpellPanel/Player/BG">
+    <Property Name="AlwaysOnTop" Value="False" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="false" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.85,0},{1,0},{1,0}}" />
+    <Property Name="HorizontalAlignment" Value="Centre" />
+    <Property Name="Image" Value="set:HUDs image:DarkBG" />
+  </Window>
 	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Combat/SpellPanel/Player">
 	  <Property Name="Visible" Value="True" />
 		<Property Name="AlwaysOnTop" Value="True" />
@@ -99,19 +112,13 @@
     <Property Name="ContentPaneAutoSized" Value="False" />
 -->
 
-    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/SpellPanel/Player/BG">
-      <Property Name="AlwaysOnTop" Value="False" />
-      <Property Name="BackgroundEnabled" Value="False" />
-      <Property Name="FrameEnabled" Value="false" />
-      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-      <Property Name="Image" Value="set:HUDs image:Hand2" />
-      <Property Name="HorizontalAlignment" Value="Centre" />
-    </Window>
+
     <Window Type="HorizontalLayoutContainer" Name="Elementum/Combat/SpellPanel/Player/Hand">
       <Property Name="Visible" Value="True" />
       <Property Name="AlwaysOnTop" Value="True" />
       <Property Name="HorizontalAlignment" Value="Centre" />
       <Property Name="VerticalAlignment" Value="Centre" />
+
     </Window>
   </Window>
 
@@ -210,5 +217,110 @@
       <Property Name="ClippedByParent" Value="False" />
     </Window>
   </Window> <!-- temporary text -->
+
+
+  <!-- Tooltip panel -->
+  <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/Tooltip">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.75,0},{0.25,0},{1,0}}" />
+<!--
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.6,0},{0.52,0},{0.8,0}}" />
+-->
+    <Property Name="Visible" Value="False" />
+    <Property Name="HorizontalAlignment" Value="Left" />
+    <Property Name="VerticalAlignment" Value="Top" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="False" />
+    <Property Name="AlwaysOnTop" Value="True" />
+
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/Tooltip/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:DarkBG" />
+    </Window>
+
+    <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Text/Tooltip">
+      <Property Name="Font" Value="DejaVuSans-10" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Left" />
+      <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
+      <Property Name="VertFormatting" Value="TopAligned" />
+      <Property Name="VerticalAlignment" Value="Top" />
+      <Property Name="UnifiedMaxSize" Value="{{0.55,0}, {1,0}}" />
+      <Property Name="ClippedByParent" Value="False" />
+    </Window> <!-- Player end turn button -->
+
+  </Window> <!-- Tooltip bar -->
+
+
+
+
+  <!-- Player's WP panel -->
+  <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/PlayerWP">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.80,0},{0.1,0},{0.85,0}}" />
+    <Property Name="Visible" Value="True" />
+    <Property Name="HorizontalAlignment" Value="Centre" />
+    <Property Name="VerticalAlignment" Value="Top" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="False" />
+    <Property Name="AlwaysOnTop" Value="True" />
+
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/PlayerWP/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:DarkBG" />
+    </Window>
+
+    <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Text/PlayerWP">
+      <Property Name="Font" Value="Alice-12" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
+      <Property Name="HorzFormatting" Value="WordWrapCentred" />
+      <Property Name="VertFormatting" Value="VertCentred" />
+      <Property Name="VerticalAlignment" Value="Centre" />
+      <Property Name="ClippedByParent" Value="False" />
+      <Property Name="Text" Value="100" />
+    </Window>
+  </Window> <!-- Player's WP panel -->
+
+
+  <!-- Enemy's WP panel -->
+  <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/EnemyWP">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.06,0},{0.1,0},{0.11,0}}" />
+    <Property Name="Visible" Value="True" />
+    <Property Name="HorizontalAlignment" Value="Centre" />
+    <Property Name="VerticalAlignment" Value="Top" />
+    <Property Name="BackgroundEnabled" Value="False" />
+    <Property Name="FrameEnabled" Value="False" />
+    <Property Name="AlwaysOnTop" Value="True" />
+
+    <Window Type="TaharezLook/StaticImage" Name="Elementum/Combat/Containers/EnemyWP/BG">
+      <Property Name="AlwaysOnTop" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Image" Value="set:HUDs image:DarkBG" />
+    </Window>
+
+    <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Text/EnemyWP">
+      <Property Name="Font" Value="Alice-12" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
+      <Property Name="HorzFormatting" Value="WordWrapCentred" />
+      <Property Name="VertFormatting" Value="VertCentred" />
+      <Property Name="VerticalAlignment" Value="Top" />
+      <Property Name="ClippedByParent" Value="False" />
+      <Property Name="Text" Value="100" />
+    </Window>
+  </Window> <!-- Enemy's WP panel -->
 </Window>
 </GUILayout>

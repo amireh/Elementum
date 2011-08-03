@@ -16,6 +16,9 @@ Pixy.Combat.assignActivePuppet = function(puppet)
   Pixy.Log("Current turn is for puppet: " .. Active:getName())
 end
 
+Pixy.Combat.UpdatePuppet = function(puppet)
+  Pixy.UI.Combat.UpdatePuppet(puppet)
+end
 -- type: incoming event handler
 -- job: parses the puppet from the event, calls the factory for an instance
 -- then generates the deck.. and tells the GfxEngine to render it

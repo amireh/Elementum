@@ -89,6 +89,8 @@ namespace Pixy
 		Combat( const Combat& ) = delete;
 		Combat& operator=( const Combat& ) = delete;
 
+    void handleNewTurn();
+
     bool onSyncGameData(const Event&);
     bool onJoinQueue(const Event& inEvt);
     bool onMatchFound(const Event& inEvt);

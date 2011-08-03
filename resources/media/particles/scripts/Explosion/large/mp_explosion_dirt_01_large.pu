@@ -6,7 +6,7 @@
 // Usage of this program is licensed under the terms of the Particle Universe Commercial License Media Pack 1.
 // You can find a copy of the Commercial License in the Media Pack 1 package.
 //-----------------------------------------------------------------------------------------------------------------------
-system Explosion/mp_dirt_01
+system Elementum/Fx/ExplosionDirt
  {
     scale_velocity                              0.1
     scale                                       0.1 0.1 0.1

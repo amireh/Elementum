@@ -9,4 +9,9 @@ public:
   virtual ~CUnit();
   virtual Pixy::Renderable* getRenderable();
 
+  virtual void attachBuff(CSpell*);
+  virtual void detachBuff(int inUID);
+  virtual bool hasBuff(int inUID);
+
+  void updateTextOverlay();
 };

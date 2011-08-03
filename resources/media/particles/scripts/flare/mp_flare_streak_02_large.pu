@@ -19,6 +19,7 @@ system Elementum/Fx/Summon
         renderer                                Billboard
         {
             billboard_origin                    bottom_center
+            render_queue_group                  5
         }
         emitter                                 Circle
         {
@@ -67,6 +68,7 @@ system Elementum/Fx/Summon
         renderer                                Billboard
         {
             billboard_origin                    bottom_center
+            render_queue_group                  5
         }
         emitter                                 Circle
         {
@@ -123,6 +125,7 @@ system Elementum/Fx/Summon
             common_direction                    0 1 0
             common_up_vector                    0 0 1
             accurate_facing   on
+            render_queue_group                  5
         }
         emitter                                 Point
         {

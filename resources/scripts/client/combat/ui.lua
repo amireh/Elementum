@@ -4,7 +4,7 @@
 	cegui event handlers and UI bootstrapping goes here
 ]]
 if (Pixy.UI.Combat == nil) then
-  Pixy.UI.Combat = { Buttons = {}, Labels = {}, Config = {}, Containers = {}}
+  Pixy.UI.Combat = { Buttons = {}, LogButtons = {}, Labels = {}, Config = {}, Containers = {}}
 
 end
 
@@ -19,6 +19,16 @@ Pixy.UI.Combat.configure = function()
 	cfg.SpellButton = {}
 	cfg.SpellButton["Height"] = 96
 	cfg.SpellButton["Width"] = 96
+  cfg.SpellButton["Dimensions"] =
+    CEGUI.UVector2:new(
+      CEGUI.UDim(0.147,0),-- cfg.SpellButton["Width"]),
+      CEGUI.UDim(0.67,0)-- cfg.SpellButton["Height"])
+    )
+  cfg.SpellButton["LogDimensions"] =
+    CEGUI.UVector2:new(
+      CEGUI.UDim(0.0735,0),-- cfg.SpellButton["Width"]),
+      CEGUI.UDim(0.335,0)-- cfg.SpellButton["Height"])
+    )
 
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "spells_earth.imageset" )
@@ -34,8 +44,10 @@ Pixy.UI.Combat.registerGlobals = function()
   assert(Pixy.UI.Combat.Containers["Error"])
 
   Pixy.UI.Combat.Labels["Turns"] = CEWindowMgr:getWindow("Elementum/Combat/Effects/Turns/Text")
-  Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Labels/Tooltip")
+  Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Text/Tooltip")
   Pixy.UI.Combat.Labels["Error"] = CEWindowMgr:getWindow("Elementum/Combat/Text/Error")
+  Pixy.UI.Combat.Labels["PlayerWP"] = CEWindowMgr:getWindow("Elementum/Combat/Text/PlayerWP")
+  Pixy.UI.Combat.Labels["EnemyWP"] = CEWindowMgr:getWindow("Elementum/Combat/Text/EnemyWP")
 
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Victory"), "Testing")
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"), "Fade")
@@ -155,13 +167,13 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
   instance:setTargetWindow(inSpell:getButton())
   if (not instance:isRunning()) then instance:start() end
 
-  table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
+  --table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
 end
 
 
 Pixy.UI.Combat.dropSpell = function(inSpell)
   Pixy.UI.Combat.HideTooltip(nil)
-  removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
+  --removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
   local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation("DropSpell")
   instance:setTargetWindow(inSpell:getButton())
   if (not instance:isRunning()) then instance:start() end
@@ -245,6 +257,7 @@ Pixy.UI.Combat.ShowTooltip = function(e)
 	local spell = SelfPuppet:getSpell(win:getUserString("Spell"))
   assert(spell)
 
+  Pixy.UI.Combat.Containers["Tooltip"]:show()
   local label = Pixy.UI.Combat.Labels["Tooltip"]
   label:setText(spell:getTooltip())
   --UIEngine:refreshTooltipSize(win, spell)
@@ -256,12 +269,84 @@ Pixy.UI.Combat.ShowTooltip = function(e)
 end
 Pixy.UI.Combat.HideTooltip = function(e)
   Pixy.UI.Combat.Labels["Tooltip"]:setText("")
+  Pixy.UI.Combat.Containers["Tooltip"]:hide()
 end
 
 Pixy.UI.Combat.ShowError = function(txt)
   Pixy.UI.Combat.Containers["Error"]:hide()
   Pixy.UI.Combat.Labels["Error"]:setText(txt)
   Pixy.UI.Combat.Containers["Error"]:show()
+end
+
+Pixy.UI.Combat.UpdatePuppet = function(puppet)
+  if (puppet == SelfPuppet) then
+    Pixy.UI.Combat.Labels["PlayerWP"]:setText(puppet:getWP())
+  else
+    Pixy.UI.Combat.Labels["EnemyWP"]:setText(puppet:getWP())
+  end
+end
+
+Pixy.UI.Combat.LogSpellCast = function(inSpell,caster_is_self)
+  local target = ""
+  if (caster_is_self) then target = "Player" else target = "Enemy" end
+  Pixy.Log("Spell's log target : " .. target)
+  local name = "Elementum/Combat/SpellLog/" .. target .. "/" .. inSpell:getUID() .. "_log"
+  local win = CEWindowMgr:createWindow("TaharezLook/ImageButton", name)
+  CEWindowMgr:getWindow("Elementum/Combat/Containers/SpellLog/" .. target):addChildWindow(win)
+
+  -- sanitize spell name to match image set name
+  local image_set = "Spells_" .. raceToString(inSpell:getRace())
+  local image_name = string.gsub(inSpell:getName(), "%s", "_")
+
+	local image = "set:" .. image_set .. " image:" .. image_name
+	win:setProperty("NormalImage",   image .. "_Normal")
+	win:setProperty("HoverImage",    image .. "_Hover")
+	win:setProperty("PushedImage",   image .. "_Pushed")
+	win:setProperty("DisabledImage", image .. "_Disabled")
+  win:setUserString("Tooltip", inSpell:getTooltip())
+	win:setSize(Pixy.UI.Combat.Config.SpellButton["LogDimensions"])
+  UIEngine:setMargin(win,
+    CEGUI.UBox(
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,5)))
+
+  win:moveToFront()
+  win:show()
+
+  win:subscribeEvent("MouseEnter", "Pixy.UI.Combat.ShowLogTooltip")
+  win:subscribeEvent("MouseLeave", "Pixy.UI.Combat.HideLogTooltip")
+
+  table.insert(Pixy.UI.Combat.LogButtons, win:getName())
+
+  Pixy.Log("Logged Spell cast ! " .. inSpell:getName() .. inSpell:getUID())
+end
+
+Pixy.UI.Combat.ClearSpellLog = function()
+  if next(Pixy.UI.Combat.LogButtons) == nil then
+     return
+  end
+  Pixy.Log("Clearing spell log")
+  for win in list_iter(Pixy.UI.Combat.LogButtons) do
+    Pixy.Log("removing spell log button named: " .. win)
+    CEWindowMgr:destroyWindow(win)
+  end
+  Pixy.Log("Cleared")
+end
+
+Pixy.UI.Combat.ShowLogTooltip = function(e)
+  local win = CEGUI.toWindowEventArgs(e).window
+  local tt = win:getUserString("Tooltip")
+
+  Pixy.UI.Combat.Containers["Tooltip"]:show()
+  local label = Pixy.UI.Combat.Labels["Tooltip"]
+  label:setText(tt)
+end
+Pixy.UI.Combat.HideLogTooltip = function(e)
+  Pixy.UI.Combat.Containers["Tooltip"]:hide()
+  local label = Pixy.UI.Combat.Labels["Tooltip"]
+  label:setText("")
 end
 
 -- configure

@@ -14,4 +14,8 @@ class CSpell : public Pixy::Spell
   CEGUI::Window*  getButton();
   std::string getTooltip() const;
 
+  Renderable* getCaster();
+  Renderable* getTarget();
+  void setCaster(Renderable* inCaster);
+  void setTarget(Renderable* inTarget);
 };

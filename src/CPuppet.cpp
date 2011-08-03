@@ -45,7 +45,23 @@ namespace Pixy
     if (mRenderable)
       delete mRenderable;
 
+    while (!mSpells.empty()) {
+      delete mSpells.back();
+      mSpells.pop_back();
+    }
+
+    while (!mBuffs.empty()) {
+      delete mBuffs.back();
+      mBuffs.pop_back();
+    }
+
     mRenderable = 0;
+
+    if (mLog) {
+      mLog->infoStream() << "destroyed";
+      delete mLog;
+      mLog = 0;
+    }
   };
 
   Renderable* CPuppet::getRenderable() {
@@ -83,11 +99,11 @@ namespace Pixy
 	void CPuppet::attachSpell(CSpell* inSpell)
 	{
 		mHand.push_back(inSpell);
-    inSpell->setCaster(this);
+    inSpell->setCaster(mRenderable);
 		std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
 	};
 
-	void CPuppet::detachSpell(int inUID)
+	void CPuppet::detachSpell(int inUID, bool remove)
 	{
 		CSpell* lSpell = 0;
 		hand_t::iterator it;
@@ -100,8 +116,46 @@ namespace Pixy
 			}
 
     assert(lSpell);
+    if (remove)
+      delete lSpell;
+
+    lSpell = 0;
+	};
+
+  CPuppet::spells_t const& CPuppet::getBuffs() const {
+    return mBuffs;
+  }
+  void CPuppet::attachBuff(CSpell* inSpell)
+	{
+		mBuffs.push_back(inSpell);
+    inSpell->setCaster(mRenderable);
+		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
+	};
+
+	void CPuppet::detachBuff(int inUID)
+	{
+		CSpell* lSpell = 0;
+		spells_t::iterator it;
+		for(it = mBuffs.begin(); it != mBuffs.end(); ++it)
+			if ((*it)->getUID() == inUID)
+			{
+        lSpell = *it;
+				mBuffs.erase(it);
+				break;
+			}
+
+    assert(lSpell);
     delete lSpell;
 	};
+
+  bool CPuppet::hasBuff(int inUID) {
+		spells_t::iterator lSpell = mBuffs.begin();
+		for (lSpell; lSpell != mBuffs.end(); ++lSpell)
+			if ((*lSpell)->getUID() == inUID)
+				return true;
+
+    return false;
+  }
 
 	/* ------------------------
 	 * UNITS

@@ -108,7 +108,7 @@ namespace Pixy {
     if (inEffect->isAttached())
       inEffect->getParentSceneNode()->detachObject(inEffect);
 
-    inEffect->setUserAny(Ogre::Any(inEntity));
+    //~ inEffect->setUserAny(Ogre::Any(inEntity));
     //~ inEffect->setScale(inEntity->getSceneNode()->getScale());
     inEntity->getSceneNode()->attachObject(inEffect);
     inEffect->start();
@@ -124,7 +124,10 @@ namespace Pixy {
     Ogre::SceneNode* mNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     mNode->setPosition(pos);
 
+    assert(mEffects.find(inEffect) != mEffects.end());
+
     ParticleUniverse::ParticleSystem* mEffect = mEffects.find(inEffect)->second;
+
     if (mEffect->isAttached())
       mEffect->getParentSceneNode()->detachObject(mEffect);
 

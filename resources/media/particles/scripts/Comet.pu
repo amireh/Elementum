@@ -1,0 +1,88 @@
+system Elementum/Fx/Comet
+{
+  scale 0.4 0.4 0.4
+  velocity_scale 0.4 0.4 0.4
+    technique
+    {
+        visual_particle_quota                   2000
+        material                                PUMediaPack/Flare_04
+        renderer                                Billboard
+        {
+        }
+        emitter                                 SphereSurface
+        {
+            emission_rate                       500
+            time_to_live                        1
+            velocity                            500
+            position                            0 20 0
+            radius                              50
+        }
+        affector                                Colour Affector210
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.184783  0.2 0.2 0.956863 0.776471
+            time_colour                         1    0.121569 0.0784314 0.878431 0.6
+            colour_operation                    multiply
+        }
+        affector                                Scale Affector211
+        {
+            xyz_scale                           dyn_curved_linear
+            {
+                control_point                   0 0.0831025
+                control_point                   0.998893 192
+            }
+            since_start_system                  true
+        }
+        observer                                OnTime Observer43
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler45
+            {
+            }
+            since_start_system                  true
+            on_time                             greater_than 2
+        }
+    }
+    technique Technique116
+    {
+        visual_particle_quota                   12
+        material                                mp_flare_04
+        default_particle_width                  5
+        default_particle_height                 5
+        default_particle_depth                  5
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point Emitter137
+        {
+            emission_rate                       800
+            time_to_live                        dyn_random
+            {
+                min                             0.2
+                max                             0.5
+            }
+            direction                           0 -1 0
+            colour                              0.254902 0.388235 0.921569 1
+        }
+        affector                                Scale Affector263
+        {
+            xyz_scale                           dyn_curved_linear
+            {
+                control_point                   0.0516605 1415.34
+                control_point                   1.0059 0.283661
+            }
+        }
+        affector                                TextureRotator Affector284
+        {
+            rotation                            dyn_random
+            {
+                min                             -3
+                max                             3
+            }
+            rotation_speed                      0.5
+        }
+        affector                                SphereCollider Affector453
+        {
+        }
+    }
+}

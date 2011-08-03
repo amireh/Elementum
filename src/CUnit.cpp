@@ -47,8 +47,21 @@ namespace Pixy
 
     mRenderable = 0;
 
-    if (mLog)
+    if (mLog) {
       mLog->infoStream() << " i'm destroyed!\n";
+      delete mLog;
+      mLog = 0;
+    }
+
+    while (!mSpells.empty()) {
+      delete mSpells.back();
+      mSpells.pop_back();
+    }
+
+    while (!mBuffs.empty()) {
+      delete mBuffs.back();
+      mBuffs.pop_back();
+    }
 
   };
 
@@ -91,10 +104,10 @@ namespace Pixy
       << "#" << inSpell->getUID()
       << " attached to hand.\n";
 
-    mSpells.back()->setCaster(this);
+    mSpells.back()->setCaster(mRenderable);
 	};
 
-	void CUnit::detachSpell(int inUID)
+	void CUnit::detachSpell(int inUID, bool remove)
 	{
     CSpell* lSpell = 0;
 		spells_t::iterator it;
@@ -113,7 +126,10 @@ namespace Pixy
       << "#" << lSpell->getUID()
       << " detached from hand.\n";
 
-    delete lSpell;
+    if (remove)
+      delete lSpell;
+
+    lSpell = 0;
 	};
 
 	int CUnit::nrSpells() {
@@ -128,6 +144,42 @@ namespace Pixy
 
     throw invalid_uid("couldn't find a spell with uid" + stringify(inUID));
 	}
+
+
+  CUnit::spells_t const& CUnit::getBuffs() const {
+    return mBuffs;
+  }
+  void CUnit::attachBuff(CSpell* inSpell)
+	{
+		mBuffs.push_back(inSpell);
+    inSpell->setCaster(mRenderable);
+		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
+	};
+
+	void CUnit::detachBuff(int inUID)
+	{
+		CSpell* lSpell = 0;
+		spells_t::iterator it;
+		for(it = mBuffs.begin(); it != mBuffs.end(); ++it)
+			if ((*it)->getUID() == inUID)
+			{
+        lSpell = *it;
+				mBuffs.erase(it);
+				break;
+			}
+
+    assert(lSpell);
+    delete lSpell;
+	};
+
+  bool CUnit::hasBuff(int inUID) {
+		spells_t::iterator lSpell = mBuffs.begin();
+		for (lSpell; lSpell != mBuffs.end(); ++lSpell)
+			if ((*lSpell)->getUID() == inUID)
+				return true;
+
+    return false;
+  }
 
   bool CUnit::live() {
     Unit::live();

@@ -20,6 +20,7 @@
 #include "FxEngine.h"
 #include "ScriptEngine.h"
 #include "CResourceManager.h"
+#include "Renderable.h"
 
 namespace Pixy
 {
@@ -426,6 +427,55 @@ namespace Pixy
     return true;
   }
 
+  void Combat::handleNewTurn() {
+
+    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+    mScriptEngine->passToLua("onHandleNewTurn", 0);
+
+    // remove all expired puppet buffs
+    {
+      std::vector<CSpell*> expired;
+      for (auto buff : mActivePuppet->getBuffs())
+        if (buff->hasExpired()) {
+          expired.push_back(buff);
+        }
+      for (auto expired_spell : expired)
+        mActivePuppet->detachBuff(expired_spell->getUID());
+    }
+    // apply active buffs
+    for (auto buff : mActivePuppet->getBuffs()) {
+      mScriptEngine->passToLua(
+        "CastSpell", 3,
+        "Pixy::Renderable", buff->getCaster(),
+        "Pixy::Renderable", buff->getTarget(),
+        "Pixy::CSpell", buff);
+    }
+
+    for (auto unit : mActivePuppet->getUnits()) {
+      unit->getUp();
+
+      // remove all expired puppet buffs
+      {
+        std::vector<CSpell*> expired;
+        for (auto buff : unit->getBuffs())
+          if (buff->hasExpired()) {
+            expired.push_back(buff);
+          }
+        for (auto expired_spell : expired)
+          unit->detachBuff(expired_spell->getUID());
+      }
+      // apply active buffs
+      for (auto buff : unit->getBuffs()) {
+        mScriptEngine->passToLua(
+        "CastSpell", 3,
+        "Pixy::Renderable", buff->getCaster(),
+        "Pixy::Renderable", buff->getTarget(),
+        "Pixy::CSpell", buff);
+      }
+    }
+
+  }
+
   bool Combat::onStartTurn(const Event& inEvt) {
 
     mActivePuppet = mPuppet;
@@ -434,14 +484,10 @@ namespace Pixy
     else
       mWaitingPuppet = mPuppets.front();
 
-    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
-
-    //mUIEngine->onTurnStarted(mPuppet);
     // send the event back, acknowledging the order
     mNetMgr->send(inEvt);
 
-    for (auto unit : mActivePuppet->getUnits())
-      unit->getUp();
+    handleNewTurn();
 
     return true;
   }
@@ -451,13 +497,10 @@ namespace Pixy
 
     mWaitingPuppet = mActivePuppet;
     mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("Puppet")));
-    //mUIEngine->onTurnStarted(mActivePuppet);
-    mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
 
     assert(mActivePuppet); // _DEBUG_
 
-    for (auto unit : mActivePuppet->getUnits())
-      unit->getUp();
+    handleNewTurn();
 
     mLog->infoStream() << mActivePuppet->getName() << "'s turn has started, not mine";
 
@@ -505,7 +548,6 @@ namespace Pixy
       while (++spellsParsed <= nrDrawSpells) {
         CSpell* lSpell = mResMgr.getSpell(elements[++index]);
         lSpell->setUID(convertTo<int>(elements[++index]));
-        lSpell->setCaster(lPuppet);
         lPuppet->attachSpell(lSpell);
 
         mLog->debugStream() << "attaching spell with UID: " << lSpell->getUID() << " to puppet " << lPuppet->getUID();
@@ -588,7 +630,7 @@ namespace Pixy
     for (auto puppet : mPuppets)
       try {
         lSpell = puppet->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
-        lCaster = puppet;
+        lCaster = static_cast<CPuppet*>(lSpell->getCaster()->getEntity());
         break;
       } catch (...) { lSpell = 0; }
 
@@ -615,7 +657,10 @@ namespace Pixy
         (_lTarget->getRank() == PUPPET)
           ? getPuppet(_lTarget->getUID())->getRenderable()
           : getUnit(_lTarget->getUID())->getRenderable();
-    }
+
+      lSpell->setTarget(lTarget);
+    } else
+      lSpell->setTarget(lCaster->getRenderable());
 
     mScriptEngine->passToLua(
       "CastSpell", 3,
@@ -628,9 +673,8 @@ namespace Pixy
     if (lCaster == mPuppet)
       mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
     //mUIEngine->dropSpell(_spell);
-    // remove it from the puppet's hand
-    lCaster->detachSpell(lSpell->getUID());
-
+    // remove it from the puppet's hand if it's not a buff
+    lCaster->detachSpell(lSpell->getUID(), lSpell->getDuration() == 0);
 
     return true;
   }
@@ -672,6 +716,7 @@ namespace Pixy
     std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
 
     _puppet->updateFromEvent(evt);
+    mScriptEngine->passToLua("UpdatePuppet", 1, "Pixy::CPuppet", (void*)_puppet);
 
     return true;
   }

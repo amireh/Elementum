@@ -38,3 +38,7 @@ end
 Pixy.Combat.onMatchFinished = function(wuid)
   Pixy.UI.Combat.onMatchFinished(wuid)
 end
+
+Pixy.Combat.onHandleNewTurn = function()
+  Pixy.UI.Combat.ClearSpellLog()
+end

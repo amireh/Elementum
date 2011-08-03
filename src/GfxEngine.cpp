@@ -1243,6 +1243,8 @@ namespace Pixy {
       inUnit->setWaypoints(&mWaypoints[inUnit->getOwner() == mPlayer ? 0 : 1][idNode]);
       inUnit->move(POS_READY);
 
+      FxEngine::getSingleton().dehighlight();
+
     } else {
       mLog->errorStream() << "Could not change Unit's ownership! No empty SceneNodes available";
     }
@@ -1303,9 +1305,10 @@ namespace Pixy {
         mLog->infoStream() << "Ray target name: " << itr->movable->getName();
       if (itr->movable &&
           (itr->movable->getName().find(mPlayer->getName()) != std::string::npos ||
-          itr->movable->getName().find(mEnemy->getName()) != std::string::npos ||
-          (itr->movable->getName().find("Fx") != std::string::npos &&
-           itr->movable->getName().find("Blood") == std::string::npos))
+          itr->movable->getName().find(mEnemy->getName()) != std::string::npos
+          //(itr->movable->getName().find("Fx") == std::string::npos &&
+          // itr->movable->getName().find("Blood") == std::string::npos)
+          )
          /*(itr->movable->getName().substr(0,6) != "Caelum") &&
          itr->movable->getName() != "" &&
          //~ itr->movable->getName() != "mySphereEntity" &&
@@ -1491,6 +1494,7 @@ namespace Pixy {
         mSelected->getEntity()->getRank() != PUPPET &&
         mSelected->getEntity()->getOwner() == mPlayer &&
         lUnit->getOwner() != mPlayer &&
+        lUnit->getPosition() == POS_CHARGING &&
         !static_cast<CUnit*>(mSelected->getEntity())->isResting())
     {
       Event req(EventUID::Block);
