@@ -81,6 +81,7 @@ namespace Pixy
 
 		// start the interface chain
 		mScriptEngine->runScript("combat/entry_point.lua");
+    mScriptEngine->passToLua("PrepareScene", 0);
 
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
@@ -108,6 +109,10 @@ namespace Pixy
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
     bind(EventUID::UpdateUnit, boost::bind(&Combat::onUpdateUnit, this, _1));
+    bind(EventUID::EntityDied, [&](const Event& inEvt) -> bool {
+      markForDeath(static_cast<CUnit*>(inEvt.Any));
+      return true;
+    });
 
     bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
@@ -298,6 +303,8 @@ namespace Pixy
     mScriptEngine->passToLua("addPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
     if (inPuppet->getName() == mPuppetName)
       assignPuppet(inPuppet);
+    else
+      mScriptEngine->passToLua("assignEnemyPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
 	}
 
   void Combat::assignPuppet(CPuppet* inPuppet) {
@@ -412,6 +419,7 @@ namespace Pixy
 
     // set up the scene
     mGfxEngine->setupCombat();
+    mScriptEngine->passToLua("SetupScene", 0);
 
     // render all the puppets
     for (auto puppet : mPuppets) {
@@ -419,8 +427,11 @@ namespace Pixy
         mPuppet = puppet;
 
       puppet->live();
-      mGfxEngine->attachToScene(puppet->getRenderable());
+      mScriptEngine->passToLua("CreatePuppet", 1, "Pixy::CPuppet", (void*)puppet);
+      //~ mGfxEngine->attachToScene(puppet->getRenderable());
     }
+
+    mScriptEngine->passToLua("GameStarted", 0);
 
     mNetMgr->send(Event(EventUID::Ready));
     //mEvtMgr->hook(mEvtMgr->createEvt("Ready")); __DISABLED__
@@ -697,7 +708,7 @@ namespace Pixy
     assert(_unit->getOwner());
 
     _unit->live();
-    mGfxEngine->attachToScene(_unit->getRenderable());
+    //~ mGfxEngine->attachToScene(_unit->getRenderable());
 
     mScriptEngine->passToLua("CreateUnit", 1, "Pixy::CUnit", (void*)_unit);
 

@@ -198,7 +198,7 @@ namespace Pixy {
 
 	bool ScriptEngine::passToLua(const Event& inEvt) {
 
-		mLog->debugStream() << "dispatching evt to lua";
+		//~ mLog->debugStream() << "dispatching evt to lua";
 
 		//mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
 

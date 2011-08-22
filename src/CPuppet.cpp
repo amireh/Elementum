@@ -16,6 +16,8 @@ namespace Pixy
     mSceneNode = 0;
     mEntity = this;
     */
+
+    mMesh = "DarkKnight.mesh";
   };
 
   bool CPuppet::live() {
@@ -211,10 +213,10 @@ namespace Pixy
 
   void CPuppet::onVictory() {
 
-		mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
-		mRenderable->setTopAnimation(Renderable::ANIM_NONE);
-		// disable hand animation because the dance controls hands
-		mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
+		//mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
+		//mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+		//// disable hand animation because the dance controls hands
+		//mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
   }
 
 } // end of namespace

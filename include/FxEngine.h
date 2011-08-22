@@ -47,6 +47,7 @@ namespace Pixy {
       ParticleUniverse::ParticleSystem*,
       ParticleUniverse::ParticleUniverseEvent&);
 
+    void onEntityDying(Renderable* inUnit);
 
 	protected:
     friend class GfxEngine;

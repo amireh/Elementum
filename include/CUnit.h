@@ -25,6 +25,8 @@ namespace Pixy
 	public:
     typedef std::list<CSpell*> spells_t;
 
+    bool fRequiresYawFix;
+
     CUnit();
     CUnit(const CUnit& src);
     CUnit& operator=(const CUnit& rhs);
@@ -87,6 +89,8 @@ namespace Pixy
 
     virtual void updateFromEvent(const Event& evt);
 
+    bool isDying() const;
+
 	protected:
     friend class GfxEngine;
 
@@ -140,6 +144,7 @@ namespace Pixy
 
     spells_t mSpells;
     spells_t mBuffs;
+    bool fDying;
 	};
 } // end of namespace
 #endif

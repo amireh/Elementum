@@ -125,16 +125,21 @@ namespace Pixy
 
 	}
 
-	void Intro::mouseMoved( const OIS::MouseEvent &e )
+	bool Intro::mouseMoved( const OIS::MouseEvent &e )
 	{
 		// Update CEGUI with the mouse motion
-
+    mUIEngine->mouseMoved(e);
+    return true;
 	}
 
-	void Intro::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+	bool Intro::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    mUIEngine->mousePressed(e, id);
+    return true;
 	}
 
-	void Intro::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+	bool Intro::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    mUIEngine->mouseReleased(e, id);
+    return true;
 	}
 
 	void Intro::pause( void ) {

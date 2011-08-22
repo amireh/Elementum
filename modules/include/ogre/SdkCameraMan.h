@@ -66,7 +66,7 @@ namespace OgreBites
     , MAX_PITCH(1.4f)
     , MIN_PITCH(0.25f)
     , MAX_Y(100)
-    , MIN_Y(30)
+    , MIN_Y(1)
 		{
 			setCamera(cam);
 			setStyle(CS_FREELOOK);

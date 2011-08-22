@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES(include include/dotscene include/ogre include/tinyxmlresource)
+INCLUDE_DIRECTORIES(include include/dotscene include/ogre include/tinyxml include/tinyxmlresource include/OgreMax)
 # add sources
 SET(EClient_Modules_SRCS
 
@@ -10,6 +10,12 @@ SET(EClient_Modules_SRCS
   src/ogre/HDRCompositor.cpp
   src/ogre/HelperLogics.cpp
   src/ogre/MovableTextOverlay.cpp
+
+  src/OgreMax/OgreMaxModel.cpp
+  src/OgreMax/OgreMaxScene.cpp
+  src/OgreMax/OgreMaxUtilities.cpp
+  src/OgreMax/ProgressCalculator.cpp
+  src/OgreMax/Version.cpp
 )
 
 

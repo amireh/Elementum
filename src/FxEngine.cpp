@@ -265,4 +265,10 @@ namespace Pixy {
     }
   }
 
+  void FxEngine::onEntityDying(Renderable* inUnit) {
+    assert(mEffects.find("Elementum/Fx/Desummon") != mEffects.end());
+
+    playEffect("Elementum/Fx/Desummon", inUnit->getSceneNode()->getPosition());
+  }
+
 }

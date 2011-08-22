@@ -18,6 +18,7 @@
 #include "NetworkManager.h"
 #include "InputManager.h"
 #include "FxEngine.h"
+#include "OgreMax/OgreMaxScene.hpp"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUIBase/CEGUI.h>
@@ -45,7 +46,7 @@
 //#include "Plugins/Hydrax/Modules/SimpleGrid/SimpleGrid.h"
 //#include "Plugins/Caelum/CaelumSystem.h"
 
-//#include "dotscene/DotSceneLoader.h"
+#include "dotscene/DotSceneLoader.h"
 #include "ogre/HelperLogics.h"
 #include "ogre/SdkCameraMan.h"
 #include "ogre/HDRCompositor.h"
@@ -95,8 +96,8 @@ namespace Pixy {
 			delete mLog;
 			mLog = 0;
 
-			//if (mSceneLoader)
-			//	delete mSceneLoader;
+			if (mSceneLoader)
+				delete mSceneLoader;
 
 			fSetup = false;
 		}
@@ -117,22 +118,12 @@ namespace Pixy {
 
 
 		mCamera       = mSceneMgr->createCamera("Combat_Camera");
-		//mCamera2      = mSceneMgr->createCamera("Combat_Camera_2");
-		//mCamera3      = mSceneMgr->createCamera("Combat_Camera_3");
-		//mCamera4      = mSceneMgr->createCamera("Combat_Camera_4");
 
 		mRenderWindow = mRoot->getAutoCreatedWindow();
 
-		/*mRenderWindow->reposition(1420 - mRenderWindow->getWidth(),
-								  50);*/
-		//mViewport     = mRenderWindow->addViewport( mCamera );
-
-		//mRenderWindow->getViewport(<#unsigned short index#>)
+	  mViewport = mRenderWindow->addViewport(mCamera);
 
 		mEvtMgr = EventManager::getSingletonPtr();
-
-		/*if (GameManager::getSingleton().currentState()->getId() == STATE_COMBAT)
-		  setupCombat();*/
 
 		bind(EventUID::EntitySelected, boost::bind(&GfxEngine::onEntitySelected, this, _1));
     bind(EventUID::StartBlockPhase, boost::bind(&GfxEngine::onStartBlockPhase, this, _1));
@@ -143,27 +134,26 @@ namespace Pixy {
     bind(EventUID::EndBlockPhase, boost::bind(&GfxEngine::onEndBlockPhase, this, _1));
     bind(EventUID::MatchFinished, boost::bind(&GfxEngine::onMatchFinished, this, _1));
 
+    mSceneLoader = new DotSceneLoader();
 
 
-    attrs =
-      new MovableTextOverlayAttributes(
-        "Attrs1",
-        mCamera,
-        "DejaVuSans",16,ColourValue::White,"RedTransparent");
-
-		mPuppetPos[ME] = Vector3(0, 5, -50);
+		/*mPuppetPos[ME] = Vector3(0, 0, -50);
     mPuppetPos[ENEMY] =
       Vector3(mPuppetPos[ME].x,
 							mPuppetPos[ME].y,
 							mPuppetPos[ME].z + 100);
+    */
 
-		setupSceneManager();
-    setupViewports();
-    setupCamera();
-	  setupSky();
+    mCameraMan = new OgreBites::SdkCameraMan(mCamera);
+	  mCameraMan->setStyle(OgreBites::CS_ORBIT);
+
+	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
+		//~ compMgr.registerCompositorLogic("HDR", new HDRLogic);
+
+	  //setupSky();
 	  //setupWater();
-    setupTerrain();
-    setupLights();
+    //setupTerrain();
+    //setupLights();
 
     mTrayMgr = new SdkTrayManager("Elementum", mRenderWindow, InputManager::getSingletonPtr()->getMouse(), 0);
     mTrayMgr->hideCursor();
@@ -173,6 +163,14 @@ namespace Pixy {
 		fSetup = true;
 		return fSetup;
 	}
+
+  void GfxEngine::setupMovableTextOverlays() {
+    attrs =
+      new MovableTextOverlayAttributes(
+        "MTOAttributes",
+        mCamera,
+        mMTOFontName,mMTOFontSize,mMTOFontColor,mMTOMaterialName);
+  }
 
 	bool GfxEngine::setupCombat() {
 
@@ -197,7 +195,7 @@ namespace Pixy {
 		std::ostringstream lNodeName;
 		lNodeName << mPlayer->getName() << "_node_puppet";
 		mCameraMan->setTarget(mSceneMgr->getSceneNode(lNodeName.str()));
-    mCameraMan->setYawPitchDist(Ogre::Degree(180), Ogre::Degree(15), 150);
+    mCameraMan->setYawPitchDist(Ogre::Degree(mCameraYawPitchDist.x), Ogre::Degree(mCameraYawPitchDist.y), mCameraYawPitchDist.z);
     //mCamera->yaw(Ogre::Degree(-180));
 
 		//Combat::getSingleton().updateGfx();
@@ -360,135 +358,28 @@ namespace Pixy {
 
   void GfxEngine::setupSceneManager()
   {
-	  mLog->debugStream() << "setting up SceneManager";
-
-
-
-	  mViewport = mRenderWindow->addViewport(mCamera);
-
-
-	  //Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
-		//compMgr.registerCompositorLogic("HDR", new HDRLogic);
-    //
-	  //Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
-	  //Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
-
-    //compMgr.addCompositor(mViewport, "Bloom");
-    //compMgr.setCompositorEnabled(mViewport, "Bloom", true);
-
-	  //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
-
-	  Ogre::Vector3 lPos = mPuppetPos[ME];
-	  //mCamera->setPosition(lPos.x, lPos.y+2, lPos.z-20);
-	  //mCamera->lookAt(mPuppetPos[ME]);
-
-	  mCameraMan = new OgreBites::SdkCameraMan(mCamera);
-	  //mCameraMan->setTopSpeed(50);
-	  mCameraMan->setStyle(OgreBites::CS_ORBIT);
-
-	  //mCamera->yaw(Ogre::Radian(-45));
-
-
-	  //mWindow->setDebugText(getProperty("Robot","Life"));
-
-	  //~ mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_MODULATIVE);
   };
+
+  void GfxEngine::loadDotScene(std::string inScene, std::string inName) {
+    assert(mSceneLoader);
+
+    mSceneLoader->parseDotScene(inScene, inName, mSceneMgr);
+  }
+
+  void GfxEngine::enableCompositorEffect(std::string inEffect) {
+	  Ogre::CompositorManager::getSingleton().addCompositor(mViewport, inEffect);
+	  Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, inEffect, true);
+  }
 
   void GfxEngine::setupViewports()
   {
-		mLog->debugStream() << "setting up viewports";
-    mViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
-    // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
   };
 
   void GfxEngine::setupLights()
   {
-
-    mSceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
-
-    Ogre::ColourValue fadeColour(0, 0, 0);
-    mSceneMgr->setFog(Ogre::FOG_EXP2, fadeColour, 0.0022);
-
-    Ogre::Vector3 pos;
-    Ogre::ColourValue dcol(0.9f,0.9f,0.9f);
-    Ogre::ColourValue scol(0.9f,0.9f,0.9f);
-
-    pos = mPuppetPos[ME];
-    pos.y += 450;
-	  mLog->debugStream() << "setting up lights";
-    Ogre::Light *light;
-    /* now let's setup our light so we can see the shizzle */
-    light = mSceneMgr->createLight("Light1");
-    light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(pos);
-    //light->setDirection(pos.x, 0, pos.z);
-    light->setDiffuseColour(dcol);
-    light->setSpecularColour(scol);
-
-    light = mSceneMgr->createLight("Lightzz");
-    light->setType(Ogre::Light::LT_DIRECTIONAL);
-    light->setDirection(Vector3(0,1,0));
-    light->setDiffuseColour(dcol);
-    light->setSpecularColour(scol);
-
-    light = mSceneMgr->createLight("Lightzzz");
-    light->setType(Ogre::Light::LT_DIRECTIONAL);
-    light->setDirection(Vector3(0,0,1));
-    light->setDiffuseColour(Ogre::ColourValue(0.5f,0.5f,0.5f));
-    light->setSpecularColour(Ogre::ColourValue(0.5f,0.5f,0.5f));
-
-	  light = mSceneMgr->createLight("Light2");
-    light->setType(Ogre::Light::LT_SPOTLIGHT);
-    pos = Vector3(mPuppetPos[ME].x,mPuppetPos[ME].y+50, mPuppetPos[ME].z);
-    //pos.y += 250;
-    light->setDirection(Vector3(0,-1,0));
-    light->setPosition(pos);
-    light->setDiffuseColour(dcol);
-    light->setSpecularColour(scol);
-
-
-	  light = mSceneMgr->createLight("Light4");
-    light->setType(Ogre::Light::LT_POINT);
-    pos = mPuppetPos[ENEMY];
-    pos.y += 250;
-    pos.z -= 50;
-    light->setPosition(pos);
-    //light->setDirection(0,0,100);
-    light->setDiffuseColour(dcol);
-    light->setSpecularColour(scol);
-
-    /*light = mSceneMgr->createLight("Light5");
-    light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(500, 350, 100);
-    //light->setDirection(500,0,100);
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);*/
-
-	  /*col = Ogre::ColourValue(1, 0.4f, 0.4f);
-    light = mSceneMgr->createLight("LightDirectional");
-    light->setType(Ogre::Light::LT_DIRECTIONAL);
-    light->setDirection(Vector3(0,-1,0));
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);*/
-
-    /*pos.z -= 10;
-    col = Ogre::ColourValue(1,0,0);
-    light = mSceneMgr->createLight("Light3");
-    light->setType(Ogre::Light::LT_POINT);
-    light->setPosition(pos);
-    light->setDirection(mPuppetPos[ME]);
-    light->setDiffuseColour(col);
-    light->setSpecularColour(col);   */
-      /*light = mSceneMgr->createLight("Light2");
-	 light->setType(Ogre::Light::LT_POINT);
-	 light->setPosition(Vector3(500, 500, 1000));
-	 light->setDirection(Vector3(0,0,1200));
-	 light->setDiffuseColour(1.0, 1.0, 1.0);
-	 light->setSpecularColour(1.0, 1.0, 1.0);*/
   };
 
-  void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16)
+  void GfxEngine::createSphere(const std::string& strName, const float r, const int nRings, const int nSegments)
  {
    using namespace Ogre;
      MeshPtr pSphere = MeshManager::getSingleton().createManual(strName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -679,103 +570,13 @@ namespace Pixy {
 
   void GfxEngine::setupCamera()
   {
-    mLog->debugStream() << "setting up cameras";
-    Vector3 lCamPos;
-
-    mCamera->setNearClipDistance( 10 );
-    mCamera->setFarClipDistance( 10000 );
-    /*lCamPos = mPuppetPos[ME];
-    lCamPos.y += 800;
-    lCamPos.z += 1000;
-
-    lCamPos.x = 99;
-    lCamPos.y = 189;
-    lCamPos.z = -150;
-    mCamera->setPosition(lCamPos);
-    mCamera->lookAt(mPuppetPos[ME]);*/
 	};
+
+
 
   void GfxEngine::setupTerrain()
   {
-
-    //mSceneMgr->setWorldGeometry("terrain.cfg");
-	  //~ mSceneLoader = new DotSceneLoader();
-	  //~ mSceneLoader->parseDotScene("Elementum.scene",
-								  //~ "General",
-								  //~ mSceneMgr);
-		//mCamera = mSceneMgr->getCamera("Camera#0");
-	  //parseDotScene("Elementum.xml","General",mSceneMgr);
-
-    /*
-    char* lTerrainCfgPath = (char*)malloc(sizeof(char) * (strlen(PROJECT_ROOT) + 18));
-    sprintf(lTerrainCfgPath, "%s/Resources/Config", PROJECT_ROOT);
-    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(lTerrainCfgPath, "FileSystem");
-
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-
-
-    mLog->noticeStream() << "Setting world geometry";
-    mSceneMgr->setWorldGeometry("terrain.cfg");*/
-
-    using namespace Ogre;
-    Ogre::SceneNode* node;
-    // create a floor mesh resource
-		MeshManager::getSingleton().createPlane("floor", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_Y, 0), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Z);
-		/*MeshManager::getSingleton().createPlane("ceiling", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_Y, 1024), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Z);
-		MeshManager::getSingleton().createPlane("lwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_X, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
-		MeshManager::getSingleton().createPlane("rwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_X, -512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
-    MeshManager::getSingleton().createPlane("fwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_Z, -512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);
-    MeshManager::getSingleton().createPlane("bwall", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Plane(Vector3::UNIT_Z, 512), 1024, 1024, 10, 10, true, 1, 10, 10, Vector3::UNIT_Y);*/
-
-		// create a floor entity, give it a material, and place it at the origin
-    Ogre::Entity* ent = mSceneMgr->createEntity("Floor", "floor");
-    ent->setMaterialName("Elementum/Terrain/Floor");
-		ent->setCastShadows(false);
-    ent->setRenderQueueGroup( Ogre::RENDER_QUEUE_BACKGROUND );
-    mSceneMgr->getRootSceneNode()->attachObject(ent);
-
-    /*ent = mSceneMgr->createEntity("Ceiling", "ceiling");
-    ent->setMaterialName("Elementum/Terrain/Floor");
-		ent->setCastShadows(false);
-    mSceneMgr->getRootSceneNode()->attachObject(ent);
-
-    ent = mSceneMgr->createEntity("LeftWall", "lwall");
-    ent->setMaterialName("Elementum/Terrain/Floor");
-		ent->setCastShadows(false);
-    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    node->setPosition(Vector3(0,512,0));
-    node->attachObject(ent);
-
-    ent = mSceneMgr->createEntity("RightWall", "rwall");
-    ent->setMaterialName("Elementum/Terrain/Floor");
-		ent->setCastShadows(false);
-    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    node->setPosition(Vector3(0,512,0));
-    node->attachObject(ent);
-
-    ent = mSceneMgr->createEntity("FrontWall", "fwall");
-    ent->setMaterialName("Elementum/Terrain/Floor");
-		ent->setCastShadows(false);
-    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    node->setPosition(Vector3(0,512,0));
-    node->attachObject(ent);
-
-    ent = mSceneMgr->createEntity("BackWall", "bwall");
-    ent->setMaterialName("Elementum/Terrain/Floor");
-		ent->setCastShadows(false);
-    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    node->setPosition(Vector3(0,512,0));
-    node->attachObject(ent);*/
   };
-
-
 
   void GfxEngine::setupNodes()
   {
@@ -795,8 +596,9 @@ namespace Pixy {
     //Vector3 mPuppetScale, mUnitScale; // mPuppetPos[2], mDirection[2],
 
     // Define the scale to which the Models will be resized to
-    mPuppetScale = Vector3(2.0f, 2.0f, 2.0f);
-    mUnitScale = Vector3(1.0f, 1.0f, 1.0f);
+    //float scaleMod = 5.0f;
+    //mPuppetScale = Vector3(scaleMod, scaleMod, scaleMod);
+    //mUnitScale = Vector3(1.0f, 1.0f, 1.0f);
 
     // Set up the direction to make each faction face the other
     mDirection[ME] = mPuppetPos[ENEMY];
@@ -828,10 +630,6 @@ namespace Pixy {
       if (i == ENEMY) {
         tmpNode->yaw(Ogre::Degree(180));
       }
-      /*
-      tmpNode->pitch(Ogre::Degree(-90.0f));
-      tmpNode->roll(Ogre::Degree(75.0f));
-      */
     };
 
     // create Unit nodes
@@ -852,13 +650,19 @@ namespace Pixy {
         tmpDir = mDirection[ENEMY];
       }
 
-      tmpPos.x += 10; // margin from the puppet
-      tmpPos.z += (owner == ME) ? -50 : 50;
+      //~ tmpPos.x += 10; // margin from the puppet
+      //~ tmpPos.x += mPuppetMargin.x;
+      tmpPos.x += mPackSpacing / 2;
+      //~ tmpPos.z += (owner == ME) ? -50 : 50;
+      tmpPos.z += (owner == ME) ? -mPuppetMargin.z : mPuppetMargin.z;
 
-      unitMargin = 10; // separate units by unitMargin space units on X axis
-      packMargin = 75; // separate "packs" of units by packMargin space units on X axis
+      //~ unitMargin = 10; // separate units by unitMargin space units on X axis
+      unitMargin = mUnitMargin.x; // separate units by unitMargin space units on X axis
+      //~ packMargin = 75; // separate "packs" of units by packMargin space units on X axis
+      packMargin = mPackSpacing; // separate "packs" of units by packMargin space units on X axis
       posFrontier = tmpPos.z;
-      posRear = posFrontier+15; // more on this below
+      //~ posRear = posFrontier+15; // more on this below
+      posRear = posFrontier+mUnitMargin.z; // more on this below
 
       for (int i=0; i<10; i++)
       {
@@ -867,7 +671,7 @@ namespace Pixy {
          * Units will be grouped in packs of 5, resulting in
          * 2 "packs" of units for each Puppet, one to the left, other to the
          * right of Her. Units should be standing behind the Puppet,
-         * a margin of 100 space units.
+
          * However, each pack of units will be split in 2 rows, Frontier and Rear;
          * this way, we have a nicely aligned pack of 3 units in front,
          * and 2 in the back, split up from the other group.
@@ -876,7 +680,7 @@ namespace Pixy {
 				// separate our "packs"
 				if (i == 5)
 				{
-					tmpPos.x -= packMargin;
+					tmpPos.x = mPuppetPos[ME].x - (mPackSpacing / 2);
 					tmpPos.z = posFrontier;
 					unitMargin *= -1; // negated so that nodes grow in the opposite direction
 				}
@@ -1054,12 +858,14 @@ namespace Pixy {
       mNode = mSceneMgr->getSceneNode(nodeName);
 
       mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+      mEntity->setMaterialName(inEntity->getMaterial());
 
       mLog->debugStream() << "attaching user data to ogre entity";
       mEntity->setUserAny(Ogre::Any(inRenderable));
 
       mLog->infoStream() << "Attaching puppet entity " << mEntity->getName() << " to node " << mNode->getName();
       mNode->attachObject(mEntity);
+      mNode->setScale(inRenderable->getScale());
 
       MovableTextOverlay *p =
         new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
@@ -1108,8 +914,10 @@ namespace Pixy {
       /* TO_DO */
       std::string _meshPath = "";
       mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+      mEntity->setMaterialName(inEntity->getMaterial());
       mEntity->setUserAny(Ogre::Any(inRenderable));
       mNode->attachObject(mEntity);
+      mNode->setScale(inRenderable->getScale());
 
       MovableTextOverlay *p =
         new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
@@ -1181,7 +989,8 @@ namespace Pixy {
     mTmpNode = inRenderable->getSceneNode();
 
     // move the node back to its original spot
-    mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
+    if (inRenderable->getEntity()->getRank() != PUPPET)
+      mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
 
     mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
     mTmpNode->showBoundingBox(false);
@@ -1236,6 +1045,7 @@ namespace Pixy {
       // detach the unit from its current node and transfer to the new node
       inRenderable->getSceneNode()->detachObject(inRenderable->getSceneObject());
       mNode->attachObject(inRenderable->getSceneObject());
+      mNode->setScale(inRenderable->getScale());
       inRenderable->attachSceneNode(mNode);
       oldNode->setPosition((*inUnit->mWaypoints)[POS_READY]);
 
@@ -1594,5 +1404,15 @@ namespace Pixy {
     mUpdatees.find(inUnit)->second = false;
   }
 
+  OgreMax::OgreMaxScene* GfxEngine::loadScene(std::string inSceneName) {
+    using namespace OgreMax;
+    OgreMaxScene* scene = new OgreMaxScene();
+    scene->Load(inSceneName, mRenderWindow);
 
+    return scene;
+  }
+
+  void GfxEngine::unloadScene(OgreMax::OgreMaxScene* inScene) {
+    inScene->Destroy();
+  }
 }

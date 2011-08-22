@@ -28,7 +28,7 @@
 
   <!-- Turn panel -->
   <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Effects/Turns/Menu">
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.025.0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.06.0}}" />
     <Property Name="Visible" Value="True" />
     <Property Name="HorizontalAlignment" Value="Left" />
     <Property Name="VerticalAlignment" Value="Top" />
@@ -62,14 +62,14 @@
 		<Property Name="AlwaysOnTop" Value="True" />
 		<Property Name="Alpha" Value="1" />
     <Property Name="HorizontalAlignment" Value="Left" />
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.025,0},{0.52,0},{0.15,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.0,0},{0.52,0},{0.125,0}}" />
 
 
     <Window Type="HorizontalLayoutContainer" Name="Elementum/Combat/Containers/SpellLog/Player">
       <Property Name="Visible" Value="True" />
       <Property Name="AlwaysOnTop" Value="True" />
       <Property Name="HorizontalAlignment" Value="Left" />
-      <Property Name="VerticalAlignment" Value="Centre" />
+      <Property Name="VerticalAlignment" Value="Top" />
     </Window>
   </Window> <!-- Player Spell log panel  -->
 
@@ -79,14 +79,14 @@
 		<Property Name="AlwaysOnTop" Value="True" />
 		<Property Name="Alpha" Value="1" />
     <Property Name="HorizontalAlignment" Value="Right" />
-    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.025,0},{0.52,0},{0.15,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0.0,0},{0.52,0},{0.125,0}}" />
 
 
     <Window Type="HorizontalLayoutContainer" Name="Elementum/Combat/Containers/SpellLog/Enemy">
       <Property Name="Visible" Value="True" />
       <Property Name="AlwaysOnTop" Value="True" />
       <Property Name="HorizontalAlignment" Value="Right" />
-      <Property Name="VerticalAlignment" Value="Centre" />
+      <Property Name="VerticalAlignment" Value="Top" />
     </Window>
   </Window> <!-- Enemy Spell log panel  -->
 

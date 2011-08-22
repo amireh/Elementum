@@ -291,12 +291,13 @@ namespace Pixy {
 
   CSpell* const CResourceManager::getSpell(std::string inName) {
     CSpell* lSpell = 0;
-    for (int i=0; i < WATER; ++i) {
+    for (int i=0; i < 4; ++i) {
       lSpell = getSpell(inName, (RACE)i);
       if (lSpell)
         return lSpell;
     }
 
+    assert(false);
     mLog->errorStream() << "couldnt find a spell named " << inName;
     return 0;
   }
@@ -308,18 +309,18 @@ namespace Pixy {
       if ((*itr)->getName() == inName)
         return new CSpell((**itr));
 
-    assert(false);
     return 0;
   }
 
   CUnit* const CResourceManager::getUnit(std::string inName) {
     CUnit* lUnit = 0;
-    for (int i=0; i < WATER; ++i) {
+    for (int i=0; i < 4; ++i) {
       lUnit = getUnit(inName, (RACE)i);
       if (lUnit)
         return lUnit;
     }
 
+    assert(false);
     mLog->errorStream() << "couldnt find a spell named " << inName;
     return 0;
   }
@@ -331,7 +332,6 @@ namespace Pixy {
       if ((*itr)->getName() == inName)
         return new CUnit((**itr));
 
-    assert(false);
     return 0;
   }
 

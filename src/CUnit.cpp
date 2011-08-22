@@ -4,6 +4,7 @@
 #include "GfxEngine.h"
 #include "ogre/MovableTextOverlay.h"
 #include "Combat.h"
+#include "FxEngine.h"
 
 namespace Pixy
 {
@@ -17,7 +18,9 @@ namespace Pixy
     mMoveSpeed(0),
     mCallback(0),
     mRenderable(0),
-    mTimer(0)
+    mTimer(0),
+    fDying(false),
+    fRequiresYawFix(false)
   {
 
   };
@@ -78,6 +81,8 @@ namespace Pixy
     mMoveSpeed = src.mMoveSpeed;
     mDestination = src.mDestination;
     mMoveDirection = src.mMoveDirection;
+    fDying = false;
+    fRequiresYawFix = src.fRequiresYawFix;
 
     // Pixy::Entity::copyFrom() copies Spell* objects and we need
     // CSpell* here, so we clear the copied ones, and create new ones
@@ -197,12 +202,30 @@ namespace Pixy
   };
 
   void CUnit::die() {
-    Unit::die();
+    if (fDying)
+      return;
 
+    fDying = true;
 
-    mRenderable->hide();
+    //~ boost::function<void()> death_func = boost::bind(&Unit::die, this);
 
-    mLog->infoStream() << "dead";
+    mLog->infoStream() << "dying [playing animation now]";
+
+    //~ float length_sec = mRenderable->animateDie();
+
+    //~ mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
+    //~ mTimer->async_wait([&, death_func](boost::system::error_code e) -> void {
+      Unit::die();
+
+      FxEngine::getSingleton().onEntityDying(this->mRenderable);
+
+      //~ Event evt(EventUID::EntityDied);
+      //~ evt.Any = (void*)this;
+      //~ EventManager::getSingleton().hook(evt);
+
+      mRenderable->hide();
+      mLog->infoStream() << "dead [inside the async timer]";
+    //~ });
   };
 
 
@@ -249,19 +272,20 @@ namespace Pixy
     GfxEngine::getSingletonPtr()->updateMe(this);
 
     // start running if not already moving and the player wants to move
-    mRenderable->setBaseAnimation(Renderable::ANIM_RUN_BASE, true);
+    mRenderable->animateRun();
+    //~ mRenderable->setBaseAnimation(Renderable::ANIM_RUN_BASE, true);
     //if (mRenderable->mTopAnimID == Renderable::ANIM_IDLE_TOP) {
       // when charging, run with swords sheathed
       if (inDestination == POS_READY) {
-        mRenderable->setTopAnimation(Renderable::ANIM_RUN_TOP, true);
+        //mRenderable->setTopAnimation(Renderable::ANIM_RUN_TOP, true);
 
       } else {
         // draw swords and continue running
-        if (!mRenderable->mSwordsDrawn) {
+        /*if (!mRenderable->mSwordsDrawn) {
           // take swords out (or put them back, since it's the same animation but reversed)
           mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
           mRenderable->mTimer = 0;
-        }
+        }*/
       }
     //}
 
@@ -317,23 +341,34 @@ namespace Pixy
 
       // if we came back from an attack and still waiting at the charging spot
       // turn around 180 degrees to face the enemy
-      if (mPosition != POS_READY && mPDestination == POS_CHARGING)
+      if (mPosition != POS_READY && mPDestination == POS_CHARGING) {
         mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
+      }
+
+      // ------------- a gentleman's hack ---------------
+      if (fRequiresYawFix) {
+        if (mPosition == POS_READY && mPDestination == POS_CHARGING) {
+          mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
+        }
+      } // yaw hack
 
 			// stop running if already moving and the player doesn't want to move
-			mRenderable->setBaseAnimation(Renderable::ANIM_IDLE_BASE);
+      mRenderable->animateIdle();
+			/*mRenderable->setBaseAnimation(Renderable::ANIM_IDLE_BASE);
 			if (mRenderable->mTopAnimID == Renderable::ANIM_RUN_TOP)
-        mRenderable->setTopAnimation(Renderable::ANIM_IDLE_TOP);
+        mRenderable->setTopAnimation(Renderable::ANIM_IDLE_TOP);*/
 
 
       // if we came back from an attack or a block, unsheathe our swords
-      if (mPDestination == POS_READY && mRenderable->mSwordsDrawn) {
+      /*if (mPDestination == POS_READY && mRenderable->mSwordsDrawn) {
         mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
         mRenderable->mTimer = 0;
-      }
+      }*/
 
       std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
       mPosition = mPDestination;
+
+      //~ this->mRenderable->resetOrientation();
 
       // is there a callback?
       if (mCallback)
@@ -381,23 +416,25 @@ namespace Pixy
   }
 
   bool CUnit::attack(Pixy::CPuppet* inTarget, boost::function<void()> callback) {
-    Renderable::AnimID anim = (rand() % 2 == 0)
+    /*Renderable::AnimID anim = (rand() % 2 == 0)
       ? Renderable::ANIM_SLICE_VERTICAL
       : Renderable::ANIM_SLICE_HORIZONTAL;
-    float length_sec = mRenderable->mAnims[anim]->getLength();
+    float length_sec = mRenderable->mAnims[anim]->getLength();*/
+    float length_sec = mRenderable->animateAttack();
 
-    std::cout
-    << "Animation is " << (anim == Renderable::ANIM_SLICE_HORIZONTAL ? "horz" : "vert")
-    << " and length is " << length_sec << "\n";
+    std::cout << "Animation is " << length_sec << " seconds long\n";
 
-    mRenderable->setTopAnimation(anim, true);
-    mRenderable->mTimer = 0;
+    //mRenderable->setTopAnimation(anim, true);
+    //mRenderable->mTimer = 0;
 
     boost::function<bool(Puppet*)> attack_func = boost::bind(&Unit::attack, this, _1);
 
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait([&, callback, attack_func, inTarget](boost::system::error_code e) -> void {
       attack_func(inTarget);
+
+      inTarget->getRenderable()->animateHit();
+
       Event evt(EventUID::EntityAttacked);
       evt.Any = (void*)inTarget->getRenderable();
       EventManager::getSingleton().hook(evt);
@@ -408,13 +445,15 @@ namespace Pixy
   }
 
   bool CUnit::attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block) {
-    Renderable::AnimID anim = (rand() % 2 == 0)
+    /*Renderable::AnimID anim = (rand() % 2 == 0)
       ? Renderable::ANIM_SLICE_VERTICAL
       : Renderable::ANIM_SLICE_HORIZONTAL;
     float length_sec = mRenderable->mAnims[anim]->getLength();
 
     mRenderable->setTopAnimation(anim, true);
-    mRenderable->mTimer = 0;
+    mRenderable->mTimer = 0;*/
+
+    float length_sec = mRenderable->animateAttack();
 
     // wrap the base class function using boost function because we can't call it
     // inside the lambda
@@ -432,13 +471,16 @@ namespace Pixy
       // the reason we pass block=false here is that we're running a special
       // version of the attack function (this one) that deals with rendering
       attack_func(inTarget, false);
+
+      inTarget->getRenderable()->animateHit();
+
       // inform other components so they can render particles or w/e
       Event evt(EventUID::EntityAttacked);
       evt.Any = (void*)inTarget->getRenderable();
       EventManager::getSingleton().hook(evt);
 
       // if the target is required to block us, is not dead, and has AP, make it hit us back
-      if (block && !inTarget->isDead() && inTarget->getAP() > 0) {
+      if (block && !inTarget->isDead() && !inTarget->isDying() && inTarget->getAP() > 0) {
         inTarget->attack(this, [&, callback]() -> void {
           updateTextOverlay();
           callback();
@@ -459,6 +501,8 @@ namespace Pixy
 
       return;
     }
+
+    this->mRenderable->trackEnemyPuppet();
 
     mAttackTarget = inTarget;
     this->move(POS_ATTACK, [&](CUnit* me) -> void {
@@ -510,6 +554,7 @@ namespace Pixy
 
     // we're dead, tell Combat we're done and to process the next unit
     if (isDead()) {
+
       Combat::getSingleton().unitAttacked(this);
       Combat::getSingleton().doBattle();
 
@@ -534,9 +579,11 @@ namespace Pixy
         });
       } else { // no trample, just move back and mark as done
         move(POS_CHARGING);
+        this->mRenderable->trackEnemyPuppet();
 
         Combat::getSingleton().unitAttacked(this);
         Combat::getSingleton().doBattle();
+
 
         return;
       }
@@ -553,6 +600,15 @@ namespace Pixy
 
       return this->doAttack(inBlockers);
     }
+
+    if (blocker->isDying()) {
+      inBlockers.pop_front();
+
+      return this->doAttack(inBlockers);
+    }
+
+    blocker->getRenderable()->trackEnemyUnit(this);
+    this->getRenderable()->trackEnemyUnit(blocker);
 
     blocker->move(POS_DEFENCE, [&, blocker](CUnit*) -> void {
 
@@ -593,10 +649,10 @@ namespace Pixy
 
   void CUnit::onVictory() {
 
-		mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
-		mRenderable->setTopAnimation(Renderable::ANIM_NONE);
-		// disable hand animation because the dance controls hands
-		mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
+		//mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
+		//mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+		//// disable hand animation because the dance controls hands
+		//mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
 
     GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
   }
@@ -607,6 +663,7 @@ namespace Pixy
 
     Unit::rest();
     updateTextOverlay();
+    mRenderable->animateRest();
   }
 
   void CUnit::getUp() {
@@ -615,9 +672,14 @@ namespace Pixy
 
     Unit::getUp();
 
-    mRenderable->setBaseAnimation(Renderable::ANIM_JUMP_START, true);
-    mRenderable->setTopAnimation(Renderable::ANIM_NONE);
-    mRenderable->mTimer = 0;
+    //mRenderable->setBaseAnimation(Renderable::ANIM_JUMP_START, true);
+    //mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+    //mRenderable->mTimer = 0;
+    float length_sec = mRenderable->animateGetUp();
+
+    mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
+    mTimer->async_wait([&](boost::system::error_code e) -> void { this->mRenderable->animateIdle(); } );
+
 
     updateTextOverlay();
   }
@@ -627,4 +689,6 @@ namespace Pixy
 
     updateTextOverlay();
   }
+
+  bool CUnit::isDying() const { return fDying; };
 } // end of namespace

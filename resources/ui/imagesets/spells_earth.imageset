@@ -1,44 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Imageset Name="Spells_Earth" Imagefile="spells_earth.tga" >
-	<!-- Treant -->
-	<Image Name="Summon:_Fetish_Zij_Normal" XPos="0" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Zij_Hover"  XPos="0" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Zij_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Zij_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Peasant_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Peasant_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Peasant_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Peasant_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
 	<!-- Crustling -->
-	<Image Name="Summon:_Fetish_Hurler_Normal"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Hurler_Hover"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Hurler_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Hurler_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Warrior_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Warrior_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Warrior_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Warrior_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
 	<!-- Stone Golem -->
-	<Image Name="Summon:_Fetish_Playmaker_Normal"   XPos="2560" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Playmaker_Hover"    XPos="2560" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Playmaker_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Playmaker_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Pirate_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Pirate_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Pirate_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Pirate_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
 	<!-- Earth Elemental -->
-	<Image Name="Summon:_Fetish_Herdkeeper_Normal"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Herdkeeper_Hover"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Herdkeeper_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Herdkeeper_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Nully_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Nully_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Nully_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skelly_Nully_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
 
-	<Image Name="Comet_Normal"   XPos="1024" YPos="0"  Width="256" Height="256" />
-	<Image Name="Comet_Hover"    XPos="1024" YPos="256" Width="256" Height="256" />
-	<Image Name="Comet_Pushed"   XPos="1024" YPos="512" Width="256" Height="256" />
-	<Image Name="Comet_Disabled" XPos="1024" YPos="768" Width="256" Height="256" />
-
-	<Image Name="Nourish_Normal"   XPos="1280" YPos="0"  Width="256" Height="256" />
-	<Image Name="Nourish_Hover"    XPos="1280" YPos="256" Width="256" Height="256" />
+	<Image Name="Nourish_Hover"   XPos="1280" YPos="0"  Width="256" Height="256" />
+	<Image Name="Nourish_Normal"    XPos="1280" YPos="256" Width="256" Height="256" />
 	<Image Name="Nourish_Pushed"   XPos="1280" YPos="512" Width="256" Height="256" />
 	<Image Name="Nourish_Disabled" XPos="1280" YPos="768" Width="256" Height="256" />
 
-	<Image Name="Chains_of_Command_Normal"   XPos="256" YPos="0"  Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Hover"    XPos="256" YPos="256" Width="256" Height="256" />
+	<Image Name="Chains_of_Command_Hover"   XPos="256" YPos="0"  Width="256" Height="256" />
+	<Image Name="Chains_of_Command_Normal"    XPos="256" YPos="256" Width="256" Height="256" />
 	<Image Name="Chains_of_Command_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
 	<Image Name="Chains_of_Command_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
 
-	<Image Name="Fartigue_Normal"   XPos="3072" YPos="0"  Width="256" Height="256" />
-	<Image Name="Fartigue_Hover"    XPos="3072" YPos="256" Width="256" Height="256" />
+	<Image Name="Fartigue_Hover"   XPos="3072" YPos="0"  Width="256" Height="256" />
+	<Image Name="Fartigue_Normal"    XPos="3072" YPos="256" Width="256" Height="256" />
 	<Image Name="Fartigue_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
 	<Image Name="Fartigue_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
 </Imageset>

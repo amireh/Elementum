@@ -4,10 +4,10 @@
 #include <Terrain/OgreTerrainGroup.h>
 #include <Terrain/OgreTerrainMaterialGeneratorA.h>
 
-#include "OGRE/Plugins/PagedGeometry/PagedGeometry.h"
-#include "OGRE/Plugins/PagedGeometry/BatchPage.h"
-#include "OGRE/Plugins/PagedGeometry/ImpostorPage.h"
-#include "OGRE/Plugins/PagedGeometry/TreeLoader3D.h"
+#include "PagedGeometry/PagedGeometry.h"
+#include "PagedGeometry/BatchPage.h"
+#include "PagedGeometry/ImpostorPage.h"
+#include "PagedGeometry/TreeLoader3D.h"
 
 
 #pragma warning(disable:4390)

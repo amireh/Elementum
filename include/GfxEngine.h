@@ -39,8 +39,13 @@ namespace Hydrax {
 namespace Caelum {
   class CaelumSystem;
 }
-class DotSceneLoader;
 */
+class DotSceneLoader;
+
+
+namespace OgreMax {
+  class OgreMaxScene;
+}
 namespace OgreBites {
   class SdkCameraMan;
   class SdkTrayManager;
@@ -75,12 +80,27 @@ namespace Pixy {
 		virtual ~GfxEngine();
 		static GfxEngine* getSingletonPtr();
 
+    Ogre::ColourValue mMTOFontColor;
+    Ogre::String mMTOFontName;
+    int mMTOFontSize;
+    Ogre::String mMTOMaterialName;
+		//! used for setting Puppetes' starting positions in Scene
+		Vector3 mPuppetPos[2];
+		Vector3 mPuppetScale, mUnitScale;
+
+    Vector3 mUnitMargin;
+    Vector3 mPuppetMargin;
+    int mPackSpacing;
+
+    Vector3 mCameraYawPitchDist;
 
 		virtual bool setup();
 		virtual void update(unsigned long lTimeElapsed);
 		virtual bool cleanup();
 
 		void setCamera(const Ogre::String& inCameraName);
+
+    void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
 
 		//! Attaches a Pixy::Entity to an SceneNode and renders it
 		/*!
@@ -100,6 +120,8 @@ namespace Pixy {
 		 * from the Ogre::Entity.
 		 */
 		void detachFromScene(Renderable* inEntity);
+
+    void setupMovableTextOverlays();
 
 		//! Moves a SceneNode to a destination using a Waypoint
 		/*!
@@ -186,6 +208,13 @@ namespace Pixy {
 
     void changeOwnership(Pixy::CUnit*);
 
+    OgreMax::OgreMaxScene* loadScene(std::string inOgreMaxScene);
+    void unloadScene(OgreMax::OgreMaxScene* inScene);
+
+    void enableCompositorEffect(std::string inEffect);
+
+    void loadDotScene(std::string inScene, std::string inName);
+
 	protected:
 	  void (GfxEngine::*mUpdate)(unsigned long);
 
@@ -201,7 +230,7 @@ namespace Pixy {
 		Ogre::Overlay        *mOverlay;
 		EventManager		 *mEvtMgr;
 		SdkCameraMan		 *mCameraMan;
-		//DotSceneLoader		 *mSceneLoader;
+		DotSceneLoader		 *mSceneLoader;
 		//Hydrax::Hydrax *mHydrax;
 		//Caelum::CaelumSystem *mCaelumSystem;
 		HDRCompositor *mHDRComp;
@@ -214,11 +243,9 @@ namespace Pixy {
 
 		Renderable* mSelected; // selected entity
 
-		//! used for setting Puppetes' starting positions in Scene
-		Vector3 mPuppetPos[2];
-		//! used for setting Objects' direction in Scene
+    //! used for setting Objects' direction in Scene
 		Vector3 mDirection[2];
-    Vector3 mPuppetScale, mUnitScale;
+
 
     typedef std::map<CUnit*, bool> updatees_t;
     updatees_t mUpdatees;
@@ -271,6 +298,8 @@ namespace Pixy {
 	  void dehighlight();
 
     bool inBlockPhase;
+
+    OgreMax::OgreMaxScene* mScene;
 
 	private:
 		static GfxEngine* _myGfxEngine;
