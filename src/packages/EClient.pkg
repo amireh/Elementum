@@ -49,10 +49,4 @@ namespace Pixy
 
 }
 
-namespace Ogre {
-  class Vector3 {
-  }
-  class SceneNode {
-    Vector3& getPosition() const;
-  }
-}
+$pfile "Ogre.pkg"

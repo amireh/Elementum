@@ -2,14 +2,53 @@ $#include "Renderable.h"
 
 class Renderable
 {
-  public:
-    Renderable(Pixy::Entity* inOwner);
-    virtual ~Renderable();
+public:
+  enum AnimID
+  {
+    ANIM_LIVE1,
+    ANIM_LIVE2,
+    ANIM_IDLE1,
+    ANIM_IDLE2,
+    ANIM_WALK,
+    ANIM_RUN,
+    ANIM_ATTACK1,
+    ANIM_ATTACK2,
+    ANIM_HIT1,
+    ANIM_HIT2,
+    ANIM_REST,
+    ANIM_GETUP,
+    ANIM_DEATH1,
+    ANIM_DEATH2,
+    ANIM_NONE
+  };
 
-    Pixy::Entity* getEntity();
+  Renderable(Pixy::Entity* inOwner);
+  virtual ~Renderable();
 
-		virtual void attachSceneNode(Ogre::SceneNode* inNode);
-		virtual Ogre::SceneNode* getSceneNode();
-		virtual void attachSceneObject(Ogre::Entity* inObject);
-		virtual Ogre::Entity* getSceneObject();
+  Pixy::Entity* getEntity();
+
+  virtual void attachSceneNode(Ogre::SceneNode* inNode);
+  virtual Ogre::SceneNode* getSceneNode();
+  virtual void attachSceneObject(Ogre::Entity* inObject);
+  virtual Ogre::Entity* getSceneObject();
+
+  void registerAnimationState(AnimID inId, std::string inState, bool doLoop = true);
+  void setRunSpeed(float inWorldUnitsPerSecond);
+  void setScale(float inScale);
+
+  float animateLive();
+  float animateDie();
+  float animateIdle();
+  float animateWalk();
+  float animateRun();
+  float animateAttack();
+  float animateHit();
+  float animateRest();
+  float animateGetUp();
+
+  float _animate(AnimID inId);
+
+  void attachExtension(std::string inMesh, std::string inBone);
+  void setOrientation(Ogre::Quaternion inQuat);
+  void resetOrientation();
 };

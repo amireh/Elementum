@@ -3,10 +3,26 @@ $#include "GfxEngine.h"
 class GfxEngine : public Pixy::Engine, public Pixy::EventListener {
 
 public:
+
+Ogre::Vector3 mPuppetPos[2];
+Ogre::Vector3 mPuppetScale, mUnitScale;
+Ogre::ColourValue mMTOFontColor;
+Ogre::String mMTOFontName;
+int mMTOFontSize;
+Ogre::String mMTOMaterialName;
+
+Ogre::Vector3 mUnitMargin;
+Ogre::Vector3 mPuppetMargin;
+Ogre::Vector3 mCameraYawPitchDist;
+
+int mPackSpacing;
+
 virtual ~GfxEngine();
 static GfxEngine* getSingletonPtr();
 //void setCamera(const Ogre::String& inCameraName);
 
+
+void setupMovableTextOverlays();
 
 bool attachToScene(Pixy::Renderable* inEntity);
 void detachFromScene(Pixy::Renderable* inEntity);
@@ -34,4 +50,13 @@ void setupNodes();
 void setupWaypoints();
 
 void changeOwnership(Pixy::CUnit* inUnit);
+
+OgreMax::OgreMaxScene* loadScene(std::string inOgreMaxScene);
+void unloadScene(OgreMax::OgreMaxScene* inScene);
+
+void enableCompositorEffect(std::string inEffect);
+
+void loadDotScene(std::string inFile, std::string inName);
+
+void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
 };
