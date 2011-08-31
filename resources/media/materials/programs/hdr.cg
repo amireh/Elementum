@@ -7,7 +7,7 @@ void morningskybox_fp (
 	colour = tex2D(tex, uv);
 
 	// blow out the light a bit
-	colour *= 6;
+	colour *= 1.7;
 }
 void morningcubemap_fp (
 	float3 uv : TEXCOORD0,
@@ -18,7 +18,7 @@ void morningcubemap_fp (
 	colour = texCUBE(tex, uv);
 
 	// blow out the light a bit
-	colour *= 6;
+	colour *= 1.7;
 }
 
 

@@ -8,11 +8,11 @@ material Elementum/Sky
 			lighting off
 			depth_write off
 
-         cull_hardware none
-         cull_software none
+     cull_hardware none
+     cull_software none
 			texture_unit
 			{
-				texture sky5.jpg
+				texture vortex.png
 				scroll_anim 0.01 0
 			}
 		}

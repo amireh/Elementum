@@ -6,7 +6,6 @@ material Elementum/Terrain/Floor
 		pass
 		{
 			ambient 1 1 1
-			//scene_blend add
 			depth_write on
       depth_check off
 			cull_software none
@@ -14,13 +13,13 @@ material Elementum/Terrain/Floor
 
 			/*texture_unit
 			{
-				texture HUD_Ice.jpg
-				scroll_anim 0.1 0
+				texture Rose_Translucent.jpg
+				//scroll_anim 0.1 0
 			}*/
 
 			texture_unit
 			{
-				texture Raw_Ruby.jpg
+				texture Hysteria1.jpg
 				//scroll_anim 0.1 0
 			}
 		}

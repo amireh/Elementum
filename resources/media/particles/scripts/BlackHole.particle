@@ -63,6 +63,6 @@ system Elementum/Fx/BlackHole
         {
             y_scale                             -1500
         }
-        use_alias                               PUMediaPack/ColourAffectorFade_06
+        //use_alias                               PUMediaPack/ColourAffectorFade_06
     }
 }
