@@ -350,8 +350,8 @@ namespace Ogre {
     void setSpotlightOuterAngle(const Radian& val);
     void setSpotlightFalloff(Real val);
 
-		void setSpotlightNearClipDistance(Real nearClip);
-		Real getSpotlightNearClipDistance() const;
+		//void setSpotlightNearClipDistance(Real nearClip);
+		//Real getSpotlightNearClipDistance() const;
 
 		void setPowerScale(Real power);
 		Real getPowerScale(void) const;

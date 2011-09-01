@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Fri Aug 19 10:16:03 2011.
+** Generated automatically by tolua++-1.0.92 on Thu Sep  1 09:37:59 2011.
 */
 
 #ifndef __cplusplus
@@ -8438,71 +8438,6 @@ static int tolua_EClient_Ogre_Light_setSpotlightFalloff00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setSpotlightNearClipDistance of class  Ogre::Light */
-#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Light_setSpotlightNearClipDistance00
-static int tolua_EClient_Ogre_Light_setSpotlightNearClipDistance00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Ogre::Light",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
-   float nearClip = ((  float)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightNearClipDistance'", NULL);
-#endif
-  {
-   self->setSpotlightNearClipDistance(nearClip);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setSpotlightNearClipDistance'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getSpotlightNearClipDistance of class  Ogre::Light */
-#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Light_getSpotlightNearClipDistance00
-static int tolua_EClient_Ogre_Light_getSpotlightNearClipDistance00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"const Ogre::Light",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightNearClipDistance'", NULL);
-#endif
-  {
-    float tolua_ret = (  float)  self->getSpotlightNearClipDistance();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSpotlightNearClipDistance'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: setPowerScale of class  Ogre::Light */
 #ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Light_setPowerScale00
 static int tolua_EClient_Ogre_Light_setPowerScale00(lua_State* tolua_S)
@@ -13153,8 +13088,6 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setSpotlightInnerAngle",tolua_EClient_Ogre_Light_setSpotlightInnerAngle00);
     tolua_function(tolua_S,"setSpotlightOuterAngle",tolua_EClient_Ogre_Light_setSpotlightOuterAngle00);
     tolua_function(tolua_S,"setSpotlightFalloff",tolua_EClient_Ogre_Light_setSpotlightFalloff00);
-    tolua_function(tolua_S,"setSpotlightNearClipDistance",tolua_EClient_Ogre_Light_setSpotlightNearClipDistance00);
-    tolua_function(tolua_S,"getSpotlightNearClipDistance",tolua_EClient_Ogre_Light_getSpotlightNearClipDistance00);
     tolua_function(tolua_S,"setPowerScale",tolua_EClient_Ogre_Light_setPowerScale00);
     tolua_function(tolua_S,"getPowerScale",tolua_EClient_Ogre_Light_getPowerScale00);
     tolua_function(tolua_S,"getBoundingBox",tolua_EClient_Ogre_Light_getBoundingBox00);

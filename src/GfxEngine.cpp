@@ -21,9 +21,10 @@
 #include "OgreMax/OgreMaxScene.hpp"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-#include <CEGUIBase/CEGUI.h>
-#include <CEGUIBase/CEGUISystem.h>
-#include <CEGUIBase/CEGUISchemeManager.h>
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUISchemeManager.h>
+#include <CEGUI/CEGUIInputEvent.h>
 #else
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/CEGUISystem.h>
@@ -46,7 +47,7 @@
 //#include "Plugins/Hydrax/Modules/SimpleGrid/SimpleGrid.h"
 //#include "Plugins/Caelum/CaelumSystem.h"
 
-#include "dotscene/DotSceneLoader.h"
+//#include "dotscene/DotSceneLoader.h"
 #include "ogre/HelperLogics.h"
 #include "ogre/SdkCameraMan.h"
 #include "ogre/HDRCompositor.h"
@@ -96,8 +97,8 @@ namespace Pixy {
 			delete mLog;
 			mLog = 0;
 
-			if (mSceneLoader)
-				delete mSceneLoader;
+			//if (mSceneLoader)
+				//delete mSceneLoader;
 
 			fSetup = false;
 		}
@@ -134,7 +135,7 @@ namespace Pixy {
     bind(EventUID::EndBlockPhase, boost::bind(&GfxEngine::onEndBlockPhase, this, _1));
     bind(EventUID::MatchFinished, boost::bind(&GfxEngine::onMatchFinished, this, _1));
 
-    mSceneLoader = new DotSceneLoader();
+    //mSceneLoader = new DotSceneLoader();
 
 
 		/*mPuppetPos[ME] = Vector3(0, 0, -50);
@@ -177,9 +178,11 @@ namespace Pixy {
 		mLog->infoStream() << "preparing combat scene";
 
     mPlayer = Combat::getSingleton().getPuppet();
-    for (auto puppet : Combat::getSingleton().getPuppets())
-      if (puppet != mPlayer) {
-        mEnemy = puppet;
+    for (Combat::puppets_t::const_iterator puppet = Combat::getSingleton().getPuppets().begin();
+         puppet != Combat::getSingleton().getPuppets().end();
+         ++puppet)
+      if ((*puppet)->getUID() != mPlayer->getUID()) {
+        mEnemy = *puppet;
         break;
       }
 
@@ -361,9 +364,9 @@ namespace Pixy {
   };
 
   void GfxEngine::loadDotScene(std::string inScene, std::string inName) {
-    assert(mSceneLoader);
+    //assert(mSceneLoader);
 
-    mSceneLoader->parseDotScene(inScene, inName, mSceneMgr);
+    //mSceneLoader->parseDotScene(inScene, inName, mSceneMgr);
   }
 
   void GfxEngine::enableCompositorEffect(std::string inEffect) {
@@ -1383,8 +1386,10 @@ namespace Pixy {
       lWinner = mEnemy;
 
     mLog->infoStream() << "game is over! the winner is " << lWinner->getName();
-    for (auto unit : lWinner->getUnits()) {
-      unit->onVictory();
+    for (CPuppet::units_t::const_iterator unit = lWinner->getUnits().begin();
+         unit != lWinner->getUnits().end();
+         ++unit) {
+      (*unit)->onVictory();
     }
     lWinner->onVictory();
 

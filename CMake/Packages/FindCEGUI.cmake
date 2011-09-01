@@ -34,6 +34,7 @@ IF (APPLE)
        ~/Library/Frameworks/CEGUI.framework/Headers
        /Library/Frameworks/CEGUI.framework/Headers
        ${DELTA3D_EXT_DIR}/Frameworks/CEGUI.framework/Headers
+       /usr/local/lib/CEGUI/CEGUIBase.framework/Headers
 )
 ENDIF (APPLE)
 
@@ -58,6 +59,7 @@ MACRO(FIND_CEGUI_LIBRARY MYLIBRARY MYLIBRARYNAMES)
         ~/Library/Frameworks
         /Library/Frameworks
         /usr/local/lib
+        /usr/local/lib/CEGUI
         /usr/lib
         /sw/lib
         /opt/local/lib

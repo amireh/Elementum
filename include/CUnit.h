@@ -102,11 +102,17 @@ namespace Pixy
     }
 
     bool doMove(unsigned long);
-
+    
+    void attackAfterMoving(CPuppet* inTarget);
+    void cleanupAfterAttacking(CPuppet* inTarget);
+    void cleanupAfterMovingBack(CPuppet* inTarget);
+    
     // recursively goes through all the blockers and attacks them
     void doAttack(std::list<CUnit*>& inBlockers);
 
-
+    void attackAfterAnimation(boost::function<void()> callback, CPuppet*);
+    void attackAfterAnimation(boost::function<void()> callback, CUnit*, bool doBlock);
+    void updateOverlayAfterAttack(boost::function<void()> callback);
 
     /*!
      * \brief Informs whether the SceneNode has

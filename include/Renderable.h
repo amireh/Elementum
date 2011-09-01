@@ -88,8 +88,6 @@ namespace Pixy
     };
 
 		Renderable(Entity* inOwner);
-		Renderable& operator=(const Renderable& rhs) = delete;
-		Renderable(const Renderable& src) = delete;
 		virtual ~Renderable();
 
 		virtual void attachSceneNode(Ogre::SceneNode* inNode);
@@ -156,6 +154,8 @@ namespace Pixy
     Ogre::AnimationState* mAnims[NUM_ANIMS];    // master animation list
 
     private:
+		Renderable& operator=(const Renderable& rhs);
+		Renderable(const Renderable& src);
 
     Ogre::Vector3 mScale;
 

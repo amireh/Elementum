@@ -75,9 +75,12 @@ namespace Pixy {
 
 	void FxEngine::update( unsigned long lTimeElapsed ) {
 		processEvents();
-    for (auto node : mDeathlist) {
-      node->detachAllObjects();
-      mSceneMgr->destroySceneNode(node);
+    deathlist_t::iterator node;
+    for (node = mDeathlist.begin();
+         node != mDeathlist.end();
+         ++node) {
+      (*node)->detachAllObjects();
+      mSceneMgr->destroySceneNode(*node);
     }
     mDeathlist.clear();
 	}
@@ -247,13 +250,16 @@ namespace Pixy {
     {
       case PU_EVT_SYSTEM_STOPPED:
         // if the system is attached to a portable effect node, we need to destroy it
-        for (auto node : mPortableEffects) {
+        portable_effects_t::iterator node;
+        for (node = mPortableEffects.begin();
+             node != mPortableEffects.end();
+             ++node) {
           try {
-            if (node->getAttachedObject(inSystem->getName())) {
+            if ((*node)->getAttachedObject(inSystem->getName())) {
               //node->detachObject(inSystem);
               inSystem->removeParticleSystemListener(this);
-              mPortableEffects.remove(node);
-              mDeathlist.push_back(node);
+              mPortableEffects.remove(*node);
+              mDeathlist.push_back(*node);
 
               mLog->infoStream() << "destroyed a portable effect node";
               break;

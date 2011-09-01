@@ -86,11 +86,13 @@ namespace Pixy
 	private:
 
 		Combat( void );
-		Combat( const Combat& ) = delete;
-		Combat& operator=( const Combat& ) = delete;
+		Combat( const Combat& );
+		Combat& operator=( const Combat& );
 
     void handleNewTurn();
 
+    bool onConnected(const Event&);
+    bool onLogin(const Event& inEvt);   
     bool onSyncGameData(const Event&);
     bool onJoinQueue(const Event& inEvt);
     bool onMatchFound(const Event& inEvt);
@@ -102,7 +104,8 @@ namespace Pixy
     bool onCreateUnit(const Event&);
     bool onUpdatePuppet(const Event&);
     bool onUpdateUnit(const Event&);
-
+    bool onEntityDied(const Event&);
+    
     bool onStartBlockPhase(const Event&);
     bool onCharge(const Event&);
     bool onCancelCharge(const Event&);
@@ -128,12 +131,12 @@ namespace Pixy
     attackers_t mChargers;
 
     // key is the attacker, value is the list of blockers in order
-    typedef std::map<CUnit*, std::list<CUnit*> > blockers_t;
+    typedef std::map<CUnit*, attackers_t > blockers_t;
     blockers_t mBlockers;
 
 
-    typedef std::vector<CUnit*> death_list_t;
-    death_list_t mDeathlist;
+    typedef std::vector<CUnit*> deathlist_t;
+    deathlist_t mDeathlist;
 
     bool inBlockPhase;
 
@@ -147,6 +150,9 @@ namespace Pixy
     boost::asio::strand mStrand;
     boost::asio::io_service::work mWork;
     boost::thread* mWorker;
+    
+    void onMoveBack(CUnit* inUnit);
+    void onMoveBackAndRest(CUnit* inUnit);
 
 	};
 } // end of namespace

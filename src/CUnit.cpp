@@ -91,9 +91,13 @@ namespace Pixy
       mSpells.pop_back();
     }
 
-    if (!src.mSpells.empty())
-      for (auto spell : src.mSpells)
-        attachSpell( new CSpell(*spell) );
+    if (!src.mSpells.empty()) {
+      spells_t::const_iterator spell;
+      for (spell = src.mSpells.begin();
+           spell != src.mSpells.end();
+           ++spell)
+        attachSpell( new CSpell(*(*spell)) );
+    }
 
     mTimer = 0;
   }
@@ -142,8 +146,8 @@ namespace Pixy
 	}
 
 	CSpell* CUnit::getSpell(int inUID) {
-		spells_t::iterator lSpell = mSpells.begin();
-		for (lSpell; lSpell != mSpells.end(); ++lSpell)
+		spells_t::const_iterator lSpell;
+		for (lSpell = mSpells.begin(); lSpell != mSpells.end(); ++lSpell)
 			if ((*lSpell)->getUID() == inUID)
 				return *lSpell;
 
@@ -178,8 +182,8 @@ namespace Pixy
 	};
 
   bool CUnit::hasBuff(int inUID) {
-		spells_t::iterator lSpell = mBuffs.begin();
-		for (lSpell; lSpell != mBuffs.end(); ++lSpell)
+		spells_t::const_iterator lSpell;
+		for (lSpell = mBuffs.begin(); lSpell != mBuffs.end(); ++lSpell)
 			if ((*lSpell)->getUID() == inUID)
 				return true;
 
@@ -427,21 +431,27 @@ namespace Pixy
     //mRenderable->setTopAnimation(anim, true);
     //mRenderable->mTimer = 0;
 
-    boost::function<bool(Puppet*)> attack_func = boost::bind(&Unit::attack, this, _1);
+    //boost::function<bool(Puppet*)> attack_func = boost::bind(&Unit::attack, this, _1);
 
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
-    mTimer->async_wait([&, callback, attack_func, inTarget](boost::system::error_code e) -> void {
-      attack_func(inTarget);
+    mTimer->async_wait( boost::bind(&CUnit::attackAfterAnimation, this, callback, inTarget) );
+    /*mTimer->async_wait([&, callback, attack_func, inTarget](boost::system::error_code e) -> void {
 
-      inTarget->getRenderable()->animateHit();
-
-      Event evt(EventUID::EntityAttacked);
-      evt.Any = (void*)inTarget->getRenderable();
-      EventManager::getSingleton().hook(evt);
-
-      updateTextOverlay();
-      callback();
-    });
+    });*/
+  }
+  
+  void 
+  CUnit::attackAfterAnimation(boost::function<void()> callback, CPuppet* inTarget) {
+    Unit::attack(inTarget);
+    
+    inTarget->getRenderable()->animateHit();
+    
+    Event evt(EventUID::EntityAttacked);
+    evt.Any = (void*)inTarget->getRenderable();
+    EventManager::getSingleton().hook(evt);
+    
+    this->updateTextOverlay();
+    callback();    
   }
 
   bool CUnit::attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block) {
@@ -457,39 +467,47 @@ namespace Pixy
 
     // wrap the base class function using boost function because we can't call it
     // inside the lambda
-    boost::function<bool(Unit*, bool)> attack_func = boost::bind(&Unit::attack, this, _1, _2);
+    //boost::function<bool(Unit*, bool)> attack_func = boost::bind(&Unit::attack, this, _1, _2);
 
     // @note
     // we're using a timer so we give the animation time to finish
     // TODO: use actual animation length
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
-    mTimer->async_wait(
-    [&, inTarget, callback, block, attack_func](boost::system::error_code e) -> void {
+    mTimer->async_wait(boost::bind(&CUnit::attackAfterAnimation, this, callback, inTarget, block));
+    /*[&, inTarget, callback, block, attack_func](boost::system::error_code e) -> void {
 
-      // actually attack the target (see Unit::attack())
-      // @note
-      // the reason we pass block=false here is that we're running a special
-      // version of the attack function (this one) that deals with rendering
-      attack_func(inTarget, false);
-
-      inTarget->getRenderable()->animateHit();
-
-      // inform other components so they can render particles or w/e
-      Event evt(EventUID::EntityAttacked);
-      evt.Any = (void*)inTarget->getRenderable();
-      EventManager::getSingleton().hook(evt);
-
-      // if the target is required to block us, is not dead, and has AP, make it hit us back
-      if (block && !inTarget->isDead() && !inTarget->isDying() && inTarget->getAP() > 0) {
-        inTarget->attack(this, [&, callback]() -> void {
-          updateTextOverlay();
-          callback();
-        });
-      } else {
-        updateTextOverlay();
-        callback();
-      }
-    });
+      
+    });*/
+  }
+  
+  void CUnit::attackAfterAnimation(boost::function<void()> callback, CUnit* inTarget, bool block) {
+    
+    // actually attack the target (see Unit::attack())
+    // @note
+    // the reason we pass block=false here is that we're running a special
+    // version of the attack function (this one) that deals with rendering
+    Unit::attack(inTarget, false);
+    
+    inTarget->getRenderable()->animateHit();
+    
+    // inform other components so they can render particles or w/e
+    Event evt(EventUID::EntityAttacked);
+    evt.Any = (void*)inTarget->getRenderable();
+    EventManager::getSingleton().hook(evt);
+    
+    // if the target is required to block us, is not dead, and has AP, make it hit us back
+    if (block && !inTarget->isDead() && !inTarget->isDying() && inTarget->getAP() > 0) {
+      inTarget->attack(this, boost::bind(&CUnit::updateOverlayAfterAttack, this, callback));
+    } else {
+      updateTextOverlay();
+      callback();
+    }
+    
+  }
+  
+  void CUnit::updateOverlayAfterAttack(boost::function<void()> callback) {
+    updateTextOverlay();
+    callback();    
   }
 
   void CUnit::moveAndAttack(CPuppet* inTarget) {
@@ -503,29 +521,33 @@ namespace Pixy
     }
 
     this->mRenderable->trackEnemyPuppet();
-
-    mAttackTarget = inTarget;
-    this->move(POS_ATTACK, [&](CUnit* me) -> void {
-      this->attack(
-      static_cast<CPuppet*>(this->mAttackTarget),
-      [&]() -> void {
-        // update the stat HUDs
-        static_cast<CPuppet*>(mAttackTarget)->updateTextOverlay();
-
-        this->mAttackTarget = 0;
-
-        std::cout << "I attacked puppet, going back now\n";
-
-        this->move(POS_CHARGING, [&](CUnit*) -> void {
-          std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
-          Combat::getSingleton().unitAttacked(this);
-          Combat::getSingleton().doBattle();
-        }); // on move back to charging position
-      }); // on attack
-    }); // on move to attack position
+    this->move(POS_ATTACK, boost::bind(&CUnit::attackAfterMoving, this, inTarget) );
+  }
+  
+  void CUnit::attackAfterMoving(CPuppet* inTarget) {
+    this->mAttackTarget = inTarget;
+    this->attack(inTarget, boost::bind(&CUnit::cleanupAfterAttacking, this, inTarget) );  
+  }
+  
+  void CUnit::cleanupAfterAttacking(CPuppet* inTarget) {
+    // update the stat HUDs
+    inTarget->updateTextOverlay();
+    
+    this->mAttackTarget = 0;
+    
+    std::cout << "I attacked puppet, going back now\n";
+    
+    this->move(POS_CHARGING, boost::bind(&CUnit::cleanupAfterMovingBack, this, inTarget) ); // on move back to charging position    
+  }
+  
+  void CUnit::cleanupAfterMovingBack(CPuppet* inTarget) {
+    std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
+    Combat::getSingleton().unitAttacked(this);
+    Combat::getSingleton().doBattle();    
   }
 
   void CUnit::moveAndAttack(std::list<CUnit*> inBlockers) {
+#if 0
     // move to offense position
     //fDoneBlocking = false;
 
@@ -533,12 +555,13 @@ namespace Pixy
 
     this->reset();
     this->move(POS_OFFENCE, boost::bind(&CUnit::doAttack, this, boost::ref(mBlockers)));
+#endif
   }
 
   void CUnit::doAttack(std::list<CUnit*>& inBlockers) {
 
     updateTextOverlay();
-
+#if 0
     /*
      * for every blocker X in blockers do:
      *  - move(X,POS_DEFENSE)
@@ -645,6 +668,7 @@ namespace Pixy
 
       }
     });
+#endif
   }
 
   void CUnit::onVictory() {
@@ -677,8 +701,8 @@ namespace Pixy
     //mRenderable->mTimer = 0;
     float length_sec = mRenderable->animateGetUp();
 
-    mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
-    mTimer->async_wait([&](boost::system::error_code e) -> void { this->mRenderable->animateIdle(); } );
+    /*mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
+    mTimer->async_wait([&](boost::system::error_code e) -> void { this->mRenderable->animateIdle(); } );*/
 
 
     updateTextOverlay();

@@ -14,13 +14,9 @@
 #include "EventListener.h"
 #include "InputListener.h"
 
+#include <CEGUI/CEGUIBase.h>
 #include <CEGUI/CEGUIInputEvent.h>
-
-namespace CEGUI {
-  class System;
-  class OgreRenderer;
-  class UBox;
-}
+#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
 
 namespace Pixy {
 

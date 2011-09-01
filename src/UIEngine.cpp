@@ -11,18 +11,19 @@
 #include "EventManager.h"
 // CEGUI
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-#include <CEGUIBase/CEGUI.h>
-#include <CEGUIBase/CEGUISystem.h>
-#include <CEGUIBase/CEGUISchemeManager.h>
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUISchemeManager.h>
 //#include "CEGUIBase/ScriptingModules/LuaScriptModule/CEGUILua.h"
-#include "CEGUIBase/RendererModules/Ogre/CEGUIOgreRenderer.h"
+#include "CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h"
+//#include "CEGUI/WindowRendererSets/Falagard/FalStaticText.h"
 #else
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/CEGUISystem.h>
 #include <CEGUI/CEGUISchemeManager.h>
 //#include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
 #include "CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h"
-#include "CEGUI/WindowRendererSets/Falagard/FalStaticText.h"
+//#include "CEGUI/WindowRendererSets/Falagard/FalStaticText.h"
 #endif
 #include <Ogre.h>
 #include "CSpell.h"
@@ -105,10 +106,14 @@ namespace Pixy {
 										  "CEGUI::System object is already initialised.");
 
 
-		CEGUI::DefaultLogger* lUILog = new CEGUI::DefaultLogger();
+	/*	CEGUI::DefaultLogger* lUILog = new CEGUI::DefaultLogger();
 		std::ostringstream lUILogPath;
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+		lUILogPath << "Contents/Logs/CEGUI.log";
+#else
 		lUILogPath << PROJECT_LOG_DIR << "/CEGUI.log";
-		lUILog->setLogFilename(lUILogPath.str(), true);
+#endif		
+		lUILog->setLogFilename(lUILogPath.str(), true);*/
 
 		mOgreRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 		mUISystem = &CEGUI::System::getSingleton();

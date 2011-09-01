@@ -27,13 +27,15 @@ namespace Pixy
     virtual void update(unsigned long lTimeElapsed)=0;
     virtual bool cleanup()=0;
 
-    protected:
-    inline Engine() { mLog = NULL; fSetup = false; };
-    Engine(const Engine& src) = delete;
-    Engine& operator=(const Engine& rhs) = delete;
-
+  protected:
+    inline Engine() { mLog = NULL; fSetup = false; }
     log4cpp::Category* mLog;
     bool fSetup;
+    
+  private:
+    Engine(const Engine& src);
+    Engine& operator=(const Engine& rhs);
+
   };
 };
 

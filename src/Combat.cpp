@@ -87,18 +87,8 @@ namespace Pixy
     mPuppet = 0;
 
     // sync the game data when we're connected
-    bind(EventUID::Connected, [&](const Event& evt) -> bool {
-      mNetMgr->send(Event(EventUID::SyncGameData));
-      return true;
-    });
-
-    bind(EventUID::Login, [&](const Event& evt) -> bool {
-      Event _evt(EventUID::JoinQueue);
-      _evt.setProperty("Puppet", "Sugar");
-      mNetMgr->send(_evt);
-      return true;
-    });
-
+    bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));    
+    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));    
     bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::SyncPuppetData, boost::bind(&Combat::onSyncPuppetData, this, _1));
@@ -109,11 +99,7 @@ namespace Pixy
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
     bind(EventUID::UpdateUnit, boost::bind(&Combat::onUpdateUnit, this, _1));
-    bind(EventUID::EntityDied, [&](const Event& inEvt) -> bool {
-      markForDeath(static_cast<CUnit*>(inEvt.Any));
-      return true;
-    });
-
+    bind(EventUID::EntityDied, boost::bind(&Combat::onEntityDied, this, _1));    
     bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
     bind(EventUID::CancelCharge, boost::bind(&Combat::onCancelCharge, this, _1));
@@ -124,6 +110,19 @@ namespace Pixy
     inBlockPhase = false;
 	}
 
+  bool Combat::onConnected(const Event& evt) {
+    mNetMgr->send(Event(EventUID::SyncGameData));
+    
+    return true;   
+  }
+  
+  bool Combat::onLogin(const Event& evt) {
+    Event _evt(EventUID::JoinQueue);
+    _evt.setProperty("Puppet", "Sugar");
+    mNetMgr->send(_evt);
+    
+    return true;
+  }
 	void Combat::exit( void ) {
 
 
@@ -202,7 +201,11 @@ namespace Pixy
       break;
       case OIS::KC_A:
         if (mActivePuppet == mPuppet) {
-          for (auto unit : mPuppet->getUnits()) {
+          CPuppet::units_t::const_iterator unit_itr;
+          for (unit_itr = mPuppet->getUnits().begin();
+               unit_itr != mPuppet->getUnits().end();
+               ++unit_itr) {
+            CUnit* unit = *unit_itr;
             if (unit->getAP() > 0 && !unit->isResting() && !unit->isMoving() && !unit->getPosition() == POS_CHARGING) {
               Event req(EventUID::Charge);
               req.setProperty("UID", unit->getUID());
@@ -277,8 +280,11 @@ namespace Pixy
 		mUIEngine->update(lTimeElapsed);
 
     if (!mDeathlist.empty()) {
-      for (auto unit : mDeathlist)
-        static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
+      deathlist_t::iterator unit;
+      for (unit = mDeathlist.begin();
+           unit != mDeathlist.end();
+           ++unit)
+        static_cast<CPuppet*>((Entity*)(*unit)->getOwner())->detachUnit((*unit)->getUID());
 
       mDeathlist.clear();
     }
@@ -339,10 +345,18 @@ namespace Pixy
   }
 
   CUnit* Combat::getUnit(int inUID) {
-    for (auto puppet : mPuppets)
-      for (auto unit : puppet->getUnits())
-        if (unit->getUID() == inUID)
-          return unit;
+    puppets_t::const_iterator puppet;
+    for (puppet = mPuppets.begin();
+         puppet != mPuppets.end();
+         ++puppet)
+    {
+      CPuppet::units_t::const_iterator unit;
+      for (unit = (*puppet)->getUnits().begin();
+           unit != (*puppet)->getUnits().end();
+           ++unit)
+        if ((*unit)->getUID() == inUID)
+          return *unit;
+    }
 
     throw invalid_uid("in Combat::getUnit() : " + stringify(inUID));
   }
@@ -414,15 +428,20 @@ namespace Pixy
     list<CPuppet*> lPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
     datastream.clear();
 
-    for (auto puppet : lPuppets)
-      this->registerPuppet(puppet);
+    for (list<CPuppet*>::iterator puppet = lPuppets.begin();
+         puppet != lPuppets.end();
+         ++puppet)
+      this->registerPuppet(*puppet);
 
     // set up the scene
     mGfxEngine->setupCombat();
     mScriptEngine->passToLua("SetupScene", 0);
 
     // render all the puppets
-    for (auto puppet : mPuppets) {
+    for (puppets_t::iterator puppet_itr = mPuppets.begin();
+         puppet_itr != mPuppets.end();
+         ++puppet_itr) {
+      CPuppet* puppet = *puppet_itr;
       if (puppet->getName() == mPuppetName) // is this the puppet we're playing with?
         mPuppet = puppet;
 
@@ -446,42 +465,60 @@ namespace Pixy
     // remove all expired puppet buffs
     {
       std::vector<CSpell*> expired;
-      for (auto buff : mActivePuppet->getBuffs())
-        if (buff->hasExpired()) {
-          expired.push_back(buff);
-        }
-      for (auto expired_spell : expired)
-        mActivePuppet->detachBuff(expired_spell->getUID());
+      for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
+           buff != mActivePuppet->getBuffs().end();
+           ++buff)
+        if ((*buff)->hasExpired())
+          expired.push_back(*buff);
+      
+      for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
+           expired_spell != expired.end();
+           ++expired_spell)
+        mActivePuppet->detachBuff((*expired_spell)->getUID());
     }
     // apply active buffs
-    for (auto buff : mActivePuppet->getBuffs()) {
+    for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
+         buff != mActivePuppet->getBuffs().end();
+         ++buff)
+    {
       mScriptEngine->passToLua(
         "CastSpell", 3,
-        "Pixy::Renderable", buff->getCaster(),
-        "Pixy::Renderable", buff->getTarget(),
-        "Pixy::CSpell", buff);
+        "Pixy::Renderable", (*buff)->getCaster(),
+        "Pixy::Renderable", (*buff)->getTarget(),
+        "Pixy::CSpell", *buff);
     }
 
-    for (auto unit : mActivePuppet->getUnits()) {
+    for (CPuppet::units_t::const_iterator unit_itr = mActivePuppet->getUnits().begin();
+         unit_itr != mActivePuppet->getUnits().end();
+         ++unit_itr)
+    {
+      CUnit* unit = *unit_itr;
       unit->getUp();
 
       // remove all expired puppet buffs
       {
         std::vector<CSpell*> expired;
-        for (auto buff : unit->getBuffs())
-          if (buff->hasExpired()) {
-            expired.push_back(buff);
-          }
-        for (auto expired_spell : expired)
-          unit->detachBuff(expired_spell->getUID());
+        for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
+             buff != unit->getBuffs().end();
+             ++buff)
+          if ((*buff)->hasExpired())
+            expired.push_back(*buff);
+        
+        for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
+             expired_spell != expired.end();
+             ++expired_spell)
+          unit->detachBuff((*expired_spell)->getUID());
       }
       // apply active buffs
-      for (auto buff : unit->getBuffs()) {
+      for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
+           buff != unit->getBuffs().end();
+           ++buff)
+      {
         mScriptEngine->passToLua(
         "CastSpell", 3,
-        "Pixy::Renderable", buff->getCaster(),
-        "Pixy::Renderable", buff->getTarget(),
-        "Pixy::CSpell", buff);
+        "Pixy::Renderable", (*buff)->getCaster(),
+        "Pixy::Renderable", (*buff)->getTarget(),
+        "Pixy::CSpell", *buff);
       }
     }
 
@@ -614,6 +651,8 @@ namespace Pixy
         lPuppet = 0;
       }
     }
+    
+    return true;
   }
 
   void Combat::castSpell(CSpell* inSpell) {
@@ -638,9 +677,11 @@ namespace Pixy
     CSpell* lSpell = 0;
     CPuppet* lCaster = 0;
 
-    for (auto puppet : mPuppets)
+    for (puppets_t::iterator puppet = mPuppets.begin();
+         puppet != mPuppets.end();
+         ++puppet)
       try {
-        lSpell = puppet->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
+        lSpell = (*puppet)->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
         lCaster = static_cast<CPuppet*>(lSpell->getCaster()->getEntity());
         break;
       } catch (...) { lSpell = 0; }
@@ -747,14 +788,20 @@ namespace Pixy
     return true;
   }
 
+  bool Combat::onEntityDied(const Event& evt) {
+    markForDeath(static_cast<CUnit*>(evt.Any));
+    return true;
+  }
   bool Combat::onStartBlockPhase(const Event& evt) {
     if (mActivePuppet != mPuppet)
       inBlockPhase = true;
 
     // get up all the opponent units with summoning sickness
-    for (auto unit : mWaitingPuppet->getUnits())
-      if (unit->hasSummoningSickness())
-        unit->getUp();
+    for (CPuppet::units_t::const_iterator unit = mWaitingPuppet->getUnits().begin();
+         unit != mWaitingPuppet->getUnits().end();
+         ++unit)
+      if ((*unit)->hasSummoningSickness())
+        ((CUnit*)(*unit))->getUp();
 
     return true;
   }
@@ -799,9 +846,11 @@ namespace Pixy
     attacker->updateTextOverlay();
 
     int i=0;
-    for (auto unit : mAttackers) {
-      unit->setAttackOrder(++i);
-      unit->updateTextOverlay();
+    for (attackers_t::iterator unit = mAttackers.begin();
+         unit != mAttackers.end();
+         ++unit) {
+      (*unit)->setAttackOrder(++i);
+      (*unit)->updateTextOverlay();
     }
 
     return true;
@@ -862,9 +911,11 @@ namespace Pixy
       mBlockers.erase(entry);
     } else {
       int i=0;
-      for (auto blocker : entry->second) {
-        blocker->setAttackOrder(++i);
-        blocker->updateTextOverlay();
+      for (std::list<CUnit*>::iterator blocker = entry->second.begin();
+           blocker != entry->second.end();
+           ++blocker) {
+        (*blocker)->setAttackOrder(++i);
+        (*blocker)->updateTextOverlay();
       }
     }
 
@@ -896,16 +947,22 @@ namespace Pixy
 
       // assign attack orders and display them
       int i=0;
-      for (auto unit : mAttackers) {
-        unit->setAttackOrder(++i);
-        unit->updateTextOverlay();
+      for (attackers_t::iterator unit = mAttackers.begin();
+           unit != mAttackers.end();
+           ++unit) {
+        (*unit)->setAttackOrder(++i);
+        (*unit)->updateTextOverlay();
       }
 
-      for (auto pair : mBlockers) {
+      for (blockers_t::iterator unit_pair = mBlockers.begin();
+           unit_pair != mBlockers.end();
+           ++unit_pair) {
         int i = 0;
-        for (auto unit : pair.second) {
-          unit->setAttackOrder(++i);
-          unit->updateTextOverlay();
+        for (attackers_t::iterator unit = unit_pair->second.begin();
+             unit != unit_pair->second.end();
+             ++unit) {
+          (*unit)->setAttackOrder(++i);
+          (*unit)->updateTextOverlay();
         }
       }
     }
@@ -913,29 +970,28 @@ namespace Pixy
     if (mAttackers.empty()) {
 
       // move the blockers first
-      for (auto pair : mBlockers)
-        for (auto unit : pair.second) {
-          if (!unit->isDead()) {
-            unit->move(POS_READY, [&](CUnit* inUnit) -> void {
-              inUnit->setAttackOrder(0);
-              inUnit->reset();
-            });
+      for (blockers_t::iterator unit_pair = mBlockers.begin();
+           unit_pair != mBlockers.end();
+           ++unit_pair)
+        for (attackers_t::iterator unit = unit_pair->second.begin();
+             unit != unit_pair->second.end();
+             ++unit) {
+          if (!(*unit)->isDead()) {
+            (*unit)->move(POS_READY, boost::bind(&Combat::onMoveBack, this, *unit));
           } else {
             //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
-            mDeathlist.push_back(unit);
+            mDeathlist.push_back(*unit);
           }
         }
 
-      for (auto unit : mChargers) {
-        if (!unit->isDead())
-          unit->move(POS_READY, [&](CUnit* inUnit) -> void {
-            inUnit->setAttackOrder(0);
-            inUnit->rest();
-            inUnit->reset();
-          });
+      for (attackers_t::iterator unit = mChargers.begin();
+           unit != mChargers.end();
+           ++unit) {
+        if (!(*unit)->isDead())
+          (*unit)->move(POS_READY, boost::bind(&Combat::onMoveBackAndRest, this, *unit));
         else {
           //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
-          mDeathlist.push_back(unit);
+          mDeathlist.push_back(*unit);
         }
       }
 
@@ -953,7 +1009,7 @@ namespace Pixy
 
 
     // go through every attacking unit:
-    auto unit = mAttackers.front();
+    CUnit* unit = mAttackers.front();
     //for (auto unit : mAttackers) {
       // if it's being blocked, go through every blocker
       // else, let it attack the puppet
@@ -966,6 +1022,15 @@ namespace Pixy
     //}
 
   }
+  
+  void Combat::onMoveBack(CUnit* inUnit) {
+    inUnit->setAttackOrder(0);
+    inUnit->reset();      
+  }
+  void Combat::onMoveBackAndRest(CUnit* inUnit) {
+    onMoveBack(inUnit);
+    inUnit->rest();
+  }
 
   void Combat::unitAttacked(CUnit* inUnit) {
     mAttackers.remove(inUnit);
@@ -975,8 +1040,10 @@ namespace Pixy
 
   void Combat::markForDeath(CUnit* inUnit) {
     // add the unit to the deathlist only if it's not there
-    for (auto unit : mDeathlist)
-      if (unit->getUID() == inUnit->getUID())
+    for (deathlist_t::iterator unit = mDeathlist.begin();
+         unit != mDeathlist.end();
+         ++unit)
+      if ((*unit)->getUID() == inUnit->getUID())
         return;
 
     mDeathlist.push_back(inUnit);

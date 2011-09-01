@@ -2,7 +2,7 @@ INCLUDE_DIRECTORIES(include include/dotscene include/ogre include/tinyxml includ
 # add sources
 SET(EClient_Modules_SRCS
 
-  src/dotscene/DotSceneLoader.cpp
+  #src/dotscene/DotSceneLoader.cpp
 
   src/tinyxmlresource/TinyXMLResource.cpp
   src/tinyxmlresource/TinyXMLResourceManager.cpp
@@ -18,11 +18,20 @@ SET(EClient_Modules_SRCS
   src/OgreMax/Version.cpp
 )
 
+if(APPLE)
+  LINK_LIBRARIES("-F/usr/local/lib/OGRE -framework Ogre -framework Cocoa -framework Carbon")
+else()
+  SET(PROJECT_LIBS 
+    #PagedGeometry
+    /usr/local/lib/OGRE/Ogre)
+endif()
 
-SET(PROJECT_LIBS PagedGeometry)
+if(APPLE OR LINUX)
+  LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib)
+endif()
 
-LINK_DIRECTORIES(${OGRE_LIBRARY_DIRS} /usr/local/lib/OGRE)
-
+LIST(APPEND PROJECT_LIBS ${ESHARED_LIBRARIES})
+  
 SET(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 ADD_LIBRARY( EClient_Modules SHARED ${EClient_Modules_SRCS} )
 TARGET_LINK_LIBRARIES( EClient_Modules ${PROJECT_LIBS} )

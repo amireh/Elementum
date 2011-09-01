@@ -7,13 +7,11 @@
 
 SET(EShared_PATHS
   /home/kandie/Workspace/Projects/Elementum/Shared
-  /Volumes/kandiehack/Workspace/Projects/Elementum/Shared
-  /Users/kandie/Workspace/Projects/Elementum/Shared
+  /Volumes/kandie/Workspace/Projects/Elementum/Shared
 )
 
 FIND_PATH(ESHARED_INCLUDE_DIRS Pixy.h
   HINTS
-  $ENV{LUA_DIR}
   PATH_SUFFIXES include
   PATHS
   ${EShared_PATHS}
@@ -48,7 +46,7 @@ ENDIF()
 #INCLUDE(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 # handle the QUIETLY and REQUIRED arguments and set LUA_FOUND to TRUE if
 # all listed variables are TRUE
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(EShared  DEFAULT_MSG  ESHARED_LIBRARIES ESHARED_INCLUDE_DIRS)
+#FIND_PACKAGE_HANDLE_STANDARD_ARGS(EShared  DEFAULT_MSG  ESHARED_LIBRARIES ESHARED_INCLUDE_DIRS)
 
 SET(ESHARED_LIBRARY_DIR ${EShared_PATHS})
 MARK_AS_ADVANCED(ESHARED_FOUND ESHARED_INCLUDE_DIRS ESHARED_LIBRARY_DIR ESHARED_LIBRARIES ESHARED_LIBRARY ESHARED_MODULES_LIBRARY)

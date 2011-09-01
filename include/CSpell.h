@@ -7,7 +7,7 @@
 #include <string>
 
 namespace CEGUI {
-class Window;
+  class Window;
 }
 
 using std::string;

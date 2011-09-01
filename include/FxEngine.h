@@ -65,17 +65,21 @@ namespace Pixy {
     ParticleUniverse::ParticleSystem* mHighlightEffect;
 
     typedef std::map< std::string, ParticleUniverse::ParticleSystem* > effects_t;
+    typedef std::list<Ogre::SceneNode*> deathlist_t;
+    typedef deathlist_t portable_effects_t;
+    
     effects_t mEffects;
 
     Renderable* mSelected;
 
-    std::list<Ogre::SceneNode*> mPortableEffects;
-    std::list<Ogre::SceneNode*> mDeathlist;
+    
+    portable_effects_t mPortableEffects;
+    deathlist_t mDeathlist;
 
 		static FxEngine* __instance;
 		FxEngine();
-		FxEngine(const FxEngine& src) = delete;
-		FxEngine& operator=(const FxEngine& rhs) = delete;
+		FxEngine(const FxEngine& src);
+		FxEngine& operator=(const FxEngine& rhs);
 	};
 }
 #endif
