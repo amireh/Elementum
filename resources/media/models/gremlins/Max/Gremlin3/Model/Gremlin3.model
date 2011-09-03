@@ -1,0 +1,15 @@
+<node>
+    <position x="0" y="0" z="0" />
+    <scale x="1" y="1" z="1" />
+    <rotation qx="0" qy="0" qz="0" qw="1" />
+    <node name="imp_v03">
+        <position x="0.000320643" y="0.00312179" z="0.0594399" />
+        <scale x="1" y="1" z="1" />
+        <rotation qx="0" qy="0" qz="0" qw="1" />
+        <entity name="imp_v03" castShadows="true" receiveShadows="true" meshFile="imp_v03.mesh">
+            <subentities>
+                <subentity index="0" materialName="gremlin-01" />
+            </subentities>
+        </entity>
+    </node>
+</node>

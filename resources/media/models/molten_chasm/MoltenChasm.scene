@@ -1,0 +1,1749 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1" unitType="meters" minOgreVersion="1.7" ogreMaxVersion="2.3.14" author="OgreMax Scene Exporter (www.ogremax.com)" application="3DS Max">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="100000" />
+    </environment>
+    <nodes>
+        <node name="head_s1">
+            <position x="8.7704" y="5.22728" z="-13.991" />
+            <scale x="22.3252" y="18.7021" z="18.7021" />
+            <rotation qx="-0.0103105" qy="0.99094" qz="-0.133841" qw="-0.00425132" />
+            <entity name="head_s1" castShadows="true" receiveShadows="true" meshFile="head_s1.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="head_s04">
+            <position x="8.7704" y="5.22728" z="13.7652" />
+            <scale x="22.3252" y="18.7021" z="18.7021" />
+            <rotation qx="0.133841" qy="0.00425125" qz="-0.0103105" qw="0.99094" />
+            <entity name="head_s04" castShadows="true" receiveShadows="true" meshFile="head_s04.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object01">
+            <position x="8.7753" y="1.88359" z="-0.117412" />
+            <scale x="0.0113545" y="0.0113545" z="0.0113545" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Object01" castShadows="true" receiveShadows="true" meshFile="Object01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="lava" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box01">
+            <position x="6.27027" y="1.16456" z="-11.1179" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="-0.382683" qz="1.67276e-008" qw="0.92388" />
+            <entity name="Box01" castShadows="true" receiveShadows="true" meshFile="Box01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="lava" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box13">
+            <position x="11.2567" y="1.16456" z="-11.1179" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0.92388" qy="-1.67276e-008" qz="-0.382683" qw="0" />
+            <entity name="Box13" castShadows="true" receiveShadows="true" meshFile="Box13.mesh">
+                <subentities>
+                    <subentity index="0" materialName="lava" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box14">
+            <position x="6.27027" y="1.16456" z="11.049" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0.382683" qy="4.03841e-008" qz="0.92388" qw="0" />
+            <entity name="Box14" castShadows="true" receiveShadows="true" meshFile="Box14.mesh">
+                <subentities>
+                    <subentity index="0" materialName="lava" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box15">
+            <position x="11.2567" y="1.16456" z="11.049" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="0.92388" qz="-4.03841e-008" qw="0.382683" />
+            <entity name="Box15" castShadows="true" receiveShadows="true" meshFile="Box15.mesh">
+                <subentities>
+                    <subentity index="0" materialName="lava" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box23">
+            <position x="-0.14848" y="1.59553" z="-0.117412" />
+            <scale x="0.00517483" y="0.01" z="0.01" />
+            <rotation qx="0.0308436" qy="0.706434" qz="-0.0308436" qw="0.706434" />
+            <entity name="Box23" castShadows="true" receiveShadows="true" meshFile="Box23.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box40">
+            <position x="44.0026" y="1.40849" z="-3.6954" />
+            <scale x="0.0182472" y="0.00915549" z="0.0182472" />
+            <rotation qx="-0.0802993" qy="-0.0424063" qz="-0.053406" qw="0.994435" />
+            <entity name="Box40" castShadows="true" receiveShadows="true" meshFile="Box40.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder04">
+            <position x="58.611" y="2.25337" z="9.55344" />
+            <scale x="0.00834773" y="0.0092384" z="0.00834773" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Cylinder04" castShadows="true" receiveShadows="true" meshFile="Cylinder04.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder20">
+            <position x="68.8" y="1.16456" z="7.4741" />
+            <scale x="0.00790289" y="0.00790289" z="0.00790289" />
+            <rotation qx="0.0436194" qy="0" qz="0" qw="0.999048" />
+            <entity name="Cylinder20" castShadows="true" receiveShadows="true" meshFile="Cylinder20.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder21">
+            <position x="78.9328" y="2.71623" z="-7.34359" />
+            <scale x="0.00949161" y="0.00949161" z="0.00949161" />
+            <rotation qx="0.0436194" qy="0" qz="0" qw="0.999048" />
+            <entity name="Cylinder21" castShadows="true" receiveShadows="true" meshFile="Cylinder21.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere06">
+            <position x="60.2482" y="1.45628" z="6.83371" />
+            <scale x="0.00880343" y="0.00880343" z="0.00880343" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere06" castShadows="true" receiveShadows="true" meshFile="GeoSphere06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere07">
+            <position x="62.9289" y="1.45628" z="11.4142" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere07" castShadows="true" receiveShadows="true" meshFile="GeoSphere07.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere08">
+            <position x="87.7185" y="3.07255" z="-9.02999" />
+            <scale x="0.00880343" y="0.00880343" z="0.00880343" />
+            <rotation qx="0" qy="-0.21644" qz="9.46088e-009" qw="0.976296" />
+            <entity name="GeoSphere08" castShadows="true" receiveShadows="true" meshFile="GeoSphere08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere09">
+            <position x="81.4431" y="3.42717" z="-12.6531" />
+            <scale x="0.0156351" y="0.0156351" z="0.01196" />
+            <rotation qx="0" qy="-0.0696237" qz="3.04335e-009" qw="0.997573" />
+            <entity name="GeoSphere09" castShadows="true" receiveShadows="true" meshFile="GeoSphere09.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder25">
+            <position x="112.376" y="3.24299" z="-5.67465" />
+            <scale x="0.00642944" y="0.00711544" z="0.00642944" />
+            <rotation qx="-0.0596866" qy="-0.810118" qz="-0.13914" qw="0.56638" />
+            <entity name="Cylinder25" castShadows="true" receiveShadows="true" meshFile="Cylinder25.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere10">
+            <position x="89.1062" y="3.51585" z="12.6754" />
+            <scale x="0.0155321" y="0.0155321" z="0.0155321" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere10" castShadows="true" receiveShadows="true" meshFile="GeoSphere10.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere11">
+            <position x="85.404" y="3.19722" z="11.9377" />
+            <scale x="0.00859793" y="0.0052148" z="0.00859793" />
+            <rotation qx="0" qy="-7.5904e-009" qz="-0.173648" qw="0.984808" />
+            <entity name="GeoSphere11" castShadows="true" receiveShadows="true" meshFile="GeoSphere11.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere12">
+            <position x="91.8054" y="2.00139" z="10.6467" />
+            <scale x="0.0112665" y="0.00880343" z="0.0101607" />
+            <rotation qx="0" qy="-5.70548e-009" qz="-0.130526" qw="0.991445" />
+            <entity name="GeoSphere12" castShadows="true" receiveShadows="true" meshFile="GeoSphere12.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box44">
+            <position x="78.6135" y="-0.203144" z="0.1228" />
+            <scale x="0.00603173" y="0.00603173" z="0.00603173" />
+            <rotation qx="-0.00909307" qy="-0.000466294" qz="0.051211" qw="0.998646" />
+            <entity name="Box44" castShadows="true" receiveShadows="true" meshFile="Box44.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box45">
+            <position x="87.1325" y="0.476788" z="0.330426" />
+            <scale x="0.00603173" y="0.00603173" z="0.00603173" />
+            <rotation qx="0.00379179" qy="0.000693996" qz="-0.0161906" qw="0.999861" />
+            <entity name="Box45" castShadows="true" receiveShadows="true" meshFile="Box45.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box46">
+            <position x="104.406" y="0.424542" z="1.53998" />
+            <scale x="0.00603173" y="0.00603173" z="0.00603173" />
+            <rotation qx="-0.289799" qy="-0.14103" qz="0.0709437" qw="0.943978" />
+            <entity name="Box46" castShadows="true" receiveShadows="true" meshFile="Box46.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere13">
+            <position x="106.134" y="4.73723" z="14.5288" />
+            <scale x="0.0112665" y="0.00880343" z="0.0101607" />
+            <rotation qx="0" qy="-5.70548e-009" qz="-0.130526" qw="0.991445" />
+            <entity name="GeoSphere13" castShadows="true" receiveShadows="true" meshFile="GeoSphere13.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere14">
+            <position x="103.435" y="6.25169" z="16.5576" />
+            <scale x="0.0155321" y="0.0155321" z="0.0155321" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere14" castShadows="true" receiveShadows="true" meshFile="GeoSphere14.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere15">
+            <position x="99.7331" y="4.7928" z="15.8199" />
+            <scale x="0.00890352" y="0.00612889" z="0.00859793" />
+            <rotation qx="0" qy="7.03375e-009" qz="0.160913" qw="0.986969" />
+            <entity name="GeoSphere15" castShadows="true" receiveShadows="true" meshFile="GeoSphere15.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere16">
+            <position x="102.138" y="3.95305" z="13.6794" />
+            <scale x="0.0108848" y="0.00749273" z="0.0105112" />
+            <rotation qx="1.12488e-016" qy="7.03375e-009" qz="0.160913" qw="0.986969" />
+            <entity name="GeoSphere16" castShadows="true" receiveShadows="true" meshFile="GeoSphere16.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere17">
+            <position x="110.797" y="3.33122" z="-4.91803" />
+            <scale x="0.00759698" y="0.0117816" z="0.00703593" />
+            <rotation qx="0.0407431" qy="0.00576666" qz="-0.140022" qw="0.989293" />
+            <entity name="GeoSphere17" castShadows="true" receiveShadows="true" meshFile="GeoSphere17.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder30">
+            <position x="112.376" y="3.24299" z="4.96445" />
+            <scale x="0.00642944" y="0.00711544" z="0.00642944" />
+            <rotation qx="0.810118" qy="-0.0596866" qz="0.56638" qw="0.13914" />
+            <entity name="Cylinder30" castShadows="true" receiveShadows="true" meshFile="Cylinder30.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere18">
+            <position x="110.603" y="2.77964" z="3.35654" />
+            <scale x="0.00971854" y="0.00852142" z="0.00859793" />
+            <rotation qx="0" qy="7.29067e-009" qz="0.166791" qw="0.985992" />
+            <entity name="GeoSphere18" castShadows="true" receiveShadows="true" meshFile="GeoSphere18.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder36">
+            <position x="59.0287" y="1.60781" z="-13.5123" />
+            <scale x="0.00834773" y="0.0092384" z="0.00834773" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Cylinder36" castShadows="true" receiveShadows="true" meshFile="Cylinder36.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object04">
+            <position x="76.7468" y="8.13606" z="-8.57516" />
+            <scale x="0.233656" y="0.233656" z="0.233656" />
+            <rotation qx="0.364396" qy="0.930769" qz="0.013236" qw="-0.0266466" />
+            <entity name="Object04" castShadows="true" receiveShadows="true" meshFile="Object04.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object08">
+            <position x="78.8742" y="8.46778" z="-15.5424" />
+            <scale x="0.153474" y="0.153474" z="0.153474" />
+            <rotation qx="0.0704837" qy="0.956708" qz="-0.191034" qw="-0.207961" />
+            <entity name="Object08" castShadows="true" receiveShadows="true" meshFile="Object08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box50">
+            <position x="88.9909" y="11.5895" z="13.7032" />
+            <scale x="0.0147269" y="0.00996793" z="0.0147269" />
+            <rotation qx="-0.0732465" qy="0.0630819" qz="0.0084711" qw="0.995281" />
+            <entity name="Box50" castShadows="true" receiveShadows="true" meshFile="Box50.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box51">
+            <position x="88.1091" y="9.63377" z="-14.1509" />
+            <scale x="0.0147269" y="0.00996793" z="0.0147269" />
+            <rotation qx="0.109315" qy="0.0237572" qz="-0.0224272" qw="0.99347" />
+            <entity name="Box51" castShadows="true" receiveShadows="true" meshFile="Box51.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere22">
+            <position x="106.406" y="3.81108" z="-11.4506" />
+            <scale x="0.00880343" y="0.00880343" z="0.00880343" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere22" castShadows="true" receiveShadows="true" meshFile="GeoSphere22.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder42">
+            <position x="-15.3943" y="2.25337" z="3.91828" />
+            <scale x="0.00834773" y="0.0092384" z="0.00834773" />
+            <rotation qx="0.0172944" qy="0" qz="0" qw="0.99985" />
+            <entity name="Cylinder42" castShadows="true" receiveShadows="true" meshFile="Cylinder42.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder43">
+            <position x="-15.1819" y="2.25337" z="-3.58233" />
+            <scale x="0.00834773" y="0.0092384" z="0.00834773" />
+            <rotation qx="-0.0349594" qy="0" qz="0" qw="0.999389" />
+            <entity name="Cylinder43" castShadows="true" receiveShadows="true" meshFile="Cylinder43.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object12">
+            <position x="8.76587" y="5.42143" z="13.7647" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="4.37114e-008" qy="-4.37114e-008" qz="-4.37114e-008" qw="1" />
+            <entity name="Object12" castShadows="true" receiveShadows="true" meshFile="Object12.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere23">
+            <position x="-73.8577" y="-7.18355" z="39.4308" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="-0.00754841" qy="0.817771" qz="0.028374" qw="0.574794" />
+            <entity name="GeoSphere23" castShadows="true" receiveShadows="true" meshFile="GeoSphere23.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere24">
+            <position x="-75.0558" y="-6.78671" z="48.9949" />
+            <scale x="0.00880343" y="0.00880343" z="0.00880343" />
+            <rotation qx="-0.00754841" qy="0.817771" qz="0.028374" qw="0.574794" />
+            <entity name="GeoSphere24" castShadows="true" receiveShadows="true" meshFile="GeoSphere24.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere25">
+            <position x="-86.1702" y="-5.66732" z="40.107" />
+            <scale x="0.0156351" y="0.0156351" z="0.01196" />
+            <rotation qx="-0.00555457" qy="0.775767" qz="0.028831" qw="0.630336" />
+            <entity name="GeoSphere25" castShadows="true" receiveShadows="true" meshFile="GeoSphere25.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere26">
+            <position x="-70.9358" y="-5.62319" z="33.0057" />
+            <scale x="0.00971854" y="0.00852142" z="0.00859793" />
+            <rotation qx="0.128954" qy="0.807575" qz="0.123847" qw="0.56201" />
+            <entity name="GeoSphere26" castShadows="true" receiveShadows="true" meshFile="GeoSphere26.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere27">
+            <position x="-91.1575" y="-5.52449" z="45.1217" />
+            <scale x="0.00759698" y="0.0117816" z="0.00703593" />
+            <rotation qx="-0.098718" qy="0.812429" qz="-0.0857755" qw="0.568205" />
+            <entity name="GeoSphere27" castShadows="true" receiveShadows="true" meshFile="GeoSphere27.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere28">
+            <position x="-76.0061" y="-6.5428" z="30.1026" />
+            <scale x="0.0112665" y="0.00880343" z="0.0101607" />
+            <rotation qx="-0.114224" qy="0.80979" qz="-0.0468944" qw="0.57358" />
+            <entity name="GeoSphere28" castShadows="true" receiveShadows="true" meshFile="GeoSphere28.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere29">
+            <position x="-85.2688" y="-7.43672" z="46.984" />
+            <scale x="0.00759698" y="0.0117816" z="0.00703593" />
+            <rotation qx="0.534495" qy="0.542154" qz="-0.281392" qw="0.584126" />
+            <entity name="GeoSphere29" castShadows="true" receiveShadows="true" meshFile="GeoSphere29.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere30">
+            <position x="-80.1009" y="-7.18355" z="44.7999" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="-0.00754841" qy="0.817771" qz="0.028374" qw="0.574794" />
+            <entity name="GeoSphere30" castShadows="true" receiveShadows="true" meshFile="GeoSphere30.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere31">
+            <position x="-80.4534" y="-6.5428" z="36.2301" />
+            <scale x="0.0138825" y="0.0108476" z="0.01252" />
+            <rotation qx="-0.114224" qy="0.80979" qz="-0.0468944" qw="0.57358" />
+            <entity name="GeoSphere31" castShadows="true" receiveShadows="true" meshFile="GeoSphere31.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere32">
+            <position x="-88.0999" y="-5.67043" z="53.0655" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="-0.00754841" qy="0.817771" qz="0.028374" qw="0.574794" />
+            <entity name="GeoSphere32" castShadows="true" receiveShadows="true" meshFile="GeoSphere32.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere33">
+            <position x="-95.4642" y="-5.76876" z="52.1139" />
+            <scale x="0.009802" y="0.0152013" z="0.00907811" />
+            <rotation qx="0.419367" qy="-0.00300772" qz="-0.747131" qw="0.515673" />
+            <entity name="GeoSphere33" castShadows="true" receiveShadows="true" meshFile="GeoSphere33.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere34">
+            <position x="-96.1116" y="-4.19557" z="63.7848" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="-0.314541" qy="0.86513" qz="0.27333" qw="-0.279115" />
+            <entity name="GeoSphere34" castShadows="true" receiveShadows="true" meshFile="GeoSphere34.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere35">
+            <position x="-105.668" y="-3.96755" z="51.3351" />
+            <scale x="0.00759698" y="0.0117816" z="0.00703593" />
+            <rotation qx="0.327696" qy="0.787701" qz="0.0346359" qw="0.520521" />
+            <entity name="GeoSphere35" castShadows="true" receiveShadows="true" meshFile="GeoSphere35.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere36">
+            <position x="-88.8948" y="-4.42049" z="59.5235" />
+            <scale x="0.00759698" y="0.0117816" z="0.00703593" />
+            <rotation qx="0.140408" qy="0.819193" qz="-0.0197315" qw="0.555714" />
+            <entity name="GeoSphere36" castShadows="true" receiveShadows="true" meshFile="GeoSphere36.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder53">
+            <position x="-61.3479" y="-3.83656" z="46.8956" />
+            <scale x="0.00790289" y="0.00790289" z="0.00790289" />
+            <rotation qx="-0.0901832" qy="0.340441" qz="0.032824" qw="0.935355" />
+            <entity name="Cylinder53" castShadows="true" receiveShadows="true" meshFile="Cylinder53.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder57">
+            <position x="-78.0833" y="-4.70003" z="60.4459" />
+            <scale x="0.00663988" y="0.00663988" z="0.00663988" />
+            <rotation qx="0.00377826" qy="0.335254" qz="-0.116405" qw="0.934901" />
+            <entity name="Cylinder57" castShadows="true" receiveShadows="true" meshFile="Cylinder57.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder58">
+            <position x="-92.8392" y="-3.83656" z="66.6407" />
+            <scale x="0.00438313" y="0.00438313" z="0.00438313" />
+            <rotation qx="-0.0901831" qy="0.340441" qz="0.032824" qw="0.935355" />
+            <entity name="Cylinder58" castShadows="true" receiveShadows="true" meshFile="Cylinder58.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalaktites">
+            <position x="-75.0916" y="22.5623" z="40.1295" />
+            <scale x="0.0115119" y="0.0115119" z="0.0115119" />
+            <rotation qx="0.937273" qy="0.0245279" qz="-0.341139" qw="0.0673898" />
+            <entity name="stalaktites" castShadows="true" receiveShadows="true" meshFile="stalaktites.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder69">
+            <position x="-101.125" y="-3.23164" z="62.1603" />
+            <scale x="0.0114612" y="0.0114612" z="0.0114612" />
+            <rotation qx="0.0603574" qy="0.343473" qz="0.0385025" qw="0.93643" />
+            <entity name="Cylinder69" castShadows="true" receiveShadows="true" meshFile="Cylinder69.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="scelet02">
+            <position x="-60.5883" y="-2.93482" z="35.0082" />
+            <scale x="0.275775" y="0.275775" z="0.275775" />
+            <rotation qx="0.111197" qy="0.726883" qz="-0.0356812" qw="0.676759" />
+            <entity name="scelet02" castShadows="true" receiveShadows="true" meshFile="scelet02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="scelet05">
+            <position x="-20.0249" y="2.11964" z="2.90885" />
+            <scale x="0.197614" y="0.197615" z="0.197614" />
+            <rotation qx="0.572216" qy="0.787495" qz="0.13417" qw="0.185524" />
+            <entity name="scelet05" castShadows="true" receiveShadows="true" meshFile="scelet05.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object13">
+            <position x="14.5615" y="4.20317" z="-4.66336" />
+            <scale x="0.163691" y="0.163691" z="0.163691" />
+            <rotation qx="-0.314533" qy="-0.783421" qz="0.12193" qw="0.52197" />
+            <entity name="Object13" castShadows="true" receiveShadows="true" meshFile="Object13.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object14">
+            <position x="-60.9992" y="3.48509" z="29.8086" />
+            <scale x="0.274551" y="0.274551" z="0.274551" />
+            <rotation qx="0.412838" qy="0.884367" qz="-0.0834201" qw="-0.201247" />
+            <entity name="Object14" castShadows="true" receiveShadows="true" meshFile="Object14.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box64">
+            <position x="-18.2613" y="6.35075" z="-2.43608" />
+            <scale x="0.0102535" y="0.0102535" z="0.0102535" />
+            <rotation qx="-5.33851e-008" qy="0.707107" qz="0.707107" qw="5.33851e-008" />
+            <entity name="Box64" castShadows="true" receiveShadows="true" meshFile="Box64.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder73">
+            <position x="33.0388" y="1.16456" z="5.13114" />
+            <scale x="0.00790289" y="0.00790289" z="0.00790289" />
+            <rotation qx="0.0436194" qy="0" qz="0" qw="0.999048" />
+            <entity name="Cylinder73" castShadows="true" receiveShadows="true" meshFile="Cylinder73.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Cylinder74">
+            <position x="34.6115" y="2.71623" z="0.885548" />
+            <scale x="0.00949161" y="0.00949161" z="0.00949161" />
+            <rotation qx="0.0436194" qy="0" qz="0" qw="0.999048" />
+            <entity name="Cylinder74" castShadows="true" receiveShadows="true" meshFile="Cylinder74.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere37">
+            <position x="31.9443" y="3.45408" z="1.57125" />
+            <scale x="0.00880343" y="0.00880343" z="0.00880343" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere37" castShadows="true" receiveShadows="true" meshFile="GeoSphere37.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere38">
+            <position x="35.1567" y="4.03224" z="2.6763" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere38" castShadows="true" receiveShadows="true" meshFile="GeoSphere38.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere39">
+            <position x="32.4152" y="3.81477" z="-1.92914" />
+            <scale x="0.0156351" y="0.0156351" z="0.01196" />
+            <rotation qx="0" qy="-0.754622" qz="3.29856e-008" qw="0.656159" />
+            <entity name="GeoSphere39" castShadows="true" receiveShadows="true" meshFile="GeoSphere39.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere40">
+            <position x="31.6718" y="3.19722" z="5.43839" />
+            <scale x="0.00859793" y="0.0052148" z="0.00859793" />
+            <rotation qx="0" qy="-7.5904e-009" qz="-0.173648" qw="0.984808" />
+            <entity name="GeoSphere40" castShadows="true" receiveShadows="true" meshFile="GeoSphere40.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box65">
+            <position x="-27.1618" y="4.8717" z="-0.239739" />
+            <scale x="0.0108487" y="0.0108487" z="0.0108487" />
+            <rotation qx="-5.33851e-008" qy="0.707107" qz="0.707107" qw="5.33851e-008" />
+            <entity name="Box65" castShadows="true" receiveShadows="true" meshFile="Box65.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box66">
+            <position x="-41.6272" y="6.49522" z="6.31662" />
+            <scale x="0.0102535" y="0.0091929" z="0.0091929" />
+            <rotation qx="0.270598" qy="0.653282" qz="0.653281" qw="-0.270598" />
+            <entity name="Box66" castShadows="true" receiveShadows="true" meshFile="Box66.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box67">
+            <position x="-44.6331" y="6.45579" z="11.4537" />
+            <scale x="0.0131722" y="0.0118098" z="0.0118098" />
+            <rotation qx="0.272953" qy="0.637313" qz="0.674729" qw="-0.253118" />
+            <entity name="Box67" castShadows="true" receiveShadows="true" meshFile="Box67.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box68">
+            <position x="-65.6424" y="10.5922" z="6.38248" />
+            <scale x="0.00919291" y="0.0102535" z="0.0091929" />
+            <rotation qx="0.341986" qy="0.607364" qz="0.642502" qw="-0.318348" />
+            <entity name="Box68" castShadows="true" receiveShadows="true" meshFile="Box68.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box69">
+            <position x="-38.867" y="5.82597" z="-5.17331" />
+            <scale x="0.00919291" y="0.0102535" z="0.0091929" />
+            <rotation qx="-0.185983" qy="0.692352" qz="0.67261" qw="0.183452" />
+            <entity name="Box69" castShadows="true" receiveShadows="true" meshFile="Box69.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box70">
+            <position x="13.6282" y="5.07325" z="23.7118" />
+            <scale x="0.00720503" y="0.00803625" z="0.00720503" />
+            <rotation qx="-0.191846" qy="0.690724" qz="0.670962" qw="0.189487" />
+            <entity name="Box70" castShadows="true" receiveShadows="true" meshFile="Box70.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box71">
+            <position x="23.3972" y="5.07326" z="31.9376" />
+            <scale x="0.0106798" y="0.00957512" z="0.00957512" />
+            <rotation qx="-0.191846" qy="0.690724" qz="0.670962" qw="0.189487" />
+            <entity name="Box71" castShadows="true" receiveShadows="true" meshFile="Box71.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box72">
+            <position x="46.4775" y="7.0619" z="23.8868" />
+            <scale x="0.00742114" y="0.0082773" z="0.00742114" />
+            <rotation qx="-0.610097" qy="0.354428" qz="0.338786" qw="0.622403" />
+            <entity name="Box72" castShadows="true" receiveShadows="true" meshFile="Box72.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere41">
+            <position x="27.4581" y="2.0048" z="37.9562" />
+            <scale x="0.00434619" y="0.00434619" z="0.00434619" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere41" castShadows="true" receiveShadows="true" meshFile="GeoSphere41.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere42">
+            <position x="35.478" y="1.6671" z="35.1668" />
+            <scale x="0.00570303" y="0.00570303" z="0.00570303" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere42" castShadows="true" receiveShadows="true" meshFile="GeoSphere42.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere43">
+            <position x="-33.1939" y="3.52708" z="-1.67973" />
+            <scale x="0.00570303" y="0.00570303" z="0.00570303" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere43" castShadows="true" receiveShadows="true" meshFile="GeoSphere43.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere44">
+            <position x="-42.6897" y="3.11009" z="7.51182" />
+            <scale x="0.00527128" y="0.00527128" z="0.00527128" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="GeoSphere44" castShadows="true" receiveShadows="true" meshFile="GeoSphere44.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object02">
+            <position x="8.76587" y="5.42143" z="13.7647" />
+            <scale x="22.3251" y="18.7021" z="18.7021" />
+            <rotation qx="0.99094" qy="0.0103104" qz="0.00425142" qw="-0.133841" />
+            <entity name="Object02" castShadows="true" receiveShadows="true" meshFile="Object02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="lava" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object03">
+            <position x="44.0026" y="1.40849" z="-3.6954" />
+            <scale x="0.0182472" y="0.00915549" z="0.0182472" />
+            <rotation qx="-0.0802993" qy="-0.0424063" qz="-0.053406" qw="0.994435" />
+            <entity name="Object03" castShadows="true" receiveShadows="true" meshFile="Object03.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Box73">
+            <position x="-0.198834" y="1.65937" z="-45.6044" />
+            <scale x="0.00517483" y="0.01" z="0.01" />
+            <rotation qx="0.0308436" qy="0.706434" qz="-0.0308436" qw="0.706434" />
+            <entity name="Box73" castShadows="true" receiveShadows="true" meshFile="Box73.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Statue_05">
+            <position x="-12.0444" y="2.13322" z="-58.3295" />
+            <scale x="13.7998" y="13.7998" z="13.7998" />
+            <rotation qx="0" qy="0.930034" qz="-4.06531e-008" qw="-0.367475" />
+            <entity name="Statue_05" castShadows="true" receiveShadows="true" meshFile="Statue_05.mesh">
+                <subentities>
+                    <subentity index="0" materialName="statue-03" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Statue_06">
+            <position x="29.0239" y="2.90946" z="-41.1159" />
+            <scale x="17.6403" y="17.6403" z="17.6403" />
+            <rotation qx="0" qy="1" qz="-4.37114e-008" qw="-4.37114e-008" />
+            <entity name="Statue_06" castShadows="true" receiveShadows="true" meshFile="Statue_06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Statue_02" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Statue_07">
+            <position x="-85.556" y="3.20893" z="-58.3188" />
+            <scale x="24.7523" y="24.7523" z="24.7523" />
+            <rotation qx="0" qy="0.707107" qz="-3.09086e-008" qw="0.707107" />
+            <entity name="Statue_07" castShadows="true" receiveShadows="true" meshFile="Statue_07.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Statue_01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Statue_08">
+            <position x="-23.7622" y="2.22453" z="-49.079" />
+            <scale x="0.300988" y="0.300988" z="0.300988" />
+            <rotation qx="0" qy="0.831471" qz="-3.63448e-008" qw="0.555568" />
+            <entity name="Statue_08" castShadows="true" receiveShadows="true" meshFile="Statue_08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="statue-04" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Statue_09">
+            <position x="-13.7098" y="2.13041" z="-34.661" />
+            <scale x="14.6096" y="14.6096" z="14.6096" />
+            <rotation qx="0" qy="-0.328703" qz="1.4368e-008" qw="0.944434" />
+            <entity name="Statue_09" castShadows="true" receiveShadows="true" meshFile="Statue_09.mesh">
+                <subentities>
+                    <subentity index="0" materialName="statue-03" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Object05">
+            <position x="52.967" y="0.939585" z="-45.974" />
+            <scale x="0.00946908" y="0.0182983" z="0.0182983" />
+            <rotation qx="0.0308436" qy="0.706434" qz="-0.0308436" qw="0.706434" />
+            <entity name="Object05" castShadows="true" receiveShadows="true" meshFile="Object05.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere45">
+            <position x="86.7761" y="3.36326" z="-46.373" />
+            <scale x="0.0134267" y="0.0134267" z="0.0102707" />
+            <rotation qx="0.317483" qy="0.896544" qz="-0.10311" qw="0.291173" />
+            <entity name="GeoSphere45" castShadows="true" receiveShadows="true" meshFile="GeoSphere45.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere46">
+            <position x="83.5529" y="2.60661" z="-44.9638" />
+            <scale x="0.00756" y="0.00756" z="0.00756" />
+            <rotation qx="0" qy="-0.66262" qz="2.8964e-008" qw="0.748956" />
+            <entity name="GeoSphere46" castShadows="true" receiveShadows="true" meshFile="GeoSphere46.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere47">
+            <position x="80.9138" y="1.97953" z="-46.6439" />
+            <scale x="0.00738353" y="0.00447824" z="0.00738353" />
+            <rotation qx="0.0633316" qy="-0.660036" qz="-0.0842182" qw="0.743807" />
+            <entity name="GeoSphere47" castShadows="true" receiveShadows="true" meshFile="GeoSphere47.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="invis-wall">
+            <position x="2.74593" y="-0.122639" z="-6.91152" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="invis-wall" castShadows="true" receiveShadows="true" meshFile="invis-wall.mesh">
+                <subentities>
+                    <subentity index="0" materialName="invis-wall" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="invis-wall01">
+            <position x="14.7426" y="-0.122639" z="-6.92031" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="invis-wall01" castShadows="true" receiveShadows="true" meshFile="invis-wall01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="invis-wall" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="invis-wall02">
+            <position x="2.74593" y="-0.122638" z="7.06308" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="invis-wall02" castShadows="true" receiveShadows="true" meshFile="invis-wall02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="invis-wall" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="invis-wall03">
+            <position x="14.7426" y="-0.122638" z="7.0543" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="invis-wall03" castShadows="true" receiveShadows="true" meshFile="invis-wall03.mesh">
+                <subentities>
+                    <subentity index="0" materialName="invis-wall" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="invis-wall04">
+            <position x="87.9807" y="-1.32201" z="0.28304" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="invis-wall04" castShadows="true" receiveShadows="true" meshFile="invis-wall04.mesh">
+                <subentities>
+                    <subentity index="0" materialName="invis-wall" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate">
+            <position x="8.76587" y="5.42143" z="13.7647" />
+            <scale x="0.01" y="0.01" z="0.01" />
+            <rotation qx="4.37114e-008" qy="-3.82137e-015" qz="-4.37114e-008" qw="1" />
+            <entity name="gate" castShadows="true" receiveShadows="true" meshFile="gate.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-05">
+            <position x="-15.6731" y="3.54786" z="-55.3442" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="6.07324e-008" qy="-0.562805" qz="1.30706e-008" qw="0.82659" />
+            <entity name="light-05" castShadows="true" receiveShadows="true" meshFile="light-05.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-06">
+            <position x="-15.6951" y="3.54786" z="-37.4901" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="4.37114e-008" qy="8.74228e-008" qz="-4.37114e-008" qw="1" />
+            <entity name="light-06" castShadows="true" receiveShadows="true" meshFile="light-06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-07">
+            <position x="16.3474" y="3.5503" z="-54.6981" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="6.00457e-008" qy="-0.854912" qz="5.20624e-008" qw="0.518773" />
+            <entity name="light-07" castShadows="true" receiveShadows="true" meshFile="light-07.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-08">
+            <position x="14.7888" y="3.5503" z="-34.8561" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="-4.61192e-008" qy="0.998392" qz="-8.4804e-008" qw="-0.056693" />
+            <entity name="light-08" castShadows="true" receiveShadows="true" meshFile="light-08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-11">
+            <position x="52.3991" y="2.32765" z="-9.19955" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="6.07821e-008" qy="-0.566406" qz="1.34931e-008" qw="0.824126" />
+            <entity name="light-11" castShadows="true" receiveShadows="true" meshFile="light-11.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-12">
+            <position x="52.7898" y="2.15883" z="7.3173" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="2.63693e-008" qy="0.337917" qz="-7.06817e-008" qw="0.941176" />
+            <entity name="light-12" castShadows="true" receiveShadows="true" meshFile="light-12.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-13">
+            <position x="109.057" y="4.72435" z="9.32462" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="-1.59995e-008" qy="0.866026" qz="-9.7566e-008" qw="0.5" />
+            <entity name="light-13" castShadows="true" receiveShadows="true" meshFile="light-13.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-14">
+            <position x="107.652" y="8.11906" z="-15.3334" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="6.16849e-008" qy="-0.75184" qz="3.6907e-008" qw="0.659346" />
+            <entity name="light-14" castShadows="true" receiveShadows="true" meshFile="light-14.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-15">
+            <position x="24.7338" y="3.55372" z="-7.58486" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="-5.35353e-008" qy="0.965926" qz="-7.31306e-008" qw="-0.258819" />
+            <entity name="light-15" castShadows="true" receiveShadows="true" meshFile="light-15.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-16">
+            <position x="-3.85868" y="3.49302" z="11.3573" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="1.88781e-009" qy="0.685183" qz="-9.17387e-008" qw="0.728371" />
+            <entity name="light-16" castShadows="true" receiveShadows="true" meshFile="light-16.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-17">
+            <position x="-65.2244" y="9.27681" z="14.7934" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="-5.74164e-008" qy="0.918791" qz="-6.30685e-008" qw="-0.394744" />
+            <entity name="light-17" castShadows="true" receiveShadows="true" meshFile="light-17.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-18">
+            <position x="-54.2091" y="-0.247501" z="28.3591" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="-4.42798e-008" qy="0.999914" qz="-8.68431e-008" qw="-0.0130891" />
+            <entity name="light-18" castShadows="true" receiveShadows="true" meshFile="light-18.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="light-19">
+            <position x="67.8581" y="3.44328" z="-56.0565" />
+            <scale x="0.00348763" y="0.00348763" z="0.00348763" />
+            <rotation qx="-4.61192e-008" qy="0.998392" qz="-8.4804e-008" qw="-0.056693" />
+            <entity name="light-19" castShadows="true" receiveShadows="true" meshFile="light-19.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="GeoSphere48">
+            <position x="44.4096" y="2.82765" z="1.39316" />
+            <scale x="0.0136485" y="0.0136485" z="0.0136485" />
+            <rotation qx="0.314219" qy="0.245494" qz="-0.564599" qw="0.722653" />
+            <entity name="GeoSphere48" castShadows="true" receiveShadows="true" meshFile="GeoSphere48.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_17">
+            <position x="-68.6585" y="8.2055" z="11.2062" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.126199" qz="5.51633e-009" qw="0.992005" />
+            <entity name="gate_17" castShadows="true" receiveShadows="true" meshFile="gate_17.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="bridge-destr_07">
+            <position x="-68.4462" y="-6.13679" z="42.4367" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0.0301426" qy="-0.405618" qz="0.0677015" qw="0.911033" />
+            <entity name="bridge-destr_07" castShadows="true" receiveShadows="true" meshFile="bridge-destr_07.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_18">
+            <position x="-46.3899" y="2.01152" z="12.7746" />
+            <scale x="1.23432" y="1.23432" z="1.23432" />
+            <rotation qx="0" qy="-0.410719" qz="1.79531e-008" qw="0.911762" />
+            <entity name="gate_18" castShadows="true" receiveShadows="true" meshFile="gate_18.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_16">
+            <position x="19.3563" y="21.1941" z="-0.207118" />
+            <scale x="1.11507" y="0.844127" z="1.11507" />
+            <rotation qx="0" qy="-0.258819" qz="1.13133e-008" qw="0.965926" />
+            <entity name="stalagmite_16" castShadows="true" receiveShadows="true" meshFile="stalagmite_16.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_19">
+            <position x="48.0811" y="5.35868" z="15.6629" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.34202" qz="1.49502e-008" qw="0.939693" />
+            <entity name="gate_19" castShadows="true" receiveShadows="true" meshFile="gate_19.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-05">
+            <position x="53.0117" y="1.91649" z="-45.7411" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-05" castShadows="true" receiveShadows="true" meshFile="Altar-05.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-door01">
+            <position x="39.3161" y="1.88969" z="-31.8596" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.957571" qz="-4.18568e-008" qw="0.288196" />
+            <entity name="Altar-door01" castShadows="true" receiveShadows="true" meshFile="Altar-door01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-door02">
+            <position x="70.1487" y="2.18428" z="-33.9879" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.894934" qz="-3.91188e-008" qw="-0.446198" />
+            <entity name="Altar-door02" castShadows="true" receiveShadows="true" meshFile="Altar-door02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-08">
+            <position x="53.4597" y="1.74656" z="-30.0042" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="1" qz="-4.37114e-008" qw="-4.37114e-008" />
+            <entity name="Altar-gate-08" castShadows="true" receiveShadows="true" meshFile="Altar-gate-08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-06">
+            <position x="32.6537" y="2.06586" z="-45.6905" />
+            <scale x="1.31928" y="1.31928" z="1.31928" />
+            <rotation qx="0" qy="0.71934" qz="-3.14433e-008" qw="0.694658" />
+            <entity name="Altar-misc-06" castShadows="true" receiveShadows="true" meshFile="Altar-misc-06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-07">
+            <position x="43.3876" y="2.11099" z="-58.8503" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.313164" qz="-1.36888e-008" qw="0.949699" />
+            <entity name="Altar-misc-07" castShadows="true" receiveShadows="true" meshFile="Altar-misc-07.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-08">
+            <position x="63.1209" y="2.17912" z="-32.2854" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.237686" qz="-1.03896e-008" qw="0.971342" />
+            <entity name="Altar-misc-08" castShadows="true" receiveShadows="true" meshFile="Altar-misc-08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-09">
+            <position x="44.661" y="2.09028" z="-32.2193" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.224951" qz="9.83292e-009" qw="0.97437" />
+            <entity name="Altar-misc-09" castShadows="true" receiveShadows="true" meshFile="Altar-misc-09.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_24">
+            <position x="37.3283" y="2.14011" z="-37.9025" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.0697565" qz="3.04915e-009" qw="0.997564" />
+            <entity name="stone_24" castShadows="true" receiveShadows="true" meshFile="stone_24.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_25">
+            <position x="67.5423" y="2.1185" z="-39.6155" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="8.74228e-008" qz="-3.82137e-015" qw="1" />
+            <entity name="stone_25" castShadows="true" receiveShadows="true" meshFile="stone_25.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_26">
+            <position x="71.7292" y="2.01163" z="-41.1681" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="8.74228e-008" qz="-3.82137e-015" qw="1" />
+            <entity name="stone_26" castShadows="true" receiveShadows="true" meshFile="stone_26.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_27">
+            <position x="70.3867" y="2.52265" z="-52.4908" />
+            <scale x="1.25155" y="1.25155" z="1.25155" />
+            <rotation qx="0" qy="0.93358" qz="-4.08081e-008" qw="-0.358368" />
+            <entity name="stone_27" castShadows="true" receiveShadows="true" meshFile="stone_27.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_28">
+            <position x="35.2062" y="4.49153" z="-56.3504" />
+            <scale x="1.25155" y="1.25155" z="1.25155" />
+            <rotation qx="0.509784" qy="0.210311" qz="-0.238395" qw="0.799411" />
+            <entity name="stone_28" castShadows="true" receiveShadows="true" meshFile="stone_28.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_29">
+            <position x="37.2602" y="2.16913" z="-52.2698" />
+            <scale x="1.35798" y="1.35798" z="1.35798" />
+            <rotation qx="0" qy="0.942641" qz="-4.12042e-008" qw="-0.333807" />
+            <entity name="stone_29" castShadows="true" receiveShadows="true" meshFile="stone_29.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_30">
+            <position x="55.2234" y="2.58665" z="-60.8228" />
+            <scale x="0.80041" y="0.80041" z="0.80041" />
+            <rotation qx="0" qy="0.362438" qz="-1.58427e-008" qw="0.932008" />
+            <entity name="stone_30" castShadows="true" receiveShadows="true" meshFile="stone_30.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_17">
+            <position x="38.8006" y="2.55948" z="-57.1751" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.241922" qz="-1.05747e-008" qw="0.970296" />
+            <entity name="stalagmite_17" castShadows="true" receiveShadows="true" meshFile="stalagmite_17.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_18">
+            <position x="34.7002" y="2.55948" z="-36.9417" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="-0.112235" qy="-0.014776" qz="-0.129687" qw="0.985072" />
+            <entity name="stalagmite_18" castShadows="true" receiveShadows="true" meshFile="stalagmite_18.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_19">
+            <position x="64.0446" y="2.769" z="-59.79" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.422618" qz="1.84732e-008" qw="0.906308" />
+            <entity name="stalagmite_19" castShadows="true" receiveShadows="true" meshFile="stalagmite_19.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_20">
+            <position x="46.7454" y="21.7095" z="-46.1483" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0.0764054" qy="-0.820085" qz="0.0609678" qw="0.563831" />
+            <entity name="stalagmite_20" castShadows="true" receiveShadows="true" meshFile="stalagmite_20.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_21">
+            <position x="60.1644" y="19.9338" z="-46.1483" />
+            <scale x="0.613921" y="0.613921" z="0.613921" />
+            <rotation qx="0.0677032" qy="0.486427" qz="-0.0705063" qw="0.868236" />
+            <entity name="stalagmite_21" castShadows="true" receiveShadows="true" meshFile="stalagmite_21.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_22">
+            <position x="35.0159" y="21.124" z="-45.4426" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0.130465" qy="-0.0302773" qz="-0.00398607" qw="0.990982" />
+            <entity name="stalagmite_22" castShadows="true" receiveShadows="true" meshFile="stalagmite_22.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-06">
+            <position x="-0.0818042" y="0.658889" z="-45.6728" />
+            <scale x="0.783343" y="0.783343" z="0.783343" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-06" castShadows="true" receiveShadows="true" meshFile="Altar-06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-10">
+            <position x="15.4583" y="2.00149" z="-48.9656" />
+            <scale x="0.858756" y="0.858756" z="0.858756" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-misc-10" castShadows="true" receiveShadows="true" meshFile="Altar-misc-10.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-11">
+            <position x="15.4583" y="2.00149" z="-42.5418" />
+            <scale x="0.858756" y="0.858756" z="0.858756" />
+            <rotation qx="0" qy="0.999991" qz="-4.3711e-008" qw="-0.00436324" />
+            <entity name="Altar-misc-11" castShadows="true" receiveShadows="true" meshFile="Altar-misc-11.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_23">
+            <position x="2.5764" y="15.0779" z="-46.9495" />
+            <scale x="0.632711" y="0.632711" z="0.632711" />
+            <rotation qx="-0.0610485" qy="0" qz="0" qw="0.998135" />
+            <entity name="stalagmite_23" castShadows="true" receiveShadows="true" meshFile="stalagmite_23.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_24">
+            <position x="-0.712166" y="14.0271" z="-41.4829" />
+            <scale x="0.632711" y="0.632711" z="0.632711" />
+            <rotation qx="0" qy="-0.052336" qz="2.28768e-009" qw="0.99863" />
+            <entity name="stalagmite_24" castShadows="true" receiveShadows="true" meshFile="stalagmite_24.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_25">
+            <position x="-4.74591" y="14.3358" z="-44.2194" />
+            <scale x="0.632711" y="0.632711" z="0.632711" />
+            <rotation qx="-0.0572752" qy="0.345472" qz="0.0211299" qw="0.936441" />
+            <entity name="stalagmite_25" castShadows="true" receiveShadows="true" meshFile="stalagmite_25.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_26">
+            <position x="-0.712166" y="15.1786" z="-53.1991" />
+            <scale x="0.632711" y="0.463232" z="0.632711" />
+            <rotation qx="0" qy="0.00872654" qz="-3.81449e-010" qw="0.999962" />
+            <entity name="stalagmite_26" castShadows="true" receiveShadows="true" meshFile="stalagmite_26.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_31">
+            <position x="4.04755" y="2.44949" z="-28.8527" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0.991216" qy="-0.112697" qz="-0.0606255" qw="-0.0333824" />
+            <entity name="stone_31" castShadows="true" receiveShadows="true" meshFile="stone_31.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stone_32">
+            <position x="-8.94828" y="2.80054" z="-30.44" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.999762" qz="-4.3701e-008" qw="0.021815" />
+            <entity name="stone_32" castShadows="true" receiveShadows="true" meshFile="stone_32.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_20">
+            <position x="-0.796543" y="2.32247" z="-62.3487" />
+            <scale x="1.04838" y="1.04838" z="1.04838" />
+            <rotation qx="0" qy="0.0305385" qz="-1.33488e-009" qw="0.999534" />
+            <entity name="gate_20" castShadows="true" receiveShadows="true" meshFile="gate_20.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_21">
+            <position x="-2.8159" y="2.20124" z="-68.6123" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.21644" qz="-9.46088e-009" qw="0.976296" />
+            <entity name="gate_21" castShadows="true" receiveShadows="true" meshFile="gate_21.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_22">
+            <position x="-6.0147" y="2.20124" z="-73.4382" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.313164" qz="-1.36888e-008" qw="0.949699" />
+            <entity name="gate_22" castShadows="true" receiveShadows="true" meshFile="gate_22.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_23">
+            <position x="-27.1513" y="1.61135" z="-78.6491" />
+            <scale x="1.32895" y="1.32895" z="1.32895" />
+            <rotation qx="0" qy="0.906308" qz="-3.9616e-008" qw="0.422618" />
+            <entity name="gate_23" castShadows="true" receiveShadows="true" meshFile="gate_23.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_24">
+            <position x="-36.416" y="4.17103" z="-69.4552" />
+            <scale x="0.978626" y="0.978626" z="0.978626" />
+            <rotation qx="0" qy="0.944089" qz="-4.12674e-008" qw="0.329691" />
+            <entity name="gate_24" castShadows="true" receiveShadows="true" meshFile="gate_24.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_25">
+            <position x="-40.0809" y="5.42123" z="-61.2699" />
+            <scale x="0.931675" y="0.931675" z="0.931675" />
+            <rotation qx="0" qy="-0.321439" qz="1.40506e-008" qw="0.94693" />
+            <entity name="gate_25" castShadows="true" receiveShadows="true" meshFile="gate_25.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_26">
+            <position x="91.3884" y="13.1851" z="-47.3971" />
+            <scale x="1.40054" y="1.40054" z="1.40054" />
+            <rotation qx="0" qy="-0.0436194" qz="1.90666e-009" qw="0.999048" />
+            <entity name="gate_26" castShadows="true" receiveShadows="true" meshFile="gate_26.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_27">
+            <position x="92.0162" y="9.13005" z="-62.768" />
+            <scale x="1.40054" y="1.40054" z="1.40054" />
+            <rotation qx="0" qy="0.0784591" qz="-3.42956e-009" qw="0.996917" />
+            <entity name="gate_27" castShadows="true" receiveShadows="true" meshFile="gate_27.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_28">
+            <position x="81.7543" y="5.96223" z="-78.655" />
+            <scale x="1.40054" y="1.40054" z="1.40054" />
+            <rotation qx="0" qy="0.450098" qz="-1.96744e-008" qw="0.892979" />
+            <entity name="gate_28" castShadows="true" receiveShadows="true" meshFile="gate_28.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="gate_29">
+            <position x="63.4708" y="4.1758" z="-77.9357" />
+            <scale x="1.22304" y="1.22304" z="1.22304" />
+            <rotation qx="0" qy="0.892979" qz="-3.90334e-008" qw="0.450098" />
+            <entity name="gate_29" castShadows="true" receiveShadows="true" meshFile="gate_29.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="scelet06">
+            <position x="-78.8152" y="7.6921" z="12.9581" />
+            <scale x="0.216992" y="0.216992" z="0.216992" />
+            <rotation qx="-0.274783" qy="-0.573497" qz="0.679804" qw="0.365323" />
+            <entity name="scelet06" castShadows="true" receiveShadows="true" meshFile="scelet06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="stone-01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="rock-pillar_15">
+            <position x="-25.1502" y="3.16038" z="-45.3361" />
+            <scale x="1.19949" y="1.19949" z="1.19949" />
+            <rotation qx="0" qy="0.67559" qz="-2.9531e-008" qw="0.737277" />
+            <entity name="rock-pillar_15" castShadows="true" receiveShadows="true" meshFile="rock-pillar_15.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="column-B_08">
+            <position x="-74.2003" y="2.33917" z="-59.9301" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.233445" qz="-1.02042e-008" qw="0.97237" />
+            <entity name="column-B_08" castShadows="true" receiveShadows="true" meshFile="column-B_08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="column-B_09">
+            <position x="-64.0754" y="2.33917" z="-62.3631" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.880891" qz="-3.8505e-008" qw="0.47332" />
+            <entity name="column-B_09" castShadows="true" receiveShadows="true" meshFile="column-B_09.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="column-B_10">
+            <position x="-52.0236" y="2.20775" z="-61.9633" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.882948" qz="-3.85949e-008" qw="-0.469472" />
+            <entity name="column-B_10" castShadows="true" receiveShadows="true" meshFile="column-B_10.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="column-B_11">
+            <position x="-74.2003" y="2.33917" z="-29.5928" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.233445" qz="-1.02042e-008" qw="0.97237" />
+            <entity name="column-B_11" castShadows="true" receiveShadows="true" meshFile="column-B_11.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="column-B_12">
+            <position x="-64.0754" y="2.33917" z="-32.0258" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.880891" qz="-3.8505e-008" qw="0.47332" />
+            <entity name="column-B_12" castShadows="true" receiveShadows="true" meshFile="column-B_12.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="column-B_13">
+            <position x="-51.4904" y="1.65381" z="-31.5343" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.949699" qz="-4.15127e-008" qw="-0.313164" />
+            <entity name="column-B_13" castShadows="true" receiveShadows="true" meshFile="column-B_13.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="rock-pillar_16">
+            <position x="-80.8704" y="12.5651" z="-21.5109" />
+            <scale x="0.824504" y="0.824504" z="0.824504" />
+            <rotation qx="-0.0699783" qy="-0.738728" qz="0.0833969" qw="0.665154" />
+            <entity name="rock-pillar_16" castShadows="true" receiveShadows="true" meshFile="rock-pillar_16.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="rock-pillar_17">
+            <position x="-81.1217" y="14.2868" z="-69.3008" />
+            <scale x="0.824504" y="0.824504" z="0.824504" />
+            <rotation qx="0.08972" qy="0.732895" qz="0.0616629" qw="0.671575" />
+            <entity name="rock-pillar_17" castShadows="true" receiveShadows="true" meshFile="rock-pillar_17.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-12">
+            <position x="-38.6941" y="1.46575" z="-45.6259" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.710185" qz="3.10432e-008" qw="0.704015" />
+            <entity name="Altar-misc-12" castShadows="true" receiveShadows="true" meshFile="Altar-misc-12.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-13">
+            <position x="-81.0583" y="13.2126" z="-68.18" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.0479781" qz="-2.09719e-009" qw="0.998848" />
+            <entity name="Altar-misc-13" castShadows="true" receiveShadows="true" meshFile="Altar-misc-13.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-misc-14">
+            <position x="-80.8836" y="11.9892" z="-21.131" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.0348995" qz="1.52551e-009" qw="0.999391" />
+            <entity name="Altar-misc-14" castShadows="true" receiveShadows="true" meshFile="Altar-misc-14.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_27">
+            <position x="-82.7053" y="2.36586" z="-38.7806" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0.979046" qz="-4.27954e-008" qw="-0.203642" />
+            <entity name="stalagmite_27" castShadows="true" receiveShadows="true" meshFile="stalagmite_27.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="stalagmite_28">
+            <position x="-82.5358" y="2.36586" z="-51.9425" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-0.398749" qz="1.74299e-008" qw="0.91706" />
+            <entity name="stalagmite_28" castShadows="true" receiveShadows="true" meshFile="stalagmite_28.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="rock-pillar_18">
+            <position x="-50.3391" y="3.07427" z="-46.4058" />
+            <scale x="2.59546" y="2.59546" z="2.59546" />
+            <rotation qx="0" qy="-0.697791" qz="3.05014e-008" qw="0.716302" />
+            <entity name="rock-pillar_18" castShadows="true" receiveShadows="true" meshFile="rock-pillar_18.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>

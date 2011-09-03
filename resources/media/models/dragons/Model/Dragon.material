@@ -1,0 +1,110 @@
+
+material dragon_texture_01_NoCull
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-01.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material dragon_texture_02_NoCull
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-12.jpg
+			}
+		}
+
+	}
+
+}
+
+
+material dragon_texture_03_NoCull
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-18.jpg
+			}
+		}
+
+	}
+
+}
+
+
+material dragon_texture_04_NoCull
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-21.jpg
+			}
+		}
+
+	}
+
+}
+
+
+material dragon_texture_05_NoCull
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-32.jpg
+			}
+		}
+
+	}
+
+}

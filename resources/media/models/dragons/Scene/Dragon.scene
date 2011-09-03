@@ -1,0 +1,19 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="100" unitType="centimeters" minOgreVersion="1.7" ogreMaxVersion="2.3.15" author="OgreMax Scene Exporter (www.ogremax.com)" application="Maya">
+    <environment>
+        <colourAmbient r="0.33" g="0.33" b="0.33" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="100000" />
+    </environment>
+    <nodes>
+        <node name="Dragon">
+            <position x="-0.164365" y="0.322308" z="2.48016" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="-0.707107" qy="0" qz="0" qw="0.707107" />
+            <entity name="Dragon" castShadows="true" receiveShadows="true" meshFile="Dragon.mesh">
+                <subentities>
+                    <subentity index="0" materialName="dragon_texture_01_NoCull" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>

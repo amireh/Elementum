@@ -1,0 +1,110 @@
+
+material dragon_black
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-01.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material dragon_bronze
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-27.jpg
+			}
+		}
+
+	}
+
+}
+
+
+material dragon_emerald
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-09.jpg
+			}
+		}
+
+	}
+
+}
+
+
+material dragon_blue
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-25.jpg
+			}
+		}
+
+	}
+
+}
+
+
+material dragon_red
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 2.56
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture dragon-06.jpg
+			}
+		}
+
+	}
+
+}

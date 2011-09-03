@@ -1,0 +1,121 @@
+
+material knight-01
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture knight_01.jpg
+			}
+		}
+
+	}
+
+}
+
+material knight-02
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture knight_02.jpg
+			}
+		}
+
+	}
+
+}
+
+material knight-03
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture knight_03.jpg
+			}
+		}
+
+	}
+
+}
+
+material knight-04
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture knight_04.jpg
+			}
+		}
+
+	}
+
+}
+
+material knight-05
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture knight_05.jpg
+			}
+		}
+
+	}
+
+}
+material sword-01_OgreMax
+{
+	technique Map#0
+	{
+		pass Map#1
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit Map#2
+			{
+				texture sword_01.jpg
+				filtering linear linear linear
+			}
+		}
+
+	}
+
+}
+

@@ -1,0 +1,57 @@
+<node>
+    <position x="0" y="0" z="0" />
+    <scale x="1" y="1" z="1" />
+    <rotation qx="0" qy="0" qz="0" qw="1" />
+    <node name="shield">
+        <position x="-0.411294" y="0.328386" z="-0.188271" />
+        <scale x="1" y="1" z="1" />
+        <rotation qx="-0.432848" qy="0.648826" qz="0.587601" qw="-0.215389" />
+        <entity name="shield" castShadows="true" receiveShadows="true" meshFile="shield.mesh">
+            <subentities>
+                <subentity index="0" materialName="sk_mat#02" />
+            </subentities>
+        </entity>
+    </node>
+    <node name="sword">
+        <position x="0.397524" y="0.322189" z="-0.22216" />
+        <scale x="1" y="1" z="1" />
+        <rotation qx="-0.648826" qy="0.432848" qz="-0.215388" qw="0.587601" />
+        <entity name="sword" castShadows="true" receiveShadows="true" meshFile="sword.mesh">
+            <subentities>
+                <subentity index="0" materialName="sk_mat#02" />
+            </subentities>
+        </entity>
+    </node>
+    <node name="skeleton_warrior">
+        <position x="0" y="1.98989e-010" z="0.00455235" />
+        <scale x="1" y="1" z="1" />
+        <rotation qx="0" qy="0" qz="0" qw="1" />
+        <entity name="skeleton_warrior" castShadows="true" receiveShadows="true" meshFile="skeleton_warrior.mesh">
+            <subentities>
+                <subentity index="0" materialName="sk_mat#02" />
+            </subentities>
+            <boneAttachments>
+                <boneAttachment bone="Bip01 L Hand">
+                    <position x="-0.411294" y="0.328386" z="-0.188271" />
+                    <rotation qx="-0.432848" qy="0.648826" qz="0.587601" qw="-0.215389" />
+                    <scale x="1" y="1" z="1" />
+                    <entity name="shield_1" castShadows="true" receiveShadows="true" meshFile="shield.mesh">
+                        <subentities>
+                            <subentity index="0" materialName="sk_mat#02" />
+                        </subentities>
+                    </entity>
+                </boneAttachment>
+                <boneAttachment bone="Bip01 R Hand">
+                    <position x="0.397524" y="0.322189" z="-0.22216" />
+                    <rotation qx="-0.648826" qy="0.432848" qz="-0.215388" qw="0.587601" />
+                    <scale x="1" y="1" z="1" />
+                    <entity name="sword_1" castShadows="true" receiveShadows="true" meshFile="sword.mesh">
+                        <subentities>
+                            <subentity index="0" materialName="sk_mat#02" />
+                        </subentities>
+                    </entity>
+                </boneAttachment>
+            </boneAttachments>
+        </entity>
+    </node>
+</node>
