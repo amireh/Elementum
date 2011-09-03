@@ -36,6 +36,7 @@ namespace Pixy {
   {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "FxEngine");
 		mLog->infoStream() << "firing up";
+    mLog->infoStream() << "My Listener UID: " << mUID;
 		fSetup = false;
 	}
 
