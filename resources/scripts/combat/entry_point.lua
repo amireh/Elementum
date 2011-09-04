@@ -9,6 +9,7 @@ require("combat/debug")
 require("combat/ui")
 require("combat/turns")
 require("combat/spells")
+require("combat/gfx")
 require("combat/bindings")
 
 -- and attach UI layout!

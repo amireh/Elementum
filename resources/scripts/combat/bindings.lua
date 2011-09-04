@@ -4,6 +4,7 @@
 --bind("AssignPuppets", Pixy.Combat.assignPuppets)
 --bind("CreatePuppet", Pixy.Combat.createPuppet)
 --bind("GameStarted", Pixy.Combat.gameStarted)
+bind(Pixy.EventUID.EntitySelected, Pixy.Combat.onEntitySelected)
 bind(Pixy.EventUID.StartTurn, Pixy.UI.Combat.onStartTurn)
 bind(Pixy.EventUID.TurnStarted, Pixy.UI.Combat.onTurnStarted)
 bind(Pixy.EventUID.StartBlockPhase, Pixy.UI.Combat.onStartBlockPhase)

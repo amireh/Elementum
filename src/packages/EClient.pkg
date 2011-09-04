@@ -50,3 +50,4 @@ namespace Pixy
 }
 
 $pfile "Ogre.pkg"
+$pfile "OgreBillboards.pkg"

@@ -63,7 +63,7 @@ namespace Pixy {
 
 		mLog->infoStream() << "Setting up";
 
-    bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
+    //bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
     bind(EventUID::EntityAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
 
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
