@@ -85,7 +85,7 @@ Pixy.Combat.PrepareScene = function()
   BB:setTexcoordRect(0,0,1,1)
   BBNode:attachObject(BBSet)
 
-  Pixy.CUnit:setDefaultWalkSpeed(0.05)
+  Pixy.CUnit:setDefaultWalkSpeed(0.15)
 
   -- Lights
   Pixy.Combat.SetupLights()
