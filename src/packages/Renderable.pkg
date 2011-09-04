@@ -2,24 +2,19 @@ $#include "Renderable.h"
 
 class Renderable
 {
-public:
+  public:
   enum AnimID
   {
-    ANIM_LIVE1,
-    ANIM_LIVE2,
-    ANIM_IDLE1,
-    ANIM_IDLE2,
+    ANIM_NONE=0,
+    ANIM_LIVE,
+    ANIM_IDLE,
     ANIM_WALK,
     ANIM_RUN,
-    ANIM_ATTACK1,
-    ANIM_ATTACK2,
-    ANIM_HIT1,
-    ANIM_HIT2,
+    ANIM_ATTACK,
+    ANIM_HIT,
     ANIM_REST,
     ANIM_GETUP,
-    ANIM_DEATH1,
-    ANIM_DEATH2,
-    ANIM_NONE
+    ANIM_DIE
   };
 
   Renderable(Pixy::Entity* inOwner);
@@ -33,8 +28,13 @@ public:
   virtual Ogre::Entity* getSceneObject();
 
   void registerAnimationState(AnimID inId, std::string inState, bool doLoop = true);
-  void setRunSpeed(float inWorldUnitsPerSecond);
+
   void setScale(float inScale);
+
+  static void setAnimFadeSpeed(float inSpeed);
+  static float getAnimFadeSpeed();
+
+  static void setRotationFactor(float inFactor);
 
   float animateLive();
   float animateDie();
@@ -49,6 +49,6 @@ public:
   float _animate(AnimID inId);
 
   void attachExtension(std::string inMesh, std::string inBone);
-  void setOrientation(Ogre::Quaternion inQuat);
-  void resetOrientation();
+  //void setOrientation(Ogre::Quaternion inQuat);
+  //void resetOrientation();
 };

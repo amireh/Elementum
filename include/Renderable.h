@@ -16,12 +16,12 @@
 #include "Pixy.h"
 #include <Ogre.h>
 
-#define NUM_ANIMS 14           // number of animations the character has
+//#define NUM_ANIMS 14           // number of animations the character has
 //#define CHAR_HEIGHT 5          // height of character's center of mass above ground
 //#define CAM_HEIGHT 2           // height of camera above character's center of mass
-#define RUN_SPEED 17           // character running speed in units per second
+//#define RUN_SPEED 17           // character running speed in units per second
 //#define TURN_SPEED 500.0f      // character turning in degrees per second
-#define ANIM_FADE_SPEED 7.5f   // animation crossfade speed in % of full weight per second
+//#define ANIM_FADE_SPEED 7.5f   // animation crossfade speed in % of full weight per second
 //#define JUMP_ACCEL 30.0f       // character jump acceleration in upward units per squared second
 //#define GRAVITY 90.0f          // gravity in downward units per squared second
 
@@ -57,34 +57,16 @@ namespace Pixy
     // some of these affect separate body parts and will be blended together
     enum AnimID
     {
-      ANIM_LIVE1,
-      ANIM_LIVE2,
-      ANIM_IDLE1,
-      ANIM_IDLE2,
+      ANIM_NONE=0,
+      ANIM_LIVE,
+      ANIM_IDLE,
       ANIM_WALK,
       ANIM_RUN,
-      ANIM_ATTACK1,
-      ANIM_ATTACK2,
-      ANIM_HIT1,
-      ANIM_HIT2,
+      ANIM_ATTACK,
+      ANIM_HIT,
       ANIM_REST,
       ANIM_GETUP,
-      ANIM_DEATH1,
-      ANIM_DEATH2,
-      /*ANIM_IDLE_BASE,
-      ANIM_IDLE_TOP,
-      ANIM_RUN_BASE,
-      ANIM_RUN_TOP,
-      ANIM_HANDS_CLOSED,
-      ANIM_HANDS_RELAXED,
-      ANIM_DRAW_SWORDS,
-      ANIM_SLICE_VERTICAL,
-      ANIM_SLICE_HORIZONTAL,
-      ANIM_DANCE,
-      ANIM_JUMP_START,
-      ANIM_JUMP_LOOP,
-      ANIM_JUMP_END,*/
-      ANIM_NONE
+      ANIM_DIE
     };
 
 		Renderable(Entity* inOwner);
@@ -137,6 +119,12 @@ namespace Pixy
     void resetOrientation();
 
     void rotateToEnemy();
+    void rotateTo(const Ogre::Vector3& inDest);
+
+    static void setAnimFadeSpeed(float inSpeed);
+    static float getAnimFadeSpeed();
+
+    static void setRotationFactor(float inFactor);
 
 		protected:
 
@@ -147,21 +135,40 @@ namespace Pixy
       mOwner = inOwner;
     }
 
-    void setBaseAnimation(AnimID id, bool reset = false);
-    void setTopAnimation(AnimID id, bool reset = false);
+    //~ void setBaseAnimation(AnimID id, bool reset = false);
+    //~ void setTopAnimation(AnimID id, bool reset = false);
 
-    AnimID mBaseAnimID;                   // current base (full- or lower-body) animation
-    AnimID mTopAnimID;                    // current top (upper-body) animation
+    //~ AnimID mCurrentAnimID;
+    //~ AnimID mLoopAnimID;
+
     Ogre::Real mTimer;
-    Ogre::AnimationState* mAnims[NUM_ANIMS];    // master animation list
+    //Ogre::AnimationState* mAnims[NUM_ANIMS];    // master animation list
 
     private:
 
-		Renderable& operator=(const Renderable& rhs);
-		Renderable(const Renderable& src);
-    void _applyNextAnimation();
+    typedef struct {
 
-    Ogre::Vector3 mScale;
+      AnimID ID;
+      Ogre::AnimationState* State;
+      bool FadingIn;
+      bool FadingOut;
+
+      inline bool isMini() const {
+        return (!State->getLoop());
+      }
+
+    } Animation;
+
+    Animation *mCurrentAnim;
+    Animation *mLoopAnim;
+
+    typedef std::vector<Animation*> anims_t;
+    typedef std::map<AnimID, anims_t > anim_map_t;
+    anim_map_t mAnims;
+
+    std::list<Animation*> mAnimQueue;
+
+    void _applyNextAnimation();
 
     void setupBody();
     void setupAnimations();
@@ -169,40 +176,26 @@ namespace Pixy
     void fadeAnimations(Ogre::Real deltaTime);
 
 		Ogre::SceneNode     *mSceneNode;
-		Ogre::Entity *mSceneObject;
+    Ogre::Vector3       mScale;
+		Ogre::Entity        *mSceneObject;
     MovableTextOverlay  *mText;
     Pixy::Entity        *mOwner;
     Ogre::SceneManager  *mSceneMgr;
-
-    Ogre::Real mPivotPitch;
-    //Ogre::Entity* mBodyEnt;
-    Ogre::Entity* mSword1;
-    Ogre::Entity* mSword2;
-    Ogre::RibbonTrail* mSwordTrail;
-    bool mFadingIn[NUM_ANIMS];            // which animations are fading in
-    bool mFadingOut[NUM_ANIMS];           // which animations are fading out
     std::vector<Ogre::Entity*> mExtensions;
-    //bool mSwordsDrawn;
-    //Ogre::Vector3 mKeyDirection;      // player's local intended direction based on WASD keys
-    //Ogre::Vector3 mGoalDirection;     // actual intended direction in world-space
-    //Ogre::Real mVerticalVelocity;     // for jumping
-    Ogre::Real mRunSpeed;
-    Ogre::Quaternion mOrientation;
-    std::list<AnimID> mAnimQueue;
-    AnimID mLoopAnim;
+    static float mAnimFadeSpeed;
 
-		//! helper method for copy/assignment methods
-		//! copies all data from src and sets it into this entity
-		//~ virtual void copyFrom(const Renderable& src);
+    //bool mFadingIn[NUM_ANIMS];            // which animations are fading in
+    //bool mFadingOut[NUM_ANIMS];           // which animations are fading out
 
-    /*Ogre::Quaternion mRotQuat;
-    Ogre::Vector3 mRotDirection;
-    bool fRotating;*/
+    // for rotation
     Ogre::Quaternion mOrientSrc;               // Initial orientation
     Ogre::Quaternion mOrientDest;              // Destination orientation
     Ogre::Real mRotProgress;                   // How far we've interpolated
-    Ogre::Real mRotFactor;                     // Interpolation step
+    static Ogre::Real mRotFactor;                     // Interpolation step
     bool fRotating;
+
+		Renderable& operator=(const Renderable& rhs);
+		Renderable(const Renderable& src);
 
 	}; // end of Entity class
 } // end of Pixy namespace

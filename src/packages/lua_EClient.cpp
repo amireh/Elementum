@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sun Sep  4 15:12:41 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Sep  4 21:29:48 2011.
 */
 
 #ifndef __cplusplus
@@ -539,39 +539,6 @@ static int tolua_EClient_Pixy_Renderable_registerAnimationState00(lua_State* tol
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setRunSpeed of class  Pixy::Renderable */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_setRunSpeed00
-static int tolua_EClient_Pixy_Renderable_setRunSpeed00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
-  float inWorldUnitsPerSecond = ((float)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRunSpeed'", NULL);
-#endif
-  {
-   self->setRunSpeed(inWorldUnitsPerSecond);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setRunSpeed'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: setScale of class  Pixy::Renderable */
 #ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_setScale00
 static int tolua_EClient_Pixy_Renderable_setScale00(lua_State* tolua_S)
@@ -600,6 +567,92 @@ static int tolua_EClient_Pixy_Renderable_setScale00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAnimFadeSpeed of class  Pixy::Renderable */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_setAnimFadeSpeed00
+static int tolua_EClient_Pixy_Renderable_setAnimFadeSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float inSpeed = ((float)  tolua_tonumber(tolua_S,2,0));
+  {
+   Pixy::Renderable::setAnimFadeSpeed(inSpeed);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAnimFadeSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAnimFadeSpeed of class  Pixy::Renderable */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_getAnimFadeSpeed00
+static int tolua_EClient_Pixy_Renderable_getAnimFadeSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   float tolua_ret = (float)  Pixy::Renderable::getAnimFadeSpeed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAnimFadeSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRotationFactor of class  Pixy::Renderable */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_setRotationFactor00
+static int tolua_EClient_Pixy_Renderable_setRotationFactor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float inFactor = ((float)  tolua_tonumber(tolua_S,2,0));
+  {
+   Pixy::Renderable::setRotationFactor(inFactor);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setRotationFactor'.",&tolua_err);
  return 0;
 #endif
 }
@@ -957,70 +1010,6 @@ static int tolua_EClient_Pixy_Renderable_attachExtension00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'attachExtension'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setOrientation of class  Pixy::Renderable */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_setOrientation00
-static int tolua_EClient_Pixy_Renderable_setOrientation00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Ogre::Quaternion",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::Quaternion inQuat = *((Ogre::Quaternion*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'", NULL);
-#endif
-  {
-   self->setOrientation(inQuat);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setOrientation'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: resetOrientation of class  Pixy::Renderable */
-#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_Renderable_resetOrientation00
-static int tolua_EClient_Pixy_Renderable_resetOrientation00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Renderable",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resetOrientation'", NULL);
-#endif
-  {
-   self->resetOrientation();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'resetOrientation'.",&tolua_err);
  return 0;
 #endif
 }
@@ -15883,21 +15872,16 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"Renderable","Pixy::Renderable","",NULL);
    #endif
    tolua_beginmodule(tolua_S,"Renderable");
-    tolua_constant(tolua_S,"ANIM_LIVE1",Pixy::Renderable::ANIM_LIVE1);
-    tolua_constant(tolua_S,"ANIM_LIVE2",Pixy::Renderable::ANIM_LIVE2);
-    tolua_constant(tolua_S,"ANIM_IDLE1",Pixy::Renderable::ANIM_IDLE1);
-    tolua_constant(tolua_S,"ANIM_IDLE2",Pixy::Renderable::ANIM_IDLE2);
+    tolua_constant(tolua_S,"ANIM_NONE",Pixy::Renderable::ANIM_NONE);
+    tolua_constant(tolua_S,"ANIM_LIVE",Pixy::Renderable::ANIM_LIVE);
+    tolua_constant(tolua_S,"ANIM_IDLE",Pixy::Renderable::ANIM_IDLE);
     tolua_constant(tolua_S,"ANIM_WALK",Pixy::Renderable::ANIM_WALK);
     tolua_constant(tolua_S,"ANIM_RUN",Pixy::Renderable::ANIM_RUN);
-    tolua_constant(tolua_S,"ANIM_ATTACK1",Pixy::Renderable::ANIM_ATTACK1);
-    tolua_constant(tolua_S,"ANIM_ATTACK2",Pixy::Renderable::ANIM_ATTACK2);
-    tolua_constant(tolua_S,"ANIM_HIT1",Pixy::Renderable::ANIM_HIT1);
-    tolua_constant(tolua_S,"ANIM_HIT2",Pixy::Renderable::ANIM_HIT2);
+    tolua_constant(tolua_S,"ANIM_ATTACK",Pixy::Renderable::ANIM_ATTACK);
+    tolua_constant(tolua_S,"ANIM_HIT",Pixy::Renderable::ANIM_HIT);
     tolua_constant(tolua_S,"ANIM_REST",Pixy::Renderable::ANIM_REST);
     tolua_constant(tolua_S,"ANIM_GETUP",Pixy::Renderable::ANIM_GETUP);
-    tolua_constant(tolua_S,"ANIM_DEATH1",Pixy::Renderable::ANIM_DEATH1);
-    tolua_constant(tolua_S,"ANIM_DEATH2",Pixy::Renderable::ANIM_DEATH2);
-    tolua_constant(tolua_S,"ANIM_NONE",Pixy::Renderable::ANIM_NONE);
+    tolua_constant(tolua_S,"ANIM_DIE",Pixy::Renderable::ANIM_DIE);
     tolua_function(tolua_S,"new",tolua_EClient_Pixy_Renderable_new00);
     tolua_function(tolua_S,"new_local",tolua_EClient_Pixy_Renderable_new00_local);
     tolua_function(tolua_S,".call",tolua_EClient_Pixy_Renderable_new00_local);
@@ -15908,8 +15892,10 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"attachSceneObject",tolua_EClient_Pixy_Renderable_attachSceneObject00);
     tolua_function(tolua_S,"getSceneObject",tolua_EClient_Pixy_Renderable_getSceneObject00);
     tolua_function(tolua_S,"registerAnimationState",tolua_EClient_Pixy_Renderable_registerAnimationState00);
-    tolua_function(tolua_S,"setRunSpeed",tolua_EClient_Pixy_Renderable_setRunSpeed00);
     tolua_function(tolua_S,"setScale",tolua_EClient_Pixy_Renderable_setScale00);
+    tolua_function(tolua_S,"setAnimFadeSpeed",tolua_EClient_Pixy_Renderable_setAnimFadeSpeed00);
+    tolua_function(tolua_S,"getAnimFadeSpeed",tolua_EClient_Pixy_Renderable_getAnimFadeSpeed00);
+    tolua_function(tolua_S,"setRotationFactor",tolua_EClient_Pixy_Renderable_setRotationFactor00);
     tolua_function(tolua_S,"animateLive",tolua_EClient_Pixy_Renderable_animateLive00);
     tolua_function(tolua_S,"animateDie",tolua_EClient_Pixy_Renderable_animateDie00);
     tolua_function(tolua_S,"animateIdle",tolua_EClient_Pixy_Renderable_animateIdle00);
@@ -15921,8 +15907,6 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"animateGetUp",tolua_EClient_Pixy_Renderable_animateGetUp00);
     tolua_function(tolua_S,"_animate",tolua_EClient_Pixy_Renderable__animate00);
     tolua_function(tolua_S,"attachExtension",tolua_EClient_Pixy_Renderable_attachExtension00);
-    tolua_function(tolua_S,"setOrientation",tolua_EClient_Pixy_Renderable_setOrientation00);
-    tolua_function(tolua_S,"resetOrientation",tolua_EClient_Pixy_Renderable_resetOrientation00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"CPuppet","Pixy::CPuppet","Pixy::Puppet",tolua_collect_Pixy__CPuppet);

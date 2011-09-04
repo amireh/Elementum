@@ -348,10 +348,14 @@ namespace Pixy
 
       // if we came back from an attack and still waiting at the charging spot
       // turn around 180 degrees to face the enemy
-      if ((mPosition != POS_READY && mPDestination == POS_CHARGING) || mPDestination == POS_READY) {
+      if ((mPosition != POS_READY && mPDestination == POS_CHARGING))
+      {
         //~ mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
         //~ mRenderable->trackEnemyPuppet();
         mRenderable->rotateToEnemy();
+      } else if (mPDestination == POS_READY)
+      {
+        mRenderable->rotateTo(mWaypoints->at(POS_CHARGING));
       }
 
 
