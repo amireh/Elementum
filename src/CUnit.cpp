@@ -270,12 +270,12 @@ namespace Pixy
     Vector3 src = mNode->getOrientation() * Vector3::UNIT_Z;
     if ((1.0f + src.dotProduct(mMoveDirection)) < 0.0001f)
     {
-      //~ std::cout << " ***** YAWING 180 ****** \n";
-        //~ mNode->yaw(Ogre::Degree(180));
+      std::cout << " ***** YAWING 180 ****** \n";
+        mNode->yaw(Ogre::Degree(180));
     } else
     {
-        //~ Ogre::Quaternion quat = src.getRotationTo(mMoveDirection);
-        //~ mNode->rotate(quat);
+        Ogre::Quaternion quat = src.getRotationTo(mMoveDirection);
+        mNode->rotate(quat);
     } // else
 
     mNode = 0;
@@ -291,14 +291,15 @@ namespace Pixy
 
     if (inDestination < mPosition) {
       //~ mRenderable->trackEnemyUnit(this);
-      mRenderable->getSceneNode()->setAutoTracking(false);
-      Ogre::Vector3 pos = mWaypoints->front();
+      //~ mRenderable->getSceneNode()->setAutoTracking(false);
+      //~ Ogre::Vector3 pos = mWaypoints->front();
       //~ pos.z *= 2;
-      mRenderable->getSceneNode()->lookAt(pos, Ogre::Node::TS_WORLD);
-      std::cout << "Unit: I'm MOVING BACK, ROTATING\n";
+      //~ mRenderable->getSceneNode()->lookAt(pos, Ogre::Node::TS_WORLD);
+      //~ std::cout << "Unit: I'm MOVING BACK, ROTATING\n";
       //~ mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
-    } else
-      mRenderable->trackEnemyPuppet();
+    }
+    //~ else
+      //~ mRenderable->trackEnemyPuppet();
     // start running if not already moving and the player wants to move
     mRenderable->animateRun();
 
@@ -347,9 +348,10 @@ namespace Pixy
 
       // if we came back from an attack and still waiting at the charging spot
       // turn around 180 degrees to face the enemy
-      if (mPosition != POS_READY && mPDestination == POS_CHARGING || mPDestination == POS_READY) {
+      if ((mPosition != POS_READY && mPDestination == POS_CHARGING) || mPDestination == POS_READY) {
         //~ mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
-        mRenderable->trackEnemyPuppet();
+        //~ mRenderable->trackEnemyPuppet();
+        mRenderable->rotateToEnemy();
       }
 
 

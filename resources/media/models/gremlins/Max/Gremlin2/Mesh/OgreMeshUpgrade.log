@@ -1,0 +1,90 @@
+20:03:02: Creating resource group General
+20:03:02: Creating resource group Internal
+20:03:02: Creating resource group Autodetect
+20:03:02: Registering ResourceManager for type Material
+20:03:02: Registering ResourceManager for type Skeleton
+20:03:02: Registering ResourceManager for type Mesh
+20:03:02: Skeleton: Loading Gremlin2.skeleton
+20:03:02: OGRE EXCEPTION(6:FileNotFoundException): Cannot locate resource Gremlin2.skeleton in resource group General or any other group. in ResourceGroupManager::openResource at /home/kandie/Workspace/Repos/ogre/OgreMain/src/OgreResourceGroupManager.cpp (line 756)
+20:03:02: Unable to load skeleton Gremlin2.skeleton for Mesh conversion. This Mesh will not be animated. You can ignore this message if you are using an offline tool.
+20:03:02: WARNING: conversion is an older format ([MeshSerializer_v1.41]); you should upgrade it as soon as possible using the OgreMeshUpgrade tool.
+20:03:02: MeshSerializer writing mesh data to stream ...
+20:03:02: File header written.
+20:03:02: Writing mesh data...
+20:03:02: Writing submesh...
+20:03:02: Exporting submesh texture aliases...
+20:03:02: Submesh texture aliases exported.
+20:03:02: Exporting dedicated geometry bone assignments...
+20:03:02: Dedicated geometry bone assignments exported.
+20:03:02: Submesh exported.
+20:03:02: Exporting skeleton link...
+20:03:02: Skeleton link exported.
+20:03:02: Exporting bounds information....
+20:03:02: Bounds information exported.
+20:03:02: Exporting submesh name table...
+20:03:02: Submesh name table exported.
+20:03:02: Exporting edge lists...
+20:03:02: Edge lists exported
+20:03:02: Exporting animation Attack_1
+20:03:02: Animation exported.
+20:03:02: Exporting animation Attack_2
+20:03:02: Animation exported.
+20:03:02: Exporting animation Attack_3
+20:03:02: Animation exported.
+20:03:02: Exporting animation Casting
+20:03:02: Animation exported.
+20:03:02: Exporting animation Crying
+20:03:02: Animation exported.
+20:03:02: Exporting animation Death_1
+20:03:02: Animation exported.
+20:03:02: Exporting animation Death_2
+20:03:02: Animation exported.
+20:03:02: Exporting animation Digging
+20:03:02: Animation exported.
+20:03:02: Exporting animation Eating
+20:03:02: Animation exported.
+20:03:02: Exporting animation Idle_1
+20:03:02: Animation exported.
+20:03:02: Exporting animation Idle_2
+20:03:02: Animation exported.
+20:03:02: Exporting animation Idle_3
+20:03:02: Animation exported.
+20:03:02: Exporting animation Idle_Sitting
+20:03:02: Animation exported.
+20:03:02: Exporting animation Idle_Sleeping
+20:03:02: Animation exported.
+20:03:02: Exporting animation Jump
+20:03:02: Animation exported.
+20:03:02: Exporting animation Jumping_Happy
+20:03:02: Animation exported.
+20:03:02: Exporting animation Lauhghing
+20:03:02: Animation exported.
+20:03:02: Exporting animation Run_1
+20:03:02: Animation exported.
+20:03:02: Exporting animation Run_2
+20:03:02: Animation exported.
+20:03:02: Exporting animation Scared
+20:03:02: Animation exported.
+20:03:02: Exporting animation Scaring
+20:03:02: Animation exported.
+20:03:02: Exporting animation Scream
+20:03:02: Animation exported.
+20:03:02: Exporting animation Strafe_Left
+20:03:02: Animation exported.
+20:03:02: Exporting animation Strafe_Right
+20:03:02: Animation exported.
+20:03:02: Exporting animation Suicide
+20:03:02: Animation exported.
+20:03:02: Exporting animation Tired
+20:03:02: Animation exported.
+20:03:02: Exporting animation Walk_1
+20:03:02: Animation exported.
+20:03:02: Exporting animation Walk_2
+20:03:02: Animation exported.
+20:03:02: Exporting animation Walk_Backwards
+20:03:02: Animation exported.
+20:03:02: Mesh data exported.
+20:03:02: MeshSerializer export successful.
+20:03:02: Unregistering ResourceManager for type Mesh
+20:03:02: Unregistering ResourceManager for type Skeleton
+20:03:02: Unregistering ResourceManager for type Material

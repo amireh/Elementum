@@ -1171,15 +1171,19 @@ namespace Pixy {
     if (Combat::getSingleton().getPuppet() == 0)
       return;
 
-    SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable()->getSceneNode();
+    //SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable()->getSceneNode();
+
     switch (e.key) {
-      /*case OIS::KC_F:
-        tmp->yaw(Ogre::Degree(5));
+      case OIS::KC_F:
+        if (mSelected)
+          mSelected->getSceneNode()->yaw(Ogre::Degree(15));
       break;
       case OIS::KC_G:
-        tmp->roll(Ogre::Degree(5));
+        if (mSelected)
+          mSelected->rotateToEnemy();
+        //tmp->roll(Ogre::Degree(5));
       break;
-      case OIS::KC_H:
+      /*case OIS::KC_H:
         tmp->pitch(Ogre::Degree(5));
       break;
       case OIS::KC_E:

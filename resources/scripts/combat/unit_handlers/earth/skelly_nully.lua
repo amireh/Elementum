@@ -31,7 +31,7 @@ local process = function(inUnit)
 
   rnd:animateRest()
   --~ rnd:getSceneNode():pitch(Ogre.Degree(-90))
-  rnd:getSceneNode():yaw(Ogre.Degree(180))
+  --~ rnd:getSceneNode():yaw(Ogre.Degree(180))
   --~ rnd:getSceneNode():setOrientation(Ogre.Quaternion:new(0,180,0,0))
 
 	return true

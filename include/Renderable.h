@@ -136,6 +136,8 @@ namespace Pixy
     void setOrientation(Ogre::Quaternion inQuat);
     void resetOrientation();
 
+    void rotateToEnemy();
+
 		protected:
 
     friend class CPuppet;
@@ -192,6 +194,15 @@ namespace Pixy
 		//! helper method for copy/assignment methods
 		//! copies all data from src and sets it into this entity
 		//~ virtual void copyFrom(const Renderable& src);
+
+    /*Ogre::Quaternion mRotQuat;
+    Ogre::Vector3 mRotDirection;
+    bool fRotating;*/
+    Ogre::Quaternion mOrientSrc;               // Initial orientation
+    Ogre::Quaternion mOrientDest;              // Destination orientation
+    Ogre::Real mRotProgress;                   // How far we've interpolated
+    Ogre::Real mRotFactor;                     // Interpolation step
+    bool fRotating;
 
 	}; // end of Entity class
 } // end of Pixy namespace

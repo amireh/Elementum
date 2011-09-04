@@ -24,6 +24,8 @@ namespace Pixy
     mBaseAnimID = ANIM_NONE;
     mLoopAnim = ANIM_NONE;
     mScale = Ogre::Vector3(1,1,1);
+    fRotating = false;
+    //~ mRotDirection = Ogre::Vector3::ZERO;
 	};
 
   Renderable::~Renderable() {
@@ -315,6 +317,27 @@ namespace Pixy
 
 	void Renderable::updateBody(unsigned long dt)
 	{
+    /*if (fRotating) {
+      mSceneNode->yaw(Ogre::Degree(0.1 * (dt/1000)));
+
+      Vector3 src = mSceneNode->getOrientation() * Vector3::UNIT_Z;
+      if ((1.0f + src.dotProduct(mRotDirection)) < 0.0001f)
+        fRotating = false;
+    }*/
+
+    if(fRotating)                                // Process timed rotation
+    {
+        mRotProgress += mRotFactor;
+        if(mRotProgress>1)
+        {
+            fRotating = false;
+        }
+        else
+        {
+            Quaternion delta = Quaternion::Slerp(mRotProgress, mOrientSrc, mOrientDest, true);
+            mSceneNode->setOrientation(delta);
+        }
+    }  // if mRotating
 	}
 
   void  Renderable::registerAnimationState(AnimID inId, std::string inState, bool loop) {
@@ -454,5 +477,43 @@ namespace Pixy
 
   void Renderable::resetOrientation() {
     mSceneNode->setOrientation(mOrientation);
+  }
+
+  void Renderable::rotateToEnemy() {
+    CPuppet* mEnemy = 0;
+    Combat::puppets_t lPuppets = Combat::getSingleton().getPuppets();
+    for (Combat::puppets_t::const_iterator itr = lPuppets.begin();
+      itr != lPuppets.end();
+      ++itr)
+    {
+      if ((*itr)->getUID() != mOwner->getOwner()->getUID()) {
+        mEnemy = *itr;
+        break;
+      }
+    }
+
+    assert(mEnemy);
+
+    mRotFactor = 1.0f / 30;
+    mOrientSrc = mSceneNode->getOrientation();
+    //~ mOrientDest = mEnemy->getRenderable()->getSceneNode()->getOrientation() * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
+    Vector3 src = mSceneNode->getOrientation( ) * Vector3::UNIT_Z;
+    mOrientDest = (src.getRotationTo(mEnemy->getRenderable()->getSceneNode()->getPosition() - mSceneNode->getPosition())) * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
+    mRotProgress = 0;
+
+    /*Vector3 src = mSceneNode->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+    Ogre::Radian angle = src.angleBetween(mEnemy->getRenderable()->getSceneNode()->getPosition());
+    mRotDirection = mEnemy->getRenderable()->getSceneNode()->getPosition() - mSceneNode->getPosition();
+    mRotQuat = src.getRotationTo(mRotDirection);
+    mSceneNode->rotate(mRotQuat );*/
+
+    //~ std::cout << "Angle between the two vecs =  " << src.angleBetween(mEnemy->getRenderable()->getSceneNode()->getPosition()) << "\n";
+    //~ std::cout << "Rotation quaternion: "
+      //~ << mRotQuat.w << ","
+      //~ << mRotQuat.x << ","
+      //~ << mRotQuat.y << ","
+      //~ << mRotQuat.z << "\n";
+
+    fRotating = true;
   }
 } // end of namespace

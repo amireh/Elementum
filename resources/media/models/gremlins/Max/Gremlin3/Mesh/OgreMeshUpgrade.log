@@ -1,0 +1,32 @@
+20:05:29: Creating resource group General
+20:05:29: Creating resource group Internal
+20:05:29: Creating resource group Autodetect
+20:05:29: Registering ResourceManager for type Material
+20:05:29: Registering ResourceManager for type Skeleton
+20:05:29: Registering ResourceManager for type Mesh
+20:05:29: Skeleton: Loading Gremlin3.skeleton
+20:05:29: OGRE EXCEPTION(6:FileNotFoundException): Cannot locate resource Gremlin3.skeleton in resource group General or any other group. in ResourceGroupManager::openResource at /home/kandie/Workspace/Repos/ogre/OgreMain/src/OgreResourceGroupManager.cpp (line 756)
+20:05:29: Unable to load skeleton Gremlin3.skeleton for Mesh conversion. This Mesh will not be animated. You can ignore this message if you are using an offline tool.
+20:05:29: WARNING: conversion is an older format ([MeshSerializer_v1.41]); you should upgrade it as soon as possible using the OgreMeshUpgrade tool.
+20:05:29: MeshSerializer writing mesh data to stream ...
+20:05:29: File header written.
+20:05:29: Writing mesh data...
+20:05:29: Writing submesh...
+20:05:29: Exporting submesh texture aliases...
+20:05:29: Submesh texture aliases exported.
+20:05:29: Exporting dedicated geometry bone assignments...
+20:05:29: Dedicated geometry bone assignments exported.
+20:05:29: Submesh exported.
+20:05:29: Exporting skeleton link...
+20:05:29: Skeleton link exported.
+20:05:29: Exporting bounds information....
+20:05:29: Bounds information exported.
+20:05:29: Exporting submesh name table...
+20:05:29: Submesh name table exported.
+20:05:29: Exporting edge lists...
+20:05:29: Edge lists exported
+20:05:29: Mesh data exported.
+20:05:29: MeshSerializer export successful.
+20:05:29: Unregistering ResourceManager for type Mesh
+20:05:29: Unregistering ResourceManager for type Skeleton
+20:05:29: Unregistering ResourceManager for type Material
