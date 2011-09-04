@@ -478,7 +478,6 @@ namespace Pixy
       updateTextOverlay();
       callback();
     }
-
   }
 
   void CUnit::updateOverlayAfterAttack(boost::function<void()> callback) {

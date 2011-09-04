@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sun Sep  4 21:29:48 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Sep  4 22:27:15 2011.
 */
 
 #ifndef __cplusplus
@@ -1003,10 +1003,11 @@ static int tolua_EClient_Pixy_Renderable_attachExtension00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachExtension'", NULL);
 #endif
   {
-   self->attachExtension(inMesh,inBone);
+   Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->attachExtension(inMesh,inBone);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Entity");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'attachExtension'.",&tolua_err);

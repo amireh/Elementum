@@ -110,7 +110,7 @@ namespace Pixy
 
     float _animate(AnimID inId);
 
-    void attachExtension(std::string inMesh, std::string inBone);
+    Ogre::Entity* attachExtension(std::string inMesh, std::string inBone);
 
     void trackEnemyPuppet();
     void trackEnemyUnit(CUnit* inUnit);

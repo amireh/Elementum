@@ -1,0 +1,66 @@
+22:12:05: Creating resource group General
+22:12:05: Creating resource group Internal
+22:12:05: Creating resource group Autodetect
+22:12:05: Registering ResourceManager for type Material
+22:12:05: Registering ResourceManager for type Skeleton
+22:12:05: Registering ResourceManager for type Mesh
+22:12:05: MeshSerializer writing mesh data to stream ...
+22:12:05: File header written.
+22:12:05: Writing mesh data...
+22:12:05: Writing submesh...
+22:12:05: Exporting submesh texture aliases...
+22:12:05: Submesh texture aliases exported.
+22:12:05: Submesh exported.
+22:12:05: Exporting bounds information....
+22:12:05: Bounds information exported.
+22:12:05: Exporting submesh name table...
+22:12:05: Submesh name table exported.
+22:12:05: Exporting edge lists...
+22:12:05: Edge lists exported
+22:12:05: Exporting animation Attack_1
+22:12:05: Animation exported.
+22:12:05: Exporting animation Attack_2
+22:12:05: Animation exported.
+22:12:05: Exporting animation Attack_3
+22:12:05: Animation exported.
+22:12:05: Exporting animation Attack_4
+22:12:05: Animation exported.
+22:12:05: Exporting animation Attack_5
+22:12:05: Animation exported.
+22:12:05: Exporting animation Attack_6
+22:12:05: Animation exported.
+22:12:05: Exporting animation Death_1
+22:12:05: Animation exported.
+22:12:05: Exporting animation Death_2
+22:12:05: Animation exported.
+22:12:05: Exporting animation Emotion_1
+22:12:05: Animation exported.
+22:12:05: Exporting animation Emotion_2
+22:12:05: Animation exported.
+22:12:05: Exporting animation Hit_1
+22:12:05: Animation exported.
+22:12:05: Exporting animation Hit_2
+22:12:05: Animation exported.
+22:12:05: Exporting animation Hit_3
+22:12:05: Animation exported.
+22:12:05: Exporting animation Idle_1
+22:12:05: Animation exported.
+22:12:05: Exporting animation Idle_2
+22:12:05: Animation exported.
+22:12:05: Exporting animation Jump
+22:12:05: Animation exported.
+22:12:05: Exporting animation Run
+22:12:05: Animation exported.
+22:12:05: Exporting animation Strafe_Left
+22:12:05: Animation exported.
+22:12:05: Exporting animation Strafe_Right
+22:12:05: Animation exported.
+22:12:05: Exporting animation Walk
+22:12:05: Animation exported.
+22:12:05: Exporting animation Walk_Backwards
+22:12:05: Animation exported.
+22:12:05: Mesh data exported.
+22:12:05: MeshSerializer export successful.
+22:12:05: Unregistering ResourceManager for type Mesh
+22:12:05: Unregistering ResourceManager for type Skeleton
+22:12:05: Unregistering ResourceManager for type Material

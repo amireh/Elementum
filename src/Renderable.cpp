@@ -112,12 +112,14 @@ namespace Pixy
     setupAnimations();
   }
 
-  void Renderable::attachExtension(std::string inMesh, std::string inBone) {
+  Ogre::Entity* Renderable::attachExtension(std::string inMesh, std::string inBone) {
     Ogre::Entity* tmp =
       mSceneMgr->createEntity(stringify(mOwner->getUID()) + "extension" + stringify(mExtensions.size()), inMesh);
 
     mSceneObject->attachObjectToBone(inBone, tmp);
     mExtensions.push_back(tmp);
+
+    return tmp;
   }
 
   void Renderable::setupBody()
@@ -282,7 +284,10 @@ namespace Pixy
     return this->_animate(ANIM_GETUP);
   }
   float Renderable::_animate(AnimID id) {
-    assert(mAnims.find(id) != mAnims.end() && !mAnims[id].empty());
+    if (mAnims.find(id) == mAnims.end() || mAnims[id].empty()) {
+      std::cerr << "ERROR! Asked to play a non-existing animation: " << id << ", gracefully rejecting\n";
+      return 0;
+    }
 
     Animation* _anim = mAnims[id].at(rand() % mAnims[id].size());
 
