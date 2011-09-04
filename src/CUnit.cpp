@@ -22,7 +22,6 @@ namespace Pixy
     fDying(false),
     fRequiresYawFix(false)
   {
-
   };
 
 
@@ -49,12 +48,6 @@ namespace Pixy
       delete mTimer;
 
     mRenderable = 0;
-
-    if (mLog) {
-      mLog->infoStream() << " i'm destroyed!\n";
-      delete mLog;
-      mLog = 0;
-    }
 
     while (!mSpells.empty()) {
       delete mSpells.back();
@@ -209,6 +202,8 @@ namespace Pixy
     if (fDying)
       return;
 
+    assert(!fIsDead);
+
     fDying = true;
 
     //~ boost::function<void()> death_func = boost::bind(&Unit::die, this);
@@ -229,6 +224,9 @@ namespace Pixy
 
       mRenderable->hide();
       mLog->infoStream() << "dead [inside the async timer]";
+      mLog->infoStream() << " i'm destroyed!\n";
+      delete mLog;
+      mLog = 0;
     //~ });
   };
 
@@ -439,19 +437,19 @@ namespace Pixy
 
     });*/
   }
-  
-  void 
+
+  void
   CUnit::attackAfterAnimation(boost::function<void()> callback, CPuppet* inTarget) {
     Unit::attack(inTarget);
-    
+
     inTarget->getRenderable()->animateHit();
-    
+
     Event evt(EventUID::EntityAttacked);
     evt.Any = (void*)inTarget->getRenderable();
     EventManager::getSingleton().hook(evt);
-    
+
     this->updateTextOverlay();
-    callback();    
+    callback();
   }
 
   bool CUnit::attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block) {
@@ -476,25 +474,25 @@ namespace Pixy
     mTimer->async_wait(boost::bind(&CUnit::attackAfterAnimation, this, callback, inTarget, block));
     /*[&, inTarget, callback, block, attack_func](boost::system::error_code e) -> void {
 
-      
+
     });*/
   }
-  
+
   void CUnit::attackAfterAnimation(boost::function<void()> callback, CUnit* inTarget, bool block) {
-    
+
     // actually attack the target (see Unit::attack())
     // @note
     // the reason we pass block=false here is that we're running a special
     // version of the attack function (this one) that deals with rendering
     Unit::attack(inTarget, false);
-    
+
     inTarget->getRenderable()->animateHit();
-    
+
     // inform other components so they can render particles or w/e
     Event evt(EventUID::EntityAttacked);
     evt.Any = (void*)inTarget->getRenderable();
     EventManager::getSingleton().hook(evt);
-    
+
     // if the target is required to block us, is not dead, and has AP, make it hit us back
     if (block && !inTarget->isDead() && !inTarget->isDying() && inTarget->getAP() > 0) {
       inTarget->attack(this, boost::bind(&CUnit::updateOverlayAfterAttack, this, callback));
@@ -502,12 +500,12 @@ namespace Pixy
       updateTextOverlay();
       callback();
     }
-    
+
   }
-  
+
   void CUnit::updateOverlayAfterAttack(boost::function<void()> callback) {
     updateTextOverlay();
-    callback();    
+    callback();
   }
 
   void CUnit::moveAndAttack(CPuppet* inTarget) {
@@ -523,27 +521,27 @@ namespace Pixy
     this->mRenderable->trackEnemyPuppet();
     this->move(POS_ATTACK, boost::bind(&CUnit::attackAfterMoving, this, inTarget) );
   }
-  
+
   void CUnit::attackAfterMoving(CPuppet* inTarget) {
     this->mAttackTarget = inTarget;
-    this->attack(inTarget, boost::bind(&CUnit::cleanupAfterAttacking, this, inTarget) );  
+    this->attack(inTarget, boost::bind(&CUnit::cleanupAfterAttacking, this, inTarget) );
   }
-  
+
   void CUnit::cleanupAfterAttacking(CPuppet* inTarget) {
     // update the stat HUDs
     inTarget->updateTextOverlay();
-    
+
     this->mAttackTarget = 0;
-    
+
     std::cout << "I attacked puppet, going back now\n";
-    
-    this->move(POS_CHARGING, boost::bind(&CUnit::cleanupAfterMovingBack, this, inTarget) ); // on move back to charging position    
+
+    this->move(POS_CHARGING, boost::bind(&CUnit::cleanupAfterMovingBack, this, inTarget) ); // on move back to charging position
   }
-  
+
   void CUnit::cleanupAfterMovingBack(CPuppet* inTarget) {
     std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
     Combat::getSingleton().unitAttacked(this);
-    Combat::getSingleton().doBattle();    
+    Combat::getSingleton().doBattle();
   }
 
   void CUnit::moveAndAttack(std::list<CUnit*> inBlockers) {
