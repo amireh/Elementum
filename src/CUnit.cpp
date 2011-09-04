@@ -9,12 +9,14 @@
 namespace Pixy
 {
 
+  float CUnit::mDefaultWalkSpeed = 0.15f;
+
   CUnit::CUnit()
   : fIsMoving(false),
     mPosition(POS_READY),
     mWaypoints(0),
     mMoveDistance(0),
-    mWalkSpeed(0.15f),
+    mWalkSpeed(mDefaultWalkSpeed),
     mMoveSpeed(0),
     mCallback(0),
     mRenderable(0),
@@ -95,6 +97,19 @@ namespace Pixy
     mTimer = 0;
   }
 
+  void  CUnit::setWalkSpeed(const float inSpeed) {
+    mWalkSpeed = inSpeed;
+  }
+  float CUnit::getWalkSpeed() const {
+    return mWalkSpeed;
+  }
+
+  void CUnit::setDefaultWalkSpeed(const float inSpeed) {
+    mDefaultWalkSpeed = inSpeed;
+  }
+  float CUnit::getDefaultWalkSpeed() {
+    return mDefaultWalkSpeed;
+  }
 
 	CUnit::spells_t const& CUnit::getSpells(){ return mSpells; };
 
@@ -275,62 +290,47 @@ namespace Pixy
 
     // start running if not already moving and the player wants to move
     mRenderable->animateRun();
-    //~ mRenderable->setBaseAnimation(Renderable::ANIM_RUN_BASE, true);
-    //if (mRenderable->mTopAnimID == Renderable::ANIM_IDLE_TOP) {
-      // when charging, run with swords sheathed
-      if (inDestination == POS_READY) {
-        //mRenderable->setTopAnimation(Renderable::ANIM_RUN_TOP, true);
-
-      } else {
-        // draw swords and continue running
-        /*if (!mRenderable->mSwordsDrawn) {
-          // take swords out (or put them back, since it's the same animation but reversed)
-          mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
-          mRenderable->mTimer = 0;
-        }*/
-      }
-    //}
 
   }
 
   bool CUnit::doMove(unsigned long mTimeElapsed)
   {
-      Ogre::SceneNode* mNode = mRenderable->getSceneNode();
+    Ogre::SceneNode* mNode = mRenderable->getSceneNode();
 
-      nextLocation(mPDestination);
+    nextLocation(mPDestination);
 
-      if (mMoveDirection != Vector3::ZERO)
+    if (mMoveDirection != Vector3::ZERO)
+    {
+      mMoveSpeed = mWalkSpeed * mTimeElapsed;
+      mMoveDistance -= mMoveSpeed;
+
+      //~ std::cout
+        //~ << "\tActually moving, distance left: "
+        //~ << mMoveDistance << " at speed "
+        //~ << mMoveSpeed << " te: " << mTimeElapsed << " ws: " << mWalkSpeed << "\n";
+
+      // if we're there or the Unit has passed the destination
+      // correct its position and stop moving
+      if (mMoveDistance <= 0.0f)
       {
-          mMoveSpeed = mWalkSpeed * mTimeElapsed;
-          mMoveDistance -= mMoveSpeed;
+        mNode->setPosition(mDestination);
+        mMoveDirection = Vector3::ZERO;
 
-          //~ std::cout
-            //~ << "\tActually moving, distance left: "
-            //~ << mMoveDistance << " at speed "
-            //~ << mMoveSpeed << " te: " << mTimeElapsed << " ws: " << mWalkSpeed << "\n";
+        if (mPDestination == POS_READY) {
+          mNode->yaw(Ogre::Degree(180));
+        }
+        //Vector3 mLookDirection = (inIdOwner == ID_HOST) ? mHeroPos[ID_CLIENT] : mHeroPos[];
 
-          // if we're there or the Unit has passed the destination
-          // correct its position and stop moving
-          if (mMoveDistance <= 0.0f)
-          {
-              mNode->setPosition(mDestination);
-              mMoveDirection = Vector3::ZERO;
+        //mNode->lookAt(mMoveDirection[this->getOwner()], Ogre::Node::TS_WORLD);
+        //this->setMoving(false);
+      } else {
+        mNode->translate(mMoveDirection * mMoveSpeed);
+      }
+      fIsMoving = true;
+    } else // if
+      fIsMoving = false;
 
-              if (mPDestination == POS_READY) {
-                mNode->yaw(Ogre::Degree(180));
-              }
-              //Vector3 mLookDirection = (inIdOwner == ID_HOST) ? mHeroPos[ID_CLIENT] : mHeroPos[];
-
-              //mNode->lookAt(mMoveDirection[this->getOwner()], Ogre::Node::TS_WORLD);
-              //this->setMoving(false);
-          } else {
-              mNode->translate(mMoveDirection * mMoveSpeed);
-          }
-          fIsMoving = true;
-      } else // if
-        fIsMoving = false;
-
-      return fIsMoving;
+    return fIsMoving;
   };
 
 
@@ -356,16 +356,6 @@ namespace Pixy
 
 			// stop running if already moving and the player doesn't want to move
       mRenderable->animateIdle();
-			/*mRenderable->setBaseAnimation(Renderable::ANIM_IDLE_BASE);
-			if (mRenderable->mTopAnimID == Renderable::ANIM_RUN_TOP)
-        mRenderable->setTopAnimation(Renderable::ANIM_IDLE_TOP);*/
-
-
-      // if we came back from an attack or a block, unsheathe our swords
-      /*if (mPDestination == POS_READY && mRenderable->mSwordsDrawn) {
-        mRenderable->setTopAnimation(Renderable::ANIM_DRAW_SWORDS, true);
-        mRenderable->mTimer = 0;
-      }*/
 
       std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
       mPosition = mPDestination;

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sun Sep  4 12:28:15 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Sep  4 15:12:41 2011.
 */
 
 #ifndef __cplusplus
@@ -2386,6 +2386,128 @@ static int tolua_set_Pixy__CUnit_fRequiresYawFix(lua_State* tolua_S)
   self->fRequiresYawFix = ((bool)  tolua_toboolean(tolua_S,2,0))
 ;
  return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setWalkSpeed of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnit_setWalkSpeed00
+static int tolua_EClient_Pixy_CUnit_setWalkSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+  const float inSpeed = ((const float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWalkSpeed'", NULL);
+#endif
+  {
+   self->setWalkSpeed(inSpeed);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWalkSpeed of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnit_getWalkSpeed00
+static int tolua_EClient_Pixy_CUnit_getWalkSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::CUnit* self = (const Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWalkSpeed'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getWalkSpeed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDefaultWalkSpeed of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnit_setDefaultWalkSpeed00
+static int tolua_EClient_Pixy_CUnit_setDefaultWalkSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const float inSpeed = ((const float)  tolua_tonumber(tolua_S,2,0));
+  {
+   Pixy::CUnit::setDefaultWalkSpeed(inSpeed);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDefaultWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDefaultWalkSpeed of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnit_getDefaultWalkSpeed00
+static int tolua_EClient_Pixy_CUnit_getDefaultWalkSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   float tolua_ret = (float)  Pixy::CUnit::getDefaultWalkSpeed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDefaultWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -15871,6 +15993,10 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"hasBuff",tolua_EClient_Pixy_CUnit_hasBuff00);
     tolua_function(tolua_S,"updateTextOverlay",tolua_EClient_Pixy_CUnit_updateTextOverlay00);
     tolua_variable(tolua_S,"fRequiresYawFix",tolua_get_Pixy__CUnit_fRequiresYawFix,tolua_set_Pixy__CUnit_fRequiresYawFix);
+    tolua_function(tolua_S,"setWalkSpeed",tolua_EClient_Pixy_CUnit_setWalkSpeed00);
+    tolua_function(tolua_S,"getWalkSpeed",tolua_EClient_Pixy_CUnit_getWalkSpeed00);
+    tolua_function(tolua_S,"setDefaultWalkSpeed",tolua_EClient_Pixy_CUnit_setDefaultWalkSpeed00);
+    tolua_function(tolua_S,"getDefaultWalkSpeed",tolua_EClient_Pixy_CUnit_getDefaultWalkSpeed00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"FxEngine","Pixy::FxEngine","Pixy::Engine",tolua_collect_Pixy__FxEngine);

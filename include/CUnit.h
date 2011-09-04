@@ -91,6 +91,12 @@ namespace Pixy
 
     bool isDying() const;
 
+    void setWalkSpeed(const float inSpeed);
+    float getWalkSpeed() const;
+
+    static void setDefaultWalkSpeed(const float inSpeed);
+    static float getDefaultWalkSpeed();
+
 	protected:
     friend class GfxEngine;
 
@@ -102,11 +108,11 @@ namespace Pixy
     }
 
     bool doMove(unsigned long);
-    
+
     void attackAfterMoving(CPuppet* inTarget);
     void cleanupAfterAttacking(CPuppet* inTarget);
     void cleanupAfterMovingBack(CPuppet* inTarget);
-    
+
     // recursively goes through all the blockers and attacks them
     void doAttack(std::list<CUnit*>& inBlockers);
 
@@ -138,6 +144,8 @@ namespace Pixy
     Real mWalkSpeed;
     //! regulates the movement speed by (mWalkSpeed * mTimeElapsed) keeping it consistent
     Real mMoveSpeed;
+
+    static float mDefaultWalkSpeed;
 
     //~ bool fDoneBlocking;
 
