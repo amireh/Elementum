@@ -70,7 +70,7 @@ Pixy.Combat.PrepareScene = function()
   SceneMgr:getRootSceneNode():attachObject(ent)
   --~ GfxEngine:loadDotScene("Elementum.scene", "General")
 
-  BBNode = SceneMgr:getRootSceneNode():createChildSceneNode()
+  BBNode = SceneMgr:createSceneNode("EntitySelectionNode")
   BBSet = SceneMgr:createBillboardSet("EntitySelection")
   BBSet:setMaterialName("Elementum/Billboards/EntitySelection")
   BBSet:setDefaultDimensions(1,1)

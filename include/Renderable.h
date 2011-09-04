@@ -154,8 +154,10 @@ namespace Pixy
     Ogre::AnimationState* mAnims[NUM_ANIMS];    // master animation list
 
     private:
+
 		Renderable& operator=(const Renderable& rhs);
 		Renderable(const Renderable& src);
+    void _applyNextAnimation();
 
     Ogre::Vector3 mScale;
 
@@ -184,6 +186,8 @@ namespace Pixy
     //Ogre::Real mVerticalVelocity;     // for jumping
     Ogre::Real mRunSpeed;
     Ogre::Quaternion mOrientation;
+    std::list<AnimID> mAnimQueue;
+    AnimID mLoopAnim;
 
 		//! helper method for copy/assignment methods
 		//! copies all data from src and sets it into this entity

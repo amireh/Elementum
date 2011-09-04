@@ -18,6 +18,7 @@
 #include "NetworkManager.h"
 #include "InputManager.h"
 #include "FxEngine.h"
+#include "ScriptEngine.h"
 #include "OgreMax/OgreMaxScene.hpp"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
@@ -1148,6 +1149,7 @@ namespace Pixy {
       // ignore any terrain selection
       dehighlight();
       FxEngine::getSingleton().dehighlight();
+      ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
     }
 
     return true;

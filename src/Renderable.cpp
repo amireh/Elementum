@@ -22,6 +22,7 @@ namespace Pixy
     mSceneMgr = 0;
     nrHandlers = 0;
     mBaseAnimID = ANIM_NONE;
+    mLoopAnim = ANIM_NONE;
     mScale = Ogre::Vector3(1,1,1);
 	};
 
@@ -294,92 +295,18 @@ namespace Pixy
 
 		mTimer += deltaTime;
 
-		/*if (mTopAnimID == ANIM_DRAW_SWORDS)
-		{
-			// flip the draw swords animation if we need to put it back
-			topAnimSpeed = mSwordsDrawn ? -1 : 1;
+		// increment the current animation times
+		if (mBaseAnimID != ANIM_NONE) {
+      mAnims[mBaseAnimID]->addTime(deltaTime * baseAnimSpeed);
+      if (mAnims[mBaseAnimID]->hasEnded()) {
 
-			// half-way through the animation is when the hand grasps the handles...
-			if (mTimer >= mAnims[mTopAnimID]->getLength() / 2 &&
-				mTimer - deltaTime < mAnims[mTopAnimID]->getLength() / 2)
-			{
-				// so transfer the swords from the sheaths to the hands
-				mSceneObject->detachAllObjectsFromBone();
-				mSceneObject->attachObjectToBone(mSwordsDrawn ? "Sheath.L" : "Handle.L", mSword1);
-				mSceneObject->attachObjectToBone(mSwordsDrawn ? "Sheath.R" : "Handle.R", mSword2);
-				// change the hand state to grab or let go
-				mAnims[ANIM_HANDS_CLOSED]->setEnabled(!mSwordsDrawn);
-				mAnims[ANIM_HANDS_RELAXED]->setEnabled(mSwordsDrawn);
+        if (!mAnims[mBaseAnimID]->getLoop())
+          mAnimQueue.pop_front();
 
-				// toggle sword trails
-				if (mSwordsDrawn)
-				{
-					mSwordTrail->setVisible(false);
-					mSwordTrail->removeNode(mSword1->getParentNode());
-					mSwordTrail->removeNode(mSword2->getParentNode());
-				}
-				else
-				{
-					mSwordTrail->setVisible(true);
-					mSwordTrail->addNode(mSword1->getParentNode());
-					mSwordTrail->addNode(mSword2->getParentNode());
-				}
-			}
-
-			if (mTimer >= mAnims[mTopAnimID]->getLength())
-			{
-				// animation is finished, so return to what we were doing before
-				if (mBaseAnimID == ANIM_IDLE_BASE) setTopAnimation(ANIM_IDLE_TOP);
-				else
-				{
-					setTopAnimation(ANIM_RUN_TOP);
-					mAnims[ANIM_RUN_TOP]->setTimePosition(mAnims[ANIM_RUN_BASE]->getTimePosition());
-				}
-				mSwordsDrawn = !mSwordsDrawn;
-			}
-		}
-		else if (mTopAnimID == ANIM_SLICE_VERTICAL || mTopAnimID == ANIM_SLICE_HORIZONTAL)
-		{
-			if (mTimer >= mAnims[mTopAnimID]->getLength())
-			{
-				// animation is finished, so return to what we were doing before
-				if (mBaseAnimID == ANIM_IDLE_BASE) setTopAnimation(ANIM_IDLE_TOP);
-				else
-				{
-					setTopAnimation(ANIM_RUN_TOP);
-					mAnims[ANIM_RUN_TOP]->setTimePosition(mAnims[ANIM_RUN_BASE]->getTimePosition());
-				}
-			}
-
-			// don't sway hips from side to side when slicing. that's just embarrassing.
-			if (mBaseAnimID == ANIM_IDLE_BASE) baseAnimSpeed = 0;
-		}
-
-    		else if (mBaseAnimID == ANIM_JUMP_START)
-		{
-			if (mTimer >= mAnims[mBaseAnimID]->getLength())
-			{
-				// takeoff animation finished, so time to leave the ground!
-				setBaseAnimation(ANIM_JUMP_LOOP, true);
-				// apply a jump acceleration to the character
-				mVerticalVelocity = JUMP_ACCEL;
-			}
-		}
-		else if (mBaseAnimID == ANIM_JUMP_END)
-		{
-			if (mTimer >= mAnims[mBaseAnimID]->getLength())
-			{
-				// safely landed, so go back to running or idling
-        setBaseAnimation(ANIM_IDLE_BASE);
-				setTopAnimation(ANIM_IDLE_TOP);
-
-			}
-		}
-*/
-		// increment the current base and top animation times
-		if (mBaseAnimID != ANIM_NONE) mAnims[mBaseAnimID]->addTime(deltaTime * baseAnimSpeed);
-    if (mAnims[mBaseAnimID]->hasEnded())
-      animateIdle();
+        _applyNextAnimation();
+      }
+    }
+      //animateIdle();
 		//if (mTopAnimID != ANIM_NONE) mAnims[mTopAnimID]->addTime(deltaTime * topAnimSpeed);
 
 		// apply smooth transitioning between our animations
@@ -388,26 +315,6 @@ namespace Pixy
 
 	void Renderable::updateBody(unsigned long dt)
 	{
-    return;
-
-		/*mGoalDirection = Ogre::Vector3::ZERO;   // we will calculate this
-    Ogre::Real deltaTime = dt * 0.001f;
-		if (mBaseAnimID == ANIM_JUMP_LOOP)
-		{
-			// if we're jumping, add a vertical offset too, and apply gravity
-			mSceneNode->translate(0, mVerticalVelocity * deltaTime, 0, Ogre::Node::TS_LOCAL);
-			mVerticalVelocity -= GRAVITY * deltaTime;
-
-			Ogre::Vector3 pos = mSceneNode->getPosition();
-			if (pos.y <= CHAR_HEIGHT)
-			{
-				// if we've hit the ground, change to landing state
-				pos.y = CHAR_HEIGHT;
-				mSceneNode->setPosition(pos);
-				setBaseAnimation(ANIM_JUMP_END, true);
-				mTimer = 0;
-			}
-		}*/
 	}
 
   void  Renderable::registerAnimationState(AnimID inId, std::string inState, bool loop) {
@@ -452,6 +359,50 @@ namespace Pixy
   float Renderable::_animate(AnimID id) {
     assert(mAnims[id]);
 
+    // first animation must be a looping one
+    if (mBaseAnimID == ANIM_NONE)
+      if (mAnims[id]->getLoop()) {
+        mLoopAnim = id;
+        _applyNextAnimation();
+      } else
+        throw std::runtime_error("must have a base loop animation first!");
+
+    // replacing the loop anim
+    else if (mAnims[id]->getLoop()) {
+      assert(mLoopAnim != ANIM_NONE);
+      mLoopAnim = id;
+      // if there are no mini-anims running, apply the new loop anim
+      if (mAnimQueue.empty())
+        _applyNextAnimation();
+    }
+
+    // it's a mini-anim
+    else if (!mAnims[id]->getLoop()) {
+      mAnimQueue.push_back(id);
+      std::cout << "Queuing a mini-anim, queue has: " << mAnimQueue.size() << "\n";
+      // if there are no mini-anims running, apply this one immediately
+      if (mAnimQueue.size() == 1)
+        _applyNextAnimation();
+    } else
+      throw std::runtime_error("can't be here!");
+
+    return mAnims[id]->getLength();
+  }
+
+  void Renderable::_applyNextAnimation() {
+    AnimID nextAnimID = ANIM_NONE;
+
+    // if there are pending mini-anims, play them
+    if (!mAnimQueue.empty()) {
+      nextAnimID = mAnimQueue.front();
+      std::cout << "Playing a mini-animation " << nextAnimID << " (" << mAnimQueue.size() << " in queue)\n";
+    } else { // otherwise we play the loop animation
+      nextAnimID = mLoopAnim;
+      std::cout << "Playing loop animation " << mLoopAnim << "\n";
+    }
+
+    assert(nextAnimID != ANIM_NONE);
+
 		if (mBaseAnimID >= 0 && mBaseAnimID < NUM_ANIMS)
 		{
 			// if we have an old animation, fade it out
@@ -459,19 +410,19 @@ namespace Pixy
 			mFadingOut[mBaseAnimID] = true;
 		}
 
-		mBaseAnimID = id;
+		mBaseAnimID = nextAnimID;
 
-		if (id != ANIM_NONE)
-		{
-			// if we have a new animation, enable it and fade it in
-			mAnims[id]->setEnabled(true);
-			mAnims[id]->setWeight(0);
-			mFadingOut[id] = false;
-			mFadingIn[id] = true;
-			/*if (reset)*/ mAnims[id]->setTimePosition(0);
-		}
+		/*if (nextAnimID != ANIM_NONE)
+		{*/
+			// we have a new animation, enable it and fade it in
+			mAnims[nextAnimID]->setEnabled(true);
+			mAnims[nextAnimID]->setWeight(0);
+			mFadingOut[nextAnimID] = false;
+			mFadingIn[nextAnimID] = true;
+      // reset it
+			mAnims[nextAnimID]->setTimePosition(0);
+		//}
 
-    return mAnims[mBaseAnimID]->getLength();
   }
 
   void Renderable::trackEnemyPuppet() {

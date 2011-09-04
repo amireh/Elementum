@@ -13,18 +13,18 @@ Pixy.Combat.onEntitySelected = function(inEvt)
 
   if (Selected) then
     --~ Selected:getSceneNode():detachObject(BBSet)
-    --~ Selected:getSceneNode():removeChild(BBNode)
+    Selected:getSceneNode():removeChild(BBNode)
   end
 
   --~ entity:getSceneNode():attachObject(BBNode)
-  --~ entity:getSceneNode():addChild(BBNode)
+  entity:getSceneNode():addChild(BBNode)
   if (entity:getEntity():getRank() == Pixy.PUPPET) then
     BBSet:setDefaultDimensions(HeroDim.Width, HeroDim.Height)
   else
     BBSet:setDefaultDimensions(OriginalDim.Width, OriginalDim.Height)
   end
-  BBNode:setPosition(entity:getSceneNode():getPosition())
-  BBNode:setScale(entity:getSceneNode():getScale())
+  --~ BBNode:setPosition(entity:getSceneNode():getPosition())
+  --~ BBNode:setScale(entity:getSceneNode():getScale())
 
   if (entity:getEntity():getOwner():getUID() == SelfPuppet:getUID()) then
     BBSet:setMaterialName("Elementum/Billboards/EntitySelection")
@@ -34,6 +34,12 @@ Pixy.Combat.onEntitySelected = function(inEvt)
   Selected = entity
 end
 
+Pixy.Combat.onEntityDeselected = function()
+  if (Selected) then
+    Selected:getSceneNode():removeChild(BBNode)
+  end
+  Selected = nil
+end
 
 updateCombat = function(dt)
   if (Selected) then

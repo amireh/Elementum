@@ -694,16 +694,13 @@ namespace Pixy
 
     Unit::getUp();
 
-    //mRenderable->setBaseAnimation(Renderable::ANIM_JUMP_START, true);
-    //mRenderable->setTopAnimation(Renderable::ANIM_NONE);
-    //mRenderable->mTimer = 0;
     float length_sec = mRenderable->animateGetUp();
+    mRenderable->animateIdle();
+    updateTextOverlay();
 
     /*mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait([&](boost::system::error_code e) -> void { this->mRenderable->animateIdle(); } );*/
 
-
-    updateTextOverlay();
   }
 
   void CUnit::updateFromEvent(const Event& evt) {
