@@ -12,7 +12,7 @@ material Elementum/Billboards/EntitySelection
        cull_hardware node
        texture_unit
        {
-         texture green_circle.png
+         texture green_circle2.png
        }
      }
    }
@@ -32,7 +32,7 @@ material Elementum/Billboards/EnemyEntitySelection
        cull_hardware node
        texture_unit
        {
-         texture red_circle.png
+         texture red_circle2.png
        }
      }
    }
