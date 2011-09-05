@@ -162,6 +162,11 @@ namespace Pixy
     spells_t mSpells;
     spells_t mBuffs;
     bool fDying;
+
+    CPuppet* mEnemy;
+
+    Ogre::RaySceneQuery *mRaySceneQuery;
+    Ogre::SceneManager      *mSceneMgr;
 	};
 } // end of namespace
 #endif

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Sun Sep  4 22:27:15 2011.
+** Generated automatically by tolua++-1.0.92 on Mon Sep  5 11:56:01 2011.
 */
 
 #ifndef __cplusplus
@@ -5836,6 +5836,38 @@ static int tolua_EClient_Ogre_AxisAlignedBox_new00_local(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSize of class  Ogre::AxisAlignedBox */
+#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_AxisAlignedBox_getSize00
+static int tolua_EClient_Ogre_AxisAlignedBox_getSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Ogre::AxisAlignedBox",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Ogre::AxisAlignedBox* self = (const Ogre::AxisAlignedBox*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSize'", NULL);
+#endif
+  {
+   const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getSize();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Ogre::Vector3");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -16259,6 +16291,7 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"new",tolua_EClient_Ogre_AxisAlignedBox_new00);
     tolua_function(tolua_S,"new_local",tolua_EClient_Ogre_AxisAlignedBox_new00_local);
     tolua_function(tolua_S,".call",tolua_EClient_Ogre_AxisAlignedBox_new00_local);
+    tolua_function(tolua_S,"getSize",tolua_EClient_Ogre_AxisAlignedBox_getSize00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"SubEntity","Ogre::SubEntity","",NULL);
    tolua_beginmodule(tolua_S,"SubEntity");

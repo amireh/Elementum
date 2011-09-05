@@ -22,7 +22,8 @@ namespace Pixy
     mRenderable(0),
     mTimer(0),
     fDying(false),
-    fRequiresYawFix(false)
+    fRequiresYawFix(false),
+    mDestination(Vector3::ZERO)
   {
   };
 
@@ -205,6 +206,23 @@ namespace Pixy
     mLog->infoStream() << "created";
 
     mRenderable = new Renderable(this);
+    mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
+    mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
+    mRaySceneQuery->setSortByDistance(true);
+
+    mEnemy = 0;
+    Combat::puppets_t lPuppets = Combat::getSingleton().getPuppets();
+    for (Combat::puppets_t::const_iterator itr = lPuppets.begin();
+      itr != lPuppets.end();
+      ++itr)
+    {
+      if ((*itr)->getUID() != mOwner->getUID()) {
+        mEnemy = *itr;
+        break;
+      }
+    }
+
+    assert(mEnemy);
 
     reset();
 
@@ -238,6 +256,9 @@ namespace Pixy
       //~ EventManager::getSingleton().hook(evt);
 
       mRenderable->hide();
+      mSceneMgr->destroyQuery(mRaySceneQuery);
+      mSceneMgr = 0;
+
       mLog->infoStream() << "dead [inside the async timer]";
       mLog->infoStream() << " i'm destroyed!\n";
       delete mLog;
@@ -256,13 +277,39 @@ namespace Pixy
   {
     Ogre::SceneNode* mNode = mRenderable->getSceneNode();
 
-    mDestination = mWaypoints->at(inDestination);  // get walkpoint to our required destination
-    //~ std::cout
-      //~ << "\tMoving to : "
-      //~ << mDestination.x << "," << mDestination.y << "," << mDestination.z
-      //~ << " from "
-      //~ << mNode->getPosition().x << "," << mNode->getPosition().y << "," << mNode->getPosition().z
-      //~ << "\n";
+    if (mDestination == Vector3::ZERO) {
+
+      mDestination = mWaypoints->at(inDestination);  // get walkpoint to our required destination
+      std::cout
+        << "\tMoving to : "
+        << mDestination.x << "," << mDestination.y << "," << mDestination.z
+        << " from "
+        << mNode->getPosition().x << "," << mNode->getPosition().y << "," << mNode->getPosition().z
+        << "\n";
+
+      if (inDestination == POS_ATTACK) {
+        Ogre::Real radius = mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z;
+        Ogre::Real scale = mEnemy->getRenderable()->getSceneNode()->getScale().z;
+        int mod = (mDestination.z > mNode->getPosition().z) ? -1 : 1;
+        mDestination.z =
+          mEnemy->getRenderable()->getSceneNode()->getPosition().z +
+          (radius * /*scale*/2 * mod);
+        //calculatePositionOffset();
+        std::cout << "\tPosition for attacking node: " << mDestination.z <<"\n";
+      } else if (inDestination == POS_OFFENCE) {
+        Ogre::Vector3 bbox = mBlockers.front()->getRenderable()->getSceneObject()->getBoundingBox().getSize();
+        Ogre::Real radius = mBlockers.front()->getRenderable()->getSceneObject()->getBoundingBox().getSize().z;
+        int mod = (mDestination.z >= mNode->getPosition().z) ? -1 : 1;
+        mDestination.z +=
+          //mBlockers.front()->getRenderable()->getSceneNode()->getPosition().z +
+          ((radius * mBlockers.front()->getRenderable()->getSceneNode()->getScale().z) /2 * mod);
+
+        std::cout << "My blocker's bbox: "
+          << bbox.x << ","
+          << bbox.y << ","
+          << bbox.z << "\n";
+      }
+    }
 
     mMoveDirection = mDestination - mNode->getPosition();
     mMoveDistance = mMoveDirection.normalise();
@@ -281,6 +328,43 @@ namespace Pixy
     mNode = 0;
     return true;
   } // nextLocation()
+
+  /*void CUnit::calculatePositionOffset(Vector3& inDestination) {
+    // ------------------------------
+    Ogre::Ray entityRay(mRenderable->getSceneNode()->getPosition(), mMoveDirection);
+    mRaySceneQuery->setRay(entityRay);
+
+    // Execute query
+    Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
+    Ogre::RaySceneQueryResult::iterator itr;
+    for (itr = result.begin(); itr != result.end(); itr++)
+    {
+      if (itr->worldFragment) {
+        //Ogre::Real depth = itr->worldFragment->singleIntersection.z;
+        std::cout << "-- Intersection @ "
+          << itr->worldFragment->singleIntersection.x << ","
+          << itr->worldFragment->singleIntersection.y << ","
+          << itr->worldFragment->singleIntersection.z << "\n";
+      } else if (itr->movable &&
+        (itr->movable->getName().find(mEnemy->getName()) != std::string::npos)) {
+        std::cout << "-- Distance to collision: "
+          << itr->distance << ", enemy size is:"
+          << mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().x <<","
+          << mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().y <<","
+          << mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z << "\n";
+
+          if (itr->distance <= mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z/4.0f)
+          {
+            mMoveDistance = 0.0f;
+            mMoveDirection = Vector3::ZERO;
+            fIsMoving = false;
+            return false;
+          }
+
+      }
+    }
+    // ------------------------------
+  }*/
 
   void CUnit::move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback) {
     mCallback = callback;
@@ -332,8 +416,10 @@ namespace Pixy
         mNode->translate(mMoveDirection * mMoveSpeed);
       }
       fIsMoving = true;
-    } else // if
+    } else { // if
       fIsMoving = false;
+      mDestination = Vector3::ZERO;
+    }
 
     return fIsMoving;
   };

@@ -1183,25 +1183,30 @@ namespace Pixy {
           mSelected->rotateToEnemy();
         //tmp->roll(Ogre::Degree(5));
       break;
-      /*case OIS::KC_H:
-        tmp->pitch(Ogre::Degree(5));
+      case OIS::KC_H:
+        //tmp->pitch(Ogre::Degree(5));
       break;
       case OIS::KC_E:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_READY);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_READY);
         break;
       case OIS::KC_R:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_CHARGING);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_CHARGING);
         break;
       case OIS::KC_T:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_DEFENCE);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_DEFENCE);
         break;
       case OIS::KC_Y:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_OFFENCE);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_OFFENCE);
         break;
       case OIS::KC_U:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
         break;
-      case OIS::KC_I:
+      /*case OIS::KC_I:
         if (mRenderables.front()->getText()->isHidden())
           mRenderables.front()->show();
         else

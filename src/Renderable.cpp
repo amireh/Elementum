@@ -313,7 +313,7 @@ namespace Pixy
     // it's a mini-anim
     else if (_anim->isMini()) {
       mAnimQueue.push_back(_anim);
-      std::cout << "Queuing a mini-anim, queue has: " << mAnimQueue.size() << "\n";
+      //~ std::cout << "Queuing a mini-anim, queue has: " << mAnimQueue.size() << "\n";
       // if there are no mini-anims running, apply this one immediately
       if (mAnimQueue.size() == 1)
         _applyNextAnimation();

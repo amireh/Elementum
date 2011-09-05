@@ -35,6 +35,8 @@ local process = function(inUnit)
   --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Scared", false)
 
   rnd:animateRest()
+  local size = rnd:getSceneObject():getBoundingBox():getSize()
+  Pixy.Log("Peasant bounds: " .. size.x .. "," .. size.y .. "," .. size.z)
   --~ rnd:getSceneNode():pitch(Ogre.Degree(-90))
   --~ rnd:getSceneNode():yaw(Ogre.Degree(180))
   --~ rnd:getSceneNode():setOrientation(Ogre.Quaternion:new(0,180,0,0))
