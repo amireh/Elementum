@@ -5,7 +5,6 @@
 ]]
 if (Pixy.UI.Combat == nil) then
   Pixy.UI.Combat = { Buttons = {}, LogButtons = {}, Labels = {}, Config = {}, Containers = {}}
-
 end
 
 Pixy.UI.Combat.configure = function()
@@ -171,7 +170,6 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
   --table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
 end
 
-
 Pixy.UI.Combat.dropSpell = function(inSpell)
   Pixy.UI.Combat.HideTooltip(nil)
   --removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
@@ -200,10 +198,14 @@ Pixy.UI.Combat.RemoveSpell = function(e)
   end
 end
 
-Pixy.UI.Combat.onStartTurn = function()
+local ShowBigMessage = function(txt)
   CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Attacking Phase")
+  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText(txt)
   CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
+end
+
+Pixy.UI.Combat.onStartTurn = function()
+  ShowBigMessage("Attacking Phase")
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
 
@@ -215,9 +217,7 @@ Pixy.UI.Combat.onStartTurn = function()
 end
 
 Pixy.UI.Combat.onTurnStarted = function()
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Waiting")
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
+  ShowBigMessage("Waiting")
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
 
@@ -228,9 +228,7 @@ Pixy.UI.Combat.onTurnStarted = function()
 end
 
 Pixy.UI.Combat.onStartBlockPhase = function()
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Blocking Phase")
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
+  ShowBigMessage("Blocking Phase")
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Blocking Phase")
 end
@@ -240,16 +238,10 @@ Pixy.UI.Combat.onMatchFinished = function(wuid)
   Pixy.Log("Winner's UID : " .. wuid .. " mine: " .. suid)
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"), "LongFade")
   if (wuid == suid) then
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-    CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Victory")
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
-
+    ShowBigMessage("Victory")
     Pixy.UI.Combat.Labels["Turns"]:setText("")
   else
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-    CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Loss")
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
-
+    ShowBigMessage("Loss")
     Pixy.UI.Combat.Labels["Turns"]:setText("")
   end
 end
@@ -351,5 +343,29 @@ Pixy.UI.Combat.HideLogTooltip = function(e)
   label:setText("")
 end
 
+local InvalidActions = {
+  Block = {
+    BlockerResting = "Selected unit is resting!",
+    AttackerUnblockable = "Target is unblockable."
+  },
+  Charge = {
+    AttackerRestless = "Target is restless!"
+  }
+}
+Pixy.UI.Combat.onInvalidAction = function(e)
+  Pixy.UI.Combat.ShowError(InvalidActions[e:getProperty("Action")][e:getProperty("Reason")])
+end
+
+Pixy.UI.Combat.onLifetap = function(e)
+  ShowBigMessage("LIFETAP!")
+end
+
+Pixy.UI.Combat.onFirstStrike = function(e)
+  ShowBigMessage("FIRST STRIKE!")
+end
+
+Pixy.UI.Combat.onTrample = function(e)
+  ShowBigMessage("TRAMPLE!")
+end
 -- configure
 Pixy.UI.Combat.configure()

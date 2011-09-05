@@ -10,10 +10,11 @@ require("combat/ui")
 require("combat/turns")
 require("combat/spells")
 require("combat/gfx")
+require("combat/effects")
 require("combat/bindings")
 
 -- and attach UI layout!
 Pixy.UI.attach(Pixy.UI.Combat.Config.LayoutPath)
 Pixy.UI.Combat.registerGlobals()
 
-require("combat/effects")
+

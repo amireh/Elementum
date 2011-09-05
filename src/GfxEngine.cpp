@@ -1273,11 +1273,18 @@ namespace Pixy {
           req.setProperty("UID", lEntity->getUID());
           NetworkManager::getSingleton().send(req);
 
-
+          // restless units can't not charge!
         } else if (lUnit->getPosition() == POS_CHARGING) {
-          Event req(EventUID::CancelCharge);
-          req.setProperty("UID", lEntity->getUID());
-          NetworkManager::getSingleton().send(req);
+          if (lUnit->isRestless()) {
+            Event resp(EventUID::InvalidAction);
+            resp.setProperty("Action", "Charge");
+            resp.setProperty("Reason", "AttackerRestless");
+            mEvtMgr->hook(resp);
+          } else {
+            Event req(EventUID::CancelCharge);
+            req.setProperty("UID", lEntity->getUID());
+            NetworkManager::getSingleton().send(req);
+          }
 
         }
 
@@ -1323,6 +1330,25 @@ namespace Pixy {
         lUnit->getPosition() == POS_CHARGING &&
         !static_cast<CUnit*>(mSelected->getEntity())->isResting())
     {
+      // reject if the blocker is resting
+      CUnit *unit = static_cast<CUnit*>(mSelected->getEntity());
+      if (unit->isResting()) {
+        Event resp(EventUID::InvalidAction);
+        resp.setProperty("Action", "Block");
+        resp.setProperty("Reason", "BlockerResting");
+        mEvtMgr->hook(resp);
+        return true;
+      }
+
+      // reject if the attacker is unblockable
+      if (lUnit->isUnblockable()) {
+        Event resp(EventUID::InvalidAction);
+        resp.setProperty("Action", "Block");
+        resp.setProperty("Reason", "AttackerUnblockable");
+        mEvtMgr->hook(resp);
+        return true;
+      }
+
       Event req(EventUID::Block);
       req.setProperty("B", mSelected->getEntity()->getUID());
       req.setProperty("A", lUnit->getUID());

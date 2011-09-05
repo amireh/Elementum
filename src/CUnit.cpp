@@ -494,6 +494,25 @@ namespace Pixy
       s << "[" << mBlockTarget->getAttackOrder() << "->" << mAttackOrder << "] ";
       cap += s.str();
     }
+
+    if (hasFirstStrike()) {
+      cap += "[FS] ";
+    }
+    if (hasLifetap()) {
+      cap += "[L] ";
+    }
+    if (isRestless()) {
+      cap += "[R] ";
+    }
+    if (isTrampling()) {
+      cap += "[T] ";
+    }
+    if (isUnblockable()) {
+      cap += "[U] ";
+    }
+    if (isFlying()) {
+      cap += "[F] ";
+    }
     /*
      * unit is attacking, show attack order. format:
      * [AID] AP/HP
@@ -519,7 +538,9 @@ namespace Pixy
 
   void
   CUnit::attackAfterAnimation(boost::function<void()> callback, CPuppet* inTarget) {
+    int dmg = inTarget->getHP();
     Unit::attack(inTarget);
+    dmg -= inTarget->getHP();
 
     inTarget->getRenderable()->animateHit();
 
@@ -527,11 +548,23 @@ namespace Pixy
     evt.Any = (void*)inTarget->getRenderable();
     EventManager::getSingleton().hook(evt);
 
+    if (hasLifetap()) {
+      Event evt(EventUID::Lifetap);
+      evt.setProperty("Damage", dmg);
+      evt.Any = (void*)this->getRenderable();
+      EventManager::getSingleton().hook(evt);
+      static_cast<CPuppet*>((CPuppet*)mOwner)->updateTextOverlay();
+    }
+
     this->updateTextOverlay();
     callback();
   }
 
   bool CUnit::attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block) {
+
+    if (block && inTarget->hasFirstStrike() && !this->hasFirstStrike())
+      return inTarget->attack(this, callback, block);
+
 
     float length_sec = mRenderable->animateAttack();
 
@@ -654,6 +687,7 @@ namespace Pixy
       // if this is a trampling unit, and we still got AP left,
       // proceed to hitting the puppet
       if (fIsTrampling && mAP > 0) {
+        return move(POS_ATTACK, boost::bind(static_cast<void (CUnit::*)(CPuppet*)>(&CUnit::moveAndAttack), this, mEnemy));
 #if 0
         move(POS_ATTACK, [&](CUnit*) -> void {
           this->attack(static_cast<CPuppet*>((Entity*)inBlockers.front()->getOwner()),
@@ -690,11 +724,11 @@ namespace Pixy
       return this->doAttack();
     }
 
-    if (blocker->isDying()) {
+    /*if (blocker->isDying()) {
       mBlockers.pop_front();
 
       return this->doAttack();
-    }
+    }*/
 
     // make the two units face each other
     blocker->getRenderable()->trackEnemyUnit(this);
@@ -730,7 +764,7 @@ namespace Pixy
     }
   }
   void CUnit::moveBackAfterBlocking(CUnit* blocker) {
-    if (!blocker->isDead())
+    if (!(blocker->isDead() || blocker->isDying()))
       blocker->move(POS_CHARGING);
 
     mBlockers.pop_front();

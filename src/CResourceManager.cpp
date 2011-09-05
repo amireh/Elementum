@@ -227,7 +227,7 @@ namespace Pixy {
     for (itr = entries.begin(); itr != entries.end(); ++itr) {
       lUnit = new CUnit();
       vector<string> elements = Utility::split((*itr).c_str(), ';');
-      assert(elements.size() == 12);
+      assert(elements.size() == 14);
 
       lUnit->setName(elements[0]);
       lUnit->setRace((RACE)atoi(elements[1].c_str()));
@@ -243,8 +243,10 @@ namespace Pixy {
       lUnit->setIsRestless(elements[8] == "t");
       lUnit->setIsFlying(elements[9] == "t");
       lUnit->setIsTrampling(elements[10] == "t");
+      lUnit->setHasFirstStrike(elements[11] == "t");
+      lUnit->setHasLifetap(elements[12] == "t");
 
-      lUnit->setDescription(elements[11]);
+      lUnit->setDescription(elements[13]);
 
       mUnits[lUnit->getRace()].push_back(lUnit);
 
