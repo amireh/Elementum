@@ -356,8 +356,80 @@ Pixy.UI.Combat.onInvalidAction = function(e)
   Pixy.UI.Combat.ShowError(InvalidActions[e:getProperty("Action")][e:getProperty("Reason")])
 end
 
+
+-- configure
+Pixy.UI.Combat.configure()
+
+local last_scrolling_text_idx = 0
+ShowScrollingMessage = function(txt, good, rnd)
+  local pos = nil
+  if rnd == nil then
+    pos = { x = "0.5", y = "0.5" }
+  else
+    pos = GfxEngine:getScreenCoords(rnd:getSceneObject())
+  end
+
+  last_scrolling_text_idx = last_scrolling_text_idx + 1
+  local win = CEWindowMgr:createWindow("TaharezLook/StaticText", "Elementum/Combat/Temp/ScrollingText" .. last_scrolling_text_idx)
+  CEWindowMgr:getWindow("Elementum/Combat"):addChildWindow(win)
+  win:setProperty("UnifiedXPosition", "{" .. pos.x .. ",0}")
+  win:setProperty("UnifiedYPosition", "{" .. pos.y .. ",0}")
+  win:setProperty("UnifiedHeight", "{0,50}")
+  win:setProperty("Font", "Scrolling_Text")
+  if good then
+    win:setProperty("TextColours", "tl:FF6bcf00 tr:FF6bcf00 bl:FF6bcf00 br:FF6bcf00")
+  else
+    win:setProperty("TextColours", "tl:FFFF0000 tr:FF8f0000 bl:FF8f0000 br:FF8f1e00")
+  end
+  --~ win:setProperty("UnifiedWidth", "{1,0}")
+  --~ win:setProperty("HorzFormatting", "WordWrapLeftAligned")
+  --~ win:setProperty("VertFormatting", "TopAligned")
+  --~ win:setProperty("VerticalAlignment", "Centre")
+
+  --~ win:setProperty("HorizontalAlignment", "Centre")
+  win:setProperty("Text", txt)
+
+  local anim = "ScrollUpLeft"
+  if (last_scrolling_text_idx % 2 == 0) then anim = "ScrollUpLeft" else anim = "ScrollUpRight" end
+  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
+  instance:setTargetWindow(win)
+  if (not instance:isRunning()) then instance:start() end
+
+  win:subscribeEvent("AlphaChanged", "Pixy.UI.Combat.RemoveSpell")
+end
+
+Pixy.Combat.onKeyReleased = function()
+  --ShowScrollingMessage("foobar")
+  if (Selected) then
+    local pos = GfxEngine:getScreenCoords(Selected:getSceneObject())
+    Pixy.Log(pos.x)
+    ShowScrollingMessage("foobar this is a very long scrolling combat message", true, Selected)
+  end
+end
+
+Pixy.UI.Combat.onStatChange = function(e)
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  if (e:getProperty("Stat") == "HP") then
+    local amount = tonumber(e:getProperty("Value"))
+    if amount > 0 then _mod = "+" else _mod = "" end
+    ShowScrollingMessage(_mod .. amount .. " health", amount > 0, rnd)
+  end
+end
+
+Pixy.UI.Combat.onEntityAttacked = function(e)
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  local damage = tonumber(e:getProperty("Damage"))
+  if damage > 0 then
+    ShowScrollingMessage("-" .. damage .. " health", false --[[ negative scrolling message ]], rnd)
+  end
+end
+
 Pixy.UI.Combat.onLifetap = function(e)
-  ShowBigMessage("LIFETAP!")
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  local damage = tonumber(e:getProperty("Damage"))
+  if damage > 0 then
+    ShowScrollingMessage("+" .. damage .. " health (LIFETAP)", true --[[ good scrolling message ]], rnd)
+  end
 end
 
 Pixy.UI.Combat.onFirstStrike = function(e)
@@ -367,5 +439,3 @@ end
 Pixy.UI.Combat.onTrample = function(e)
   ShowBigMessage("TRAMPLE!")
 end
--- configure
-Pixy.UI.Combat.configure()

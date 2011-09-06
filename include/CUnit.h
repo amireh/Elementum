@@ -41,6 +41,11 @@ namespace Pixy
     void moveAndAttack(CPuppet* inTarget);
     void moveAndAttack(std::list<CUnit*> inBlockers);
 
+    CPuppet* getEnemy() const {
+      assert(mEnemy);
+      return mEnemy;
+    };
+
     void update(unsigned long);
 
     bool isMoving() const {
@@ -57,6 +62,17 @@ namespace Pixy
     void setWaypoints(std::vector<Vector3>* inWp) {
       mWaypoints = inWp;
     }
+
+
+    virtual void setIsTrampling(bool inF);
+    virtual void setIsUnblockable(bool inF);
+    virtual void setIsRestless(bool inF);
+    virtual void setHasFirstStrike(bool inF);
+    virtual void setHasLifetap(bool inF);
+
+    virtual void setHP(int inU);
+    virtual void setBaseHP(int inU);
+    virtual void setBaseAP(int inU);
 
     /// @note entities are responsible for destroying the spell objects they own
 		spells_t const& getSpells();

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: EClient
-** Generated automatically by tolua++-1.0.92 on Mon Sep  5 11:56:01 2011.
+** Generated automatically by tolua++-1.0.92 on Tue Sep  6 10:08:23 2011.
 */
 
 #ifndef __cplusplus
@@ -40,6 +40,13 @@ TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
+
+static int tolua_collect_Ogre__Vector2 (lua_State* tolua_S)
+{
+ Ogre::Vector2* self = (Ogre::Vector2*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
 
 static int tolua_collect_Ogre__BillboardSet (lua_State* tolua_S)
 {
@@ -193,8 +200,9 @@ static int tolua_collect_Ogre__Camera (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"Ogre::Vector2");
  tolua_usertype(tolua_S,"Ogre::Renderable");
- tolua_usertype(tolua_S,"Pixy::Spell");
+ tolua_usertype(tolua_S,"Pixy::FxEngine");
  tolua_usertype(tolua_S,"list<Pixy::CUnit*>");
  tolua_usertype(tolua_S,"Ogre::uint16");
  tolua_usertype(tolua_S,"Pixy::Event");
@@ -239,11 +247,11 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::ColourValue");
  tolua_usertype(tolua_S,"Ogre::SubEntity");
  tolua_usertype(tolua_S,"Pixy::Puppet");
- tolua_usertype(tolua_S,"Pixy::FxEngine");
+ tolua_usertype(tolua_S,"Ogre::Radian");
  tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"Ogre::Radian");
+ tolua_usertype(tolua_S,"Pixy::Spell");
  tolua_usertype(tolua_S,"Pixy::CSpell");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
@@ -1592,6 +1600,39 @@ static int tolua_EClient_Pixy_CPuppet_updateTextOverlay00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setHP of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CPuppet_setHP00
+static int tolua_EClient_Pixy_CPuppet_setHP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+  int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'", NULL);
+#endif
+  {
+   self->setHP(inHP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  Pixy::CSpell */
 #ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CSpell_new00
 static int tolua_EClient_Pixy_CSpell_new00(lua_State* tolua_S)
@@ -2496,6 +2537,71 @@ static int tolua_EClient_Pixy_CUnit_getDefaultWalkSpeed00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getDefaultWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEnemy of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnit_getEnemy00
+static int tolua_EClient_Pixy_CUnit_getEnemy00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::CUnit* self = (const Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEnemy'", NULL);
+#endif
+  {
+   Pixy::CPuppet* tolua_ret = (Pixy::CPuppet*)  self->getEnemy();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CPuppet");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEnemy'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setHP of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_CUnit_setHP00
+static int tolua_EClient_Pixy_CUnit_setHP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+  int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'", NULL);
+#endif
+  {
+   self->setHP(inHP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHP'.",&tolua_err);
  return 0;
 #endif
 }
@@ -4346,6 +4452,50 @@ static int tolua_EClient_Pixy_GfxEngine_createSphere00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getScreenCoords of class  Pixy::GfxEngine */
+#ifndef TOLUA_DISABLE_tolua_EClient_Pixy_GfxEngine_getScreenCoords00
+static int tolua_EClient_Pixy_GfxEngine_getScreenCoords00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::GfxEngine",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::MovableObject",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::MovableObject* inObject = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScreenCoords'", NULL);
+#endif
+  {
+   Ogre::Vector2 tolua_ret = (Ogre::Vector2)  self->getScreenCoords(inObject);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((Ogre::Vector2)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"Ogre::Vector2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Ogre::Vector2));
+     tolua_pushusertype(tolua_S,tolua_obj,"Ogre::Vector2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScreenCoords'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: __Pixy of class  Pixy::GfxEngine */
 #ifndef TOLUA_DISABLE_tolua_get_Pixy__GfxEngine___Pixy__EventListener__
 static int tolua_get_Pixy__GfxEngine___Pixy__EventListener__(lua_State* tolua_S)
@@ -4449,6 +4599,182 @@ static int tolua_EClient_Pixy_NetworkManager_send00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'send'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: x of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_get_Ogre__Vector2_x
+static int tolua_get_Ogre__Vector2_x(lua_State* tolua_S)
+{
+  Ogre::Vector2* self = (Ogre::Vector2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->x);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: x of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_set_Ogre__Vector2_x
+static int tolua_set_Ogre__Vector2_x(lua_State* tolua_S)
+{
+  Ogre::Vector2* self = (Ogre::Vector2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->x = ((  float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: y of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_get_Ogre__Vector2_y
+static int tolua_get_Ogre__Vector2_y(lua_State* tolua_S)
+{
+  Ogre::Vector2* self = (Ogre::Vector2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->y);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: y of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_set_Ogre__Vector2_y
+static int tolua_set_Ogre__Vector2_y(lua_State* tolua_S)
+{
+  Ogre::Vector2* self = (Ogre::Vector2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->y = ((  float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Vector2_new00
+static int tolua_EClient_Ogre_Vector2_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Ogre::Vector2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const float fX = ((const float)  tolua_tonumber(tolua_S,2,0));
+  const float fY = ((const float)  tolua_tonumber(tolua_S,3,0));
+  {
+   Ogre::Vector2* tolua_ret = (Ogre::Vector2*)  Mtolua_new((Ogre::Vector2)(fX,fY));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Vector2");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Vector2_new00_local
+static int tolua_EClient_Ogre_Vector2_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Ogre::Vector2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const float fX = ((const float)  tolua_tonumber(tolua_S,2,0));
+  const float fY = ((const float)  tolua_tonumber(tolua_S,3,0));
+  {
+   Ogre::Vector2* tolua_ret = (Ogre::Vector2*)  Mtolua_new((Ogre::Vector2)(fX,fY));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Vector2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Vector2_new01
+static int tolua_EClient_Ogre_Vector2_new01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Ogre::Vector2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const float scalar = ((const float)  tolua_tonumber(tolua_S,2,0));
+  {
+   Ogre::Vector2* tolua_ret = (Ogre::Vector2*)  Mtolua_new((Ogre::Vector2)(scalar));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Vector2");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_EClient_Ogre_Vector2_new00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  Ogre::Vector2 */
+#ifndef TOLUA_DISABLE_tolua_EClient_Ogre_Vector2_new01_local
+static int tolua_EClient_Ogre_Vector2_new01_local(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Ogre::Vector2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const float scalar = ((const float)  tolua_tonumber(tolua_S,2,0));
+  {
+   Ogre::Vector2* tolua_ret = (Ogre::Vector2*)  Mtolua_new((Ogre::Vector2)(scalar));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Vector2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_EClient_Ogre_Vector2_new00_local(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -15966,6 +16292,7 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"detachBuff",tolua_EClient_Pixy_CPuppet_detachBuff00);
     tolua_function(tolua_S,"hasBuff",tolua_EClient_Pixy_CPuppet_hasBuff00);
     tolua_function(tolua_S,"updateTextOverlay",tolua_EClient_Pixy_CPuppet_updateTextOverlay00);
+    tolua_function(tolua_S,"setHP",tolua_EClient_Pixy_CPuppet_setHP00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"CSpell","Pixy::CSpell","Pixy::Spell",tolua_collect_Pixy__CSpell);
@@ -16014,6 +16341,8 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getWalkSpeed",tolua_EClient_Pixy_CUnit_getWalkSpeed00);
     tolua_function(tolua_S,"setDefaultWalkSpeed",tolua_EClient_Pixy_CUnit_setDefaultWalkSpeed00);
     tolua_function(tolua_S,"getDefaultWalkSpeed",tolua_EClient_Pixy_CUnit_getDefaultWalkSpeed00);
+    tolua_function(tolua_S,"getEnemy",tolua_EClient_Pixy_CUnit_getEnemy00);
+    tolua_function(tolua_S,"setHP",tolua_EClient_Pixy_CUnit_setHP00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"FxEngine","Pixy::FxEngine","Pixy::Engine",tolua_collect_Pixy__FxEngine);
@@ -16103,6 +16432,7 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
     tolua_function(tolua_S,"enableCompositorEffect",tolua_EClient_Pixy_GfxEngine_enableCompositorEffect00);
     tolua_function(tolua_S,"loadDotScene",tolua_EClient_Pixy_GfxEngine_loadDotScene00);
     tolua_function(tolua_S,"createSphere",tolua_EClient_Pixy_GfxEngine_createSphere00);
+    tolua_function(tolua_S,"getScreenCoords",tolua_EClient_Pixy_GfxEngine_getScreenCoords00);
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__GfxEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
    tolua_function(tolua_S,"Log",tolua_EClient_Pixy_Log00);
@@ -16155,6 +16485,21 @@ TOLUA_API int tolua_EClient_open (lua_State* tolua_S)
    tolua_constant(tolua_S,"RENDER_QUEUE_SKIES_LATE",Ogre::RENDER_QUEUE_SKIES_LATE);
    tolua_constant(tolua_S,"RENDER_QUEUE_OVERLAY",Ogre::RENDER_QUEUE_OVERLAY);
    tolua_constant(tolua_S,"RENDER_QUEUE_MAX",Ogre::RENDER_QUEUE_MAX);
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"Vector2","Ogre::Vector2","",tolua_collect_Ogre__Vector2);
+   #else
+   tolua_cclass(tolua_S,"Vector2","Ogre::Vector2","",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"Vector2");
+    tolua_variable(tolua_S,"x",tolua_get_Ogre__Vector2_x,tolua_set_Ogre__Vector2_x);
+    tolua_variable(tolua_S,"y",tolua_get_Ogre__Vector2_y,tolua_set_Ogre__Vector2_y);
+    tolua_function(tolua_S,"new",tolua_EClient_Ogre_Vector2_new00);
+    tolua_function(tolua_S,"new_local",tolua_EClient_Ogre_Vector2_new00_local);
+    tolua_function(tolua_S,".call",tolua_EClient_Ogre_Vector2_new00_local);
+    tolua_function(tolua_S,"new",tolua_EClient_Ogre_Vector2_new01);
+    tolua_function(tolua_S,"new_local",tolua_EClient_Ogre_Vector2_new01_local);
+    tolua_function(tolua_S,".call",tolua_EClient_Ogre_Vector2_new01_local);
+   tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"Vector3","Ogre::Vector3","",tolua_collect_Ogre__Vector3);
    #else

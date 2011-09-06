@@ -1,4 +1,4 @@
-local Selected = nil
+Selected = nil
 local HSS = 6 -- Hero Selection Scale
 local OriginalDim = { Width = 1, Height = 1 }
 local HeroDim = {
@@ -35,6 +35,7 @@ Pixy.Combat.onEntitySelected = function(inEvt)
 end
 
 Pixy.Combat.onEntityDeselected = function()
+  Pixy.Log("Deselecting entity")
   if (Selected) then
     Selected:getSceneNode():removeChild(BBNode)
   end

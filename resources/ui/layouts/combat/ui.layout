@@ -26,6 +26,7 @@
       <Event Name="Clicked" Function="Pixy.Combat.reloadScripts" />
     </Window>
 
+
   <!-- Turn panel -->
   <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Effects/Turns/Menu">
     <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.06.0}}" />
@@ -98,6 +99,20 @@
     <Property Name="UnifiedAreaRect" Value="{{0,0},{0.85,0},{1,0},{1,0}}" />
     <Property Name="HorizontalAlignment" Value="Centre" />
     <Property Name="Image" Value="set:HUDs image:DarkBG" />
+
+    <Window Type="TaharezLook/ImageButton" Name="Elementum/Combat/Buttons/EndTurn" >
+      <Property Name="Visible" Value="True" />
+      <Property Name="Text" Value="End Turn" />
+      <Property Name="UnifiedPosition" Value="{{0.93,0},{0.05,0}}" />
+      <Property Name="UnifiedSize" Value="{{0.06,0},{0.9,0}}" />
+      <Property Name="Disabled" Value="False" />
+      <Property Name="NormalImage" Value="set: HUDs image:Hourglass" />
+      <Property Name="HoverImage" Value="set: HUDs image:Hourglass" />
+      <Property Name="PushedImage" Value="set: HUDs image:Hourglass" />
+      <Property Name="DisabledImage" Value="set: HUDs image:Hourglass" />
+      <Event Name="Clicked" Function="Pixy.Combat.reqEndTurn" />
+    </Window>
+
   </Window>
 	<Window Type="TaharezLook/ScrollablePane" Name="Elementum/Combat/SpellPanel/Player">
 	  <Property Name="Visible" Value="True" />
@@ -120,6 +135,8 @@
       <Property Name="VerticalAlignment" Value="Centre" />
 
     </Window>
+
+
   </Window>
 
 
@@ -197,7 +214,9 @@
   <!-- error message -->
   <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Containers/Error">
     <Property Name="MousePassThroughEnabled" Value="True" />
+<!--
     <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.025,0},{0.6,0},{0.4.0}}" />
+-->
     <Property Name="Visible" Value="False" />
     <Property Name="HorizontalAlignment" Value="Left" />
     <Property Name="VerticalAlignment" Value="Top" />
@@ -205,15 +224,18 @@
     <Property Name="FrameEnabled" Value="False" />
 
     <Window Type="TaharezLook/StaticText" Name="Elementum/Combat/Text/Error">
-      <Property Name="Font" Value="Alice-12" />
+      <Property Name="Font" Value="Scrolling_Text" />
       <Property Name="Visible" Value="True" />
       <Property Name="BackgroundEnabled" Value="False" />
       <Property Name="FrameEnabled" Value="False" />
       <Property Name="HorizontalAlignment" Value="Centre" />
       <Property Name="HorzFormatting" Value="HorzCentred" />
-      <Property Name="VerticalAlignment" Value="Centre" />
+      <Property Name="VertFormatting" Value="TopAligned" />
+      <Property Name="VerticalAlignment" Value="Top" />
       <Property Name="Text" Value="Victory!" />
       <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="UnifiedYPosition" Value="{0.1,0}" />
+      <Property Name="TextColours" Value="tl:FFFF0000 tr:FF8f0000 bl:FF8f0000 br:FF8f1e00" />
       <Property Name="ClippedByParent" Value="False" />
     </Window>
   </Window> <!-- temporary text -->

@@ -4,4 +4,5 @@
 	<Image Name="Hand" XPos="0" YPos="0"  Width="788" Height="216" />
   <Image Name="Hand2" XPos="0" YPos="256"  Width="788" Height="216" />
   <Image Name="DarkBG" XPos="0" YPos="512"  Width="200" Height="200" />
+  <Image Name="Hourglass" XPos="845" YPos="0"  Width="179" Height="300" />
 </Imageset>

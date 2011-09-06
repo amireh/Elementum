@@ -47,7 +47,7 @@ Pixy.Combat.PrepareScene = function()
   Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
   Camera:setNearClipDistance( 10 )
   Camera:setFarClipDistance( 10000 )
-  GfxEngine.mCameraYawPitchDist = Ogre.Vector3:new(160, 20, 100)
+  GfxEngine.mCameraYawPitchDist = Ogre.Vector3:new(180, 30, 140)
 
   -- Sky
   --SceneMgr:setSkyDome(true, "Elementum/Sky", 1, 1,1000,true);

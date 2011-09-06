@@ -372,6 +372,7 @@ namespace Pixy
     std::cout << "Unit " << mUID << " moving to position: " << inDestination << " from " << mPosition << "\n";
     mPDestination = inDestination;
     GfxEngine::getSingletonPtr()->updateMe(this);
+    mDestination = Ogre::Vector3::ZERO;
 
     if (inDestination < mPosition) {
       //~ mRenderable->trackEnemyUnit(this);
@@ -538,24 +539,30 @@ namespace Pixy
 
   void
   CUnit::attackAfterAnimation(boost::function<void()> callback, CPuppet* inTarget) {
-    int dmg = inTarget->getHP();
+    int dmg = getAP();
     Unit::attack(inTarget);
-    dmg -= inTarget->getHP();
+    dmg -= getAP();
 
     inTarget->getRenderable()->animateHit();
 
-    Event evt(EventUID::EntityAttacked);
-    evt.Any = (void*)inTarget->getRenderable();
-    EventManager::getSingleton().hook(evt);
-
-    if (hasLifetap()) {
-      Event evt(EventUID::Lifetap);
+    // tell interested parties that the target has been attacked (for SCT etc)
+    {
+      Event evt(EventUID::EntityAttacked);
       evt.setProperty("Damage", dmg);
-      evt.Any = (void*)this->getRenderable();
+      evt.Any = (void*)inTarget->getRenderable();
       EventManager::getSingleton().hook(evt);
-      static_cast<CPuppet*>((CPuppet*)mOwner)->updateTextOverlay();
     }
 
+    // trigger a lifetap event if the unit has leeched any HP
+    if (hasLifetap() && dmg > 0) {
+      Event evt(EventUID::Lifetap);
+      evt.setProperty("Damage", dmg);
+      evt.Any = (void*)static_cast<CPuppet*>(this->mOwner)->getRenderable();
+      EventManager::getSingleton().hook(evt);
+    }
+
+    // update HUDs
+    static_cast<CPuppet*>((CPuppet*)mOwner)->updateTextOverlay();
     this->updateTextOverlay();
     callback();
   }
@@ -581,14 +588,19 @@ namespace Pixy
     // @note
     // the reason we pass block=false here is that we're running a special
     // version of the attack function (this one) that deals with rendering
+    int dmg = getAP();
     Unit::attack(inTarget, false);
+    dmg -= getAP();
 
     inTarget->getRenderable()->animateHit();
 
     // inform other components so they can render particles or w/e
-    Event evt(EventUID::EntityAttacked);
-    evt.Any = (void*)inTarget->getRenderable();
-    EventManager::getSingleton().hook(evt);
+    {
+      Event evt(EventUID::EntityAttacked);
+      evt.setProperty("Damage", dmg);
+      evt.Any = (void*)inTarget->getRenderable();
+      EventManager::getSingleton().hook(evt);
+    }
 
     // if the target is required to block us, is not dead, and has AP, make it hit us back
     if (block && !inTarget->isDead() && !inTarget->isDying() && inTarget->getAP() > 0) {
@@ -718,7 +730,7 @@ namespace Pixy
     // there's a special case where the attacker has 0 AP left, and the blocker
     // has 0 base AP, then there's no point moving it to defense pos, we should
     // just skip it
-    if (mAP <= 0 && blocker->getAP() == 0) {
+    if (mAP <= 0 && blocker->getAP() <= 0) {
       mBlockers.pop_front();
 
       return this->doAttack();
@@ -764,8 +776,10 @@ namespace Pixy
     }
   }
   void CUnit::moveBackAfterBlocking(CUnit* blocker) {
-    if (!(blocker->isDead() || blocker->isDying()))
+    if (!(blocker->isDead() || blocker->isDying())) {
       blocker->move(POS_CHARGING);
+      blocker->updateTextOverlay();
+    }
 
     mBlockers.pop_front();
 
@@ -814,4 +828,43 @@ namespace Pixy
   }
 
   bool CUnit::isDying() const { return fDying; };
+
+  void CUnit::setIsTrampling(bool inF) {
+    Unit::setIsTrampling(inF);
+  }
+  void CUnit::setIsUnblockable(bool inF) {
+    Unit::setIsUnblockable(inF);
+  }
+  void CUnit::setIsRestless(bool inF) {
+    Unit::setIsRestless(inF);
+  }
+  void CUnit::setHasFirstStrike(bool inF) {
+    Unit::setHasFirstStrike(inF);
+  }
+  void CUnit::setHasLifetap(bool inF) {
+    Unit::setHasLifetap(inF);
+  }
+  void CUnit::setBaseHP(int inU) {
+    Unit::setBaseHP(inU);
+  }
+  void CUnit::setBaseAP(int inU) {
+    Unit::setBaseAP(inU);
+  }
+
+  void CUnit::setHP(int inHP) {
+    if (!mRenderable)
+      return Unit::setHP(inHP);
+
+    int lastHP = getHP();
+    Unit::setHP(inHP);
+    int incHP = getHP() - lastHP;
+
+    Event e(EventUID::EntityStatChanged);
+    e.setProperty("Stat", "HP");
+    e.setProperty("Value", incHP);
+    e.Any = (void*)this->mRenderable;
+    EventManager::getSingleton().hook(e);
+    updateTextOverlay();
+  }
+
 } // end of namespace

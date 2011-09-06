@@ -94,6 +94,14 @@ namespace Ogre {
     RENDER_QUEUE_MAX = 105
   };
 
+  class Vector2 {
+    public:
+    Real x,y;
+
+    Vector2( const Real fX, const Real fY );
+    Vector2( const Real scalar );
+  }
+
   class Vector3 {
     public:
 

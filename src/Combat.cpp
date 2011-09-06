@@ -494,6 +494,7 @@ namespace Pixy
          ++unit_itr)
     {
       CUnit* unit = *unit_itr;
+      unit->reset();
       unit->getUp();
 
       // remove all expired puppet buffs
