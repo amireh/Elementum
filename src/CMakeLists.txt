@@ -76,7 +76,7 @@ SET(PROJECT_LIBS
 )
 
 if (APPLE)
-  SET( PROJECT_FRAMEWORKS "-framework IOKit -framework Carbon -framework Cocoa -F/usr/local/lib/CEGUI -framework CEGUIBase -framework CEGUILuaScriptModule -framework CEGUIOgreRenderer -F/usr/local/lib/OIS -framework OIS")
+  SET( PROJECT_FRAMEWORKS "-framework IOKit -framework Cocoa -F/usr/local/lib/CEGUI -framework CEGUIBase -framework CEGUILuaScriptModule -framework CEGUIOgreRenderer -lOIS")
   
   LINK_LIBRARIES(${PROJECT_FRAMEWORKS})
   #LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib/CEGUI)
