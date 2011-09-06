@@ -1,0 +1,39 @@
+material Elementum/Billboards/EntitySelection
+{
+   technique
+   {
+
+     pass
+     {
+       lighting off
+       scene_blend alpha_blend
+       depth_write on
+       depth_check on
+       cull_hardware node
+       texture_unit
+       {
+         texture green_circle2.png
+       }
+     }
+   }
+}
+
+material Elementum/Billboards/EnemyEntitySelection
+{
+   technique
+   {
+
+     pass
+     {
+       lighting off
+       scene_blend alpha_blend
+       depth_write on
+       depth_check on
+       cull_hardware node
+       texture_unit
+       {
+         texture red_circle2.png
+       }
+     }
+   }
+}

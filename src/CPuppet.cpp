@@ -5,6 +5,8 @@
 #include "CSpell.h"
 #include "PixyUtility.h"
 #include "ogre/MovableTextOverlay.h"
+#include "Event.hpp"
+#include "EventManager.h"
 
 namespace Pixy
 {
@@ -219,4 +221,16 @@ namespace Pixy
 		//mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
   }
 
+  void CPuppet::setHP(int inHP) {
+    //int lastHP = getHP();
+    Puppet::setHP(inHP);
+    /*int incHP = getHP() - lastHP;
+
+    Event e(EventUID::EntityStatChanged);
+    e.setProperty("Stat", "HP");
+    e.setProperty("Value", incHP);
+    e.Any = (void*)this->mRenderable;
+    EventManager::getSingleton().hook(e);
+    updateTextOverlay();*/
+  }
 } // end of namespace

@@ -59,4 +59,5 @@ void enableCompositorEffect(std::string inEffect);
 void loadDotScene(std::string inFile, std::string inName);
 
 void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
+Ogre::Vector2 getScreenCoords(Ogre::MovableObject* inObject);
 };

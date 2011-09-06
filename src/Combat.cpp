@@ -58,6 +58,7 @@ namespace Pixy
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Combat");
 
 		mLog->infoStream() << "---- Entering ----";
+    mLog->infoStream() << "My Listener UID: " << mUID;
 
 		//mPuppets.clear();
 		//mUpdateQueue.clear();
@@ -87,8 +88,8 @@ namespace Pixy
     mPuppet = 0;
 
     // sync the game data when we're connected
-    bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));    
-    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));    
+    bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));
+    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));
     bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::SyncPuppetData, boost::bind(&Combat::onSyncPuppetData, this, _1));
@@ -99,7 +100,7 @@ namespace Pixy
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
     bind(EventUID::UpdateUnit, boost::bind(&Combat::onUpdateUnit, this, _1));
-    bind(EventUID::EntityDied, boost::bind(&Combat::onEntityDied, this, _1));    
+    bind(EventUID::EntityDied, boost::bind(&Combat::onEntityDied, this, _1));
     bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
     bind(EventUID::CancelCharge, boost::bind(&Combat::onCancelCharge, this, _1));
@@ -112,15 +113,15 @@ namespace Pixy
 
   bool Combat::onConnected(const Event& evt) {
     mNetMgr->send(Event(EventUID::SyncGameData));
-    
-    return true;   
+
+    return true;
   }
-  
+
   bool Combat::onLogin(const Event& evt) {
     Event _evt(EventUID::JoinQueue);
     _evt.setProperty("Puppet", "Sugar");
     mNetMgr->send(_evt);
-    
+
     return true;
   }
 	void Combat::exit( void ) {
@@ -470,7 +471,7 @@ namespace Pixy
            ++buff)
         if ((*buff)->hasExpired())
           expired.push_back(*buff);
-      
+
       for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
            expired_spell != expired.end();
            ++expired_spell)
@@ -493,6 +494,7 @@ namespace Pixy
          ++unit_itr)
     {
       CUnit* unit = *unit_itr;
+      unit->reset();
       unit->getUp();
 
       // remove all expired puppet buffs
@@ -503,7 +505,7 @@ namespace Pixy
              ++buff)
           if ((*buff)->hasExpired())
             expired.push_back(*buff);
-        
+
         for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
              expired_spell != expired.end();
              ++expired_spell)
@@ -651,7 +653,7 @@ namespace Pixy
         lPuppet = 0;
       }
     }
-    
+
     return true;
   }
 
@@ -1022,10 +1024,10 @@ namespace Pixy
     //}
 
   }
-  
+
   void Combat::onMoveBack(CUnit* inUnit) {
     inUnit->setAttackOrder(0);
-    inUnit->reset();      
+    inUnit->reset();
   }
   void Combat::onMoveBackAndRest(CUnit* inUnit) {
     onMoveBack(inUnit);

@@ -16,4 +16,14 @@ public:
   void updateTextOverlay();
 
   bool fRequiresYawFix;
+
+  void setWalkSpeed(const float inSpeed);
+  float getWalkSpeed() const;
+
+  static void setDefaultWalkSpeed(const float inSpeed);
+  static float getDefaultWalkSpeed();
+
+  CPuppet* getEnemy() const;
+  virtual void setHP(int inHP);
+
 };

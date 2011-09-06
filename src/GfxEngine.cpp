@@ -18,6 +18,7 @@
 #include "NetworkManager.h"
 #include "InputManager.h"
 #include "FxEngine.h"
+#include "ScriptEngine.h"
 #include "OgreMax/OgreMaxScene.hpp"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
@@ -71,6 +72,8 @@ namespace Pixy {
 	GfxEngine::GfxEngine() {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "GfxEngine");
 		mLog->infoStream() << "firing up";
+    mLog->infoStream() << "My Listener UID: " << mUID;
+
 		fSetup = false;
 		//mPlayers.clear();
 		mCameraMan = 0;
@@ -1040,6 +1043,12 @@ namespace Pixy {
 
     if (found)
     {
+      // This is being called directly by the spell handler, because for some
+      // reason, pixy.lua:arbitraryFunc() can't find onEntityDeselected
+      //
+      // hack date: 09/05/2011
+      //ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
+
       // move the new node to the unit's current position
       Ogre::SceneNode* oldNode = inRenderable->getSceneNode();
       Ogre::Vector3 oldPos(oldNode->getPosition());
@@ -1053,13 +1062,14 @@ namespace Pixy {
       oldNode->setPosition((*inUnit->mWaypoints)[POS_READY]);
 
       // move to the new ready position
-      inUnit->setWaypoints(&mWaypoints[inUnit->getOwner() == mPlayer ? 0 : 1][idNode]);
+      inUnit->setWaypoints(&mWaypoints[inUnit->getOwner()->getUID() == mPlayer->getUID() ? 0 : 1][idNode]);
       inUnit->move(POS_READY);
 
-      FxEngine::getSingleton().dehighlight();
+      //~ FxEngine::getSingleton().dehighlight();
 
     } else {
-      mLog->errorStream() << "Could not change Unit's ownership! No empty SceneNodes available";
+      throw std::runtime_error("gfxengine: could not change Unit's ownership! No empty SceneNodes available");
+
     }
   }
 
@@ -1146,6 +1156,7 @@ namespace Pixy {
       // ignore any terrain selection
       dehighlight();
       FxEngine::getSingleton().dehighlight();
+      ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
     }
 
     return true;
@@ -1167,33 +1178,42 @@ namespace Pixy {
     if (Combat::getSingleton().getPuppet() == 0)
       return;
 
-    SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable()->getSceneNode();
+    //SceneNode* tmp = Combat::getSingleton().getPuppet()->getRenderable()->getSceneNode();
+
     switch (e.key) {
-      /*case OIS::KC_F:
-        tmp->yaw(Ogre::Degree(5));
+      case OIS::KC_F:
+        if (mSelected)
+          mSelected->getSceneNode()->yaw(Ogre::Degree(15));
       break;
       case OIS::KC_G:
-        tmp->roll(Ogre::Degree(5));
+        if (mSelected)
+          mSelected->rotateToEnemy();
+        //tmp->roll(Ogre::Degree(5));
       break;
       case OIS::KC_H:
-        tmp->pitch(Ogre::Degree(5));
+        //tmp->pitch(Ogre::Degree(5));
       break;
       case OIS::KC_E:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_READY);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_READY);
         break;
       case OIS::KC_R:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_CHARGING);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_CHARGING);
         break;
       case OIS::KC_T:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_DEFENCE);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_DEFENCE);
         break;
       case OIS::KC_Y:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_OFFENCE);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_OFFENCE);
         break;
       case OIS::KC_U:
-        static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
+        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
+          static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
         break;
-      case OIS::KC_I:
+      /*case OIS::KC_I:
         if (mRenderables.front()->getText()->isHidden())
           mRenderables.front()->show();
         else
@@ -1205,6 +1225,14 @@ namespace Pixy {
         else
           mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMRIGHT);
         break;
+      case OIS::KC_L:
+        ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
+        break;
+      case OIS::KC_V:
+        if (mSelected) {
+          Ogre::Vector2 coords = getScreenCoords(mSelected->getSceneObject());
+          mLog->infoStream() << "Model is at " << coords.x << "," << coords.y;
+        }
         break;
     }
 	}
@@ -1260,11 +1288,18 @@ namespace Pixy {
           req.setProperty("UID", lEntity->getUID());
           NetworkManager::getSingleton().send(req);
 
-
+          // restless units can't not charge!
         } else if (lUnit->getPosition() == POS_CHARGING) {
-          Event req(EventUID::CancelCharge);
-          req.setProperty("UID", lEntity->getUID());
-          NetworkManager::getSingleton().send(req);
+          if (lUnit->isRestless()) {
+            Event resp(EventUID::InvalidAction);
+            resp.setProperty("Action", "Charge");
+            resp.setProperty("Reason", "AttackerRestless");
+            mEvtMgr->hook(resp);
+          } else {
+            Event req(EventUID::CancelCharge);
+            req.setProperty("UID", lEntity->getUID());
+            NetworkManager::getSingleton().send(req);
+          }
 
         }
 
@@ -1310,6 +1345,25 @@ namespace Pixy {
         lUnit->getPosition() == POS_CHARGING &&
         !static_cast<CUnit*>(mSelected->getEntity())->isResting())
     {
+      // reject if the blocker is resting
+      CUnit *unit = static_cast<CUnit*>(mSelected->getEntity());
+      if (unit->isResting()) {
+        Event resp(EventUID::InvalidAction);
+        resp.setProperty("Action", "Block");
+        resp.setProperty("Reason", "BlockerResting");
+        mEvtMgr->hook(resp);
+        return true;
+      }
+
+      // reject if the attacker is unblockable
+      if (lUnit->isUnblockable()) {
+        Event resp(EventUID::InvalidAction);
+        resp.setProperty("Action", "Block");
+        resp.setProperty("Reason", "AttackerUnblockable");
+        mEvtMgr->hook(resp);
+        return true;
+      }
+
       Event req(EventUID::Block);
       req.setProperty("B", mSelected->getEntity()->getUID());
       req.setProperty("A", lUnit->getUID());
@@ -1419,5 +1473,144 @@ namespace Pixy {
 
   void GfxEngine::unloadScene(OgreMax::OgreMaxScene* inScene) {
     inScene->Destroy();
+  }
+
+  Ogre::Vector2 GfxEngine::getScreenCoords(Ogre::MovableObject* inObject) {
+    using namespace Ogre;
+    // get the projection of the object's AABB into screen space
+    /*const Ogre::AxisAlignedBox& bbox = inObject->getWorldBoundingBox(true);
+    Ogre::Matrix4 mat = mCamera->getViewMatrix();
+
+    const Ogre::Vector3* corners = bbox.getAllCorners();
+
+    float min_x = 1.0f, max_x = 0.0f, min_y = 1.0f, max_y = 0.0f;
+
+    // expand the screen-space bounding-box so that it completely encloses
+    // the object's AABB
+    for (int i=0; i<8; i++) {
+      Ogre::Vector3 corner = corners[i];
+
+      // multiply the AABB corner vertex by the view matrix to
+      // get a camera-space vertex
+      corner = mat * corner;
+
+      // make 2D relative/normalized coords from the view-space vertex
+      // by dividing out the Z (depth) factor -- this is an approximation
+      float x = corner.x / corner.z + 0.5;
+      float y = corner.y / corner.z + 0.5;
+
+      if (x < min_x)
+          min_x = x;
+
+      if (x > max_x)
+          max_x = x;
+
+      if (y < min_y)
+          min_y = y;
+
+      if (y > max_y)
+          max_y = y;
+    }
+
+    return Ogre::Vector2(1-max_x, min_y);*/
+    /*const Ogre::AxisAlignedBox &AABB = inObject->getWorldBoundingBox(true);// the AABB of the target
+    Ogre::Vector3 opos = AABB.getCorner(Ogre::AxisAlignedBox::FAR_LEFT_TOP);
+    Vector3 pos = mCamera->getProjectionMatrix() * (mCamera->getViewMatrix() * opos);
+    return Vector2(
+      1.0f - ((-pos.x+1)/2),
+      //~ ((pos.x *0.5f) + 0.5f),
+      //~ 1.0f - ((pos.y+1)/2));
+      1.0f - ((pos.y * 0.5f) + 0.5f));*/
+
+
+    /*Vector3 pos = inObject->getParentSceneNode()->_getDerivedPosition();
+
+    Vector3 hcsPosition = mCamera->getProjectionMatrix() * (mCamera->getViewMatrix() * pos);
+    //Vector3 eyeSpacePos = mCamera->getViewMatrix(true) * pos;
+    Real x = 0;
+    Real y = 0;
+
+    x = ((hcsPosition.x * 0.5f) + 0.5f);// 0 <= x <= 1 // left := 0,right := 1
+    y = 1.0f - ((hcsPosition.y * 0.5f) + 0.5f);// 0 <= y <= 1 // bottom := 0,top := 1
+
+    return Vector2(x,y);*/
+
+
+    Real MinX = 0;
+    Real MinY = 0;
+    Real MaxX = 0;
+    Real MaxY = 0;
+
+    Ogre::Real X[4];// the 2D dots of the AABB in screencoordinates
+    Ogre::Real Y[4];
+
+    if (!inObject->isInScene())
+       return Vector2(0,0);
+
+    const Ogre::AxisAlignedBox &AABB = inObject->getWorldBoundingBox(true);// the AABB of the target
+    const Ogre::Vector3 CornersOfTopAABB[4] = {
+      AABB.getCorner(AxisAlignedBox::FAR_LEFT_TOP),
+      AABB.getCorner(AxisAlignedBox::FAR_RIGHT_TOP),
+      AABB.getCorner(AxisAlignedBox::NEAR_LEFT_TOP),
+      AABB.getCorner(AxisAlignedBox::NEAR_RIGHT_TOP)};
+
+    Ogre::Vector3 CameraPlainNormal = mCamera->getDerivedOrientation().zAxis();//The normal vector of the plaine.this points directly infront of the cam
+
+    Ogre::Plane CameraPlain = Plane(CameraPlainNormal,mCamera->getDerivedPosition());//the plaine that devides the space bevor and behin the cam
+
+    for (int i = 0; i < 4; i++)
+    {
+      X[i] = 0;
+      Y[i] = 0;
+
+
+      Vector3 hcsPosition = mCamera->getProjectionMatrix() * (mCamera->getViewMatrix() * CornersOfTopAABB[i]);
+
+      X[i] = 1.0f - ((hcsPosition.x * 0.5f) + 0.5f);// 0 <= x <= 1 // left := 0,right := 1
+      Y[i] = ((hcsPosition.y * 0.5f) + 0.5f);// 0 <= y <= 1 // bottom := 0,top := 1
+      //_getScreenCoordinates(CornersOfTopAABB[i],X[i],Y[i]);// transfor into 2d dots
+
+      if (CameraPlain.getSide(CornersOfTopAABB[i]) == Plane::NEGATIVE_SIDE)
+      {
+
+       if (i == 0)// accept the first set of values, no matter how bad it might be.
+       {
+        MinX = X[i];
+        MinY = Y[i];
+        MaxX = X[i];
+        MaxY = Y[i];
+       }
+       else// now compare if you get "better" values
+       {
+        if (MinX > X[i])// get the x minimum
+        {
+           MinX = X[i];
+        }
+        if (MinY > Y[i])// get the y minimum
+        {
+           MinY = Y[i];
+        }
+        if (MaxX < X[i])// get the x maximum
+        {
+           MaxX = X[i];
+        }
+        if (MaxY < Y[i])// get the y maximum
+        {
+           MaxY = Y[i];
+        }
+       }
+      }
+      else
+      {
+      MinX = 0;
+      MinY = 0;
+      MaxX = 0;
+      MaxY = 0;
+      break;
+      }
+    }
+    Real relWidth = inObject->getWorldBoundingBox().getSize().x * 2 / Ogre::OverlayManager::getSingleton().getViewportWidth();
+    return Vector2(1-(MinX + MaxX + 0.05f + relWidth )/2, 1-MaxY+0.05f);
+
   }
 }

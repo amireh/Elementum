@@ -59,6 +59,8 @@ namespace Pixy
 
     void onVictory();
 
+    virtual void setHP(int inHP);
+
 	protected:
     Renderable* mRenderable;
     CDeck *mDeck;

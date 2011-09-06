@@ -74,7 +74,7 @@ namespace Pixy {
 
     mLog->infoStream() << "Connecting to server";
 
-    conn_.reset(new Connection(io_service_, "phantom"/*SERVER_ADDRESS*/, SERVER_PORT));
+    conn_.reset(new Connection(io_service_, "cornholio"/*SERVER_ADDRESS*/, SERVER_PORT));
     if (!conn_->connect() ) {
       mLog->errorStream() << "couldnt start the conn .. ";
       return false;

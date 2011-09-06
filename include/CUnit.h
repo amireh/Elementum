@@ -41,6 +41,11 @@ namespace Pixy
     void moveAndAttack(CPuppet* inTarget);
     void moveAndAttack(std::list<CUnit*> inBlockers);
 
+    CPuppet* getEnemy() const {
+      assert(mEnemy);
+      return mEnemy;
+    };
+
     void update(unsigned long);
 
     bool isMoving() const {
@@ -57,6 +62,17 @@ namespace Pixy
     void setWaypoints(std::vector<Vector3>* inWp) {
       mWaypoints = inWp;
     }
+
+
+    virtual void setIsTrampling(bool inF);
+    virtual void setIsUnblockable(bool inF);
+    virtual void setIsRestless(bool inF);
+    virtual void setHasFirstStrike(bool inF);
+    virtual void setHasLifetap(bool inF);
+
+    virtual void setHP(int inU);
+    virtual void setBaseHP(int inU);
+    virtual void setBaseAP(int inU);
 
     /// @note entities are responsible for destroying the spell objects they own
 		spells_t const& getSpells();
@@ -91,6 +107,12 @@ namespace Pixy
 
     bool isDying() const;
 
+    void setWalkSpeed(const float inSpeed);
+    float getWalkSpeed() const;
+
+    static void setDefaultWalkSpeed(const float inSpeed);
+    static float getDefaultWalkSpeed();
+
 	protected:
     friend class GfxEngine;
 
@@ -102,17 +124,20 @@ namespace Pixy
     }
 
     bool doMove(unsigned long);
-    
+
     void attackAfterMoving(CPuppet* inTarget);
+    void attackAfterMoving(CUnit* inBlocker);
     void cleanupAfterAttacking(CPuppet* inTarget);
     void cleanupAfterMovingBack(CPuppet* inTarget);
-    
+
     // recursively goes through all the blockers and attacks them
-    void doAttack(std::list<CUnit*>& inBlockers);
+    void doAttack();
 
     void attackAfterAnimation(boost::function<void()> callback, CPuppet*);
     void attackAfterAnimation(boost::function<void()> callback, CUnit*, bool doBlock);
     void updateOverlayAfterAttack(boost::function<void()> callback);
+
+    void moveBackAfterBlocking(CUnit* blocker);
 
     /*!
      * \brief Informs whether the SceneNode has
@@ -139,6 +164,8 @@ namespace Pixy
     //! regulates the movement speed by (mWalkSpeed * mTimeElapsed) keeping it consistent
     Real mMoveSpeed;
 
+    static float mDefaultWalkSpeed;
+
     //~ bool fDoneBlocking;
 
     typedef std::list<CUnit*> blockers_t;
@@ -151,6 +178,11 @@ namespace Pixy
     spells_t mSpells;
     spells_t mBuffs;
     bool fDying;
+
+    CPuppet* mEnemy;
+
+    Ogre::RaySceneQuery *mRaySceneQuery;
+    Ogre::SceneManager      *mSceneMgr;
 	};
 } // end of namespace
 #endif

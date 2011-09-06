@@ -8,7 +8,7 @@
       <KeyFrame position="0.0" value="0" />
       <KeyFrame position="1.0" value="360" />
     </Affector>
-    <!--<Subscription event="Shown" action="Start" />-->
+    <Subscription event="Shown" action="Start" />
   </AnimationDefinition>
 
   <AnimationDefinition name="Fade" duration="2" replayMode="once">
@@ -32,19 +32,59 @@
     </Affector>
   </AnimationDefinition>
 
-  <AnimationDefinition name="LongFade" duration="5" replayMode="once">
+  <AnimationDefinition name="LongFade" duration="3" replayMode="once">
     <Affector property="Alpha" interpolator="float">
       <KeyFrame position="0.0" value="0.0" />
-      <KeyFrame position="1.0" value="1.0" />
-      <KeyFrame position="5.0" value="0.0" />
+      <KeyFrame position="1.5" value="1.0" />
+      <KeyFrame position="3.0" value="0.0" />
     </Affector>
   </AnimationDefinition>
 
-  <AnimationDefinition name="LongFadeOut" duration="5" replayMode="once">
+  <AnimationDefinition name="LongFadeOut" duration="3" replayMode="once">
     <Affector property="Alpha" interpolator="float">
       <KeyFrame position="0.0" value="1.0" />
-      <KeyFrame position="4.0" value="1.0" />
-      <KeyFrame position="5.0" value="0.0" />
+      <KeyFrame position="2.0" value="1.0" />
+      <KeyFrame position="3.0" value="0.0" />
+    </Affector>
+  </AnimationDefinition>
+
+  <AnimationDefinition name="ScrollUpLeft" duration="2" replayMode="once">
+    <Affector property="UnifiedYPosition" interpolator="UDim" applicationMethod="relative">
+      <KeyFrame position="0.0" value="{0,0}" />
+      <KeyFrame position="1.0" value="{-0.15,0}" progression="quadratic decelerating" />
+      <KeyFrame position="2.0" value="{-0.3,0}" />
+    </Affector>
+<!--
+    <Affector property="UnifiedXPosition" interpolator="UDim" applicationMethod="relative">
+      <KeyFrame position="0.0" value="{0,0}" />
+      <KeyFrame position="1.0" value="{-0.1,0}" progression="quadratic accelerating" />
+      <KeyFrame position="2.0" value="{-0.3,0}" />
+    </Affector>
+-->
+    <Affector property="Alpha" interpolator="float" >
+      <KeyFrame position="0.0" value="1.0" />
+      <KeyFrame position="1.5" value="0.9" />
+      <KeyFrame position="2.0" value="0.0" />
+    </Affector>
+  </AnimationDefinition>
+
+  <AnimationDefinition name="ScrollUpRight" duration="2" replayMode="once">
+    <Affector property="UnifiedYPosition" interpolator="UDim" applicationMethod="relative">
+      <KeyFrame position="0.0" value="{0,0}" />
+      <KeyFrame position="1.0" value="{-0.15,0}" progression="quadratic decelerating" />
+      <KeyFrame position="2.0" value="{-0.3,0}" />
+    </Affector>
+<!--
+    <Affector property="UnifiedXPosition" interpolator="UDim" applicationMethod="relative">
+      <KeyFrame position="0.0" value="{0,0}" />
+      <KeyFrame position="1.0" value="{0.1,0}" progression="quadratic accelerating" />
+      <KeyFrame position="2.0" value="{0.3,0}" />
+    </Affector>
+-->
+    <Affector property="Alpha" interpolator="float" >
+      <KeyFrame position="0.0" value="1.0" />
+      <KeyFrame position="1.5" value="0.9" />
+      <KeyFrame position="2.0" value="0.0" />
     </Affector>
   </AnimationDefinition>
 
@@ -61,6 +101,7 @@
 -->
   </AnimationDefinition>
 
+
   <AnimationDefinition name="DrawSpell" duration="0.5" replayMode="once">
     <Affector property="Alpha" interpolator="float">
       <KeyFrame position="0.001" value="0.1" />
@@ -72,6 +113,16 @@
       <KeyFrame position="0.5" value="0" />
     </Affector>
 -->
+
+  </AnimationDefinition>
+
+  <AnimationDefinition name="ClickEndTurn" duration="3" replayMode="once">
+
+    <Affector property="ZRotation" interpolator="float">
+      <KeyFrame position="0.0" value="360" />
+      <KeyFrame position="1.5" value="0"  progression="linear" />
+      <KeyFrame position="3" value="-360" progression="linear" />
+    </Affector>
 
   </AnimationDefinition>
 </Animations>

@@ -5,7 +5,6 @@
 ]]
 if (Pixy.UI.Combat == nil) then
   Pixy.UI.Combat = { Buttons = {}, LogButtons = {}, Labels = {}, Config = {}, Containers = {}}
-
 end
 
 Pixy.UI.Combat.configure = function()
@@ -171,7 +170,6 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
   --table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
 end
 
-
 Pixy.UI.Combat.dropSpell = function(inSpell)
   Pixy.UI.Combat.HideTooltip(nil)
   --removeByValue(Pixy.UI.Combat.Buttons, inSpell:getButton())
@@ -200,10 +198,14 @@ Pixy.UI.Combat.RemoveSpell = function(e)
   end
 end
 
-Pixy.UI.Combat.onStartTurn = function()
+local ShowBigMessage = function(txt)
   CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Attacking Phase")
+  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText(txt)
   CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
+end
+
+Pixy.UI.Combat.onStartTurn = function()
+  ShowBigMessage("Attacking Phase")
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
 
@@ -215,9 +217,7 @@ Pixy.UI.Combat.onStartTurn = function()
 end
 
 Pixy.UI.Combat.onTurnStarted = function()
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Waiting")
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
+  ShowBigMessage("Waiting")
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
 
@@ -228,9 +228,7 @@ Pixy.UI.Combat.onTurnStarted = function()
 end
 
 Pixy.UI.Combat.onStartBlockPhase = function()
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-  CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Blocking Phase")
-  CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
+  ShowBigMessage("Blocking Phase")
 
   Pixy.UI.Combat.Labels["Turns"]:setText("Blocking Phase")
 end
@@ -240,16 +238,10 @@ Pixy.UI.Combat.onMatchFinished = function(wuid)
   Pixy.Log("Winner's UID : " .. wuid .. " mine: " .. suid)
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"), "LongFade")
   if (wuid == suid) then
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-    CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Victory")
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
-
+    ShowBigMessage("Victory")
     Pixy.UI.Combat.Labels["Turns"]:setText("")
   else
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):hide()
-    CEWindowMgr:getWindow("Elementum/Combat/Text/Message"):setText("Loss")
-    CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"):show()
-
+    ShowBigMessage("Loss")
     Pixy.UI.Combat.Labels["Turns"]:setText("")
   end
 end
@@ -351,5 +343,99 @@ Pixy.UI.Combat.HideLogTooltip = function(e)
   label:setText("")
 end
 
+local InvalidActions = {
+  Block = {
+    BlockerResting = "Selected unit is resting!",
+    AttackerUnblockable = "Target is unblockable."
+  },
+  Charge = {
+    AttackerRestless = "Target is restless!"
+  }
+}
+Pixy.UI.Combat.onInvalidAction = function(e)
+  Pixy.UI.Combat.ShowError(InvalidActions[e:getProperty("Action")][e:getProperty("Reason")])
+end
+
+
 -- configure
 Pixy.UI.Combat.configure()
+
+local last_scrolling_text_idx = 0
+ShowScrollingMessage = function(txt, good, rnd)
+  local pos = nil
+  if rnd == nil then
+    pos = { x = "0.5", y = "0.5" }
+  else
+    pos = GfxEngine:getScreenCoords(rnd:getSceneObject())
+  end
+
+  last_scrolling_text_idx = last_scrolling_text_idx + 1
+  local win = CEWindowMgr:createWindow("TaharezLook/StaticText", "Elementum/Combat/Temp/ScrollingText" .. last_scrolling_text_idx)
+  CEWindowMgr:getWindow("Elementum/Combat"):addChildWindow(win)
+  win:setProperty("UnifiedXPosition", "{" .. pos.x .. ",0}")
+  win:setProperty("UnifiedYPosition", "{" .. pos.y .. ",0}")
+  win:setProperty("UnifiedHeight", "{0,50}")
+  win:setProperty("Font", "Scrolling_Text")
+  if good then
+    win:setProperty("TextColours", "tl:FF6bcf00 tr:FF6bcf00 bl:FF6bcf00 br:FF6bcf00")
+  else
+    win:setProperty("TextColours", "tl:FFFF0000 tr:FF8f0000 bl:FF8f0000 br:FF8f1e00")
+  end
+  --~ win:setProperty("UnifiedWidth", "{1,0}")
+  --~ win:setProperty("HorzFormatting", "WordWrapLeftAligned")
+  --~ win:setProperty("VertFormatting", "TopAligned")
+  --~ win:setProperty("VerticalAlignment", "Centre")
+
+  --~ win:setProperty("HorizontalAlignment", "Centre")
+  win:setProperty("Text", txt)
+
+  local anim = "ScrollUpLeft"
+  if (last_scrolling_text_idx % 2 == 0) then anim = "ScrollUpLeft" else anim = "ScrollUpRight" end
+  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
+  instance:setTargetWindow(win)
+  if (not instance:isRunning()) then instance:start() end
+
+  win:subscribeEvent("AlphaChanged", "Pixy.UI.Combat.RemoveSpell")
+end
+
+Pixy.Combat.onKeyReleased = function()
+  --ShowScrollingMessage("foobar")
+  if (Selected) then
+    local pos = GfxEngine:getScreenCoords(Selected:getSceneObject())
+    Pixy.Log(pos.x)
+    ShowScrollingMessage("foobar this is a very long scrolling combat message", true, Selected)
+  end
+end
+
+Pixy.UI.Combat.onStatChange = function(e)
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  if (e:getProperty("Stat") == "HP") then
+    local amount = tonumber(e:getProperty("Value"))
+    if amount > 0 then _mod = "+" else _mod = "" end
+    ShowScrollingMessage(_mod .. amount .. " health", amount > 0, rnd)
+  end
+end
+
+Pixy.UI.Combat.onEntityAttacked = function(e)
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  local damage = tonumber(e:getProperty("Damage"))
+  if damage > 0 then
+    ShowScrollingMessage("-" .. damage .. " health", false --[[ negative scrolling message ]], rnd)
+  end
+end
+
+Pixy.UI.Combat.onLifetap = function(e)
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  local damage = tonumber(e:getProperty("Damage"))
+  if damage > 0 then
+    ShowScrollingMessage("+" .. damage .. " health (LIFETAP)", true --[[ good scrolling message ]], rnd)
+  end
+end
+
+Pixy.UI.Combat.onFirstStrike = function(e)
+  ShowBigMessage("FIRST STRIKE!")
+end
+
+Pixy.UI.Combat.onTrample = function(e)
+  ShowBigMessage("TRAMPLE!")
+end

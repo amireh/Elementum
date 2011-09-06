@@ -25,7 +25,7 @@ SET(EClient_SRCS
   ../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
-  
+
   Connection.cpp
 
   Renderable.cpp
@@ -49,7 +49,7 @@ SET(EClient_SRCS
   UIEngine.cpp
 
   main.cpp
-  
+
   ${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_EClient.cpp
 
   #${CMAKE_CURRENT_SOURCE_DIR}/UI/Tooltip.cpp
@@ -60,7 +60,7 @@ SET(PROJECT_LIBS
   ${LOG4CPP_LIBRARIES}
   ${LUA_LIBRARIES}
   ${ESHARED_LIBRARIES}
-  
+
   #${OIS_LIBRARIES}
   #${CEGUI_LIBRARIES}
   #${OPENAL_LIBRARIES}
@@ -76,18 +76,20 @@ SET(PROJECT_LIBS
 )
 
 if (APPLE)
+
   SET( PROJECT_FRAMEWORKS "-framework IOKit -framework Cocoa -F/usr/local/lib/CEGUI -framework CEGUIBase -framework CEGUILuaScriptModule -framework CEGUIOgreRenderer -lOIS")
   
   LINK_LIBRARIES(${PROJECT_FRAMEWORKS})
   #LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib/CEGUI)
   #LINK_LIBRARIES(EClientLua ${PROJECT_FRAMEWORKS} tolua++ ${LUA_LIBRARIES})
 else()
-  LIST(APPEND PROJECT_LIBS 
+  LIST(APPEND PROJECT_LIBS
     ${OGRE_LIBRARIES}
-    
-    CEGUI
+    ${CEGUI_LIBRARIES}
+    #CEGUI
     CEGUIOgreRenderer
     CEGUILuaScriptModule
+    ${OIS_LIBRARIES}
   )
 endif()
 LINK_DIRECTORIES(#${OGRE_LIBRARY_DIRS}

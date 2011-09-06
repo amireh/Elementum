@@ -4,9 +4,20 @@
 --bind("AssignPuppets", Pixy.Combat.assignPuppets)
 --bind("CreatePuppet", Pixy.Combat.createPuppet)
 --bind("GameStarted", Pixy.Combat.gameStarted)
+bind(Pixy.EventUID.EntitySelected, Pixy.Combat.onEntitySelected)
+bind(Pixy.EventUID.EntityAttacked, Pixy.UI.Combat.onEntityAttacked)
+
 bind(Pixy.EventUID.StartTurn, Pixy.UI.Combat.onStartTurn)
 bind(Pixy.EventUID.TurnStarted, Pixy.UI.Combat.onTurnStarted)
 bind(Pixy.EventUID.StartBlockPhase, Pixy.UI.Combat.onStartBlockPhase)
+bind(Pixy.EventUID.InvalidAction, Pixy.UI.Combat.onInvalidAction)
+bind(Pixy.EventUID.Lifetap, Pixy.FX.Combat.onLifetap)
+bind(Pixy.EventUID.Lifetap, Pixy.UI.Combat.onLifetap)
+bind(Pixy.EventUID.Trample, Pixy.UI.Combat.onTrample)
+bind(Pixy.EventUID.FirstStrike, Pixy.UI.Combat.onFirstStrike)
+
+bind(Pixy.EventUID.EntityStatChanged, Pixy.UI.Combat.onStatChange)
+
 --bind(Pixy.EventUID.MatchFinished, Pixy.UI.Combat.onMatchFinished)
 --bind("EndTurn", Pixy.Combat.endTurn)
 --bind(Pixy.EventUID.DrawSpells, Pixy.Combat.drawSpell)

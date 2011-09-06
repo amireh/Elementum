@@ -6,6 +6,7 @@ local apply_buff = function(inCaster, inSpell)
   inCaster:attachBuff(inSpell)
   turns_left = inSpell:getDuration()
   inSpell:setExpired(false)
+  ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", true, inCaster:getRenderable())
 
   FxEngine:playEffect("Elementum/Fx/Nourish", inCaster:getRenderable())
 
@@ -17,6 +18,7 @@ local process_buff = function(inCaster, inSpell)
   inCaster:setHP(inCaster:getHP() + 3)
   inCaster:updateTextOverlay()
   FxEngine:playEffect("Elementum/Fx/Nourish", inCaster:getRenderable())
+  ShowScrollingMessage("+3 health (Nourish)", true, inCaster:getRenderable())
 
   turns_left = turns_left - 1
   -- remove spell when the duration expires

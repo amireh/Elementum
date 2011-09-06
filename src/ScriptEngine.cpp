@@ -153,6 +153,16 @@ namespace Pixy {
 
 	void ScriptEngine::updateCombat(unsigned long lTimeElapsed) {
 		updateIntro(lTimeElapsed);
+		lua_getfield(mLUA, LUA_GLOBALSINDEX, "updateCombat");
+    lua_pushinteger(mLUA,lTimeElapsed);
+		if(lua_isfunction(mLUA, 1))
+		{
+			try {
+				lua_call(mLUA, 1, 0);
+			} catch (...) { // do nothing
+			}
+		} else
+			mLog->errorStream() << "could not find Lua updater!";
 	}
 
 	bool ScriptEngine::cleanup() {

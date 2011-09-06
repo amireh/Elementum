@@ -10,6 +10,10 @@ local Camera = nil
 
 local Pos = { Me = Ogre.Vector3:new(0,0,0), Enemy = Ogre.Vector3:new(0,0,0) }
 
+BBSet = nil
+BB = nil
+BBNode = nil
+
 Pixy.Combat.PrepareScene = function()
   SceneMgr = GfxEngine:getSceneMgr()
   Viewport = GfxEngine:getViewport()
@@ -43,7 +47,7 @@ Pixy.Combat.PrepareScene = function()
   Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
   Camera:setNearClipDistance( 10 )
   Camera:setFarClipDistance( 10000 )
-  GfxEngine.mCameraYawPitchDist = Ogre.Vector3:new(160, 20, 100)
+  GfxEngine.mCameraYawPitchDist = Ogre.Vector3:new(180, 30, 140)
 
   -- Sky
   --SceneMgr:setSkyDome(true, "Elementum/Sky", 1, 1,1000,true);
@@ -66,6 +70,25 @@ Pixy.Combat.PrepareScene = function()
   SceneMgr:getRootSceneNode():attachObject(ent)
   --~ GfxEngine:loadDotScene("Elementum.scene", "General")
 
+  BBNode = SceneMgr:createSceneNode("EntitySelectionNode")
+  BBSet = SceneMgr:createBillboardSet("EntitySelection")
+  BBSet:setMaterialName("Elementum/Billboards/EntitySelection")
+  BBSet:setDefaultDimensions(1,1)
+  BBSet:setBillboardOrigin(Ogre.BBO_CENTER)
+  BBSet:setBillboardType(Ogre.BBT_PERPENDICULAR_COMMON)
+  BBSet:setBillboardRotationType(Ogre.BBR_VERTEX)
+  BBSet:setCommonDirection(Ogre.Vector3:new(0,1,0))
+  BBSet:setCommonUpVector(Ogre.Vector3:new(0,0,1))
+  BBSet:setRenderQueueGroup(Ogre.RENDER_QUEUE_WORLD_GEOMETRY_1)
+  BBSet:setAutoextend(false)
+  BB = BBSet:createBillboard(Ogre.Vector3:new(0,0,0))
+  BB:setTexcoordRect(0,0,1,1)
+  BBNode:attachObject(BBSet)
+
+  Pixy.CUnit:setDefaultWalkSpeed(0.10)
+  Pixy.Renderable:setRotationFactor(60.0)
+  Pixy.Renderable:setAnimFadeSpeed(10.0)
+
   -- Lights
   Pixy.Combat.SetupLights()
 
@@ -75,7 +98,7 @@ Pixy.Combat.SetupLights = function()
   SceneMgr:setAmbientLight(Ogre.ColourValue(0.5,0.5,0.5))
 
   fadeColour = Ogre.ColourValue:new(0, 0, 0)
-  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.005)
+  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0035)
 
   _mod = 0.5
   dcol = Ogre.ColourValue:new(_mod,_mod,_mod)

@@ -215,6 +215,8 @@ namespace Pixy {
 
     void loadDotScene(std::string inScene, std::string inName);
 
+    Ogre::Vector2 getScreenCoords(Ogre::MovableObject* inObject);
+
 	protected:
 	  void (GfxEngine::*mUpdate)(unsigned long);
 
@@ -300,6 +302,8 @@ namespace Pixy {
     bool inBlockPhase;
 
     OgreMax::OgreMaxScene* mScene;
+
+
 
 	private:
 		static GfxEngine* _myGfxEngine;

@@ -94,6 +94,14 @@ namespace Ogre {
     RENDER_QUEUE_MAX = 105
   };
 
+  class Vector2 {
+    public:
+    Real x,y;
+
+    Vector2( const Real fX, const Real fY );
+    Vector2( const Real scalar );
+  }
+
   class Vector3 {
     public:
 
@@ -197,6 +205,7 @@ namespace Ogre {
 		} CornerEnum;
 
     AxisAlignedBox();
+    const Vector3& getSize() const;
   };
 
   class SubEntity {
@@ -204,6 +213,11 @@ namespace Ogre {
   };
 
   class MovableObject {
+    public:
+    void setRenderQueueGroup(uint8 queueID);
+    void setRenderQueueGroupAndPriority(uint8 queueID, ushort priority);
+    const AxisAlignedBox& getBoundingBox(void) const;
+    const String& getMovableType(void) const;
 
   };
 
@@ -216,6 +230,32 @@ namespace Ogre {
       TS_PARENT,
       TS_WORLD
     };
+
+    virtual void setPosition(const Vector3& pos);
+    Vector3& getPosition() const;
+
+    virtual void setScale(const Vector3& scale);
+    virtual void setScale(Real x, Real y, Real z);
+    virtual const Vector3 & getScale(void) const;
+
+    virtual Node* createChild(
+    const Vector3& translate = Vector3::ZERO,
+    const Quaternion& rotate = Quaternion::IDENTITY );
+
+    virtual Node* createChild(const String& name, const Vector3& translate = Vector3::ZERO, const Quaternion& rotate = Quaternion::IDENTITY);
+
+    virtual void addChild(Node* child);
+
+    virtual Node* getChild(unsigned short index) const;
+
+    virtual Node* getChild(const String& name) const;
+    virtual Node* removeChild(unsigned short index);
+    virtual Node* removeChild(Node* child);
+
+    virtual Node* removeChild(const String& name);
+
+    virtual void removeAllChildren(void);
+
   };
 
 
@@ -225,13 +265,9 @@ namespace Ogre {
 		SubEntity* getSubEntity(unsigned int index) const;
 		SubEntity* getSubEntity( const String& name ) const;
 		unsigned int getNumSubEntities(void) const;
-    void setMaterialName( const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME );
-    void setRenderQueueGroup(uint8 queueID);
-    void setRenderQueueGroupAndPriority(uint8 queueID, ushort priority);
-    const AxisAlignedBox& getBoundingBox(void) const;
-    const String& getMovableType(void) const;
     void setDisplaySkeleton(bool display);
     const AxisAlignedBox& getWorldBoundingBox(bool derive = false) const;
+    void setMaterialName( const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME );
 
     void setCastShadows(bool enabled);
     bool getCastShadows(void);
@@ -241,7 +277,7 @@ namespace Ogre {
   class SceneNode : public Node {
     public:
 
-    Vector3& getPosition() const;
+
     void yaw(const Degree);
     void pitch(const Degree);
     void roll(const Degree);
@@ -420,6 +456,13 @@ namespace Ogre {
 
   };
 
+  class Renderable {
+  };
+
+  class RibbonTrail {
+
+  };
+
   class SceneManager {
     public:
 
@@ -519,6 +562,37 @@ namespace Ogre {
 		virtual void destroyInstancedGeometry(InstancedGeometry* geom);
 		virtual void destroyInstancedGeometry(const String& name);
 		virtual void destroyAllInstancedGeometry(void);
+
+    // billboard chains & ribbon trails
+    /*virtual BillboardChain* createBillboardChain(const String& name);
+		virtual BillboardChain* createBillboardChain();
+    virtual BillboardChain* getBillboardChain(const String& name) const;
+		virtual bool hasBillboardChain(const String& name) const;
+
+    virtual void destroyBillboardChain(BillboardChain* obj);
+		virtual void destroyBillboardChain(const String& name);
+		virtual void destroyAllBillboardChains(void);*/
+
+    virtual RibbonTrail* createRibbonTrail(const String& name);
+		virtual RibbonTrail* createRibbonTrail();
+    virtual RibbonTrail* getRibbonTrail(const String& name) const;
+		virtual bool hasRibbonTrail(const String& name) const;
+
+    virtual void destroyRibbonTrail(RibbonTrail* obj);
+		virtual void destroyRibbonTrail(const String& name);
+		virtual void destroyAllRibbonTrails(void);
+
+    // billboard sets
+    virtual BillboardSet* createBillboardSet(const String& name, unsigned int poolSize = 20);
+
+    virtual BillboardSet* createBillboardSet(unsigned int poolSize = 20);
+    virtual BillboardSet* getBillboardSet(const String& name) const;
+		virtual bool hasBillboardSet(const String& name) const;
+    virtual void destroyBillboardSet(BillboardSet* set);
+    virtual void destroyBillboardSet(const String& name);
+    virtual void destroyAllBillboardSets(void);
+
+
   };
 
   class Viewport {

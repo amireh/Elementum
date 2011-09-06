@@ -5,6 +5,7 @@ local attached = {} -- tracks all attached layouts
 Pixy.UI = {}
 
 PBox, PBox_Label, regularizer, loadingText = nil, nil, 0, ""
+Selected = nil
 Pixy.registerGlobals = function()
 
   if (Pixy.Launched) then return true end
