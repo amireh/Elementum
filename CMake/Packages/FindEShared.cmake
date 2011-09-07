@@ -8,6 +8,7 @@
 SET(EShared_PATHS
   /home/kandie/Workspace/Projects/Elementum/Shared
   /Volumes/kandie/Workspace/Projects/Elementum/Shared
+  /Users/kandie/Workspace/Projects/Elementum/Shared
 )
 
 FIND_PATH(ESHARED_INCLUDE_DIRS Pixy.h

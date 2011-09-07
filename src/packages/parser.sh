@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ROOT="."
-PKG="EClient"
+PKG="Elementum"
 if [ $# -gt 0 ]; then
   ROOT=$1
 fi

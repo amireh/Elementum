@@ -156,35 +156,35 @@ namespace Pixy {
 		ResourceGroupManager& rgm = ResourceGroupManager::getSingleton();
 
 		// add resource groups that we use
-		rgm.createResourceGroup("imagesets");
-		rgm.createResourceGroup("fonts");
-		rgm.createResourceGroup("layouts");
-		rgm.createResourceGroup("schemes");
-		rgm.createResourceGroup("looknfeels");
-		rgm.createResourceGroup("schemas");
+		//rgm.createResourceGroup("imagesets");
+		//rgm.createResourceGroup("fonts");
+		//rgm.createResourceGroup("layouts");
+		//rgm.createResourceGroup("schemes");
+		//rgm.createResourceGroup("looknfeels");
+		//rgm.createResourceGroup("schemas");
 
 		// add CEGUI sample framework datafile dirs as resource locations
-		ResourceGroupManager::getSingleton().addResourceLocation("./", "FileSystem");
+		//ResourceGroupManager::getSingleton().addResourceLocation("./", "FileSystem");
 
-		char* dataPathPrefix = (char*)malloc(sizeof(char) * (strlen(PROJECT_ROOT) + 1 + strlen(PROJECT_RESOURCES) + 1 + strlen("ui") + 1));
-		sprintf(dataPathPrefix, "%s%s/ui", PROJECT_ROOT, PROJECT_RESOURCES);
-		char resourcePath[PATH_MAX];
+		//char* dataPathPrefix = (char*)malloc(sizeof(char) * (strlen(PROJECT_ROOT) + 1 + strlen(PROJECT_RESOURCES) + 1 + strlen("ui") + 1));
+		//sprintf(dataPathPrefix, "%s%s/ui", PROJECT_ROOT, PROJECT_RESOURCES);
+		//char resourcePath[PATH_MAX];
 
 		// for each resource type, set a resource group directory
-		sprintf(resourcePath, "%s/%s", dataPathPrefix, "schemes/");
-		ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "schemes");
-		sprintf(resourcePath, "%s/%s", dataPathPrefix, "imagesets/");
-		ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "imagesets");
-		sprintf(resourcePath, "%s/%s", dataPathPrefix, "fonts/");
-		ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "fonts");
-		sprintf(resourcePath, "%s/%s", dataPathPrefix, "layouts/");
-		ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "layouts");
-		sprintf(resourcePath, "%s/%s", dataPathPrefix, "looknfeel/");
-		ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "looknfeels");
-		sprintf(resourcePath, "%s/%s", dataPathPrefix, "xml_schemas/");
-		ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "schemas");
+		//sprintf(resourcePath, "%s/%s", dataPathPrefix, "schemes/");
+		//ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "schemes");
+		//sprintf(resourcePath, "%s/%s", dataPathPrefix, "imagesets/");
+		//ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "imagesets");
+		//sprintf(resourcePath, "%s/%s", dataPathPrefix, "fonts/");
+		//ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "fonts");
+		//sprintf(resourcePath, "%s/%s", dataPathPrefix, "layouts/");
+		//ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "layouts");
+		//sprintf(resourcePath, "%s/%s", dataPathPrefix, "looknfeel/");
+		//ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "looknfeels");
+		//sprintf(resourcePath, "%s/%s", dataPathPrefix, "xml_schemas/");
+		//ResourceGroupManager::getSingleton().addResourceLocation(resourcePath, "FileSystem", "schemas");
 
-		free(dataPathPrefix);
+		//free(dataPathPrefix);
 
 		// set the default resource groups to be used
 		CEGUI::Imageset::setDefaultResourceGroup("imagesets");
@@ -199,12 +199,12 @@ namespace Pixy {
 			parser->setProperty("SchemaDefaultResourceGroup", "schemas");
 
 		//ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("schemes");
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("imagesets");
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("fonts");
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("layouts");
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("looknfeels");
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("schemas");
+		//ResourceGroupManager::getSingleton().initialiseResourceGroup("schemes");
+		//ResourceGroupManager::getSingleton().initialiseResourceGroup("imagesets");
+		//ResourceGroupManager::getSingleton().initialiseResourceGroup("fonts");
+		//ResourceGroupManager::getSingleton().initialiseResourceGroup("layouts");
+		//ResourceGroupManager::getSingleton().initialiseResourceGroup("looknfeels");
+		//ResourceGroupManager::getSingleton().initialiseResourceGroup("schemas");
 
     CEGUI::AnimationManager::getSingleton().loadAnimationsFromXML("animations.xml");
 

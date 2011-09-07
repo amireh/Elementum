@@ -21,7 +21,7 @@
 #include <stdarg.h>
 #include <boost/bind.hpp>
 
-TOLUA_API int  tolua_EClient_open (lua_State* tolua_S);
+TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 TOLUA_API int  tolua_EShared_open (lua_State* tolua_S);
 TOLUA_API int  tolua_Event_open (lua_State* tolua_S);
 namespace Pixy {
@@ -67,7 +67,7 @@ namespace Pixy {
 
 		mLUA = mCEGUILua->getLuaState();
     tolua_EShared_open(mLUA);
-    tolua_EClient_open(mLUA);
+    tolua_Elementum_open(mLUA);
     tolua_Event_open(mLUA);
 
     bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
