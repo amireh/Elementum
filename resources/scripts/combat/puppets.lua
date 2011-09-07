@@ -85,9 +85,9 @@ function subscribe_puppet(inRace, inMethod)
 	Handlers[inRace] = inMethod
 end
 
-path_to_handlers = "../resources/scripts/combat/puppet_handlers"
+path_to_handlers = ScriptPrefix .. "/combat/puppet_handlers"
 races = {"earth", "air", "fire", "water"}
-package.path = package.path .. ";" .. path_to_handlers .. "/?.lua"
+package.path = path_to_handlers .. "/?.lua;" .. package.path
 for race in list_iter(races) do
   require(race .. "_puppets")
 end

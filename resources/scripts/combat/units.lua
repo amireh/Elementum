@@ -23,9 +23,9 @@ function subscribe_unit(inUnitName, inMethod)
 end
 
 require("d_lister")
-path_to_handlers = "../resources/scripts/combat/unit_handlers"
+path_to_handlers = ScriptPrefix .. "/combat/unit_handlers"
 races = {"earth", "air", "fire", "water"}
-package.path = package.path .. ";" .. path_to_handlers .. "/?.lua"
+package.path = path_to_handlers .. "/?.lua;" .. package.path
 for race in list_iter(races) do
   for filename in dirtree(path_to_handlers .. "/" .. race) do
     stripped_name = string.gsub(filename, path_to_handlers .. "/", "")

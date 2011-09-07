@@ -50,7 +50,10 @@ namespace Pixy {
 
 		bool passToLua(const Event& inEvt);
     bool passToLua(const char* inFunc, int argc, ...);
-
+    
+    std::string getScriptPathPrefix() const;
+    std::string getModulePathPrefix() const;
+    
 	protected:
 
     bool onMatchFinished(const Event& inEvt);

@@ -187,9 +187,12 @@ ENDIF(WIN32)
 INSTALL(DIRECTORY "${OSX_PLUGINS_PATH}" DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
 INSTALL(DIRECTORY "${OSX_FWK_PATH}" DESTINATION ${fwk_dest_dir} COMPONENT Runtime)
 # Elementum shared libraries
-INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib" DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
-# Elementum modules library
-INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib" DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
+INSTALL(FILES 
+  "${CMAKE_CURRENT_SOURCE_DIR}/../lib/libElementum_Modules.dylib" 
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared.dylib" 
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared_Modules.dylib" 
+  DESTINATION ${plugin_dest_dir}/Plugins COMPONENT Runtime
+)
 
 # install!
 INSTALL(TARGETS Elementum 

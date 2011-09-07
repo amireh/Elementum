@@ -25,11 +25,9 @@ namespace Pixy
 
   $pfile "Renderable.pkg"
   $pfile "CPuppet.pkg"
-  //$pfile "CPuppetFactory.pkg"
   $pfile "CSpell.pkg"
   $pfile "CDeck.pkg"
   $pfile "CUnit.pkg"
-  //$pfile "CUnitFactory.pkg"
   $pfile "FxEngine.pkg"
   $pfile "GameManager.pkg"
   $pfile "GameState.pkg"
@@ -39,13 +37,7 @@ namespace Pixy
   $pfile "GfxEngine.pkg"
   $pfile "Logger.pkg"
   $pfile "NetworkManager.pkg"
-
-  #$pfile "UIEvt.pkg"
-  #$pfile "UIEvt_Register.pkg"
-  #$pfile "UIEvt_Login.pkg"
-  #$pfile "UIEvt_Profile.pkg"
-  #$pfile "SpellEvent.pkg"
-  #$pfile "Message.pkg"
+  $pfile "ScriptEngine.pkg"
 
 }
 

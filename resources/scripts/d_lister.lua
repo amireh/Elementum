@@ -1,4 +1,5 @@
 -- Code by David Kastrup
+print(LIBRARY_PATH)
 require "lfs"
 
 function dirtree(dir)

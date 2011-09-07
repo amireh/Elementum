@@ -9,7 +9,16 @@
 
 #include "UIEngine.h"
 #include "EventManager.h"
+#include "PixyUtility.h"
+
 // CEGUI
+// For some reason, on OS X CEGUI.h complains that CFBundleRef is undeclared
+// so we include the CoreFoundation framework to get around that
+// hack date: 09/07/2011
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+# include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/CEGUISystem.h>
@@ -28,6 +37,7 @@
 #include <Ogre.h>
 #include "CSpell.h"
 //#include "Combat.h"
+
 
 namespace Pixy {
 	UIEngine* UIEngine::_myUIEngine = NULL;
@@ -106,14 +116,14 @@ namespace Pixy {
 										  "CEGUI::System object is already initialised.");
 
 
-	/*	CEGUI::DefaultLogger* lUILog = new CEGUI::DefaultLogger();
+		CEGUI::DefaultLogger* lUILog = new CEGUI::DefaultLogger();
 		std::ostringstream lUILogPath;
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-		lUILogPath << "Contents/Logs/CEGUI.log";
+		lUILogPath << macBundlePath() + "/Contents/Logs/CEGUI.log";
 #else
 		lUILogPath << PROJECT_LOG_DIR << "/CEGUI.log";
 #endif		
-		lUILog->setLogFilename(lUILogPath.str(), true);*/
+		lUILog->setLogFilename(lUILogPath.str(), true);
 
 		mOgreRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 		mUISystem = &CEGUI::System::getSingleton();

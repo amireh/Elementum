@@ -10,6 +10,7 @@
 #include "ScriptEngine.h"
 #include "GameState.h"
 #include "EventManager.h"
+#include "PixyUtility.h"
 #include "tolua++.h"
 #include "GameManager.h"
 //#include "CPuppet.h"
@@ -299,5 +300,25 @@ namespace Pixy {
     lua_call(mLUA, 2, 0);
 
     return true;
+  }
+  
+  std::string ScriptEngine::getScriptPathPrefix() const {
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+    return macBundlePath() + "/Contents/Resources/scripts";
+#elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
+    return "../resources/scripts";
+#else // UNIX
+    return "../resources/scripts";
+#endif
+  }
+  
+  std::string ScriptEngine::getModulePathPrefix() const {
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+    return macBundlePath() + "/Contents/Plugins";
+#elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
+    return "./";
+#else // UNIX
+    return "../lib";
+#endif
   }
 }

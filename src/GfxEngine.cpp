@@ -20,6 +20,7 @@
 #include "FxEngine.h"
 #include "ScriptEngine.h"
 #include "OgreMax/OgreMaxScene.hpp"
+#include "PixyUtility.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUI/CEGUI.h>

@@ -1,4 +1,19 @@
-package.path = "./?.lua;../resources/scripts/?.lua;"
+--package.path = "./?.lua;../resources/scripts/?.lua;../Plugins/?.lua;"
+--package.cpath = "../Plugins/?.so;" .. package.cpath
+
+ScriptPrefix = ""
+ModulePrefix = ""
+
+function resolvePaths()
+  ScriptPrefix = Pixy.ScriptEngine:getSingletonPtr():getScriptPathPrefix()
+  package.path = ScriptPrefix .. "/?.lua;" .. package.path
+  ModulePrefix = Pixy.ScriptEngine:getSingletonPtr():getModulePathPrefix()
+  package.cpath = ModulePrefix .. "/?.so;" .. package.path
+  
+  print("Scripts path: " .. ScriptPrefix .. "\nModule path: " .. ModulePrefix)
+end
+
+resolvePaths()
 
 require("pixy")
 

@@ -1,0 +1,7 @@
+$#include "ScriptEngine.h"
+
+class ScriptEngine : public Pixy::Engine, public Pixy::EventListener {
+  static ScriptEngine* getSingletonPtr();
+  std::string getScriptPathPrefix() const;
+  std::string getModulePathPrefix() const;
+};

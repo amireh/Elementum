@@ -2,6 +2,7 @@
 #include "CPuppet.h"
 #include "Renderable.h"
 #include "GfxEngine.h"
+#include "PixyUtility.h"
 #include "ogre/MovableTextOverlay.h"
 #include "Combat.h"
 #include "FxEngine.h"

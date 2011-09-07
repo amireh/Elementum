@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Tue Sep  6 23:56:54 2011.
+** Generated automatically by tolua++-1.0.92 on Wed Sep  7 15:37:24 2011.
 */
 
 #ifndef __cplusplus
@@ -37,6 +37,7 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "GfxEngine.h"
 #include "ScriptEngine.h"
 #include "NetworkManager.h"
+#include "ScriptEngine.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
@@ -210,48 +211,49 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
  tolua_usertype(tolua_S,"const");
- tolua_usertype(tolua_S,"Ogre::Degree");
  tolua_usertype(tolua_S,"Ogre::Billboard");
- tolua_usertype(tolua_S,"Ogre::SceneManager");
+ tolua_usertype(tolua_S,"Ogre::Degree");
+ tolua_usertype(tolua_S,"Ogre::RibbonTrail");
+ tolua_usertype(tolua_S,"Ogre::MeshManager");
  tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
  tolua_usertype(tolua_S,"Pixy::GameState");
  tolua_usertype(tolua_S,"size_t");
  tolua_usertype(tolua_S,"Pixy::CDeck");
  tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Ogre::MeshPtr");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"Pixy::NetworkManager");
- tolua_usertype(tolua_S,"Ogre::MeshPtr");
  tolua_usertype(tolua_S,"Ogre::Viewport");
+ tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"OgreMax::OgreMaxScene");
  tolua_usertype(tolua_S,"Ogre::BillboardSet");
  tolua_usertype(tolua_S,"Ogre::Plane");
  tolua_usertype(tolua_S,"CEGUI::UBox");
- tolua_usertype(tolua_S,"Ogre::RibbonTrail");
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
  tolua_usertype(tolua_S,"Ogre::StaticGeometry");
  tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"Ogre::Entity");
  tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"Pixy::CUnit");
  tolua_usertype(tolua_S,"Ogre::Quaternion");
- tolua_usertype(tolua_S,"Ogre::Entity");
  tolua_usertype(tolua_S,"Ogre::Node");
+ tolua_usertype(tolua_S,"Ogre::Root");
  tolua_usertype(tolua_S,"CEGUI::Window");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
  tolua_usertype(tolua_S,"Pixy::EventListener");
- tolua_usertype(tolua_S,"Ogre::Root");
+ tolua_usertype(tolua_S,"Ogre::SubEntity");
  tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
- tolua_usertype(tolua_S,"Ogre::SubEntity");
+ tolua_usertype(tolua_S,"Pixy::Spell");
  tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"Ogre::Radian");
  tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"Pixy::Spell");
+ tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Pixy::CSpell");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
@@ -4599,6 +4601,115 @@ static int tolua_Elementum_Pixy_NetworkManager_send00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'send'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSingletonPtr of class  Pixy::ScriptEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_ScriptEngine_getSingletonPtr00
+static int tolua_Elementum_Pixy_ScriptEngine_getSingletonPtr00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::ScriptEngine",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::ScriptEngine* tolua_ret = (Pixy::ScriptEngine*)  Pixy::ScriptEngine::getSingletonPtr();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::ScriptEngine");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSingletonPtr'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getScriptPathPrefix of class  Pixy::ScriptEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_ScriptEngine_getScriptPathPrefix00
+static int tolua_Elementum_Pixy_ScriptEngine_getScriptPathPrefix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::ScriptEngine",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::ScriptEngine* self = (const Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScriptPathPrefix'",NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getScriptPathPrefix();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScriptPathPrefix'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getModulePathPrefix of class  Pixy::ScriptEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_ScriptEngine_getModulePathPrefix00
+static int tolua_Elementum_Pixy_ScriptEngine_getModulePathPrefix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::ScriptEngine",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::ScriptEngine* self = (const Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getModulePathPrefix'",NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getModulePathPrefix();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getModulePathPrefix'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: __Pixy of class  Pixy::ScriptEngine */
+#ifndef TOLUA_DISABLE_tolua_get_Pixy__ScriptEngine___Pixy__EventListener__
+static int tolua_get_Pixy__ScriptEngine___Pixy__EventListener__(lua_State* tolua_S)
+{
+  Pixy::ScriptEngine* self = (Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+#endif
+#ifdef __cplusplus
+   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::EventListener*>(self), "Pixy::EventListener");
+#else
+   tolua_pushusertype(tolua_S,(void*)((Pixy::EventListener*)self), "Pixy::EventListener");
+#endif
+ return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -16440,6 +16551,13 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
    tolua_beginmodule(tolua_S,"NetworkManager");
     tolua_function(tolua_S,"getSingleton",tolua_Elementum_Pixy_NetworkManager_getSingleton00);
     tolua_function(tolua_S,"send",tolua_Elementum_Pixy_NetworkManager_send00);
+   tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"ScriptEngine","Pixy::ScriptEngine","Pixy::Engine",NULL);
+   tolua_beginmodule(tolua_S,"ScriptEngine");
+    tolua_function(tolua_S,"getSingletonPtr",tolua_Elementum_Pixy_ScriptEngine_getSingletonPtr00);
+    tolua_function(tolua_S,"getScriptPathPrefix",tolua_Elementum_Pixy_ScriptEngine_getScriptPathPrefix00);
+    tolua_function(tolua_S,"getModulePathPrefix",tolua_Elementum_Pixy_ScriptEngine_getModulePathPrefix00);
+    tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__ScriptEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Ogre",0);
