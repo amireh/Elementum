@@ -34,10 +34,10 @@ namespace Pixy {
 
   public:
     /// Construct a Connection with the given io_service.
-    explicit Connection(boost::asio::io_service&, std::string host, std::string port);
+    explicit Connection(boost::asio::io_service&);
     virtual ~Connection();
 
-    bool connect();
+    bool connect(std::string host, std::string port);
     bool isConnected();
     void disconnect();
 

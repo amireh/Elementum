@@ -25,11 +25,11 @@
 
 namespace Pixy {
 
-  Connection::Connection(boost::asio::io_service& io_service, std::string server, std::string port)
+  Connection::Connection(boost::asio::io_service& io_service)
     : base_connection(io_service),
       resolver_(io_service),
-      host_(server),
-      port_(port),
+      host_(""),
+      port_(""),
       connected_(false)
   {
     //message_handler_.bind(message_id::ping, this, &Connection::on_ping);
@@ -40,11 +40,14 @@ namespace Pixy {
     std::cout << "A Connection has been destroyed\n";
   }
 
-  bool Connection::connect() {
+  bool Connection::connect(std::string host, std::string port) {
     if (connected_) {
       std::cerr << "already connected!\n";
       return true;
     }
+
+    host_ = host;
+    port_ = port;
 
     tcp::resolver::query query(host_, port_);
 
@@ -54,7 +57,7 @@ namespace Pixy {
     socket_.connect(*endpoint, ec);
 
     if (ec) {
-      std::cerr << "couldn't connect to server, aborting\n";
+      std::cerr << "couldn't connect to server " << host_ << ":" << port_ << ", aborting\n";
       return false;
     }
 

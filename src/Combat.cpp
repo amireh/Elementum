@@ -29,7 +29,8 @@ namespace Pixy
   : mIOService(),
     mStrand(mIOService),
     mWork(mIOService),
-    mWorker(0) {
+    mWorker(0),
+    fSetup(false) {
 
   }
 	Combat* Combat::mCombat = 0;
@@ -112,6 +113,7 @@ namespace Pixy
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
     inBlockPhase = false;
+    fSetup = true;
 	}
 
   bool Combat::onConnected(const Event& evt) {
@@ -128,8 +130,8 @@ namespace Pixy
     return true;
   }
 	void Combat::exit( void ) {
-
-    mScriptEngine->passToLua("cleanup", 0);
+    if (fSetup)
+      mScriptEngine->passToLua("cleanup", 0);
 
 		puppets_t::iterator lPuppet;
 		for (lPuppet = mPuppets.begin(); lPuppet != mPuppets.end(); ++lPuppet) {

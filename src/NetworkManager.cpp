@@ -2,7 +2,7 @@
 
 #include "GameManager.h"
 #include "Combat.h"
-
+#include <boost/filesystem.hpp>
 
 namespace Pixy {
 
@@ -74,11 +74,52 @@ namespace Pixy {
 
     mLog->infoStream() << "Connecting to server";
 
-    conn_.reset(new Connection(io_service_, "phantom.shroom-studios.com"/*SERVER_ADDRESS*/, SERVER_PORT));
-    if (!conn_->connect() ) {
+   // Build hosts list
+    using boost::filesystem::exists;
+    using boost::filesystem::path;
+
+    path lPath = path(GameManager::getSingleton().getCfgPath()) / std::string("hosts.txt");
+
+    std::vector<std::string> mHosts;
+    if (exists(lPath)) {
+      std::ifstream lMirrorsFile(lPath.c_str());
+      if (lMirrorsFile.is_open() && lMirrorsFile.good()) {
+        std::string lMirror;
+        while (lMirrorsFile.good()) {
+          getline(lMirrorsFile, lMirror);
+          // TODO: some sanity checks on the mirror url
+          if (!lMirror.empty())
+            mHosts.push_back(lMirror);
+        }
+        mLog->infoStream() << "registered " << mHosts.size() << " patch mirrors";
+        lMirrorsFile.close();
+      }
+    }
+
+    // add hardcoded/fallback hosts
+		mHosts.push_back("phantom.shroom-studios.com");
+
+    conn_.reset(new Connection(io_service_));
+
+    bool _connected = false;
+    std::string _port = SERVER_PORT;
+    for (std::vector<std::string>::const_iterator lHost = mHosts.begin();
+      lHost != mHosts.end();
+      ++lHost)
+    {
+      mLog->infoStream() << "attempting to connect to host " << *lHost << ":" << _port;
+      if (conn_->connect(*lHost, _port) ) {
+        _connected = true;
+        break;
+      }
+    }
+
+    if (!_connected)
+    {
       mLog->errorStream() << "couldnt start the conn .. ";
       return false;
     }
+
     try {
       conn_->start();
     } catch (std::exception& e) {

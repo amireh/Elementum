@@ -85,6 +85,8 @@ namespace Pixy
 
 	private:
 
+    bool fSetup;
+
 		Combat( void );
 		Combat( const Combat& );
 		Combat& operator=( const Combat& );
@@ -92,7 +94,7 @@ namespace Pixy
     void handleNewTurn();
 
     bool onConnected(const Event&);
-    bool onLogin(const Event& inEvt);   
+    bool onLogin(const Event& inEvt);
     bool onSyncGameData(const Event&);
     bool onJoinQueue(const Event& inEvt);
     bool onMatchFound(const Event& inEvt);
@@ -105,7 +107,7 @@ namespace Pixy
     bool onUpdatePuppet(const Event&);
     bool onUpdateUnit(const Event&);
     bool onEntityDied(const Event&);
-    
+
     bool onStartBlockPhase(const Event&);
     bool onCharge(const Event&);
     bool onCancelCharge(const Event&);
@@ -150,7 +152,7 @@ namespace Pixy
     boost::asio::strand mStrand;
     boost::asio::io_service::work mWork;
     boost::thread* mWorker;
-    
+
     void onMoveBack(CUnit* inUnit);
     void onMoveBackAndRest(CUnit* inUnit);
 

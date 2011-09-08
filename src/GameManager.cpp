@@ -28,6 +28,7 @@
 #include "Intro.h"
 #include "Combat.h"
 #include "log4cpp/PixyLogLayout.h"
+#include <boost/filesystem.hpp>
 
 #include "UIEngine.h"
 #include "GfxEngine.h"
@@ -37,6 +38,7 @@
 #include "InputManager.h"
 #include "CResourceManager.h"
 #include "ogre/OgreSdkTrays.h"
+#include "binreloc/binreloc.h"
 //#include "SfxEngine.h"
 //#include "PhyxEngine.h"
 using namespace Ogre;
@@ -84,6 +86,22 @@ namespace Pixy
 		log4cpp::Category::shutdown();
 		mRoot = NULL; mInputMgr = NULL;
 	}
+
+  std::string const& GameManager::getRootPath() const {
+    return mRootPath;
+  };
+  std::string const& GameManager::getResPath() const {
+    return mResPath;
+  };
+  std::string const& GameManager::getBinPath() const {
+    return mBinPath;
+  };
+  std::string const& GameManager::getCfgPath() const {
+    return mCfgPath;
+  }
+  std::string const& GameManager::getLogPath() const {
+    return mLogPath;
+  }
 
   void GameManager::loadRenderSystems()
   {
@@ -140,36 +158,30 @@ namespace Pixy
       mLog->errorStream() << "Unable to create CG Program manager RenderSystem: " << e.getFullDescription();
     }
   }
-  
+
   void GameManager::_setup() {
+    resolvePaths();
+
     // init logger
     initLogger();
-    using std::ostringstream;
-    ostringstream lPathResources, lPathPlugins, lPathCfg, lPathOgreCfg, lPathLog;
+
+    // set up Ogre paths
+    using boost::filesystem::path;
+    std::string lPathOgreRes, lPathOgrePlugins, lPathOgreCfg, lPathOgreLog;
+    std::string lSuffix = "";
 #if PIXY_PLATFORM == PIXY_PLATFORM_WIN32
-    lPathResources << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\resources_win32.cfg";
-    lPathPlugins << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\plugins.cfg";
-    lPathCfg << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\";
-    lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
-    lPathLog << PROJECT_LOG_DIR << "\\Ogre.log";
+    lSuffix = "win32";
 #elif PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-    lPathResources << macBundlePath() << "/Contents/Resources/config/resources_osx.cfg";
-    lPathPlugins << macBundlePath() << "/Contents/Resources/config/plugins.cfg";
-    lPathCfg << macBundlePath() << "/Contents/Resources/config/";
-    lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
-    lPathLog << macBundlePath() << "/Contents/Logs/Ogre.log";
+    lSuffix = "osx";
 #else
-    lPathResources << PROJECT_ROOT << PROJECT_RESOURCES << "/config/resources_linux.cfg";
-    lPathPlugins << PROJECT_ROOT << PROJECT_RESOURCES << "/config/plugins.cfg";
-    lPathCfg << PROJECT_ROOT << PROJECT_RESOURCES << "/config/";
-    lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
-    lPathLog << PROJECT_LOG_DIR << "/Ogre.log";
+    lSuffix = "linux";
 #endif
+    lPathOgreRes = path(path(mCfgPath) / std::string("resources_" + lSuffix+ ".cfg")).make_preferred().string();
+    lPathOgrePlugins = path(path(mCfgPath) / "plugins.cfg").make_preferred().string();
+    lPathOgreCfg = path(path(mCfgPath) / "ogre.cfg").make_preferred().string();
+    lPathOgreLog = path(path(mLogPath) / "Ogre.log").make_preferred().string();
 
-    mConfigPath = lPathCfg.str();
-
-
-    mRoot = OGRE_NEW Root(lPathPlugins.str(), lPathOgreCfg.str(), lPathLog.str());
+    mRoot = OGRE_NEW Root(lPathOgrePlugins, lPathOgreCfg, lPathOgreLog);
     if (!mRoot) {
     	throw Ogre::Exception( Ogre::Exception::ERR_INTERNAL_ERROR,
     						  "Error - Couldn't initalize OGRE!",
@@ -192,7 +204,9 @@ namespace Pixy
     mInputMgr->initialise( mRenderWindow );
     WindowEventUtilities::addWindowEventListener( mRenderWindow, this );
 
-    this->setupResources(lPathResources.str());
+    // load initial resources
+    this->setupResources(lPathOgreRes);
+
     mResMgr = new CResourceManager();
 
     mInputMgr->addKeyListener( this, "GameManager" );
@@ -208,11 +222,11 @@ namespace Pixy
     lTimeCurrentFrame = 0;
     lTimeSinceLastFrame = 0;
 
-    mRoot->getTimer()->reset();    
+    mRoot->getTimer()->reset();
   }
-  
+
 	void GameManager::startGame(/*int argc, char** argv*/) {
-		
+
     this->_setup();
 
 		// main game loop
@@ -220,7 +234,7 @@ namespace Pixy
       _update();
 		}
 	}
-	
+
 	Ogre::RenderWindow* GameManager::getRenderWindow() const {
     return mRenderWindow;
 	}
@@ -240,7 +254,7 @@ namespace Pixy
 		WindowEventUtilities::messagePump();
 
 		// render next frame
-	  mRoot->renderOneFrame();    
+	  mRoot->renderOneFrame();
   }
 
 	bool GameManager::configureGame() {
@@ -423,6 +437,66 @@ namespace Pixy
 		return mCurrentState;
 	}
 
+  void GameManager::resolvePaths() {
+    using boost::filesystem::path;
+    bool dontOverride = false;
+
+    // locate the binary and build its path
+#if PIXY_PLATFORM == PIXY_PLATFORM_LINUX
+    std::cout << "Platform: Linux\n";
+    // use binreloc and boost::filesystem to build up our paths
+    int brres = br_init(0);
+    if (brres == 0) {
+      std::cerr << "binreloc could not be initialised\n";
+    }
+    char *p = br_find_exe_dir(".");
+    mBinPath = std::string(p);
+    free(p);
+    mBinPath = path(mBinPath).make_preferred().string();
+#elif PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+    // use NSBundlePath() to build up our paths
+    mBinPath = Utility::macBundlePath() + "/Contents/MacOS";
+    mRootPath = Utility::macBundlePath() = "/Contents";
+    mResPath = Utility::macBundlePath() + "/Contents/Resources";
+    mCfgPath = Utility::macBundlePath() + "/Contents/Resources/config";
+    mLogPath = Utility::macBundlePath() + "/Contents/Logs";
+
+    dontOverride = true;
+#else
+    // use GetModuleFileName() and boost::filesystem to build up our paths on Windows
+    TCHAR szPath[MAX_PATH];
+
+    if( !GetModuleFileName( NULL, szPath, MAX_PATH ) )
+    {
+        printf("Cannot install service (%d)\n", GetLastError());
+        return;
+    }
+
+    mBinPath = std::string(szPath);
+    mBinPath = path(mBinPath).remove_filename().make_preferred().string();
+#endif
+
+    // root is PIXY_DISTANCE_FROM_ROOT directories up from the binary's
+    path lRoot = path(mBinPath);
+    for (int i=0; i < /*PIXY_DISTANCE_FROM_ROOT*/ 1; ++i) {
+      lRoot = lRoot.remove_leaf();
+    }
+
+    mRootPath = lRoot.make_preferred().string();
+    if (!dontOverride) {
+      mResPath = (path(mRootPath) / PROJECT_RESOURCES).make_preferred().string();
+      mCfgPath = (path(mResPath) / "config").make_preferred().string();
+      mLogPath = (path(mRootPath) / path(PROJECT_LOG_DIR)).make_preferred().string();
+    }
+
+    std::cout << "Root path: " <<  mRootPath << "\n";
+    std::cout << "Binary path: " <<  mBinPath << "\n";
+    std::cout << "Config path: " <<  mCfgPath << "\n";
+    std::cout << "Resources path: " <<  mResPath << "\n";
+    std::cout << "Log path: " <<  mLogPath << "\n";
+
+  };
+
 	void GameManager::initLogger() {
 
 
@@ -515,7 +589,7 @@ namespace Pixy
 	void GameManager::saveConfig() {
 	  mLog->infoStream() << "saving Vertigo config";
 
-	  std::string tConfigFilePath = mConfigPath + "vertigo.cfg";
+	  std::string tConfigFilePath = mCfgPath + "vertigo.cfg";
 	  std::ofstream of(tConfigFilePath.c_str());
 	  if (!of) {
 	    mLog->errorStream() << "could not write settings to " << tConfigFilePath << "!! aborting";

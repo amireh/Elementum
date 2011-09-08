@@ -10,6 +10,8 @@
 #include "UIEngine.h"
 #include "EventManager.h"
 #include "PixyUtility.h"
+#include "GameManager.h"
+#include <boost/filesystem.hpp>
 
 // CEGUI
 // For some reason, on OS X CEGUI.h complains that CFBundleRef is undeclared
@@ -117,13 +119,11 @@ namespace Pixy {
 
 
 		CEGUI::DefaultLogger* lUILog = new CEGUI::DefaultLogger();
-		std::ostringstream lUILogPath;
-#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-		lUILogPath << macBundlePath() + "/Contents/Logs/CEGUI.log";
-#else
-		lUILogPath << PROJECT_LOG_DIR << "/CEGUI.log";
-#endif		
-		lUILog->setLogFilename(lUILogPath.str(), true);
+
+    using boost::filesystem::path;
+		std::string lUILogPath =
+      (path(GameManager::getSingleton().getLogPath()) / "CEGUI.log").make_preferred().string();
+		lUILog->setLogFilename(lUILogPath, true);
 
 		mOgreRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 		mUISystem = &CEGUI::System::getSingleton();

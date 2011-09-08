@@ -57,7 +57,7 @@ namespace Pixy
 	class GameManager : public OIS::KeyListener, OIS::MouseListener ,  public Ogre::WindowEventListener {
 	public:
 		~GameManager( void );
-		
+
 		//! only called manually when running on OS X
     void _setup();
 
@@ -66,7 +66,7 @@ namespace Pixy
 		 *
 		 */
 		void startGame(/*int argc, char** argv*/);
-		
+
   void _update();
 
 		//! Shuts down current game state and loads another.
@@ -118,13 +118,21 @@ namespace Pixy
 		bool shuttingDown();
 
     CResourceManager& getResMgr();
-    
+
     Ogre::RenderWindow* getRenderWindow() const;
+
+    std::string const& getCfgPath() const;
+    std::string const& getRootPath() const;
+    std::string const& getResPath() const;
+    std::string const& getBinPath() const;
+    std::string const& getLogPath() const;
 
 	private:
 		GameManager();
 		GameManager(const GameManager&) {}
 		GameManager& operator=(const GameManager&);
+
+    void resolvePaths();
 
 		//! Prepares Ogre for use by the game components
 		/*!
@@ -211,7 +219,12 @@ namespace Pixy
 
 		tPixySettings mSettings;
 
-		std::string mConfigPath;
+    // all paths do NOT end with the trailing / or \, you must supply that
+		std::string mCfgPath;
+    std::string mBinPath; // this is where Karazeh and the external app reside
+    std::string mRootPath; // this is the root of the whole application tree
+    std::string mResPath; // this is the path of the temp folder used while patching
+    std::string mLogPath; // where logs are dumped
 	};
 } // end of namespace
 
