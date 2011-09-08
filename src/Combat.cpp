@@ -65,7 +65,10 @@ namespace Pixy
 
 		mEvtMgr = EventManager::getSingletonPtr();
 		mNetMgr = NetworkManager::getSingletonPtr();
-		mNetMgr->connect();
+		if (!mNetMgr->connect()) {
+      mLog->errorStream() << "Could not connect to server, aborting";
+      return GameManager::getSingleton().requestShutdown();
+		}
 
 		fUpdateGfx = false;
 		mGfxEngine = GfxEngine::getSingletonPtr();
@@ -119,7 +122,7 @@ namespace Pixy
 
   bool Combat::onLogin(const Event& evt) {
     Event _evt(EventUID::JoinQueue);
-    _evt.setProperty("Puppet", "Sugar");
+    _evt.setProperty("Puppet", "Kandie");
     mNetMgr->send(_evt);
 
     return true;
@@ -388,7 +391,7 @@ namespace Pixy
     GameManager::getSingleton().getResMgr().populate(datastream);
 
     Event _evt(EventUID::Login);
-    _evt.setProperty("Username", "Sugarfly");
+    _evt.setProperty("Username", "Kandie");
     _evt.setProperty("Password", "tuonela");
     mNetMgr->send(_evt);
 

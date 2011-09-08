@@ -1,0 +1,27 @@
+<node>
+    <position x="0" y="0" z="0" />
+    <scale x="1" y="1" z="1" />
+    <rotation qx="0" qy="0" qz="0" qw="1" />
+    <node name="knight_body">
+        <position x="0.000434749" y="0" z="0" />
+        <scale x="1" y="1" z="1" />
+        <rotation qx="0" qy="0.00261181" qz="-1.14166e-010" qw="0.999997" />
+        <entity name="knight_body" castShadows="true" receiveShadows="true" meshFile="DarkKnight.mesh">
+            <subentities>
+                <subentity index="0" materialName="knight-01" />
+            </subentities>
+            <boneAttachments>
+                <boneAttachment bone="Bone01">
+                    <position x="1.68563" y="0.0293682" z="0.0945663" />
+                    <rotation qx="-0.544548" qy="0.546862" qz="0.445111" qw="0.454187" />
+                    <scale x="0.0254" y="0.0254" z="0.0254" />
+                    <entity name="knight_sword" castShadows="true" receiveShadows="true" meshFile="DarkKnight.mesh">
+                        <subentities>
+                            <subentity index="0" materialName="sword-01_OgreMax" />
+                        </subentities>
+                    </entity>
+                </boneAttachment>
+            </boneAttachments>
+        </entity>
+    </node>
+</node>

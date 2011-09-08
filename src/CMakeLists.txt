@@ -144,17 +144,17 @@ ENDIF()
 IF(APPLE)
 
   # ---
-  # Generate Info.plist (see resources/cocoa/KarazehInfo.plist.in)
+  # Generate Info.plist (see resources/ElementumInfo.plist.in)
   # ---
-  SET_TARGET_PROPERTIES(Elementum PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_FILE})
+  #SET_TARGET_PROPERTIES(Elementum PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_FILE})
 
   # ---
   # copy the icon
   # ---
-  SET_SOURCE_FILES_PROPERTIES(
-    ${ICNS_FILE}
-		PROPERTIES
-   	MACOSX_PACKAGE_LOCATION Resources)
+  #SET_SOURCE_FILES_PROPERTIES(
+  #  ${ICNS_FILE}
+	#	PROPERTIES
+  # 	MACOSX_PACKAGE_LOCATION Resources)
 
   # ---
   # copy the frameworks & plugins
@@ -165,34 +165,52 @@ IF(APPLE)
 
 ENDIF(APPLE)
 
-#--------------------------------------------------------------------------------
-# Install the QtTest application, on Apple, the bundle is at the root of the
-# install tree, and on other platforms it'll go into the bin directory.
-SET(plugin_dest_dir bin)
-
-SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/Elementum")
+# --------------------------------------------------------------------------------
+# the bundle is at the root/bin of the install tree
 IF(APPLE)
   SET(plugin_dest_dir Elementum.app/Contents)
   SET(res_dest_dir Elementum.app/Contents/Resources)
   SET(fwk_dest_dir Elementum.app/Contents)
-  
-  #SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/Elementum.app")
-ENDIF(APPLE)
-IF(WIN32)
-  #SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/Elementum.exe")
-ENDIF(WIN32)
+  SET(log_dest_dir Elementum.app/Contents/Logs)
+  SET(bundle_dir Elementum.app/Contents)
 
-# --------------------------------------------------------------------------------
-# Copy dependencies for OS X (Frameworks, dylibs & bundles) into the bundle
-INSTALL(DIRECTORY "${OSX_PLUGINS_PATH}" DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
-INSTALL(DIRECTORY "${OSX_FWK_PATH}" DESTINATION ${fwk_dest_dir} COMPONENT Runtime)
-# Elementum shared libraries
-INSTALL(FILES 
-  "${CMAKE_CURRENT_SOURCE_DIR}/../lib/libElementum_Modules.dylib" 
-  "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared.dylib" 
-  "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared_Modules.dylib" 
-  DESTINATION ${plugin_dest_dir}/Plugins COMPONENT Runtime
-)
+  # --------------------------------------------------------------------------------
+  # Copy dependencies for OS X (Frameworks, dylibs & bundles) into the bundle
+  INSTALL(DIRECTORY "${OSX_PLUGINS_PATH}" DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${OSX_FWK_PATH}" DESTINATION ${fwk_dest_dir} COMPONENT Runtime)
+  # Elementum shared libraries & Lua luafilesystem module
+  INSTALL(FILES 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../lib/libElementum_Modules.dylib" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared.dylib" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared_Modules.dylib"
+    "/usr/local/lib/lua/5.1/lfs.so"
+    DESTINATION ${plugin_dest_dir}/Plugins COMPONENT Runtime
+  )
+  
+  # Copy Elementum resources
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/config" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/media" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/scripts" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/ui" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  
+  # Create an empty directory which will hold our log files
+  INSTALL(CODE "FILE(MAKE_DIRECTORY \${ENV}\${CMAKE_INSTALL_PREFIX}/${log_dest_dir})")
+  
+  # Install the patcher application
+  SET(Patcher_BUNDLE "${CMAKE_CURRENT_SOURCE_DIR}/../../Patcher/bin/Karazeh.app")
+  SET(Patcher_RES "${Patcher_BUNDLE}/Contents/Resources")
+  SET(Patcher_BIN "${Patcher_BUNDLE}/Contents/MacOS/Karazeh")
+  INSTALL(DIRECTORY "${Patcher_RES}" DESTINATION ${bundle_dir} COMPONENT Runtime)
+  INSTALL(FILES "${Patcher_BIN}" 
+    DESTINATION ${bundle_dir}/MacOS 
+    COMPONENT Runtime 
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE 
+    GROUP_READ GROUP_WRITE GROUP_EXECUTE
+    WORLD_READ WORLD_EXECUTE)
+  INSTALL(FILES "${Patcher_BUNDLE}/Contents/Info.plist" DESTINATION ${bundle_dir} COMPONENT Runtime)
+  INSTALL(FILES "${Patcher_BUNDLE}/Contents/MacOS/patch_mirrors.txt" DESTINATION ${bundle_dir}/MacOS COMPONENT Runtime)
+  
+ENDIF(APPLE)
 
 # install!
 INSTALL(TARGETS Elementum 

@@ -57,12 +57,17 @@ namespace Pixy
 	class GameManager : public OIS::KeyListener, OIS::MouseListener ,  public Ogre::WindowEventListener {
 	public:
 		~GameManager( void );
+		
+		//! only called manually when running on OS X
+    void _setup();
 
 		//! Loads StateGame game state to start the game.
 		/*!
 		 *
 		 */
-		void startGame(int argc, char** argv);
+		void startGame(/*int argc, char** argv*/);
+		
+  void _update();
 
 		//! Shuts down current game state and loads another.
 		/*!
@@ -113,6 +118,8 @@ namespace Pixy
 		bool shuttingDown();
 
     CResourceManager& getResMgr();
+    
+    Ogre::RenderWindow* getRenderWindow() const;
 
 	private:
 		GameManager();

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<scene formatVersion="1.0.0" generator="Ogitor SceneBuilder 0.4.2">
-    <terrain worldSize="512" mapSize="129" pagenameprefix="Page" colourmapEnabled="false" colourMapTextureSize="128" tuningCompositeMapDistance="2000" tuningMaxPixelError="3" tuningMinBatchSize="33" tuningMaxBatchSize="65">
-        <terrainPages>
-            <terrainPage name="Page_ffffffff.ogt" pageX="0" pageY="0" />
-        </terrainPages>
-    </terrain>
-</scene>

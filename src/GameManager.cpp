@@ -140,102 +140,108 @@ namespace Pixy
       mLog->errorStream() << "Unable to create CG Program manager RenderSystem: " << e.getFullDescription();
     }
   }
-	void GameManager::startGame(int argc, char** argv) {
-		// init logger
-		initLogger();
-		using std::ostringstream;
-		ostringstream lPathResources, lPathPlugins, lPathCfg, lPathOgreCfg, lPathLog;
+  
+  void GameManager::_setup() {
+    // init logger
+    initLogger();
+    using std::ostringstream;
+    ostringstream lPathResources, lPathPlugins, lPathCfg, lPathOgreCfg, lPathLog;
 #if PIXY_PLATFORM == PIXY_PLATFORM_WIN32
-		lPathResources << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\resources_win32.cfg";
+    lPathResources << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\resources_win32.cfg";
     lPathPlugins << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\plugins.cfg";
     lPathCfg << PROJECT_ROOT << PROJECT_RESOURCES << "\\config\\";
-		lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
-		lPathLog << PROJECT_LOG_DIR << "\\Ogre.log";
+    lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
+    lPathLog << PROJECT_LOG_DIR << "\\Ogre.log";
 #elif PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-		lPathResources << macBundlePath() << "/Contents/Resources/config/resources_osx.cfg";
-		lPathPlugins << macBundlePath() << "/Contents/Resources/config/plugins.cfg";
-		lPathCfg << macBundlePath() << "/Contents/Resources/config/";
-		lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
-		lPathLog << macBundlePath() << "/Contents/Logs/Ogre.log";
+    lPathResources << macBundlePath() << "/Contents/Resources/config/resources_osx.cfg";
+    lPathPlugins << macBundlePath() << "/Contents/Resources/config/plugins.cfg";
+    lPathCfg << macBundlePath() << "/Contents/Resources/config/";
+    lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
+    lPathLog << macBundlePath() << "/Contents/Logs/Ogre.log";
 #else
-		lPathResources << PROJECT_ROOT << PROJECT_RESOURCES << "/config/resources_linux.cfg";
+    lPathResources << PROJECT_ROOT << PROJECT_RESOURCES << "/config/resources_linux.cfg";
     lPathPlugins << PROJECT_ROOT << PROJECT_RESOURCES << "/config/plugins.cfg";
     lPathCfg << PROJECT_ROOT << PROJECT_RESOURCES << "/config/";
-		lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
-		lPathLog << PROJECT_LOG_DIR << "/Ogre.log";
+    lPathOgreCfg << lPathCfg.str() << "ogre.cfg";
+    lPathLog << PROJECT_LOG_DIR << "/Ogre.log";
 #endif
 
     mConfigPath = lPathCfg.str();
 
 
-		mRoot = OGRE_NEW Root(lPathPlugins.str(), lPathOgreCfg.str(), lPathLog.str());
-		if (!mRoot) {
-			throw Ogre::Exception( Ogre::Exception::ERR_INTERNAL_ERROR,
-								  "Error - Couldn't initalize OGRE!",
-								  "Vertigo - Error");
-		}
-		//loadRenderSystems();
+    mRoot = OGRE_NEW Root(lPathPlugins.str(), lPathOgreCfg.str(), lPathLog.str());
+    if (!mRoot) {
+    	throw Ogre::Exception( Ogre::Exception::ERR_INTERNAL_ERROR,
+    						  "Error - Couldn't initalize OGRE!",
+    						  "Vertigo - Error");
+    }
+    //loadRenderSystems();
 
+    // Setup and configure game
+    if( !this->configureGame() ) {
+        // If game can't be configured, throw exception and quit application
+        throw Ogre::Exception( Ogre::Exception::ERR_INTERNAL_ERROR,
+    						  "Error - Couldn't Configure Renderwindow",
+    						  "Vertigo - Error" );
+        return;
+    }
 
+    // Setup input & register as listener
+    mInputMgr = InputManager::getSingletonPtr();
+    mRenderWindow = mRoot->getAutoCreatedWindow();
+    mInputMgr->initialise( mRenderWindow );
+    WindowEventUtilities::addWindowEventListener( mRenderWindow, this );
 
-		// Setup and configure game
-
-		if( !this->configureGame() ) {
-		    // If game can't be configured, throw exception and quit application
-		    throw Ogre::Exception( Ogre::Exception::ERR_INTERNAL_ERROR,
-								  "Error - Couldn't Configure Renderwindow",
-								  "Vertigo - Error" );
-		    return;
-		}
-
-	  // Setup input & register as listener
-		mInputMgr = InputManager::getSingletonPtr();
-		mRenderWindow = mRoot->getAutoCreatedWindow();
-		mInputMgr->initialise( mRenderWindow );
-		WindowEventUtilities::addWindowEventListener( mRenderWindow, this );
-
-		this->setupResources(lPathResources.str());
+    this->setupResources(lPathResources.str());
     mResMgr = new CResourceManager();
 
-		mInputMgr->addKeyListener( this, "GameManager" );
-		mInputMgr->addMouseListener( this, "GameManager" );
+    mInputMgr->addKeyListener( this, "GameManager" );
+    mInputMgr->addMouseListener( this, "GameManager" );
 
-		// Change to first state
-		this->changeState( Combat::getSingletonPtr() );
+    // Change to first state
+    this->changeState( Combat::getSingletonPtr() );
 
-		// lTimeLastFrame remembers the last time that it was checked
-		// we use it to calculate the time since last frame
+    // lTimeLastFrame remembers the last time that it was checked
+    // we use it to calculate the time since last frame
 
-		lTimeLastFrame = 0;
-		lTimeCurrentFrame = 0;
-		lTimeSinceLastFrame = 0;
+    lTimeLastFrame = 0;
+    lTimeCurrentFrame = 0;
+    lTimeSinceLastFrame = 0;
 
-    mRoot->getTimer()->reset();
+    mRoot->getTimer()->reset();    
+  }
+  
+	void GameManager::startGame(/*int argc, char** argv*/) {
+		
+    this->_setup();
 
 		// main game loop
 		while( !fShutdown ) {
-
-	    // calculate time since last frame and remember current time for next frame
-	    lTimeCurrentFrame = mRoot->getTimer()->getMilliseconds();
-	    lTimeSinceLastFrame = lTimeCurrentFrame - lTimeLastFrame;
-	    lTimeLastFrame = lTimeCurrentFrame;
-
-	    // update input manager
-	    mInputMgr->capture();
-
-	    // cpdate current state
-	    mStates.back()->update( lTimeSinceLastFrame );
-
-			WindowEventUtilities::messagePump();
-
-			// render next frame
-		  mRoot->renderOneFrame();
-
+      _update();
 		}
-
-
+	}
+	
+	Ogre::RenderWindow* GameManager::getRenderWindow() const {
+    return mRenderWindow;
 	}
 
+  void GameManager::_update() {
+	  // calculate time since last frame and remember current time for next frame
+    lTimeCurrentFrame = mRoot->getTimer()->getMilliseconds();
+    lTimeSinceLastFrame = lTimeCurrentFrame - lTimeLastFrame;
+    lTimeLastFrame = lTimeCurrentFrame;
+
+    // update input manager
+    mInputMgr->capture();
+
+    // cpdate current state
+    mStates.back()->update( lTimeSinceLastFrame );
+
+		WindowEventUtilities::messagePump();
+
+		// render next frame
+	  mRoot->renderOneFrame();    
+  }
 
 	bool GameManager::configureGame() {
 
