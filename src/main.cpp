@@ -1,4 +1,9 @@
-#include "AppDelegate.h"
+#include "PixyPlatform.h"
+
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+# include "AppDelegate.h"
+#endif
+
 #include "GameManager.h"
 #include "Intro.h"
 
@@ -13,15 +18,15 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 // Apple
 #if (OGRE_PLATFORM == OGRE_PLATFORM_APPLE) && __LP64__
   	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
+
     mAppDelegate = [[AppDelegate alloc] init];
     [[NSApplication sharedApplication] setDelegate:mAppDelegate];
   	int retVal = NSApplicationMain(argc, (const char **) argv);
-    
+
   	[pool release];
-    
+
   	return retVal;
-#else 
+#else
 
 // Win32 && Linux
 		GameManager *gameManager = GameManager::getSingletonPtr();
