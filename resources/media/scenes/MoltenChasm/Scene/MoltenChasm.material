@@ -1,0 +1,292 @@
+
+material Lava_02
+{
+	technique
+	{
+
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+			scene_blend add
+						
+			texture_unit
+			{
+				texture Lava.jpg
+			  //scale 0.5 0.5
+			  scroll_anim 0.01 0.01
+			}
+		}
+
+	}
+
+}
+
+
+
+material Statue_01
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.670588 0.670588 0.670588 1
+			diffuse 0.670588 0.670588 0.670588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture statue1.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material wall1
+{
+	technique
+	{
+
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture Crater.jpg
+				scale 0.1 0.1
+			}
+		}
+
+	}
+
+}
+
+
+
+material statue-03
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture statue3.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material gate
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture ent.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material arena
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture arena.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#12
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture ent.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material gate_2
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture ent.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#16
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture ent.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#14
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture ent.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Statue_02
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.584314 0.584314 0.584314 1
+			diffuse 0.584314 0.584314 0.584314 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture statue2.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#26
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture statue4.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#28
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture statue3.jpg
+			}
+		}
+
+	}
+
+}
+
+

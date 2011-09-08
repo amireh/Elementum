@@ -1467,7 +1467,7 @@ namespace Pixy {
   OgreMax::OgreMaxScene* GfxEngine::loadScene(std::string inSceneName) {
     using namespace OgreMax;
     OgreMaxScene* scene = new OgreMaxScene();
-    scene->Load(inSceneName, mRenderWindow);
+    scene->Load(inSceneName, mRenderWindow, OgreMaxScene::NO_OPTIONS, mSceneMgr, mSceneMgr->getRootSceneNode());
 
     return scene;
   }

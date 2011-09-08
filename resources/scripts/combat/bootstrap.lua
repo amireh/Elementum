@@ -13,6 +13,7 @@ local Pos = { Me = Ogre.Vector3:new(0,0,0), Enemy = Ogre.Vector3:new(0,0,0) }
 BBSet = nil
 BB = nil
 BBNode = nil
+Scene = nil
 
 Pixy.Combat.PrepareScene = function()
   SceneMgr = GfxEngine:getSceneMgr()
@@ -60,15 +61,18 @@ Pixy.Combat.PrepareScene = function()
   --~ sphereNode:attachObject(sphereEntity)
 
   -- Terrain
-  Ogre.MeshManager:getSingleton():createPlane(
-    "floor", Ogre.ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
-			Ogre.Plane:new(Ogre.Vector3.UNIT_Y, 0), 512, 512, 10, 10, true, 1, 10, 10, Ogre.Vector3.UNIT_Z);
-  ent = SceneMgr:createEntity("Floor", "floor");
-  ent:setMaterialName("Elementum/Terrain/Floor");
-  ent:setCastShadows(true)
-  ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
-  SceneMgr:getRootSceneNode():attachObject(ent)
+  --Ogre.MeshManager:getSingleton():createPlane(
+  --  "floor", Ogre.ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
+	--		Ogre.Plane:new(Ogre.Vector3.UNIT_Y, 0), 512, 512, 10, 10, true, 1, 10, 10, Ogre.Vector3.UNIT_Z);
+  --ent = SceneMgr:createEntity("Floor", "floor");
+  --ent:setMaterialName("Elementum/Terrain/Floor");
+  --ent:setCastShadows(true)
+  --ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
+  --SceneMgr:getRootSceneNode():attachObject(ent)
   --~ GfxEngine:loadDotScene("Elementum.scene", "General")
+  Scene = GfxEngine:loadScene("MoltenChasm.scene")
+  GfxEngine:getSceneMgr():getEntity("arena_02"):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
+  --Pixy.Log("Arena node is at " .. pos.x .. "," .. pos.y .. "," .. pos.z)
 
   BBNode = SceneMgr:createSceneNode("EntitySelectionNode")
   BBSet = SceneMgr:createBillboardSet("EntitySelection")
@@ -94,11 +98,15 @@ Pixy.Combat.PrepareScene = function()
 
 end
 
+Pixy.Combat.cleanup = function()
+  GfxEngine:unloadScene(Scene)
+end
+
 Pixy.Combat.SetupLights = function()
   SceneMgr:setAmbientLight(Ogre.ColourValue(0.5,0.5,0.5))
 
   fadeColour = Ogre.ColourValue:new(0, 0, 0)
-  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0035)
+  --SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0035)
 
   _mod = 0.5
   dcol = Ogre.ColourValue:new(_mod,_mod,_mod)

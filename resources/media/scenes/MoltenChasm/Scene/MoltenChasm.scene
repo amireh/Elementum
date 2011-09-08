@@ -1,0 +1,226 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1" unitType="meters" minOgreVersion="1.8" ogreMaxVersion="2.3.15" author="OgreMax Scene Exporter (www.ogremax.com)" application="3DS Max">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="100000" />
+    </environment>
+    <nodes>
+      <node name="molten_chasm">
+        <position x="0" y="-50" z="0" />      
+        <scale x="10" y="10" z="10" />
+        
+        <node name="arena_02">
+            <position x="-3.12402e-006" y="4.20979" z="0" />
+            <scale x="5.11746" y="5.11746" z="5.11746" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="arena_02" castShadows="true" receiveShadows="true" meshFile="arena_02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="statue-03" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="bridge_02">
+            <position x="0.0336448" y="1.53712" z="44.8173" />
+            <scale x="3.31233" y="3.31233" z="3.31233" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="bridge_02" castShadows="true" receiveShadows="true" meshFile="bridge_02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="bridge_03">
+            <position x="44.8174" y="1.53712" z="-0.0336648" />
+            <scale x="3.31233" y="3.31233" z="3.31233" />
+            <rotation qx="0" qy="0.707107" qz="-3.09086e-008" qw="0.707107" />
+            <entity name="bridge_03" castShadows="true" receiveShadows="true" meshFile="bridge_03.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="bridge_04">
+            <position x="-0.0606127" y="1.53712" z="-44.994" />
+            <scale x="3.31233" y="3.31233" z="3.31233" />
+            <rotation qx="0" qy="1" qz="-4.37114e-008" qw="-4.37114e-008" />
+            <entity name="bridge_04" castShadows="true" receiveShadows="true" meshFile="bridge_04.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="bridge_05">
+            <position x="-44.994" y="1.53712" z="0.0606212" />
+            <scale x="3.31233" y="3.31233" z="3.31233" />
+            <rotation qx="0" qy="-0.707107" qz="3.09086e-008" qw="0.707107" />
+            <entity name="bridge_05" castShadows="true" receiveShadows="true" meshFile="bridge_05.mesh">
+                <subentities>
+                    <subentity index="0" materialName="arena" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-01">
+            <position x="-66.3199" y="-1.22454e-012" z="-2.80142e-005" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0.707107" qz="-3.09086e-008" qw="0.707107" />
+            <entity name="Altar-gate-01" castShadows="true" receiveShadows="true" meshFile="Altar-gate-01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-02">
+            <position x="3.5584e-005" y="-2.89893e-006" z="-66.3198" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-gate-02" castShadows="true" receiveShadows="true" meshFile="Altar-gate-02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="gate_2" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-03">
+            <position x="65.4509" y="1.37744e-009" z="0.0315121" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="-0.707107" qz="3.09086e-008" qw="0.707107" />
+            <entity name="Altar-gate-03" castShadows="true" receiveShadows="true" meshFile="Altar-gate-03.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#12" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-04">
+            <position x="0.0151735" y="3.27128e-006" z="74.8382" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-gate-04" castShadows="true" receiveShadows="true" meshFile="Altar-gate-04.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#14" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-06">
+            <position x="-39.5691" y="3.64947e-009" z="0.0834901" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="-0.707107" qz="3.09086e-008" qw="0.707107" />
+            <entity name="Altar-gate-06" castShadows="true" receiveShadows="true" meshFile="Altar-gate-06.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#16" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-08">
+            <position x="39.5691" y="-2.71476e-009" z="-0.0621065" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="-0.707107" qz="3.09086e-008" qw="0.707107" />
+            <entity name="Altar-gate-08" castShadows="true" receiveShadows="true" meshFile="Altar-gate-08.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#16" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-09">
+            <position x="-0.0620538" y="-1.72962e-006" z="-39.5691" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-gate-09" castShadows="true" receiveShadows="true" meshFile="Altar-gate-09.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#16" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Altar-gate-10">
+            <position x="0.0565137" y="1.7219e-006" z="39.3924" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Altar-gate-10" castShadows="true" receiveShadows="true" meshFile="Altar-gate-10.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#16" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="statue-Gargoyle-02">
+            <position x="15.3096" y="4.91481" z="-15.3307" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="-0.382683" qz="1.67276e-008" qw="0.92388" />
+            <entity name="statue-Gargoyle-02" castShadows="true" receiveShadows="true" meshFile="statue-Gargoyle-02.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Statue_02" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="statue-Monk-01">
+            <position x="-15.5339" y="4.90603" z="15.7406" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0.887011" qz="-3.87725e-008" qw="0.461749" />
+            <entity name="statue-Monk-01" castShadows="true" receiveShadows="true" meshFile="statue-Monk-01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Statue_01" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="statue-Orc-01">
+            <position x="-15.8443" y="4.97445" z="-15.7477" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0.422618" qz="-1.84732e-008" qw="0.906308" />
+            <entity name="statue-Orc-01" castShadows="true" receiveShadows="true" meshFile="statue-Orc-01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#26" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="statue-Warrior-01">
+            <position x="15.92" y="4.88177" z="15.7715" />
+            <scale x="3" y="3" z="3" />
+            <rotation qx="0" qy="0.939693" qz="-4.10753e-008" qw="-0.34202" />
+            <entity name="statue-Warrior-01" castShadows="true" receiveShadows="true" meshFile="statue-Warrior-01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Material#28" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Sphere01">
+            <position x="0" y="0" z="0" />
+            <scale x="15.96295" y="15.96295" z="15.96295" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Sphere01" castShadows="true" receiveShadows="true" meshFile="Sphere01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="wall1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Circle01">
+            <position x="1.7596" y="1.42924e-008" z="0.326973" />
+            <scale x="0.596214" y="0.596214" z="0.596214" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Circle01" castShadows="true" receiveShadows="true" meshFile="Circle01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Lava_02" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Omni01">
+            <position x="39.7386" y="15.9859" z="0.0568974" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="2.18557e-008" qz="0.5" qw="0.866025" />
+            <light name="Omni01" visible="true" type="directional" castShadows="true" power="0.6">
+                <rotation qx="-0.707107" qy="-0" qz="-0" qw="-0.707107" />
+                <colourDiffuse r="0.87451" g="0.87451" b="0.87451" />
+                <colourSpecular r="1" g="1" b="1" />
+                <lightAttenuation range="200" constant="1" linear="0" quadric="0" />
+            </light>
+        </node>
+        <node name="Omni03">
+            <position x="-39.8569" y="15.9859" z="-0.11429" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="-2.18557e-008" qz="-0.5" qw="0.866025" />
+            <light name="Omni03" visible="true" type="directional" castShadows="true" power="0.6">
+                <rotation qx="-0.707107" qy="-0" qz="-0" qw="-0.707107" />
+                <colourDiffuse r="0.87451" g="0.87451" b="0.87451" />
+                <colourSpecular r="1" g="1" b="1" />
+                <lightAttenuation range="200" constant="1" linear="0" quadric="0" />
+            </light>
+        </node>
+      </node>
+    </nodes>
+</scene>

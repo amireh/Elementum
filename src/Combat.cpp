@@ -122,13 +122,14 @@ namespace Pixy
 
   bool Combat::onLogin(const Event& evt) {
     Event _evt(EventUID::JoinQueue);
-    _evt.setProperty("Puppet", "Kandie");
+    _evt.setProperty("Puppet", "Sugar");
     mNetMgr->send(_evt);
 
     return true;
   }
 	void Combat::exit( void ) {
 
+    mScriptEngine->passToLua("cleanup", 0);
 
 		puppets_t::iterator lPuppet;
 		for (lPuppet = mPuppets.begin(); lPuppet != mPuppets.end(); ++lPuppet) {
@@ -391,7 +392,7 @@ namespace Pixy
     GameManager::getSingleton().getResMgr().populate(datastream);
 
     Event _evt(EventUID::Login);
-    _evt.setProperty("Username", "Kandie");
+    _evt.setProperty("Username", "Sugarfly");
     _evt.setProperty("Password", "tuonela");
     mNetMgr->send(_evt);
 
