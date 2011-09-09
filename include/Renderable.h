@@ -108,7 +108,11 @@ namespace Pixy
     float animateRest();
     float animateGetUp();
 
-    float _animate(AnimID inId);
+    // if override is true, then the given animation will instantly
+    // play and override any currently playing one (even mini ones)
+    //
+    // note: only applies to Mini animations
+    float _animate(AnimID inId, bool override = false);
 
     Ogre::Entity* attachExtension(std::string inMesh, std::string inBone);
 

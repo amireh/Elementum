@@ -200,7 +200,7 @@ namespace Pixy {
 
 
 		std::ostringstream lNodeName;
-		lNodeName << mPlayer->getName() << "_node_puppet";
+		lNodeName << getNodeIdPrefix(mPlayer) << "_node_puppet";
 		mCameraMan->setTarget(mSceneMgr->getSceneNode(lNodeName.str()));
     mCameraMan->setYawPitchDist(Ogre::Degree(mCameraYawPitchDist.x), Ogre::Degree(mCameraYawPitchDist.y), mCameraYawPitchDist.z);
     //mCamera->yaw(Ogre::Degree(-180));
@@ -622,11 +622,11 @@ namespace Pixy {
     {
       if (i == ME)
       {
-        ownerName = mPlayer->getName();
+        ownerName = getNodeIdPrefix(mPlayer);
         tmpPos = mPuppetPos[ME];
         tmpDir = mDirection[ME];
       } else {
-        ownerName = mEnemy->getName();
+        ownerName = getNodeIdPrefix(mEnemy);
         tmpPos = mPuppetPos[ENEMY];
         tmpDir = mDirection[ENEMY];
       }
@@ -646,12 +646,12 @@ namespace Pixy {
       if (owner == ME)
       {
         // start by creating client's nodes
-        ownerName = mPlayer->getName();
+        ownerName = getNodeIdPrefix(mPlayer);
         // define the starting position of the first node
         tmpPos = mPuppetPos[ME];
         tmpDir = mDirection[ME];
       } else {
-        ownerName = mEnemy->getName();
+        ownerName = getNodeIdPrefix(mEnemy);
         // define the starting position of the opponent first node
         tmpPos = mPuppetPos[ENEMY];
         tmpDir = mDirection[ENEMY];
@@ -742,8 +742,8 @@ namespace Pixy {
 
     Ogre::String tmpName[3] = {
 	    "shared_node_offense",
-	    mPlayer->getName() + "_node_defense",
-	    mEnemy->getName() + "_node_defense"
+	    getNodeIdPrefix(mPlayer) + "_node_defense",
+	    getNodeIdPrefix(mEnemy) + "_node_defense"
 		};
 
     createNode(tmpName[0],   offensePos,        mUnitScale, mDirection[ME]);
@@ -854,7 +854,7 @@ namespace Pixy {
 
     //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
     //ownerName = stringify(inEntity->getUID());
-    ownerName = inEntity->getOwner()->getName();
+    ownerName = getNodeIdPrefix(static_cast<CPuppet*>(inEntity->getOwner()->getOwner()));
     if (isPuppet)
     {
       entityName = ownerName + "_entity_puppet";
@@ -985,13 +985,12 @@ namespace Pixy {
   void GfxEngine::detachFromScene(Renderable* inRenderable)
   {
     dehighlight();
-    FxEngine::getSingleton().dehighlight();
 
     Entity* inEntity = inRenderable->getEntity();
 
-    Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
+    /*Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
     Ogre::String nodeName = ownerName + "_node_";
-    Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());
+    Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());*/
     Ogre::SceneNode* mTmpNode = NULL;
 
     mTmpNode = inRenderable->getSceneNode();
@@ -1018,7 +1017,7 @@ namespace Pixy {
 
     Renderable* inRenderable = inUnit->getRenderable();
 
-    std::string ownerName = inUnit->getOwner()->getName();
+    std::string ownerName = getNodeIdPrefix(inUnit);
     std::string entityName = ownerName + "_entity_" + stringify<int>(inUnit->getUID());
     // now we need to locate the nearest empty SceneNode
     // to render our Entity in
@@ -1071,7 +1070,6 @@ namespace Pixy {
 
     } else {
       throw std::runtime_error("gfxengine: could not change Unit's ownership! No empty SceneNodes available");
-
     }
   }
 
@@ -1079,8 +1077,8 @@ namespace Pixy {
   {
     for (int i=0; i<10; i++)
     {
-      createWaypoint(ME, i, mPlayer->getName(), mEnemy->getName());
-      createWaypoint(ENEMY, i, mEnemy->getName(), mPlayer->getName());
+      createWaypoint(ME, i, getNodeIdPrefix(mPlayer), getNodeIdPrefix(mEnemy));
+      createWaypoint(ENEMY, i, getNodeIdPrefix(mEnemy), getNodeIdPrefix(mPlayer));
     };
   };
 
@@ -1157,8 +1155,6 @@ namespace Pixy {
     if (!found) {
       // ignore any terrain selection
       dehighlight();
-      FxEngine::getSingleton().dehighlight();
-      ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
     }
 
     return true;
@@ -1250,6 +1246,9 @@ namespace Pixy {
 	};
 
 	void GfxEngine::dehighlight() {
+    //FxEngine::getSingleton().dehighlight();
+    ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
+
 	  if (!mSelected)
 	    return;
 
@@ -1615,5 +1614,12 @@ namespace Pixy {
     Real relWidth = inObject->getWorldBoundingBox().getSize().x * 2 / Ogre::OverlayManager::getSingleton().getViewportWidth();
     return Vector2(1-(MinX + MaxX + 0.05f + relWidth )/2, 1-MaxY+0.05f);
 
+  }
+
+  std::string GfxEngine::getNodeIdPrefix(CPuppet* inEntity) {
+    return std::string(inEntity->getName() + "_" + stringify(inEntity->getUID()));
+  }
+  std::string GfxEngine::getNodeIdPrefix(CUnit* inUnit) {
+    return getNodeIdPrefix(static_cast<CPuppet*>(inUnit->getOwner()));
   }
 }

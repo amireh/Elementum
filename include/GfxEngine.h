@@ -303,7 +303,8 @@ namespace Pixy {
 
     OgreMax::OgreMaxScene* mScene;
 
-
+    std::string getNodeIdPrefix(CPuppet*);
+    std::string getNodeIdPrefix(CUnit*);
 
 	private:
 		static GfxEngine* _myGfxEngine;

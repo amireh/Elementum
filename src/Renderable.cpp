@@ -259,10 +259,10 @@ namespace Pixy
   }
 
   float Renderable::animateLive() {
-    return this->_animate(ANIM_LIVE);
+    return this->_animate(ANIM_LIVE, true);
   }
   float Renderable::animateDie() {
-    return this->_animate(ANIM_DIE);
+    return this->_animate(ANIM_DIE, true);
   }
   float Renderable::animateIdle() {
     return this->_animate(ANIM_IDLE);
@@ -277,7 +277,7 @@ namespace Pixy
     return this->_animate(ANIM_ATTACK);
   }
   float Renderable::animateHit() {
-    return this->_animate(ANIM_HIT);
+    return this->_animate(ANIM_HIT, true);
   }
   float Renderable::animateRest() {
     return this->_animate(ANIM_REST);
@@ -285,7 +285,7 @@ namespace Pixy
   float Renderable::animateGetUp() {
     return this->_animate(ANIM_GETUP);
   }
-  float Renderable::_animate(AnimID id) {
+  float Renderable::_animate(AnimID id, bool override) {
     if (mAnims.find(id) == mAnims.end() || mAnims[id].empty()) {
       std::cerr << "ERROR! Asked to play a non-existing animation: " << id << ", gracefully rejecting\n";
       return 0;
@@ -314,10 +314,13 @@ namespace Pixy
 
     // it's a mini-anim
     else if (_anim->isMini()) {
-      mAnimQueue.push_back(_anim);
-      //~ std::cout << "Queuing a mini-anim, queue has: " << mAnimQueue.size() << "\n";
+      if (override)
+        mAnimQueue.push_front(_anim);
+      else
+        mAnimQueue.push_back(_anim);
+
       // if there are no mini-anims running, apply this one immediately
-      if (mAnimQueue.size() == 1)
+      if (mAnimQueue.size() == 1 || override)
         _applyNextAnimation();
     } else
       throw std::runtime_error("can't be here!");
