@@ -76,6 +76,7 @@ end
 Pixy.Combat.CreatePuppet = function(puppet)
   Pixy.Log("Creating puppet")
   Handlers[puppet:getRace()](puppet)
+  Pixy.UI.Combat.UpdatePuppet(puppet)
   Pixy.Log("Created!")
 end
 

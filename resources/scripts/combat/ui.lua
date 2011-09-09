@@ -274,9 +274,9 @@ end
 
 Pixy.UI.Combat.UpdatePuppet = function(puppet)
   if (puppet == SelfPuppet) then
-    Pixy.UI.Combat.Labels["PlayerWP"]:setText(puppet:getWP())
+    Pixy.UI.Combat.Labels["PlayerWP"]:setText(puppet:getWP() .. " @" .. puppet:getChannels())
   else
-    Pixy.UI.Combat.Labels["EnemyWP"]:setText(puppet:getWP())
+    Pixy.UI.Combat.Labels["EnemyWP"]:setText(puppet:getWP() .. " @" .. puppet:getChannels())
   end
 end
 

@@ -200,7 +200,7 @@ namespace Pixy {
     for (itr = entries.begin(); itr != entries.end(); ++itr) {
       lSpell = new CSpell();
       vector<string> elements = Utility::split((*itr).c_str(), ';');
-      assert(elements.size() == 10);
+      assert(elements.size() == 11);
 
       lSpell->setName(elements[0]);
       lSpell->setRace((RACE)atoi(elements[1].c_str()));
@@ -211,7 +211,8 @@ namespace Pixy {
       lSpell->setDispellable(elements[6] == "t");
       lSpell->setRequiresTarget(elements[7] == "t");
       lSpell->setPhase((SPELL_PHASE)atoi(elements[8].c_str()));
-      lSpell->setDescription(elements[9]);
+      lSpell->setCostChannels(atoi(elements[9].c_str()));
+      lSpell->setDescription(elements[10]);
 
       mSpells[lSpell->getRace()].push_back(lSpell);
 
