@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Wed Sep  7 15:37:24 2011.
+** Generated automatically by tolua++-1.0.92 on Fri Sep  9 14:59:46 2011.
 */
 
 #ifndef __cplusplus
@@ -337,7 +337,7 @@ static int tolua_Elementum_Pixy_Renderable_delete00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -366,7 +366,7 @@ static int tolua_Elementum_Pixy_Renderable_getEntity00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEntity'", NULL);
 #endif
   {
    Pixy::Entity* tolua_ret = (Pixy::Entity*)  self->getEntity();
@@ -400,7 +400,7 @@ static int tolua_Elementum_Pixy_Renderable_attachSceneNode00(lua_State* tolua_S)
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
   Ogre::SceneNode* inNode = ((Ogre::SceneNode*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneNode'", NULL);
 #endif
   {
    self->attachSceneNode(inNode);
@@ -431,7 +431,7 @@ static int tolua_Elementum_Pixy_Renderable_getSceneNode00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getSceneNode();
@@ -465,7 +465,7 @@ static int tolua_Elementum_Pixy_Renderable_attachSceneObject00(lua_State* tolua_
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Entity* inObject = ((Ogre::Entity*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneObject'", NULL);
 #endif
   {
    self->attachSceneObject(inObject);
@@ -496,7 +496,7 @@ static int tolua_Elementum_Pixy_Renderable_getSceneObject00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneObject'", NULL);
 #endif
   {
    Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->getSceneObject();
@@ -534,7 +534,7 @@ static int tolua_Elementum_Pixy_Renderable_registerAnimationState00(lua_State* t
   std::string inState = ((std::string)  tolua_tocppstring(tolua_S,3,0));
   bool doLoop = ((bool)  tolua_toboolean(tolua_S,4,true));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerAnimationState'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerAnimationState'", NULL);
 #endif
   {
    self->registerAnimationState(inId,inState,doLoop);
@@ -567,7 +567,7 @@ static int tolua_Elementum_Pixy_Renderable_setScale00(lua_State* tolua_S)
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
   float inScale = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
 #endif
   {
    self->setScale(inScale);
@@ -684,7 +684,7 @@ static int tolua_Elementum_Pixy_Renderable_animateLive00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateLive'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateLive'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateLive();
@@ -716,7 +716,7 @@ static int tolua_Elementum_Pixy_Renderable_animateDie00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateDie'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateDie'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateDie();
@@ -748,7 +748,7 @@ static int tolua_Elementum_Pixy_Renderable_animateIdle00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateIdle'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateIdle'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateIdle();
@@ -780,7 +780,7 @@ static int tolua_Elementum_Pixy_Renderable_animateWalk00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateWalk'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateWalk'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateWalk();
@@ -812,7 +812,7 @@ static int tolua_Elementum_Pixy_Renderable_animateRun00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateRun'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateRun'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateRun();
@@ -844,7 +844,7 @@ static int tolua_Elementum_Pixy_Renderable_animateAttack00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateAttack'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateAttack'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateAttack();
@@ -876,7 +876,7 @@ static int tolua_Elementum_Pixy_Renderable_animateHit00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateHit'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateHit'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateHit();
@@ -908,7 +908,7 @@ static int tolua_Elementum_Pixy_Renderable_animateRest00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateRest'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateRest'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateRest();
@@ -940,7 +940,7 @@ static int tolua_Elementum_Pixy_Renderable_animateGetUp00(lua_State* tolua_S)
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateGetUp'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateGetUp'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->animateGetUp();
@@ -974,7 +974,7 @@ static int tolua_Elementum_Pixy_Renderable__animate00(lua_State* tolua_S)
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
   Pixy::Renderable::AnimID inId = ((Pixy::Renderable::AnimID) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_animate'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_animate'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->_animate(inId);
@@ -1010,7 +1010,7 @@ static int tolua_Elementum_Pixy_Renderable_attachExtension00(lua_State* tolua_S)
   std::string inMesh = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   std::string inBone = ((std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachExtension'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachExtension'", NULL);
 #endif
   {
    Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->attachExtension(inMesh,inBone);
@@ -1099,7 +1099,7 @@ static int tolua_Elementum_Pixy_CPuppet_delete00(lua_State* tolua_S)
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -1130,7 +1130,7 @@ static int tolua_Elementum_Pixy_CPuppet_getSpell00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'", NULL);
 #endif
   {
    Pixy::CSpell* tolua_ret = (Pixy::CSpell*)  self->getSpell(inUID);
@@ -1162,7 +1162,7 @@ static int tolua_Elementum_Pixy_CPuppet_getRenderable00(lua_State* tolua_S)
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRenderable'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRenderable'", NULL);
 #endif
   {
    Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getRenderable();
@@ -1194,7 +1194,7 @@ static int tolua_Elementum_Pixy_CPuppet_getHand00(lua_State* tolua_S)
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHand'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHand'", NULL);
 #endif
   {
     list<Pixy::CSpell*>& tolua_ret = (  list<Pixy::CSpell*>&)  self->getHand();
@@ -1226,7 +1226,7 @@ static int tolua_Elementum_Pixy_CPuppet_nrSpellsInHand00(lua_State* tolua_S)
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'nrSpellsInHand'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'nrSpellsInHand'", NULL);
 #endif
   {
    int tolua_ret = (int)  self->nrSpellsInHand();
@@ -1258,7 +1258,7 @@ static int tolua_Elementum_Pixy_CPuppet_getSpell01(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'", NULL);
 #endif
   {
    Pixy::CSpell* tolua_ret = (Pixy::CSpell*)  self->getSpell(inUID);
@@ -1289,7 +1289,7 @@ static int tolua_Elementum_Pixy_CPuppet_attachSpell00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   Pixy::CSpell* inSpell = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSpell'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSpell'", NULL);
 #endif
   {
    self->attachSpell(inSpell);
@@ -1322,7 +1322,7 @@ static int tolua_Elementum_Pixy_CPuppet_detachSpell00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachSpell'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachSpell'", NULL);
 #endif
   {
    self->detachSpell(inUID);
@@ -1355,7 +1355,7 @@ static int tolua_Elementum_Pixy_CPuppet_attachUnit00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   Pixy::CUnit* inUnit = ((Pixy::CUnit*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachUnit'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachUnit'", NULL);
 #endif
   {
    self->attachUnit(inUnit);
@@ -1390,7 +1390,7 @@ static int tolua_Elementum_Pixy_CPuppet_detachUnit00(lua_State* tolua_S)
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
   bool tolua_var_1 = ((bool)  tolua_toboolean(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachUnit'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachUnit'", NULL);
 #endif
   {
    self->detachUnit(inUID,tolua_var_1);
@@ -1423,7 +1423,7 @@ static int tolua_Elementum_Pixy_CPuppet_getUnit00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUnit'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUnit'", NULL);
 #endif
   {
    Pixy::CUnit* tolua_ret = (Pixy::CUnit*)  self->getUnit(inUID);
@@ -1455,7 +1455,7 @@ static int tolua_Elementum_Pixy_CPuppet_getUnits00(lua_State* tolua_S)
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUnits'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUnits'", NULL);
 #endif
   {
     list<Pixy::CUnit*>& tolua_ret = (  list<Pixy::CUnit*>&)  self->getUnits();
@@ -1489,7 +1489,7 @@ static int tolua_Elementum_Pixy_CPuppet_attachBuff00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   Pixy::CSpell* tolua_var_2 = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'", NULL);
 #endif
   {
    self->attachBuff(tolua_var_2);
@@ -1522,7 +1522,7 @@ static int tolua_Elementum_Pixy_CPuppet_detachBuff00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachBuff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachBuff'", NULL);
 #endif
   {
    self->detachBuff(inUID);
@@ -1555,7 +1555,7 @@ static int tolua_Elementum_Pixy_CPuppet_hasBuff00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuff'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasBuff(inUID);
@@ -1587,7 +1587,7 @@ static int tolua_Elementum_Pixy_CPuppet_updateTextOverlay00(lua_State* tolua_S)
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateTextOverlay'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateTextOverlay'", NULL);
 #endif
   {
    self->updateTextOverlay();
@@ -1620,7 +1620,7 @@ static int tolua_Elementum_Pixy_CPuppet_setHP00(lua_State* tolua_S)
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
   int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'", NULL);
 #endif
   {
    self->setHP(inHP);
@@ -1708,7 +1708,7 @@ static int tolua_Elementum_Pixy_CSpell_delete00(lua_State* tolua_S)
  {
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -1739,7 +1739,7 @@ static int tolua_Elementum_Pixy_CSpell_setImageSet00(lua_State* tolua_S)
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
   std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setImageSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setImageSet'", NULL);
 #endif
   {
    self->setImageSet(inName);
@@ -1772,7 +1772,7 @@ static int tolua_Elementum_Pixy_CSpell_setImageName00(lua_State* tolua_S)
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
   std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setImageName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setImageName'", NULL);
 #endif
   {
    self->setImageName(inName);
@@ -1805,7 +1805,7 @@ static int tolua_Elementum_Pixy_CSpell_setButton00(lua_State* tolua_S)
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
   CEGUI::Window* inButton = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setButton'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setButton'", NULL);
 #endif
   {
    self->setButton(inButton);
@@ -1836,7 +1836,7 @@ static int tolua_Elementum_Pixy_CSpell_getImageSet00(lua_State* tolua_S)
  {
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getImageSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getImageSet'", NULL);
 #endif
   {
    std::string tolua_ret = (std::string)  self->getImageSet();
@@ -1868,7 +1868,7 @@ static int tolua_Elementum_Pixy_CSpell_getImageName00(lua_State* tolua_S)
  {
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getImageName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getImageName'", NULL);
 #endif
   {
    std::string tolua_ret = (std::string)  self->getImageName();
@@ -1900,7 +1900,7 @@ static int tolua_Elementum_Pixy_CSpell_getButton00(lua_State* tolua_S)
  {
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getButton'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getButton'", NULL);
 #endif
   {
    CEGUI::Window* tolua_ret = (CEGUI::Window*)  self->getButton();
@@ -1932,7 +1932,7 @@ static int tolua_Elementum_Pixy_CSpell_getTooltip00(lua_State* tolua_S)
  {
   const Pixy::CSpell* self = (const Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTooltip'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTooltip'", NULL);
 #endif
   {
    std::string tolua_ret = (std::string)  self->getTooltip();
@@ -1964,7 +1964,7 @@ static int tolua_Elementum_Pixy_CSpell_getCaster00(lua_State* tolua_S)
  {
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCaster'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCaster'", NULL);
 #endif
   {
    Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getCaster();
@@ -1996,7 +1996,7 @@ static int tolua_Elementum_Pixy_CSpell_getTarget00(lua_State* tolua_S)
  {
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTarget'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTarget'", NULL);
 #endif
   {
    Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getTarget();
@@ -2030,7 +2030,7 @@ static int tolua_Elementum_Pixy_CSpell_setCaster00(lua_State* tolua_S)
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
   Pixy::Renderable* inCaster = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCaster'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCaster'", NULL);
 #endif
   {
    self->setCaster(inCaster);
@@ -2063,7 +2063,7 @@ static int tolua_Elementum_Pixy_CSpell_setTarget00(lua_State* tolua_S)
   Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
   Pixy::Renderable* inTarget = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTarget'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTarget'", NULL);
 #endif
   {
    self->setTarget(inTarget);
@@ -2094,7 +2094,7 @@ static int tolua_Elementum_Pixy_CDeck_generate00(lua_State* tolua_S)
  {
   Pixy::CDeck* self = (Pixy::CDeck*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'generate'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'generate'", NULL);
 #endif
   {
    self->generate();
@@ -2127,7 +2127,7 @@ static int tolua_Elementum_Pixy_CDeck_getSpell00(lua_State* tolua_S)
   Pixy::CDeck* self = (Pixy::CDeck*)  tolua_tousertype(tolua_S,1,0);
   std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'", NULL);
 #endif
   {
    Pixy::CSpell* tolua_ret = (Pixy::CSpell*)  self->getSpell(inName);
@@ -2216,7 +2216,7 @@ static int tolua_Elementum_Pixy_CUnit_delete00(lua_State* tolua_S)
  {
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -2245,7 +2245,7 @@ static int tolua_Elementum_Pixy_CUnit_getRenderable00(lua_State* tolua_S)
  {
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRenderable'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRenderable'", NULL);
 #endif
   {
    Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getRenderable();
@@ -2279,7 +2279,7 @@ static int tolua_Elementum_Pixy_CUnit_attachBuff00(lua_State* tolua_S)
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
   Pixy::CSpell* tolua_var_3 = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'", NULL);
 #endif
   {
    self->attachBuff(tolua_var_3);
@@ -2312,7 +2312,7 @@ static int tolua_Elementum_Pixy_CUnit_detachBuff00(lua_State* tolua_S)
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachBuff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachBuff'", NULL);
 #endif
   {
    self->detachBuff(inUID);
@@ -2345,7 +2345,7 @@ static int tolua_Elementum_Pixy_CUnit_hasBuff00(lua_State* tolua_S)
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
   int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuff'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasBuff(inUID);
@@ -2377,7 +2377,7 @@ static int tolua_Elementum_Pixy_CUnit_updateTextOverlay00(lua_State* tolua_S)
  {
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateTextOverlay'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateTextOverlay'", NULL);
 #endif
   {
    self->updateTextOverlay();
@@ -2440,7 +2440,7 @@ static int tolua_Elementum_Pixy_CUnit_setWalkSpeed00(lua_State* tolua_S)
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
   const float inSpeed = ((const float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWalkSpeed'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWalkSpeed'", NULL);
 #endif
   {
    self->setWalkSpeed(inSpeed);
@@ -2471,7 +2471,7 @@ static int tolua_Elementum_Pixy_CUnit_getWalkSpeed00(lua_State* tolua_S)
  {
   const Pixy::CUnit* self = (const Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWalkSpeed'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWalkSpeed'", NULL);
 #endif
   {
    float tolua_ret = (float)  self->getWalkSpeed();
@@ -2560,7 +2560,7 @@ static int tolua_Elementum_Pixy_CUnit_getEnemy00(lua_State* tolua_S)
  {
   const Pixy::CUnit* self = (const Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEnemy'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEnemy'", NULL);
 #endif
   {
    Pixy::CPuppet* tolua_ret = (Pixy::CPuppet*)  self->getEnemy();
@@ -2594,7 +2594,7 @@ static int tolua_Elementum_Pixy_CUnit_setHP00(lua_State* tolua_S)
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
   int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'", NULL);
 #endif
   {
    self->setHP(inHP);
@@ -2625,7 +2625,7 @@ static int tolua_Elementum_Pixy_FxEngine_delete00(lua_State* tolua_S)
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -2712,7 +2712,7 @@ static int tolua_Elementum_Pixy_FxEngine_loadEffect00(lua_State* tolua_S)
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
   std::string name = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadEffect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadEffect'", NULL);
 #endif
   {
    self->loadEffect(name);
@@ -2745,7 +2745,7 @@ static int tolua_Elementum_Pixy_FxEngine_registerHighlightEffect00(lua_State* to
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
   std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerHighlightEffect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerHighlightEffect'", NULL);
 #endif
   {
    self->registerHighlightEffect(inName);
@@ -2780,7 +2780,7 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect00(lua_State* tolua_S)
   std::string tolua_var_4 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   Pixy::Renderable* tolua_var_5 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
    self->playEffect(tolua_var_4,tolua_var_5);
@@ -2813,7 +2813,7 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect01(lua_State* tolua_S)
   std::string tolua_var_6 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   Ogre::Vector3 tolua_var_7 = *((Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
    self->playEffect(tolua_var_6,tolua_var_7);
@@ -2860,7 +2860,7 @@ static int tolua_Elementum_Pixy_GameManager_changeState00(lua_State* tolua_S)
   Pixy::GameManager* self = (Pixy::GameManager*)  tolua_tousertype(tolua_S,1,0);
   Pixy::GameState* inState = ((Pixy::GameState*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeState'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeState'", NULL);
 #endif
   {
    self->changeState(inState);
@@ -2919,7 +2919,7 @@ static int tolua_Elementum_Pixy_GameManager_requestShutdown00(lua_State* tolua_S
  {
   Pixy::GameManager* self = (Pixy::GameManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'requestShutdown'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'requestShutdown'", NULL);
 #endif
   {
    self->requestShutdown();
@@ -2952,7 +2952,7 @@ static int tolua_Elementum_Pixy_GameState_changeState00(lua_State* tolua_S)
   Pixy::GameState* self = (Pixy::GameState*)  tolua_tousertype(tolua_S,1,0);
   Pixy::GameState* state = ((Pixy::GameState*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeState'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeState'", NULL);
 #endif
   {
    self->changeState(state);
@@ -2983,7 +2983,7 @@ static int tolua_Elementum_Pixy_GameState_requestShutdown00(lua_State* tolua_S)
  {
   Pixy::GameState* self = (Pixy::GameState*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'requestShutdown'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'requestShutdown'", NULL);
 #endif
   {
    self->requestShutdown();
@@ -3070,7 +3070,7 @@ static int tolua_Elementum_Pixy_Combat_getPuppets00(lua_State* tolua_S)
  {
   Pixy::Combat* self = (Pixy::Combat*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPuppets'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPuppets'", NULL);
 #endif
   {
    std::list<Pixy::CPuppet*> const& tolua_ret = (std::list<Pixy::CPuppet*> const&)  self->getPuppets();
@@ -3102,7 +3102,7 @@ static int tolua_Elementum_Pixy_UIEngine_delete00(lua_State* tolua_S)
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -3159,7 +3159,7 @@ static int tolua_Elementum_Pixy_UIEngine_setup00(lua_State* tolua_S)
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setup'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setup'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->setup();
@@ -3193,7 +3193,7 @@ static int tolua_Elementum_Pixy_UIEngine_update00(lua_State* tolua_S)
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
   unsigned long lTimeElapsed = ((unsigned long)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'update'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'update'", NULL);
 #endif
   {
    self->update(lTimeElapsed);
@@ -3224,7 +3224,7 @@ static int tolua_Elementum_Pixy_UIEngine_cleanup00(lua_State* tolua_S)
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'cleanup'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'cleanup'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->cleanup();
@@ -3260,7 +3260,7 @@ static int tolua_Elementum_Pixy_UIEngine_setMargin00(lua_State* tolua_S)
   CEGUI::Window* tolua_var_8 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
   CEGUI::UBox tolua_var_9 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMargin'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMargin'", NULL);
 #endif
   {
    self->setMargin(tolua_var_8,tolua_var_9);
@@ -3295,7 +3295,7 @@ static int tolua_Elementum_Pixy_UIEngine_connectAnimation00(lua_State* tolua_S)
   CEGUI::Window* tolua_var_10 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
   std::string tolua_var_11 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'connectAnimation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'connectAnimation'", NULL);
 #endif
   {
    self->connectAnimation(tolua_var_10,tolua_var_11);
@@ -3330,7 +3330,7 @@ static int tolua_Elementum_Pixy_UIEngine_refreshTooltipSize00(lua_State* tolua_S
   CEGUI::Window* inWindow = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
   Pixy::CSpell* inSpell = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'refreshTooltipSize'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'refreshTooltipSize'", NULL);
 #endif
   {
    self->refreshTooltipSize(inWindow,inSpell);
@@ -3730,7 +3730,7 @@ static int tolua_Elementum_Pixy_GfxEngine_delete00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -3787,7 +3787,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupMovableTextOverlays00(lua_State* 
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupMovableTextOverlays'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupMovableTextOverlays'", NULL);
 #endif
   {
    self->setupMovableTextOverlays();
@@ -3820,7 +3820,7 @@ static int tolua_Elementum_Pixy_GfxEngine_attachToScene00(lua_State* tolua_S)
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   Pixy::Renderable* inEntity = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachToScene'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachToScene'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->attachToScene(inEntity);
@@ -3854,7 +3854,7 @@ static int tolua_Elementum_Pixy_GfxEngine_detachFromScene00(lua_State* tolua_S)
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   Pixy::Renderable* inEntity = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachFromScene'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachFromScene'", NULL);
 #endif
   {
    self->detachFromScene(inEntity);
@@ -3885,7 +3885,7 @@ static int tolua_Elementum_Pixy_GfxEngine_getSelected00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSelected'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSelected'", NULL);
 #endif
   {
    Pixy::Renderable* tolua_ret = (Pixy::Renderable*)  self->getSelected();
@@ -3917,7 +3917,7 @@ static int tolua_Elementum_Pixy_GfxEngine_getCamera00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCamera'", NULL);
 #endif
   {
    Ogre::Camera* tolua_ret = (Ogre::Camera*)  self->getCamera();
@@ -3949,7 +3949,7 @@ static int tolua_Elementum_Pixy_GfxEngine_getRoot00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRoot'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRoot'", NULL);
 #endif
   {
    Ogre::Root* tolua_ret = (Ogre::Root*)  self->getRoot();
@@ -3981,7 +3981,7 @@ static int tolua_Elementum_Pixy_GfxEngine_getSceneMgr00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneMgr'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneMgr'", NULL);
 #endif
   {
    Ogre::SceneManager* tolua_ret = (Ogre::SceneManager*)  self->getSceneMgr();
@@ -4013,7 +4013,7 @@ static int tolua_Elementum_Pixy_GfxEngine_getViewport00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getViewport'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getViewport'", NULL);
 #endif
   {
    Ogre::Viewport* tolua_ret = (Ogre::Viewport*)  self->getViewport();
@@ -4045,7 +4045,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupSceneManager00(lua_State* tolua_S
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupSceneManager'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupSceneManager'", NULL);
 #endif
   {
    self->setupSceneManager();
@@ -4076,7 +4076,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupViewports00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupViewports'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupViewports'", NULL);
 #endif
   {
    self->setupViewports();
@@ -4107,7 +4107,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupCamera00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupCamera'", NULL);
 #endif
   {
    self->setupCamera();
@@ -4138,7 +4138,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupTerrain00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupTerrain'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupTerrain'", NULL);
 #endif
   {
    self->setupTerrain();
@@ -4169,7 +4169,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupLights00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupLights'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupLights'", NULL);
 #endif
   {
    self->setupLights();
@@ -4200,7 +4200,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupNodes00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupNodes'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupNodes'", NULL);
 #endif
   {
    self->setupNodes();
@@ -4231,7 +4231,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setupWaypoints00(lua_State* tolua_S)
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupWaypoints'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupWaypoints'", NULL);
 #endif
   {
    self->setupWaypoints();
@@ -4264,7 +4264,7 @@ static int tolua_Elementum_Pixy_GfxEngine_changeOwnership00(lua_State* tolua_S)
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   Pixy::CUnit* inUnit = ((Pixy::CUnit*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeOwnership'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeOwnership'", NULL);
 #endif
   {
    self->changeOwnership(inUnit);
@@ -4297,7 +4297,7 @@ static int tolua_Elementum_Pixy_GfxEngine_loadScene00(lua_State* tolua_S)
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   std::string inOgreMaxScene = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadScene'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadScene'", NULL);
 #endif
   {
    OgreMax::OgreMaxScene* tolua_ret = (OgreMax::OgreMaxScene*)  self->loadScene(inOgreMaxScene);
@@ -4331,7 +4331,7 @@ static int tolua_Elementum_Pixy_GfxEngine_unloadScene00(lua_State* tolua_S)
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   OgreMax::OgreMaxScene* inScene = ((OgreMax::OgreMaxScene*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unloadScene'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unloadScene'", NULL);
 #endif
   {
    self->unloadScene(inScene);
@@ -4364,7 +4364,7 @@ static int tolua_Elementum_Pixy_GfxEngine_enableCompositorEffect00(lua_State* to
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   std::string inEffect = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'enableCompositorEffect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'enableCompositorEffect'", NULL);
 #endif
   {
    self->enableCompositorEffect(inEffect);
@@ -4399,7 +4399,7 @@ static int tolua_Elementum_Pixy_GfxEngine_loadDotScene00(lua_State* tolua_S)
   std::string inFile = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   std::string inName = ((std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadDotScene'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadDotScene'", NULL);
 #endif
   {
    self->loadDotScene(inFile,inName);
@@ -4438,7 +4438,7 @@ static int tolua_Elementum_Pixy_GfxEngine_createSphere00(lua_State* tolua_S)
   const int nRings = ((const int)  tolua_tonumber(tolua_S,4,16));
   const int nSegments = ((const int)  tolua_tonumber(tolua_S,5,16));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createSphere'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createSphere'", NULL);
 #endif
   {
    self->createSphere(strName,r,nRings,nSegments);
@@ -4472,7 +4472,7 @@ static int tolua_Elementum_Pixy_GfxEngine_getScreenCoords00(lua_State* tolua_S)
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
   Ogre::MovableObject* inObject = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScreenCoords'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScreenCoords'", NULL);
 #endif
   {
    Ogre::Vector2 tolua_ret = (Ogre::Vector2)  self->getScreenCoords(inObject);
@@ -4589,7 +4589,7 @@ static int tolua_Elementum_Pixy_NetworkManager_send00(lua_State* tolua_S)
   Pixy::NetworkManager* self = (Pixy::NetworkManager*)  tolua_tousertype(tolua_S,1,0);
   const Pixy::Event* tolua_var_12 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'", NULL);
 #endif
   {
    self->send(*tolua_var_12);
@@ -4648,7 +4648,7 @@ static int tolua_Elementum_Pixy_ScriptEngine_getScriptPathPrefix00(lua_State* to
  {
   const Pixy::ScriptEngine* self = (const Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScriptPathPrefix'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScriptPathPrefix'", NULL);
 #endif
   {
    std::string tolua_ret = (std::string)  self->getScriptPathPrefix();
@@ -4680,7 +4680,7 @@ static int tolua_Elementum_Pixy_ScriptEngine_getModulePathPrefix00(lua_State* to
  {
   const Pixy::ScriptEngine* self = (const Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getModulePathPrefix'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getModulePathPrefix'", NULL);
 #endif
   {
    std::string tolua_ret = (std::string)  self->getModulePathPrefix();
@@ -5248,7 +5248,7 @@ static int tolua_Elementum_Ogre_Degree_valueDegrees00(lua_State* tolua_S)
  {
   const Ogre::Degree* self = (const Ogre::Degree*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueDegrees'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueDegrees'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->valueDegrees();
@@ -5280,7 +5280,7 @@ static int tolua_Elementum_Ogre_Degree_valueRadians00(lua_State* tolua_S)
  {
   const Ogre::Degree* self = (const Ogre::Degree*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueRadians'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueRadians'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->valueRadians();
@@ -5312,7 +5312,7 @@ static int tolua_Elementum_Ogre_Degree_valueAngleUnits00(lua_State* tolua_S)
  {
   const Ogre::Degree* self = (const Ogre::Degree*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueAngleUnits'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueAngleUnits'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->valueAngleUnits();
@@ -5456,7 +5456,7 @@ static int tolua_Elementum_Ogre_Radian_valueDegrees00(lua_State* tolua_S)
  {
   const Ogre::Radian* self = (const Ogre::Radian*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueDegrees'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueDegrees'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->valueDegrees();
@@ -5488,7 +5488,7 @@ static int tolua_Elementum_Ogre_Radian_valueRadians00(lua_State* tolua_S)
  {
   const Ogre::Radian* self = (const Ogre::Radian*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueRadians'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueRadians'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->valueRadians();
@@ -5520,7 +5520,7 @@ static int tolua_Elementum_Ogre_Radian_valueAngleUnits00(lua_State* tolua_S)
  {
   const Ogre::Radian* self = (const Ogre::Radian*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueAngleUnits'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'valueAngleUnits'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->valueAngleUnits();
@@ -5613,7 +5613,7 @@ static int tolua_Elementum_Ogre_Angle__Radian00(lua_State* tolua_S)
  {
   const Ogre::Angle* self = (const Ogre::Angle*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'operatorRadian'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'operatorRadian'", NULL);
 #endif
   {
    Ogre::Radian tolua_ret = (Ogre::Radian)  self->operator  Ogre::Radian();
@@ -5655,7 +5655,7 @@ static int tolua_Elementum_Ogre_Angle__Degree00(lua_State* tolua_S)
  {
   const Ogre::Angle* self = (const Ogre::Angle*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'operatorDegree'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'operatorDegree'", NULL);
 #endif
   {
    Ogre::Degree tolua_ret = (Ogre::Degree)  self->operator  Ogre::Degree();
@@ -6294,7 +6294,7 @@ static int tolua_Elementum_Ogre_AxisAlignedBox_getSize00(lua_State* tolua_S)
  {
   const Ogre::AxisAlignedBox* self = (const Ogre::AxisAlignedBox*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSize'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSize'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getSize();
@@ -6328,7 +6328,7 @@ static int tolua_Elementum_Ogre_MovableObject_setRenderQueueGroup00(lua_State* t
   Ogre::MovableObject* self = (Ogre::MovableObject*)  tolua_tousertype(tolua_S,1,0);
    int queueID = ((  int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRenderQueueGroup'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRenderQueueGroup'", NULL);
 #endif
   {
    self->setRenderQueueGroup(queueID);
@@ -6363,7 +6363,7 @@ static int tolua_Elementum_Ogre_MovableObject_setRenderQueueGroupAndPriority00(l
    int queueID = ((  int)  tolua_tonumber(tolua_S,2,0));
   unsigned short priority = (( unsigned short)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRenderQueueGroupAndPriority'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRenderQueueGroupAndPriority'", NULL);
 #endif
   {
    self->setRenderQueueGroupAndPriority(queueID,priority);
@@ -6394,7 +6394,7 @@ static int tolua_Elementum_Ogre_MovableObject_getBoundingBox00(lua_State* tolua_
  {
   const Ogre::MovableObject* self = (const Ogre::MovableObject*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBoundingBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBoundingBox'", NULL);
 #endif
   {
    const Ogre::AxisAlignedBox& tolua_ret = (const Ogre::AxisAlignedBox&)  self->getBoundingBox();
@@ -6426,7 +6426,7 @@ static int tolua_Elementum_Ogre_MovableObject_getMovableType00(lua_State* tolua_
  {
   const Ogre::MovableObject* self = (const Ogre::MovableObject*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMovableType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMovableType'", NULL);
 #endif
   {
     const std::string& tolua_ret = (  const std::string&)  self->getMovableType();
@@ -6437,6 +6437,39 @@ static int tolua_Elementum_Ogre_MovableObject_getMovableType00(lua_State* tolua_
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getMovableType'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setQueryFlags of class  Ogre::MovableObject */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_MovableObject_setQueryFlags00
+static int tolua_Elementum_Ogre_MovableObject_setQueryFlags00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::MovableObject",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::MovableObject* self = (Ogre::MovableObject*)  tolua_tousertype(tolua_S,1,0);
+  int flags = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setQueryFlags'", NULL);
+#endif
+  {
+   self->setQueryFlags(flags);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setQueryFlags'.",&tolua_err);
  return 0;
 #endif
 }
@@ -6460,7 +6493,7 @@ static int tolua_Elementum_Ogre_Node_setPosition00(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* pos = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(*pos);
@@ -6491,7 +6524,7 @@ static int tolua_Elementum_Ogre_Node_getPosition00(lua_State* tolua_S)
  {
   const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'", NULL);
 #endif
   {
    Ogre::Vector3& tolua_ret = (Ogre::Vector3&)  self->getPosition();
@@ -6525,7 +6558,7 @@ static int tolua_Elementum_Ogre_Node_setScale00(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* scale = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
 #endif
   {
    self->setScale(*scale);
@@ -6560,7 +6593,7 @@ static int tolua_Elementum_Ogre_Node_setScale01(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
 #endif
   {
    self->setScale(x,y,z);
@@ -6588,7 +6621,7 @@ static int tolua_Elementum_Ogre_Node_getScale00(lua_State* tolua_S)
  {
   const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScale'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScale'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getScale();
@@ -6620,7 +6653,7 @@ static int tolua_Elementum_Ogre_Node_createChild00(lua_State* tolua_S)
  {
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->createChild();
@@ -6652,7 +6685,7 @@ static int tolua_Elementum_Ogre_Node_createChild01(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->createChild(*translate);
@@ -6683,7 +6716,7 @@ static int tolua_Elementum_Ogre_Node_createChild02(lua_State* tolua_S)
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
   const Ogre::Quaternion* rotate = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->createChild(*translate,*rotate);
@@ -6712,7 +6745,7 @@ static int tolua_Elementum_Ogre_Node_createChild03(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->createChild(name);
@@ -6743,7 +6776,7 @@ static int tolua_Elementum_Ogre_Node_createChild04(lua_State* tolua_S)
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->createChild(name,*translate);
@@ -6776,7 +6809,7 @@ static int tolua_Elementum_Ogre_Node_createChild05(lua_State* tolua_S)
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
   const Ogre::Quaternion* rotate = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->createChild(name,*translate,*rotate);
@@ -6807,7 +6840,7 @@ static int tolua_Elementum_Ogre_Node_addChild00(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Node* child = ((Ogre::Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
 #endif
   {
    self->addChild(child);
@@ -6840,7 +6873,7 @@ static int tolua_Elementum_Ogre_Node_getChild00(lua_State* tolua_S)
   const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   unsigned short index = ((unsigned short)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->getChild(index);
@@ -6872,7 +6905,7 @@ static int tolua_Elementum_Ogre_Node_getChild01(lua_State* tolua_S)
   const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->getChild(name);
@@ -6903,7 +6936,7 @@ static int tolua_Elementum_Ogre_Node_removeChild00(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   unsigned short index = ((unsigned short)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->removeChild(index);
@@ -6935,7 +6968,7 @@ static int tolua_Elementum_Ogre_Node_removeChild01(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Node* child = ((Ogre::Node*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->removeChild(child);
@@ -6964,7 +6997,7 @@ static int tolua_Elementum_Ogre_Node_removeChild02(lua_State* tolua_S)
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'", NULL);
 #endif
   {
    Ogre::Node* tolua_ret = (Ogre::Node*)  self->removeChild(name);
@@ -6993,7 +7026,7 @@ static int tolua_Elementum_Ogre_Node_removeAllChildren00(lua_State* tolua_S)
  {
   Ogre::Node* self = (Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllChildren'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllChildren'", NULL);
 #endif
   {
    self->removeAllChildren();
@@ -7026,7 +7059,7 @@ static int tolua_Elementum_Ogre_Entity_getSubEntity00(lua_State* tolua_S)
   const Ogre::Entity* self = (const Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
   unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSubEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSubEntity'", NULL);
 #endif
   {
    Ogre::SubEntity* tolua_ret = (Ogre::SubEntity*)  self->getSubEntity(index);
@@ -7058,7 +7091,7 @@ static int tolua_Elementum_Ogre_Entity_getSubEntity01(lua_State* tolua_S)
   const Ogre::Entity* self = (const Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSubEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSubEntity'", NULL);
 #endif
   {
    Ogre::SubEntity* tolua_ret = (Ogre::SubEntity*)  self->getSubEntity(name);
@@ -7087,7 +7120,7 @@ static int tolua_Elementum_Ogre_Entity_getNumSubEntities00(lua_State* tolua_S)
  {
   const Ogre::Entity* self = (const Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumSubEntities'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumSubEntities'", NULL);
 #endif
   {
    unsigned int tolua_ret = (unsigned int)  self->getNumSubEntities();
@@ -7121,7 +7154,7 @@ static int tolua_Elementum_Ogre_Entity_setDisplaySkeleton00(lua_State* tolua_S)
   Ogre::Entity* self = (Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
   bool display = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDisplaySkeleton'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDisplaySkeleton'", NULL);
 #endif
   {
    self->setDisplaySkeleton(display);
@@ -7154,7 +7187,7 @@ static int tolua_Elementum_Ogre_Entity_getWorldBoundingBox00(lua_State* tolua_S)
   const Ogre::Entity* self = (const Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
   bool derive = ((bool)  tolua_toboolean(tolua_S,2,false));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWorldBoundingBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWorldBoundingBox'", NULL);
 #endif
   {
    const Ogre::AxisAlignedBox& tolua_ret = (const Ogre::AxisAlignedBox&)  self->getWorldBoundingBox(derive);
@@ -7188,7 +7221,7 @@ static int tolua_Elementum_Ogre_Entity_setMaterialName00(lua_State* tolua_S)
   Ogre::Entity* self = (Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'", NULL);
 #endif
   {
    self->setMaterialName(name);
@@ -7221,7 +7254,7 @@ static int tolua_Elementum_Ogre_Entity_setMaterialName01(lua_State* tolua_S)
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
   const std::string groupName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'", NULL);
 #endif
   {
    self->setMaterialName(name,groupName);
@@ -7251,7 +7284,7 @@ static int tolua_Elementum_Ogre_Entity_setCastShadows00(lua_State* tolua_S)
   Ogre::Entity* self = (Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
   bool enabled = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCastShadows'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCastShadows'", NULL);
 #endif
   {
    self->setCastShadows(enabled);
@@ -7282,7 +7315,7 @@ static int tolua_Elementum_Ogre_Entity_getCastShadows00(lua_State* tolua_S)
  {
   Ogre::Entity* self = (Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCastShadows'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCastShadows'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->getCastShadows();
@@ -7316,7 +7349,7 @@ static int tolua_Elementum_Ogre_SceneNode_yaw00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Degree tolua_var_13 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'", NULL);
 #endif
   {
    self->yaw(tolua_var_13);
@@ -7349,7 +7382,7 @@ static int tolua_Elementum_Ogre_SceneNode_pitch00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Degree tolua_var_14 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'", NULL);
 #endif
   {
    self->pitch(tolua_var_14);
@@ -7382,7 +7415,7 @@ static int tolua_Elementum_Ogre_SceneNode_roll00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Degree tolua_var_15 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'", NULL);
 #endif
   {
    self->roll(tolua_var_15);
@@ -7415,7 +7448,7 @@ static int tolua_Elementum_Ogre_SceneNode_attachObject00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   Ogre::MovableObject* obj = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachObject'", NULL);
 #endif
   {
    self->attachObject(obj);
@@ -7446,7 +7479,7 @@ static int tolua_Elementum_Ogre_SceneNode_numAttachedObjects00(lua_State* tolua_
  {
   const Ogre::SceneNode* self = (const Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'numAttachedObjects'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'numAttachedObjects'", NULL);
 #endif
   {
    unsigned short tolua_ret = (unsigned short)  self->numAttachedObjects();
@@ -7480,7 +7513,7 @@ static int tolua_Elementum_Ogre_SceneNode_getAttachedObject00(lua_State* tolua_S
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   unsigned short index = ((unsigned short)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttachedObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttachedObject'", NULL);
 #endif
   {
    Ogre::MovableObject* tolua_ret = (Ogre::MovableObject*)  self->getAttachedObject(index);
@@ -7512,7 +7545,7 @@ static int tolua_Elementum_Ogre_SceneNode_getAttachedObject01(lua_State* tolua_S
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttachedObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttachedObject'", NULL);
 #endif
   {
    Ogre::MovableObject* tolua_ret = (Ogre::MovableObject*)  self->getAttachedObject(name);
@@ -7543,7 +7576,7 @@ static int tolua_Elementum_Ogre_SceneNode_detachObject00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   unsigned short index = ((unsigned short)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachObject'", NULL);
 #endif
   {
    Ogre::MovableObject* tolua_ret = (Ogre::MovableObject*)  self->detachObject(index);
@@ -7575,7 +7608,7 @@ static int tolua_Elementum_Ogre_SceneNode_detachObject01(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   Ogre::MovableObject* obj = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachObject'", NULL);
 #endif
   {
    self->detachObject(obj);
@@ -7603,7 +7636,7 @@ static int tolua_Elementum_Ogre_SceneNode_detachObject02(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachObject'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachObject'", NULL);
 #endif
   {
    Ogre::MovableObject* tolua_ret = (Ogre::MovableObject*)  self->detachObject(name);
@@ -7632,7 +7665,7 @@ static int tolua_Elementum_Ogre_SceneNode_detachAllObjects00(lua_State* tolua_S)
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachAllObjects'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachAllObjects'", NULL);
 #endif
   {
    self->detachAllObjects();
@@ -7663,7 +7696,7 @@ static int tolua_Elementum_Ogre_SceneNode_getCreator00(lua_State* tolua_S)
  {
   const Ogre::SceneNode* self = (const Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCreator'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCreator'", NULL);
 #endif
   {
    Ogre::SceneManager* tolua_ret = (Ogre::SceneManager*)  self->getCreator();
@@ -7695,7 +7728,7 @@ static int tolua_Elementum_Ogre_SceneNode_createChildSceneNode00(lua_State* tolu
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createChildSceneNode();
@@ -7727,7 +7760,7 @@ static int tolua_Elementum_Ogre_SceneNode_createChildSceneNode01(lua_State* tolu
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createChildSceneNode(*translate);
@@ -7758,7 +7791,7 @@ static int tolua_Elementum_Ogre_SceneNode_createChildSceneNode02(lua_State* tolu
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
   const Ogre::Quaternion* rotate = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createChildSceneNode(*translate,*rotate);
@@ -7787,7 +7820,7 @@ static int tolua_Elementum_Ogre_SceneNode_createChildSceneNode03(lua_State* tolu
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createChildSceneNode(name);
@@ -7818,7 +7851,7 @@ static int tolua_Elementum_Ogre_SceneNode_createChildSceneNode04(lua_State* tolu
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createChildSceneNode(name,*translate);
@@ -7851,7 +7884,7 @@ static int tolua_Elementum_Ogre_SceneNode_createChildSceneNode05(lua_State* tolu
   const Ogre::Vector3* translate = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
   const Ogre::Quaternion* rotate = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createChildSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createChildSceneNode(name,*translate,*rotate);
@@ -7882,7 +7915,7 @@ static int tolua_Elementum_Ogre_SceneNode_removeAndDestroyChild00(lua_State* tol
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAndDestroyChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAndDestroyChild'", NULL);
 #endif
   {
    self->removeAndDestroyChild(name);
@@ -7913,7 +7946,7 @@ static int tolua_Elementum_Ogre_SceneNode_removeAndDestroyChild01(lua_State* tol
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   unsigned short index = ((unsigned short)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAndDestroyChild'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAndDestroyChild'", NULL);
 #endif
   {
    self->removeAndDestroyChild(index);
@@ -7941,7 +7974,7 @@ static int tolua_Elementum_Ogre_SceneNode_removeAndDestroyAllChildren00(lua_Stat
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAndDestroyAllChildren'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAndDestroyAllChildren'", NULL);
 #endif
   {
    self->removeAndDestroyAllChildren();
@@ -7974,7 +8007,7 @@ static int tolua_Elementum_Ogre_SceneNode_showBoundingBox00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   bool bShow = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'showBoundingBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'showBoundingBox'", NULL);
 #endif
   {
    self->showBoundingBox(bShow);
@@ -8007,7 +8040,7 @@ static int tolua_Elementum_Ogre_SceneNode_hideBoundingBox00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   bool bHide = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hideBoundingBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hideBoundingBox'", NULL);
 #endif
   {
    self->hideBoundingBox(bHide);
@@ -8046,7 +8079,7 @@ static int tolua_Elementum_Ogre_SceneNode_setDirection00(lua_State* tolua_S)
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
   Ogre::Node::TransformSpace relativeTo = ((Ogre::Node::TransformSpace) (int)  tolua_tonumber(tolua_S,5,Ogre::Node::TS_LOCAL));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(x,y,z,relativeTo);
@@ -8085,7 +8118,7 @@ static int tolua_Elementum_Ogre_SceneNode_setDirection01(lua_State* tolua_S)
   Ogre::Node::TransformSpace relativeTo = ((Ogre::Node::TransformSpace) (int)  tolua_tonumber(tolua_S,5,0));
   const Ogre::Vector3* localDirectionVector = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,6,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(x,y,z,relativeTo,*localDirectionVector);
@@ -8115,7 +8148,7 @@ static int tolua_Elementum_Ogre_SceneNode_setDirection02(lua_State* tolua_S)
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
   Ogre::Node::TransformSpace relativeTo = ((Ogre::Node::TransformSpace) (int)  tolua_tonumber(tolua_S,3,Ogre::Node::TS_LOCAL));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(*vec,relativeTo);
@@ -8147,7 +8180,7 @@ static int tolua_Elementum_Ogre_SceneNode_setDirection03(lua_State* tolua_S)
   Ogre::Node::TransformSpace relativeTo = ((Ogre::Node::TransformSpace) (int)  tolua_tonumber(tolua_S,3,0));
   const Ogre::Vector3* localDirectionVector = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(*vec,relativeTo,*localDirectionVector);
@@ -8179,7 +8212,7 @@ static int tolua_Elementum_Ogre_SceneNode_lookAt00(lua_State* tolua_S)
   const Ogre::Vector3* targetPoint = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
   Ogre::Node::TransformSpace relativeTo = ((Ogre::Node::TransformSpace) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'", NULL);
 #endif
   {
    self->lookAt(*targetPoint,relativeTo);
@@ -8214,7 +8247,7 @@ static int tolua_Elementum_Ogre_SceneNode_lookAt01(lua_State* tolua_S)
   Ogre::Node::TransformSpace relativeTo = ((Ogre::Node::TransformSpace) (int)  tolua_tonumber(tolua_S,3,0));
   const Ogre::Vector3* localDirectionVector = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'", NULL);
 #endif
   {
    self->lookAt(*targetPoint,relativeTo,*localDirectionVector);
@@ -8246,7 +8279,7 @@ static int tolua_Elementum_Ogre_SceneNode_setAutoTracking00(lua_State* tolua_S)
   bool enabled = ((bool)  tolua_toboolean(tolua_S,2,0));
   Ogre::SceneNode* target = ((Ogre::SceneNode*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoTracking'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoTracking'", NULL);
 #endif
   {
    self->setAutoTracking(enabled,target);
@@ -8281,7 +8314,7 @@ static int tolua_Elementum_Ogre_SceneNode_setAutoTracking01(lua_State* tolua_S)
   Ogre::SceneNode* target = ((Ogre::SceneNode*)  tolua_tousertype(tolua_S,3,0));
   const Ogre::Vector3* localDirectionVector = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoTracking'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoTracking'", NULL);
 #endif
   {
    self->setAutoTracking(enabled,target,*localDirectionVector);
@@ -8315,7 +8348,7 @@ static int tolua_Elementum_Ogre_SceneNode_setAutoTracking02(lua_State* tolua_S)
   const Ogre::Vector3* localDirectionVector = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,4,0));
   const Ogre::Vector3* offset = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoTracking'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoTracking'", NULL);
 #endif
   {
    self->setAutoTracking(enabled,target,*localDirectionVector,*offset);
@@ -8343,7 +8376,7 @@ static int tolua_Elementum_Ogre_SceneNode_getAutoTrackTarget00(lua_State* tolua_
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoTrackTarget'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoTrackTarget'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getAutoTrackTarget();
@@ -8375,7 +8408,7 @@ static int tolua_Elementum_Ogre_SceneNode_getAutoTrackOffset00(lua_State* tolua_
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoTrackOffset'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoTrackOffset'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getAutoTrackOffset();
@@ -8407,7 +8440,7 @@ static int tolua_Elementum_Ogre_SceneNode_getAutoTrackLocalDirection00(lua_State
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoTrackLocalDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoTrackLocalDirection'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getAutoTrackLocalDirection();
@@ -8439,7 +8472,7 @@ static int tolua_Elementum_Ogre_SceneNode_getParentSceneNode00(lua_State* tolua_
  {
   const Ogre::SceneNode* self = (const Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getParentSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getParentSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getParentSceneNode();
@@ -8475,7 +8508,7 @@ static int tolua_Elementum_Ogre_SceneNode_setVisible00(lua_State* tolua_S)
   bool visible = ((bool)  tolua_toboolean(tolua_S,2,0));
   bool cascade = ((bool)  tolua_toboolean(tolua_S,3,true));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVisible'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVisible'", NULL);
 #endif
   {
    self->setVisible(visible,cascade);
@@ -8508,7 +8541,7 @@ static int tolua_Elementum_Ogre_SceneNode_flipVisibility00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   bool cascade = ((bool)  tolua_toboolean(tolua_S,2,true));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'flipVisibility'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'flipVisibility'", NULL);
 #endif
   {
    self->flipVisibility(cascade);
@@ -8541,7 +8574,7 @@ static int tolua_Elementum_Ogre_SceneNode_setOrientation00(lua_State* tolua_S)
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Quaternion* q = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'", NULL);
 #endif
   {
    self->setOrientation(*q);
@@ -8578,7 +8611,7 @@ static int tolua_Elementum_Ogre_SceneNode_setOrientation01(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,4,0));
    float z = ((  float)  tolua_tonumber(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'", NULL);
 #endif
   {
    self->setOrientation(w,x,y,z);
@@ -8714,7 +8747,7 @@ static int tolua_Elementum_Ogre_Light_delete00(lua_State* tolua_S)
  {
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -8745,7 +8778,7 @@ static int tolua_Elementum_Ogre_Light_setType00(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Light::LightTypes type = ((Ogre::Light::LightTypes) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setType'", NULL);
 #endif
   {
    self->setType(type);
@@ -8776,7 +8809,7 @@ static int tolua_Elementum_Ogre_Light_getType00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getType'", NULL);
 #endif
   {
    Ogre::Light::LightTypes tolua_ret = (Ogre::Light::LightTypes)  self->getType();
@@ -8814,7 +8847,7 @@ static int tolua_Elementum_Ogre_Light_setDiffuseColour00(lua_State* tolua_S)
    float green = ((  float)  tolua_tonumber(tolua_S,3,0));
    float blue = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDiffuseColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDiffuseColour'", NULL);
 #endif
   {
    self->setDiffuseColour(red,green,blue);
@@ -8845,7 +8878,7 @@ static int tolua_Elementum_Ogre_Light_setDiffuseColour01(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDiffuseColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDiffuseColour'", NULL);
 #endif
   {
    self->setDiffuseColour(*colour);
@@ -8873,7 +8906,7 @@ static int tolua_Elementum_Ogre_Light_getDiffuseColour00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDiffuseColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDiffuseColour'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getDiffuseColour();
@@ -8911,7 +8944,7 @@ static int tolua_Elementum_Ogre_Light_setSpecularColour00(lua_State* tolua_S)
    float green = ((  float)  tolua_tonumber(tolua_S,3,0));
    float blue = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpecularColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpecularColour'", NULL);
 #endif
   {
    self->setSpecularColour(red,green,blue);
@@ -8942,7 +8975,7 @@ static int tolua_Elementum_Ogre_Light_setSpecularColour01(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpecularColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpecularColour'", NULL);
 #endif
   {
    self->setSpecularColour(*colour);
@@ -8970,7 +9003,7 @@ static int tolua_Elementum_Ogre_Light_getSpecularColour00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpecularColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpecularColour'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getSpecularColour();
@@ -9010,7 +9043,7 @@ static int tolua_Elementum_Ogre_Light_setAttenuation00(lua_State* tolua_S)
    float linear = ((  float)  tolua_tonumber(tolua_S,4,0));
    float quadratic = ((  float)  tolua_tonumber(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAttenuation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAttenuation'", NULL);
 #endif
   {
    self->setAttenuation(range,constant,linear,quadratic);
@@ -9041,7 +9074,7 @@ static int tolua_Elementum_Ogre_Light_getAttenuationRange00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationRange'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationRange'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getAttenuationRange();
@@ -9073,7 +9106,7 @@ static int tolua_Elementum_Ogre_Light_getAttenuationConstant00(lua_State* tolua_
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationConstant'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationConstant'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getAttenuationConstant();
@@ -9105,7 +9138,7 @@ static int tolua_Elementum_Ogre_Light_getAttenuationLinear00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationLinear'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationLinear'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getAttenuationLinear();
@@ -9137,7 +9170,7 @@ static int tolua_Elementum_Ogre_Light_getAttenuationQuadric00(lua_State* tolua_S
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationQuadric'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAttenuationQuadric'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getAttenuationQuadric();
@@ -9175,7 +9208,7 @@ static int tolua_Elementum_Ogre_Light_setPosition00(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(x,y,z);
@@ -9206,7 +9239,7 @@ static int tolua_Elementum_Ogre_Light_setPosition01(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(*vec);
@@ -9234,7 +9267,7 @@ static int tolua_Elementum_Ogre_Light_getPosition00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getPosition();
@@ -9272,7 +9305,7 @@ static int tolua_Elementum_Ogre_Light_setDirection00(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(x,y,z);
@@ -9303,7 +9336,7 @@ static int tolua_Elementum_Ogre_Light_setDirection01(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(*vec);
@@ -9331,7 +9364,7 @@ static int tolua_Elementum_Ogre_Light_getDirection00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDirection'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getDirection();
@@ -9369,7 +9402,7 @@ static int tolua_Elementum_Ogre_Light_setSpotlightRange00(lua_State* tolua_S)
   const Ogre::Radian* outerAngle = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,3,0));
    float falloff = ((  float)  tolua_tonumber(tolua_S,4,1.0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightRange'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightRange'", NULL);
 #endif
   {
    self->setSpotlightRange(*innerAngle,*outerAngle,falloff);
@@ -9400,7 +9433,7 @@ static int tolua_Elementum_Ogre_Light_getSpotlightInnerAngle00(lua_State* tolua_
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightInnerAngle'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightInnerAngle'", NULL);
 #endif
   {
    const Ogre::Radian& tolua_ret = (const Ogre::Radian&)  self->getSpotlightInnerAngle();
@@ -9432,7 +9465,7 @@ static int tolua_Elementum_Ogre_Light_getSpotlightOuterAngle00(lua_State* tolua_
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightOuterAngle'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightOuterAngle'", NULL);
 #endif
   {
    const Ogre::Radian& tolua_ret = (const Ogre::Radian&)  self->getSpotlightOuterAngle();
@@ -9464,7 +9497,7 @@ static int tolua_Elementum_Ogre_Light_getSpotlightFalloff00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightFalloff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpotlightFalloff'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getSpotlightFalloff();
@@ -9498,7 +9531,7 @@ static int tolua_Elementum_Ogre_Light_setSpotlightInnerAngle00(lua_State* tolua_
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Radian* val = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightInnerAngle'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightInnerAngle'", NULL);
 #endif
   {
    self->setSpotlightInnerAngle(*val);
@@ -9531,7 +9564,7 @@ static int tolua_Elementum_Ogre_Light_setSpotlightOuterAngle00(lua_State* tolua_
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Radian* val = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightOuterAngle'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightOuterAngle'", NULL);
 #endif
   {
    self->setSpotlightOuterAngle(*val);
@@ -9564,7 +9597,7 @@ static int tolua_Elementum_Ogre_Light_setSpotlightFalloff00(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
    float val = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightFalloff'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSpotlightFalloff'", NULL);
 #endif
   {
    self->setSpotlightFalloff(val);
@@ -9597,7 +9630,7 @@ static int tolua_Elementum_Ogre_Light_setPowerScale00(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
    float power = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPowerScale'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPowerScale'", NULL);
 #endif
   {
    self->setPowerScale(power);
@@ -9628,7 +9661,7 @@ static int tolua_Elementum_Ogre_Light_getPowerScale00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPowerScale'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPowerScale'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getPowerScale();
@@ -9660,7 +9693,7 @@ static int tolua_Elementum_Ogre_Light_getBoundingBox00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBoundingBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBoundingBox'", NULL);
 #endif
   {
    const Ogre::AxisAlignedBox& tolua_ret = (const Ogre::AxisAlignedBox&)  self->getBoundingBox();
@@ -9692,7 +9725,7 @@ static int tolua_Elementum_Ogre_Light_getMovableType00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMovableType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMovableType'", NULL);
 #endif
   {
     const std::string& tolua_ret = (  const std::string&)  self->getMovableType();
@@ -9726,7 +9759,7 @@ static int tolua_Elementum_Ogre_Light_getDerivedPosition00(lua_State* tolua_S)
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   bool cameraRelativeIfSet = ((bool)  tolua_toboolean(tolua_S,2,false));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDerivedPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDerivedPosition'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getDerivedPosition(cameraRelativeIfSet);
@@ -9758,7 +9791,7 @@ static int tolua_Elementum_Ogre_Light_getDerivedDirection00(lua_State* tolua_S)
  {
   const Ogre::Light* self = (const Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDerivedDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDerivedDirection'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getDerivedDirection();
@@ -9792,7 +9825,7 @@ static int tolua_Elementum_Ogre_Light_setVisible00(lua_State* tolua_S)
   Ogre::Light* self = (Ogre::Light*)  tolua_tousertype(tolua_S,1,0);
   bool visible = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVisible'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVisible'", NULL);
 #endif
   {
    self->setVisible(visible);
@@ -9890,7 +9923,7 @@ static int tolua_Elementum_Ogre_Camera_delete00(lua_State* tolua_S)
  {
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -9919,7 +9952,7 @@ static int tolua_Elementum_Ogre_Camera_getSceneManager00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneManager'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneManager'", NULL);
 #endif
   {
    Ogre::SceneManager* tolua_ret = (Ogre::SceneManager*)  self->getSceneManager();
@@ -9953,7 +9986,7 @@ static int tolua_Elementum_Ogre_Camera_setAspectRatio00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
    float ratio = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAspectRatio'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAspectRatio'", NULL);
 #endif
   {
    self->setAspectRatio(ratio);
@@ -9986,7 +10019,7 @@ static int tolua_Elementum_Ogre_Camera_setNearClipDistance00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
    float nearDist = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setNearClipDistance'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setNearClipDistance'", NULL);
 #endif
   {
    self->setNearClipDistance(nearDist);
@@ -10017,7 +10050,7 @@ static int tolua_Elementum_Ogre_Camera_getNearClipDistance00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNearClipDistance'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNearClipDistance'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getNearClipDistance();
@@ -10051,7 +10084,7 @@ static int tolua_Elementum_Ogre_Camera_setFarClipDistance00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
    float farDist = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFarClipDistance'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFarClipDistance'", NULL);
 #endif
   {
    self->setFarClipDistance(farDist);
@@ -10082,7 +10115,7 @@ static int tolua_Elementum_Ogre_Camera_getFarClipDistance00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFarClipDistance'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFarClipDistance'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getFarClipDistance();
@@ -10116,7 +10149,7 @@ static int tolua_Elementum_Ogre_Camera_setPolygonMode00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   Ogre::PolygonMode sd = ((Ogre::PolygonMode) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPolygonMode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPolygonMode'", NULL);
 #endif
   {
    self->setPolygonMode(sd);
@@ -10147,7 +10180,7 @@ static int tolua_Elementum_Ogre_Camera_getPolygonMode00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPolygonMode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPolygonMode'", NULL);
 #endif
   {
    Ogre::PolygonMode tolua_ret = (Ogre::PolygonMode)  self->getPolygonMode();
@@ -10185,7 +10218,7 @@ static int tolua_Elementum_Ogre_Camera_setPosition00(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(x,y,z);
@@ -10216,7 +10249,7 @@ static int tolua_Elementum_Ogre_Camera_setPosition01(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(*vec);
@@ -10244,7 +10277,7 @@ static int tolua_Elementum_Ogre_Camera_getPosition00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getPosition();
@@ -10278,7 +10311,7 @@ static int tolua_Elementum_Ogre_Camera_move00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'move'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'move'", NULL);
 #endif
   {
    self->move(*vec);
@@ -10311,7 +10344,7 @@ static int tolua_Elementum_Ogre_Camera_moveRelative00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'moveRelative'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'moveRelative'", NULL);
 #endif
   {
    self->moveRelative(*vec);
@@ -10348,7 +10381,7 @@ static int tolua_Elementum_Ogre_Camera_setDirection00(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(x,y,z);
@@ -10379,7 +10412,7 @@ static int tolua_Elementum_Ogre_Camera_setDirection01(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
   {
    self->setDirection(*vec);
@@ -10407,7 +10440,7 @@ static int tolua_Elementum_Ogre_Camera_getDirection00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDirection'", NULL);
 #endif
   {
    Ogre::Vector3 tolua_ret = (Ogre::Vector3)  self->getDirection();
@@ -10449,7 +10482,7 @@ static int tolua_Elementum_Ogre_Camera_getUp00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUp'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUp'", NULL);
 #endif
   {
    Ogre::Vector3 tolua_ret = (Ogre::Vector3)  self->getUp();
@@ -10491,7 +10524,7 @@ static int tolua_Elementum_Ogre_Camera_getRight00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRight'", NULL);
 #endif
   {
    Ogre::Vector3 tolua_ret = (Ogre::Vector3)  self->getRight();
@@ -10535,7 +10568,7 @@ static int tolua_Elementum_Ogre_Camera_lookAt00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* targetPoint = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'", NULL);
 #endif
   {
    self->lookAt(*targetPoint);
@@ -10570,7 +10603,7 @@ static int tolua_Elementum_Ogre_Camera_lookAt01(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lookAt'", NULL);
 #endif
   {
    self->lookAt(x,y,z);
@@ -10600,7 +10633,7 @@ static int tolua_Elementum_Ogre_Camera_roll00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Radian* angle = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'", NULL);
 #endif
   {
    self->roll(*angle);
@@ -10633,7 +10666,7 @@ static int tolua_Elementum_Ogre_Camera_yaw00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Radian* angle = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'", NULL);
 #endif
   {
    self->yaw(*angle);
@@ -10666,7 +10699,7 @@ static int tolua_Elementum_Ogre_Camera_pitch00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Radian* angle = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'", NULL);
 #endif
   {
    self->pitch(*angle);
@@ -10701,7 +10734,7 @@ static int tolua_Elementum_Ogre_Camera_rotate00(lua_State* tolua_S)
   const Ogre::Vector3* axis = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
   const Ogre::Radian* angle = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'", NULL);
 #endif
   {
    self->rotate(*axis,*angle);
@@ -10732,7 +10765,7 @@ static int tolua_Elementum_Ogre_Camera_rotate01(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Quaternion* q = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotate'", NULL);
 #endif
   {
    self->rotate(*q);
@@ -10762,7 +10795,7 @@ static int tolua_Elementum_Ogre_Camera_setFixedYawAxis00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   bool useFixed = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFixedYawAxis'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFixedYawAxis'", NULL);
 #endif
   {
    self->setFixedYawAxis(useFixed);
@@ -10795,7 +10828,7 @@ static int tolua_Elementum_Ogre_Camera_setFixedYawAxis01(lua_State* tolua_S)
   bool useFixed = ((bool)  tolua_toboolean(tolua_S,2,0));
   const Ogre::Vector3* fixedAxis = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFixedYawAxis'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFixedYawAxis'", NULL);
 #endif
   {
    self->setFixedYawAxis(useFixed,*fixedAxis);
@@ -10823,7 +10856,7 @@ static int tolua_Elementum_Ogre_Camera_getOrientation00(lua_State* tolua_S)
  {
   const Ogre::Camera* self = (const Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOrientation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOrientation'", NULL);
 #endif
   {
    const Ogre::Quaternion& tolua_ret = (const Ogre::Quaternion&)  self->getOrientation();
@@ -10857,7 +10890,7 @@ static int tolua_Elementum_Ogre_Camera_setOrientation00(lua_State* tolua_S)
   Ogre::Camera* self = (Ogre::Camera*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Quaternion* q = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrientation'", NULL);
 #endif
   {
    self->setOrientation(*q);
@@ -10890,7 +10923,7 @@ static int tolua_Elementum_Ogre_SceneManager_createCamera00(lua_State* tolua_S)
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createCamera'", NULL);
 #endif
   {
    Ogre::Camera* tolua_ret = (Ogre::Camera*)  self->createCamera(name);
@@ -10924,7 +10957,7 @@ static int tolua_Elementum_Ogre_SceneManager_getCamera00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCamera'", NULL);
 #endif
   {
    Ogre::Camera* tolua_ret = (Ogre::Camera*)  self->getCamera(name);
@@ -10958,7 +10991,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasCamera00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasCamera'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasCamera(name);
@@ -10990,7 +11023,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyAllCameras00(lua_State* tolu
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllCameras'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllCameras'", NULL);
 #endif
   {
    self->destroyAllCameras();
@@ -11023,7 +11056,7 @@ static int tolua_Elementum_Ogre_SceneManager_createLight00(lua_State* tolua_S)
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createLight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createLight'", NULL);
 #endif
   {
    Ogre::Light* tolua_ret = (Ogre::Light*)  self->createLight(name);
@@ -11053,7 +11086,7 @@ static int tolua_Elementum_Ogre_SceneManager_createLight01(lua_State* tolua_S)
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createLight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createLight'", NULL);
 #endif
   {
    Ogre::Light* tolua_ret = (Ogre::Light*)  self->createLight();
@@ -11084,7 +11117,7 @@ static int tolua_Elementum_Ogre_SceneManager_getLight00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLight'", NULL);
 #endif
   {
    Ogre::Light* tolua_ret = (Ogre::Light*)  self->getLight(name);
@@ -11118,7 +11151,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasLight00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasLight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasLight'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasLight(name);
@@ -11152,7 +11185,7 @@ static int tolua_Elementum_Ogre_SceneManager_setAmbientLight00(lua_State* tolua_
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAmbientLight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAmbientLight'", NULL);
 #endif
   {
    self->setAmbientLight(*colour);
@@ -11183,7 +11216,7 @@ static int tolua_Elementum_Ogre_SceneManager_getAmbientLight00(lua_State* tolua_
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAmbientLight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAmbientLight'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getAmbientLight();
@@ -11217,7 +11250,7 @@ static int tolua_Elementum_Ogre_SceneManager_setWorldGeometry00(lua_State* tolua
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string filename = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWorldGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWorldGeometry'", NULL);
 #endif
   {
    self->setWorldGeometry(filename);
@@ -11248,7 +11281,7 @@ static int tolua_Elementum_Ogre_SceneManager_clearScene00(lua_State* tolua_S)
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clearScene'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clearScene'", NULL);
 #endif
   {
    self->clearScene();
@@ -11279,7 +11312,7 @@ static int tolua_Elementum_Ogre_SceneManager_createSceneNode00(lua_State* tolua_
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createSceneNode();
@@ -11311,7 +11344,7 @@ static int tolua_Elementum_Ogre_SceneManager_createSceneNode01(lua_State* tolua_
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->createSceneNode(name);
@@ -11342,7 +11375,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroySceneNode00(lua_State* tolua
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroySceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroySceneNode'", NULL);
 #endif
   {
    self->destroySceneNode(name);
@@ -11373,7 +11406,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroySceneNode01(lua_State* tolua
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::SceneNode* sn = ((Ogre::SceneNode*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroySceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroySceneNode'", NULL);
 #endif
   {
    self->destroySceneNode(sn);
@@ -11401,7 +11434,7 @@ static int tolua_Elementum_Ogre_SceneManager_getRootSceneNode00(lua_State* tolua
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRootSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRootSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getRootSceneNode();
@@ -11435,7 +11468,7 @@ static int tolua_Elementum_Ogre_SceneManager_getSceneNode00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getSceneNode(name);
@@ -11469,7 +11502,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasSceneNode00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasSceneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasSceneNode'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasSceneNode(name);
@@ -11505,7 +11538,7 @@ static int tolua_Elementum_Ogre_SceneManager_createEntity00(lua_State* tolua_S)
   const std::string entityName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
   const std::string meshName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'", NULL);
 #endif
   {
    Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->createEntity(entityName,meshName);
@@ -11541,7 +11574,7 @@ static int tolua_Elementum_Ogre_SceneManager_createEntity01(lua_State* tolua_S)
   const std::string meshName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
   const std::string groupName = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'", NULL);
 #endif
   {
    Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->createEntity(entityName,meshName,groupName);
@@ -11570,7 +11603,7 @@ static int tolua_Elementum_Ogre_SceneManager_createEntity02(lua_State* tolua_S)
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string meshName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createEntity'", NULL);
 #endif
   {
    Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->createEntity(meshName);
@@ -11601,7 +11634,7 @@ static int tolua_Elementum_Ogre_SceneManager_getEntity00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEntity'", NULL);
 #endif
   {
    Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->getEntity(name);
@@ -11635,7 +11668,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasEntity00(lua_State* tolua_S)
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasEntity'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasEntity(name);
@@ -11669,7 +11702,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyEntity00(lua_State* tolua_S)
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Entity* ent = ((Ogre::Entity*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyEntity'", NULL);
 #endif
   {
    self->destroyEntity(ent);
@@ -11700,7 +11733,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyEntity01(lua_State* tolua_S)
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyEntity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyEntity'", NULL);
 #endif
   {
    self->destroyEntity(name);
@@ -11728,7 +11761,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyAllEntities00(lua_State* tol
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllEntities'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllEntities'", NULL);
 #endif
   {
    self->destroyAllEntities();
@@ -11777,7 +11810,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyPlane00(lua_State* tolua_S)
   int xsegments = ((int)  tolua_tonumber(tolua_S,9,1));
   int ysegments = ((int)  tolua_tonumber(tolua_S,10,1));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyPlane'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyPlane'", NULL);
 #endif
   {
    self->setSkyPlane(enable,*plane,materialName,scale,tiling,drawFirst,bow,xsegments,ysegments);
@@ -11826,7 +11859,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyPlane01(lua_State* tolua_S)
   int ysegments = ((int)  tolua_tonumber(tolua_S,10,0));
   const std::string groupName = ((const std::string)  tolua_tocppstring(tolua_S,11,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyPlane'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyPlane'", NULL);
 #endif
   {
    self->setSkyPlane(enable,*plane,materialName,scale,tiling,drawFirst,bow,xsegments,ysegments,groupName);
@@ -11856,7 +11889,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyPlaneEnabled00(lua_State* tol
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   bool enable = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyPlaneEnabled'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyPlaneEnabled'", NULL);
 #endif
   {
    self->setSkyPlaneEnabled(enable);
@@ -11887,7 +11920,7 @@ static int tolua_Elementum_Ogre_SceneManager_isSkyPlaneEnabled00(lua_State* tolu
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSkyPlaneEnabled'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSkyPlaneEnabled'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->isSkyPlaneEnabled();
@@ -11919,7 +11952,7 @@ static int tolua_Elementum_Ogre_SceneManager_getSkyPlaneNode00(lua_State* tolua_
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSkyPlaneNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSkyPlaneNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getSkyPlaneNode();
@@ -11959,7 +11992,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyBox00(lua_State* tolua_S)
    float distance = ((  float)  tolua_tonumber(tolua_S,4,5000));
   bool drawFirst = ((bool)  tolua_toboolean(tolua_S,5,true));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBox'", NULL);
 #endif
   {
    self->setSkyBox(enable,materialName,distance,drawFirst);
@@ -11998,7 +12031,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyBox01(lua_State* tolua_S)
   bool drawFirst = ((bool)  tolua_toboolean(tolua_S,5,0));
   const Ogre::Quaternion* orientation = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,6,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBox'", NULL);
 #endif
   {
    self->setSkyBox(enable,materialName,distance,drawFirst,*orientation);
@@ -12036,7 +12069,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyBox02(lua_State* tolua_S)
   const Ogre::Quaternion* orientation = ((const Ogre::Quaternion*)  tolua_tousertype(tolua_S,6,0));
   const std::string groupName = ((const std::string)  tolua_tocppstring(tolua_S,7,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBox'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBox'", NULL);
 #endif
   {
    self->setSkyBox(enable,materialName,distance,drawFirst,*orientation,groupName);
@@ -12066,7 +12099,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyBoxEnabled00(lua_State* tolua
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   bool enable = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBoxEnabled'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyBoxEnabled'", NULL);
 #endif
   {
    self->setSkyBoxEnabled(enable);
@@ -12097,7 +12130,7 @@ static int tolua_Elementum_Ogre_SceneManager_isSkyBoxEnabled00(lua_State* tolua_
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSkyBoxEnabled'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSkyBoxEnabled'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->isSkyBoxEnabled();
@@ -12129,7 +12162,7 @@ static int tolua_Elementum_Ogre_SceneManager_getSkyBoxNode00(lua_State* tolua_S)
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSkyBoxNode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSkyBoxNode'", NULL);
 #endif
   {
    Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getSkyBoxNode();
@@ -12173,7 +12206,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyDome00(lua_State* tolua_S)
    float distance = ((  float)  tolua_tonumber(tolua_S,6,4000));
   bool drawFirst = ((bool)  tolua_toboolean(tolua_S,7,true));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyDome'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyDome'", NULL);
 #endif
   {
    self->setSkyDome(enable,materialName,curvature,tiling,distance,drawFirst);
@@ -12222,7 +12255,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyDome01(lua_State* tolua_S)
   int ysegments = ((int)  tolua_tonumber(tolua_S,10,16));
   int ysegments_keep = ((int)  tolua_tonumber(tolua_S,11,-1));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyDome'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyDome'", NULL);
 #endif
   {
    self->setSkyDome(enable,materialName,curvature,tiling,distance,drawFirst,*orientation,xsegments,ysegments,ysegments_keep);
@@ -12270,7 +12303,7 @@ static int tolua_Elementum_Ogre_SceneManager_setSkyDome02(lua_State* tolua_S)
   int ysegments_keep = ((int)  tolua_tonumber(tolua_S,11,0));
   const std::string groupName = ((const std::string)  tolua_tocppstring(tolua_S,12,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyDome'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkyDome'", NULL);
 #endif
   {
    self->setSkyDome(enable,materialName,curvature,tiling,distance,drawFirst,*orientation,xsegments,ysegments,ysegments_keep,groupName);
@@ -12300,7 +12333,7 @@ static int tolua_Elementum_Ogre_SceneManager_setFog00(lua_State* tolua_S)
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::FogMode mode = ((Ogre::FogMode) (int)  tolua_tonumber(tolua_S,2,Ogre::FOG_NONE));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFog'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFog'", NULL);
 #endif
   {
    self->setFog(mode);
@@ -12339,7 +12372,7 @@ static int tolua_Elementum_Ogre_SceneManager_setFog01(lua_State* tolua_S)
    float linearStart = ((  float)  tolua_tonumber(tolua_S,5,0.0));
    float linearEnd = ((  float)  tolua_tonumber(tolua_S,6,1.0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFog'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFog'", NULL);
 #endif
   {
    self->setFog(mode,*colour,expDensity,linearStart,linearEnd);
@@ -12367,7 +12400,7 @@ static int tolua_Elementum_Ogre_SceneManager_getFogMode00(lua_State* tolua_S)
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogMode'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogMode'", NULL);
 #endif
   {
    Ogre::FogMode tolua_ret = (Ogre::FogMode)  self->getFogMode();
@@ -12399,7 +12432,7 @@ static int tolua_Elementum_Ogre_SceneManager_getFogColour00(lua_State* tolua_S)
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogColour'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getFogColour();
@@ -12431,7 +12464,7 @@ static int tolua_Elementum_Ogre_SceneManager_getFogStart00(lua_State* tolua_S)
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogStart'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogStart'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getFogStart();
@@ -12463,7 +12496,7 @@ static int tolua_Elementum_Ogre_SceneManager_getFogEnd00(lua_State* tolua_S)
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogEnd'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogEnd'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getFogEnd();
@@ -12495,7 +12528,7 @@ static int tolua_Elementum_Ogre_SceneManager_getFogDensity00(lua_State* tolua_S)
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogDensity'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFogDensity'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getFogDensity();
@@ -12529,7 +12562,7 @@ static int tolua_Elementum_Ogre_SceneManager_setShadowTechnique00(lua_State* tol
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::ShadowTechnique technique = ((Ogre::ShadowTechnique) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShadowTechnique'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShadowTechnique'", NULL);
 #endif
   {
    self->setShadowTechnique(technique);
@@ -12560,7 +12593,7 @@ static int tolua_Elementum_Ogre_SceneManager_getShadowTechnique00(lua_State* tol
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getShadowTechnique'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getShadowTechnique'", NULL);
 #endif
   {
    Ogre::ShadowTechnique tolua_ret = (Ogre::ShadowTechnique)  self->getShadowTechnique();
@@ -12594,7 +12627,7 @@ static int tolua_Elementum_Ogre_SceneManager_setShadowColour00(lua_State* tolua_
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShadowColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShadowColour'", NULL);
 #endif
   {
    self->setShadowColour(*colour);
@@ -12625,7 +12658,7 @@ static int tolua_Elementum_Ogre_SceneManager_getShadowColour00(lua_State* tolua_
  {
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getShadowColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getShadowColour'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getShadowColour();
@@ -12659,7 +12692,7 @@ static int tolua_Elementum_Ogre_SceneManager_createStaticGeometry00(lua_State* t
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createStaticGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createStaticGeometry'", NULL);
 #endif
   {
    Ogre::StaticGeometry* tolua_ret = (Ogre::StaticGeometry*)  self->createStaticGeometry(name);
@@ -12693,7 +12726,7 @@ static int tolua_Elementum_Ogre_SceneManager_getStaticGeometry00(lua_State* tolu
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStaticGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStaticGeometry'", NULL);
 #endif
   {
    Ogre::StaticGeometry* tolua_ret = (Ogre::StaticGeometry*)  self->getStaticGeometry(name);
@@ -12727,7 +12760,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasStaticGeometry00(lua_State* tolu
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasStaticGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasStaticGeometry'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasStaticGeometry(name);
@@ -12761,7 +12794,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyStaticGeometry00(lua_State* 
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::StaticGeometry* geom = ((Ogre::StaticGeometry*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyStaticGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyStaticGeometry'", NULL);
 #endif
   {
    self->destroyStaticGeometry(geom);
@@ -12792,7 +12825,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyStaticGeometry01(lua_State* 
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyStaticGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyStaticGeometry'", NULL);
 #endif
   {
    self->destroyStaticGeometry(name);
@@ -12820,7 +12853,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyAllStaticGeometry00(lua_Stat
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllStaticGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllStaticGeometry'", NULL);
 #endif
   {
    self->destroyAllStaticGeometry();
@@ -12853,7 +12886,7 @@ static int tolua_Elementum_Ogre_SceneManager_createInstancedGeometry00(lua_State
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createInstancedGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createInstancedGeometry'", NULL);
 #endif
   {
    Ogre::InstancedGeometry* tolua_ret = (Ogre::InstancedGeometry*)  self->createInstancedGeometry(name);
@@ -12887,7 +12920,7 @@ static int tolua_Elementum_Ogre_SceneManager_getInstancedGeometry00(lua_State* t
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getInstancedGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getInstancedGeometry'", NULL);
 #endif
   {
    Ogre::InstancedGeometry* tolua_ret = (Ogre::InstancedGeometry*)  self->getInstancedGeometry(name);
@@ -12921,7 +12954,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyInstancedGeometry00(lua_Stat
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::InstancedGeometry* geom = ((Ogre::InstancedGeometry*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyInstancedGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyInstancedGeometry'", NULL);
 #endif
   {
    self->destroyInstancedGeometry(geom);
@@ -12952,7 +12985,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyInstancedGeometry01(lua_Stat
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyInstancedGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyInstancedGeometry'", NULL);
 #endif
   {
    self->destroyInstancedGeometry(name);
@@ -12980,7 +13013,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyAllInstancedGeometry00(lua_S
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllInstancedGeometry'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllInstancedGeometry'", NULL);
 #endif
   {
    self->destroyAllInstancedGeometry();
@@ -13013,7 +13046,7 @@ static int tolua_Elementum_Ogre_SceneManager_createRibbonTrail00(lua_State* tolu
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createRibbonTrail'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createRibbonTrail'", NULL);
 #endif
   {
    Ogre::RibbonTrail* tolua_ret = (Ogre::RibbonTrail*)  self->createRibbonTrail(name);
@@ -13043,7 +13076,7 @@ static int tolua_Elementum_Ogre_SceneManager_createRibbonTrail01(lua_State* tolu
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createRibbonTrail'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createRibbonTrail'", NULL);
 #endif
   {
    Ogre::RibbonTrail* tolua_ret = (Ogre::RibbonTrail*)  self->createRibbonTrail();
@@ -13074,7 +13107,7 @@ static int tolua_Elementum_Ogre_SceneManager_getRibbonTrail00(lua_State* tolua_S
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRibbonTrail'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRibbonTrail'", NULL);
 #endif
   {
    Ogre::RibbonTrail* tolua_ret = (Ogre::RibbonTrail*)  self->getRibbonTrail(name);
@@ -13108,7 +13141,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasRibbonTrail00(lua_State* tolua_S
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasRibbonTrail'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasRibbonTrail'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasRibbonTrail(name);
@@ -13142,7 +13175,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyRibbonTrail00(lua_State* tol
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::RibbonTrail* obj = ((Ogre::RibbonTrail*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyRibbonTrail'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyRibbonTrail'", NULL);
 #endif
   {
    self->destroyRibbonTrail(obj);
@@ -13173,7 +13206,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyRibbonTrail01(lua_State* tol
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyRibbonTrail'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyRibbonTrail'", NULL);
 #endif
   {
    self->destroyRibbonTrail(name);
@@ -13201,7 +13234,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyAllRibbonTrails00(lua_State*
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllRibbonTrails'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllRibbonTrails'", NULL);
 #endif
   {
    self->destroyAllRibbonTrails();
@@ -13236,7 +13269,7 @@ static int tolua_Elementum_Ogre_SceneManager_createBillboardSet00(lua_State* tol
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
   unsigned int poolSize = ((unsigned int)  tolua_tonumber(tolua_S,3,20));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboardSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboardSet'", NULL);
 #endif
   {
    Ogre::BillboardSet* tolua_ret = (Ogre::BillboardSet*)  self->createBillboardSet(name,poolSize);
@@ -13268,7 +13301,7 @@ static int tolua_Elementum_Ogre_SceneManager_createBillboardSet01(lua_State* tol
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   unsigned int poolSize = ((unsigned int)  tolua_tonumber(tolua_S,2,20));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboardSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboardSet'", NULL);
 #endif
   {
    Ogre::BillboardSet* tolua_ret = (Ogre::BillboardSet*)  self->createBillboardSet(poolSize);
@@ -13299,7 +13332,7 @@ static int tolua_Elementum_Ogre_SceneManager_getBillboardSet00(lua_State* tolua_
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardSet'", NULL);
 #endif
   {
    Ogre::BillboardSet* tolua_ret = (Ogre::BillboardSet*)  self->getBillboardSet(name);
@@ -13333,7 +13366,7 @@ static int tolua_Elementum_Ogre_SceneManager_hasBillboardSet00(lua_State* tolua_
   const Ogre::SceneManager* self = (const Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBillboardSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBillboardSet'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasBillboardSet(name);
@@ -13367,7 +13400,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyBillboardSet00(lua_State* to
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   Ogre::BillboardSet* set = ((Ogre::BillboardSet*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyBillboardSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyBillboardSet'", NULL);
 #endif
   {
    self->destroyBillboardSet(set);
@@ -13398,7 +13431,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyBillboardSet01(lua_State* to
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyBillboardSet'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyBillboardSet'", NULL);
 #endif
   {
    self->destroyBillboardSet(name);
@@ -13426,7 +13459,7 @@ static int tolua_Elementum_Ogre_SceneManager_destroyAllBillboardSets00(lua_State
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllBillboardSets'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllBillboardSets'", NULL);
 #endif
   {
    self->destroyAllBillboardSets();
@@ -13465,7 +13498,7 @@ static int tolua_Elementum_Ogre_Viewport_getActualDimensions00(lua_State* tolua_
   int width = ((int)  tolua_tonumber(tolua_S,4,0));
   int height = ((int)  tolua_tonumber(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualDimensions'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualDimensions'", NULL);
 #endif
   {
    self->getActualDimensions(left,top,width,height);
@@ -13500,7 +13533,7 @@ static int tolua_Elementum_Ogre_Viewport_getCamera00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCamera'", NULL);
 #endif
   {
    Ogre::Camera* tolua_ret = (Ogre::Camera*)  self->getCamera();
@@ -13534,7 +13567,7 @@ static int tolua_Elementum_Ogre_Viewport_setCamera00(lua_State* tolua_S)
   Ogre::Viewport* self = (Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Camera* cam = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCamera'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCamera'", NULL);
 #endif
   {
    self->setCamera(cam);
@@ -13565,7 +13598,7 @@ static int tolua_Elementum_Ogre_Viewport_getLeft00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLeft'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLeft'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getLeft();
@@ -13597,7 +13630,7 @@ static int tolua_Elementum_Ogre_Viewport_getTop00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTop'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTop'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getTop();
@@ -13629,7 +13662,7 @@ static int tolua_Elementum_Ogre_Viewport_getWidth00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWidth'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWidth'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getWidth();
@@ -13661,7 +13694,7 @@ static int tolua_Elementum_Ogre_Viewport_getHeight00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHeight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHeight'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getHeight();
@@ -13693,7 +13726,7 @@ static int tolua_Elementum_Ogre_Viewport_getActualLeft00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualLeft'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualLeft'", NULL);
 #endif
   {
    int tolua_ret = (int)  self->getActualLeft();
@@ -13725,7 +13758,7 @@ static int tolua_Elementum_Ogre_Viewport_getActualTop00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualTop'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualTop'", NULL);
 #endif
   {
    int tolua_ret = (int)  self->getActualTop();
@@ -13757,7 +13790,7 @@ static int tolua_Elementum_Ogre_Viewport_getActualWidth00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualWidth'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualWidth'", NULL);
 #endif
   {
    int tolua_ret = (int)  self->getActualWidth();
@@ -13789,7 +13822,7 @@ static int tolua_Elementum_Ogre_Viewport_getActualHeight00(lua_State* tolua_S)
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualHeight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActualHeight'", NULL);
 #endif
   {
    int tolua_ret = (int)  self->getActualHeight();
@@ -13823,7 +13856,7 @@ static int tolua_Elementum_Ogre_Viewport_setBackgroundColour00(lua_State* tolua_
   Ogre::Viewport* self = (Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBackgroundColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBackgroundColour'", NULL);
 #endif
   {
    self->setBackgroundColour(*colour);
@@ -13854,7 +13887,7 @@ static int tolua_Elementum_Ogre_Viewport_getBackgroundColour00(lua_State* tolua_
  {
   const Ogre::Viewport* self = (const Ogre::Viewport*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBackgroundColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBackgroundColour'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getBackgroundColour();
@@ -13936,7 +13969,7 @@ static int tolua_Elementum_Ogre_MeshManager_createPlane00(lua_State* tolua_S)
    float uTile = ((  float)  tolua_tonumber(tolua_S,11,1.0f));
    float vTile = ((  float)  tolua_tonumber(tolua_S,12,1.0f));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createPlane'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createPlane'", NULL);
 #endif
   {
    Ogre::MeshPtr tolua_ret = (Ogre::MeshPtr)  self->createPlane(name,groupName,*plane,width,height,xsegments,ysegments,normals,numTexCoordSets,uTile,vTile);
@@ -14000,7 +14033,7 @@ static int tolua_Elementum_Ogre_MeshManager_createPlane01(lua_State* tolua_S)
    float vTile = ((  float)  tolua_tonumber(tolua_S,12,0));
   const Ogre::Vector3* upVector = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,13,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createPlane'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createPlane'", NULL);
 #endif
   {
    Ogre::MeshPtr tolua_ret = (Ogre::MeshPtr)  self->createPlane(name,groupName,*plane,width,height,xsegments,ysegments,normals,numTexCoordSets,uTile,vTile,*upVector);
@@ -14232,7 +14265,7 @@ static int tolua_Elementum_Ogre_BillboardSet_delete00(lua_State* tolua_S)
  {
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -14263,7 +14296,7 @@ static int tolua_Elementum_Ogre_BillboardSet_createBillboard00(lua_State* tolua_
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* position = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'", NULL);
 #endif
   {
    Ogre::Billboard* tolua_ret = (Ogre::Billboard*)  self->createBillboard(*position);
@@ -14297,7 +14330,7 @@ static int tolua_Elementum_Ogre_BillboardSet_createBillboard01(lua_State* tolua_
   const Ogre::Vector3* position = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'", NULL);
 #endif
   {
    Ogre::Billboard* tolua_ret = (Ogre::Billboard*)  self->createBillboard(*position,*colour);
@@ -14330,7 +14363,7 @@ static int tolua_Elementum_Ogre_BillboardSet_createBillboard02(lua_State* tolua_
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'", NULL);
 #endif
   {
    Ogre::Billboard* tolua_ret = (Ogre::Billboard*)  self->createBillboard(x,y,z);
@@ -14365,7 +14398,7 @@ static int tolua_Elementum_Ogre_BillboardSet_createBillboard03(lua_State* tolua_
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createBillboard'", NULL);
 #endif
   {
    Ogre::Billboard* tolua_ret = (Ogre::Billboard*)  self->createBillboard(x,y,z,*colour);
@@ -14394,7 +14427,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getNumBillboards00(lua_State* tolua
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumBillboards'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumBillboards'", NULL);
 #endif
   {
    int tolua_ret = (int)  self->getNumBillboards();
@@ -14428,7 +14461,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setAutoextend00(lua_State* tolua_S)
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   bool autoextend = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoextend'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoextend'", NULL);
 #endif
   {
    self->setAutoextend(autoextend);
@@ -14459,7 +14492,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getAutoextend00(lua_State* tolua_S)
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoextend'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAutoextend'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->getAutoextend();
@@ -14493,7 +14526,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setSortingEnabled00(lua_State* tolu
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   bool sortenable = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSortingEnabled'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSortingEnabled'", NULL);
 #endif
   {
    self->setSortingEnabled(sortenable);
@@ -14524,7 +14557,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getSortingEnabled00(lua_State* tolu
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSortingEnabled'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSortingEnabled'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->getSortingEnabled();
@@ -14558,7 +14591,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setPoolSize00(lua_State* tolua_S)
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   size_t size = *((size_t*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPoolSize'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPoolSize'", NULL);
 #endif
   {
    self->setPoolSize(size);
@@ -14589,7 +14622,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getPoolSize00(lua_State* tolua_S)
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPoolSize'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPoolSize'", NULL);
 #endif
   {
    unsigned int tolua_ret = (unsigned int)  self->getPoolSize();
@@ -14621,7 +14654,7 @@ static int tolua_Elementum_Ogre_BillboardSet_clear00(lua_State* tolua_S)
  {
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clear'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clear'", NULL);
 #endif
   {
    self->clear();
@@ -14654,7 +14687,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getBillboard00(lua_State* tolua_S)
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboard'", NULL);
 #endif
   {
    Ogre::Billboard* tolua_ret = (Ogre::Billboard*)  self->getBillboard(index);
@@ -14688,7 +14721,7 @@ static int tolua_Elementum_Ogre_BillboardSet_removeBillboard00(lua_State* tolua_
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeBillboard'", NULL);
 #endif
   {
    self->removeBillboard(index);
@@ -14719,7 +14752,7 @@ static int tolua_Elementum_Ogre_BillboardSet_removeBillboard01(lua_State* tolua_
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   Ogre::Billboard* pBill = ((Ogre::Billboard*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeBillboard'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeBillboard'", NULL);
 #endif
   {
    self->removeBillboard(pBill);
@@ -14749,7 +14782,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setBillboardOrigin00(lua_State* tol
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   Ogre::BillboardOrigin origin = ((Ogre::BillboardOrigin) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBillboardOrigin'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBillboardOrigin'", NULL);
 #endif
   {
    self->setBillboardOrigin(origin);
@@ -14780,7 +14813,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getBillboardOrigin00(lua_State* tol
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardOrigin'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardOrigin'", NULL);
 #endif
   {
    Ogre::BillboardOrigin tolua_ret = (Ogre::BillboardOrigin)  self->getBillboardOrigin();
@@ -14814,7 +14847,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setBillboardRotationType00(lua_Stat
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   Ogre::BillboardRotationType rotationType = ((Ogre::BillboardRotationType) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBillboardRotationType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBillboardRotationType'", NULL);
 #endif
   {
    self->setBillboardRotationType(rotationType);
@@ -14845,7 +14878,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getBillboardRotationType00(lua_Stat
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardRotationType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardRotationType'", NULL);
 #endif
   {
    Ogre::BillboardRotationType tolua_ret = (Ogre::BillboardRotationType)  self->getBillboardRotationType();
@@ -14881,7 +14914,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setDefaultDimensions00(lua_State* t
    float width = ((  float)  tolua_tonumber(tolua_S,2,0));
    float height = ((  float)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDefaultDimensions'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDefaultDimensions'", NULL);
 #endif
   {
    self->setDefaultDimensions(width,height);
@@ -14914,7 +14947,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setDefaultWidth00(lua_State* tolua_
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
    float width = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDefaultWidth'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDefaultWidth'", NULL);
 #endif
   {
    self->setDefaultWidth(width);
@@ -14945,7 +14978,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getDefaultWidth00(lua_State* tolua_
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDefaultWidth'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDefaultWidth'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getDefaultWidth();
@@ -14979,7 +15012,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setDefaultHeight00(lua_State* tolua
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
    float height = ((  float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDefaultHeight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDefaultHeight'", NULL);
 #endif
   {
    self->setDefaultHeight(height);
@@ -15010,7 +15043,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getDefaultHeight00(lua_State* tolua
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDefaultHeight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDefaultHeight'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getDefaultHeight();
@@ -15044,7 +15077,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setMaterialName00(lua_State* tolua_
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'", NULL);
 #endif
   {
    self->setMaterialName(name);
@@ -15077,7 +15110,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setMaterialName01(lua_State* tolua_
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
   const std::string groupName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterialName'", NULL);
 #endif
   {
    self->setMaterialName(name,groupName);
@@ -15105,7 +15138,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getMaterialName00(lua_State* tolua_
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMaterialName'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMaterialName'", NULL);
 #endif
   {
     const std::string& tolua_ret = (  const std::string&)  self->getMaterialName();
@@ -15137,7 +15170,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getCullIndividually00(lua_State* to
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCullIndividually'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCullIndividually'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->getCullIndividually();
@@ -15171,7 +15204,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setCullIndividually00(lua_State* to
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   bool cullIndividual = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCullIndividually'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCullIndividually'", NULL);
 #endif
   {
    self->setCullIndividually(cullIndividual);
@@ -15204,7 +15237,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setBillboardType00(lua_State* tolua
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   Ogre::BillboardType bbt = ((Ogre::BillboardType) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBillboardType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBillboardType'", NULL);
 #endif
   {
    self->setBillboardType(bbt);
@@ -15235,7 +15268,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getBillboardType00(lua_State* tolua
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardType'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBillboardType'", NULL);
 #endif
   {
    Ogre::BillboardType tolua_ret = (Ogre::BillboardType)  self->getBillboardType();
@@ -15269,7 +15302,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setCommonDirection00(lua_State* tol
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCommonDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCommonDirection'", NULL);
 #endif
   {
    self->setCommonDirection(*vec);
@@ -15300,7 +15333,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getCommonDirection00(lua_State* tol
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCommonDirection'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCommonDirection'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getCommonDirection();
@@ -15334,7 +15367,7 @@ static int tolua_Elementum_Ogre_BillboardSet_setCommonUpVector00(lua_State* tolu
   Ogre::BillboardSet* self = (Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* vec = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCommonUpVector'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCommonUpVector'", NULL);
 #endif
   {
    self->setCommonUpVector(*vec);
@@ -15365,7 +15398,7 @@ static int tolua_Elementum_Ogre_BillboardSet_getCommonUpVector00(lua_State* tolu
  {
   const Ogre::BillboardSet* self = (const Ogre::BillboardSet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCommonUpVector'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCommonUpVector'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getCommonUpVector();
@@ -15621,7 +15654,7 @@ static int tolua_Elementum_Ogre_Billboard_delete00(lua_State* tolua_S)
  {
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
   Mtolua_delete(self);
  }
@@ -15764,7 +15797,7 @@ static int tolua_Elementum_Ogre_Billboard_getRotation00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRotation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRotation'", NULL);
 #endif
   {
    const Ogre::Radian& tolua_ret = (const Ogre::Radian&)  self->getRotation();
@@ -15798,7 +15831,7 @@ static int tolua_Elementum_Ogre_Billboard_setRotation00(lua_State* tolua_S)
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Radian* rotation = ((const Ogre::Radian*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRotation'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRotation'", NULL);
 #endif
   {
    self->setRotation(*rotation);
@@ -15831,7 +15864,7 @@ static int tolua_Elementum_Ogre_Billboard_setPosition00(lua_State* tolua_S)
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::Vector3* position = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(*position);
@@ -15866,7 +15899,7 @@ static int tolua_Elementum_Ogre_Billboard_setPosition01(lua_State* tolua_S)
    float y = ((  float)  tolua_tonumber(tolua_S,3,0));
    float z = ((  float)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
 #endif
   {
    self->setPosition(x,y,z);
@@ -15894,7 +15927,7 @@ static int tolua_Elementum_Ogre_Billboard_getPosition00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosition'", NULL);
 #endif
   {
    const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getPosition();
@@ -15930,7 +15963,7 @@ static int tolua_Elementum_Ogre_Billboard_setDimensions00(lua_State* tolua_S)
    float width = ((  float)  tolua_tonumber(tolua_S,2,0));
    float height = ((  float)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDimensions'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDimensions'", NULL);
 #endif
   {
    self->setDimensions(width,height);
@@ -15961,7 +15994,7 @@ static int tolua_Elementum_Ogre_Billboard_resetDimensions00(lua_State* tolua_S)
  {
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resetDimensions'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resetDimensions'", NULL);
 #endif
   {
    self->resetDimensions();
@@ -15994,7 +16027,7 @@ static int tolua_Elementum_Ogre_Billboard_setColour00(lua_State* tolua_S)
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
   const Ogre::ColourValue* colour = ((const Ogre::ColourValue*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColour'", NULL);
 #endif
   {
    self->setColour(*colour);
@@ -16025,7 +16058,7 @@ static int tolua_Elementum_Ogre_Billboard_getColour00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getColour'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getColour'", NULL);
 #endif
   {
    const Ogre::ColourValue& tolua_ret = (const Ogre::ColourValue&)  self->getColour();
@@ -16057,7 +16090,7 @@ static int tolua_Elementum_Ogre_Billboard_hasOwnDimensions00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasOwnDimensions'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasOwnDimensions'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->hasOwnDimensions();
@@ -16089,7 +16122,7 @@ static int tolua_Elementum_Ogre_Billboard_getOwnWidth00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnWidth'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnWidth'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getOwnWidth();
@@ -16121,7 +16154,7 @@ static int tolua_Elementum_Ogre_Billboard_getOwnHeight00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnHeight'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwnHeight'", NULL);
 #endif
   {
     float tolua_ret = (  float)  self->getOwnHeight();
@@ -16155,7 +16188,7 @@ static int tolua_Elementum_Ogre_Billboard__notifyOwner00(lua_State* tolua_S)
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
   Ogre::BillboardSet* owner = ((Ogre::BillboardSet*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_notifyOwner'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_notifyOwner'", NULL);
 #endif
   {
    self->_notifyOwner(owner);
@@ -16186,7 +16219,7 @@ static int tolua_Elementum_Ogre_Billboard_isUseTexcoordRect00(lua_State* tolua_S
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isUseTexcoordRect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isUseTexcoordRect'", NULL);
 #endif
   {
    bool tolua_ret = (bool)  self->isUseTexcoordRect();
@@ -16220,7 +16253,7 @@ static int tolua_Elementum_Ogre_Billboard_setTexcoordIndex00(lua_State* tolua_S)
   Ogre::Billboard* self = (Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
   Ogre::uint16 texcoordIndex = *((Ogre::uint16*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTexcoordIndex'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTexcoordIndex'", NULL);
 #endif
   {
    self->setTexcoordIndex(texcoordIndex);
@@ -16251,7 +16284,7 @@ static int tolua_Elementum_Ogre_Billboard_getTexcoordIndex00(lua_State* tolua_S)
  {
   const Ogre::Billboard* self = (const Ogre::Billboard*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTexcoordIndex'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTexcoordIndex'", NULL);
 #endif
   {
    Ogre::uint16 tolua_ret = (Ogre::uint16)  self->getTexcoordIndex();
@@ -16301,7 +16334,7 @@ static int tolua_Elementum_Ogre_Billboard_setTexcoordRect00(lua_State* tolua_S)
    float u1 = ((  float)  tolua_tonumber(tolua_S,4,0));
    float v1 = ((  float)  tolua_tonumber(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTexcoordRect'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTexcoordRect'", NULL);
 #endif
   {
    self->setTexcoordRect(u0,v0,u1,v1);
@@ -16509,6 +16542,8 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"GfxEngine","Pixy::GfxEngine","Pixy::Engine",NULL);
    #endif
    tolua_beginmodule(tolua_S,"GfxEngine");
+    tolua_constant(tolua_S,"ENTITY_MASK",Pixy::GfxEngine::ENTITY_MASK);
+    tolua_constant(tolua_S,"TERRAIN_MASK",Pixy::GfxEngine::TERRAIN_MASK);
     tolua_array(tolua_S,"mPuppetPos",tolua_get_Elementum_Pixy_GfxEngine_mPuppetPos,tolua_set_Elementum_Pixy_GfxEngine_mPuppetPos);
     tolua_variable(tolua_S,"mPuppetScale",tolua_get_Pixy__GfxEngine_mPuppetScale,tolua_set_Pixy__GfxEngine_mPuppetScale);
     tolua_variable(tolua_S,"mUnitScale",tolua_get_Pixy__GfxEngine_mUnitScale,tolua_set_Pixy__GfxEngine_mUnitScale);
@@ -16765,6 +16800,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setRenderQueueGroupAndPriority",tolua_Elementum_Ogre_MovableObject_setRenderQueueGroupAndPriority00);
     tolua_function(tolua_S,"getBoundingBox",tolua_Elementum_Ogre_MovableObject_getBoundingBox00);
     tolua_function(tolua_S,"getMovableType",tolua_Elementum_Ogre_MovableObject_getMovableType00);
+    tolua_function(tolua_S,"setQueryFlags",tolua_Elementum_Ogre_MovableObject_setQueryFlags00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Node","Ogre::Node","",NULL);
    tolua_beginmodule(tolua_S,"Node");

@@ -4,6 +4,11 @@ class GfxEngine : public Pixy::Engine, public Pixy::EventListener {
 
 public:
 
+enum QueryFlags {
+  ENTITY_MASK = 1<<0,
+  TERRAIN_MASK = 1<<1
+};
+
 Ogre::Vector3 mPuppetPos[2];
 Ogre::Vector3 mPuppetScale, mUnitScale;
 Ogre::ColourValue mMTOFontColor;

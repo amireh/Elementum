@@ -5,6 +5,7 @@
 --bind("CreatePuppet", Pixy.Combat.createPuppet)
 --bind("GameStarted", Pixy.Combat.gameStarted)
 bind(Pixy.EventUID.EntitySelected, Pixy.Combat.onEntitySelected)
+bind(Pixy.EventUID.EntityDeselected, Pixy.Combat.onEntityDeselected)
 bind(Pixy.EventUID.EntityAttacked, Pixy.UI.Combat.onEntityAttacked)
 
 bind(Pixy.EventUID.StartTurn, Pixy.UI.Combat.onStartTurn)

@@ -6,10 +6,16 @@ local HeroDim = {
   Height = OriginalDim.Height * HSS
 }
 
+local rotateBillboard = function(dt)
+  BBNode:yaw(Ogre.Degree(0.1 * dt))
+end
+local doNothing = function(dt) end
+local updater = doNothing
+
 Pixy.Combat.onEntitySelected = function(inEvt)
   local entity = inEvt.Any
   entity = tolua.cast(entity, "Pixy::Renderable")
-  print("Entity selected, UID: " .. entity:getEntity():getUID())
+  --~ print("Entity selected, UID: " .. entity:getEntity():getUID())
 
   if (Selected) then
     --~ Selected:getSceneNode():detachObject(BBSet)
@@ -31,20 +37,21 @@ Pixy.Combat.onEntitySelected = function(inEvt)
   else
     BBSet:setMaterialName("Elementum/Billboards/EnemyEntitySelection")
   end
+
   Selected = entity
+  updater = rotateBillboard
 end
 
 Pixy.Combat.onEntityDeselected = function()
-  Pixy.Log("Deselecting entity")
+  --~ Pixy.Log("Deselecting entity")
   if (Selected) then
     Selected:getSceneNode():removeChild(BBNode)
   end
+
   Selected = nil
+  updater = doNothing
 end
 
 updateCombat = function(dt)
-  if (Selected) then
-    --Selected:getSceneNode():yaw(Ogre.Degree(1))
-    BBNode:yaw(Ogre.Degree(0.1 * dt))
-  end
+  updater(dt)
 end

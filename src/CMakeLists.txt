@@ -25,6 +25,7 @@ SET(Elementum_SRCS
   ../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
+  ../include/MousePicker.h
 
   Connection.cpp
 
@@ -47,6 +48,7 @@ SET(Elementum_SRCS
   NetworkManager.cpp
   ScriptEngine.cpp
   UIEngine.cpp
+  MousePicker.cpp
 
   main.cpp
 
@@ -78,7 +80,7 @@ SET(PROJECT_LIBS
 if (APPLE)
 
   SET( PROJECT_FRAMEWORKS "-framework IOKit -framework Cocoa -framework Carbon -F/usr/local/lib/CEGUI -framework CEGUIBase -framework CEGUILuaScriptModule -framework CEGUIOgreRenderer -lOIS")
-  
+
   LINK_LIBRARIES(${PROJECT_FRAMEWORKS})
   #LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib/CEGUI)
   #LINK_LIBRARIES(ElementumLua ${PROJECT_FRAMEWORKS} tolua++ ${LUA_LIBRARIES})
@@ -126,7 +128,7 @@ IF (APPLE)
   SET(ICNS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../resources/elementum.icns)
   SET(PLIST_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ElementumInfo.plist.in)
   LIST(APPEND Elementum_SRCS ${ICNS_FILE})
-  
+
 ENDIF()
 
 ADD_EXECUTABLE(Elementum MACOSX_BUNDLE WIN32 ${Elementum_SRCS})
@@ -179,45 +181,45 @@ IF(APPLE)
   INSTALL(DIRECTORY "${OSX_PLUGINS_PATH}" DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${OSX_FWK_PATH}" DESTINATION ${fwk_dest_dir} COMPONENT Runtime)
   # Elementum shared libraries & Lua luafilesystem module
-  INSTALL(FILES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../lib/libElementum_Modules.dylib" 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared.dylib" 
+  INSTALL(FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/../lib/libElementum_Modules.dylib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared.dylib"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../Shared/lib/libEShared_Modules.dylib"
     "/usr/local/lib/lua/5.1/lfs.so"
     DESTINATION ${plugin_dest_dir}/Plugins COMPONENT Runtime
   )
-  
+
   # Copy Elementum resources
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/config" DESTINATION ${res_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/media" DESTINATION ${res_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/scripts" DESTINATION ${res_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/ui" DESTINATION ${res_dest_dir} COMPONENT Runtime)
-  
+
   # Create an empty directory which will hold our log files
   INSTALL(CODE "FILE(MAKE_DIRECTORY \${ENV}\${CMAKE_INSTALL_PREFIX}/${log_dest_dir})")
-  
+
   # Install the patcher application
   SET(Patcher_BUNDLE "${CMAKE_CURRENT_SOURCE_DIR}/../../Patcher/bin/Karazeh.app")
   SET(Patcher_RES "${Patcher_BUNDLE}/Contents/Resources")
   SET(Patcher_BIN "${Patcher_BUNDLE}/Contents/MacOS/Karazeh")
   INSTALL(DIRECTORY "${Patcher_RES}" DESTINATION ${bundle_dir} COMPONENT Runtime)
-  INSTALL(FILES "${Patcher_BIN}" 
-    DESTINATION ${bundle_dir}/MacOS 
-    COMPONENT Runtime 
-    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE 
+  INSTALL(FILES "${Patcher_BIN}"
+    DESTINATION ${bundle_dir}/MacOS
+    COMPONENT Runtime
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
     GROUP_READ GROUP_WRITE GROUP_EXECUTE
     WORLD_READ WORLD_EXECUTE)
   INSTALL(FILES "${Patcher_BUNDLE}/Contents/Info.plist" DESTINATION ${bundle_dir} COMPONENT Runtime)
   INSTALL(FILES "${Patcher_BUNDLE}/Contents/MacOS/patch_mirrors.txt" DESTINATION ${bundle_dir}/MacOS COMPONENT Runtime)
-  
+
 ENDIF(APPLE)
 
 # install!
-INSTALL(TARGETS Elementum 
+INSTALL(TARGETS Elementum
   BUNDLE DESTINATION . COMPONENT Runtime
   RUNTIME DESTINATION bin COMPONENT Runtime
 )
-  
+
 # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
 # where CPackConfig.cmake is created by including CPack
 # And then there's ways to customize this as well

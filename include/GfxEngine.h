@@ -68,6 +68,9 @@ namespace Pixy {
   class CPuppet;
   class Renderable;
   class EventManager;
+  class MousePicker;
+  class GenericMousePicker;
+  class PolyMousePicker;
 	/*! \class GfxEngine
 	 *	\brief
 	 *	Handles all graphics related features of the game, acts as the immediate
@@ -77,6 +80,17 @@ namespace Pixy {
 	class GfxEngine : public Engine, public EventListener, public InputListener {
 
 	public:
+
+    enum QueryFlags {
+      TERRAIN_MASK = 1<<0,
+      ENTITY_MASK = 1<<1
+    };
+
+    enum MousePickingMode {
+      GENERIC,
+      POLY
+    };
+
 		virtual ~GfxEngine();
 		static GfxEngine* getSingletonPtr();
 
@@ -101,6 +115,9 @@ namespace Pixy {
 		void setCamera(const Ogre::String& inCameraName);
 
     void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
+
+    void switchMousePickingMode();
+    int getMousePickingMode() const;
 
 		//! Attaches a Pixy::Entity to an SceneNode and renders it
 		/*!
@@ -305,6 +322,10 @@ namespace Pixy {
 
     std::string getNodeIdPrefix(CPuppet*);
     std::string getNodeIdPrefix(CUnit*);
+
+    GenericMousePicker *mGenericPicker;
+    PolyMousePicker *mPolyPicker;
+    MousePicker* mPicker;
 
 	private:
 		static GfxEngine* _myGfxEngine;

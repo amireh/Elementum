@@ -346,10 +346,12 @@ end
 local InvalidActions = {
   Block = {
     BlockerResting = "Selected unit is resting!",
-    AttackerUnblockable = "Target is unblockable."
+    AttackerUnblockable = "Target is unblockable.",
+    InvalidTarget = "You can not block that target."
   },
   Charge = {
-    AttackerRestless = "Target is restless!"
+    AttackerRestless = "Target is restless!",
+    AttackerHasNoAP = "Target has no attack power!"
   }
 }
 Pixy.UI.Combat.onInvalidAction = function(e)

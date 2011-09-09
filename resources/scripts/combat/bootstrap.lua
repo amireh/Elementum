@@ -72,6 +72,8 @@ Pixy.Combat.PrepareScene = function()
   --~ GfxEngine:loadDotScene("Elementum.scene", "General")
   Scene = GfxEngine:loadScene("MoltenChasm.scene")
   GfxEngine:getSceneMgr():getEntity("arena_02"):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
+  --local mask = tolua.cast(Pixy.GfxEngine.TERRAIN_MASK, "Ogre::uint32")
+  --GfxEngine:getSceneMgr():getEntity("arena_02"):setQueryFlags(Pixy.GfxEngine.TERRAIN_MASK)
   --Pixy.Log("Arena node is at " .. pos.x .. "," .. pos.y .. "," .. pos.z)
 
   BBNode = SceneMgr:createSceneNode("EntitySelectionNode")
@@ -91,7 +93,7 @@ Pixy.Combat.PrepareScene = function()
 
   Pixy.CUnit:setDefaultWalkSpeed(0.10)
   Pixy.Renderable:setRotationFactor(60.0)
-  Pixy.Renderable:setAnimFadeSpeed(10.0)
+  Pixy.Renderable:setAnimFadeSpeed(30.0)
 
   -- Lights
   Pixy.Combat.SetupLights()

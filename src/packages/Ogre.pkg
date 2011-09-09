@@ -219,6 +219,8 @@ namespace Ogre {
     const AxisAlignedBox& getBoundingBox(void) const;
     const String& getMovableType(void) const;
 
+    virtual void setQueryFlags(int flags);
+
   };
 
   class Node

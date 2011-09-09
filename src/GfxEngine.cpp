@@ -21,6 +21,7 @@
 #include "ScriptEngine.h"
 #include "OgreMax/OgreMaxScene.hpp"
 #include "PixyUtility.h"
+#include "MousePicker.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUI/CEGUI.h>
@@ -88,6 +89,13 @@ namespace Pixy {
 	GfxEngine::~GfxEngine() {
 		mLog->infoStream() << "shutting down";
 		if (fSetup) {
+
+      delete mGenericPicker;
+      delete mPolyPicker;
+      mGenericPicker = 0;
+      mPolyPicker = 0;
+      mPicker = 0;
+
 			mRoot = 0;
 			mSceneMgr = 0;
 			mCamera = mCamera2 = mCamera3 = mCamera4 = 0;
@@ -121,7 +129,6 @@ namespace Pixy {
 		//else
 		mSceneMgr = mRoot->createSceneManager("OctreeSceneManager", "CombatScene");
 
-
 		mCamera       = mSceneMgr->createCamera("Combat_Camera");
 
 		mRenderWindow = mRoot->getAutoCreatedWindow();
@@ -138,6 +145,8 @@ namespace Pixy {
     bind(EventUID::CancelBlock, boost::bind(&GfxEngine::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&GfxEngine::onEndBlockPhase, this, _1));
     bind(EventUID::MatchFinished, boost::bind(&GfxEngine::onMatchFinished, this, _1));
+
+    Ogre::MovableObject::setDefaultQueryFlags(TERRAIN_MASK);
 
     //mSceneLoader = new DotSceneLoader();
 
@@ -192,12 +201,16 @@ namespace Pixy {
 
     assert(mPlayer && mEnemy);
 
+    mGenericPicker = new GenericMousePicker(mSceneMgr);
+    mPolyPicker = new PolyMousePicker(mSceneMgr);
+
+    mPicker = (MousePicker*)mPolyPicker;
+
 		//mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
 		//mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
 
     setupNodes();
     setupWaypoints();
-
 
 		std::ostringstream lNodeName;
 		lNodeName << getNodeIdPrefix(mPlayer) << "_node_puppet";
@@ -866,6 +879,7 @@ namespace Pixy {
 
       mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
       mEntity->setMaterialName(inEntity->getMaterial());
+      mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
 
       mLog->debugStream() << "attaching user data to ogre entity";
       mEntity->setUserAny(Ogre::Any(inRenderable));
@@ -923,6 +937,8 @@ namespace Pixy {
       mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
       mEntity->setMaterialName(inEntity->getMaterial());
       mEntity->setUserAny(Ogre::Any(inRenderable));
+      mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+
       mNode->attachObject(mEntity);
       mNode->setScale(inRenderable->getScale());
 
@@ -1105,12 +1121,106 @@ namespace Pixy {
     if (id != OIS::MB_Left)
       return false;
 
+    Ogre::MovableObject *resultObj = 0;
+    bool result = mPicker->cast( e, mousePos, mCamera, &resultObj, ENTITY_MASK);
+
+    if (!result)
+    {
+      dehighlight();
+      return true;
+    }
+
+    assert(resultObj);
+    highlight(Ogre::any_cast<Pixy::Renderable*>(resultObj->getUserAny()));
+
+#if 0
+
+    /*bool result =
+    mPicker->cast(
+      mouseRay.getOrigin(),
+      mouseRay.getDirection(),
+      &resultObj,
+      ENTITY_MASK);*/
+
     // Setup the ray scene query, use CEGUI's mouse position
-    Ogre::Ray mouseRay =
+    /*Ogre::Ray mouseRay =
       mCamera->getCameraToViewportRay(
         mousePos.d_x/float(e.state.width),
         mousePos.d_y/float(e.state.height)
+      );*/
+
+    /*
+    using Ogre::Vector2;
+    float step = 20;
+    Vector2 states[9] = {
+      Vector2(-step, -step), Vector2(0, -step), Vector2(step, -step),
+      Vector2(-step, 0), Vector2(0, 0), Vector2(step, 0),
+      Vector2(-step, step), Vector2(0, step), Vector2(step, step)
+    };
+
+    std::map<Ogre::MovableObject*, int> objects;
+
+    for (int i=0; i < 9; ++i)
+    {
+      Ogre::Ray mouseRay =
+      mCamera->getCameraToViewportRay(
+        (mousePos.d_x + states[i].x)/float(e.state.width),
+        (mousePos.d_y + states[i].y)/float(e.state.height)
       );
+
+      Ogre::Vector3 resultPoint;
+      Ogre::MovableObject* resultObj = 0;
+      bool result =
+      mPicker->RaycastFromPoint(
+        mouseRay.getOrigin(),
+        mouseRay.getDirection(),
+        resultPoint,
+        &resultObj,
+        GfxEngine::ENTITY_MASK);
+
+      if (result)
+      {
+        if (objects.find(resultObj) == objects.end())
+          objects.insert(std::make_pair(resultObj, 1));
+        else
+          objects.find(resultObj)->second++;
+      }
+    }
+
+    bool result = !objects.empty();
+
+    if (!result)
+    {
+      dehighlight();
+      return true;
+    }
+
+    // find the best hit
+    int max = 0;
+    Ogre::MovableObject* bestHit = 0;
+    for (std::map<Ogre::MovableObject*, int>::const_iterator object = objects.begin();
+    object != objects.end();
+    ++object)
+    {
+      if (object->second > max)
+      {
+        max = object->second;
+        bestHit = object->first;
+      }
+    }*/
+
+    /*Ogre::Vector3 resultPoint;
+    Ogre::MovableObject* resultObj = 0;
+    bool result = mPicker->RaycastFromPoint(mouseRay.getOrigin(), mouseRay.getDirection(), resultPoint, &resultObj, GfxEngine::ENTITY_MASK);
+    if (result)
+    {
+      highlight(Ogre::any_cast<Pixy::Renderable*>(resultObj->getUserAny()));
+      std::cout << "raycast hit was successful @ "
+        << resultPoint.x << "," << resultPoint.y << "," << resultPoint.z
+        << " .. name : " << resultObj->getName() << "\n";
+    } else
+      dehighlight();*/
+
 
     Ogre::RaySceneQuery *mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
     mRaySceneQuery->setRay(mouseRay);
@@ -1156,7 +1266,7 @@ namespace Pixy {
       // ignore any terrain selection
       dehighlight();
     }
-
+#endif
     return true;
 
 	}
@@ -1211,6 +1321,9 @@ namespace Pixy {
         if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
           static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
         break;
+      case OIS::KC_M:
+        switchMousePickingMode();
+        break;
       /*case OIS::KC_I:
         if (mRenderables.front()->getText()->isHidden())
           mRenderables.front()->show();
@@ -1240,17 +1353,26 @@ namespace Pixy {
 	}
 
 	void GfxEngine::highlight(Renderable* inEntity) {
-	  dehighlight();
-	  mSelected = inEntity;
+	  //~ dehighlight();
+
+    Event e(EventUID::EntitySelected);
+    e.Any = (void*)inEntity;
+    mEvtMgr->hook(e);
+
+	  //mSelected = inEntity;
 	  //~ mSelected->getSceneNode()->showBoundingBox(true);
 	};
 
 	void GfxEngine::dehighlight() {
-    //FxEngine::getSingleton().dehighlight();
-    ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
-
 	  if (!mSelected)
 	    return;
+
+    //FxEngine::getSingleton().dehighlight();
+    Event e(EventUID::EntityDeselected);
+    e.Any = (void*)mSelected;
+    mEvtMgr->hook(e);
+
+    //ScriptEngine::getSingletonPtr()->passToLua("onEntityDeselected", 0);
 
 	  //~ mSelected->getSceneNode()->showBoundingBox(false);
 	  mSelected = 0;
@@ -1263,10 +1385,10 @@ namespace Pixy {
     Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
     Pixy::Entity* lEntity = lRend->getEntity();
 
-    std::cout << "selected a unit with UID: " << lEntity->getUID() << "\n";
+    //~ std::cout << "selected a unit with UID: " << lEntity->getUID() << "\n";
      // double click on an entity
     if (mSelected && mSelected->getEntity()->getUID() == lEntity->getUID()) {
-      std::cout << "got a double click\n";
+      //~ std::cout << "got a double click\n";
       if (lEntity->getRank() != PUPPET) {
         CUnit *lUnit = static_cast<CUnit*>(lEntity);
 
@@ -1280,8 +1402,13 @@ namespace Pixy {
           return true;
 
         // if the unit has 0 AP, don't do anything
-        if (lUnit->getBaseAP() == 0)
+        if (lUnit->getBaseAP() == 0) {
+          Event resp(EventUID::InvalidAction);
+          resp.setProperty("Action", "Charge");
+          resp.setProperty("Reason", "AttackerHasNoAP");
+          mEvtMgr->hook(resp);
           return true;
+        }
 
         // if the unit is passive, make it charge
         if (lUnit->getPosition() == POS_READY) {
@@ -1311,7 +1438,9 @@ namespace Pixy {
       return true;
     }
 
-    highlight(lRend);
+    mSelected = lRend;
+
+    //highlight(lRend);
 
     return true;
   }
@@ -1321,7 +1450,12 @@ namespace Pixy {
 
     // if it's a puppet, just de-select
     if (lEntity->getRank() == PUPPET) {
-      highlight(lRend);
+      mSelected = lRend;
+      Event resp(EventUID::InvalidAction);
+      resp.setProperty("Action", "Block");
+      resp.setProperty("Reason", "InvalidTarget");
+      mEvtMgr->hook(resp);
+      //~ highlight(lRend);
       return true;
     }
 
@@ -1343,8 +1477,9 @@ namespace Pixy {
         mSelected->getEntity()->getRank() != PUPPET &&
         mSelected->getEntity()->getOwner() == mPlayer &&
         lUnit->getOwner() != mPlayer &&
-        lUnit->getPosition() == POS_CHARGING &&
-        !static_cast<CUnit*>(mSelected->getEntity())->isResting())
+        lUnit->getPosition() == POS_CHARGING
+        //~ && !static_cast<CUnit*>(mSelected->getEntity())->isResting()
+        )
     {
       // reject if the blocker is resting
       CUnit *unit = static_cast<CUnit*>(mSelected->getEntity());
@@ -1370,7 +1505,7 @@ namespace Pixy {
       req.setProperty("A", lUnit->getUID());
       NetworkManager::getSingleton().send(req);
     } else
-      highlight(lRend);
+      mSelected = lRend;
 
     return true;
   }
@@ -1622,4 +1757,17 @@ namespace Pixy {
   std::string GfxEngine::getNodeIdPrefix(CUnit* inUnit) {
     return getNodeIdPrefix(static_cast<CPuppet*>(inUnit->getOwner()));
   }
+
+  void GfxEngine::switchMousePickingMode()
+  {
+    mPicker = (mPicker == (MousePicker*)mPolyPicker) ? (MousePicker*)mGenericPicker : (MousePicker*)mPolyPicker;
+  }
+
+  int GfxEngine::getMousePickingMode() const
+  {
+    return (mPicker == (MousePicker*)mPolyPicker) ? POLY : GENERIC;
+  };
+
+
+
 }
