@@ -6,6 +6,7 @@
 ]]
 
 local Handlers = {}
+SpellValidators = {}
 
 -- type: incoming event handler
 -- job: parses the spell attributes from the given event,
@@ -86,6 +87,10 @@ end
 function subscribe_spell(inSpellName, inMethod)
 	Pixy.Log("subscribing to " .. inSpellName)
 	Handlers[inSpellName] = inMethod
+end
+
+function subscribe_spell_prereq(inSpellName, inMethod)
+  SpellValidators[inSpellName] = inMethod
 end
 
 require("d_lister")

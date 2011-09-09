@@ -15,4 +15,13 @@ local process = function(inCaster, inTarget, inSpell)
 	return true
 end
 
+local validate = function()
+  if Selected == nil then return false end
+
+  if Selected:getEntity():getRank() == Pixy.PUPPET then return false end
+
+  return true
+end
+
 subscribe_spell("Chains of Command", process)
+subscribe_spell_prereq("Chains of Command", validate)

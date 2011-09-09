@@ -3,6 +3,10 @@
 
 	cegui event handlers and UI bootstrapping goes here
 ]]
+
+local MyHand = {}
+local inBlockPhase = false
+
 if (Pixy.UI.Combat == nil) then
   Pixy.UI.Combat = { Buttons = {}, LogButtons = {}, Labels = {}, Config = {}, Containers = {}}
 end
@@ -167,7 +171,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
   instance:setTargetWindow(inSpell:getButton())
   if (not instance:isRunning()) then instance:start() end
 
-  --table.insert(Pixy.UI.Combat.Buttons, inSpell:getButton())
+  table.insert(MyHand, inSpell)
 end
 
 Pixy.UI.Combat.dropSpell = function(inSpell)
@@ -180,6 +184,18 @@ Pixy.UI.Combat.dropSpell = function(inSpell)
   inSpell:getButton():removeEvent("Clicked")
   inSpell:getButton():removeEvent("MouseEnter")
   inSpell:getButton():removeEvent("MouseLeave")
+
+  removeByValue(MyHand, inSpell)
+  --[[local idx = 0
+  for spell in list_iter(MyHand) do
+    if spell:getButton() == win then
+      Pixy.Log("----- REMOVING SPELL " .. spell:getName() .. " FROM HAND -----")
+      table.remove(MyHand, idx)
+      break
+    end
+    idx = idx+1
+  end]]
+
   --CEWindowMgr:destroyWindow(inSpell:getButton())
   --for button in list_iter(Pixy.UI.Combat.Buttons) do
   --  local pos = CEGUI.UVector2:new(
@@ -192,7 +208,9 @@ end
 
 Pixy.UI.Combat.RemoveSpell = function(e)
   local win = CEGUI.toWindowEventArgs(e).window
+
   if (win and tonumber(win:getProperty("Alpha")) == 0) then
+
     --~ win:removeEvent("AlphaChanged")
     CEWindowMgr:destroyWindow(win)
   end
@@ -207,6 +225,7 @@ end
 Pixy.UI.Combat.onStartTurn = function()
   ShowBigMessage("Attacking Phase")
 
+  inBlockPhase = false
   Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
 
   CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):enable()
@@ -218,7 +237,7 @@ end
 
 Pixy.UI.Combat.onTurnStarted = function()
   ShowBigMessage("Waiting")
-
+  inBlockPhase = true
   Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
 
   CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):disable()
@@ -229,7 +248,6 @@ end
 
 Pixy.UI.Combat.onStartBlockPhase = function()
   ShowBigMessage("Blocking Phase")
-
   Pixy.UI.Combat.Labels["Turns"]:setText("Blocking Phase")
 end
 
@@ -440,4 +458,71 @@ end
 
 Pixy.UI.Combat.onTrample = function(e)
   ShowBigMessage("TRAMPLE!")
+end
+
+
+local function prereqs_met(spell)
+  if ((spell:requiresTarget() or spell:requiresEnemyTarget()) and Selected == nil) then
+    Pixy.Log("-=-= spell requires a target, none is selected")
+    return false
+  end
+  if (spell:requiresEnemyTarget()
+    and
+    Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID())
+  then
+    return false
+  end
+
+
+  local caster = spell:getCaster():getEntity()
+
+  if (caster:getRank() == Pixy.PUPPET) then
+    if (caster:getWP() < spell:getCostWP()) then
+      --~ Pixy.Log("-=-= caster doesn't have enough WP")
+      return false
+    end
+    if (caster:getChannels() < spell:getCostChannels()) then
+      --~ Pixy.Log("-=-= caster doesn't have enough channels")
+      return false
+    end
+  end
+
+  if (caster:getHP() < spell:getCostHP()) then
+    --~ Pixy.Log("-=-= caster doesn't have enough HP")
+    return false
+  end
+
+  if (inBlockPhase and spell:getPhase() == Pixy.CASTING) then
+    --~ Pixy.Log("-=-= spell isn't castable in this phase")
+    return false
+  end
+
+  if (SpellValidators[spell:getName()] ~= nil) then
+    return SpellValidators[spell:getName()]()
+  else
+    return true
+  end
+end
+
+Pixy.UI.Combat.updateHand = function(e)
+  --if next(Hand) == nil then return true end
+  local idx = 0
+  for spell in list_iter(MyHand) do
+    if prereqs_met(spell) then
+      spell:getButton():enable()
+    else
+      spell:getButton():disable()
+      Pixy.Log("-=-=-= disabling spell due to not meeting requirements")
+    end
+    idx = idx + 1
+  end
+
+  Pixy.Log("== Hand has " .. idx .. " spells")
+
+  return true
+end
+
+Pixy.UI.Combat.onUpdatePuppet = function(e)
+  --Pixy.Log("***************** UPDATING PUPPET *******************")
+  Pixy.UI.Combat.updateHand(e)
 end
