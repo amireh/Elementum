@@ -498,16 +498,9 @@ namespace Pixy
   };
 
 	void GameManager::initLogger() {
+    using boost::filesystem::path;
 
-
-		std::string lLogPath = PROJECT_LOG_DIR;
-#if PIXY_PLATFORM == PIXY_PLATFORM_WINDOWS || defined(_WIN32)
-		lLogPath += "\\Pixy.log";
-#elif PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-		lLogPath = macBundlePath() + "/Contents/Logs/Pixy.log";
-#else
-		lLogPath += "/Pixy.log";
-#endif
+		std::string lLogPath = (path(mLogPath) / "Pixy.log").make_preferred().string();
 		std::cout << "| Initting log4cpp logger @ " << lLogPath << "!\n";
 
 		log4cpp::Appender* lApp = new

@@ -125,6 +125,8 @@ namespace Pixy
 
     bool doMove(unsigned long);
 
+    void dieAfterAnimating();
+
     void attackAfterMoving(CPuppet* inTarget);
     void attackAfterMoving(CUnit* inBlocker);
     void cleanupAfterAttacking(CPuppet* inTarget);

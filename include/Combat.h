@@ -106,7 +106,17 @@ namespace Pixy
     bool onCreateUnit(const Event&);
     bool onUpdatePuppet(const Event&);
     bool onUpdateUnit(const Event&);
+
+    /*
+     * Pushes the UID of the given unit into mRDeathlist. See below.
+     */
+    bool onRemoveUnit(const Event&);
+
+    /*
+     * Client-specific event:
+     */
     bool onEntityDied(const Event&);
+
 
     bool onStartBlockPhase(const Event&);
     bool onCharge(const Event&);
@@ -136,12 +146,30 @@ namespace Pixy
     typedef std::map<CUnit*, attackers_t > blockers_t;
     blockers_t mBlockers;
 
-
+    /* mDeathlist contains a list of units to be immediately removed from play,
+     * as in their objects destroyed. Note that this does not particularly
+     * happen when the Unit _displays_ that it dies.
+     *
+     * See CUnit::die() for more info.
+     */
     typedef std::vector<CUnit*> deathlist_t;
     deathlist_t mDeathlist;
 
-    bool inBlockPhase;
+    /* "Remote" deathlist is a list populated by commands sent from the
+     * server, namely EventUID::RemoveUnit events. We queue them in a separate
+     * queue other than Deathlist because the client stages a unit's death
+     * before actually removing it; the unit might display death animation & fx
+     * at a time much earlier than the actual removal.
+     *
+     * mRDeathlist is used to verify the consistency between client unit deaths
+     * and the server's. on Update(), units in mDeathlist are checked against
+     * those UIDs in mRDeathlist, if they don't match, something is seriously
+     * wrong.
+     */
+    typedef std::list<int> rdeathlist_t;
+    rdeathlist_t mRDeathlist;
 
+    bool inBlockPhase;
 
 		std::vector<Engine*>		mUpdateQueue;
 		std::vector<Engine*>::const_iterator mUpdater;

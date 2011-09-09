@@ -45,12 +45,12 @@ namespace Pixy
   };
 
   CUnit::~CUnit() {
-    if (mRenderable)
-      delete mRenderable;
 
     if (mTimer)
       delete mTimer;
 
+    if (mRenderable)
+      delete mRenderable;
     mRenderable = 0;
 
     while (!mSpells.empty()) {
@@ -244,28 +244,32 @@ namespace Pixy
 
     mLog->infoStream() << "dying [playing animation now]";
 
-    //~ float length_sec = mRenderable->animateDie();
+    Unit::die();
+    float length_sec = mRenderable->animateDie();
 
-    //~ mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
-    //~ mTimer->async_wait([&, death_func](boost::system::error_code e) -> void {
-      Unit::die();
-
-      FxEngine::getSingleton().onEntityDying(this->mRenderable);
-
-      //~ Event evt(EventUID::EntityDied);
-      //~ evt.Any = (void*)this;
-      //~ EventManager::getSingleton().hook(evt);
-
-      mRenderable->hide();
-      mSceneMgr->destroyQuery(mRaySceneQuery);
-      mSceneMgr = 0;
-
-      mLog->infoStream() << "dead [inside the async timer]";
-      mLog->infoStream() << " i'm destroyed!\n";
-      delete mLog;
-      mLog = 0;
-    //~ });
+    mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
+    mTimer->async_wait(boost::bind(&CUnit::dieAfterAnimating, this));
   };
+
+  void CUnit::dieAfterAnimating() {
+
+    FxEngine::getSingleton().onEntityDying(this->mRenderable);
+
+    Event evt(EventUID::EntityDied);
+    evt.Any = (void*)this;
+    EventManager::getSingleton().hook(evt);
+
+    //~ mRenderable->hide();
+    GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
+    mSceneMgr->destroyQuery(mRaySceneQuery);
+    mSceneMgr = 0;
+
+    mLog->infoStream() << "dead [inside the async timer]";
+    mLog->infoStream() << " i'm destroyed!\n";
+    delete mLog;
+    mLog = 0;
+
+  }
 
 
 

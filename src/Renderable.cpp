@@ -46,6 +46,8 @@ namespace Pixy
       itr->second.clear();
     }
 
+    delete mText;
+
     mSceneNode->setVisible(true);
     GfxEngine::getSingletonPtr()->detachFromScene(this);
 
@@ -53,7 +55,7 @@ namespace Pixy
 
 		mSceneNode = 0;
     mSceneObject = 0;
-    delete mText;
+
     mText = 0;
     nrHandlers = 0;
 	}

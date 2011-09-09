@@ -104,6 +104,7 @@ namespace Pixy
     bind(EventUID::CreateUnit, boost::bind(&Combat::onCreateUnit, this, _1));
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
     bind(EventUID::UpdateUnit, boost::bind(&Combat::onUpdateUnit, this, _1));
+    bind(EventUID::RemoveUnit, boost::bind(&Combat::onRemoveUnit, this, _1));
     bind(EventUID::EntityDied, boost::bind(&Combat::onEntityDied, this, _1));
     bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
@@ -291,7 +292,22 @@ namespace Pixy
       for (unit = mDeathlist.begin();
            unit != mDeathlist.end();
            ++unit)
+      {
+        bool found = false;
+        // verify the mark in the remote deathlist
+        for (rdeathlist_t::iterator uid = mRDeathlist.begin();
+          uid != mRDeathlist.end();
+          ++uid)
+        {
+          if ((*uid) == (*unit)->getUID())
+          {
+            found = true;
+            break;
+          }
+        }
+        assert(found);
         static_cast<CPuppet*>((Entity*)(*unit)->getOwner())->detachUnit((*unit)->getUID());
+      }
 
       mDeathlist.clear();
     }
@@ -796,6 +812,12 @@ namespace Pixy
     return true;
   }
 
+  bool Combat::onRemoveUnit(const Event& evt) {
+    mLog->debugStream() << "Unit#" << evt.getProperty("UID") << " is marked for removal by server.";
+    mRDeathlist.push_back(convertTo<int>(evt.getProperty("UID")));
+    return true;
+  }
+
   bool Combat::onEntityDied(const Event& evt) {
     markForDeath(static_cast<CUnit*>(evt.Any));
     return true;
@@ -974,11 +996,27 @@ namespace Pixy
         }
       }
     }
-    // move them back
+    // battle is over, move all remaining units back
     if (mAttackers.empty()) {
 
+      for (puppets_t::iterator puppet = mPuppets.begin();
+      puppet != mPuppets.end();
+      ++puppet)
+      {
+        for (CPuppet::units_t::const_iterator unit = (*puppet)->getUnits().begin();
+        unit != (*puppet)->getUnits().end();
+        ++unit)
+        {
+          bool isAttacker = (*unit)->getOwner()->getUID() == mActivePuppet->getUID();
+          if ((*unit)->getPosition() != POS_READY && !(*unit)->isDying())
+            (*unit)->move(POS_READY, boost::bind(
+              (isAttacker ? &Combat::onMoveBackAndRest : &Combat::onMoveBack),
+              this, *unit));
+        }
+      }
+
       // move the blockers first
-      for (blockers_t::iterator unit_pair = mBlockers.begin();
+      /*for (blockers_t::iterator unit_pair = mBlockers.begin();
            unit_pair != mBlockers.end();
            ++unit_pair)
         for (attackers_t::iterator unit = unit_pair->second.begin();
@@ -988,7 +1026,8 @@ namespace Pixy
             (*unit)->move(POS_READY, boost::bind(&Combat::onMoveBack, this, *unit));
           } else {
             //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
-            mDeathlist.push_back(*unit);
+            //mDeathlist.push_back(*unit);
+            //~ markForDeath(*unit);
           }
         }
 
@@ -999,9 +1038,10 @@ namespace Pixy
           (*unit)->move(POS_READY, boost::bind(&Combat::onMoveBackAndRest, this, *unit));
         else {
           //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
-          mDeathlist.push_back(*unit);
+          //mDeathlist.push_back(*unit);
+          //~ markForDeath(*unit);
         }
-      }
+      }*/
 
       mChargers.clear();
       mBlockers.clear();

@@ -956,6 +956,7 @@ namespace Pixy {
       //mSceneMgr->getSceneNode(nodeName)->setUserAny(
     } else {
       mLog->errorStream() << "Could not attach Entity! No empty SceneNodes available";
+      assert(false);
       return NULL;
     }
     //LOG_F(__FUNCTION__);
@@ -1461,7 +1462,8 @@ namespace Pixy {
   }
 
   void GfxEngine::stopUpdatingMe(CUnit* inUnit) {
-    mUpdatees.find(inUnit)->second = false;
+    if (mUpdatees.find(inUnit) != mUpdatees.end())
+      mUpdatees.find(inUnit)->second = false;
   }
 
   OgreMax::OgreMaxScene* GfxEngine::loadScene(std::string inSceneName) {

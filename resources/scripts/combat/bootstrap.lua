@@ -38,7 +38,7 @@ Pixy.Combat.PrepareScene = function()
   GfxEngine.mUnitMargin.x = 15 -- the distance between every unit on the X axis
   GfxEngine.mUnitMargin.z = 10 -- the distance between the frontier and rear of the unit packs on the Z axis
   --GfxEngine.mPuppetMargin.x = 10 -- how far units are from the puppet on the X axis
-  GfxEngine.mPuppetMargin.z = 25 -- how far puppets are from each other
+  GfxEngine.mPuppetMargin.z = 35 -- how far puppets are from each other
   GfxEngine.mPackSpacing = 20 -- how far every unit pack is from the other on the X axis
 
   -- Viewport
