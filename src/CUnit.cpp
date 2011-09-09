@@ -24,7 +24,8 @@ namespace Pixy
     mTimer(0),
     fDying(false),
     fRequiresYawFix(false),
-    mDestination(Vector3::ZERO)
+    mDestination(Vector3::ZERO),
+    mEnemy(0)
   {
   };
 
@@ -211,20 +212,6 @@ namespace Pixy
     mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
     mRaySceneQuery->setSortByDistance(true);
 
-    mEnemy = 0;
-    Combat::puppets_t lPuppets = Combat::getSingleton().getPuppets();
-    for (Combat::puppets_t::const_iterator itr = lPuppets.begin();
-      itr != lPuppets.end();
-      ++itr)
-    {
-      if ((*itr)->getUID() != mOwner->getUID()) {
-        mEnemy = *itr;
-        break;
-      }
-    }
-
-    assert(mEnemy);
-
     reset();
 
     mTimer = new boost::asio::deadline_timer(Combat::getSingleton().getIOService());
@@ -293,6 +280,8 @@ namespace Pixy
         << "\n";
 
       if (inDestination == POS_ATTACK) {
+        assert(mEnemy);
+
         Ogre::Real radius = mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z;
         Ogre::Real scale = mEnemy->getRenderable()->getSceneNode()->getScale().z;
         int mod = (mDestination.z > mNode->getPosition().z) ? -1 : 1;
@@ -704,6 +693,8 @@ namespace Pixy
       // if this is a trampling unit, and we still got AP left,
       // proceed to hitting the puppet
       if (fIsTrampling && mAP > 0) {
+        assert(mEnemy);
+
         return move(POS_ATTACK, boost::bind(static_cast<void (CUnit::*)(CPuppet*)>(&CUnit::moveAndAttack), this, mEnemy));
 #if 0
         move(POS_ATTACK, [&](CUnit*) -> void {
@@ -872,4 +863,7 @@ namespace Pixy
     updateTextOverlay();
   }
 
+  void CUnit::_setEnemy(CPuppet* inPuppet) {
+    mEnemy = inPuppet;
+  }
 } // end of namespace

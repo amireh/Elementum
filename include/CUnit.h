@@ -46,6 +46,9 @@ namespace Pixy
       return mEnemy;
     };
 
+    // called by CPuppet::attachUnit()
+    void _setEnemy(CPuppet* inPuppet);
+
     void update(unsigned long);
 
     bool isMoving() const {

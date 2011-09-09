@@ -7,19 +7,18 @@
 #include "ogre/MovableTextOverlay.h"
 #include "Event.hpp"
 #include "EventManager.h"
+#include "Combat.h"
 
 namespace Pixy
 {
 
   CPuppet::CPuppet()
-  : mRenderable(0) {
+  : mRenderable(0), mEnemy(0) {
 
     /*mSceneObject = 0;
     mSceneNode = 0;
     mEntity = this;
     */
-
-    mMesh = "DarkKnight.mesh";
   };
 
   bool CPuppet::live() {
@@ -27,8 +26,19 @@ namespace Pixy
     mLog->infoStream() << "created";
 
     mRenderable = new Renderable(this);
-
     updateTextOverlay();
+
+    mEnemy = 0;
+    Combat::puppets_t lPuppets = Combat::getSingleton().getPuppets();
+    for (Combat::puppets_t::const_iterator itr = lPuppets.begin();
+      itr != lPuppets.end();
+      ++itr)
+    {
+      if ((*itr)->getUID() != mOwner->getUID()) {
+        mEnemy = *itr;
+        break;
+      }
+    }
 
     return true;
   };
@@ -167,6 +177,7 @@ namespace Pixy
   void CPuppet::attachUnit(CUnit* inUnit) {
     mUnits.push_back(inUnit);
     inUnit->setOwner(this);
+    inUnit->_setEnemy(mEnemy);
 
     mLog->infoStream()
       << mUID << " attached a cunit to my control: "

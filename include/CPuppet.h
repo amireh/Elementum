@@ -68,6 +68,8 @@ namespace Pixy
 		hand_t			mHand;
     spells_t    mBuffs;
 		units_t     mUnits;
+
+    CPuppet* mEnemy;
 	};
 } // end of namespace
 #endif
