@@ -7,6 +7,7 @@
 #include "ScriptEngine.h"
 #include "Combat.h"
 #include "FxEngine.h"
+#include "Intro.h"
 
 namespace Pixy
 {
@@ -53,9 +54,15 @@ namespace Pixy
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
 
+    mScriptEngine->runScript("lobby/entry_point.lua");
+
+    mLog->infoStream() << "Joined the lobby with puppet " << Intro::getSingleton().getPuppetName();
 	}
 
 	void Lobby::exit( void ) {
+    //~ mScriptEngine->cleanup();
+    //~ mUIEngine->cleanup();
+
     mLog->infoStream() << "---- Exiting ----";
     delete mLog;
 		mLog = 0;

@@ -61,17 +61,12 @@ namespace Pixy {
 
 	UIEngine::~UIEngine() {
 		mLog->infoStream() << "shutting down";
+    cleanup();
 
 		if (fSetup) {
 			mLog->debugStream() << "destroying all windows";
-			CEGUI::WindowManager::getSingleton().destroyAllWindows();
 
-			mLog->debugStream() << "destroying system";
-			mOgreRenderer->destroySystem();
 
-			mOgreRenderer = NULL; mUISystem = NULL;
-
-      delete mMyInput;
 
 			delete mLog; mLog = 0;
 			fSetup = false;
@@ -79,6 +74,21 @@ namespace Pixy {
 	}
 
 	bool UIEngine::cleanup() {
+    if (!fSetup)
+      return true;
+
+    delete mMyInput;
+    mMyInput = 0;
+
+    CEGUI::WindowManager::getSingleton().destroyAllWindows();
+
+    mLog->debugStream() << "destroying system";
+    mOgreRenderer->destroySystem();
+
+    mOgreRenderer = NULL; mUISystem = NULL;
+
+    fSetup = false;
+
 		return true;
 	}
 
@@ -137,16 +147,16 @@ namespace Pixy {
 
 		// load GUI scheme
 
-		CEGUI::SchemeManager::getSingleton().create( "TaharezLook.scheme" );
-		CEGUI::SchemeManager::getSingleton().create( "VanillaSkin.scheme" );
-		CEGUI::SchemeManager::getSingleton().create( "WindowsLook.scheme" );
+		//~ CEGUI::SchemeManager::getSingleton().create( "TaharezLook.scheme" );
+		//~ CEGUI::SchemeManager::getSingleton().create( "VanillaSkin.scheme" );
+		//~ CEGUI::SchemeManager::getSingleton().create( "WindowsLook.scheme" );
 
 
 		// load font and setup default if not loaded via scheme
 		//CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
 
 		// set up defaults
-		CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
+		//~ CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 		//CEGUI::System::getSingleton().setDefaultFont("DejaVuSans-10");
 
     // Create default ToolTip item
@@ -232,6 +242,7 @@ namespace Pixy {
 	void UIEngine::update( unsigned long lTimeElapsed ) {
 		mUISystem->injectTimePulse(lTimeElapsed * 0.001f);
     mMyInput->update(lTimeElapsed * 0.001f);
+
 		processEvents();
 	}
 

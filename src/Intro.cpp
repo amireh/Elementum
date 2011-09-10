@@ -8,7 +8,7 @@
 #include "CPuppet.h"
 #include "CDeck.h"
 #include "CSpell.h"
-#include "Combat.h"
+#include "Lobby.h"
 #include "FxEngine.h"
 
 using namespace Ogre;
@@ -63,6 +63,8 @@ namespace Pixy
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
 
+    bind(EventUID::JoinLobby, boost::bind(&Intro::onJoinLobby, this, _1));
+
 		// start the interface chain
 		mScriptEngine->runScript("intro/entry_point.lua");
 
@@ -103,6 +105,8 @@ namespace Pixy
 		delete mUIEngine;
 		delete mGfxEngine;
 		delete mEvtMgr;*/
+    //~ mScriptEngine->cleanup();
+    //~ mUIEngine->cleanup();
 
 		mLog->infoStream() << "---- Exited ----";
 
@@ -142,7 +146,7 @@ namespace Pixy
 				break;
 			case OIS::KC_SPACE:
 				//fireLoginEvt();
-				GameManager::getSingleton().changeState(Combat::getSingletonPtr());
+				//GameManager::getSingleton().changeState(Combat::getSingletonPtr());
 				break;
 		}
 
@@ -184,5 +188,17 @@ namespace Pixy
 	Intro& Intro::getSingleton( void ) {
 		return *getSingletonPtr();
 	}
+
+  bool Intro::onJoinLobby(const Event& e)
+  {
+    mPuppetName = e.getProperty("Puppet");
+
+    GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
+    return true;
+  }
+
+  std::string const& Intro::getPuppetName() const {
+    return mPuppetName;
+  }
 
 } // end of namespace

@@ -71,8 +71,8 @@ namespace Pixy
     delete FxEngine::getSingletonPtr();
     //delete SfxEngine::getSingletonPtr();
     //delete PhyxEngine::getSingletonPtr();
-    delete UIEngine::getSingletonPtr();
     delete ScriptEngine::getSingletonPtr();
+    delete UIEngine::getSingletonPtr();
     delete NetworkManager::getSingletonPtr();
 
     delete mResMgr;
@@ -248,9 +248,9 @@ namespace Pixy
       _update();
 		}
 
-    Event evt(EventUID::ChangingState);
+    Event evt(EventUID::ShuttingDown);
     EventManager::getSingleton().hook(evt);
-    for (int i=0; i < 5; ++i)
+    for (int i=0; i < 2; ++i)
       mStates.back()->update(1);
 	}
 
@@ -351,10 +351,10 @@ namespace Pixy
 		// Cleanup the current state
 		if( !mStates.empty() ) {
 
-        Event evt(EventUID::ChangingState);
-        EventManager::getSingleton().hook(evt);
-        for (int i=0; i < 5; ++i)
-          mStates.back()->update(1);
+        //~ Event evt(EventUID::ChangingState);
+        //~ EventManager::getSingleton().hook(evt);
+        //~ for (int i=0; i < 5; ++i)
+          //~ mStates.back()->update(1);
 
 
 		    mStates.back()->exit();

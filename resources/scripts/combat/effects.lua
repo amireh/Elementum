@@ -26,7 +26,6 @@ Pixy.Effects.Configure = function()
 end
 
 Pixy.FX.Combat.onLifetap = function(e)
-  --FxEngine:playEffect("Lifetap"
 end
 
 Pixy.Effects.Configure()

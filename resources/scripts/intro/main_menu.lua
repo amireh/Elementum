@@ -181,31 +181,15 @@ MainMenu.cleanup = function()
     --~ unit:die()
     unit:delete()
   end
+  Units = {}
 
   return true
-end
-
-Pixy.Combat.updateAnimation = function()
-  --~ rnd:animateIdle()
-  --~ return ScriptEngine:callMeAfter(1, "updateAnimation")
-end
-
-local DeathList = {}
-Pixy.Combat.removeUnit = function()
-  local idx = 0
-  for unit in list_iter(DeathList) do
-    unit:delete()
-    table.remove(Units, idx)
-    idx = idx + 1
-  end
-  --~ DeathList = {}
 end
 
 MainMenu.onEntityDied = function(e)
   unit = tolua.cast(e.Any, "Pixy::CUnit")
   unit:getRenderable():hide()
   FxEngine:playEffect("Elementum/Fx/Desummon", unit:getRenderable():getSceneNode():getPosition())
-  --~ table.insert(DeathList, unit)
-  --~ ScriptEngine:callMeAfter(1, "removeUnit")
+
   return true
 end

@@ -74,6 +74,7 @@ namespace Pixy {
 		bool setupIntro();
 		bool setupCombat();
 
+		void updateNothing(unsigned long lTimeElapsed);
 		void updateIntro(unsigned long lTimeElapsed);
 		void updateCombat(unsigned long lTimeElapsed);
 

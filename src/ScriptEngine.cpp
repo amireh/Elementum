@@ -42,21 +42,26 @@ namespace Pixy {
 	ScriptEngine::ScriptEngine()  {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "ScriptEngine");
 		mLuaLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Lua");
+    mUpdater = &ScriptEngine::updateNothing;
+    mLUA = 0;
+    mCEGUILua = 0;
+    mTimer = 0;
 		fSetup = false;
 	}
 
 	ScriptEngine::~ScriptEngine() {
-		//cleanup();
+		cleanup();
+
 		mLog->infoStream() << "shutting down.";
-		if (fSetup) {
-			mLUA = NULL; mCEGUILua = NULL;
-			fSetup = false;
+		//if (fSetup) {
+			//mLUA = NULL; mCEGUILua = NULL;
+			//fSetup = false;
 			delete mLog;
 			delete mLuaLog;
 			mLog = mLuaLog = 0;
 
-      delete mTimer;
-		}
+      //delete mTimer;
+		//}
 	}
 
 	bool ScriptEngine::setup() {
@@ -76,14 +81,11 @@ namespace Pixy {
     bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
 
-		//~ bindToAll<ScriptEngine>(this, &ScriptEngine::passToLua); // __DISABLED__
-    //bindToName("AssignPuppets", this, &ScriptEngine::evtAssignPuppets);
-    //bindToName("JoinQueue", this, &ScriptEngine::evtJoinQueue);
-
 		bool lSuccess = false;
 		GAME_STATE lGameState = GameManager::getSingleton().getCurrentState()->getId();
 		switch (lGameState) {
 			case STATE_INTRO:
+      case STATE_LOBBY:
 				lSuccess = setupIntro();
 				mUpdater = &ScriptEngine::updateIntro;
 			break;
@@ -92,6 +94,7 @@ namespace Pixy {
 				mUpdater = &ScriptEngine::updateCombat;
 			break;
 			default:
+        mUpdater = &ScriptEngine::updateNothing;
 				lSuccess = true;
 		}
 
@@ -100,6 +103,29 @@ namespace Pixy {
 		//Combat::getSingletonPtr()->updateMe(getSingletonPtr());
 		fSetup = true;
 		return lSuccess;
+	}
+
+	bool ScriptEngine::cleanup() {
+    if (!fSetup)
+      return true;
+
+    unbind(EventUID::MatchFinished);
+    unbind(EventUID::Unassigned);
+
+		//~ CEGUI::System::getSingleton().setScriptingModule(0);
+    //~ CEGUI::LuaScriptModule::destroy(*mCEGUILua);
+
+		mCEGUILua = 0;
+		mLUA = 0;
+
+    delete mTimer;
+    mTimer = 0;
+
+    mUpdater = &ScriptEngine::updateNothing;
+
+    fSetup = false;
+
+		return true;
 	}
 
   void ScriptEngine::callMeAfter(int inSeconds, std::string inFunc)
@@ -115,7 +141,7 @@ namespace Pixy {
 
 	bool ScriptEngine::setupIntro() {
 
-		mLog->infoStream() << "setting up Intro";
+		mLog->infoStream() << "setting up Intro & Lobby";
 		//loadResources();
 
 		// init lua state
@@ -151,6 +177,14 @@ namespace Pixy {
 	void ScriptEngine::update( unsigned long lTimeElapsed ) {
 		processEvents();
 
+		(this->*mUpdater)(lTimeElapsed);
+	}
+
+	void ScriptEngine::updateNothing(unsigned long lTimeElapsed) {
+  }
+
+	void ScriptEngine::updateIntro(unsigned long lTimeElapsed) {
+
 		// update Lua
 		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
 		if(lua_isfunction(mLUA, 1))
@@ -162,10 +196,6 @@ namespace Pixy {
 		} else
 			mLog->errorStream() << "could not find Lua updater!";
 
-		(this->*mUpdater)(lTimeElapsed);
-	}
-
-	void ScriptEngine::updateIntro(unsigned long lTimeElapsed) {
 	}
 
 	void ScriptEngine::updateCombat(unsigned long lTimeElapsed) {
@@ -182,9 +212,6 @@ namespace Pixy {
 			mLog->errorStream() << "could not find Lua updater!";
 	}
 
-	bool ScriptEngine::cleanup() {
-		return true;
-	}
 
 	void ScriptEngine::loadResources() {
 	}

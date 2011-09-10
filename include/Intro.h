@@ -56,8 +56,11 @@ namespace Pixy
 		static Intro* getSingletonPtr( void );
 		static Intro& getSingleton();
 
+    std::string const& getPuppetName() const;
+
 	protected:
 		void fireLoginEvt();
+    bool onJoinLobby(const Event&);
 
     //~ boost::asio::io_service mIOService;
     boost::asio::strand mStrand;
@@ -76,7 +79,9 @@ namespace Pixy
 		ScriptEngine	*mScriptEngine;
 		EventManager	*mEvtMgr;
 		NetworkManager  *mNetMgr;
-		//Player			*mPlayer;
+
+    std::string mPuppetName;
+
     bool fSetup;
 
 		static Intro    *mIntro;

@@ -38,12 +38,12 @@ require("intro/profiles/new_info")
 Selected = nil
 
 local UID = 100
-Profiles.CreateKnight = function(material, scale, pos)
+Profiles.CreateKnight = function(name, material, scale, pos)
     UID = UID+1
 
     local unit = Pixy.CUnit()
     unit:setRank(Pixy.PUPPET)
-    unit:setName("Knight_" .. material)
+    unit:setName(name)
     unit:setUID(UID)
     unit:live()
     unit:setMesh("DarkKnight.mesh")
@@ -128,13 +128,13 @@ Profiles.attach = function()
     scale = Ogre.Vector3(sf)
   end
 
-  earth_knight = Profiles.CreateKnight("Earth", scale, Ogre.Vector3:new(-14 * ar,0,3 * ar))
+  earth_knight = Profiles.CreateKnight("Sugar", "Earth", scale, Ogre.Vector3:new(-14 * ar,0,3 * ar))
   earth_knight:setRace(Pixy.EARTH)
-  water_knight = Profiles.CreateKnight("Water", scale, Ogre.Vector3:new(-8 * ar,0,0))
+  water_knight = Profiles.CreateKnight("Unknown", "Water", scale, Ogre.Vector3:new(-8 * ar,0,0))
   water_knight:setRace(Pixy.WATER)
-  air_knight = Profiles.CreateKnight("Air", scale, Ogre.Vector3:new(0,0,0))
+  air_knight = Profiles.CreateKnight("Unknown", "Air", scale, Ogre.Vector3:new(0,0,0))
   air_knight:setRace(Pixy.AIR)
-  fire_knight = Profiles.CreateKnight("Fire", scale, Ogre.Vector3:new(6 * ar,0,3 * ar))
+  fire_knight = Profiles.CreateKnight("Kandie", "Fire", scale, Ogre.Vector3:new(6 * ar,0,3 * ar))
   fire_knight:setRace(Pixy.FIRE)
 
   fire_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-26 * ar))
@@ -177,7 +177,6 @@ Profiles.JoinLobby = function()
 	-- wait for feedback
 	--Pixy.UI.waiting("Looking for an opponent", Layout)
 	Buttons.JoinLobby:disable()
-
   FxEngine:dehighlight()
 
   for unit in list_iter(Units) do
@@ -185,8 +184,17 @@ Profiles.JoinLobby = function()
     --~ GfxEngine:detachFromScene(unit:getRenderable())
   end
 
+  local puppet_name = Selected:getEntity():getName()
+
   MainMenu.cleanup()
-  GameMgr:changeState(Pixy.Lobby:getSingletonPtr())
+
+  local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
+  evt:setProperty("Puppet", puppet_name)
+  EvtMgr:hook(evt)
+
+  return true
+
+  --GameMgr:changeState(Pixy.Lobby:getSingletonPtr())
 
   --~ GameMgr:changeState(Lobby)
   --~ ScriptEngine:callMeAfter(1, "doJoinLobby")

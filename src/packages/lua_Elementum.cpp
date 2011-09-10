@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sat Sep 10 14:06:48 2011.
+** Generated automatically by tolua++-1.0.92 on Sat Sep 10 15:52:19 2011.
 */
 
 #ifndef __cplusplus

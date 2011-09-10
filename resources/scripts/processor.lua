@@ -38,9 +38,7 @@ function dontUpdateMe(inCallback)
 end
 
 function setupEvtMap()
-  if not EventMap then
-    EventMap = {}
-  end
+  EventMap = {}
 	tracking = false
 end
 
@@ -57,6 +55,10 @@ function subscribeToEvt(inUID, inHandler)
 	Pixy.Log("Subscribed handler to " .. inUID)
 end
 bind = subscribeToEvt -- an alias
+
+function clearBindings()
+  EventMap = {}
+end
 
 -- calls handlers and returns status
 function processEvt(inEvt)
