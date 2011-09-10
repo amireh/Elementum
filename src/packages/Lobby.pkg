@@ -1,0 +1,6 @@
+$#include "Lobby.h"
+
+class Lobby : public GameState
+{
+  static Lobby* getSingletonPtr( void );
+};

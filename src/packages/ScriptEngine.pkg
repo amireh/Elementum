@@ -4,4 +4,6 @@ class ScriptEngine : public Pixy::Engine, public Pixy::EventListener {
   static ScriptEngine* getSingletonPtr();
   std::string getScriptPathPrefix() const;
   std::string getModulePathPrefix() const;
+
+  void callMeAfter(int inSeconds, std::string inFunc);
 };

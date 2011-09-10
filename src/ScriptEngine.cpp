@@ -54,6 +54,8 @@ namespace Pixy {
 			delete mLog;
 			delete mLuaLog;
 			mLog = mLuaLog = 0;
+
+      delete mTimer;
 		}
 	}
 
@@ -93,10 +95,23 @@ namespace Pixy {
 				lSuccess = true;
 		}
 
+    mTimer = new boost::asio::deadline_timer(GameManager::getSingleton().getIOService());
+
 		//Combat::getSingletonPtr()->updateMe(getSingletonPtr());
 		fSetup = true;
 		return lSuccess;
 	}
+
+  void ScriptEngine::callMeAfter(int inSeconds, std::string inFunc)
+  {
+    mTimer->expires_from_now(boost::posix_time::milliseconds(inSeconds * 1000));
+    mTimer->async_wait(boost::bind(&ScriptEngine::luaCallback, this, inFunc));
+  }
+
+  void ScriptEngine::luaCallback(std::string inFunc)
+  {
+    passToLua(inFunc.c_str(), 0);
+  }
 
 	bool ScriptEngine::setupIntro() {
 
@@ -136,10 +151,6 @@ namespace Pixy {
 	void ScriptEngine::update( unsigned long lTimeElapsed ) {
 		processEvents();
 
-		(this->*mUpdater)(lTimeElapsed);
-	}
-
-	void ScriptEngine::updateIntro(unsigned long lTimeElapsed) {
 		// update Lua
 		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
 		if(lua_isfunction(mLUA, 1))
@@ -150,10 +161,15 @@ namespace Pixy {
 			}
 		} else
 			mLog->errorStream() << "could not find Lua updater!";
+
+		(this->*mUpdater)(lTimeElapsed);
+	}
+
+	void ScriptEngine::updateIntro(unsigned long lTimeElapsed) {
 	}
 
 	void ScriptEngine::updateCombat(unsigned long lTimeElapsed) {
-		updateIntro(lTimeElapsed);
+
 		lua_getfield(mLUA, LUA_GLOBALSINDEX, "updateCombat");
     lua_pushinteger(mLUA,lTimeElapsed);
 		if(lua_isfunction(mLUA, 1))
@@ -171,19 +187,6 @@ namespace Pixy {
 	}
 
 	void ScriptEngine::loadResources() {
-		/*using namespace Ogre;
-		ResourceGroupManager& rgm = ResourceGroupManager::getSingleton();
-
-		// add resource groups that we use
-		rgm.createResourceGroup("scripts");
-
-		const char* dataPathPrefix;
-		dataPathPrefix = "../resources/scripts/client/";
-		//char resourcePath[PATH_MAX];
-		mLog->infoStream() << "Adding resource locations";
-
-		ResourceGroupManager::getSingleton().addResourceLocation(dataPathPrefix, "FileSystem", "scripts");
-		ResourceGroupManager::getSingleton().initialiseAllResourceGroups();	*/
 	}
 
 	lua_State* ScriptEngine::getLuaState() {
@@ -301,7 +304,7 @@ namespace Pixy {
 
     return true;
   }
-  
+
   std::string ScriptEngine::getScriptPathPrefix() const {
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
     return macBundlePath() + "/Contents/Resources/scripts";
@@ -311,7 +314,7 @@ namespace Pixy {
     return "../resources/scripts";
 #endif
   }
-  
+
   std::string ScriptEngine::getModulePathPrefix() const {
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
     return macBundlePath() + "/Contents/Plugins";

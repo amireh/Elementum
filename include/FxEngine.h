@@ -47,16 +47,17 @@ namespace Pixy {
       ParticleUniverse::ParticleSystem*,
       ParticleUniverse::ParticleUniverseEvent&);
 
-    void onEntityDying(Renderable* inUnit);
+    //~ void onEntityDying(Renderable* inUnit);
+
+    void highlight(Renderable*);
+    void dehighlight();
 
 	protected:
     friend class GfxEngine;
 
     bool onEntitySelected(const Event& inEvt);
     bool onEntityAttacked(const Event& inEvt);
-
-    void highlight(Renderable*);
-    void dehighlight();
+    bool onEntityDying(const Event& evt);
 
 	private:
 
@@ -67,12 +68,12 @@ namespace Pixy {
     typedef std::map< std::string, ParticleUniverse::ParticleSystem* > effects_t;
     typedef std::list<Ogre::SceneNode*> deathlist_t;
     typedef deathlist_t portable_effects_t;
-    
+
     effects_t mEffects;
 
     Renderable* mSelected;
 
-    
+
     portable_effects_t mPortableEffects;
     deathlist_t mDeathlist;
 

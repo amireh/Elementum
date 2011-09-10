@@ -12,15 +12,17 @@ system Elementum/Fx/Aurora
 
     technique
     {
-        visual_particle_quota                   20
+        visual_particle_quota                   60
+        position 0 10 0
         material                                mp_flare_01
         renderer                                Billboard
         {
         }
         emitter                                 Box
         {
-            emission_rate                       80
-            angle                               180
+            emission_rate                       60
+            angle                               0
+            time_to_live                        1.5
 
             /*time_to_live                        dyn_random
             {
@@ -29,29 +31,29 @@ system Elementum/Fx/Aurora
             }*/
             velocity                            dyn_random
             {
-                min                             1
-                max                             1
+                min                             0
+                max                             20
             }
             //duration                            2
-            all_particle_dimensions 200
-            /*all_particle_dimensions             dyn_random
+            all_particle_dimensions             150
+            /*all_particle_dimensions           dyn_random
             {
                 min                             100
-                max                             100
+                max                             200
             }*/
-            colour                              1 0.576471 0.388235 1
+            colour                              1 0.476471 0.188235 1
             box_width                           50
-            box_height                          100
-            box_depth                           50
+            box_height                          200
+            box_depth                           100
         }
-        affector                                Colour
+        /*affector                                Colour
         {
             //time_colour                         0    0 0 0 1
             time_colour                         0  0.5 0.5 0.5 1
             time_colour                         0.2  0.5 0.5 0.5 1
             //time_colour                         1    0 0 0 1
             colour_operation                    multiply
-        }
+        }*/
     }
 
  }

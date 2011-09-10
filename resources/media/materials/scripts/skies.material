@@ -12,7 +12,7 @@ material Elementum/Sky
      cull_software none
 			texture_unit
 			{
-				texture vortex.png
+				texture Space_Texture_2_by_zy0rg.png
 				scroll_anim 0.01 0
 			}
 		}

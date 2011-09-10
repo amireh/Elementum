@@ -76,7 +76,7 @@ namespace Pixy
 
     void markForDeath(CUnit*);
 
-    boost::asio::io_service& getIOService();
+    //~ boost::asio::io_service& getIOService();
     boost::asio::strand& getStrand();
 
   protected:
@@ -176,10 +176,10 @@ namespace Pixy
 
 		bool fUpdateGfx;
 
-    boost::asio::io_service mIOService;
+    //~ boost::asio::io_service& mIOService;
     boost::asio::strand mStrand;
-    boost::asio::io_service::work mWork;
-    boost::thread* mWorker;
+    //~ boost::asio::io_service::work mWork;
+    //~ boost::thread* mWorker;
 
     void onMoveBack(CUnit* inUnit);
     void onMoveBackAndRest(CUnit* inUnit);

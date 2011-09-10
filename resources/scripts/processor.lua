@@ -38,7 +38,9 @@ function dontUpdateMe(inCallback)
 end
 
 function setupEvtMap()
-	EventMap = {}
+  if not EventMap then
+    EventMap = {}
+  end
 	tracking = false
 end
 
@@ -46,7 +48,7 @@ end
 function subscribeToEvt(inUID, inHandler)
 
 	-- init handler table for event if it doesnt exist
-	if (EventMap[inUID] == nil) then
+	if (not EventMap[inUID]) then
 		EventMap[inUID] = {}
 	end
 
@@ -58,7 +60,7 @@ bind = subscribeToEvt -- an alias
 
 -- calls handlers and returns status
 function processEvt(inEvt)
-  --tolua.cast(inEvt, "Pixy::Event")
+  --inEvt = tolua.cast(inEvt, "Pixy::Event")
   --tolua.cast(inEvt.UID, "Pixy::EventUID")
   if (inEvt.UID == Pixy.EventUID.Connected) then Pixy.Log("There's a connected evt!") end
 
@@ -118,5 +120,6 @@ function update()
 	for callback in list_iter(WantUpdates) do
 		callback()
 	end
-
 end
+
+setupEvtMap()

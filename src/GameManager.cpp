@@ -26,6 +26,7 @@
 #include "GameState.h"
 #include "EventManager.h"
 #include "Intro.h"
+#include "Lobby.h"
 #include "Combat.h"
 #include "log4cpp/PixyLogLayout.h"
 #include <boost/filesystem.hpp>
@@ -48,6 +49,9 @@ namespace Pixy
 	GameManager* GameManager::mGameManager;
 
 	GameManager::GameManager() :
+  mIOService(),
+  mWork(mIOService),
+  mWorker(0),
 	mRoot(NULL),
 	mInputMgr(NULL),
 	fShutdown(false) {
@@ -85,6 +89,10 @@ namespace Pixy
 
 		log4cpp::Category::shutdown();
 		mRoot = NULL; mInputMgr = NULL;
+
+    mIOService.stop();
+    mWorker->join();
+    delete mWorker;
 	}
 
   std::string const& GameManager::getRootPath() const {
@@ -101,6 +109,10 @@ namespace Pixy
   }
   std::string const& GameManager::getLogPath() const {
     return mLogPath;
+  }
+
+  boost::asio::io_service& GameManager::getIOService() {
+    return mIOService;
   }
 
   void GameManager::loadRenderSystems()
@@ -165,6 +177,8 @@ namespace Pixy
     // init logger
     initLogger();
 
+    mWorker = new boost::thread(boost::bind(&boost::asio::io_service::run, &mIOService));
+
     // set up Ogre paths
     using boost::filesystem::path;
     std::string lPathOgreRes, lPathOgrePlugins, lPathOgreCfg, lPathOgreLog;
@@ -213,7 +227,7 @@ namespace Pixy
     mInputMgr->addMouseListener( this, "GameManager" );
 
     // Change to first state
-    this->changeState( Combat::getSingletonPtr() );
+    this->changeState( Intro::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame
@@ -233,6 +247,11 @@ namespace Pixy
 		while( !fShutdown ) {
       _update();
 		}
+
+    Event evt(EventUID::ChangingState);
+    EventManager::getSingleton().hook(evt);
+    for (int i=0; i < 5; ++i)
+      mStates.back()->update(1);
 	}
 
 	Ogre::RenderWindow* GameManager::getRenderWindow() const {
@@ -329,9 +348,15 @@ namespace Pixy
 
 	void GameManager::changeState( GameState *inState ) {
 
-
 		// Cleanup the current state
 		if( !mStates.empty() ) {
+
+        Event evt(EventUID::ChangingState);
+        EventManager::getSingleton().hook(evt);
+        for (int i=0; i < 5; ++i)
+          mStates.back()->update(1);
+
+
 		    mStates.back()->exit();
 		    mStates.pop_back();
 		}

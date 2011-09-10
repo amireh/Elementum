@@ -26,6 +26,7 @@ SET(Elementum_SRCS
   ../include/ScriptEngine.h
   ../include/UIEngine.h
   ../include/MousePicker.h
+  ../include/AutoRepeatKey.h
 
   Connection.cpp
 
@@ -44,11 +45,12 @@ SET(Elementum_SRCS
   GfxEngine.cpp
   InputManager.cpp
   Intro.cpp
-  #Lobby.cpp
+  Lobby.cpp
   NetworkManager.cpp
   ScriptEngine.cpp
   UIEngine.cpp
   MousePicker.cpp
+  AutoRepeatKey.cpp
 
   main.cpp
 

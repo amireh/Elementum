@@ -79,11 +79,16 @@ namespace Pixy {
 		fSetup = false;
 		//mPlayers.clear();
 		mCameraMan = 0;
+    attrs = 0;
 		//mSceneLoader = 0;
     mPlayer = 0;
     mEnemy = 0;
     inBlockPhase = false;
     mSelected = 0;
+    mPicker = 0;
+    mGenericPicker = 0;
+    mPolyPicker = 0;
+    mTrayMgr = 0;
 	}
 
 	GfxEngine::~GfxEngine() {
@@ -104,7 +109,9 @@ namespace Pixy {
 
       delete mTrayMgr;
 
-      delete attrs;
+      if (attrs)
+        delete attrs;
+      attrs = 0;
 
 			delete mLog;
 			mLog = 0;
@@ -159,7 +166,10 @@ namespace Pixy {
     */
 
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);
-	  mCameraMan->setStyle(OgreBites::CS_ORBIT);
+    if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
+      mCameraMan->setStyle(OgreBites::CS_FREELOOK);
+    else
+      mCameraMan->setStyle(OgreBites::CS_ORBIT);
 
 	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
 		//~ compMgr.registerCompositorLogic("HDR", new HDRLogic);
@@ -172,7 +182,13 @@ namespace Pixy {
     mTrayMgr = new SdkTrayManager("Elementum", mRenderWindow, InputManager::getSingletonPtr()->getMouse(), 0);
     mTrayMgr->hideCursor();
 
-		mUpdate = &GfxEngine::updateNothing;
+    mGenericPicker = new GenericMousePicker(mSceneMgr);
+    mPolyPicker = new PolyMousePicker(mSceneMgr);
+
+    mPicker = (MousePicker*)mPolyPicker;
+
+		mUpdate = &GfxEngine::updateIntro;
+
 		mSelected = 0;
 		fSetup = true;
 		return fSetup;
@@ -201,11 +217,6 @@ namespace Pixy {
 
     assert(mPlayer && mEnemy);
 
-    mGenericPicker = new GenericMousePicker(mSceneMgr);
-    mPolyPicker = new PolyMousePicker(mSceneMgr);
-
-    mPicker = (MousePicker*)mPolyPicker;
-
 		//mPlayers.push_back(Combat::getSingleton().getPuppets().front()->getName());
 		//mPlayers.push_back(Combat::getSingleton().getPuppets().back()->getName());
 
@@ -214,8 +225,9 @@ namespace Pixy {
 
 		std::ostringstream lNodeName;
 		lNodeName << getNodeIdPrefix(mPlayer) << "_node_puppet";
-		mCameraMan->setTarget(mSceneMgr->getSceneNode(lNodeName.str()));
-    mCameraMan->setYawPitchDist(Ogre::Degree(mCameraYawPitchDist.x), Ogre::Degree(mCameraYawPitchDist.y), mCameraYawPitchDist.z);
+    trackNode(mSceneMgr->getSceneNode(lNodeName.str()));
+    setYawPitchDist(mCameraYawPitchDist);
+
     //mCamera->yaw(Ogre::Degree(-180));
 
 		//Combat::getSingleton().updateGfx();
@@ -223,6 +235,17 @@ namespace Pixy {
 
 		return true;
 	}
+
+  void GfxEngine::trackNode(Ogre::SceneNode* inNode)
+  {
+    mCameraMan->setTarget(inNode);
+  }
+
+  void GfxEngine::setYawPitchDist(Ogre::Vector3 inVec)
+  {
+    mCameraYawPitchDist = inVec;
+    mCameraMan->setYawPitchDist(Ogre::Degree(mCameraYawPitchDist.x), Ogre::Degree(mCameraYawPitchDist.y), mCameraYawPitchDist.z);
+  }
 
 
 	void GfxEngine::setCamera(const Ogre::String& inCameraName) {
@@ -260,6 +283,28 @@ namespace Pixy {
 
 	};
 
+	void GfxEngine::updateIntro(unsigned long lTimeElapsed) {
+		mCameraMan->update(lTimeElapsed);
+		// update our good tray manager
+    evt.timeSinceLastFrame = evt.timeSinceLastEvent = lTimeElapsed;
+    mTrayMgr->frameRenderingQueued(evt);
+
+		using namespace Ogre;
+
+    // clean up updatees marked for removal
+    updatees_t::iterator itr = mUpdatees.begin();
+    for (itr = mUpdatees.begin(); itr != mUpdatees.end(); ++itr)
+      if (itr->second)
+        itr->first->update(lTimeElapsed);
+
+
+    std::list<Renderable*>::const_iterator r;
+    for (r = mRenderables.begin(); r != mRenderables.end(); ++r) {
+      (*r)->updateAnimations(lTimeElapsed);
+      (*r)->updateBody(lTimeElapsed);
+    }
+
+	};
 	void GfxEngine::updateCombat(unsigned long lTimeElapsed) {
 		mCameraMan->update(lTimeElapsed);
 		// update our good tray manager
@@ -331,36 +376,6 @@ namespace Pixy {
 		/*mCaelumSystem->notifyCameraChanged(mCamera);
 		*/
 
-
-		/*
-		bool mFly = false;
-		if (!mFly)
-		{
-		 */
-			// clamp to terrain
-			/*Vector3 camPos = mCamera->getPosition();
-			Ray ray;
-			ray.setOrigin(Vector3(camPos.x, 10000, camPos.z));
-			ray.setDirection(Vector3::NEGATIVE_UNIT_Y);*/
-
-			/*TerrainGroup::RayResult rayResult = mSceneLoader->getTerrainGroup()->rayIntersects(ray);
-			Real distanceAboveTerrain = 50;
-			Real fallSpeed = 300;
-			Real newy = camPos.y;
-			if (rayResult.hit)
-			{
-				if (camPos.y > rayResult.position.y + distanceAboveTerrain)
-				{
-					mFallVelocity += lTimeElapsed * 20;
-					mFallVelocity = std::min(mFallVelocity, fallSpeed);
-					newy = camPos.y - mFallVelocity * lTimeElapsed;
-
-				}
-				newy = std::max(rayResult.position.y + distanceAboveTerrain, newy);
-				mCamera->setPosition(camPos.x, newy, camPos.z);
-
-			}*/
-		//}
 	};
 
 	void GfxEngine::update(unsigned long lTimeElapsed) {
@@ -984,8 +999,20 @@ namespace Pixy {
       //bool isPuppet = (inEntity->getRank() == 0) ? true : false;
 
       assert(inEntity->getEntity());
-      // render the object
-      renderEntity(inEntity);
+
+      if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
+      {
+        mRenderables.push_back(inEntity);
+        //~ MovableTextOverlay *p =
+          //~ new MovableTextOverlay(inEntity->getEntity()->getName() + "_text"," Robot ", inEntity->getSceneObject(), attrs);
+        //~ p->enable(false); // make it invisible for now
+        //~ p->hide(true);
+        //~ p->setUpdateFrequency(0.01);// set update frequency to 0.01 seconds
+        //~ inEntity->setText(p);
+        //~ p = 0;
+      } else
+        // render the object
+        renderEntity(inEntity);
   /*
       // create and attach interface stats overlay
       if (!isPuppet)
@@ -1012,7 +1039,8 @@ namespace Pixy {
     mTmpNode = inRenderable->getSceneNode();
 
     // move the node back to its original spot
-    if (inRenderable->getEntity()->getRank() != PUPPET)
+    if (inRenderable->getEntity()->getRank() != PUPPET
+      && GameManager::getSingleton().getCurrentState()->getId() != STATE_INTRO)
       mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
 
     mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
@@ -1100,6 +1128,9 @@ namespace Pixy {
 
 	bool GfxEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
+    if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
+      return true;
+
 		if (mCameraMan)
 			mCameraMan->injectMouseMove(e);
 
@@ -1768,6 +1799,9 @@ namespace Pixy {
     return (mPicker == (MousePicker*)mPolyPicker) ? POLY : GENERIC;
   };
 
-
+  void GfxEngine::_setUserAny(Ogre::MovableObject* inObj, void* any)
+  {
+    inObj->setUserAny(Ogre::Any(any));
+  }
 
 }

@@ -234,10 +234,16 @@ namespace Pixy {
 
     Ogre::Vector2 getScreenCoords(Ogre::MovableObject* inObject);
 
+    void setYawPitchDist(Ogre::Vector3 inVec);
+    void trackNode(Ogre::SceneNode* inNode);
+
+    void _setUserAny(Ogre::MovableObject*, void*);
+
 	protected:
 	  void (GfxEngine::*mUpdate)(unsigned long);
 
 	  void updateNothing(unsigned long lTimeElapsed);
+	  void updateIntro(unsigned long lTimeElapsed);
 	  void updateCombat(unsigned long lTimeElapsed);
 
 		Ogre::Root           *mRoot;

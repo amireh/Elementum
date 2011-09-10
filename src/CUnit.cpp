@@ -6,6 +6,7 @@
 #include "ogre/MovableTextOverlay.h"
 #include "Combat.h"
 #include "FxEngine.h"
+#include "GameManager.h"
 
 namespace Pixy
 {
@@ -64,6 +65,7 @@ namespace Pixy
       mBuffs.pop_back();
     }
 
+    std::cout << "CUnit: " << mName << "#" << mUID << " destroyed\n";
   };
 
   void CUnit::copyFrom(const CUnit& src) {
@@ -214,7 +216,7 @@ namespace Pixy
 
     reset();
 
-    mTimer = new boost::asio::deadline_timer(Combat::getSingleton().getIOService());
+    mTimer = new boost::asio::deadline_timer(GameManager::getSingleton().getIOService());
 
     return true;
   };
@@ -240,7 +242,7 @@ namespace Pixy
 
   void CUnit::dieAfterAnimating() {
 
-    FxEngine::getSingleton().onEntityDying(this->mRenderable);
+    //~ FxEngine::getSingleton().onEntityDying(this->mRenderable);
 
     Event evt(EventUID::EntityDied);
     evt.Any = (void*)this;

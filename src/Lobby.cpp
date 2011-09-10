@@ -1,70 +1,119 @@
 #include "Lobby.h"
-#include "Intro.h"
+#include "GameManager.h"
+#include "EventManager.h"
+#include "NetworkManager.h"
+#include "UIEngine.h"
+#include "GfxEngine.h"
+#include "ScriptEngine.h"
+#include "Combat.h"
+#include "FxEngine.h"
 
-using namespace Ogre;
 namespace Pixy
-	{
+{
+	Lobby* Lobby::mLobby = 0;
 
-	
-	Lobby* Lobby::mLobby;
+  Lobby::Lobby()
+  : mStrand(GameManager::getSingleton().getIOService())
+  {
+    mLog = 0;
+    mId = STATE_LOBBY;
+  }
 
-	GAME_STATE Lobby::getId() const { return STATE_LOBBY; }
-		
+  Lobby::~Lobby()
+  {
+    if (mLog) {
+		  delete mLog;
+		  mLog = 0;
+		}
+  }
+
 	void Lobby::enter( void ) {
+		if (!mLog)
+		  mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Lobby");
+
+    mLog->infoStream() << "---- Entering ----";
+
+		mEvtMgr = EventManager::getSingletonPtr();
+		mNetMgr = NetworkManager::getSingletonPtr();
+		if (!mNetMgr->isConnected()) {
+      mLog->errorStream() << "Could not connect to server, aborting";
+      return GameManager::getSingleton().requestShutdown();
+		}
+
+		// init engines
 		mGfxEngine = GfxEngine::getSingletonPtr();
+		mGfxEngine->setup();
+
+    mFxEngine = FxEngine::getSingletonPtr();
+    mFxEngine->setup();
+
 		mUIEngine = UIEngine::getSingletonPtr();
-		mUISystem = &CEGUI::System::getSingleton();
+		mUIEngine->setup();
+
+		mScriptEngine = ScriptEngine::getSingletonPtr();
+		mScriptEngine->setup();
+
 	}
 
 	void Lobby::exit( void ) {
-		mUIEngine->cleanup();
-		mGfxEngine->cleanup();
+    mLog->infoStream() << "---- Exiting ----";
+    delete mLog;
+		mLog = 0;
 	}
 
 	void Lobby::keyPressed( const OIS::KeyEvent &e )
 	{
-		
-		 mUISystem->injectKeyDown(e.key);
-		 mUISystem->injectChar(e.text);
-		 
+    mUIEngine->keyPressed(e);
 	}
-	
+
 	void Lobby::keyReleased( const OIS::KeyEvent &e ) {
-		
-		 mUISystem->injectKeyUp(e.key);
-		 
-		if( e.key == OIS::KC_ESCAPE ) {
-			this->requestShutdown();
+    mUIEngine->keyReleased(e);
+		switch (e.key) {
+			case OIS::KC_ESCAPE:
+				this->requestShutdown();
+				break;
 		}
-		
+
 	}
-	
-	void Lobby::mouseMoved( const OIS::MouseEvent &e )
+
+	bool Lobby::mouseMoved( const OIS::MouseEvent &e )
 	{
-		mUISystem->injectMouseMove(e.state.X.rel, e.state.Y.rel);
+		// Update CEGUI with the mouse motion
+    mUIEngine->mouseMoved(e);
+    mGfxEngine->mouseMoved(e);
+    return true;
 	}
-	
-	void Lobby::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		mUISystem->injectMouseButtonDown(convertButton(id));
-		
+
+	bool Lobby::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    mUIEngine->mousePressed(e, id);
+    mGfxEngine->mousePressed(e, id);
+    return true;
 	}
-	
-	void Lobby::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		mUISystem->injectMouseButtonUp(convertButton(id));
+
+	bool Lobby::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    mUIEngine->mouseReleased(e, id);
+    mGfxEngine->mouseReleased(e, id);
+    return true;
 	}
-		
+
 	void Lobby::pause( void ) {
-		//mIntroOverlay->hide();
 	}
 
 	void Lobby::resume( void ) {
-		//mIntroOverlay->hide();
 	}
 
 	void Lobby::update( unsigned long lTimeElapsed ) {
-				
+		mEvtMgr->update();
+		mNetMgr->update();
+
+		processEvents();
+
+		mGfxEngine->update(lTimeElapsed);
+		mUIEngine->update(lTimeElapsed);
+		mScriptEngine->update(lTimeElapsed);
+    mFxEngine->update(lTimeElapsed);
 	}
-		
+
 	Lobby* Lobby::getSingletonPtr( void ) {
 		if( !mLobby ) {
 		    mLobby = new Lobby();
@@ -73,5 +122,5 @@ namespace Pixy
 		return mLobby;
 	}
 
-		
+
 } // end of namespace

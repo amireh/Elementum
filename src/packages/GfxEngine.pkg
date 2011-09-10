@@ -36,6 +36,7 @@ Renderable* getSelected();
 //bool moveUnit(Pixy::Unit* inUnit, int inDestination);
 
 Ogre::Camera* getCamera();
+OgreBites::SdkCameraMan* getCameraMan();
 Ogre::Root* getRoot();
 Ogre::SceneManager* getSceneMgr();
 Ogre::Viewport* getViewport();
@@ -65,4 +66,9 @@ void loadDotScene(std::string inFile, std::string inName);
 
 void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
 Ogre::Vector2 getScreenCoords(Ogre::MovableObject* inObject);
+
+void setYawPitchDist(Ogre::Vector3 inVec);
+void trackNode(Ogre::SceneNode* inNode);
+
+void _setUserAny(Ogre::MovableObject* inObj, void* any);
 };

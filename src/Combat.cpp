@@ -26,10 +26,10 @@ namespace Pixy
 {
 
   Combat::Combat()
-  : mIOService(),
-    mStrand(mIOService),
-    mWork(mIOService),
-    mWorker(0),
+  : //mIOService(GameManager::getSingleton().getIOService()),
+    mStrand(GameManager::getSingleton().getIOService()),
+    //~ mWork(GameManager::getSingleton().getIOService()),
+    //~ mWorker(0),
     fSetup(false) {
 
   }
@@ -52,7 +52,7 @@ namespace Pixy
 
 	void Combat::enter( void ) {
 
-    mWorker = new boost::thread(boost::bind(&boost::asio::io_service::run, &mIOService));
+    //~ mWorker = new boost::thread(boost::bind(&boost::asio::io_service::run, &mIOService));
 
     mId = STATE_COMBAT;
 
@@ -152,9 +152,9 @@ namespace Pixy
 		delete mLog;
 		mLog = 0;
 
-    mIOService.stop();
-    mWorker->join();
-    delete mWorker;
+    //~ mIOService.stop();
+    //~ mWorker->join();
+    //~ delete mWorker;
 	}
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
@@ -264,9 +264,6 @@ namespace Pixy
 	void Combat::resume( void ) {
 	}
 
-  boost::asio::io_service& Combat::getIOService() {
-    return mIOService;
-  }
   boost::asio::strand& Combat::getStrand() {
     return mStrand;
   }

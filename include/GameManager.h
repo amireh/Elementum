@@ -27,6 +27,8 @@
 #include "Pixy.h"
 #include "InputManager.h"
 #include "EventManager.h"
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 // OGRE
 #include <Ogre.h>
@@ -127,9 +129,11 @@ namespace Pixy
     std::string const& getBinPath() const;
     std::string const& getLogPath() const;
 
+    boost::asio::io_service& getIOService();
+
 	private:
 		GameManager();
-		GameManager(const GameManager&) {}
+		GameManager(const GameManager&);
 		GameManager& operator=(const GameManager&);
 
     void resolvePaths();
@@ -216,6 +220,10 @@ namespace Pixy
 		std::vector<GameState*> mStates;
 		static GameManager *mGameManager;
 		log4cpp::Category* mLog;
+
+    boost::asio::io_service mIOService;
+    boost::asio::io_service::work mWork;
+    boost::thread* mWorker;
 
 		tPixySettings mSettings;
 

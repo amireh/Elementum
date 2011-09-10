@@ -11,20 +11,27 @@
 #define H_Lobby_H
 
 #include "GameState.h"
-#include "UIEngine.h"
-#include "GfxEngine.h"
-#include <map>
+#include "EventListener.h"
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 namespace Pixy
 {
 
-    /*! \class Lobby
-     *  \brief
-     *  Chat lobby & match finding state.
-     */
-	class Lobby : public GameState {
+  class Engine;
+  class GfxEngine;
+  class FxEngine;
+  class UIEngine;
+  class ScriptEngine;
+  class EventManager;
+  class NetworkManager;
+  /*! \class Lobby
+   *  \brief
+   *  Chat lobby & match finding state.
+   */
+	class Lobby : public GameState, public EventListener {
 	public:
-		~Lobby( void ){ };
+		virtual ~Lobby( void );
 
 		void enter( void );
 		void exit( void );
@@ -36,25 +43,28 @@ namespace Pixy
 		void keyPressed( const OIS::KeyEvent &e );
 		void keyReleased( const OIS::KeyEvent &e );
 
-		void mouseMoved( const OIS::MouseEvent &e );
-		void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
-		void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseMoved( const OIS::MouseEvent &e );
+		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
 		static Lobby* getSingletonPtr( void );
 
-		GAME_STATE getId() const;
 	private:
-		Lobby( void ) { }
-		Lobby( const Lobby& ) { }
+		Lobby( void );
+		Lobby( const Lobby& );
 		Lobby & operator = ( const Lobby& );
 
 		// Pixy
-		GfxEngine			 *mGfxEngine;
-		UIEngine			 *mUIEngine;
-		// OIS
-		OIS::Keyboard        *mInputDevice;
+		GfxEngine		    *mGfxEngine;
+		UIEngine		    *mUIEngine;
+    FxEngine        *mFxEngine;
+		ScriptEngine	  *mScriptEngine;
+		EventManager	  *mEvtMgr;
+		NetworkManager  *mNetMgr;
 
 		static Lobby    *mLobby;
+
+    boost::asio::strand mStrand;
 
 
 	};

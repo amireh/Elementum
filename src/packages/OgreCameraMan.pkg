@@ -1,0 +1,60 @@
+$#include "Ogre.h"
+$#include "SdkCameraMan.h"
+
+namespace OgreBites
+{
+	enum CameraStyle   // enumerator values for different styles of camera movement
+	{
+		CS_FREELOOK,
+		CS_ORBIT,
+		CS_MANUAL
+	};
+
+	/*=============================================================================
+	| Utility class for controlling the camera in samples.
+	=============================================================================*/
+	class SdkCameraMan
+    {
+    public:
+
+		/*-----------------------------------------------------------------------------
+		| Swaps the camera on our camera man for another camera.
+		-----------------------------------------------------------------------------*/
+		virtual void setCamera(Ogre::Camera* cam);
+
+		virtual Ogre::Camera* getCamera();
+
+		/*-----------------------------------------------------------------------------
+		| Sets the target we will revolve around. Only applies for orbit style.
+		-----------------------------------------------------------------------------*/
+		virtual void setTarget(Ogre::SceneNode* target);
+
+		virtual Ogre::SceneNode* getTarget();
+
+		/*-----------------------------------------------------------------------------
+		| Sets the spatial offset from the target. Only applies for orbit style.
+		-----------------------------------------------------------------------------*/
+		virtual void setYawPitchDist(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Real dist);
+
+		/*-----------------------------------------------------------------------------
+		| Sets the camera's top speed. Only applies for free-look style.
+		-----------------------------------------------------------------------------*/
+		virtual void setTopSpeed(Ogre::Real topSpeed);
+
+		virtual Ogre::Real getTopSpeed();
+		/*-----------------------------------------------------------------------------
+		| Sets the movement style of our camera man.
+		-----------------------------------------------------------------------------*/
+		virtual void setStyle(CameraStyle style);
+
+		virtual CameraStyle getStyle();
+
+		/*-----------------------------------------------------------------------------
+		| Manually stops the camera when in free-look mode.
+		-----------------------------------------------------------------------------*/
+		virtual void manualStop();
+
+    };
+}
+
+#endif

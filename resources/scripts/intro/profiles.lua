@@ -1,198 +1,215 @@
 -- UISheet : Profiles
 
-require("pixy")
-
+--require("pixy")
+require("helpers")
 Profiles = {}
 Profiles.New = {}
 
 local isSetup = nil
 local mProfiles = {}
 local Name, Stats = nil
-
 local Listbox = nil
+local RaceText = nil
 
+local Buttons = {
+  JoinLobby = nil,
+  Back = nil
+}
+
+Races = {
+  Earth =
+"With dirt, stone, and bone, the followers of the call of Nature have risen." ..
+" Bound to the ground for millenias, Earthens have mastered matters of" ..
+" Life and Death.\
+ \
+Preserving life, or reanimating it, the followers" ..
+" of the Earth dominion are" ..
+" bound to surpass their foes."
+, Fire =
+"Fire shizzle, fingers burned etc.",
+  Water =
+"In calamity there's also peace, at least that's what the Water guys believe.\
+ \
+Water is definitely every gay gentleman's choice.",
+  Air = "Unavailable."
+}
 require("intro/profiles/new_info")
+
+Selected = nil
+
+local UID = 100
+Profiles.CreateKnight = function(material, scale, pos)
+    UID = UID+1
+
+    local unit = Pixy.CUnit()
+    unit:setRank(Pixy.PUPPET)
+    unit:setName("Knight_" .. material)
+    unit:setUID(UID)
+    unit:live()
+    unit:setMesh("DarkKnight.mesh")
+    unit:setMaterial("Elementum/DarkKnight/" .. material)
+
+    rnd = unit:getRenderable()
+
+    local node = SceneMgr:createSceneNode("knight_node_" .. material)
+    SceneMgr:getRootSceneNode():addChild(node)
+    local ent = SceneMgr:createEntity("Knight_" .. material, unit:getMesh());
+    ent:setMaterialName(unit:getMaterial())
+    ent:setCastShadows(true)
+    ent:setQueryFlags(Pixy.GfxEngine.ENTITY_MASK)
+    node:attachObject(ent)
+    node:setScale(scale)
+    node:setPosition(pos)
+    node:lookAt(Ogre.Vector3(0,0,-100),Ogre.Node.TS_WORLD)
+    rnd:attachSceneObject(ent)
+    rnd:attachSceneNode(node)
+    rnd:setup(SceneMgr)
+
+    GfxEngine:attachToScene(rnd)
+    local sword = nil
+    if (material ~= "Water" and material ~= "Air") then
+      --~ sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
+      --~ sword:setMaterialName("Elementum/DarkKnight/" .. material .. "/Sword")
+      rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
+    end
+    if (material == "Water") then
+      rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_2")
+
+    end
+    if (material == "Air") then
+      rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
+    end
+
+
+    --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_1", false)
+    --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_2", false)
+    rnd:animateIdle()
+
+    table.insert(Units, unit)
+
+  return unit
+end
+
+Profiles.onEntitySelected = function(e)
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  Selected = rnd
+
+  Profiles.updateRaceText()
+  FxEngine:highlight(rnd)
+end
+
+Profiles.onEntityDeselected = function(e)
+  FxEngine:dehighlight()
+end
 
 -- ************************
 -- ** Profiles Listing
 -- ************************
 Profiles.attach = function()
 	Layout = Pixy.UI.attach("intro/profiles.layout")
-	
+  RaceText = CEWindowMgr:getWindow("Elementum/Intro/Text/RaceDescription")
+  Buttons.JoinLobby = CEWindowMgr:getWindow("Elementum/Intro/Buttons/JoinLobby")
+  Buttons.Back = CEWindowMgr:getWindow("Elementum/Intro/Buttons/BackToLogin")
+
 	if isSetup then return true end
-	
-	CEImagesetMgr:create( "Profiles-Avatars.imageset" );
-	CEWindowMgr:getWindow("Elementum/Scenes/Intro/Profiles/Container/Avatar"):setProperty("Image", "set:Profiles-Avatars image:Kandy");
 
-	Pixy.Log("subscribing to load profile")
+  unit = next(Units)
+  Units[unit]:die()
 
-	Listbox = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Profiles/List")
-	CEGUI.toItemListbox(Listbox)
-	Name = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Profiles/Container/Name")
-	Stats = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Profiles/Container/Stats")
-	
-	Pixy.Log("hooking evt load profile")
-	
-	
-	local mEvt = EvtMgr:createEvt("LoadAllProfiles")
-	mEvt:setType(Pixy.EVT_REQ)
+  local ar_orig = 1600 / 900
+  local sf = 4
+  local scale = Ogre.Vector3(sf)
+  -- find the aspect ratio and calculate the scale based on that
+  local vw = GfxEngine:getViewport():getActualWidth()
+  local vh = GfxEngine:getViewport():getActualHeight()
+  local ar = vw / vh
+  if ar < ar_orig then
+    sf = sf / ar
+    scale = Ogre.Vector3(sf)
+  end
 
-	EvtMgr:hook(mEvt)
-	mEvt = nil
-	
-	Pixy.UI.waiting("Loading Profiles", Layout)
-	
+  earth_knight = Profiles.CreateKnight("Earth", scale, Ogre.Vector3:new(-14 * ar,0,3 * ar))
+  earth_knight:setRace(Pixy.EARTH)
+  water_knight = Profiles.CreateKnight("Water", scale, Ogre.Vector3:new(-8 * ar,0,0))
+  water_knight:setRace(Pixy.WATER)
+  air_knight = Profiles.CreateKnight("Air", scale, Ogre.Vector3:new(0,0,0))
+  air_knight:setRace(Pixy.AIR)
+  fire_knight = Profiles.CreateKnight("Fire", scale, Ogre.Vector3:new(6 * ar,0,3 * ar))
+  fire_knight:setRace(Pixy.FIRE)
+
+  fire_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-26 * ar))
+  earth_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(26 * ar))
+  air_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-6 * ar))
+
+  --~ GfxEngine:trackNode(fire_knight:getRenderable():getSceneNode())
+  --~ GfxEngine:trackNode(nil)
+  --~ GfxEngine:setYawPitchDist(Ogre.Vector3:new(-30, 0, 0))
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
+  GfxEngine:getCamera():setPosition(Ogre.Vector3(-6 * ar, 3 * ar, 29 * ar))
+  --~ GfxEngine:getCamera():yaw(Ogre.Radian(-30))
+  GfxEngine:getCamera():lookAt(Ogre.Vector3(-4 * ar ,6 * ar ,-58 * ar))
+
 	isSetup = true
 end
 
 Profiles.detach = function()
 end
 
-Profiles.back = function()
+Profiles.Back = function()
 
-	local mEvt = EvtMgr:createEvt("Logout")
-	EvtMgr:hook(mEvt)
+  NetMgr:disconnect()
+	--[[
+  local mEvt = Pixy.Event(Pixy.EventUID.Logout)
+	NetMgr:send(mEvt)
 	mEvt = nil
-	
+  ]]
+
 	Profiles.detach()
-	Login.attach()	
+	MainMenu.attach()
 end
 
-Profiles.play = function()
-  
-	Pixy.Log("player wants to play!")
+Profiles.JoinLobby = function()
 
-  -- DEBUG --
-  --[[local mEvt = EvtMgr:createEvt("ForceInstance")
-  mEvt:setProperty("Profile", Listbox:getLastSelectedItem():getText())
-  EvtMgr:hook(mEvt)]]
-  
-	local mEvt = EvtMgr:createEvt("JoinQueue")
-	Pixy.Log(Listbox:getLastSelectedItem():getText())
-	mEvt:setProperty("Profile", Listbox:getLastSelectedItem():getText())
-	EvtMgr:hook(mEvt)
-	
+	--~ local evt = Pixy.Event(Pixy.EventUID.JoinQueue)
+  --~ evt:setProperty("Puppet", "Kandie")
+	--~ NetMgr:send(evt)
+
 	-- wait for feedback
-	Pixy.UI.waiting("Looking for an opponent", Layout)
-	CEWindowMgr:getWindow("Elementum/Scenes/Intro/Profiles/Buttons/Play"):disable()
-	
+	--Pixy.UI.waiting("Looking for an opponent", Layout)
+	Buttons.JoinLobby:disable()
+
+  FxEngine:dehighlight()
+
+  for unit in list_iter(Units) do
+    --~ unit:die()
+    --~ GfxEngine:detachFromScene(unit:getRenderable())
+  end
+
+  MainMenu.cleanup()
+  GameMgr:changeState(Pixy.Lobby:getSingletonPtr())
+
+  --~ GameMgr:changeState(Lobby)
+  --~ ScriptEngine:callMeAfter(1, "doJoinLobby")
 end
 
-Profiles.next = function()
-
+Pixy.Combat.doJoinLobby = function()
+  for unit in list_iter(Units) do
+    --~ unit:die()
+    --~ unit:delete()
+  end
 end
 
-Profiles.prev = function()
+Profiles.updateRaceText = function()
+  if (Selected == nil) then return false end
+  local race = Selected:getEntity():getRace()
 
+  -- display the race description
+  RaceText:setText(Races[raceToString(race)])
+
+  -- if it's earth or fire, enable the play button
+  if (race == Pixy.EARTH or race == Pixy.FIRE) then
+    Buttons.JoinLobby:enable()
+  else
+    Buttons.JoinLobby:disable()
+  end
 end
-
-Profiles.create = function()
-	if (not mPuppet) then
-		mPuppet = Pixy.Puppet:new()
-	end
-	Profiles.New.Info.attach()
-end
-
-Profiles.saveProfile = function(inPuppet)
-	-- this is called once the user is done creating
-	-- a profile, we create an event, set the profile
-	-- data, and fire it
-	local mEvt = EvtMgr:createEvt("CreateProfile")
-
-	mEvt:setProperty("Name", inPuppet:getName())
-	mEvt:setProperty("Race", inPuppet:getRace())
-	mEvt:setProperty("Intelligence", inPuppet:getIntelligence())
-	mEvt:setProperty("Vitality", inPuppet:getVitality())
-	mEvt:setProperty("Alignment", inPuppet:getAlignment())
-	
-	EvtMgr:hook(mEvt)
-	mEvt = nil
-end
-
-Profiles.show = function(inItem)
-	-- displays the chosen profile that is loaded
-	--if (inEvt:getFeedback() == Pixy.EVT_ERROR) then return true end
-	
-	-- retrieve profile using the item's value
-	inItem = CEGUI.toWindowEventArgs(inItem).window
-	local profile = nil --mProfiles[tonumber(inItem:getUserData())]
-	for _id,_profile in ipairs(mProfiles) do
-		if (_profile.Name == inItem:getText()) then 
-			profile = _profile
-			break 
-		end
-	end
-	
-	if (not profile) then return false end
-	--tolua.cast(inEvt, "Pixy::UIEvent_Profile")
-	--Pixy.Log("Got profile! " .. inEvt:getProfileName())
-	
-	
-	local stats, race, align = ""
-	if (profile.Race == Pixy.EARTH) then race = "Earth"
-	elseif (profile.Race == Pixy.AIR) then race = "Air"
-	elseif (profile.Race == Pixy.FIRE) then race = "Fire"
-	else race = "Water" end
-	
-	if (profile.Alignment == Pixy.H_NEUTRAL) then align = "Neutral"
-	elseif (profile.Alignment == Pixy.H_GOOD) then align = "Good"
-	else align = "Evil" end
-	
-	stats = 	"Race: " .. race .. "\n"
-						.. "Alignment: " .. align .. "\n"
-						.. "Intelligence: " .. tostring(profile.Intelligence) .. "\n"
-						.. "Vitality: " .. tostring(profile.Vitality) .. "\n"	
-	
-	Name:setText(profile.Name)
-	Stats:setText(stats)
-	
-	return true
-end
-
-Profiles.add = function(inEvt)
-
-	if (inEvt:propertyExists("Incoming")) then
-		return true
-	end
-	
-	-- adds a loaded profile to our container
-	inEvt:dump()
-	
-	
-	local profile = {}
-	profile.Name = inEvt:getProperty("Name")
-	profile.Race = inEvt:getProperty("Race")
-	profile.Intelligence = inEvt:getProperty("Intelligence")
-	profile.Vitality = inEvt:getProperty("Vitality")
-	profile.Alignment = inEvt:getProperty("Alignment")
-	
---	if (not mProfiles[profile.Name]) then mProfiles[profile.Name] = {} end
-	local name = profile.Name
-	Pixy.Log("Adding profile '" .. name .. "' to container")
-	
-	table.insert(mProfiles, profile)
-	
-	-- add item to our profile list
-	local item = CEWindowMgr:createWindow("TaharezLook/ListboxItem", "Elementum/Scenes/Intro/Profiles/List/" .. profile.Name)
-	CEGUI.toItemEntry(item)
-	item:subscribeEvent("SelectionChanged", "Profiles.show")
-	item:setText(profile.Name)
-	Listbox:addItem(item)
-	-- remove progress box
-	Pixy.UI.doneWaiting()
-	
-	return true
-end
-
-Profiles.matchFound = function()
-	Pixy.Log("!!!! GAME FOUND !!!!")
-	Pixy.UI.doneWaiting()
-	GameMgr:changeState(Combat)
-	--require("combat/entry_point")
-	--CEWindowMgr:getWindow("Elementum/Scenes/Intro/Profiles/Container/Buttons/Play"):enable()
-	return true
-end
-
-subscribeToEvt("LoadProfile", Profiles.show)
-subscribeToEvt("LoadAllProfiles", Profiles.add)
-subscribeToEvt("MatchFound", Profiles.matchFound)

@@ -10,10 +10,12 @@
 #include "FxEngine.h"
 #include "ParticleUniverseSystemManager.h"
 #include "GfxEngine.h"
+#include "GameManager.h"
 #include "Renderable.h"
 #include "Entity.h"
 #include "CPuppet.h"
 #include "CUnit.h"
+#include "GameState.h"
 
 namespace Pixy {
 	FxEngine* FxEngine::__instance = NULL;
@@ -65,6 +67,11 @@ namespace Pixy {
 
     //bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
     bind(EventUID::EntityAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
+    if (GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
+    {
+      bind(EventUID::EntityDied, boost::bind(&FxEngine::onEntityDying, this, _1));
+    } else
+      unbind(EventUID::EntityDied);
 
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
     mFxMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -109,8 +116,9 @@ namespace Pixy {
   }
 
   void FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Renderable* inEntity) {
-    if (inEffect->isAttached())
+    if (inEffect->isAttached()) {
       inEffect->getParentSceneNode()->detachObject(inEffect);
+    }
 
     //~ inEffect->setUserAny(Ogre::Any(inEntity));
     //~ inEffect->setScale(inEntity->getSceneNode()->getScale());
@@ -272,7 +280,9 @@ namespace Pixy {
     }
   }
 
-  void FxEngine::onEntityDying(Renderable* inUnit) {
+  //~ void FxEngine::onEntityDying(Renderable* inUnit) {
+  bool FxEngine::onEntityDying(const Event& evt) {
+    Renderable *inUnit = static_cast<Renderable*>(evt.Any);
     assert(mEffects.find("Elementum/Fx/Desummon") != mEffects.end());
 
     playEffect("Elementum/Fx/Desummon", inUnit->getSceneNode()->getPosition());

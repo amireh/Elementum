@@ -3,6 +3,9 @@ $#include "NetworkManager.h"
 class NetworkManager
 {
 static NetworkManager& getSingleton();
+bool connect();
+bool disconnect();
 void send(const Pixy::Event&);
+bool isConnected() const;
 };
 

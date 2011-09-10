@@ -15,6 +15,8 @@
 
 #include "GameState.h"
 #include "EventListener.h"
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
 #include <map>
 #include <list>
 
@@ -23,6 +25,7 @@ namespace Pixy
 
   class Engine;
   class GfxEngine;
+  class FxEngine;
   class UIEngine;
   class ScriptEngine;
   class EventManager;
@@ -55,20 +58,29 @@ namespace Pixy
 
 	protected:
 		void fireLoginEvt();
+
+    //~ boost::asio::io_service mIOService;
+    boost::asio::strand mStrand;
+    //~ boost::asio::io_service::work mWork;
+    //~ boost::thread* mWorker;
+
 	private:
 		Intro( void );
 		~Intro();
-		Intro( const Intro& ) { }
+		Intro( const Intro& );
 		Intro & operator = ( const Intro& );
 
 		GfxEngine		*mGfxEngine;
 		UIEngine		*mUIEngine;
+    FxEngine      *mFxEngine;
 		ScriptEngine	*mScriptEngine;
 		EventManager	*mEvtMgr;
 		NetworkManager  *mNetMgr;
 		//Player			*mPlayer;
+    bool fSetup;
 
 		static Intro    *mIntro;
+
 
 	};
 } // end of namespace

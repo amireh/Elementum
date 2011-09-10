@@ -1,20 +1,20 @@
 -- Login.lua
-require("pixy")
-require("intro/register")
-require("intro/profiles")
+--require("pixy")
+--require("intro/register")
+--require("intro/profiles")
 Login = {}
 
 
 Login.attach = function()
 
 	Layout = Pixy.UI.attach("intro/login.layout")
-	
+
 	Login.Username = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username")
 	Login.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
-	
-	subscribeToEvt("Login", Login.doAuthenticate)
-	
-	
+
+	--~ subscribeToEvt("Login", Login.doAuthenticate)
+
+
 
 	-- DEBUG
 	--[[
@@ -23,25 +23,25 @@ Login.attach = function()
 	mEvt:setProperty("SomeProperty", "SomeValue")
 	mEvt:setProperty("SomeProperty", "SomeValue")
 	EvtMgr:hook(mEvt)
-	
-	
+
+
 	Pixy.Log("Hooking Spell Event")
 	local mEvt = EvtMgr:createEvt(Pixy.EVT_SPELL_CAST)
 	tolua.cast(mEvt, "Pixy::SpellEvent")
 	mEvt:setProperty("SpellName", "Summoning")
 	mEvt:dump()
 	EvtMgr:hook(mEvt)
-	
+
 	mEvt = EvtMgr:createEvt(Pixy.EVT_SPELL_CAST)
 	tolua.cast(mEvt, "Pixy::SpellEvent")
 	mEvt:setProperty("SpellName", "Regenerating")
 
 	EvtMgr:hook(mEvt)
-	
+
 	mEvt = nil
 	]]
 end
-
+--[[
 Login.detach = function()
 	--CEWindowMgr:destroyWindow(Layout)
 	Login.Username = nil
@@ -67,33 +67,25 @@ Login.authenticate = function(inEvt)
 
 	-- nop, send the event now then
 	Pixy.Log("firing Login event")
-	
+
 	Pixy.UI.waiting("Authenticating", Layout)
-	
+
 	-- hook login event
-	--[[
-	local mEvt = EvtMgr:createEvt(Pixy.EVT_UI_LOGIN)
-	tolua.cast(mEvt, "Pixy::UIEvent_Login")
-	mEvt:setUsername(Login.Username:getText())
-	mEvt:setPassword(Login.Password:getText())
-	
-	EvtMgr:hook(mEvt)
-	]]
-	local mEvt = EvtMgr:createEvt("Login")
+	local mEvt = Pixy.Event(Pixy.EventUID.Login)
 	mEvt:setProperty("Username", Login.Username:getText())
 	mEvt:setProperty("Password", Login.Password:getText())
-	EvtMgr:hook(mEvt)
+	NetMgr:send(mEvt)
 	mEvt = nil
-	
+
 	return true
 end
 
-Login.doAuthenticate = function(inEvt)
+Login.onLogin = function(inEvt)
 	Pixy.UI.doneWaiting(true)
 
 	if (inEvt:getFeedback() == Pixy.EVT_OK) then
 		Pixy.Log("login successful")
-		
+
 		Login.detach()
 		Profiles.attach()
 		return true
@@ -104,3 +96,4 @@ Login.doAuthenticate = function(inEvt)
 
 	return true
 end
+]]

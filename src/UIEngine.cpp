@@ -12,6 +12,7 @@
 #include "PixyUtility.h"
 #include "GameManager.h"
 #include <boost/filesystem.hpp>
+#include "AutoRepeatKey.h"
 
 // CEGUI
 // For some reason, on OS X CEGUI.h complains that CFBundleRef is undeclared
@@ -69,6 +70,9 @@ namespace Pixy {
 			mOgreRenderer->destroySystem();
 
 			mOgreRenderer = NULL; mUISystem = NULL;
+
+      delete mMyInput;
+
 			delete mLog; mLog = 0;
 			fSetup = false;
 		}
@@ -154,6 +158,8 @@ namespace Pixy {
 
 		//Combat::getSingletonPtr()->updateMe(getSingletonPtr());
 
+    mMyInput = new MyInput();
+
 		fSetup = true;
 		return true;
 	}
@@ -225,6 +231,7 @@ namespace Pixy {
 
 	void UIEngine::update( unsigned long lTimeElapsed ) {
 		mUISystem->injectTimePulse(lTimeElapsed * 0.001f);
+    mMyInput->update(lTimeElapsed * 0.001f);
 		processEvents();
 	}
 
@@ -246,10 +253,13 @@ namespace Pixy {
   }
 
 	void UIEngine::keyReleased( const OIS::KeyEvent &e ) {
-
+    //mUISystem->injectKeyReleased(e);
+    mMyInput->injectOISKey(false, e);
 	}
 	void UIEngine::keyPressed( const OIS::KeyEvent &e ) {
-
+		//mUISystem->injectKeyDown(e.key);
+		//mUISystem->injectChar(e.text);
+    mMyInput->injectOISKey(true, e);
 	}
 
   void UIEngine::setMargin(CEGUI::Window* win, CEGUI::UBox& margin) {

@@ -220,6 +220,8 @@ namespace Ogre {
     const String& getMovableType(void) const;
 
     virtual void setQueryFlags(int flags);
+    virtual void setUserAny(const Any& anything);
+    virtual const Any& getUserAny(void) const;
 
   };
 
@@ -644,4 +646,5 @@ namespace Ogre {
 		static size_t RESOURCE_SYSTEM_NUM_REFERENCE_COUNTS;
 
   };
+
 }

@@ -119,7 +119,7 @@ material Elementum/DarkKnight/Water : Examples/CelShading
 }
 material Elementum/DarkKnight/Air : Examples/CelShading
 {
-	set_texture_alias Skin knight_03.jpg
+	set_texture_alias Skin knight_10.jpg
 }
 
 material Elementum/DarkKnight/Earth/Sword : Examples/CelShading
@@ -129,6 +129,14 @@ material Elementum/DarkKnight/Earth/Sword : Examples/CelShading
 material Elementum/DarkKnight/Fire/Sword : Examples/CelShading
 {
 	set_texture_alias Skin sword_04.jpg
+}
+material Elementum/DarkKnight/Air/Sword : Examples/CelShading
+{
+	set_texture_alias Skin sword_03.jpg
+}
+material Elementum/DarkKnight/Water/Sword : Examples/CelShading
+{
+	set_texture_alias Skin sword_05.jpg
 }
 
 material Elementum/Gremlin/Psycho : Examples/CelShading
@@ -186,4 +194,25 @@ material Elementum/Skelly/Pirate : Examples/CelShading
 material Elementum/Skelly/Nully : Examples/CelShading
 {
   set_texture_alias Skin skeleton_06.jpg
+}
+
+
+material Elementum/Gremlin/Intro
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture gremlin-17.jpg
+			}
+		}
+
+	}
+
 }

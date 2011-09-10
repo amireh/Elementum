@@ -1,5 +1,4 @@
 require("processor")
-setupEvtMap()
 
 local attached = {} -- tracks all attached layouts
 Pixy.UI = {}
@@ -40,7 +39,8 @@ Pixy.registerGlobals = function()
 	GameMgr = Pixy.GameManager:getSingleton()
   NetMgr = Pixy.NetworkManager:getSingleton()
 	--if (state == "Intro") then
-		--Intro = Pixy.Intro:getSingletonPtr()
+		Intro = Pixy.Intro:getSingletonPtr()
+    Lobby = Pixy.Lobby:getSingletonPtr()
 	--elseif (state == "Combat") then
 		Puppet, EnemyPuppet, Active, Waiting = nil
 		Combat = Pixy.Combat:getSingletonPtr()
@@ -49,6 +49,7 @@ Pixy.registerGlobals = function()
 		GfxEngine = Pixy.GfxEngine:getSingletonPtr()
     FxEngine = Pixy.FxEngine:getSingleton()
     UIEngine = Pixy.UIEngine:getSingletonPtr()
+    ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
 		Pixy.Combat = {}
 	--end
 	--Pixy.Log("* State: " .. state)
@@ -68,6 +69,7 @@ Pixy.registerGlobals = function()
 	Pixy.Log( "*************************************************")
 
   Pixy.Log("Test: EventUID::Connected => " .. Pixy.EventUID.Connected)
+  Pixy.Log("Test: EventUID::Login => " .. Pixy.EventUID.Login)
 
 	Pixy.Launched = true
 
@@ -88,6 +90,10 @@ Pixy.UI.attach = function(inWindow)
 	-- attach layout
 	attached[inWindow]:setAlwaysOnTop(true)
 	CESystem:setGUISheet(attached[inWindow])
+
+  -- hide the progress box
+  Pixy.UI.closeProgressBox()
+
 	return attached[inWindow]
 end
 
@@ -116,6 +122,10 @@ Pixy.UI.showLoadingBox = function()
 	end
 
 	PBox_Label:setText(text)
+end
+
+Pixy.UI.closeProgressBox = function()
+  PBox:hide()
 end
 
 Pixy.UI.waiting = function(inText, inLayout)

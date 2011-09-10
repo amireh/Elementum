@@ -51,6 +51,8 @@ namespace Pixy {
 
     void send(const Event&);
 
+    bool isConnected() const;
+
 	protected:
 		/*! \brief
 		 *	broadcasts an INCOMING (EVT_RESP) event to all the modules interested
@@ -99,7 +101,7 @@ namespace Pixy {
 
     Connection_ptr conn_;
 
-    boost::asio::io_service io_service_;
+    boost::asio::io_service& io_service_;
     boost::asio::io_service::work work_;
     boost::asio::deadline_timer timer_;
     boost::thread* poller_;

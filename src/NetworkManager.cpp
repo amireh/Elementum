@@ -9,7 +9,7 @@ namespace Pixy {
 	NetworkManager* NetworkManager::mInstance = NULL;
 
 	NetworkManager::NetworkManager()
-  : io_service_(),
+  : io_service_(GameManager::getSingleton().getIOService()),
     work_(io_service_),
     timer_(io_service_),
     fOnline(false),
@@ -144,6 +144,9 @@ namespace Pixy {
 	bool NetworkManager::disconnect() {
     if (!fOnline)
       return true;
+
+    Event evt(EventUID::Logout);
+    send(evt);
 
     mLog->infoStream() << "Disconnecting from server";
 
@@ -354,4 +357,9 @@ namespace Pixy {
     Combat::getSingleton().pktDrawSpells(inPkt);
   }
 #endif // __DISABLED__
+
+  bool NetworkManager::isConnected() const
+  {
+    return fOnline;
+  }
 }

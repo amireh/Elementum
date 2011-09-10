@@ -23,6 +23,7 @@ namespace Pixy {
   class Event;
   class EventManager;
   class CSpell;
+  class MyInput;
 	/*	\class UIEngine
 	 *	\brief
 	 *	Loads and unloads UISheets, manages CEGUI system, and handles UI related operations
@@ -65,6 +66,7 @@ namespace Pixy {
 		CEGUI::OgreRenderer		*mOgreRenderer;
 		CEGUI::System			*mUISystem;
 		EventManager			*mEvtMgr;
+    MyInput *mMyInput;
 
 	private:
 		static UIEngine* _myUIEngine;

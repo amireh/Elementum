@@ -1,0 +1,15 @@
+namespace Ogre
+{
+	class Any
+  {
+    public: // constructors
+
+    Any();
+    Any(const Any & other);
+    virtual ~Any();
+    bool isEmpty() const;
+    const std::type_info& getType() const;
+		void destroy();
+
+  };
+}

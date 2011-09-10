@@ -48,7 +48,12 @@ class Renderable
 
   float _animate(AnimID inId);
 
+  void setup(Ogre::SceneManager*);
+
   Ogre::Entity* attachExtension(std::string inMesh, std::string inBone);
   //void setOrientation(Ogre::Quaternion inQuat);
   //void resetOrientation();
+
+    void hide();
+    void show();
 };

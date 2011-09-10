@@ -84,7 +84,10 @@ namespace Pixy
   }
 
 	void Renderable::attachSceneNode(Ogre::SceneNode* inNode) { mSceneNode = inNode; }
-  void Renderable::attachSceneObject(Ogre::Entity* inObject) { mSceneObject = inObject; }
+  void Renderable::attachSceneObject(Ogre::Entity* inObject) {
+    mSceneObject = inObject;
+    mSceneObject->setUserAny(Ogre::Any(this));
+  }
   Ogre::SceneNode* Renderable::getSceneNode() { return mSceneNode; }
   Ogre::Entity* Renderable::getSceneObject() { return mSceneObject; }
 
@@ -95,16 +98,22 @@ namespace Pixy
 
   void Renderable::hide() {
     mSceneNode->setVisible(false);
-    mText->hide(true);
-    mText->enable(false);
-    mText->update(1);
+    if (mText)
+    {
+      mText->hide(true);
+      mText->enable(false);
+      mText->update(1);
+    }
   }
 
   void Renderable::show() {
     mSceneNode->setVisible(true);
-    mText->hide(false);
-    mText->enable(true);
-    mText->update(1);
+    if (mText)
+    {
+      mText->hide(false);
+      mText->enable(true);
+      mText->update(1);
+    }
   }
 
   void Renderable::setup(Ogre::SceneManager* inSceneMgr) {

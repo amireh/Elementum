@@ -13,6 +13,7 @@
 
 #include "Engine.h"
 #include "EventListener.h"
+#include <boost/asio.hpp>
 
 namespace CEGUI {
   class LuaScriptModule;
@@ -50,13 +51,17 @@ namespace Pixy {
 
 		bool passToLua(const Event& inEvt);
     bool passToLua(const char* inFunc, int argc, ...);
-    
+
     std::string getScriptPathPrefix() const;
     std::string getModulePathPrefix() const;
-    
+
+    void callMeAfter(int inSeconds, std::string func);
+
 	protected:
 
     bool onMatchFinished(const Event& inEvt);
+
+    void luaCallback(std::string inFunc);
 
     //bool evtAssignPuppets(Event* inEvt);
     //bool evtJoinQueue(Event* inEvt);
@@ -71,6 +76,8 @@ namespace Pixy {
 
 		void updateIntro(unsigned long lTimeElapsed);
 		void updateCombat(unsigned long lTimeElapsed);
+
+    boost::asio::deadline_timer* mTimer;
 
     //void assignSelfPuppet(CPuppet* inPuppet);
 	private:
