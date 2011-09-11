@@ -2,7 +2,8 @@
 
 MainMenu = {}
 Units = {}
-Form = {}
+
+local Form = {}
 
 MainMenu.CreateGremlin = function()
 
@@ -48,9 +49,10 @@ end
 
 local isSetup = false
 MainMenu.attach = function()
-	Layout = Pixy.UI.attach("intro/login.layout")
+	MainMenu.Layout = Pixy.UI.attach("intro/login.layout")
   Form.Username = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username")
 	Form.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
+  Form.Username:activate()
 
 	if isSetup then return true end
 
@@ -114,19 +116,22 @@ MainMenu.attach = function()
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-
   gremlin = MainMenu.CreateGremlin()
 
   isSetup = true
 end
 
 MainMenu.detach = function()
-	--CEWindowMgr:destroyWindow(Layout)
+  Pixy.UI.doneWaiting(false)
+	--~ CEWindowMgr:destroyWindow(MainMenu.Layout)
+  --~ MainMenu.Layout:hide()
+  Pixy.UI.detach(MainMenu.Layout)
+  Form = {}
 end
 
 MainMenu.Quit = function(e)
 	MainMenu.detach()
-  Intro:requestShutdown()
+  IntroState:requestShutdown()
 end
 
 
@@ -135,10 +140,11 @@ MainMenu.reqLogin = function(inEvt)
 	-- nop, send the event now then
 	Pixy.Log("firing Login event")
 
-	Pixy.UI.waiting("Connecting...", Layout)
+	Pixy.UI.waiting("Connecting...", MainMenu.Layout)
   connected = NetMgr:connect()
   if (connected) then
-    Pixy.UI.waiting("Authenticating", Layout)
+    Pixy.UI.doneWaiting(false)
+    Pixy.UI.waiting("Authenticating", MainMenu.Layout)
 
     -- hook login event
     local mEvt = Pixy.Event(Pixy.EventUID.Login)
@@ -171,17 +177,18 @@ MainMenu.onLogin = function(inEvt)
 	return true
 end
 
-MainMenu.attach()
-
 MainMenu.cleanup = function()
   if not isSetup then return true end
 
   Pixy.Log("Cleaning up in Intro state")
+  FxEngine:dehighlight()
   for unit in list_iter(Units) do
     --~ unit:die()
     unit:delete()
   end
   Units = {}
+  FxEngine:unloadAllEffects()
+  SceneMgr:clearScene()
 
   return true
 end
@@ -193,3 +200,5 @@ MainMenu.onEntityDied = function(e)
 
   return true
 end
+
+MainMenu.attach()

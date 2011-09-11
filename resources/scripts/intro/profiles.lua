@@ -2,8 +2,10 @@
 
 --require("pixy")
 require("helpers")
-Profiles = {}
-Profiles.New = {}
+if not Profiles then
+  Profiles = {}
+end
+--Profiles.New = {}
 
 local isSetup = nil
 local mProfiles = {}
@@ -12,13 +14,14 @@ local Listbox = nil
 local RaceText = nil
 
 SelectedPuppetName = nil
+Selected = nil
 
 local Buttons = {
   JoinLobby = nil,
   Back = nil
 }
 
-Races = {
+local Races = {
   Earth =
 "With dirt, stone, and bone, the followers of the call of Nature have risen." ..
 " Bound to the ground for millenias, Earthens have mastered matters of" ..
@@ -35,9 +38,7 @@ Preserving life, or reanimating it, the followers" ..
 Water is definitely every gay gentleman's choice.",
   Air = "Unavailable."
 }
-require("intro/profiles/new_info")
-
-Selected = nil
+--require("intro/profiles/new_info")
 
 local UID = 100
 Profiles.CreateKnight = function(name, material, scale, pos)
@@ -108,7 +109,7 @@ end
 -- ** Profiles Listing
 -- ************************
 Profiles.attach = function()
-	Layout = Pixy.UI.attach("intro/profiles.layout")
+	Profiles.Layout = Pixy.UI.attach("intro/profiles.layout")
   RaceText = CEWindowMgr:getWindow("Elementum/Intro/Text/RaceDescription")
   Buttons.JoinLobby = CEWindowMgr:getWindow("Elementum/Intro/Buttons/JoinLobby")
   Buttons.Back = CEWindowMgr:getWindow("Elementum/Intro/Buttons/BackToLogin")
@@ -155,6 +156,11 @@ Profiles.attach = function()
 end
 
 Profiles.detach = function()
+  --~ CEWindowMgr:destroyWindow(Profiles.Layout)
+  --Profiles.Layout:hide()
+  Pixy.UI.detach(Profiles.Layout)
+  Buttons = {}
+  RaceText = nil
 end
 
 Profiles.Back = function()
@@ -179,7 +185,7 @@ Profiles.JoinLobby = function()
 	-- wait for feedback
 	--Pixy.UI.waiting("Looking for an opponent", Layout)
 	Buttons.JoinLobby:disable()
-  FxEngine:dehighlight()
+  --~ FxEngine:dehighlight()
 
   for unit in list_iter(Units) do
     --~ unit:die()
@@ -189,8 +195,9 @@ Profiles.JoinLobby = function()
   local puppet_name = Selected:getEntity():getName()
   SelectedPuppetName = puppet_name
 
-  MainMenu.cleanup()
-  GameMgr:changeState(Lobby)
+  --~ MainMenu.cleanup()
+  Profiles.detach()
+  GameMgr:changeState(LobbyState)
   --~ local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
   --~ evt:setProperty("Puppet", puppet_name)
   --~ EvtMgr:hook(evt)
@@ -203,7 +210,7 @@ Profiles.JoinLobby = function()
   --~ ScriptEngine:callMeAfter(1, "doJoinLobby")
 end
 
-Pixy.Combat.doJoinLobby = function()
+Combat.doJoinLobby = function()
   for unit in list_iter(Units) do
     --~ unit:die()
     --~ unit:delete()

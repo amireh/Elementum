@@ -71,6 +71,7 @@
         <Property Name="Text" Value="Logout" />
         <Property Name="UnifiedAreaRect" Value="{{0.3,0},{0.075,0},{0.39,0},{0.125,0}}" />
         <Property Name="Disabled" Value="False" />
+        <Event Name="Clicked" Function="Lobby.doLogout" />
     </Window>
     <Window Type="Vanilla/Button" Name="Elementum/Chat/Buttons/JoinQueue" >
         <Property Name="Text" Value="Join Queue" />
@@ -119,10 +120,12 @@
       <Property Name="FrameEnabled" Value="False" />
       <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.02,0},{0.25,0},{0.05,0}}" />
     </Window>
+<!--
     <Window Type="Vanilla/FrameWindow" Name="Elementum/Chat/Containers/Portrait" >
         <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.05,0},{0.25,0},{0.25,0}}" />
         <Property Name="Disabled" Value="False" />
         <Property Name="CloseButtonEnabled" Value="False" />
     </Window>
+-->
   </Window>
 </GUILayout>

@@ -3,31 +3,31 @@ local Handlers = {}
 -- type: incoming event handler
 -- job: stores the names of the player's puppet and his opponent
 -- and tells the graphics engine about them
-Pixy.Combat.addPuppet = function(inPuppet)
+Combat.addPuppet = function(inPuppet)
   table.insert(Puppets, inPuppet)
   Pixy.Log("Registering a new Puppet to the instance, named: " .. inPuppet:getName())
 end
 
-Pixy.Combat.assignSelfPuppet = function(inPuppet)
+Combat.assignSelfPuppet = function(inPuppet)
   SelfPuppet = inPuppet
   Pixy.Log("I'm playing with a puppet named " .. SelfPuppet:getName())
 end
-Pixy.Combat.assignEnemyPuppet = function(inPuppet)
+Combat.assignEnemyPuppet = function(inPuppet)
   EnemyPuppet = inPuppet
 end
-Pixy.Combat.assignActivePuppet = function(puppet)
+Combat.assignActivePuppet = function(puppet)
   Active = puppet
   Pixy.Log("Current turn is for puppet: " .. Active:getName())
 end
 
-Pixy.Combat.UpdatePuppet = function(puppet)
+Combat.UpdatePuppet = function(puppet)
   Pixy.UI.Combat.UpdatePuppet(puppet)
 end
 -- type: incoming event handler
 -- job: parses the puppet from the event, calls the factory for an instance
 -- then generates the deck.. and tells the GfxEngine to render it
 --[[
-Pixy.Combat.createPuppet = function(inEvt)
+Combat.createPuppet = function(inEvt)
 	tolua.cast(inEvt, "Pixy::EntityEvent")
 
 	local lPuppet =
@@ -73,7 +73,7 @@ Pixy.Combat.createPuppet = function(inEvt)
 end
 ]]
 
-Pixy.Combat.CreatePuppet = function(puppet)
+Combat.CreatePuppet = function(puppet)
   Pixy.Log("Creating puppet")
   Handlers[puppet:getRace()](puppet)
   Pixy.UI.Combat.UpdatePuppet(puppet)

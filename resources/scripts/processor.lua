@@ -122,7 +122,7 @@ function processEvt(inEvt)
 		return true
 	end
 
-	Pixy.Log("handling evt " .. inEvt.UID)
+	Pixy.Log("handling evt " .. inEvt.UID .. ":" .. Pixy.Event:_uid_to_string(inEvt.UID))
 
 	return false
 end

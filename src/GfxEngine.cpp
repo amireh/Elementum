@@ -166,9 +166,9 @@ namespace Pixy {
     */
 
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);
-    if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
+    /*if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
       mCameraMan->setStyle(OgreBites::CS_FREELOOK);
-    else
+    else*/
       mCameraMan->setStyle(OgreBites::CS_ORBIT);
 
 	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
@@ -195,6 +195,12 @@ namespace Pixy {
 	}
 
   void GfxEngine::setupMovableTextOverlays() {
+    if (attrs)
+    {
+      delete attrs;
+      attrs = 0;
+    }
+
     attrs =
       new MovableTextOverlayAttributes(
         "MTOAttributes",
@@ -225,6 +231,7 @@ namespace Pixy {
 
 		std::ostringstream lNodeName;
 		lNodeName << getNodeIdPrefix(mPlayer) << "_node_puppet";
+    mCameraMan->setStyle(OgreBites::CS_ORBIT);
     trackNode(mSceneMgr->getSceneNode(lNodeName.str()));
     setYawPitchDist(mCameraYawPitchDist);
 
@@ -284,7 +291,7 @@ namespace Pixy {
 	};
 
 	void GfxEngine::updateIntro(unsigned long lTimeElapsed) {
-		mCameraMan->update(lTimeElapsed);
+		//~ mCameraMan->update(lTimeElapsed);
 		// update our good tray manager
     evt.timeSinceLastFrame = evt.timeSinceLastEvent = lTimeElapsed;
     mTrayMgr->frameRenderingQueued(evt);
@@ -1000,7 +1007,7 @@ namespace Pixy {
 
       assert(inEntity->getEntity());
 
-      if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
+      if (GameManager::getSingleton().getCurrentState()->getId() != STATE_COMBAT)
       {
         mRenderables.push_back(inEntity);
         //~ MovableTextOverlay *p =
@@ -1040,7 +1047,7 @@ namespace Pixy {
 
     // move the node back to its original spot
     if (inRenderable->getEntity()->getRank() != PUPPET
-      && GameManager::getSingleton().getCurrentState()->getId() != STATE_INTRO)
+      && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
       mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
 
     mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
@@ -1128,7 +1135,7 @@ namespace Pixy {
 
 	bool GfxEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
-    if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
+    if (GameManager::getSingleton().getCurrentState()->getId() != STATE_COMBAT)
       return true;
 
 		if (mCameraMan)
@@ -1368,7 +1375,7 @@ namespace Pixy {
           mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMRIGHT);
         break;
       case OIS::KC_L:
-        ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
+        //~ ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
         break;
       case OIS::KC_V:
         if (mSelected) {

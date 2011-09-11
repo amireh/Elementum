@@ -39,7 +39,7 @@ namespace Pixy
 
   bool GameState::isCurrentState()
   {
-    return GameManager::getSingleton().getCurrentState()->getId() == mId;
+    return GameManager::getSingleton().getCurrentState()->getId() == this->getId();
   }
 
 } // end of namespace Pixy

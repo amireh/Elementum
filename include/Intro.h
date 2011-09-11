@@ -57,6 +57,7 @@ namespace Pixy
 		static Intro& getSingleton();
 
     std::string const& getPuppetName() const;
+    void setPuppetName(std::string);
 
 	protected:
 		void fireLoginEvt();

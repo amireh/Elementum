@@ -9,7 +9,7 @@
 
 #include "Combat.h"
 #include "GameManager.h"
-//#include "Intro.h"
+#include "Intro.h"
 #include "CPuppet.h"
 #include "CUnit.h"
 #include "CSpell.h"
@@ -82,20 +82,22 @@ namespace Pixy
 		mUIEngine->setup();
 
 		mScriptEngine = ScriptEngine::getSingletonPtr();
-		mScriptEngine->setup();
+		mScriptEngine->setup(mId);
 
 		// start the interface chain
 		mScriptEngine->runScript("combat/entry_point.lua");
-    mScriptEngine->passToLua("PrepareScene", 0);
+    //~ mScriptEngine->passToLua("PrepareScene", 0);
 
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
+    mPuppetName = Intro::getSingleton().getPuppetName();
+
     // sync the game data when we're connected
-    bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));
-    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));
-    bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
-    bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
+    //~ bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));
+    //~ bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));
+    //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
+    //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::SyncPuppetData, boost::bind(&Combat::onSyncPuppetData, this, _1));
     bind(EventUID::StartTurn, boost::bind(&Combat::onStartTurn, this, _1));
     bind(EventUID::TurnStarted, boost::bind(&Combat::onTurnStarted, this, _1));
@@ -112,6 +114,9 @@ namespace Pixy
     bind(EventUID::Block, boost::bind(&Combat::onBlock, this, _1));
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
+
+    Event e(EventUID::SyncPuppetData);
+    mNetMgr->send(e);
 
     inBlockPhase = false;
     fSetup = true;
@@ -385,25 +390,25 @@ namespace Pixy
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
   bool Combat::onSyncGameData(const Event& evt) {
-    //~ using std::string;
-    //~ using std::vector;
-//~
-    //~ mLog->infoStream() << "received game data, populating Resource Manager...";
-//~
-    //~ std::string senc = evt.getProperty("Data");
-//~
-    //~ vector<unsigned char> encoded(senc.begin(), senc.end());
-    //~ vector<unsigned char> raw;
-//~
-    //~ if (Archiver::decodeLzma(raw, encoded, evt.Rawsize) != 1) {
-      //~ std::cerr << "decoding failed!! \n";
-    //~ }
-//~
-    //~ string raw2str(raw.begin(), raw.end());
-//~
-    //~ std::istringstream datastream(raw2str);
-//~
-    //~ GameManager::getSingleton().getResMgr().populate(datastream);
+    using std::string;
+    using std::vector;
+
+    mLog->infoStream() << "received game data, populating Resource Manager...";
+
+    std::string senc = evt.getProperty("Data");
+
+    vector<unsigned char> encoded(senc.begin(), senc.end());
+    vector<unsigned char> raw;
+
+    if (Archiver::decodeLzma(raw, encoded, evt.Rawsize) != 1) {
+      std::cerr << "decoding failed!! \n";
+    }
+
+    string raw2str(raw.begin(), raw.end());
+
+    std::istringstream datastream(raw2str);
+
+    GameManager::getSingleton().getResMgr().populate(datastream);
 
     Event _evt(EventUID::Login);
     _evt.setProperty("Username", "Sugarfly");
@@ -471,8 +476,9 @@ namespace Pixy
 
     mScriptEngine->passToLua("GameStarted", 0);
 
-    mNetMgr->send(Event(EventUID::Ready));
-    //mEvtMgr->hook(mEvtMgr->createEvt("Ready")); __DISABLED__
+    Event resp(EventUID::Ready);
+    mNetMgr->send(resp);
+
     return true;
   }
 

@@ -227,7 +227,7 @@ namespace Pixy
     mInputMgr->addMouseListener( this, "GameManager" );
 
     // Change to first state
-    this->changeState( Lobby::getSingletonPtr() );
+    this->changeState( Intro::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame
@@ -605,9 +605,10 @@ namespace Pixy
 	};
 
 	void GameManager::saveConfig() {
+    using boost::filesystem::path;
 	  mLog->infoStream() << "saving Vertigo config";
 
-	  std::string tConfigFilePath = mCfgPath + "vertigo.cfg";
+	  std::string tConfigFilePath = (path(mCfgPath) / "vertigo.cfg").make_preferred().string();
 	  std::ofstream of(tConfigFilePath.c_str());
 	  if (!of) {
 	    mLog->errorStream() << "could not write settings to " << tConfigFilePath << "!! aborting";

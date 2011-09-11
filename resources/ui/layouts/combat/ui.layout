@@ -110,7 +110,7 @@
       <Property Name="HoverImage" Value="set: HUDs image:Hourglass" />
       <Property Name="PushedImage" Value="set: HUDs image:Hourglass" />
       <Property Name="DisabledImage" Value="set: HUDs image:Hourglass" />
-      <Event Name="Clicked" Function="Pixy.Combat.reqEndTurn" />
+      <Event Name="Clicked" Function="Combat.reqEndTurn" />
     </Window>
 
   </Window>

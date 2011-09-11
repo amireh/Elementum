@@ -81,29 +81,33 @@ namespace Pixy {
     bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
 
-		bool lSuccess = false;
-		GAME_STATE lGameState = GameManager::getSingleton().getCurrentState()->getId();
-		switch (lGameState) {
-			case STATE_INTRO:
-      case STATE_LOBBY:
-				lSuccess = setupIntro();
-				mUpdater = &ScriptEngine::updateIntro;
-			break;
-			case STATE_COMBAT:
-				lSuccess = setupCombat();
-				mUpdater = &ScriptEngine::updateCombat;
-			break;
-			default:
-        mUpdater = &ScriptEngine::updateNothing;
-				lSuccess = true;
-		}
+    mUpdater = &ScriptEngine::updateNothing;
 
     mTimer = new boost::asio::deadline_timer(GameManager::getSingleton().getIOService());
 
 		//Combat::getSingletonPtr()->updateMe(getSingletonPtr());
 		fSetup = true;
-		return lSuccess;
+		return true;
 	}
+
+  bool ScriptEngine::setup(GAME_STATE inState)
+  {
+    if (!fSetup)
+      setup();
+
+    bool lSuccess = true;
+    if (inState == STATE_COMBAT)
+    {
+      lSuccess = setupCombat();
+      mUpdater = &ScriptEngine::updateCombat;
+    } else
+    {
+      lSuccess = setupIntro();
+      mUpdater = &ScriptEngine::updateIntro;
+    }
+
+    return lSuccess;
+  }
 
 	bool ScriptEngine::cleanup() {
     if (!fSetup)

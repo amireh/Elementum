@@ -17,7 +17,11 @@ require("pixy")
 Pixy.registerGlobals()
 clearBindings()
 
+if not Lobby then Lobby = {} end
+
 require("lobby/lobby")
 require("lobby/chat")
 require("lobby/bindings")
 require("lobby/input")
+
+Lobby.bind()

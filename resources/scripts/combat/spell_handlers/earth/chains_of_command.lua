@@ -8,7 +8,7 @@ local process = function(inCaster, inTarget, inSpell)
   --tolua.cast(cpuppet, "Pixy::CPuppet")
 
   inCaster:getEntity():attachUnit(cunit)
-  Pixy.Combat.onEntityDeselected()
+  Combat.onEntityDeselected()
   GfxEngine:changeOwnership(cunit)
   FxEngine:playEffect("Elementum/Fx/MindControl", inTarget)
 

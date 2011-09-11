@@ -1,4 +1,4 @@
-require("combat/helpers")
+require("helpers")
 require("combat/puppets") -- puppet handling
 require("combat/units") -- unit handling
 --~ require("spells/bootstrap_spells") -- unit definitions
@@ -15,7 +15,9 @@ BB = nil
 BBNode = nil
 Scene = nil
 
-Pixy.Combat.PrepareScene = function()
+Combat.PrepareScene = function()
+  Pixy.Log("COMBAT SCENE IS PREPARED")
+
   SceneMgr = GfxEngine:getSceneMgr()
   Viewport = GfxEngine:getViewport()
   Camera = GfxEngine:getCamera()
@@ -96,15 +98,17 @@ Pixy.Combat.PrepareScene = function()
   Pixy.Renderable:setAnimFadeSpeed(30.0)
 
   -- Lights
-  Pixy.Combat.SetupLights()
-
+  Combat.SetupLights()
 end
 
-Pixy.Combat.cleanup = function()
+Combat.SetupScene = function()
+end
+
+Combat.cleanup = function()
   GfxEngine:unloadScene(Scene)
 end
 
-Pixy.Combat.SetupLights = function()
+Combat.SetupLights = function()
   SceneMgr:setAmbientLight(Ogre.ColourValue(0.5,0.5,0.5))
 
   fadeColour = Ogre.ColourValue:new(0, 0, 0)
@@ -144,11 +148,7 @@ Pixy.Combat.SetupLights = function()
 
 end
 
-Pixy.Combat.SetupScene = function()
-
-end
-
-Pixy.Combat.GameStarted = function()
+Combat.GameStarted = function()
 	Pixy.Log("Game has started! Pwning time")
 
   --~ GfxEngine:enableCompositorEffect("Bloom")

@@ -39,7 +39,8 @@ Chat = {
     },
     Command = {
       UnknownCommand = "Unknown command. Type /help for a list of available commands.",
-      InvalidArgs = "Invalid command arguments. Type /help for a list of valid commands."
+      InvalidArgs = "Invalid command arguments. Type /help for a list of valid commands.",
+      PermanentRoom = "You can not leave this room."
     }
   },
   Commands = {
@@ -63,30 +64,47 @@ CurrentChatMessage = nil
 
 local isSetup = false
 Chat.attach = function()
-	Layout = Pixy.UI.attach("lobby/chat.layout")
+	Chat.Layout = Pixy.UI.attach("lobby/chat.layout")
   --MsgBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Text/Messages"))
   InputBox = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Chat/Editbox/Message"))
   RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"), "CEGUI::Listbox")
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
   Tabs = CEGUI.toTabControl(CEWindowMgr:getWindow("Elementum/Containers/Rooms"))
+  Chat.Layout:show()
 
-  --~ local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
-  --~ evt:setProperty("Puppet", SelectedPuppetName)
-  --~ NetMgr:send(evt)
+  local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
+  evt:setProperty("Puppet", SelectedPuppetName)
+  NetMgr:send(evt)
 
-  --~ Pixy.Log("Joining the Lobby with " .. Intro:getPuppetName())
-  --~ Pixy.Log("Joining the Lobby with " .. SelectedPuppetName)
+  --~ Pixy.Log("Joining the Lobby with " .. IntroState:getPuppetName())
+  Pixy.Log("Joining the Lobby with " .. SelectedPuppetName)
 
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
-  GfxEngine:trackNode(nil)
+  --~ GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
+  --~ GfxEngine:trackNode(Selected:getSceneNode())
+  --~ GfxEngine:setYawPitchDist(Ogre.Vector3:new(0, 20, 30))
+
+  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(SelectedPuppetName)
 
   InputBox:activate()
+
+  FxEngine:highlight(Selected)
 
   isSetup = true
 end
 
 Chat.detach = function()
-	--CEWindowMgr:destroyWindow(Layout)
+  __RoomNames__ = nil
+  Rooms = nil
+  CurrentRoom = nil
+  CurrentWhisperTarget = nil
+  CurrentChatMessage = nil
+  Chat.History = {}
+  Chat.WhisperHistory = {}
+  Chat.Context = nil
+
+	--~ CEWindowMgr:destroyWindow(Chat.Layout)
+	--~ Chat.Layout:hide()
+  Pixy.UI.detach(Chat.Layout)
 end
 
 Chat.cleanup = function()
@@ -152,26 +170,6 @@ Chat.populateRoom = function(clients)
 
 end
 
-Chat.onConnected = function(e)
-  local mEvt = Pixy.Event(Pixy.EventUID.Login)
-  mEvt:setProperty("Username", "Kandie")
-  mEvt:setProperty("Password", "tuonela")
-  NetMgr:send(mEvt)
-
-  return true
-end
-
-Chat.onLogin = function(e)
-  SelectedPuppetName = "Kandie"
-  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(SelectedPuppetName)
-
-  local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
-  evt:setProperty("Puppet", SelectedPuppetName)
-  NetMgr:send(evt)
-
-  return true
-end
-
 Chat.onJoinLobby = function(e)
   if e.Feedback ~= Pixy.EventFeedback.Ok then
     local box = Pixy.UI.attachOverlay("ProgressBox")
@@ -215,7 +213,9 @@ Chat.unregisterRoom = function(room)
 
     next_idx = next_idx - 1
   end
-  assert(next_idx >= 1)
+
+  if next_idx < 1 then return false end
+  --assert(next_idx >= 1)
 
   Chat.switchToRoom(__RoomNames__[next_idx])
 

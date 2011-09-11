@@ -254,7 +254,7 @@ namespace Pixy {
   {
     using namespace ParticleUniverse;
 
-    mLog->debugStream() << "got a PU event: " << (int)inEvt.eventType;
+    //~ mLog->debugStream() << "got a PU event: " << (int)inEvt.eventType;
     switch(inEvt.eventType)
     {
       case PU_EVT_SYSTEM_STOPPED:
@@ -286,6 +286,13 @@ namespace Pixy {
     assert(mEffects.find("Elementum/Fx/Desummon") != mEffects.end());
 
     playEffect("Elementum/Fx/Desummon", inUnit->getSceneNode()->getPosition());
+  }
+
+  void FxEngine::unloadAllEffects() {
+    dehighlight();
+    mEffects.clear();
+    mFxMgr->destroyAllParticleSystems(mSceneMgr);
+    mHighlightEffect = 0;
   }
 
 }

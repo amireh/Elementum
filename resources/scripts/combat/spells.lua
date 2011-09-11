@@ -12,7 +12,7 @@ SpellValidators = {}
 -- job: parses the spell attributes from the given event,
 -- and attaches it to the puppet's hand, and finally calls the UI script
 -- to draw it
-Pixy.Combat.DrawSpell = function(Spell)
+Combat.DrawSpell = function(Spell)
   Pixy.Log("Drawing spell button: " .. Spell:getName())
   Pixy.UI.Combat.drawSpell(Spell)
 --[[
@@ -33,7 +33,7 @@ Pixy.Combat.DrawSpell = function(Spell)
 	return true
 end
 
-Pixy.Combat.DropSpell = function(Spell)
+Combat.DropSpell = function(Spell)
   Pixy.Log("Discarding spell button: " .. Spell:getName())
   Pixy.UI.Combat.dropSpell(Spell)
 end
@@ -41,7 +41,7 @@ end
 -- type: CEGUI event handler
 -- job: sends a request to the instance with the spell id
 -- awaiting EVT_OK feedback to actually cast it
-Pixy.Combat.reqCastSpell = function(inUIEvt)
+Combat.reqCastSpell = function(inUIEvt)
 	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
 
@@ -67,7 +67,7 @@ end
 
 -- type: incoming event handler
 -- job: locates the spell given in the event and calls its registered handler
-Pixy.Combat.CastSpell = function(inCaster, inTarget, inSpell)
+Combat.CastSpell = function(inCaster, inTarget, inSpell)
 	local spellHandler = Handlers[inSpell:getName()]
   if not inSpell:getCaster() then
     Pixy.Log("Spell has no assigned caster!! returning")

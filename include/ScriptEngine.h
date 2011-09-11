@@ -42,6 +42,7 @@ namespace Pixy {
 		static ScriptEngine& getSingleton();
 
 		virtual bool setup();
+		virtual bool setup(GAME_STATE inState);
 		virtual void update(unsigned long lTimeElapsed);
 		virtual bool cleanup();
 

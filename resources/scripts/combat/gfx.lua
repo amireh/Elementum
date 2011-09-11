@@ -12,7 +12,7 @@ end
 local doNothing = function(dt) end
 local updater = doNothing
 
-Pixy.Combat.onEntitySelected = function(inEvt)
+Combat.onEntitySelected = function(inEvt)
   local entity = inEvt.Any
   entity = tolua.cast(entity, "Pixy::Renderable")
   --~ print("Entity selected, UID: " .. entity:getEntity():getUID())
@@ -42,7 +42,7 @@ Pixy.Combat.onEntitySelected = function(inEvt)
   updater = rotateBillboard
 end
 
-Pixy.Combat.onEntityDeselected = function()
+Combat.onEntityDeselected = function()
   --~ Pixy.Log("Deselecting entity")
   if (Selected) then
     Selected:getSceneNode():removeChild(BBNode)
@@ -55,3 +55,5 @@ end
 updateCombat = function(dt)
   updater(dt)
 end
+
+Pixy.Log("I'm REGISTERED")

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sun Sep 11 12:35:35 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Sep 11 22:08:01 2011.
 */
 
 #ifndef __cplusplus
@@ -3009,6 +3009,37 @@ static int tolua_Elementum_Pixy_FxEngine_dehighlight00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: unloadAllEffects of class  Pixy::FxEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_FxEngine_unloadAllEffects00
+static int tolua_Elementum_Pixy_FxEngine_unloadAllEffects00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::FxEngine",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unloadAllEffects'", NULL);
+#endif
+  {
+   self->unloadAllEffects();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'unloadAllEffects'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: __Pixy of class  Pixy::FxEngine */
 #ifndef TOLUA_DISABLE_tolua_get_Pixy__FxEngine___Pixy__EventListener__
 static int tolua_get_Pixy__FxEngine___Pixy__EventListener__(lua_State* tolua_S)
@@ -3357,6 +3388,39 @@ static int tolua_Elementum_Pixy_Intro_getPuppetName00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getPuppetName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPuppetName of class  Pixy::Intro */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Intro_setPuppetName00
+static int tolua_Elementum_Pixy_Intro_setPuppetName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Intro",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Intro* self = (Pixy::Intro*)  tolua_tousertype(tolua_S,1,0);
+  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPuppetName'", NULL);
+#endif
+  {
+   self->setPuppetName(inName);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPuppetName'.",&tolua_err);
  return 0;
 #endif
 }
@@ -17969,6 +18033,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect01);
     tolua_function(tolua_S,"highlight",tolua_Elementum_Pixy_FxEngine_highlight00);
     tolua_function(tolua_S,"dehighlight",tolua_Elementum_Pixy_FxEngine_dehighlight00);
+    tolua_function(tolua_S,"unloadAllEffects",tolua_Elementum_Pixy_FxEngine_unloadAllEffects00);
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__FxEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"GameManager","Pixy::GameManager","",NULL);
@@ -17993,6 +18058,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getSingleton",tolua_Elementum_Pixy_Intro_getSingleton00);
     tolua_function(tolua_S,"getSingletonPtr",tolua_Elementum_Pixy_Intro_getSingletonPtr00);
     tolua_function(tolua_S,"getPuppetName",tolua_Elementum_Pixy_Intro_getPuppetName00);
+    tolua_function(tolua_S,"setPuppetName",tolua_Elementum_Pixy_Intro_setPuppetName00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Lobby","Pixy::Lobby","Pixy::GameState",NULL);
    tolua_beginmodule(tolua_S,"Lobby");

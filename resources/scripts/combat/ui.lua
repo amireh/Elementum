@@ -158,7 +158,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 
   -- finally, subscribe the button to its event handlers
   --lButton["Window"]:subscribeEvent("Shown", "Pixy.UI.Combat.DrawSpell")
-	lButton["Window"]:subscribeEvent("Clicked", "Pixy.Combat.reqCastSpell")
+	lButton["Window"]:subscribeEvent("Clicked", "Combat.reqCastSpell")
   lButton["Window"]:subscribeEvent("MouseEnter", "Pixy.UI.Combat.ShowTooltip")
   lButton["Window"]:subscribeEvent("MouseLeave", "Pixy.UI.Combat.HideTooltip")
   lButton["Window"]:subscribeEvent("AlphaChanged", "Pixy.UI.Combat.RemoveSpell")
@@ -418,7 +418,7 @@ ShowScrollingMessage = function(txt, good, rnd)
   win:subscribeEvent("AlphaChanged", "Pixy.UI.Combat.RemoveSpell")
 end
 
-Pixy.Combat.onKeyReleased = function()
+Combat.onKeyReleased = function()
   --ShowScrollingMessage("foobar")
   if (Selected) then
     local pos = GfxEngine:getScreenCoords(Selected:getSceneObject())

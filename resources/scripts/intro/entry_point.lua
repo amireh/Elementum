@@ -17,7 +17,11 @@ require("pixy")
 Pixy.registerGlobals()
 clearBindings()
 
+if not Intro then Intro = {} end
+
 require("intro/main_menu")
 require("intro/profiles")
 require("combat/effects")
 require("intro/bindings")
+
+Intro.bind()

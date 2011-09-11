@@ -6,4 +6,5 @@ class Intro : public GameState
   static Intro* getSingletonPtr( void );
 
   std::string& getPuppetName() const;
+  void setPuppetName(std::string inName);
 };

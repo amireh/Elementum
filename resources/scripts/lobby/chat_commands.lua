@@ -55,6 +55,8 @@ Chat.Commands.leave = function(args)
     if not found then return false, "InvalidArgs" end
   end
 
+  if room == "General" then return false, "PermanentRoom" end
+
   local e = Pixy.Event(Pixy.EventUID.LeaveRoom)
   e:setProperty("R", room)
   NetMgr:send(e)

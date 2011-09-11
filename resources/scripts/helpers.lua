@@ -38,9 +38,9 @@ function aspectToString(inAsp)
 end
 
 -- reloads the lua module, effectively resetting the state
-Pixy.Combat.reloadScripts = function()
-	require("pixy")
-end
+--~ Combat.reloadScripts = function()
+	--~ require("pixy")
+--~ end
 
 function split(str, pat)
    local t = {}  -- NOTE: use {n = 0} in Lua-5.0

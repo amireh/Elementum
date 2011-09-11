@@ -52,6 +52,8 @@ namespace Pixy {
     void highlight(Renderable*);
     void dehighlight();
 
+    void unloadAllEffects();
+
 	protected:
     friend class GfxEngine;
 

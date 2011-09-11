@@ -1,8 +1,8 @@
 require("processor")
 
 function arbitraryFuncCombat(name, ...)
-  if Pixy.Combat[name] then
-    Pixy.Combat[name](unpack(arg))
+  if Combat[name] then
+    Combat[name](unpack(arg))
   end
 end
 function arbitraryFuncAll(name, ...)
@@ -11,7 +11,7 @@ function arbitraryFuncAll(name, ...)
   end
 end
 
-arbitraryFunc = nil
+arbitraryFunc = arbitraryFuncAll
 
 local attached = {} -- tracks all attached layouts
 Pixy.UI = {}
@@ -21,6 +21,8 @@ Selected = nil
 Pixy.registerGlobals = function()
 
   if (Pixy.Launched) then return true end
+
+  if not Combat then Combat = {} end
 
 	Pixy.Log( "*************************************************")
 	Pixy.Log( "* Launching Pixy Lua module!                    *")
@@ -64,7 +66,7 @@ Pixy.registerGlobals = function()
   UIEngine = Pixy.UIEngine:getSingletonPtr()
   ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
 
-  Pixy.Combat = {}
+  --Pixy.Combat = {}
 
   Puppets = {}
   SelfPuppet = nil
@@ -87,12 +89,6 @@ Pixy.registerGlobals = function()
 
   Scene = nil
 
-  if CombatState:isCurrentState() then
-    arbitraryFunc = arbitraryFuncCombat
-  else
-    arbitraryFunc = arbitraryFuncAll
-  end
-
 end
 
 Pixy.UI.attach = function(inWindow)
@@ -101,18 +97,26 @@ Pixy.UI.attach = function(inWindow)
 	if (not attached[inWindow]) then
 		Pixy.Log("window is not loaded, loading...")
 		-- load layout
-		attached[inWindow] = CEWindowMgr:loadWindowLayout(inWindow)
+		attached[inWindow] = CEGUI.toGUISheet(CEWindowMgr:loadWindowLayout(inWindow))
  		--CEWindowMgr:destroyWindow(attached[inWindow])
 	end
 
 	-- attach layout
 	attached[inWindow]:setAlwaysOnTop(true)
+	attached[inWindow]:show()
+  --~ attached[inWindow]:addChild(PBox)
 	CESystem:setGUISheet(attached[inWindow])
 
   -- hide the progress box
   Pixy.UI.closeProgressBox()
 
 	return attached[inWindow]
+end
+
+Pixy.UI.detach = function(inWindow)
+  inWindow:setAlwaysOnTop(false)
+  inWindow:hide()
+  CESystem:setGUISheet(nil)
 end
 
 Pixy.UI.attachOverlay = function(inWindow)

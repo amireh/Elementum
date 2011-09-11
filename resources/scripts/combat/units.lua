@@ -1,6 +1,6 @@
 local Handlers = {}
 
-Pixy.Combat.CreateUnit = function(inUnit)
+Combat.CreateUnit = function(inUnit)
 
 	local handler = Handlers[inUnit:getName()]
 	if not handler then

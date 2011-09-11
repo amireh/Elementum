@@ -200,4 +200,9 @@ namespace Pixy
     return mPuppetName;
   }
 
+  void Intro::setPuppetName(std::string inName)
+  {
+    mPuppetName = inName;
+  }
+
 } // end of namespace
