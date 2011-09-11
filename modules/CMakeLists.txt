@@ -1,8 +1,21 @@
-INCLUDE_DIRECTORIES(include include/dotscene include/ogre include/tinyxml include/tinyxmlresource include/OgreMax)
+SET(Elementum_Modules_INCLUDE_DIRS
+  include
+  include/cegui
+  include/dotscene
+  include/ogre
+  include/tinyxml
+  include/tinyxmlresource
+  include/OgreMax
+
+  include/pixy)
+
+INCLUDE_DIRECTORIES(${Elementum_Modules_INCLUDE_DIRS})
+
 # add sources
 SET(Elementum_Modules_SRCS
 
   #src/dotscene/DotSceneLoader.cpp
+  src/cegui/FormattedListboxTextItem.cpp
 
   src/tinyxmlresource/TinyXMLResource.cpp
   src/tinyxmlresource/TinyXMLResourceManager.cpp
@@ -16,6 +29,8 @@ SET(Elementum_Modules_SRCS
   src/OgreMax/OgreMaxUtilities.cpp
   src/OgreMax/ProgressCalculator.cpp
   src/OgreMax/Version.cpp
+
+  src/pixy/required.cpp
 )
 
 if(APPLE)
@@ -37,5 +52,5 @@ TARGET_LINK_LIBRARIES( Elementum_Modules ${PROJECT_LIBS} )
 IF(APPLE)
   set_target_properties(Elementum_Modules
      PROPERTIES BUILD_WITH_INSTALL_RPATH 1
-     INSTALL_NAME_DIR "@executable_path/../Plugins")  
+     INSTALL_NAME_DIR "@executable_path/../Plugins")
 ENDIF()

@@ -46,6 +46,7 @@ SET( ${PROJECT_NAME}_BUILD_LEVEL 1 )
 INCLUDE_DIRECTORIES(
   include
   modules/include
+  modules/include/pixy
   #~ ${RakNet_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${LOG4CPP_INCLUDE_DIR}

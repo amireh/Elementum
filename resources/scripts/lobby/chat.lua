@@ -2,6 +2,14 @@
 
 require("helpers")
 
+MinMessageLength = 2
+MaxMessageLength = 255
+MaxMessages = 50
+
+if not Chat then
+  Chat = { Errors = { General = {} } }
+end
+
 Chat = {
   History = {},
   WhisperHistory = {},
@@ -9,14 +17,45 @@ Chat = {
     Typing = nil,
     Whispering = nil
   },
-  Context = nil
+  Context = nil,
+
+  Handlers = {
+    Message = nil, -- a message sent to the room
+    Whisper = nil, -- a "tell" sent to one client
+    Command = nil -- a special command
+  },
+
+  Errors = {
+    General = {
+      TooShort = "Message must be at least " .. MinMessageLength .. " characters long.",
+      TooLong = "Message can't be longer than " .. MaxMessageLength .. " characters."
+    },
+    Whisper = {
+      InvalidTarget = "Invalid whisper target.",
+      TooShort = nil,
+      UnknownTarget = "Unknown whisper target, probably offline."
+    },
+    Message = {
+    },
+    Command = {
+      UnknownCommand = "Unknown command. Type /help for a list of available commands.",
+      InvalidArgs = "Invalid command arguments. Type /help for a list of valid commands."
+    }
+  },
+  Commands = {
+    ping = nil,
+    join = nil,
+    leave = nil,
+    help = nil
+  }
 }
+
+Chat.Errors.Whisper.TooShort = Chat.Errors.General.TooShort
+
+require("lobby/chat_commands")
 
 Rooms = {}
 CurrentRoom = nil
-MinMessageLength = 3
-MaxMessageLength = 255
-MaxMessages = 50
 NrClients = 0
 CurrentWhisperTarget = nil
 CurrentChatMessage = nil
@@ -28,7 +67,7 @@ Chat.attach = function()
   InputBox = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Chat/Editbox/Message"))
   RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"), "CEGUI::Listbox")
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
-
+  Tabs = CEGUI.toTabControl(CEWindowMgr:getWindow("Elementum/Containers/Rooms"))
   --~ local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
   --~ evt:setProperty("Puppet", SelectedPuppetName)
   --~ NetMgr:send(evt)
@@ -67,7 +106,7 @@ Chat.showMessage = function(txt, sender, msg)
     MsgBox:removeItem(MsgBox:getListboxItemFromIndex(0))
   end
 
-  local item = CEGUI.createListboxTextItem(msg)
+  local item = CEGUI.createFormattedListboxTextItem(msg, CEGUI.HTF_WORDWRAP_LEFT_ALIGNED)
   MsgBox:addItem(item)
   MsgBox:ensureItemIsVisible(item)
 
@@ -132,6 +171,11 @@ end
 -- we get the list of clients in this current room
 Chat.onJoinRoom = function(e)
 
+  local win = CEWindowMgr:loadWindowLayout("lobby/party.layout", "Elementum/Rooms/" .. e:getProperty("R"))
+  win:setText(e:getProperty("R"))
+  Tabs:addTab(win)
+  Chat.switchToRoom(e:getProperty("R"))
+
   if e.Feedback == Pixy.EventFeedback.Ok then
     assert(e:hasProperty("R") and e:hasProperty("C"))
 
@@ -179,6 +223,15 @@ Chat.onLeftRoom = function(e)
   return true
 end
 
+Chat.switchToRoom = function(room)
+  local win = CEWindowMgr:getWindow("Elementum/Rooms/" .. room)
+  assert(win)
+  local msg_box = win:getChildAtIdx(0)--("Messages")
+  assert(msg_box)
+  MsgBox = CEGUI.toListbox(msg_box)
+  MsgBox:rename(win:getName() .. "/" .. "Messages")
+end
+
 Chat.onIncomingMessage = function(e)
   if e.Feedback == Pixy.EventFeedback.Ok then
     assert(e:hasProperty("M") and e:hasProperty("S"))
@@ -205,42 +258,111 @@ Chat.Send = function(e)
   local len = msg:len()
   local e = nil
 
-  if len > MaxMessageLength or len < MinMessageLength then return true end
+  if len == 0 then return true end
 
-  local is_whisper = (msg:sub(0,3) == "/w ")
-  if (is_whisper) then
-    print("this is a whisper! ")
-    local target = capitalize(string.match(msg:sub(3), "%a+"))
-    msg = msg:sub(5 + target:len()) --[["/w TARGET MSG"]]
-    if msg:len() < MinMessageLength then return true end
-
-    if not target then return true end
-    e = Pixy.Event(Pixy.EventUID.SendWhisper)
-    e:setProperty("M", msg)
-    e:setProperty("T", target)
-
-    -- send the tell to ourself as well
-    Chat.showWhisper(msg, "\\[To: " .. target .. "\]")
-
-    -- track history
-    Chat.trackWhisperTarget(target)
-
-    -- switch back to typing context
-    --~ Chat.switchContext(Chat.Contexts.Typing)
-
-  else
-    e = Pixy.Event(Pixy.EventUID.SendMessage)
-    e:setProperty("M", msg)
-
-    -- save the message for history browsing
-    Chat.saveMessage(msg)
+  if len > MaxMessageLength then
+    return Chat.notifySendFailed("General", "TooLong")
+  elseif len < MinMessageLength then
+    return Chat.notifySendFailed("General", "TooShort")
   end
 
-  e:setProperty("R", CurrentRoom)
-  e:setProperty("S", SelectedPuppetName)
+  local msg_type = Chat.parseMessageType(msg)
+  if msg_type then
+    local _result, _error = Chat.Handlers[msg_type](msg)
 
-  NetMgr:send(e)
+    -- if an error occured, we notify the client
+    if not _result then
+      return Chat.notifySendFailed(msg_type, _error)
+    else
+      return true
+    end
+  end
+
+  -- really shouldn't be here
+  assert(false)
+end
+
+Chat.parseMessageType = function(msg)
+  -- a message is either a message, a whisper, or a command
+  -- whispers format: "/w TARGET MSG"
+  -- commands format: "/COMMAND"
+
+  -- a) is it a whisper?
+  if (msg:sub(0,3) == "/w ") then return "Whisper" end
+
+  -- b) is it a command?
+  if (msg:sub(0,1) == "/") then return "Command" end
+
+  return "Message"
+end
+
+Chat.Handlers.Whisper = function(msg)
+  print("this is a whisper! ")
+
+  -- validate the whisper
+  local target = capitalize(string.match(msg:sub(3), "%a+"))
+  if not target then return false, "InvalidTarget" end
+
+  msg = msg:sub(5 + target:len()) --[["/w TARGET MSG"]]
+
+  if msg:len() < MinMessageLength then return false, "TooShort" end
+
+
+  -- TODO: check if target is online
+  -- if not Chat.isOnline(target) then return false, "UnknownTarget" end
+
+  e = Pixy.Event(Pixy.EventUID.SendWhisper)
+  e:setProperty("M", msg)
+  e:setProperty("T", target)
+
+  -- send the tell to ourself as well
+  Chat.showWhisper(msg, "\\[To: " .. target .. "\]")
+
+  -- track history
+  Chat.trackWhisperTarget(target)
+
+  -- switch back to typing context
+  --~ Chat.switchContext(Chat.Contexts.Typing)
+  return Chat.doSend(e)
+end
+
+Chat.Handlers.Message = function(msg)
+  e = Pixy.Event(Pixy.EventUID.SendMessage)
+  e:setProperty("M", msg)
+
+  -- save the message for history browsing
+  Chat.saveMessage(msg)
+
+  return Chat.doSend(e)
+end
+
+Chat.Handlers.Command = function(msg)
+  local cmd = (string.match(msg:sub(1), "%a+")):lower()
+  if not Chat.Commands[cmd] then return false, "UnknownCommand" end
+
+  Chat.saveMessage(msg)
+
+  return Chat.Commands[cmd](msg:sub(3 + cmd:len()))
+end
+
+Chat.notifySendFailed = function(msg_type, _error)
+  print("Error: " .. msg_type .. " # " .. _error)
+  assert(Chat.Errors[msg_type][_error] ~= nil)
+
+  local msg =
+    "[colour='ffff0000']" .. Chat.Errors[msg_type][_error] .. "[colour='FFFFFFFF']"
+  Chat.showMessage(txt, nil, msg)
+
+  return true
+end
+
+Chat.doSend = function(msg_event)
+  msg_event:setProperty("R", CurrentRoom)
+  msg_event:setProperty("S", SelectedPuppetName)
+
+  NetMgr:send(msg_event)
   InputBox:setText("")
+
   return true
 end
 

@@ -62,5 +62,6 @@ function split(str, pat)
 end
 
 function capitalize(str)
-    return (str:gsub("^%l", string.upper))
+  if not str then return nil end
+  return (str:gsub("^%l", string.upper))
 end

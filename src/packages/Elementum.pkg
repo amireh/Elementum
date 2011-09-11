@@ -1,5 +1,5 @@
 // include the header that makes these files generate valid code
-$#include "required.h"
+$#include "pixy/required.h"
 $#include "Pixy.h"
 
 // start the Pixy namespace and include everything inside that
@@ -48,3 +48,4 @@ $pfile "OgreBillboards.pkg"
 $pfile "OgreCameraMan.pkg"
 $pfile "OgreAny.pkg"
 $pfile "OIS.pkg"
+$pfile "CEGUI.pkg"
