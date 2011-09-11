@@ -1,5 +1,18 @@
 require("processor")
 
+function arbitraryFuncCombat(name, ...)
+  if Pixy.Combat[name] then
+    Pixy.Combat[name](unpack(arg))
+  end
+end
+function arbitraryFuncAll(name, ...)
+  if Pixy[name] then
+    Pixy[name](unpack(arg))
+  end
+end
+
+arbitraryFunc = nil
+
 local attached = {} -- tracks all attached layouts
 Pixy.UI = {}
 
@@ -38,6 +51,7 @@ Pixy.registerGlobals = function()
 	EvtMgr = Pixy.EventManager:getSingletonPtr()
 	GameMgr = Pixy.GameManager:getSingleton()
   NetMgr = Pixy.NetworkManager:getSingleton()
+  InputMgr = Pixy.InputManager:getSingletonPtr()
 	--if (state == "Intro") then
 		Intro = Pixy.Intro:getSingletonPtr()
     Lobby = Pixy.Lobby:getSingletonPtr()
@@ -74,6 +88,12 @@ Pixy.registerGlobals = function()
 	Pixy.Launched = true
 
   Scene = nil
+
+  if Combat:isCurrentState() then
+    arbitraryFunc = arbitraryFuncCombat
+  else
+    arbitraryFunc = arbitraryFuncAll
+  end
 
 end
 
@@ -143,7 +163,3 @@ Pixy.UI.doneWaiting = function(keep_box)
 	dontUpdateMe(Pixy.UI.showLoadingBox)
 end
 
-
-function arbitraryFunc(name, ...)
-  Pixy.Combat[name](unpack(arg))
-end

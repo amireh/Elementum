@@ -49,6 +49,8 @@ namespace Pixy
 		void requestShutdown( void );
 
 		virtual GAME_STATE getId() const;
+
+    bool isCurrentState();
 	protected:
 		GameState(){ };
 		log4cpp::Category* mLog;

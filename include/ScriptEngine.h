@@ -13,6 +13,7 @@
 
 #include "Engine.h"
 #include "EventListener.h"
+#include "InputListener.h"
 #include <boost/asio.hpp>
 
 namespace CEGUI {
@@ -33,7 +34,7 @@ namespace Pixy {
 	 *	Manages the Lua module, loads Script resources, listens to and passes off
 	 *	Events fro and to Lua.
 	 */
-	class ScriptEngine : public Engine, public EventListener {
+	class ScriptEngine : public Engine, public EventListener, public InputListener {
 
 	public:
 		virtual ~ScriptEngine();
@@ -56,6 +57,13 @@ namespace Pixy {
     std::string getModulePathPrefix() const;
 
     void callMeAfter(int inSeconds, std::string func);
+
+		void keyPressed( const OIS::KeyEvent &e );
+		void keyReleased( const OIS::KeyEvent &e );
+
+		bool mouseMoved( const OIS::MouseEvent &e );
+		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
 	protected:
 

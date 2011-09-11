@@ -36,7 +36,11 @@ namespace Pixy
 
 		mEvtMgr = EventManager::getSingletonPtr();
 		mNetMgr = NetworkManager::getSingletonPtr();
-		if (!mNetMgr->isConnected()) {
+		//~ if (!mNetMgr->isConnected()) {
+      //~ mLog->errorStream() << "Could not connect to server, aborting";
+      //~ return GameManager::getSingleton().requestShutdown();
+		//~ }
+		if (!mNetMgr->connect()) {
       mLog->errorStream() << "Could not connect to server, aborting";
       return GameManager::getSingleton().requestShutdown();
 		}
@@ -71,10 +75,12 @@ namespace Pixy
 	void Lobby::keyPressed( const OIS::KeyEvent &e )
 	{
     mUIEngine->keyPressed(e);
+    mScriptEngine->keyPressed(e);
 	}
 
 	void Lobby::keyReleased( const OIS::KeyEvent &e ) {
     mUIEngine->keyReleased(e);
+    mScriptEngine->keyReleased(e);
 		switch (e.key) {
 			case OIS::KC_ESCAPE:
 				this->requestShutdown();

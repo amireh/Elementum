@@ -332,6 +332,29 @@ namespace Pixy {
     return true;
   }
 
+
+	bool ScriptEngine::mouseMoved( const OIS::MouseEvent &e )
+	{
+		//return passToLua("onMouseMoved", 1, "OIS::MouseEvent", &e);
+	}
+
+	bool ScriptEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+		return passToLua("onMousePressed", 2, "OIS::MouseEvent", &e, "OIS::MouseButtonID", &id);
+	}
+
+	bool ScriptEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+		return passToLua("onMouseReleased", 2, "OIS::MouseEvent", &e, "OIS::MouseButtonID", &id);
+    //CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
+    //return (window && window->isVisible() && window->getAlpha() > 0.0f && (window->getType() != "DefaultWindow"));
+  }
+
+	void ScriptEngine::keyReleased( const OIS::KeyEvent &e ) {
+    passToLua("onKeyReleased", 1, "OIS::KeyEvent", &e);
+	}
+	void ScriptEngine::keyPressed( const OIS::KeyEvent &e ) {
+		passToLua("onKeyPressed", 1, "OIS::KeyEvent", &e);
+	}
+
   std::string ScriptEngine::getScriptPathPrefix() const {
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
     return macBundlePath() + "/Contents/Resources/scripts";
@@ -351,4 +374,5 @@ namespace Pixy {
     return "../lib";
 #endif
   }
+
 }

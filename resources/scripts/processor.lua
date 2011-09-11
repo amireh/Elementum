@@ -6,7 +6,16 @@ function list_iter(t)
   local n = table.getn(t)
   return function ()
     i = i + 1
-    if i <= n then return t[i] end
+    if i <= n then return t[i] else return nil end
+  end
+end
+
+function rlist_iter(t)
+  local n = table.getn(t)
+  local i = n+1
+  return function ()
+    i = i - 1
+    if i > 0 then return t[i] else return nil end
   end
 end
 

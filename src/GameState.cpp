@@ -37,4 +37,9 @@ namespace Pixy
 		GameManager::getSingletonPtr()->requestShutdown();
 	}
 
+  bool GameState::isCurrentState()
+  {
+    return GameManager::getSingleton().getCurrentState()->getId() == mId;
+  }
+
 } // end of namespace Pixy

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sat Sep 10 15:52:19 2011.
+** Generated automatically by tolua++-1.0.92 on Sat Sep 10 21:40:44 2011.
 */
 
 #ifndef __cplusplus
@@ -28,6 +28,7 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "CDeck.h"
 #include "FxEngine.h"
 #include "GameManager.h"
+#include "InputManager.h"
 #include "GameState.h"
 #include "Intro.h"
 #include "Lobby.h"
@@ -42,6 +43,7 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "ScriptEngine.h"
 #include "Ogre.h"
 #include "SdkCameraMan.h"
+#include "OIS.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
@@ -212,68 +214,71 @@ static int tolua_collect_Ogre__Camera (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Ogre::Vector2");
- tolua_usertype(tolua_S,"Pixy::ScriptEngine");
+ tolua_usertype(tolua_S,"Pixy::InputManager");
  tolua_usertype(tolua_S,"Ogre::Renderable");
- tolua_usertype(tolua_S,"Pixy::FxEngine");
- tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Pixy::Spell");
  tolua_usertype(tolua_S,"list<Pixy::CUnit*>");
  tolua_usertype(tolua_S,"Ogre::uint16");
- tolua_usertype(tolua_S,"Pixy::Event");
- tolua_usertype(tolua_S,"Pixy::Deck");
- tolua_usertype(tolua_S,"Ogre::SceneNode");
+ tolua_usertype(tolua_S,"Ogre::Radian");
  tolua_usertype(tolua_S,"Ogre::Billboard");
- tolua_usertype(tolua_S,"Pixy::GameManager");
- tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
- tolua_usertype(tolua_S,"Ogre::StaticGeometry");
- tolua_usertype(tolua_S,"const");
- tolua_usertype(tolua_S,"Ogre::Viewport");
- tolua_usertype(tolua_S,"Ogre::Degree");
+ tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
- tolua_usertype(tolua_S,"Ogre::MeshManager");
- tolua_usertype(tolua_S,"Ogre::MeshPtr");
+ tolua_usertype(tolua_S,"Ogre::Degree");
  tolua_usertype(tolua_S,"Pixy::GameState");
  tolua_usertype(tolua_S,"size_t");
  tolua_usertype(tolua_S,"Pixy::CDeck");
- tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"Ogre::SubEntity");
+ tolua_usertype(tolua_S,"Pixy::NetworkManager");
+ tolua_usertype(tolua_S,"OgreMax::OgreMaxScene");
+ tolua_usertype(tolua_S,"CEGUI::UBox");
+ tolua_usertype(tolua_S,"OgreBites::SdkCameraMan");
+ tolua_usertype(tolua_S,"Ogre::Root");
+ tolua_usertype(tolua_S,"Pixy::CPuppet");
+ tolua_usertype(tolua_S,"Pixy::EventListener");
+ tolua_usertype(tolua_S,"Pixy::Puppet");
+ tolua_usertype(tolua_S,"Ogre::MovableObject");
+ tolua_usertype(tolua_S,"Pixy::Lobby");
+ tolua_usertype(tolua_S,"Ogre::Vector2");
+ tolua_usertype(tolua_S,"Pixy::FxEngine");
+ tolua_usertype(tolua_S,"Pixy::Event");
+ tolua_usertype(tolua_S,"Pixy::Deck");
+ tolua_usertype(tolua_S,"Pixy::CSpell");
+ tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
+ tolua_usertype(tolua_S,"Ogre::MeshPtr");
+ tolua_usertype(tolua_S,"Pixy::UIEngine");
+ tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Pixy::Engine");
- tolua_usertype(tolua_S,"Pixy::NetworkManager");
- tolua_usertype(tolua_S,"Ogre::RibbonTrail");
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
- tolua_usertype(tolua_S,"OgreMax::OgreMaxScene");
  tolua_usertype(tolua_S,"Ogre::BillboardSet");
  tolua_usertype(tolua_S,"Ogre::Plane");
- tolua_usertype(tolua_S,"CEGUI::UBox");
  tolua_usertype(tolua_S,"Pixy::Intro");
- tolua_usertype(tolua_S,"Ogre::Camera");
- tolua_usertype(tolua_S,"Ogre::Node");
- tolua_usertype(tolua_S,"OgreBites::SdkCameraMan");
- tolua_usertype(tolua_S,"Ogre::Entity");
+ tolua_usertype(tolua_S,"OIS::Keyboard");
+ tolua_usertype(tolua_S,"OIS::KeyEvent");
+ tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"Pixy::CUnit");
  tolua_usertype(tolua_S,"Ogre::Quaternion");
- tolua_usertype(tolua_S,"Pixy::UIEngine");
- tolua_usertype(tolua_S,"Ogre::SubEntity");
+ tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Pixy::CPuppet");
- tolua_usertype(tolua_S,"Pixy::EventListener");
+ tolua_usertype(tolua_S,"Pixy::GameManager");
+ tolua_usertype(tolua_S,"Ogre::Entity");
  tolua_usertype(tolua_S,"std::type_info");
  tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
- tolua_usertype(tolua_S,"Ogre::Radian");
- tolua_usertype(tolua_S,"Pixy::Puppet");
- tolua_usertype(tolua_S,"Pixy::Spell");
+ tolua_usertype(tolua_S,"const");
+ tolua_usertype(tolua_S,"Ogre::Viewport");
+ tolua_usertype(tolua_S,"Ogre::MeshManager");
  tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"Ogre::Root");
- tolua_usertype(tolua_S,"Pixy::CSpell");
- tolua_usertype(tolua_S,"Ogre::MovableObject");
- tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
- tolua_usertype(tolua_S,"Pixy::Lobby");
+ tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"Ogre::RibbonTrail");
+ tolua_usertype(tolua_S,"Ogre::Camera");
+ tolua_usertype(tolua_S,"Ogre::Node");
+ tolua_usertype(tolua_S,"Ogre::StaticGeometry");
 }
 
 /* method: new of class  Pixy::Renderable */
@@ -3109,6 +3114,66 @@ static int tolua_Elementum_Pixy_GameManager_requestShutdown00(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getKeyboard of class  Pixy::InputManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_InputManager_getKeyboard00
+static int tolua_Elementum_Pixy_InputManager_getKeyboard00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::InputManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::InputManager* self = (Pixy::InputManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getKeyboard'", NULL);
+#endif
+  {
+   OIS::Keyboard* tolua_ret = (OIS::Keyboard*)  self->getKeyboard();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"OIS::Keyboard");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getKeyboard'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSingletonPtr of class  Pixy::InputManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_InputManager_getSingletonPtr00
+static int tolua_Elementum_Pixy_InputManager_getSingletonPtr00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::InputManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::InputManager* tolua_ret = (Pixy::InputManager*)  Pixy::InputManager::getSingletonPtr();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::InputManager");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSingletonPtr'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: changeState of class  Pixy::GameState */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_GameState_changeState00
 static int tolua_Elementum_Pixy_GameState_changeState00(lua_State* tolua_S)
@@ -3173,6 +3238,38 @@ static int tolua_Elementum_Pixy_GameState_requestShutdown00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: isCurrentState of class  Pixy::GameState */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_GameState_isCurrentState00
+static int tolua_Elementum_Pixy_GameState_isCurrentState00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::GameState",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::GameState* self = (Pixy::GameState*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isCurrentState'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isCurrentState();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isCurrentState'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getSingleton of class  Pixy::Intro */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Intro_getSingleton00
 static int tolua_Elementum_Pixy_Intro_getSingleton00(lua_State* tolua_S)
@@ -3224,6 +3321,38 @@ static int tolua_Elementum_Pixy_Intro_getSingletonPtr00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getSingletonPtr'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPuppetName of class  Pixy::Intro */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Intro_getPuppetName00
+static int tolua_Elementum_Pixy_Intro_getPuppetName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Intro",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Intro* self = (const Pixy::Intro*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPuppetName'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getPuppetName();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPuppetName'.",&tolua_err);
  return 0;
 #endif
 }
@@ -17497,6 +17626,83 @@ static int tolua_Elementum_Ogre_Any_destroy00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: key of class  OIS::KeyEvent */
+#ifndef TOLUA_DISABLE_tolua_get_OIS__KeyEvent_key
+static int tolua_get_OIS__KeyEvent_key(lua_State* tolua_S)
+{
+  OIS::KeyEvent* self = (OIS::KeyEvent*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'key'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->key);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: text of class  OIS::KeyEvent */
+#ifndef TOLUA_DISABLE_tolua_get_OIS__KeyEvent_unsigned_text
+static int tolua_get_OIS__KeyEvent_unsigned_text(lua_State* tolua_S)
+{
+  OIS::KeyEvent* self = (OIS::KeyEvent*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'text'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->text);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: text of class  OIS::KeyEvent */
+#ifndef TOLUA_DISABLE_tolua_set_OIS__KeyEvent_unsigned_text
+static int tolua_set_OIS__KeyEvent_unsigned_text(lua_State* tolua_S)
+{
+  OIS::KeyEvent* self = (OIS::KeyEvent*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'text'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->text = ((unsigned int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isModifierDown of class  OIS::Keyboard */
+#ifndef TOLUA_DISABLE_tolua_Elementum_OIS_Keyboard_isModifierDown00
+static int tolua_Elementum_OIS_Keyboard_isModifierDown00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const OIS::Keyboard",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const OIS::Keyboard* self = (const OIS::Keyboard*)  tolua_tousertype(tolua_S,1,0);
+  OIS::Keyboard::Modifier mod = ((OIS::Keyboard::Modifier) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isModifierDown'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isModifierDown(mod);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isModifierDown'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
 {
@@ -17662,15 +17868,22 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getSingleton",tolua_Elementum_Pixy_GameManager_getSingleton00);
     tolua_function(tolua_S,"requestShutdown",tolua_Elementum_Pixy_GameManager_requestShutdown00);
    tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"InputManager","Pixy::InputManager","",NULL);
+   tolua_beginmodule(tolua_S,"InputManager");
+    tolua_function(tolua_S,"getKeyboard",tolua_Elementum_Pixy_InputManager_getKeyboard00);
+    tolua_function(tolua_S,"getSingletonPtr",tolua_Elementum_Pixy_InputManager_getSingletonPtr00);
+   tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"GameState","Pixy::GameState","",NULL);
    tolua_beginmodule(tolua_S,"GameState");
     tolua_function(tolua_S,"changeState",tolua_Elementum_Pixy_GameState_changeState00);
     tolua_function(tolua_S,"requestShutdown",tolua_Elementum_Pixy_GameState_requestShutdown00);
+    tolua_function(tolua_S,"isCurrentState",tolua_Elementum_Pixy_GameState_isCurrentState00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Intro","Pixy::Intro","Pixy::GameState",NULL);
    tolua_beginmodule(tolua_S,"Intro");
     tolua_function(tolua_S,"getSingleton",tolua_Elementum_Pixy_Intro_getSingleton00);
     tolua_function(tolua_S,"getSingletonPtr",tolua_Elementum_Pixy_Intro_getSingletonPtr00);
+    tolua_function(tolua_S,"getPuppetName",tolua_Elementum_Pixy_Intro_getPuppetName00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Lobby","Pixy::Lobby","Pixy::GameState",NULL);
    tolua_beginmodule(tolua_S,"Lobby");
@@ -18415,6 +18628,166 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"isEmpty",tolua_Elementum_Ogre_Any_isEmpty00);
     tolua_function(tolua_S,"getType",tolua_Elementum_Ogre_Any_getType00);
     tolua_function(tolua_S,"destroy",tolua_Elementum_Ogre_Any_destroy00);
+   tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"OIS",0);
+  tolua_beginmodule(tolua_S,"OIS");
+   tolua_constant(tolua_S,"KC_UNASSIGNED",OIS::KC_UNASSIGNED);
+   tolua_constant(tolua_S,"KC_ESCAPE",OIS::KC_ESCAPE);
+   tolua_constant(tolua_S,"KC_1",OIS::KC_1);
+   tolua_constant(tolua_S,"KC_2",OIS::KC_2);
+   tolua_constant(tolua_S,"KC_3",OIS::KC_3);
+   tolua_constant(tolua_S,"KC_4",OIS::KC_4);
+   tolua_constant(tolua_S,"KC_5",OIS::KC_5);
+   tolua_constant(tolua_S,"KC_6",OIS::KC_6);
+   tolua_constant(tolua_S,"KC_7",OIS::KC_7);
+   tolua_constant(tolua_S,"KC_8",OIS::KC_8);
+   tolua_constant(tolua_S,"KC_9",OIS::KC_9);
+   tolua_constant(tolua_S,"KC_0",OIS::KC_0);
+   tolua_constant(tolua_S,"KC_MINUS",OIS::KC_MINUS);
+   tolua_constant(tolua_S,"KC_EQUALS",OIS::KC_EQUALS);
+   tolua_constant(tolua_S,"KC_BACK",OIS::KC_BACK);
+   tolua_constant(tolua_S,"KC_TAB",OIS::KC_TAB);
+   tolua_constant(tolua_S,"KC_Q",OIS::KC_Q);
+   tolua_constant(tolua_S,"KC_W",OIS::KC_W);
+   tolua_constant(tolua_S,"KC_E",OIS::KC_E);
+   tolua_constant(tolua_S,"KC_R",OIS::KC_R);
+   tolua_constant(tolua_S,"KC_T",OIS::KC_T);
+   tolua_constant(tolua_S,"KC_Y",OIS::KC_Y);
+   tolua_constant(tolua_S,"KC_U",OIS::KC_U);
+   tolua_constant(tolua_S,"KC_I",OIS::KC_I);
+   tolua_constant(tolua_S,"KC_O",OIS::KC_O);
+   tolua_constant(tolua_S,"KC_P",OIS::KC_P);
+   tolua_constant(tolua_S,"KC_LBRACKET",OIS::KC_LBRACKET);
+   tolua_constant(tolua_S,"KC_RBRACKET",OIS::KC_RBRACKET);
+   tolua_constant(tolua_S,"KC_RETURN",OIS::KC_RETURN);
+   tolua_constant(tolua_S,"KC_LCONTROL",OIS::KC_LCONTROL);
+   tolua_constant(tolua_S,"KC_A",OIS::KC_A);
+   tolua_constant(tolua_S,"KC_S",OIS::KC_S);
+   tolua_constant(tolua_S,"KC_D",OIS::KC_D);
+   tolua_constant(tolua_S,"KC_F",OIS::KC_F);
+   tolua_constant(tolua_S,"KC_G",OIS::KC_G);
+   tolua_constant(tolua_S,"KC_H",OIS::KC_H);
+   tolua_constant(tolua_S,"KC_J",OIS::KC_J);
+   tolua_constant(tolua_S,"KC_K",OIS::KC_K);
+   tolua_constant(tolua_S,"KC_L",OIS::KC_L);
+   tolua_constant(tolua_S,"KC_SEMICOLON",OIS::KC_SEMICOLON);
+   tolua_constant(tolua_S,"KC_APOSTROPHE",OIS::KC_APOSTROPHE);
+   tolua_constant(tolua_S,"KC_GRAVE",OIS::KC_GRAVE);
+   tolua_constant(tolua_S,"KC_LSHIFT",OIS::KC_LSHIFT);
+   tolua_constant(tolua_S,"KC_BACKSLASH",OIS::KC_BACKSLASH);
+   tolua_constant(tolua_S,"KC_Z",OIS::KC_Z);
+   tolua_constant(tolua_S,"KC_X",OIS::KC_X);
+   tolua_constant(tolua_S,"KC_C",OIS::KC_C);
+   tolua_constant(tolua_S,"KC_V",OIS::KC_V);
+   tolua_constant(tolua_S,"KC_B",OIS::KC_B);
+   tolua_constant(tolua_S,"KC_N",OIS::KC_N);
+   tolua_constant(tolua_S,"KC_M",OIS::KC_M);
+   tolua_constant(tolua_S,"KC_COMMA",OIS::KC_COMMA);
+   tolua_constant(tolua_S,"KC_PERIOD",OIS::KC_PERIOD);
+   tolua_constant(tolua_S,"KC_SLASH",OIS::KC_SLASH);
+   tolua_constant(tolua_S,"KC_RSHIFT",OIS::KC_RSHIFT);
+   tolua_constant(tolua_S,"KC_MULTIPLY",OIS::KC_MULTIPLY);
+   tolua_constant(tolua_S,"KC_LMENU",OIS::KC_LMENU);
+   tolua_constant(tolua_S,"KC_SPACE",OIS::KC_SPACE);
+   tolua_constant(tolua_S,"KC_CAPITAL",OIS::KC_CAPITAL);
+   tolua_constant(tolua_S,"KC_F1",OIS::KC_F1);
+   tolua_constant(tolua_S,"KC_F2",OIS::KC_F2);
+   tolua_constant(tolua_S,"KC_F3",OIS::KC_F3);
+   tolua_constant(tolua_S,"KC_F4",OIS::KC_F4);
+   tolua_constant(tolua_S,"KC_F5",OIS::KC_F5);
+   tolua_constant(tolua_S,"KC_F6",OIS::KC_F6);
+   tolua_constant(tolua_S,"KC_F7",OIS::KC_F7);
+   tolua_constant(tolua_S,"KC_F8",OIS::KC_F8);
+   tolua_constant(tolua_S,"KC_F9",OIS::KC_F9);
+   tolua_constant(tolua_S,"KC_F10",OIS::KC_F10);
+   tolua_constant(tolua_S,"KC_NUMLOCK",OIS::KC_NUMLOCK);
+   tolua_constant(tolua_S,"KC_SCROLL",OIS::KC_SCROLL);
+   tolua_constant(tolua_S,"KC_NUMPAD7",OIS::KC_NUMPAD7);
+   tolua_constant(tolua_S,"KC_NUMPAD8",OIS::KC_NUMPAD8);
+   tolua_constant(tolua_S,"KC_NUMPAD9",OIS::KC_NUMPAD9);
+   tolua_constant(tolua_S,"KC_SUBTRACT",OIS::KC_SUBTRACT);
+   tolua_constant(tolua_S,"KC_NUMPAD4",OIS::KC_NUMPAD4);
+   tolua_constant(tolua_S,"KC_NUMPAD5",OIS::KC_NUMPAD5);
+   tolua_constant(tolua_S,"KC_NUMPAD6",OIS::KC_NUMPAD6);
+   tolua_constant(tolua_S,"KC_ADD",OIS::KC_ADD);
+   tolua_constant(tolua_S,"KC_NUMPAD1",OIS::KC_NUMPAD1);
+   tolua_constant(tolua_S,"KC_NUMPAD2",OIS::KC_NUMPAD2);
+   tolua_constant(tolua_S,"KC_NUMPAD3",OIS::KC_NUMPAD3);
+   tolua_constant(tolua_S,"KC_NUMPAD0",OIS::KC_NUMPAD0);
+   tolua_constant(tolua_S,"KC_DECIMAL",OIS::KC_DECIMAL);
+   tolua_constant(tolua_S,"KC_OEM_102",OIS::KC_OEM_102);
+   tolua_constant(tolua_S,"KC_F11",OIS::KC_F11);
+   tolua_constant(tolua_S,"KC_F12",OIS::KC_F12);
+   tolua_constant(tolua_S,"KC_F13",OIS::KC_F13);
+   tolua_constant(tolua_S,"KC_F14",OIS::KC_F14);
+   tolua_constant(tolua_S,"KC_F15",OIS::KC_F15);
+   tolua_constant(tolua_S,"KC_KANA",OIS::KC_KANA);
+   tolua_constant(tolua_S,"KC_ABNT_C1",OIS::KC_ABNT_C1);
+   tolua_constant(tolua_S,"KC_CONVERT",OIS::KC_CONVERT);
+   tolua_constant(tolua_S,"KC_NOCONVERT",OIS::KC_NOCONVERT);
+   tolua_constant(tolua_S,"KC_YEN",OIS::KC_YEN);
+   tolua_constant(tolua_S,"KC_ABNT_C2",OIS::KC_ABNT_C2);
+   tolua_constant(tolua_S,"KC_NUMPADEQUALS",OIS::KC_NUMPADEQUALS);
+   tolua_constant(tolua_S,"KC_PREVTRACK",OIS::KC_PREVTRACK);
+   tolua_constant(tolua_S,"KC_AT",OIS::KC_AT);
+   tolua_constant(tolua_S,"KC_COLON",OIS::KC_COLON);
+   tolua_constant(tolua_S,"KC_UNDERLINE",OIS::KC_UNDERLINE);
+   tolua_constant(tolua_S,"KC_KANJI",OIS::KC_KANJI);
+   tolua_constant(tolua_S,"KC_STOP",OIS::KC_STOP);
+   tolua_constant(tolua_S,"KC_AX",OIS::KC_AX);
+   tolua_constant(tolua_S,"KC_UNLABELED",OIS::KC_UNLABELED);
+   tolua_constant(tolua_S,"KC_NEXTTRACK",OIS::KC_NEXTTRACK);
+   tolua_constant(tolua_S,"KC_NUMPADENTER",OIS::KC_NUMPADENTER);
+   tolua_constant(tolua_S,"KC_RCONTROL",OIS::KC_RCONTROL);
+   tolua_constant(tolua_S,"KC_MUTE",OIS::KC_MUTE);
+   tolua_constant(tolua_S,"KC_CALCULATOR",OIS::KC_CALCULATOR);
+   tolua_constant(tolua_S,"KC_PLAYPAUSE",OIS::KC_PLAYPAUSE);
+   tolua_constant(tolua_S,"KC_MEDIASTOP",OIS::KC_MEDIASTOP);
+   tolua_constant(tolua_S,"KC_VOLUMEDOWN",OIS::KC_VOLUMEDOWN);
+   tolua_constant(tolua_S,"KC_VOLUMEUP",OIS::KC_VOLUMEUP);
+   tolua_constant(tolua_S,"KC_WEBHOME",OIS::KC_WEBHOME);
+   tolua_constant(tolua_S,"KC_NUMPADCOMMA",OIS::KC_NUMPADCOMMA);
+   tolua_constant(tolua_S,"KC_DIVIDE",OIS::KC_DIVIDE);
+   tolua_constant(tolua_S,"KC_SYSRQ",OIS::KC_SYSRQ);
+   tolua_constant(tolua_S,"KC_RMENU",OIS::KC_RMENU);
+   tolua_constant(tolua_S,"KC_PAUSE",OIS::KC_PAUSE);
+   tolua_constant(tolua_S,"KC_HOME",OIS::KC_HOME);
+   tolua_constant(tolua_S,"KC_UP",OIS::KC_UP);
+   tolua_constant(tolua_S,"KC_PGUP",OIS::KC_PGUP);
+   tolua_constant(tolua_S,"KC_LEFT",OIS::KC_LEFT);
+   tolua_constant(tolua_S,"KC_RIGHT",OIS::KC_RIGHT);
+   tolua_constant(tolua_S,"KC_END",OIS::KC_END);
+   tolua_constant(tolua_S,"KC_DOWN",OIS::KC_DOWN);
+   tolua_constant(tolua_S,"KC_PGDOWN",OIS::KC_PGDOWN);
+   tolua_constant(tolua_S,"KC_INSERT",OIS::KC_INSERT);
+   tolua_constant(tolua_S,"KC_DELETE",OIS::KC_DELETE);
+   tolua_constant(tolua_S,"KC_LWIN",OIS::KC_LWIN);
+   tolua_constant(tolua_S,"KC_RWIN",OIS::KC_RWIN);
+   tolua_constant(tolua_S,"KC_APPS",OIS::KC_APPS);
+   tolua_constant(tolua_S,"KC_POWER",OIS::KC_POWER);
+   tolua_constant(tolua_S,"KC_SLEEP",OIS::KC_SLEEP);
+   tolua_constant(tolua_S,"KC_WAKE",OIS::KC_WAKE);
+   tolua_constant(tolua_S,"KC_WEBSEARCH",OIS::KC_WEBSEARCH);
+   tolua_constant(tolua_S,"KC_WEBFAVORITES",OIS::KC_WEBFAVORITES);
+   tolua_constant(tolua_S,"KC_WEBREFRESH",OIS::KC_WEBREFRESH);
+   tolua_constant(tolua_S,"KC_WEBSTOP",OIS::KC_WEBSTOP);
+   tolua_constant(tolua_S,"KC_WEBFORWARD",OIS::KC_WEBFORWARD);
+   tolua_constant(tolua_S,"KC_WEBBACK",OIS::KC_WEBBACK);
+   tolua_constant(tolua_S,"KC_MYCOMPUTER",OIS::KC_MYCOMPUTER);
+   tolua_constant(tolua_S,"KC_MAIL",OIS::KC_MAIL);
+   tolua_constant(tolua_S,"KC_MEDIASELECT",OIS::KC_MEDIASELECT);
+   tolua_cclass(tolua_S,"KeyEvent","OIS::KeyEvent","",NULL);
+   tolua_beginmodule(tolua_S,"KeyEvent");
+    tolua_variable(tolua_S,"key",tolua_get_OIS__KeyEvent_key,NULL);
+    tolua_variable(tolua_S,"text",tolua_get_OIS__KeyEvent_unsigned_text,tolua_set_OIS__KeyEvent_unsigned_text);
+   tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"Keyboard","OIS::Keyboard","",NULL);
+   tolua_beginmodule(tolua_S,"Keyboard");
+    tolua_constant(tolua_S,"Shift",OIS::Keyboard::Shift);
+    tolua_constant(tolua_S,"Ctrl",OIS::Keyboard::Ctrl);
+    tolua_constant(tolua_S,"Alt",OIS::Keyboard::Alt);
+    tolua_function(tolua_S,"isModifierDown",tolua_Elementum_OIS_Keyboard_isModifierDown00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);

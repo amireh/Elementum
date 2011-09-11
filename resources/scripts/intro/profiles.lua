@@ -11,6 +11,8 @@ local Name, Stats = nil
 local Listbox = nil
 local RaceText = nil
 
+SelectedPuppetName = nil
+
 local Buttons = {
   JoinLobby = nil,
   Back = nil
@@ -185,18 +187,19 @@ Profiles.JoinLobby = function()
   end
 
   local puppet_name = Selected:getEntity():getName()
+  SelectedPuppetName = puppet_name
 
   MainMenu.cleanup()
-
-  local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
-  evt:setProperty("Puppet", puppet_name)
-  EvtMgr:hook(evt)
+  GameMgr:changeState(Lobby)
+  --~ local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
+  --~ evt:setProperty("Puppet", puppet_name)
+  --~ EvtMgr:hook(evt)
 
   return true
 
   --GameMgr:changeState(Pixy.Lobby:getSingletonPtr())
 
-  --~ GameMgr:changeState(Lobby)
+
   --~ ScriptEngine:callMeAfter(1, "doJoinLobby")
 end
 

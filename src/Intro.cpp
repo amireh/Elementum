@@ -63,7 +63,7 @@ namespace Pixy
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
 
-    bind(EventUID::JoinLobby, boost::bind(&Intro::onJoinLobby, this, _1));
+    //~ bind(EventUID::JoinLobby, boost::bind(&Intro::onJoinLobby, this, _1));
 
 		// start the interface chain
 		mScriptEngine->runScript("intro/entry_point.lua");
