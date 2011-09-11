@@ -54,16 +54,17 @@ Chat.Errors.Whisper.TooShort = Chat.Errors.General.TooShort
 
 require("lobby/chat_commands")
 
+__RoomNames__ = {}
+
 Rooms = {}
 CurrentRoom = nil
-NrClients = 0
 CurrentWhisperTarget = nil
 CurrentChatMessage = nil
 
 local isSetup = false
 Chat.attach = function()
 	Layout = Pixy.UI.attach("lobby/chat.layout")
-  MsgBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Text/Messages"))
+  --MsgBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Text/Messages"))
   InputBox = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Chat/Editbox/Message"))
   RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"), "CEGUI::Listbox")
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
@@ -93,7 +94,7 @@ Chat.cleanup = function()
   return true
 end
 
-Chat.showMessage = function(txt, sender, msg)
+Chat.showMessage = function(room, txt, sender, msg)
   if not msg then
   msg =
     "[colour='FF00FF00']" ..
@@ -101,6 +102,8 @@ Chat.showMessage = function(txt, sender, msg)
     "[colour='FFFFFFFF']" ..
     ": " .. txt
   end
+
+  local MsgBox = Rooms[room].MsgBox
 
   while MsgBox:getItemCount() > MaxMessages do
     MsgBox:removeItem(MsgBox:getListboxItemFromIndex(0))
@@ -118,7 +121,12 @@ Chat.showWhisper = function(txt, sender)
     sender ..
     ": " .. txt .. "\n" ..
     "[colour='FFFFFFFF']"
-  Chat.showMessage(txt, sender, msg)
+
+  -- whispers are shown in all rooms
+  print("Showing whisper in " .. table.getn(Rooms) .. " rooms")
+  for room in list_iter(__RoomNames__) do
+    Chat.showMessage(room, nil, nil, msg)
+  end
 end
 
 Chat.addClientToRoom = function(name)
@@ -127,17 +135,20 @@ Chat.addClientToRoom = function(name)
   item:setSelectionBrushImage("TaharezLook", "MultiListSelectionBrush")
 
   RoomBox:addItem(item)
-  NrClients = NrClients+1
-  RoomLabel:setText("There are " .. NrClients .. " players in this room.")
 end
 
 Chat.populateRoom = function(clients)
+  print("Removing all clients from list")
+  while RoomBox:getItemCount() > 0 do
+    RoomBox:removeItem(RoomBox:getListboxItemFromIndex(0))
+  end
+
   print("Populating room clients")
-  list = split(clients, ";")
-  for client in list_iter(list) do
+  for client in list_iter(clients) do
     print(client)
     Chat.addClientToRoom(client)
   end
+
 end
 
 Chat.onConnected = function(e)
@@ -167,81 +178,164 @@ Chat.onJoinLobby = function(e)
   return true
 end
 
+Chat.registerRoom = function(name, clients)
+
+  local win = CEWindowMgr:loadWindowLayout("lobby/room.layout", "Elementum/Rooms/" .. name)
+  win:setText(name)
+  win:setUserString("Room", name) -- onTabChanged() uses this string to identify the room
+
+  Rooms[name] = {
+    Name = name,
+    Window = win,
+    Clients = split(clients, ";")
+  }
+
+  table.insert(__RoomNames__, name)
+
+  Tabs:addTab(win)
+  Chat.switchToRoom(name)
+
+  --Chat.addClientToRoom(SelectedPuppetName)
+  Pixy.Log("Contacts in room " .. CurrentRoom.Name .. ": " .. clients)
+
+end
+
+Chat.unregisterRoom = function(room)
+  assert(Rooms[room])
+
+  print("Unregistering room " .. room)
+
+  -- attempt to switch to tab-1
+  local next_idx = table.getn(__RoomNames__)
+  for room_name in rlist_iter(__RoomNames__) do
+    if room_name == room then next_idx = next_idx - 1; break end
+
+    next_idx = next_idx - 1
+  end
+  assert(next_idx >= 1)
+
+  Chat.switchToRoom(__RoomNames__[next_idx])
+
+  Tabs:removeTab(Rooms[room].Window:getName())
+  CEWindowMgr:destroyWindow(Rooms[room].Window)
+  Rooms[room] = nil
+  removeByValue(__RoomNames__, room)
+
+end
+
 -- we either joined this room or not, if we did
 -- we get the list of clients in this current room
 Chat.onJoinRoom = function(e)
 
-  local win = CEWindowMgr:loadWindowLayout("lobby/party.layout", "Elementum/Rooms/" .. e:getProperty("R"))
-  win:setText(e:getProperty("R"))
-  Tabs:addTab(win)
-  Chat.switchToRoom(e:getProperty("R"))
-
   if e.Feedback == Pixy.EventFeedback.Ok then
     assert(e:hasProperty("R") and e:hasProperty("C"))
-
-    table.insert(Rooms, e:getProperty("R"))
-
-    -- set the first room as our default one
-    if not CurrentRoom then CurrentRoom = e:getProperty("R") end
-
-    Chat.populateRoom(e:getProperty("C"))
-    Chat.addClientToRoom(SelectedPuppetName)
-    Pixy.Log("Contacts in room " .. CurrentRoom .. ": " .. e:getProperty("C"))
+    Chat.registerRoom(e:getProperty("R"), e:getProperty("C"))
   else
-    Chat.showMessage("Unable to join room.", "Server")
+    Chat.showMessage(CurrentRoom.Name, "Unable to join room.", "Server")
   end
+
+  return true
+end
+
+Chat.onLeaveRoom = function(e)
+  if e.Feedback == Pixy.EventFeedback.Ok then
+    assert(e:hasProperty("R"))
+    Chat.unregisterRoom(e:getProperty("R"))
+  end
+
   return true
 end
 
 -- a new client has joined this room
 Chat.onJoinedRoom = function(e)
   assert(e:hasProperty("R") and e:hasProperty("S"))
-  Chat.showMessage("has joined the room.", e:getProperty("S"))
 
-  Chat.addClientToRoom(e:getProperty("S"))
+  local room = e:getProperty("R")
+  local client = e:getProperty("S")
+
+  -- add this client to the room's list
+  table.insert(Rooms[room].Clients, client)
+
+  -- display a notification in the room's message box
+  Chat.showMessage(room, "has joined the room.", client)
+
+  -- if it's our current room, add the client to the box, and adjust the clients nr label
+  if CurrentRoom.Name == room then
+    Chat.addClientToRoom(client)
+    Chat.refreshCurrentRoom()
+  end
 
   return true
+end
+
+Chat.refreshCurrentRoom = function()
+  RoomLabel:setText("There are " .. table.getn(CurrentRoom.Clients) .. " players in this room.")
 end
 
 -- an existing client has left this room
 Chat.onLeftRoom = function(e)
   assert(e:hasProperty("R") and e:hasProperty("S"))
+  local room = e:getProperty("R")
+  local client = e:getProperty("S")
 
-  Chat.showMessage("has left the room.", e:getProperty("S"))
+  Chat.showMessage(room, "has left the room.", client)
 
-  NrClients = NrClients-1
-  RoomLabel:setText("There are " .. NrClients .. " players in this room.")
+  if CurrentRoom == room then
+    Chat.refreshCurrentRoom()
 
-  -- remove the client from the clients list
-  local item = RoomBox:findItemWithText(e:getProperty("S"))
+    -- remove the client from the clients list
+    local item = RoomBox:findItemWithText(client)
 
-  -- NOTE: why does it break here???
-  if not item then return true end
+    -- NOTE: why does it break here???
+    --if not item then return true end
 
-  RoomBox:removeItem(item)
+    RoomBox:removeItem(item)
+  end
 
   return true
 end
 
 Chat.switchToRoom = function(room)
-  local win = CEWindowMgr:getWindow("Elementum/Rooms/" .. room)
-  assert(win)
-  local msg_box = win:getChildAtIdx(0)--("Messages")
+  print("Switching to room "  .. room)
+  CurrentRoom = Rooms[room]
+
+  local msg_box = CurrentRoom.Window:getChildAtIdx(0)--("Messages")
   assert(msg_box)
-  MsgBox = CEGUI.toListbox(msg_box)
-  MsgBox:rename(win:getName() .. "/" .. "Messages")
+
+  CurrentRoom.MsgBox = CEGUI.toListbox(msg_box)
+  CurrentRoom.MsgBox:rename(CurrentRoom.Window:getName() .. "/" .. "Messages")
+
+  Tabs:setSelectedTab(CurrentRoom.Window:getName())
+  Chat.populateRoom(CurrentRoom.Clients)
+
+  Chat.refreshCurrentRoom()
+
+  --Tabs:makeTabVisible(win:getName())
+end
+
+Chat.onTabChanged = function(args)
+  local args = CEGUI.toWindowEventArgs(args)
+  print("Tab changed: " .. args.window:getName())
+  local win = Tabs:getTabContentsAtIndex(Tabs:getSelectedTabIndex())
+
+  -- extract room name from window
+  Chat.switchToRoom(win:getUserString("Room"))
+
+  return true
 end
 
 Chat.onIncomingMessage = function(e)
   if e.Feedback == Pixy.EventFeedback.Ok then
-    assert(e:hasProperty("M") and e:hasProperty("S"))
-    Chat.showMessage(e:getProperty("M"), e:getProperty("S"))
+    assert(e:hasProperty("R") and e:hasProperty("M") and e:hasProperty("S"))
+    Chat.showMessage(e:getProperty("R"), e:getProperty("M"), e:getProperty("S"))
   end
   return true
 end
 
 Chat.onIncomingWhisper = function(e)
-  if e.Feedback == Pixy.EventFeedback.Ok then
+  print("A whisper is incoming!")
+
+  --if e.Feedback == Pixy.EventFeedback.Ok then
     assert(e:hasProperty("M") and e:hasProperty("S"))
     Chat.showWhisper(e:getProperty("M"), e:getProperty("S"))
 
@@ -249,8 +343,14 @@ Chat.onIncomingWhisper = function(e)
     Chat.trackWhisperTarget(e:getProperty("S"))
     -- set them as the most recent whisper target
     CurrentWhisperTarget = e:getProperty("S")
-  end
+  --end
   return true
+end
+
+Chat.onSendWhisper = function(e)
+  if e:hasProperty("E") and e:getProperty("E") == "UnknownTarget" then
+    return Chat.notifySendFailed("Whisper", "UnknownTarget")
+  end
 end
 
 Chat.Send = function(e)
@@ -329,6 +429,7 @@ end
 Chat.Handlers.Message = function(msg)
   e = Pixy.Event(Pixy.EventUID.SendMessage)
   e:setProperty("M", msg)
+  e:setProperty("R", CurrentRoom.Name)
 
   -- save the message for history browsing
   Chat.saveMessage(msg)
@@ -341,6 +442,7 @@ Chat.Handlers.Command = function(msg)
   if not Chat.Commands[cmd] then return false, "UnknownCommand" end
 
   Chat.saveMessage(msg)
+  InputBox:setText("")
 
   return Chat.Commands[cmd](msg:sub(3 + cmd:len()))
 end
@@ -351,14 +453,13 @@ Chat.notifySendFailed = function(msg_type, _error)
 
   local msg =
     "[colour='ffff0000']" .. Chat.Errors[msg_type][_error] .. "[colour='FFFFFFFF']"
-  Chat.showMessage(txt, nil, msg)
+  Chat.showMessage(CurrentRoom.Name, txt, nil, msg)
 
   return true
 end
 
 Chat.doSend = function(msg_event)
-  msg_event:setProperty("R", CurrentRoom)
-  msg_event:setProperty("S", SelectedPuppetName)
+  --~ msg_event:setProperty("S", SelectedPuppetName)
 
   NetMgr:send(msg_event)
   InputBox:setText("")
