@@ -275,7 +275,6 @@ namespace Pixy
 	void Combat::update( unsigned long lTimeElapsed ) {
 
 		mEvtMgr->update();
-    mNetMgr->update();
 
     processEvents();
 
@@ -386,25 +385,25 @@ namespace Pixy
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
   bool Combat::onSyncGameData(const Event& evt) {
-    using std::string;
-    using std::vector;
-
-    mLog->infoStream() << "received game data, populating Resource Manager...";
-
-    std::string senc = evt.getProperty("Data");
-
-    vector<unsigned char> encoded(senc.begin(), senc.end());
-    vector<unsigned char> raw;
-
-    if (Archiver::decodeLzma(raw, encoded, evt.Rawsize) != 1) {
-      std::cerr << "decoding failed!! \n";
-    }
-
-    string raw2str(raw.begin(), raw.end());
-
-    std::istringstream datastream(raw2str);
-
-    GameManager::getSingleton().getResMgr().populate(datastream);
+    //~ using std::string;
+    //~ using std::vector;
+//~
+    //~ mLog->infoStream() << "received game data, populating Resource Manager...";
+//~
+    //~ std::string senc = evt.getProperty("Data");
+//~
+    //~ vector<unsigned char> encoded(senc.begin(), senc.end());
+    //~ vector<unsigned char> raw;
+//~
+    //~ if (Archiver::decodeLzma(raw, encoded, evt.Rawsize) != 1) {
+      //~ std::cerr << "decoding failed!! \n";
+    //~ }
+//~
+    //~ string raw2str(raw.begin(), raw.end());
+//~
+    //~ std::istringstream datastream(raw2str);
+//~
+    //~ GameManager::getSingleton().getResMgr().populate(datastream);
 
     Event _evt(EventUID::Login);
     _evt.setProperty("Username", "Sugarfly");

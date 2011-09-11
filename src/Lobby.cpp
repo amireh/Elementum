@@ -117,7 +117,6 @@ namespace Pixy
 
 	void Lobby::update( unsigned long lTimeElapsed ) {
 		mEvtMgr->update();
-		mNetMgr->update();
 
 		processEvents();
 

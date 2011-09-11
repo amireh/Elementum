@@ -8,3 +8,6 @@ bind(Pixy.EventUID.LeftRoom, Chat.onLeftRoom)
 bind(Pixy.EventUID.IncomingMessage, Chat.onIncomingMessage)
 bind(Pixy.EventUID.IncomingWhisper, Chat.onIncomingWhisper)
 bind(Pixy.EventUID.SendWhisper, Chat.onSendWhisper)
+
+bind(Pixy.EventUID.JoinQueue, Lobby.onJoinQueue)
+--bind(Pixy.EventUID.LeaveQueue, Lobby.onLeaveQueue)

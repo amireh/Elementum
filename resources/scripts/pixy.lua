@@ -52,21 +52,19 @@ Pixy.registerGlobals = function()
 	GameMgr = Pixy.GameManager:getSingleton()
   NetMgr = Pixy.NetworkManager:getSingleton()
   InputMgr = Pixy.InputManager:getSingletonPtr()
-	--if (state == "Intro") then
-		Intro = Pixy.Intro:getSingletonPtr()
-    Lobby = Pixy.Lobby:getSingletonPtr()
-	--elseif (state == "Combat") then
-		Puppet, EnemyPuppet, Active, Waiting = nil
-		Combat = Pixy.Combat:getSingletonPtr()
-		--PuppetFactory = Pixy.CPuppetFactory:getSingletonPtr()
-		--UnitFactory = Pixy.CUnitFactory:getSingletonPtr()
-		GfxEngine = Pixy.GfxEngine:getSingletonPtr()
-    FxEngine = Pixy.FxEngine:getSingleton()
-    UIEngine = Pixy.UIEngine:getSingletonPtr()
-    ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
-		Pixy.Combat = {}
-	--end
-	--Pixy.Log("* State: " .. state)
+
+  IntroState = Pixy.Intro:getSingletonPtr()
+  LobbyState = Pixy.Lobby:getSingletonPtr()
+  CombatState = Pixy.Combat:getSingletonPtr()
+
+  Puppet, EnemyPuppet, Active, Waiting = nil
+
+  GfxEngine = Pixy.GfxEngine:getSingletonPtr()
+  FxEngine = Pixy.FxEngine:getSingleton()
+  UIEngine = Pixy.UIEngine:getSingletonPtr()
+  ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
+
+  Pixy.Combat = {}
 
   Puppets = {}
   SelfPuppet = nil
@@ -89,7 +87,7 @@ Pixy.registerGlobals = function()
 
   Scene = nil
 
-  if Combat:isCurrentState() then
+  if CombatState:isCurrentState() then
     arbitraryFunc = arbitraryFuncCombat
   else
     arbitraryFunc = arbitraryFuncAll

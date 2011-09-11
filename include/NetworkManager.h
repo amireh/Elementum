@@ -3,7 +3,7 @@
  *  Elementum
  *
  *  Created by Ahmad Amireh on 2/15/10.
- *  Copyright 2010 JU. All rights reserved.
+ *  Copyright 2010 Shroom Studios. All rights reserved.
  *
  */
 
@@ -32,16 +32,12 @@ namespace Pixy {
 		static NetworkManager* getSingletonPtr();
     static NetworkManager& getSingleton();
 		virtual ~NetworkManager();
+
 		/*! \brief
 		 *	initiates connection to the master server, result of the attempt
 		 *	is handled by connAccepted() and connFailed()
 		 */
 		bool connect();
-
-		/*! \brief
-		 *	polls for Events and handles them upon arrival
-		 */
-		void update();
 
 		/*! \brief
 		 *	dispatches a "Logout" event to all the local modules so they can
@@ -55,46 +51,20 @@ namespace Pixy {
 
 	protected:
 		/*! \brief
-		 *	broadcasts an INCOMING (EVT_RESP) event to all the modules interested
+		 *	uses dispatchEvent() method to broadcast an incoming event
 		 */
-		bool dispatchEvent(Event* inEvt);
+		void onInbound(const Event&);
 
-		/*! \brief
-		 *	intercepts OUTGOING (EVT_REQ) events and sends them off to the server
-		 */
-		bool dispatchToServer(Event* inEvt);
-
-		/*! \brief
-		 *	even though the NetworkManager itself is the one who broadcasts the
-		 *	Logout event upon loss of connection; it's also interested in it
-		 *	to clean up
-		 */
-		bool evtLogout(Event* inEvt);
-		// connect
-		bool evtLogin(Event* inEvt);
+    void onSyncGameData(const Event&);
 
 		log4cpp::Category	*mLog;
 
-		bool fOnline, fGameDataReceived;
-
-		//~ map<MessageID, void (NetworkManager::*)(Event*)> mPktHandlers;
+		bool fOnline;
 
 	private:
 
-		/*! \brief
-		 *	populates the mPktHandlers map with the methods that will handle each
-		 *	type of Event received
-		 */
-		void bindEventHandlers();
 
-		/*! \brief
-		 *	uses dispatchEvent() method to broadcast an incoming event
-		 */
-		void eventReceived(const Event& inEvt);
 
-    void gameDataReceived(const Event& inEvt);
-    void puppetDataReceived(const Event& inEvt);
-    void passDrawSpells(const Event& inEvt);
 
 		static NetworkManager* mInstance;
 		NetworkManager();

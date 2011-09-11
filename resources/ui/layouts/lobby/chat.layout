@@ -20,6 +20,7 @@
 -->
     </Window>
 
+
     <Window Type="TaharezLook/ScrollablePane" Name="Elementum/Chat/Containers/Clients">
       <Property Name="Visible" Value="True" />
       <Property Name="AlwaysOnTop" Value="True" />
@@ -27,44 +28,25 @@
       <Property Name="UnifiedAreaRect" Value="{{0.65,0},{0.35,0},{0.95,0},{0.95,0}}" />
       <Property Name="ContentPaneAutoSized" Value="True" />
 
-      <Window Type="Vanilla/Listbox" Name="Elementum/Chat/Listboxes/Clients" >
+      <Window Type="TaharezLook/Listbox" Name="Elementum/Chat/Listboxes/Clients" >
         <Property Name="AlwaysOnTop" Value="True" />
         <Property Name="Font" Value="DejaVuSans-10" />
         <Property Name="UnifiedSize" Value="{{1,0},{1, 0}" />
         <Property Name="UnifiedPosition" Value="{{0, 0}, {0, 0}}" />
-<!--
-        <Property Name="Disabled" Value="False" />
--->
         <Property Name="FrameEnabled" Value="True" />
-<!--
-        <Property Name="MousePassThroughEnabled" Value="True" />
--->
       </Window>
     </Window>
 
     <Window Type="TaharezLook/TabControl" Name="Elementum/Containers/Rooms" >
         <Property Name="Tooltip" Value="This is the tab control" />
-        <Property Name="TabHeight" Value="{0.1,0}" />
+        <Property Name="AlwaysOnTop" Value="True" />
+        <Property Name="TabHeight" Value="{0,-1}" />
         <Property Name="UnifiedMaxSize" Value="{{0.55,0},{0.6,0}}" />
         <Property Name="TabPanePosition" Value="Top" />
         <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.3,0},{0.6,0},{0.85,0}}" />
+        <Property Name="FrameEnabled" Value="True" />
         <Event Name="TabSelectionChanged" Function="Chat.onTabChanged" />
     </Window>
-
-<!--
-    <Window Type="Vanilla/Listbox" Name="Elementum/Chat/Text/Messages">
-      <Property Name="Font" Value="DejaVuSans-10" />
-      <Property Name="Visible" Value="True" />
-      <Property Name="BackgroundEnabled" Value="True" />
-      <Property Name="FrameEnabled" Value="True" />
-      <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
-      <Property Name="VertFormatting" Value="TopAligned" />
-      <Property Name="Text" Value="" />
-      <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.35,0},{0.6,0},{0.85,0}}" />
-      <Property Name="ClippedByParent" Value="True" />
-      <Property Name="MousePassThroughEnabled" Value="True" />
-    </Window>
--->
 
     <Window Type="Vanilla/Editbox" Name="Elementum/Chat/Editbox/Message">
       <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.86,0},{0.49,0},{0.95,0}}" />
@@ -94,7 +76,24 @@
         <Property Name="Text" Value="Join Queue" />
         <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.05,0},{0.6,0},{0.15,0}}" />
         <Property Name="Disabled" Value="False" />
+        <Event Name="Clicked" Function="Lobby.doJoinQueue" />
     </Window>
+    <Window Type="Vanilla/Button" Name="Elementum/Chat/Buttons/LeaveQueue" >
+        <Property Name="Text" Value="Leave Queue" />
+        <Property Name="Visible" Value="False" />
+        <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.05,0},{0.6,0},{0.15,0}}" />
+        <Property Name="Disabled" Value="True" />
+        <Event Name="Clicked" Function="Lobby.doLeaveQueue" />
+    </Window>
+    <Window Type="Vanilla/StaticText" Name="Elementum/Chat/Labels/Queue">
+      <Property Name="Font" Value="DejaVuSans-10" />
+      <Property Name="Text" Value="Status: not in queue." />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="HorzFormatting" Value="HorzCentred" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.02,0},{0.6,0},{0.05,0}}" />
+    </Window>
+
     <Window Type="Vanilla/Button" Name="Elementum/Chat/Buttons/Settings" >
         <Property Name="Text" Value="Settings" />
         <Property Name="UnifiedAreaRect" Value="{{0.61,0},{0.075,0},{0.7,0},{0.125,0}}" />
@@ -113,6 +112,13 @@
         <Property Name="Disabled" Value="True" />
     </Window>
 
+    <Window Type="Vanilla/StaticText" Name="Elementum/Chat/Labels/Portrait">
+      <Property Name="Font" Value="DejaVuSans-10" />
+      <Property Name="Text" Value="Name" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.02,0},{0.25,0},{0.05,0}}" />
+    </Window>
     <Window Type="Vanilla/FrameWindow" Name="Elementum/Chat/Containers/Portrait" >
         <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.05,0},{0.25,0},{0.25,0}}" />
         <Property Name="Disabled" Value="False" />

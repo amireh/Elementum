@@ -69,6 +69,7 @@ Chat.attach = function()
   RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"), "CEGUI::Listbox")
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
   Tabs = CEGUI.toTabControl(CEWindowMgr:getWindow("Elementum/Containers/Rooms"))
+
   --~ local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
   --~ evt:setProperty("Puppet", SelectedPuppetName)
   --~ NetMgr:send(evt)
@@ -162,6 +163,7 @@ end
 
 Chat.onLogin = function(e)
   SelectedPuppetName = "Kandie"
+  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(SelectedPuppetName)
 
   local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
   evt:setProperty("Puppet", SelectedPuppetName)
@@ -175,6 +177,7 @@ Chat.onJoinLobby = function(e)
     local box = Pixy.UI.attachOverlay("ProgressBox")
     box:setText("Unable to connect to lobby. Please try again later.")
   end
+
   return true
 end
 

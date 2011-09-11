@@ -122,7 +122,6 @@ namespace Pixy
 	void Intro::update( unsigned long lTimeElapsed ) {
 
 		mEvtMgr->update();
-		mNetMgr->update();
 
 		processEvents();
 

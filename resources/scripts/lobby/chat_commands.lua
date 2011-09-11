@@ -13,7 +13,7 @@ end
 
 Chat.Commands.help = function(args)
   print("Command args: " .. args)
-  Chat.showMessage("Available commands:", "Server")
+  Chat.showMessage(CurrentRoom.Name, "Available commands:", "Server")
   if args == "" then
     -- list all commands
     Chat.showMessage(CurrentRoom.Name, nil, nil, formatCmdMsg("  /ping - tests server latency"))
