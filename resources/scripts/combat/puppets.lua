@@ -39,7 +39,6 @@ Combat.createPuppet = function(inEvt)
 	)
 
   lPuppet:live()
-	lPuppet:setMesh("sinbad.mesh")
   --lRenderable = lPuppet:getRenderable()
 	--lPuppet:getDeck():generate()
 

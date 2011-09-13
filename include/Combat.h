@@ -95,8 +95,9 @@ namespace Pixy
 
     bool onConnected(const Event&);
     bool onLogin(const Event& inEvt);
-    bool onSyncGameData(const Event&);
-    bool onJoinQueue(const Event& inEvt);
+    //~ bool onSyncGameData(const Event&);
+    //~ bool onJoinQueue(const Event& inEvt);
+    bool onJoinLobby(const Event& inEvt);
     bool onMatchFound(const Event& inEvt);
     bool onSyncPuppetData(const Event& inEvt);
     bool onStartTurn(const Event& inEvt);

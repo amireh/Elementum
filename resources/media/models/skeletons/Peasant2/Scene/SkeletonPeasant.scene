@@ -1,0 +1,29 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="100" unitType="centimeters" minOgreVersion="1.7" ogreMaxVersion="2.3.15" author="OgreMax Scene Exporter (www.ogremax.com)" application="Maya">
+    <environment>
+        <colourAmbient r="0.33" g="0.33" b="0.33" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="100000" />
+    </environment>
+    <nodes>
+        <node name="scythe">
+            <position x="0.353082" y="0.286249" z="-0.192649" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="-0.717978" qy="-0.0875604" qz="0.0748301" qw="0.686471" />
+            <entity name="scythe" castShadows="true" receiveShadows="true" meshFile="scythe.mesh">
+                <subentities>
+                    <subentity index="0" materialName="sk_mat_07_NoCull" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="skeleton_peasant01">
+            <position x="0" y="0" z="0.00455235" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="-0.707107" qy="0" qz="0" qw="0.707107" />
+            <entity name="skeleton_peasant01" castShadows="true" receiveShadows="true" meshFile="skeleton_peasant01.mesh">
+                <subentities>
+                    <subentity index="0" materialName="sk_mat_07_NoCull" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>

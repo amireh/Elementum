@@ -110,7 +110,7 @@ namespace Pixy {
             }
             break;
           case '\n': // EOL
-          case '/': // EOF
+          case '^': // EOF
           case '[': // end of section
             done = true;
             break;
@@ -229,26 +229,26 @@ namespace Pixy {
     for (itr = entries.begin(); itr != entries.end(); ++itr) {
       lUnit = new CUnit();
       vector<string> elements = Utility::split((*itr).c_str(), ';');
-      assert(elements.size() == 14);
+      assert(elements.size() == 12);
 
       lUnit->setName(elements[0]);
       lUnit->setRace((RACE)atoi(elements[1].c_str()));
-      lUnit->setFaction(elements[2].c_str());
-      lUnit->setBaseAP(atoi(elements[3].c_str()));
-      lUnit->setAP(atoi(elements[3].c_str()));
-      lUnit->setBaseHP(atoi(elements[4].c_str()));
-      lUnit->setHP(atoi(elements[4].c_str()));
-      lUnit->setUpkeep(atoi(elements[5].c_str()));
+      //~ lUnit->setFaction(elements[2].c_str());
+      lUnit->setBaseAP(atoi(elements[2].c_str()));
+      lUnit->setAP(atoi(elements[2].c_str()));
+      lUnit->setBaseHP(atoi(elements[3].c_str()));
+      lUnit->setHP(atoi(elements[3].c_str()));
+      lUnit->setUpkeep(atoi(elements[4].c_str()));
 
-      lUnit->setIsTeamAttacker(elements[6] == "t");
-      lUnit->setIsUnblockable(elements[7] == "t");
-      lUnit->setIsRestless(elements[8] == "t");
-      lUnit->setIsFlying(elements[9] == "t");
-      lUnit->setIsTrampling(elements[10] == "t");
-      lUnit->setHasFirstStrike(elements[11] == "t");
-      lUnit->setHasLifetap(elements[12] == "t");
+      //~ lUnit->setIsTeamAttacker(elements[6] == "t");
+      lUnit->setIsUnblockable(elements[5] == "t");
+      lUnit->setIsRestless(elements[6] == "t");
+      lUnit->setIsFlying(elements[7] == "t");
+      lUnit->setIsTrampling(elements[8] == "t");
+      lUnit->setHasFirstStrike(elements[9] == "t");
+      lUnit->setHasLifetap(elements[10] == "t");
 
-      lUnit->setDescription(elements[13]);
+      lUnit->setDescription(elements[11]);
 
       mUnits[lUnit->getRace()].push_back(lUnit);
 

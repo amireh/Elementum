@@ -94,10 +94,12 @@ namespace Pixy
     mPuppetName = Intro::getSingleton().getPuppetName();
 
     // sync the game data when we're connected
-    //~ bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));
-    //~ bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));
+    bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));
+    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));
+    bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1));
     //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
+    bind(EventUID::MatchFound, boost::bind(&Combat::onMatchFound, this, _1));
     bind(EventUID::SyncPuppetData, boost::bind(&Combat::onSyncPuppetData, this, _1));
     bind(EventUID::StartTurn, boost::bind(&Combat::onStartTurn, this, _1));
     bind(EventUID::TurnStarted, boost::bind(&Combat::onTurnStarted, this, _1));
@@ -122,19 +124,7 @@ namespace Pixy
     fSetup = true;
 	}
 
-  bool Combat::onConnected(const Event& evt) {
-    mNetMgr->send(Event(EventUID::SyncGameData));
 
-    return true;
-  }
-
-  bool Combat::onLogin(const Event& evt) {
-    Event _evt(EventUID::JoinQueue);
-    _evt.setProperty("Puppet", "Sugar");
-    mNetMgr->send(_evt);
-
-    return true;
-  }
 	void Combat::exit( void ) {
     if (fSetup)
       mScriptEngine->passToLua("cleanup", 0);
@@ -389,7 +379,7 @@ namespace Pixy
 	 *	Event Handlers
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
-  bool Combat::onSyncGameData(const Event& evt) {
+  /*bool Combat::onSyncGameData(const Event& evt) {
     using std::string;
     using std::vector;
 
@@ -410,6 +400,14 @@ namespace Pixy
 
     GameManager::getSingleton().getResMgr().populate(datastream);
 
+
+    return true;
+  }*/
+
+
+
+  bool Combat::onConnected(const Event& evt) {
+    //~ mNetMgr->send(Event(EventUID::SyncGameData));
     Event _evt(EventUID::Login);
     _evt.setProperty("Username", "Sugarfly");
     _evt.setProperty("Password", "tuonela");
@@ -418,15 +416,24 @@ namespace Pixy
     return true;
   }
 
-  bool Combat::onJoinQueue(const Event& inEvt) {
-    // store the name of the puppet the player joined the queue with
-    if (inEvt.Feedback == EventFeedback::Ok) {
-      mPuppetName = inEvt.getProperty("Puppet");
-      mLog->infoStream() << "joined queue with puppet " << mPuppetName;
-    }
+  bool Combat::onLogin(const Event& evt) {
+    Event _evt(EventUID::JoinLobby);
+    mPuppetName = "Sugar";
+    _evt.setProperty("Puppet", mPuppetName);
+    mNetMgr->send(_evt);
+
     return true;
   }
+
+  bool Combat::onJoinLobby(const Event& inEvt) {
+    Event _evt(EventUID::JoinQueue);
+    mNetMgr->send(_evt);
+    return true;
+  }
+
   bool Combat::onMatchFound(const Event& inEvt) {
+    Event e(EventUID::SyncPuppetData);
+    mNetMgr->send(e);
 
     return true;
   }

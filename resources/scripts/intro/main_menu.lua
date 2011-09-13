@@ -17,18 +17,24 @@ MainMenu.CreateGremlin = function()
 
   local node = SceneMgr:createSceneNode("gremlin_node")
   SceneMgr:getRootSceneNode():addChild(node)
-  local ent = SceneMgr:createEntity("Gremlin", "Gremlin1.mesh");
-  ent:setMaterialName("Elementum/Gremlin/Psycho")
+  local ent = SceneMgr:createEntity("Gremlin", unit:getMesh());
+  ent:setMaterialName(unit:getMaterial())
   ent:setCastShadows(true)
   node:attachObject(ent)
   node:setScale(Ogre.Vector3:new(20))
   node:setPosition(Ogre.Vector3:new(0,0,0))
   rnd:attachSceneObject(ent)
   rnd:attachSceneNode(node)
+
+  --~ GfxEngine:loadScene("DarkMansion.scene")
+  --~ rnd:attachSceneNode(SceneMgr:getSceneNode("troll"))
+  --~ rnd:attachSceneObject(tolua.cast(rnd:getSceneNode():getAttachedObject("troll"), "Ogre::Entity"))
+
   rnd:setup(SceneMgr)
 
-  GfxEngine:attachToScene(rnd)
 
+  GfxEngine:attachToScene(rnd)
+--~
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   --~ GfxEngine:getCameraMan():setTarget(gremlin:getRenderable():getSceneNode())
   GfxEngine:trackNode(node)
@@ -36,13 +42,16 @@ MainMenu.CreateGremlin = function()
 
   rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
   rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
+  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
   rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_1", false)
   rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_2", false)
-
+--~
   rnd:animateIdle()
 
   table.insert(Units, unit)
+
+
+
 
   return unit
 end
@@ -53,6 +62,8 @@ MainMenu.attach = function()
   Form.Username = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username")
 	Form.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
   Form.Username:activate()
+
+  --~ MainMenu.Layout:hide()
 
 	if isSetup then return true end
 
@@ -67,7 +78,7 @@ MainMenu.attach = function()
   SceneMgr:setAmbientLight(Ogre.ColourValue(100,100,100))
 
   fadeColour = Ogre.ColourValue:new(0, 0, 0)
-  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0075)
+  --~ SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0075)
   --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_MODULATIVE)
 
   -- Movable Text Overlay attributes
@@ -99,8 +110,8 @@ MainMenu.attach = function()
 
   Pos = { Me = Ogre.Vector3:new(0,100,30) }
   local pos = Ogre.Vector3:new(Pos.Me.x, Pos.Me.y, Pos.Me.z)
-  dcol = Ogre.ColourValue:new(155,0,0)
-  scol = Ogre.ColourValue:new(155,0,0)
+  dcol = Ogre.ColourValue:new(155,155,155)
+  scol = Ogre.ColourValue:new(155,155,155)
   light = SceneMgr:createLight()
   light:setType(Ogre.Light.LT_POINT)
   light:setPosition(pos)
@@ -108,8 +119,8 @@ MainMenu.attach = function()
   light:setSpecularColour(scol)
 
   pos = Ogre.Vector3:new(Pos.Me.x, 0, 80)
-  dcol = Ogre.ColourValue:new(155,0,0)
-  scol = Ogre.ColourValue:new(155,0,0)
+  dcol = Ogre.ColourValue:new(155,155,155)
+  scol = Ogre.ColourValue:new(155,155,155)
   light = SceneMgr:createLight()
   light:setType(Ogre.Light.LT_POINT)
   light:setPosition(pos)

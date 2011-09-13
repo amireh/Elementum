@@ -119,7 +119,7 @@ material Elementum/DarkKnight/Water : Examples/CelShading
 }
 material Elementum/DarkKnight/Air : Examples/CelShading
 {
-	set_texture_alias Skin knight_10.jpg
+	set_texture_alias Skin knight_11.jpg
 }
 
 material Elementum/DarkKnight/Earth/Sword : Examples/CelShading
@@ -179,22 +179,39 @@ material Elementum/Dragon/Blue : Examples/CelShading
 }
 
 
-material Elementum/Skelly/Peasant : Examples/CelShading
+material Elementum/Skeleton/Footsoldier : Examples/CelShading
 {
   set_texture_alias Skin skeleton_01.jpg
 }
-material Elementum/Skelly/Warrior : Examples/CelShading
+material Elementum/Skeleton/Warrior : Examples/CelShading
 {
   set_texture_alias Skin skeleton_02.jpg
 }
-material Elementum/Skelly/Pirate : Examples/CelShading
+material Elementum/Skeleton/Mage : Examples/CelShading
 {
   set_texture_alias Skin skeleton_04.jpg
 }
-material Elementum/Skelly/Nully : Examples/CelShading
+material Elementum/Skeleton/Acolyte : Examples/CelShading
 {
   set_texture_alias Skin skeleton_06.jpg
 }
+
+/*material Elementum/Bargor/Stomper : Examples/CelShading
+{
+  set_texture_alias Skin troll-04.jpg
+}
+material Elementum/Bargor/Pulverizer : Examples/CelShading
+{
+  set_texture_alias Skin troll-09.jpg
+}
+material Elementum/Bargor/Chieftain : Examples/CelShading
+{
+  set_texture_alias Skin troll-08.jpg
+}
+material Elementum/Bargor/Maimer : Examples/CelShading
+{
+  set_texture_alias Skin troll-19.jpg
+}*/
 
 
 material Elementum/Gremlin/Intro
@@ -216,3 +233,88 @@ material Elementum/Gremlin/Intro
 	}
 
 }
+
+
+material Elementum/Scorpid/Intro : Examples/CelShading
+{
+  set_texture_alias Skin scorp-04.jpg
+}
+
+material Elementum/Troll/Intro : Examples/CelShading
+{
+  set_texture_alias Skin troll-17.jpg
+}
+
+
+material Elementum/Bargor/Stomper
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture troll-21.jpg
+			}
+		}
+	}
+}
+material Elementum/Bargor/Pulverizer
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture troll-09.jpg
+			}
+		}
+	}
+}
+material Elementum/Bargor/Chieftain
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture troll-19.jpg
+			}
+		}
+	}
+}
+
+
+material Elementum/Bargor/Maimer
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture troll-12.jpg
+			}
+		}
+	}
+}
+
+

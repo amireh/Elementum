@@ -1,0 +1,22 @@
+
+material scorp-02
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.541176 0.541176 0.541176 1
+			diffuse 0.541176 0.541176 0.541176 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture scorp-02.jpg
+			}
+		}
+
+	}
+
+}
+
+

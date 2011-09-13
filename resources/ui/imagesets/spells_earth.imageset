@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Imageset Name="Spells_Earth" Imagefile="spells_earth.tga" >
-	<Image Name="Summon:_Skelly_Peasant_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Peasant_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Peasant_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Peasant_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
-	<!-- Crustling -->
-	<Image Name="Summon:_Skelly_Warrior_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Warrior_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Warrior_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Warrior_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
-	<!-- Stone Golem -->
-	<Image Name="Summon:_Skelly_Pirate_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Pirate_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Pirate_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Pirate_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
-	<!-- Earth Elemental -->
-	<Image Name="Summon:_Skelly_Nully_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Nully_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Nully_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skelly_Nully_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Footsoldier_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Footsoldier_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Footsoldier_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Footsoldier_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warrior_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warrior_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warrior_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warrior_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Mage_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Mage_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Mage_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Mage_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Acolyte_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Acolyte_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Acolyte_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Acolyte_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Summon:_Bargor_Stomper_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Stomper_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Stomper_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Stomper_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Pulverizer_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Pulverizer_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Pulverizer_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Pulverizer_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Chieftain_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Chieftain_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Chieftain_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Chieftain_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Maimer_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Maimer_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Maimer_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Maimer_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
 
 	<Image Name="Nourish_Hover"   XPos="1280" YPos="0"  Width="256" Height="256" />
 	<Image Name="Nourish_Normal"    XPos="1280" YPos="256" Width="256" Height="256" />
