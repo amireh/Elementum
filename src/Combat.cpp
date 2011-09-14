@@ -355,6 +355,7 @@ namespace Pixy
       if ((*itr)->getUID() == inUID)
         return *itr;
 
+    assert(false);
     throw invalid_uid("in Combat::getPuppet() : " + stringify(inUID));
   }
 
@@ -372,6 +373,7 @@ namespace Pixy
           return *unit;
     }
 
+    assert(false);
     throw invalid_uid("in Combat::getUnit() : " + stringify(inUID));
   }
 
@@ -706,20 +708,22 @@ namespace Pixy
       return true;
     }
 
-    // it's ok, let's find the spell, the caster, and the target
-    CSpell* lSpell = 0;
-    CPuppet* lCaster = 0;
+    assert(inEvt.hasProperty("Spell") && inEvt.hasProperty("C"));
 
-    for (puppets_t::iterator puppet = mPuppets.begin();
+    // it's ok, let's find the spell, the caster, and the target
+    CPuppet* lCaster = getPuppet(convertTo<int>(inEvt.getProperty("C")));
+    CSpell* lSpell = lCaster->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
+
+    /*for (puppets_t::iterator puppet = mPuppets.begin();
          puppet != mPuppets.end();
          ++puppet)
       try {
         lSpell = (*puppet)->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
         lCaster = static_cast<CPuppet*>(lSpell->getCaster()->getEntity());
         break;
-      } catch (...) { lSpell = 0; }
+      } catch (...) { lSpell = 0; }*/
 
-    assert(lSpell && lCaster);
+    assert(lSpell && lCaster && lSpell->getCaster()->getEntity()->getUID() == lCaster->getUID());
     Entity* _lTarget = 0;
     Renderable* lTarget = 0;
     if (inEvt.hasProperty("T")) {
@@ -828,7 +832,7 @@ namespace Pixy
   }
 
   bool Combat::onEntityDied(const Event& evt) {
-    markForDeath(static_cast<CUnit*>(evt.Any));
+    markForDeath((CUnit*)static_cast<Renderable*>(evt.Any)->getEntity());
     return true;
   }
   bool Combat::onStartBlockPhase(const Event& evt) {

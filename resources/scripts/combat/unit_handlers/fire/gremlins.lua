@@ -4,12 +4,13 @@ Gremlins = {
   MaterialPrefix = "Elementum/Gremlin"
 }
 
-Gremlins.Create = function(unit, mesh, material)
+Gremlins.Create = function(unit, mesh, material, scale)
   unit:setMesh(mesh)
   unit:setMaterial(Gremlins.MaterialPrefix .. "/" .. material)
 
   rnd = unit:getRenderable()
-  rnd:setScale(20)
+  if not scale then scale = 20 end
+  rnd:setScale(scale)
 
   GfxEngine:attachToScene(rnd)
 
@@ -54,13 +55,13 @@ subscribe_unit("Mechanical Gremlin",
 
 subscribe_unit("Gremlin Brawler",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin1.mesh", "Brawler")
+    Gremlins.Create(inUnit, "Gremlin2.mesh", "Engineer", 35)
   end)
 subscribe_unit("Gremlin Engineer",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin2.mesh", "Engineer")
+    Gremlins.Create(inUnit, "Gremlin1.mesh", "Brawler", 25)
   end)
 subscribe_unit("Master Gremlin",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin3.mesh", "Master")
+    Gremlins.Create(inUnit, "Gremlin3.mesh", "Master", 25)
   end)

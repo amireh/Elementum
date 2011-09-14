@@ -107,6 +107,7 @@ namespace Pixy
       if ((*lSpell)->getUID() == inUID)
         return *lSpell;
 
+    assert(false);
     throw invalid_uid("couldn't find a spell with uid" + stringify(inUID));
     return 0;
   }

@@ -164,6 +164,7 @@ namespace Pixy
 			if ((*lSpell)->getUID() == inUID)
 				return *lSpell;
 
+    assert(false);
     throw invalid_uid("couldn't find a spell with uid" + stringify(inUID));
 	}
 
@@ -236,6 +237,10 @@ namespace Pixy
     Unit::die();
     float length_sec = mRenderable->animateDie();
 
+    Event evt(EventUID::EntityDying);
+    evt.Any = (void*)this->mRenderable;
+    EventManager::getSingleton().hook(evt);
+
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait(boost::bind(&CUnit::dieAfterAnimating, this));
   };
@@ -245,7 +250,7 @@ namespace Pixy
     //~ FxEngine::getSingleton().onEntityDying(this->mRenderable);
 
     Event evt(EventUID::EntityDied);
-    evt.Any = (void*)this;
+    evt.Any = (void*)this->mRenderable;
     EventManager::getSingleton().hook(evt);
 
     //~ mRenderable->hide();

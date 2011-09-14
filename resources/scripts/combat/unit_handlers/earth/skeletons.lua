@@ -19,7 +19,7 @@ Skeletons.CreatePeasant = function(unit)
 --~
   --~ rnd:animateIdle()
 
-  Skeletons.Create(unit, "skeleton_peasant01.mesh", "Footsoldier")
+  Skeletons.Create(unit, "skeleton_peasant01.mesh", "Footsoldier", 5)
   local rnd = unit:getRenderable()
   --~ rnd:getSceneNode():setScale(20)
   local scythe = rnd:attachExtension("scythe.mesh", "Bip01 R Hand")
@@ -28,12 +28,12 @@ Skeletons.CreatePeasant = function(unit)
   return true
 end
 
-Skeletons.Create = function(unit, mesh, model_name)
+Skeletons.Create = function(unit, mesh, model_name, scale)
   unit:setMesh(mesh)
   unit:setMaterial(Skeletons.MaterialPrefix .. "/" .. model_name)
 
   rnd = unit:getRenderable()
-  rnd:setScale(7.5)
+  rnd:setScale(scale)
 
   GfxEngine:attachToScene(rnd)
 
@@ -73,13 +73,13 @@ subscribe_unit("Skeleton Footsoldier",
 
 subscribe_unit("Skeleton Mage",
   function(inUnit)
-    return Skeletons.Create(inUnit, "skeleton.mesh", "Mage")
+    return Skeletons.Create(inUnit, "skeleton.mesh", "Mage", 9)
   end)
 subscribe_unit("Skeleton Acolyte",
   function(inUnit)
-    return Skeletons.Create(inUnit, "skeleton_pirate.mesh", "Acolyte")
+    return Skeletons.Create(inUnit, "skeleton_pirate.mesh", "Acolyte", 7.5)
   end)
 subscribe_unit("Skeleton Warrior",
   function(inUnit)
-    return Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warrior")
+    return Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warrior", 9)
   end)

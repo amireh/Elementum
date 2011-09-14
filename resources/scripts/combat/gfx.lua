@@ -28,8 +28,8 @@ Combat.onEntitySelected = function(inEvt)
     BBSet:setDefaultDimensions(HeroDim.Width, HeroDim.Height)
   else
     BBSet:setDefaultDimensions(
-      OriginalDim.Width * entity:getSceneNode():getScale().x,
-      OriginalDim.Height * entity:getSceneNode():getScale().y)
+      OriginalDim.Width,
+      OriginalDim.Height)
     --~ BBNode:setScale(entity:getSceneNode():getScale())
   end
   --~ BBNode:setPosition(entity:getSceneNode():getPosition())

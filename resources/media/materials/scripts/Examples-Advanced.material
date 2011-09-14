@@ -139,19 +139,19 @@ material Elementum/DarkKnight/Water/Sword : Examples/CelShading
 	set_texture_alias Skin sword_05.jpg
 }
 
-material Elementum/Gremlin/Psycho : Examples/CelShading
+material Elementum/Gremlin/Master : Examples/CelShading
 {
   set_texture_alias Skin gremlin-17.jpg
 }
-material Elementum/Gremlin/Molten : Examples/CelShading
+material Elementum/Gremlin/Brawler : Examples/CelShading
 {
   set_texture_alias Skin gremlin-04.jpg
 }
-material Elementum/Gremlin/Stony : Examples/CelShading
+material Elementum/Gremlin/Mechanical : Examples/CelShading
 {
   set_texture_alias Skin gremlin-02.jpg
 }
-material Elementum/Gremlin/Skully : Examples/CelShading
+material Elementum/Gremlin/Engineer : Examples/CelShading
 {
   set_texture_alias Skin gremlin-16.jpg
 }
@@ -196,7 +196,7 @@ material Elementum/Skeleton/Acolyte : Examples/CelShading
   set_texture_alias Skin skeleton_06.jpg
 }
 
-/*material Elementum/Bargor/Stomper : Examples/CelShading
+material Elementum/Bargor/Stomper : Examples/CelShading
 {
   set_texture_alias Skin troll-04.jpg
 }
@@ -211,8 +211,12 @@ material Elementum/Bargor/Chieftain : Examples/CelShading
 material Elementum/Bargor/Maimer : Examples/CelShading
 {
   set_texture_alias Skin troll-19.jpg
+}
+/*
+material statue-03 : Examples/CelShading
+{
+  set_texture_alias Skin statue3.jpg
 }*/
-
 
 material Elementum/Gremlin/Intro
 {
@@ -245,7 +249,7 @@ material Elementum/Troll/Intro : Examples/CelShading
   set_texture_alias Skin troll-17.jpg
 }
 
-
+/*
 material Elementum/Bargor/Stomper
 {
 	technique
@@ -318,3 +322,4 @@ material Elementum/Bargor/Maimer
 }
 
 
+*/

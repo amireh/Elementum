@@ -51,7 +51,7 @@ Combat.PrepareScene = function()
   Camera:setNearClipDistance( 10 )
   Camera:setFarClipDistance( 10000 )
   GfxEngine.mCameraYawPitchDist = Ogre.Vector3:new(180, 30, 140)
-
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
   -- Sky
   --SceneMgr:setSkyDome(true, "Elementum/Sky", 1, 1,1000,true);
   --SceneMgr:setSkyBox(true, "Elementum/Sky", 5000, true);
@@ -72,8 +72,10 @@ Combat.PrepareScene = function()
   --ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
   --SceneMgr:getRootSceneNode():attachObject(ent)
   --~ GfxEngine:loadDotScene("Elementum.scene", "General")
+  --~ Scene = GfxEngine:loadScene("DarkMansion.scene")
   Scene = GfxEngine:loadScene("MoltenChasm.scene")
   GfxEngine:getSceneMgr():getEntity("arena_02"):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
+  GfxEngine:getSceneMgr():getEntity("arena_02"):setCastShadows(false)
   --local mask = tolua.cast(Pixy.GfxEngine.TERRAIN_MASK, "Ogre::uint32")
   --GfxEngine:getSceneMgr():getEntity("arena_02"):setQueryFlags(Pixy.GfxEngine.TERRAIN_MASK)
   --Pixy.Log("Arena node is at " .. pos.x .. "," .. pos.y .. "," .. pos.z)
@@ -109,7 +111,7 @@ Combat.cleanup = function()
 end
 
 Combat.SetupLights = function()
-  SceneMgr:setAmbientLight(Ogre.ColourValue(0.5,0.5,0.5))
+  SceneMgr:setAmbientLight(Ogre.ColourValue(150, 150,150))
 
   fadeColour = Ogre.ColourValue:new(0, 0, 0)
   --SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0035)
@@ -129,6 +131,8 @@ Combat.SetupLights = function()
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
   light:setPowerScale(1000)
+
+  --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_ADDITIVE)
 
   --~ dcol = Ogre.ColourValue:new(0.5,0.5,0.5)
   --~ scol = Ogre.ColourValue:new(0.5,0.5,0.5)

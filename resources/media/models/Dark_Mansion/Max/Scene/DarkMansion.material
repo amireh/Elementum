@@ -1,0 +1,547 @@
+
+material NoMaterial
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material 05-Default
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture nsky_UP.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material 02-Default
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture nsky_FR.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material wall
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture wall_01.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material grass
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 1 10
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture grass.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material dummy
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 1 1
+		}
+
+	}
+
+}
+
+
+
+material tree
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 1 10
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture tree.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material tree
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 1 10
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture tree.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material tree
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 1 10
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture tree.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material ghos
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 10
+			emissive 1 1 1 1
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture ghost2.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material mis
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 1 10
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture mis_alf.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material 04-Default
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture nsky_LF.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material 07-Default
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture nsky_BK.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material roof
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture roof.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material chapel
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture chapel.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material chapel
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture chapel.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material ground
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture ground.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material roof
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture roof.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material roof
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture roof.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material roof
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture roof.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material roof
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture roof.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material chapel
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture chapel.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material chapel
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture chapel.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material chapel
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture chapel.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material 03-Default
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 1
+			emissive 1 1 1 1
+
+			texture_unit
+			{
+				texture nsky_RT.jpg
+			}
+		}
+
+	}
+
+}
+
+

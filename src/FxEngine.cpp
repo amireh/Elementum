@@ -69,9 +69,9 @@ namespace Pixy {
     bind(EventUID::EntityAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
     if (GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
     {
-      bind(EventUID::EntityDied, boost::bind(&FxEngine::onEntityDying, this, _1));
+      bind(EventUID::EntityDying, boost::bind(&FxEngine::onEntityDying, this, _1));
     } else
-      unbind(EventUID::EntityDied);
+      unbind(EventUID::EntityDying);
 
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
     mFxMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -286,6 +286,8 @@ namespace Pixy {
     assert(mEffects.find("Elementum/Fx/Desummon") != mEffects.end());
 
     playEffect("Elementum/Fx/Desummon", inUnit->getSceneNode()->getPosition());
+
+    return true;
   }
 
   void FxEngine::unloadAllEffects() {
