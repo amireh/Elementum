@@ -66,9 +66,12 @@ namespace Pixy {
 		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
+    int _passGameData();
+
 	protected:
 
     bool onMatchFinished(const Event& inEvt);
+    bool onGameDataSynced(const Event&);
 
     void luaCallback(std::string inFunc);
 

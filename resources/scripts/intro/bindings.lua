@@ -1,6 +1,7 @@
 Intro.bind = function()
   bind(Pixy.EventUID.Login, MainMenu.onLogin)
   bind(Pixy.EventUID.Connected, MainMenu.onConnected)
+  bind(Pixy.EventUID.GameDataSynced, Pixy.onGameDataSynced);
   bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
   bind(Pixy.EventUID.EntitySelected, Profiles.onEntitySelected)
   bind(Pixy.EventUID.EntityDeselected, Profiles.onEntityDeselected)

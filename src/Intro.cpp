@@ -45,10 +45,6 @@ namespace Pixy
 
 		mEvtMgr = EventManager::getSingletonPtr();
 		mNetMgr = NetworkManager::getSingletonPtr();
-		if (!mNetMgr->connect()) {
-      mLog->errorStream() << "Could not connect to server, aborting";
-      return GameManager::getSingleton().requestShutdown();
-		}
 
 		// init engines
 		mGfxEngine = GfxEngine::getSingletonPtr();
@@ -86,6 +82,10 @@ namespace Pixy
 		}
 		*/
 
+		if (!mNetMgr->connect()) {
+      mLog->errorStream() << "Could not connect to server, aborting";
+      return GameManager::getSingleton().requestShutdown();
+		}
 
 		//mLog->debugStream() << "evt id " << _evt->getId();
 

@@ -6,4 +6,5 @@ class ScriptEngine : public Pixy::Engine, public Pixy::EventListener {
   std::string getModulePathPrefix() const;
 
   void callMeAfter(int inSeconds, std::string inFunc);
+  int _passGameData();
 };

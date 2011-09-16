@@ -32,6 +32,7 @@ namespace Pixy
       list<CPuppet*> puppetsFromStream(istringstream &stream);
       list<CPuppet*>& getPuppets();
 
+      spells_t const& _getSpells(Pixy::RACE);
     protected:
 
       virtual CSpell* getModelSpell(std::string inName);

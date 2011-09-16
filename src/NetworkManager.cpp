@@ -182,6 +182,9 @@ namespace Pixy {
     std::istringstream datastream(raw2str);
 
     GameManager::getSingleton().getResMgr().populate(datastream);
+
+    Event notice(EventUID::GameDataSynced);
+    EventManager::getSingleton().hook(notice);
   }
 
 }

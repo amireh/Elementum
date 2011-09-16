@@ -21,7 +21,9 @@ if not Intro then Intro = {} end
 
 require("intro/main_menu")
 require("intro/profiles")
+require("intro/decks")
 require("combat/effects")
 require("intro/bindings")
 
 Intro.bind()
+MainMenu.attach()

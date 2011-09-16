@@ -127,7 +127,7 @@ MainMenu.attach = function()
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-  gremlin = MainMenu.CreateGremlin()
+  MainMenu.Gremlin = MainMenu.CreateGremlin()
 
   isSetup = true
 end
@@ -138,6 +138,9 @@ MainMenu.detach = function()
   --~ MainMenu.Layout:hide()
   Pixy.UI.detach(MainMenu.Layout)
   Form = {}
+
+  MainMenu.Gremlin:die()
+  removeByValue(MainMenu, MainMenu.Gremlin)
 end
 
 MainMenu.Quit = function(e)
@@ -178,7 +181,8 @@ MainMenu.onLogin = function(inEvt)
 		Pixy.Log("login successful")
 
 		MainMenu.detach()
-		Profiles.attach()
+		--Profiles.attach()
+    Decks.attach()
 		return true
 	end
 
@@ -205,11 +209,9 @@ MainMenu.cleanup = function()
 end
 
 MainMenu.onEntityDied = function(e)
-  unit = tolua.cast(e.Any, "Pixy::CUnit")
-  unit:getRenderable():hide()
-  FxEngine:playEffect("Elementum/Fx/Desummon", unit:getRenderable():getSceneNode():getPosition())
+  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  rnd:hide()
+  FxEngine:playEffect("Elementum/Fx/Desummon", rnd:getSceneNode():getPosition())
 
   return true
 end
-
-MainMenu.attach()

@@ -15,6 +15,7 @@ arbitraryFunc = arbitraryFuncAll
 
 local attached = {} -- tracks all attached layouts
 Pixy.UI = {}
+Pixy.Models = { Spells = {}, Units = {} }
 
 PBox, PBox_Label, regularizer, loadingText = nil, nil, 0, ""
 Selected = nil
@@ -165,3 +166,20 @@ Pixy.UI.doneWaiting = function(keep_box)
 	dontUpdateMe(Pixy.UI.showLoadingBox)
 end
 
+Pixy.onGameDataSynced = function(e)
+  Pixy.Log("Game data synced, parsing it in lua")
+  local ret = ScriptEngine:_passGameData()
+
+  Pixy.Models.Spells = Spells
+  Spells = nil
+
+  --~ local race = 0
+  --~ while race ~= 4 do
+    --~ for k,v in ipairs(Pixy.Models.Spells[race]) do
+      --~ print(k .. " => " .. v:getName())
+    --~ end
+    --~ race = race + 1
+  --~ end
+
+  return true
+end

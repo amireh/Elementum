@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sun Sep 11 22:08:01 2011.
+** Generated automatically by tolua++-1.0.92 on Fri Sep 16 10:19:31 2011.
 */
 
 #ifndef __cplusplus
@@ -5411,6 +5411,38 @@ static int tolua_Elementum_Pixy_ScriptEngine_callMeAfter00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'callMeAfter'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _passGameData of class  Pixy::ScriptEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_ScriptEngine__passGameData00
+static int tolua_Elementum_Pixy_ScriptEngine__passGameData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::ScriptEngine",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::ScriptEngine* self = (Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_passGameData'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->_passGameData();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_passGameData'.",&tolua_err);
  return 0;
 #endif
 }
@@ -18150,6 +18182,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getScriptPathPrefix",tolua_Elementum_Pixy_ScriptEngine_getScriptPathPrefix00);
     tolua_function(tolua_S,"getModulePathPrefix",tolua_Elementum_Pixy_ScriptEngine_getModulePathPrefix00);
     tolua_function(tolua_S,"callMeAfter",tolua_Elementum_Pixy_ScriptEngine_callMeAfter00);
+    tolua_function(tolua_S,"_passGameData",tolua_Elementum_Pixy_ScriptEngine__passGameData00);
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__ScriptEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);

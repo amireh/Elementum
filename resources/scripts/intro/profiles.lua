@@ -52,7 +52,7 @@ Profiles.CreateKnight = function(name, material, scale, pos)
     unit:setMesh("DarkKnight.mesh")
     unit:setMaterial("Elementum/DarkKnight/" .. material)
 
-    rnd = unit:getRenderable()
+    --[[rnd = unit:getRenderable()
 
     local node = SceneMgr:createSceneNode("knight_node_" .. material)
     SceneMgr:getRootSceneNode():addChild(node)
@@ -86,7 +86,7 @@ Profiles.CreateKnight = function(name, material, scale, pos)
 
     --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_1", false)
     --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_2", false)
-    rnd:animateIdle()
+    rnd:animateIdle()]]
 
     table.insert(Units, unit)
 
@@ -116,8 +116,8 @@ Profiles.attach = function()
 
 	if isSetup then return true end
 
-  unit = next(Units)
-  Units[unit]:die()
+  --~ unit = next(Units)
+  --~ Units[unit]:die()
 
   local ar_orig = 1600 / 900
   local sf = 4
@@ -140,9 +140,9 @@ Profiles.attach = function()
   fire_knight = Profiles.CreateKnight("Kandie", "Fire", scale, Ogre.Vector3:new(6 * ar,0,3 * ar))
   fire_knight:setRace(Pixy.FIRE)
 
-  fire_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-26 * ar))
-  earth_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(26 * ar))
-  air_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-6 * ar))
+  --~ fire_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-26 * ar))
+  --~ earth_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(26 * ar))
+  --~ air_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-6 * ar))
 
   --~ GfxEngine:trackNode(fire_knight:getRenderable():getSceneNode())
   --~ GfxEngine:trackNode(nil)

@@ -362,4 +362,10 @@ namespace Pixy {
     mLog->errorStream() << "couldnt find a unit named " << inName;
     return 0;
   }
+
+  CResourceManager::spells_t const& CResourceManager::_getSpells(Pixy::RACE inRace)
+  {
+    assert(inRace >= 0 && inRace < 4);
+    return mSpells[inRace];
+  }
 }

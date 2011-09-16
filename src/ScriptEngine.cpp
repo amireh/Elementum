@@ -19,6 +19,8 @@
 #include <CEGUI/CEGUIExceptions.h>
 //#include "EntityEvent.h"
 //#include "Combat.h"
+#include "CSpell.h"
+#include "CResourceManager.h"
 #include <stdarg.h>
 #include <boost/bind.hpp>
 
@@ -325,6 +327,47 @@ namespace Pixy {
 
     va_end(argp);
     return true;
+  }
+
+  bool ScriptEngine::onGameDataSynced(const Event& inEvt)
+  {
+    // populate Lua with the game resources
+
+    // spells
+
+    return true;
+  }
+
+  int ScriptEngine::_passGameData()
+  {
+    lua_newtable(mLUA); // spells master table
+    std::list<CSpell*> mSpells[4];
+
+    std::list<CSpell*>::iterator spell;
+    int i=0;
+    for (i=0; i < 4; ++i)
+    {
+      mSpells[i] = GameManager::getSingleton().getResMgr()._getSpells((Pixy::RACE)i);
+      int count = 1; // start from 1 for Lua compatibility
+
+      lua_newtable(mLUA); // race spells table
+      for (spell = mSpells[i].begin(); spell != mSpells[i].end(); ++spell)
+      {
+        lua_pushinteger(mLUA, count);
+        tolua_pushusertype(mLUA, (void*)(*spell), "Pixy::CSpell");
+        lua_settable(mLUA, -3);
+
+        ++count;
+      }
+
+      lua_pushinteger(mLUA, i);
+      lua_insert(mLUA, -2); // swap race spells table with the index
+      lua_settable(mLUA, -3); // assign the new spells table
+    }
+
+    lua_setglobal(mLUA, "Spells"); /* set bottom table as global variable t */
+
+    return 0;
   }
 
   bool ScriptEngine::onMatchFinished(const Event& inEvt) {

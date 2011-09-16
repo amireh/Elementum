@@ -117,8 +117,8 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    Event e(EventUID::SyncPuppetData);
-    mNetMgr->send(e);
+    //~ Event e(EventUID::SyncPuppetData);
+    //~ mNetMgr->send(e);
 
     inBlockPhase = false;
     fSetup = true;
