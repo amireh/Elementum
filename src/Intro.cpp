@@ -125,6 +125,8 @@ namespace Pixy
 		delete mLog;
 		mLog = 0;
 
+    mPuppetName = mPuppet->getName();
+
     delete mPuppet;
     mPuppet = 0;
 

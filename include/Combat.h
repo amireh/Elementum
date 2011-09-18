@@ -94,12 +94,14 @@ namespace Pixy
     void handleNewTurn();
 
     bool onConnected(const Event&);
+    bool onGameDataSynced(const Event&);
     bool onLogin(const Event& inEvt);
+    bool onSyncPuppets(const Event& inEvt); // __DEBUG__
     //~ bool onSyncGameData(const Event&);
     //~ bool onJoinQueue(const Event& inEvt);
     bool onJoinLobby(const Event& inEvt);
     bool onMatchFound(const Event& inEvt);
-    bool onSyncPuppetData(const Event& inEvt);
+    bool onSyncMatchPuppets(const Event& inEvt);
     bool onStartTurn(const Event& inEvt);
     bool onTurnStarted(const Event& inEvt);
     bool onDrawSpells(const Event&);

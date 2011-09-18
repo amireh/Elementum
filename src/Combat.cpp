@@ -91,16 +91,18 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    mPuppetName = Intro::getSingleton().getPuppetName();
+    //~ mPuppetName = Intro::getSingleton().getPuppetName(); // __DEBUG__
+    mPuppetName = "Cranberry"; // __DEBUG__
 
     // sync the game data when we're connected
-    bind(EventUID::Connected, boost::bind(&Combat::onConnected, this, _1));
-    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1));
-    bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1));
+    bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
+    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
+    bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
+    bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
     //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::MatchFound, boost::bind(&Combat::onMatchFound, this, _1));
-    bind(EventUID::SyncPuppetData, boost::bind(&Combat::onSyncPuppetData, this, _1));
+    bind(EventUID::SyncMatchPuppets, boost::bind(&Combat::onSyncMatchPuppets, this, _1));
     bind(EventUID::StartTurn, boost::bind(&Combat::onStartTurn, this, _1));
     bind(EventUID::TurnStarted, boost::bind(&Combat::onTurnStarted, this, _1));
     bind(EventUID::DrawSpells, boost::bind(&Combat::onDrawSpells, this, _1));
@@ -117,8 +119,8 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    //~ Event e(EventUID::SyncPuppetData);
-    //~ mNetMgr->send(e);
+    //~ Event e(EventUID::SyncPuppetData); // __DEBUG__
+    //~ mNetMgr->send(e); // __DEBUG__
 
     inBlockPhase = false;
     fSetup = true;
@@ -408,10 +410,10 @@ namespace Pixy
 
 
 
-  bool Combat::onConnected(const Event& evt) {
+  bool Combat::onGameDataSynced(const Event& evt) {
     //~ mNetMgr->send(Event(EventUID::SyncGameData));
     Event _evt(EventUID::Login);
-    _evt.setProperty("Username", "Sugarfly");
+    _evt.setProperty("Username", "Kandie");
     _evt.setProperty("Password", "tuonela");
     mNetMgr->send(_evt);
 
@@ -419,14 +421,18 @@ namespace Pixy
   }
 
   bool Combat::onLogin(const Event& evt) {
-    Event _evt(EventUID::JoinLobby);
-    mPuppetName = "Sugar";
-    _evt.setProperty("Puppet", mPuppetName);
+    Event _evt(EventUID::SyncPuppets);
     mNetMgr->send(_evt);
 
     return true;
   }
 
+  bool Combat::onSyncPuppets(const Event& inEvt) {
+    Event _evt(EventUID::JoinLobby);
+    _evt.setProperty("Puppet", mPuppetName);
+    mNetMgr->send(_evt);
+    return true;
+  }
   bool Combat::onJoinLobby(const Event& inEvt) {
     Event _evt(EventUID::JoinQueue);
     mNetMgr->send(_evt);
@@ -434,13 +440,13 @@ namespace Pixy
   }
 
   bool Combat::onMatchFound(const Event& inEvt) {
-    Event e(EventUID::SyncPuppetData);
+    Event e(EventUID::SyncMatchPuppets);
     mNetMgr->send(e);
 
     return true;
   }
 
-  bool Combat::onSyncPuppetData(const Event& inEvt) {
+  bool Combat::onSyncMatchPuppets(const Event& inEvt) {
 
     using std::string;
     using std::vector;
@@ -458,8 +464,11 @@ namespace Pixy
     std::cout << "Uncompressed puppet data: " << raw2str << "\n";*/
 
     std::istringstream datastream(inEvt.getProperty("Data"));
+    std::cout << "----- INSTANCE PUPPETS DUMP -----\n" << inEvt.getProperty("Data") << "\n";
     list<CPuppet*> lPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
     datastream.clear();
+
+    assert(lPuppets.size() > 1);
 
     for (list<CPuppet*>::iterator puppet = lPuppets.begin();
          puppet != lPuppets.end();

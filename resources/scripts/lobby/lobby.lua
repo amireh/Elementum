@@ -50,6 +50,7 @@ Lobby.onJoinQueue = function(e)
 end
 
 Lobby.onMatchFound = function(e)
+  clearBindings()
   Chat.detach()
   MainMenu.cleanup()
   GameMgr:changeState(CombatState)

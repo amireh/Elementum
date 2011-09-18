@@ -227,7 +227,7 @@ namespace Pixy
     mInputMgr->addMouseListener( this, "GameManager" );
 
     // Change to first state
-    this->changeState( Intro::getSingletonPtr() );
+    this->changeState( Combat::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame
@@ -337,7 +337,7 @@ namespace Pixy
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("General");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("scripts");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Models");
-		ResourceGroupManager::getSingleton().loadResourceGroup("Models");
+		//~ ResourceGroupManager::getSingleton().loadResourceGroup("Models");
 		this->loadConfig();
 		mTrayMgr->hideLoadingBar();
 		delete mTrayMgr;

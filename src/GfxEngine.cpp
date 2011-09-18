@@ -212,6 +212,8 @@ namespace Pixy {
 
 		mLog->infoStream() << "preparing combat scene";
 
+    mRenderables.clear();
+
     mPlayer = Combat::getSingleton().getPuppet();
     for (Combat::puppets_t::const_iterator puppet = Combat::getSingleton().getPuppets().begin();
          puppet != Combat::getSingleton().getPuppets().end();
