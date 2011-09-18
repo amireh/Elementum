@@ -21,6 +21,8 @@
 //#include "Combat.h"
 #include "CSpell.h"
 #include "CResourceManager.h"
+#include "Intro.h"
+#include "Deck.h"
 #include <stdarg.h>
 #include <boost/bind.hpp>
 
@@ -368,6 +370,71 @@ namespace Pixy {
     lua_setglobal(mLUA, "Spells"); /* set bottom table as global variable t */
 
     return 0;
+  }
+
+  int ScriptEngine::_passPuppetListing()
+  {
+    lua_newtable(mLUA); // spells master table
+    Intro::puppets_t mPuppets = Intro::getSingleton().getPuppets();
+
+    Intro::puppets_t::iterator puppet;
+    int count = 1;
+    for (puppet = mPuppets.begin(); puppet != mPuppets.end(); ++puppet)
+    {
+      lua_pushinteger(mLUA, count);
+      tolua_pushusertype(mLUA, (void*)(*puppet), "Pixy::CPuppet");
+      lua_settable(mLUA, -3);
+
+      ++count;
+    }
+
+    lua_setglobal(mLUA, "Puppets");
+
+    Event e(EventUID::PuppetListSynced);
+    EventManager::getSingleton().hook(e);
+
+    return true;
+  }
+
+  int ScriptEngine::_passPuppet()
+  {
+    CPuppet* mPuppet = Intro::getSingleton().getPuppet();
+
+    tolua_pushusertype(mLUA, (void*)mPuppet, "Pixy::CPuppet");
+    lua_setglobal(mLUA, "Puppet");
+
+    Event e(EventUID::PuppetSynced);
+    EventManager::getSingleton().hook(e);
+
+    // export decks
+    {
+
+      lua_newtable(mLUA); // decks table
+      const Puppet::decks_t& mDecks = mPuppet->getDecks();
+
+      mLog->debugStream() << "exporting decks # " << mDecks.size();
+
+      Puppet::decks_t::const_iterator deck;
+      int count = 1;
+      for (deck = mDecks.begin(); deck != mDecks.end(); ++deck)
+      {
+        mLog->debugStream() << "exporting deck " << (*deck)->getName();
+        lua_pushinteger(mLUA, count);
+        tolua_pushusertype(mLUA, (void*)(*deck), "Pixy::Deck");
+        lua_settable(mLUA, -3);
+
+        ++count;
+      }
+
+      lua_setglobal(mLUA, "PuppetDecks");
+    }
+
+    {
+      Event e(EventUID::PuppetDecksSynced);
+      EventManager::getSingleton().hook(e);
+    }
+
+    return true;
   }
 
   bool ScriptEngine::onMatchFinished(const Event& inEvt) {

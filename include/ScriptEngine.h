@@ -68,6 +68,23 @@ namespace Pixy {
 
     int _passGameData();
 
+    /*!
+     * @brief
+     * Called by Intro::onSyncPuppets() to pass off the puppet data to Lua.
+     *
+     * This happens when the player logs in and receives the list of their
+     * puppets.
+     */
+    int _passPuppetListing();
+
+    /*!
+     * @brief
+     * Called by Intro::onSyncPuppetData() to pass off the selected puppet to Lua.
+     *
+     * This happens when the player joins the lobby with a selected puppet.
+     */
+    int _passPuppet();
+
 	protected:
 
     bool onMatchFinished(const Event& inEvt);

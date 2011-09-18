@@ -46,10 +46,13 @@ namespace Pixy
       itr->second.clear();
     }
 
-    delete mText;
+    if (mText)
+      delete mText;
 
-    mSceneNode->setVisible(true);
-    GfxEngine::getSingletonPtr()->detachFromScene(this);
+    if (mSceneNode) {
+      mSceneNode->setVisible(true);
+      GfxEngine::getSingletonPtr()->detachFromScene(this);
+    }
 
     mOwner = 0;
 
@@ -86,7 +89,8 @@ namespace Pixy
 	void Renderable::attachSceneNode(Ogre::SceneNode* inNode) { mSceneNode = inNode; }
   void Renderable::attachSceneObject(Ogre::Entity* inObject) {
     mSceneObject = inObject;
-    mSceneObject->setUserAny(Ogre::Any(this));
+    if (mSceneObject)
+      mSceneObject->setUserAny(Ogre::Any(this));
   }
   Ogre::SceneNode* Renderable::getSceneNode() { return mSceneNode; }
   Ogre::Entity* Renderable::getSceneObject() { return mSceneObject; }

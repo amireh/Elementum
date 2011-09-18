@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout >
+    <Window Type="DefaultWindow" Name="Elementum/Scenes/Intro/Profiles" >
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+
+      <Window Type="TaharezLook/StaticText" Name="Elementum/Intro/Labels/Name">
+        <Property Name="Font" Value="Alice_64" />
+        <Property Name="Visible" Value="True" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="HorizontalAlignment" Value="Centre" />
+        <Property Name="HorzFormatting" Value="HorzCentred" />
+        <Property Name="VerticalAlignment" Value="Top" />
+        <Property Name="VertFormatting" Value="TopAligned" />
+        <Property Name="Text" Value="Puppet" />
+        <Property Name="TextColours" Value="tl:FFFF0000 tr:FF8f0000 bl:FF8f0000 br:FF8f1e00" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="MousePassThroughEnabled" Value="True" />
+      </Window>
+      <Window Type="TaharezLook/StaticText" Name="Elementum/Intro/Labels/Level">
+        <Property Name="Font" Value="Alice_16" />
+        <Property Name="Visible" Value="True" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="HorizontalAlignment" Value="Centre" />
+        <Property Name="HorzFormatting" Value="HorzCentred" />
+        <Property Name="VerticalAlignment" Value="Top" />
+        <Property Name="VertFormatting" Value="TopAligned" />
+        <Property Name="Text" Value="Level 1" />
+        <Property Name="TextColours" Value="tl:FFFF0000 tr:FF8f0000 bl:FF8f0000 br:FF8f1e00" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,64},{1,0},{1,0}}" />
+        <Property Name="MousePassThroughEnabled" Value="True" />
+      </Window>
+
+      <Window Type="TaharezLook/Listbox" Name="Elementum/Intro/Listboxes/Puppets" >
+        <Property Name="AlwaysOnTop" Value="True" />
+        <Property Name="Font" Value="DejaVuSans-10" />
+        <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.05,0},{0.975,0},{0.85,0}}" />
+        <Window Type="Vanilla/Button" Name="Elementum/Intro/Buttons/DeletePuppet" >
+            <Property Name="Text" Value="Remove character" />
+            <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.93,0},{0.95,0},{0.98,0}}" />
+            <Property Name="Disabled" Value="True" />
+            <Property Name="AlwaysOnTop" Value="True" />
+            <Event Name="Clicked" Function="Profiles.DeletePuppet" />
+        </Window>
+      </Window>
+
+      <Window Type="Vanilla/Button" Name="Elementum/Intro/Buttons/JoinLobby" >
+          <Property Name="Text" Value="Join Lobby" />
+          <Property Name="UnifiedAreaRect" Value="{{0.40,0},{0.85,0},{0.60,0},{0.95,0}}" />
+          <Event Name="Clicked" Function="Profiles.JoinLobby" />
+      </Window>
+      <Window Type="Vanilla/Button" Name="Elementum/Intro/Buttons/CreatePuppet" >
+          <Property Name="Text" Value="Create a new hero" />
+          <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.9,0},{0.975,0},{0.95,0}}" />
+          <Event Name="Clicked" Function="Profiles.onCreatePuppet" />
+      </Window>
+      <Window Type="Vanilla/Button" Name="Elementum/Intro/Buttons/BackToLogin" >
+          <Property Name="Text" Value="Logout" />
+          <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.9,0},{0.15,0},{0.95,0}}" />
+          <Event Name="Clicked" Function="Profiles.Back" />
+      </Window>
+
+    </Window>
+</GUILayout>

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Fri Sep 16 10:19:31 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Sep 18 09:41:51 2011.
 */
 
 #ifndef __cplusplus
@@ -155,6 +155,13 @@ static int tolua_collect_Ogre__ColourValue (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_Ogre__Any (lua_State* tolua_S)
+{
+ Ogre::Any* self = (Ogre::Any*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_Pixy__UIEngine (lua_State* tolua_S)
 {
  Pixy::UIEngine* self = (Pixy::UIEngine*) tolua_tousertype(tolua_S,1,0);
@@ -176,16 +183,16 @@ static int tolua_collect_Pixy__GfxEngine (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Ogre__Any (lua_State* tolua_S)
+static int tolua_collect_Ogre__Billboard (lua_State* tolua_S)
 {
- Ogre::Any* self = (Ogre::Any*) tolua_tousertype(tolua_S,1,0);
+ Ogre::Billboard* self = (Ogre::Billboard*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_Ogre__Billboard (lua_State* tolua_S)
+static int tolua_collect_Ogre__SharedPtr_Ogre__Resource_ (lua_State* tolua_S)
 {
- Ogre::Billboard* self = (Ogre::Billboard*) tolua_tousertype(tolua_S,1,0);
+ Ogre::SharedPtr<Ogre::Resource>* self = (Ogre::SharedPtr<Ogre::Resource>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -222,7 +229,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"list<Pixy::CUnit*>");
  tolua_usertype(tolua_S,"Ogre::uint16");
  tolua_usertype(tolua_S,"Ogre::Radian");
- tolua_usertype(tolua_S,"Ogre::Billboard");
+ tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
  tolua_usertype(tolua_S,"Ogre::Degree");
@@ -234,6 +241,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"OgreMax::OgreMaxScene");
  tolua_usertype(tolua_S,"CEGUI::UBox");
  tolua_usertype(tolua_S,"OgreBites::SdkCameraMan");
+ tolua_usertype(tolua_S,"Ogre::Resource");
  tolua_usertype(tolua_S,"Ogre::Root");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
  tolua_usertype(tolua_S,"Pixy::EventListener");
@@ -251,34 +259,37 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
  tolua_usertype(tolua_S,"Pixy::Combat");
  tolua_usertype(tolua_S,"Pixy::Unit");
- tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
- tolua_usertype(tolua_S,"Ogre::BillboardSet");
- tolua_usertype(tolua_S,"Ogre::Plane");
  tolua_usertype(tolua_S,"CEGUI::ListboxTextItem");
- tolua_usertype(tolua_S,"Pixy::Intro");
  tolua_usertype(tolua_S,"CEGUI::FormattedListboxTextItem");
  tolua_usertype(tolua_S,"OIS::Keyboard");
+ tolua_usertype(tolua_S,"Ogre::BillboardSet");
+ tolua_usertype(tolua_S,"Ogre::Plane");
  tolua_usertype(tolua_S,"OIS::KeyEvent");
- tolua_usertype(tolua_S,"Pixy::ScriptEngine");
+ tolua_usertype(tolua_S,"Pixy::Intro");
+ tolua_usertype(tolua_S,"const");
+ tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Ogre::Billboard");
+ tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"Pixy::CUnit");
  tolua_usertype(tolua_S,"Ogre::Quaternion");
- tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Ogre::ResourceManager");
  tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"Ogre::Entity");
+ tolua_usertype(tolua_S,"Pixy::GameManager");
  tolua_usertype(tolua_S,"std::type_info");
  tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
- tolua_usertype(tolua_S,"const");
  tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"Pixy::Entity");
+ tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"Ogre::RibbonTrail");
  tolua_usertype(tolua_S,"Ogre::Camera");
  tolua_usertype(tolua_S,"Ogre::Node");
@@ -14997,6 +15008,165 @@ static int tolua_set_Ogre__ResourceGroupManager_RESOURCE_SYSTEM_NUM_REFERENCE_CO
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: remove of class  Ogre::ResourceManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_ResourceManager_remove00
+static int tolua_Elementum_Ogre_ResourceManager_remove00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::ResourceManager",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::ResourceManager* self = (Ogre::ResourceManager*)  tolua_tousertype(tolua_S,1,0);
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'remove'", NULL);
+#endif
+  {
+   self->remove(name);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'remove'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resourceExists of class  Ogre::ResourceManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_ResourceManager_resourceExists00
+static int tolua_Elementum_Ogre_ResourceManager_resourceExists00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::ResourceManager",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::ResourceManager* self = (Ogre::ResourceManager*)  tolua_tousertype(tolua_S,1,0);
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resourceExists'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->resourceExists(name);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resourceExists'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: prepare of class  Ogre::ResourceManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_ResourceManager_prepare00
+static int tolua_Elementum_Ogre_ResourceManager_prepare00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::ResourceManager",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::ResourceManager* self = (Ogre::ResourceManager*)  tolua_tousertype(tolua_S,1,0);
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  const std::string group = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'prepare'", NULL);
+#endif
+  {
+    Ogre::SharedPtr<Ogre::Resource> tolua_ret = (  Ogre::SharedPtr<Ogre::Resource>)  self->prepare(name,group);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((Ogre::SharedPtr<Ogre::Resource>)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"Ogre::SharedPtr<Ogre::Resource>");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Ogre::SharedPtr<Ogre::Resource>));
+     tolua_pushusertype(tolua_S,tolua_obj,"Ogre::SharedPtr<Ogre::Resource>");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'prepare'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: load of class  Ogre::ResourceManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_ResourceManager_load00
+static int tolua_Elementum_Ogre_ResourceManager_load00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::ResourceManager",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::ResourceManager* self = (Ogre::ResourceManager*)  tolua_tousertype(tolua_S,1,0);
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  const std::string group = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'load'", NULL);
+#endif
+  {
+    Ogre::SharedPtr<Ogre::Resource> tolua_ret = (  Ogre::SharedPtr<Ogre::Resource>)  self->load(name,group);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((Ogre::SharedPtr<Ogre::Resource>)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"Ogre::SharedPtr<Ogre::Resource>");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Ogre::SharedPtr<Ogre::Resource>));
+     tolua_pushusertype(tolua_S,tolua_obj,"Ogre::SharedPtr<Ogre::Resource>");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'load'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  Ogre::BillboardSet */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_BillboardSet_new00
 static int tolua_Elementum_Ogre_BillboardSet_new00(lua_State* tolua_S)
@@ -18692,6 +18862,19 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"INTERNAL_RESOURCE_GROUP_NAME",tolua_get_Ogre__ResourceGroupManager_INTERNAL_RESOURCE_GROUP_NAME,tolua_set_Ogre__ResourceGroupManager_INTERNAL_RESOURCE_GROUP_NAME);
     tolua_variable(tolua_S,"AUTODETECT_RESOURCE_GROUP_NAME",tolua_get_Ogre__ResourceGroupManager_AUTODETECT_RESOURCE_GROUP_NAME,tolua_set_Ogre__ResourceGroupManager_AUTODETECT_RESOURCE_GROUP_NAME);
     tolua_variable(tolua_S,"RESOURCE_SYSTEM_NUM_REFERENCE_COUNTS",tolua_get_Ogre__ResourceGroupManager_RESOURCE_SYSTEM_NUM_REFERENCE_COUNTS,tolua_set_Ogre__ResourceGroupManager_RESOURCE_SYSTEM_NUM_REFERENCE_COUNTS);
+   tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"ManualResourceLoader","Ogre::ManualResourceLoader","",NULL);
+   tolua_beginmodule(tolua_S,"ManualResourceLoader");
+   tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"Resource","Ogre::Resource","",NULL);
+   tolua_beginmodule(tolua_S,"Resource");
+   tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"ResourceManager","Ogre::ResourceManager","",NULL);
+   tolua_beginmodule(tolua_S,"ResourceManager");
+    tolua_function(tolua_S,"remove",tolua_Elementum_Ogre_ResourceManager_remove00);
+    tolua_function(tolua_S,"resourceExists",tolua_Elementum_Ogre_ResourceManager_resourceExists00);
+    tolua_function(tolua_S,"prepare",tolua_Elementum_Ogre_ResourceManager_prepare00);
+    tolua_function(tolua_S,"load",tolua_Elementum_Ogre_ResourceManager_load00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Ogre",0);

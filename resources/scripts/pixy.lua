@@ -15,10 +15,16 @@ arbitraryFunc = arbitraryFuncAll
 
 local attached = {} -- tracks all attached layouts
 Pixy.UI = {}
-Pixy.Models = { Spells = {}, Units = {} }
+if not Pixy.Models then
+  Pixy.Models = { Spells = {}, Units = {} }
+end
+if not Pixy.Puppets then
+  Pixy.Puppets = {}
+end
 
 PBox, PBox_Label, regularizer, loadingText = nil, nil, 0, ""
-Selected = nil
+Puppet = nil -- this is the puppet the player joins the lobby with
+Selected = nil -- this is the puppet that's either being chosen for creation or joining with
 Pixy.registerGlobals = function()
 
   if (Pixy.Launched) then return true end
@@ -46,6 +52,10 @@ Pixy.registerGlobals = function()
 	CESchemeMgr:create( "WindowsLook.scheme" )
 	CESchemeMgr:create( "VanillaSkin.scheme" )
 
+	-- create our imagesets used for spell buttons
+	CEImagesetMgr:create( "spells_earth.imageset" )
+	CEImagesetMgr:create( "spells_fire.imageset" )
+
 	-- load a default font
 	CESystem:setDefaultFont( "DejaVuSans-10" )
 	-- set default mouse cursor
@@ -66,6 +76,8 @@ Pixy.registerGlobals = function()
   FxEngine = Pixy.FxEngine:getSingleton()
   UIEngine = Pixy.UIEngine:getSingletonPtr()
   ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
+
+  SceneMgr = GfxEngine:getSceneMgr()
 
   --Pixy.Combat = {}
 
@@ -92,20 +104,25 @@ Pixy.registerGlobals = function()
 
 end
 
+local current_layout = nil
 Pixy.UI.attach = function(inWindow)
 	Pixy.Log("attaching window '" .. inWindow .. "'")
 	-- remove current layout if exists
 	if (not attached[inWindow]) then
 		Pixy.Log("window is not loaded, loading...")
 		-- load layout
-		attached[inWindow] = CEGUI.toGUISheet(CEWindowMgr:loadWindowLayout(inWindow))
+    if CEWindowMgr:isWindowPresent(inWindow) then
+      attached[inWindow] = CEGUI.toGUISheet(CEWindowMgr:getWindow(inWindow))
+    else
+      attached[inWindow] = CEGUI.toGUISheet(CEWindowMgr:loadWindowLayout(inWindow))
+    end
  		--CEWindowMgr:destroyWindow(attached[inWindow])
 	end
 
 	-- attach layout
 	attached[inWindow]:setAlwaysOnTop(true)
 	attached[inWindow]:show()
-  --~ attached[inWindow]:addChild(PBox)
+  attached[inWindow]:addChildWindow(PBox)
 	CESystem:setGUISheet(attached[inWindow])
 
   -- hide the progress box
@@ -122,14 +139,15 @@ end
 
 Pixy.UI.attachOverlay = function(inWindow)
 	local _window
-	if (inWindow == "ProgressBox") then
+	--~ if (inWindow == "ProgressBox") then
 		-- check if window present then retrieve its handle
 		-- otherwise, create it
 		_window = (CEWindowMgr:isWindowPresent("Elementum/Overlays/ProgressBox"))
 							and CEWindowMgr:getWindow("Elementum/Overlays/ProgressBox")
 							or	CEWindowMgr:loadWindowLayout("overlays/progress_box.layout")
+    _window:show()
 		return _window
-	end
+	--~ end
 end
 
 Pixy.UI.showLoadingBox = function()
@@ -145,6 +163,11 @@ Pixy.UI.showLoadingBox = function()
 	end
 
 	PBox_Label:setText(text)
+end
+
+Pixy.UI.notifyError = function(text)
+  PBox:show()
+  PBox_Label:setText(text)
 end
 
 Pixy.UI.closeProgressBox = function()
@@ -183,3 +206,5 @@ Pixy.onGameDataSynced = function(e)
 
   return true
 end
+
+Pixy.registerGlobals()

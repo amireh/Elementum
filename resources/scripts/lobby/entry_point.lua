@@ -21,7 +21,9 @@ if not Lobby then Lobby = {} end
 
 require("lobby/lobby")
 require("lobby/chat")
-require("lobby/bindings")
 require("lobby/input")
+require("lobby/decks")
+require("lobby/bindings")
 
-Lobby.bind()
+--Lobby.bind()
+--~ Chat.attach()

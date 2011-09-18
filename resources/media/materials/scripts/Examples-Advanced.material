@@ -323,3 +323,9 @@ material Elementum/Bargor/Maimer
 
 
 */
+material foobar
+{
+  technique
+  {
+  }
+}

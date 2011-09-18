@@ -4,7 +4,96 @@
   <Window Type="DefaultWindow" Name="Elementum/Intro/Decks" >
     <Property Name="Font" Value="DejaVuSans-10" />
     <Property Name="Text" Value="Elementum" />
-
     <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+
+    <Window Type="DefaultWindow" Name="Decks/Containers/Controls" >
+    <Property Name="UnifiedAreaRect" Value="{{0.025,0},{0.05,0},{0.975,0},{0.1,0}}" />
+      <Window Type="Vanilla/Button" Name="Decks/Buttons/Remove">
+        <Property Name="Text" Value="Delete current deck" />
+        <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0,0},{1,0},{0.875,0}}" />
+<!--
+        <Property Name="Disabled" Value="True" />
+-->
+        <Event Name="Clicked" Function="Decks.RemoveDeck" />
+      </Window>
+
+      <Window Type="Vanilla/Combobox" Name="Decks/Combobox/Decks" >
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.5,0},{1,120}}" />
+        <Property Name="MaxEditTextLength" Value="1073741823" />
+        <Property Name="ClippedByParent" Value="False" />
+<!--
+        <Property Name="ReadOnly" Value="True" />
+-->
+        <Event Name="ListSelectionAccepted" Function="Decks.onListSelectionChanged" />
+      </Window>
+    </Window>
+
+    <Window Type="DefaultWindow" Name="Decks/Containers/General" >
+    <Property Name="UnifiedAreaRect" Value="{{0.025,0},{0.1,0},{0.975,0},{0.9,0}}" />
+
+      <Window Type="DefaultWindow" Name="Decks/Deck" >
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0.675,0},{1,0},{1,0}" />
+
+        <Window Type="GridLayoutContainer" Name="Decks/Containers/Deck">
+        </Window>
+      </Window>
+
+      <Window Type="Vanilla/FrameWindow" Name="Decks/RaceSpells" >
+        <Property Name="UnifiedAreaRect" Value="{{0.6,0},{0.05,0},{1,0},{0.65,0}}" />
+        <Property Name="RollUpEnabled" Value="False" />
+        <Property Name="SizingEnabled" Value="False" />
+        <Property Name="CloseButtonEnabled" Value="False" />
+        <Property Name="Text" Value="Available Spells" />
+
+        <Window Type="GridLayoutContainer" Name="Decks/Containers/Spells">
+        </Window>
+
+      </Window>
+
+    <!-- Tooltip panel -->
+      <Window Type="Vanilla/Static" Name="Decks/Containers/Tooltip">
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0.05,0},{0.5,0},{0.65,0}}" />
+        <Property Name="Visible" Value="True" />
+    <!--
+        <Property Name="HorizontalAlignment" Value="Left" />
+        <Property Name="VerticalAlignment" Value="Top" />
+    -->
+        <Property Name="BackgroundEnabled" Value="True" />
+        <Property Name="FrameEnabled" Value="True" />
+        <Property Name="AlwaysOnTop" Value="True" />
+
+        <Window Type="Vanilla/StaticText" Name="Decks/Text/Tooltip">
+          <Property Name="Font" Value="DejaVuSans-10" />
+          <Property Name="Visible" Value="True" />
+          <Property Name="BackgroundEnabled" Value="False" />
+          <Property Name="FrameEnabled" Value="False" />
+          <Property Name="HorizontalAlignment" Value="Left" />
+          <Property Name="HorzFormatting" Value="WordWrapLeftAligned" />
+          <Property Name="VertFormatting" Value="TopAligned" />
+          <Property Name="VerticalAlignment" Value="Top" />
+          <Property Name="UnifiedAreaRect" Value="{{0.025,0},{0.025,0},{0.975,0},{0.975,0}}" />
+    <!--
+          <Property Name="UnifiedMaxSize" Value="{{0.55,0}, {1,0}}" />
+    -->
+          <Property Name="ClippedByParent" Value="False" />
+        </Window> <!-- Player end turn button -->
+
+      </Window> <!-- Tooltip bar -->
+    </Window> <!-- Container -->
+
+    <Window Type="Vanilla/Button" Name="Decks/Buttons/Save">
+      <Property Name="Text" Value="Save" />
+      <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.925,0},{0.6,0},{0.975,0}}" />
+<!--
+      <Property Name="HorizontalAlignment" Value="Centre" />
+-->
+      <Event Name="Clicked" Function="Decks.onSaveDeck" />
+    </Window>
+    <Window Type="Vanilla/Button" Name="Decks/Buttons/Back">
+      <Property Name="Text" Value="Back" />
+      <Property Name="UnifiedAreaRect" Value="{{0.025,0},{0.925,0},{0.15,0},{0.975,0}}" />
+      <Event Name="Clicked" Function="Decks.detach" />
+    </Window>
+
   </Window>
 </GUILayout>

@@ -2,45 +2,51 @@
 
 <Imageset Name="Spells_Fire" Imagefile="spells_earth.tga" >
 	<!-- Treant -->
-	<Image Name="Summon:_Fetish_Zij_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Zij_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Zij_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Zij_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Mechanical_Gremlin_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Mechanical_Gremlin_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Mechanical_Gremlin_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Mechanical_Gremlin_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
 	<!-- Crustling -->
-	<Image Name="Summon:_Fetish_Hurler_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Hurler_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Hurler_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Hurler_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Engineer_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Engineer_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Engineer_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Engineer_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
 	<!-- Stone Golem -->
-	<Image Name="Summon:_Fetish_Playmaker_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Playmaker_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Playmaker_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Playmaker_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Brawler_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Brawler_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Brawler_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Gremlin_Brawler_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
 	<!-- Earth Elemental -->
-	<Image Name="Summon:_Fetish_Herdkeeper_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Herdkeeper_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Herdkeeper_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Fetish_Herdkeeper_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Master_Gremlin_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Master_Gremlin_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Master_Gremlin_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Master_Gremlin_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Summon:_Scorchpid_Drone_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Drone_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Drone_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Drone_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
+	<!-- Crustling -->
+	<Image Name="Summon:_Scorchpid_Ashcrawler_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Ashcrawler_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Ashcrawler_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Ashcrawler_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<!-- Stone Golem -->
+	<Image Name="Summon:_Scorchpid_Lavawalker_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Lavawalker_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Lavawalker_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Lavawalker_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
+	<!-- Earth Elemental -->
+	<Image Name="Summon:_Scorchpid_Magmaburster_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Magmaburster_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Magmaburster_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Scorchpid_Magmaburster_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
 
 	<Image Name="Comet_Hover"   XPos="1024" YPos="0"  Width="256" Height="256" />
 	<Image Name="Comet_Normal"    XPos="1024" YPos="256" Width="256" Height="256" />
 	<Image Name="Comet_Pushed"   XPos="1024" YPos="512" Width="256" Height="256" />
 	<Image Name="Comet_Disabled" XPos="1024" YPos="768" Width="256" Height="256" />
 
-	<Image Name="Nourish_Hover"   XPos="1280" YPos="0"  Width="256" Height="256" />
-	<Image Name="Nourish_Normal"    XPos="1280" YPos="256" Width="256" Height="256" />
-	<Image Name="Nourish_Pushed"   XPos="1280" YPos="512" Width="256" Height="256" />
-	<Image Name="Nourish_Disabled" XPos="1280" YPos="768" Width="256" Height="256" />
-
-	<Image Name="Chains_of_Command_Hover"   XPos="256" YPos="0"  Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Normal"    XPos="256" YPos="256" Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
-
-	<Image Name="Fartigue_Hover"   XPos="3072" YPos="0"  Width="256" Height="256" />
-	<Image Name="Fartigue_Normal"    XPos="3072" YPos="256" Width="256" Height="256" />
-	<Image Name="Fartigue_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
-	<Image Name="Fartigue_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
 </Imageset>
 
 

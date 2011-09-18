@@ -10,6 +10,9 @@ if not Chat then
   Chat = { Errors = { General = {} } }
 end
 
+local SelectedRnd = nil
+local DeckList = nil
+
 Chat = {
   History = {},
   WhisperHistory = {},
@@ -67,34 +70,31 @@ Chat.attach = function()
 	Chat.Layout = Pixy.UI.attach("lobby/chat.layout")
   --MsgBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Text/Messages"))
   InputBox = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Chat/Editbox/Message"))
-  RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"), "CEGUI::Listbox")
+  RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"))
+  DeckList = CEGUI.toCombobox(CEWindowMgr:getWindow("Elementum/Chat/Comboboxes/Decks"))
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
   Tabs = CEGUI.toTabControl(CEWindowMgr:getWindow("Elementum/Containers/Rooms"))
-  Chat.Layout:show()
-
-  local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
-  evt:setProperty("Puppet", SelectedPuppetName)
-  NetMgr:send(evt)
-
-  --~ Pixy.Log("Joining the Lobby with " .. IntroState:getPuppetName())
-  Pixy.Log("Joining the Lobby with " .. SelectedPuppetName)
 
   --~ GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   --~ GfxEngine:trackNode(Selected:getSceneNode())
   --~ GfxEngine:setYawPitchDist(Ogre.Vector3:new(0, 20, 30))
 
-  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(SelectedPuppetName)
-
   InputBox:activate()
-
-  FxEngine:highlight(Selected)
 
   isSetup = true
 end
 
 Chat.detach = function()
-  __RoomNames__ = nil
-  Rooms = nil
+
+  -- destroy rooms
+  for room in list_iter(__RoomNames__) do
+    Chat.unregisterRoom(room)
+  end
+  Tabs:removeTab(Rooms["General"].Window:getName())
+  CEWindowMgr:destroyWindow(Rooms["General"].Window)
+
+  __RoomNames__ = {}
+  Rooms = {}
   CurrentRoom = nil
   CurrentWhisperTarget = nil
   CurrentChatMessage = nil
@@ -104,6 +104,7 @@ Chat.detach = function()
 
 	--~ CEWindowMgr:destroyWindow(Chat.Layout)
 	--~ Chat.Layout:hide()
+  FxEngine:dehighlight()
   Pixy.UI.detach(Chat.Layout)
 end
 
@@ -168,15 +169,6 @@ Chat.populateRoom = function(clients)
     Chat.addClientToRoom(client)
   end
 
-end
-
-Chat.onJoinLobby = function(e)
-  if e.Feedback ~= Pixy.EventFeedback.Ok then
-    local box = Pixy.UI.attachOverlay("ProgressBox")
-    box:setText("Unable to connect to lobby. Please try again later.")
-  end
-
-  return true
 end
 
 Chat.registerRoom = function(name, clients)
@@ -462,7 +454,6 @@ Chat.notifySendFailed = function(msg_type, _error)
 end
 
 Chat.doSend = function(msg_event)
-  --~ msg_event:setProperty("S", SelectedPuppetName)
 
   NetMgr:send(msg_event)
   InputBox:setText("")
@@ -639,4 +630,26 @@ Chat.nextChatMessage = function()
   return found
 end
 
-Chat.attach()
+Chat.onPuppetDecksSynced = function(e)
+  DeckList:clearAllSelections()
+  DeckList:resetList()
+
+  for deck in list_iter(PuppetDecks) do
+    item = CEGUI.createListboxTextItem(deck:getName())
+    DeckList:addItem(item)
+  end
+
+  if DeckList:getItemCount() > 0 then
+    DeckList:setItemSelectState(0, true)
+  end
+
+  return true
+end
+
+Chat.onPuppetSynced = function(e)
+  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(Puppet:getName())
+  SelectedRnd = Profiles.Knights[raceToString(Puppet:getRace())]:getRenderable()
+  FxEngine:highlight(SelectedRnd)
+
+  return true
+end

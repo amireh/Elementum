@@ -250,7 +250,7 @@ namespace Pixy
 
     Event evt(EventUID::ShuttingDown);
     EventManager::getSingleton().hook(evt);
-    for (int i=0; i < 2; ++i)
+    //~ for (int i=0; i < 1; ++i)
       mStates.back()->update(1);
 	}
 
@@ -336,6 +336,8 @@ namespace Pixy
 		//ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("General");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("scripts");
+		ResourceGroupManager::getSingleton().initialiseResourceGroup("Models");
+		ResourceGroupManager::getSingleton().loadResourceGroup("Models");
 		this->loadConfig();
 		mTrayMgr->hideLoadingBar();
 		delete mTrayMgr;

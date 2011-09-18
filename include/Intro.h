@@ -15,6 +15,7 @@
 
 #include "GameState.h"
 #include "EventListener.h"
+#include "CPuppet.h"
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 #include <map>
@@ -39,6 +40,8 @@ namespace Pixy
 	class Intro : public GameState, public EventListener {
 	public:
 
+    typedef std::list<CPuppet*> puppets_t;
+
 		void enter( void );
 		void exit( void );
 
@@ -59,12 +62,18 @@ namespace Pixy
     std::string const& getPuppetName() const;
     void setPuppetName(std::string);
 
+    puppets_t const& getPuppets();
+    CPuppet* getPuppet();
+
 	protected:
 		void fireLoginEvt();
+    bool onSyncPuppets(const Event&);
+    bool onSyncPuppetData(const Event&);
     bool onJoinLobby(const Event&);
 
     //~ boost::asio::io_service mIOService;
     boost::asio::strand mStrand;
+    puppets_t mPuppets;
     //~ boost::asio::io_service::work mWork;
     //~ boost::thread* mWorker;
 
@@ -82,6 +91,7 @@ namespace Pixy
 		NetworkManager  *mNetMgr;
 
     std::string mPuppetName;
+    CPuppet *mPuppet;
 
     bool fSetup;
 

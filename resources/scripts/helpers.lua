@@ -65,3 +65,11 @@ function capitalize(str)
   if not str then return nil end
   return (str:gsub("^%l", string.upper))
 end
+
+function find_by_cond(in_table, functor)
+  for item in list_iter(in_table) do
+    if functor(item) then return item end
+  end
+
+  return nil
+end

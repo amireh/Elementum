@@ -1059,6 +1059,9 @@ namespace Pixy {
 
     mRenderables.remove(inRenderable);
 
+    inRenderable->attachSceneNode(NULL);
+    inRenderable->attachSceneObject(NULL);
+
     if (inRenderable->getEntity()->getRank() != PUPPET)
       mUpdatees.erase(static_cast<CUnit*>(inRenderable->getEntity()));
       inEntity = 0;

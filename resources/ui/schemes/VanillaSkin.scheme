@@ -6,6 +6,7 @@
 	<FalagardMapping WindowType="Vanilla/Titlebar" TargetType="CEGUI/Titlebar" Renderer="Falagard/Titlebar" LookNFeel="Vanilla/Titlebar" />
 	<FalagardMapping WindowType="Vanilla/Button" TargetType="CEGUI/PushButton" Renderer="Falagard/Button" LookNFeel="Vanilla/Button" />
 	<FalagardMapping WindowType="Vanilla/FrameWindow" TargetType="CEGUI/FrameWindow" Renderer="Falagard/FrameWindow" LookNFeel="Vanilla/FrameWindow" />
+	<FalagardMapping WindowType="Vanilla/Static" TargetType="CEGUI/FrameWindow" Renderer="Falagard/FrameWindow" LookNFeel="Vanilla/Static" />
 	<FalagardMapping WindowType="Vanilla/Editbox" TargetType="CEGUI/Editbox" Renderer="Falagard/Editbox" LookNFeel="Vanilla/Editbox" />
 	<FalagardMapping WindowType="Vanilla/VerticalScrollbarThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="Vanilla/VerticalScrollbarThumb" />
 	<FalagardMapping WindowType="Vanilla/VerticalScrollbar" TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="Vanilla/VerticalScrollbar" />
@@ -18,7 +19,7 @@
 	<FalagardMapping WindowType="Vanilla/ComboDropList" TargetType="CEGUI/ComboDropList" Renderer="Falagard/Listbox" LookNFeel="Vanilla/ComboDropList" />
 	<FalagardMapping WindowType="Vanilla/Combobox" TargetType="CEGUI/Combobox" Renderer="Falagard/Default" LookNFeel="Vanilla/Combobox" />
 	<FalagardMapping WindowType="Vanilla/ProgressBar" TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="Vanilla/ProgressBar" />
-<!--	
+<!--
 	<FalagardMapping WindowType="Vanilla/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Vanilla/ScrollablePane" />
 	<FalagardMapping WindowType="Vanilla/Checkbox" TargetType="Falagard/Checkbox" LookNFeel="Vanilla/Checkbox" />
 	<FalagardMapping WindowType="Vanilla/RadioButton" TargetType="Falagard/RadioButton" LookNFeel="Vanilla/RadioButton" />

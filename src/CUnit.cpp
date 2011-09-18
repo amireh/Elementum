@@ -26,8 +26,10 @@ namespace Pixy
     fDying(false),
     fRequiresYawFix(false),
     mDestination(Vector3::ZERO),
-    mEnemy(0)
+    mEnemy(0),
+    mRaySceneQuery(0)
   {
+    mLog = 0;
   };
 
 
@@ -53,6 +55,7 @@ namespace Pixy
 
     if (mRenderable)
       delete mRenderable;
+
     mRenderable = 0;
 
     while (!mSpells.empty()) {
@@ -63,6 +66,17 @@ namespace Pixy
     while (!mBuffs.empty()) {
       delete mBuffs.back();
       mBuffs.pop_back();
+    }
+
+    if (mRaySceneQuery) {
+      mSceneMgr->destroyQuery(mRaySceneQuery);
+      mRaySceneQuery = 0;
+    }
+
+    if (mLog)
+    {
+      delete mLog;
+      mLog = 0;
     }
 
     std::cout << "CUnit: " << mName << "#" << mUID << " destroyed\n";
@@ -256,6 +270,7 @@ namespace Pixy
     //~ mRenderable->hide();
     GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
     mSceneMgr->destroyQuery(mRaySceneQuery);
+    mRaySceneQuery = 0;
     mSceneMgr = 0;
 
     mLog->infoStream() << "dead [inside the async timer]";

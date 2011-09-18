@@ -4625,7 +4625,7 @@
         <PropertyDefinition name="TextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <PropertyDefinition name="SelectionBrush" initialValue="set:TaharezLook image:ListboxSelectionBrush" redrawOnWrite="true" />
-        <PropertyDefinition name="SelectionColour" initialValue="FF4444AA" redrawOnWrite="true" />
+        <PropertyDefinition name="SelectionColour" initialValue="FFAAAAAA" redrawOnWrite="true" />
         <Property name="Selectable" value="True" />
         <NamedArea name="ContentSize">
             <Area>

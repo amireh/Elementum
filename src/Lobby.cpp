@@ -40,10 +40,10 @@ namespace Pixy
       //~ mLog->errorStream() << "Could not connect to server, aborting";
       //~ return GameManager::getSingleton().requestShutdown();
 		//~ }
-		if (!mNetMgr->connect()) {
-      mLog->errorStream() << "Could not connect to server, aborting";
-      return GameManager::getSingleton().requestShutdown();
-		}
+		//~ if (!mNetMgr->connect()) {
+      //~ mLog->errorStream() << "Could not connect to server, aborting";
+      //~ return GameManager::getSingleton().requestShutdown();
+		//~ }
 
 		// init engines
 		mGfxEngine = GfxEngine::getSingletonPtr();

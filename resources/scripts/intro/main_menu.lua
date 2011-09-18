@@ -64,7 +64,7 @@ MainMenu.attach = function()
   Form.Username:activate()
 
   --~ MainMenu.Layout:hide()
-
+  --~ bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
 	if isSetup then return true end
 
   SceneMgr = GfxEngine:getSceneMgr()
@@ -133,6 +133,8 @@ MainMenu.attach = function()
 end
 
 MainMenu.detach = function()
+  --~ unbind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
+
   Pixy.UI.doneWaiting(false)
 	--~ CEWindowMgr:destroyWindow(MainMenu.Layout)
   --~ MainMenu.Layout:hide()
@@ -180,9 +182,9 @@ MainMenu.onLogin = function(inEvt)
 	if (inEvt.Feedback == Pixy.EventFeedback.Ok) then
 		Pixy.Log("login successful")
 
-		MainMenu.detach()
-		--Profiles.attach()
-    Decks.attach()
+    local req = Pixy.Event(Pixy.EventUID.SyncPuppets)
+    NetMgr:send(req)
+
 		return true
 	end
 
@@ -192,16 +194,21 @@ MainMenu.onLogin = function(inEvt)
 	return true
 end
 
+
 MainMenu.cleanup = function()
   if not isSetup then return true end
 
   Pixy.Log("Cleaning up in Intro state")
-  FxEngine:dehighlight()
+
   for unit in list_iter(Units) do
     --~ unit:die()
+    --~ GfxEngine:detachFromScene(unit:getRenderable())
     unit:delete()
   end
   Units = {}
+
+
+  FxEngine:dehighlight()
   FxEngine:unloadAllEffects()
   SceneMgr:clearScene()
 
@@ -215,3 +222,5 @@ MainMenu.onEntityDied = function(e)
 
   return true
 end
+
+MainMenu.attach()

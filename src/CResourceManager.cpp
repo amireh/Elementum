@@ -13,20 +13,8 @@ namespace Pixy {
 	}
 
 	CResourceManager::~CResourceManager() {
-    for (int i=0; i < 4; ++i) {
-      while (!mSpells[i].empty()) {
-        // delete only the spells that aren't minion abilities
-        if (mSpells[i].back()->getCaster() == 0)
-          delete mSpells[i].back();
-
-        mSpells[i].pop_back();
-      }
-
-      while (!mUnits[i].empty()) {
-        delete mUnits[i].back();
-        mUnits[i].pop_back();
-      }
-    }
+    clearDatabase();
+    mPuppets.clear(); // we don't own/delete them
 	}
 
 /*
@@ -130,7 +118,7 @@ namespace Pixy {
         parsePuppetsStats(lEntries);
       break;
       case 1:
-        //parsePuppetsDecks(lEntries);
+        parsePuppetsDecks(lEntries);
       break;
     }
   }
@@ -141,7 +129,7 @@ namespace Pixy {
     for (itr = entries.begin(); itr != entries.end(); ++itr) {
       lPuppet = new CPuppet();
       vector<string> elements = Utility::split((*itr).c_str(), ';');
-      assert(elements.size() == 7);
+      assert(elements.size() >= 6);
 
       lPuppet->setName(elements[0]);
       lPuppet->setUID(atoi(elements[1].c_str()));
@@ -149,7 +137,8 @@ namespace Pixy {
       lPuppet->setLevel(atoi(elements[3].c_str()));
       lPuppet->setIntelligence(atoi(elements[4].c_str()));
       lPuppet->setVitality(atoi(elements[5].c_str()));
-      this->assignTalents(*lPuppet, elements[6]);
+      if (elements.size() == 7 /* there are talents */)
+        this->assignTalents(*lPuppet, elements[6]);
 
       mPuppets.push_back(lPuppet);
     }
@@ -176,7 +165,7 @@ namespace Pixy {
 
       CPuppet* lPuppet = getPuppet(elements[0], mPuppets);
 
-      lDeck = new CDeck(lPuppet);
+      lDeck = new Deck(lPuppet);
 
       lDeck->setName(elements[1]);
       lDeck->setUseCount(atoi(elements[2].c_str()));
@@ -367,5 +356,23 @@ namespace Pixy {
   {
     assert(inRace >= 0 && inRace < 4);
     return mSpells[inRace];
+  }
+
+  void CResourceManager::clearDatabase()
+  {
+    for (int i=0; i < 4; ++i) {
+      while (!mSpells[i].empty()) {
+        // delete only the spells that aren't minion abilities
+        if (mSpells[i].back()->getCaster() == 0)
+          delete mSpells[i].back();
+
+        mSpells[i].pop_back();
+      }
+
+      while (!mUnits[i].empty()) {
+        delete mUnits[i].back();
+        mUnits[i].pop_back();
+      }
+    }
   }
 }

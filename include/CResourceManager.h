@@ -32,6 +32,8 @@ namespace Pixy
       list<CPuppet*> puppetsFromStream(istringstream &stream);
       list<CPuppet*>& getPuppets();
 
+      void clearDatabase();
+
       spells_t const& _getSpells(Pixy::RACE);
     protected:
 

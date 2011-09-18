@@ -135,6 +135,7 @@ namespace Pixy {
 
     Event evt(EventUID::Logout);
     send(evt);
+    EventManager::getSingleton().hook(evt);
 
     mLog->infoStream() << "Disconnecting from server";
 
@@ -181,6 +182,7 @@ namespace Pixy {
 
     std::istringstream datastream(raw2str);
 
+    GameManager::getSingleton().getResMgr().clearDatabase();
     GameManager::getSingleton().getResMgr().populate(datastream);
 
     Event notice(EventUID::GameDataSynced);

@@ -19,6 +19,7 @@ namespace Pixy
     mSceneNode = 0;
     mEntity = this;
     */
+    mLog = 0;
   };
 
   bool CPuppet::live() {

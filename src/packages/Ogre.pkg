@@ -13,6 +13,10 @@ namespace Ogre {
 
   typedef int uint8;
 
+
+  typedef map<String, String> NameValuePairList;
+
+
   enum FogMode
   {
       FOG_NONE,
@@ -645,6 +649,30 @@ namespace Ogre {
 		static String AUTODETECT_RESOURCE_GROUP_NAME;
 		static size_t RESOURCE_SYSTEM_NUM_REFERENCE_COUNTS;
 
+  };
+
+  class ManualResourceLoader {
+  };
+
+  class Resource {
+
+  };
+  typedef Ogre::SharedPtr<Resource> ResourcePtr;
+
+  class ResourceManager {
+
+    virtual void remove(const String& name);
+    bool resourceExists(const String& name);
+
+    virtual
+    ResourcePtr prepare(
+      const String& name,
+      const String& group);
+
+    virtual
+    ResourcePtr load(
+      const String& name,
+      const String& group);
   };
 
 }

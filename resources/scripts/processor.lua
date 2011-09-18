@@ -65,6 +65,15 @@ function subscribeToEvt(inUID, inHandler)
 end
 bind = subscribeToEvt -- an alias
 
+function unsubscribeFromEvt(inUID, inHandler)
+  if not EventMap[inUID] then return false end
+
+  removeByValue(EventMap[inUID], inHandler)
+
+  return true
+end
+unbind = unsubscribeFromEvt
+
 function clearBindings()
   EventMap = {}
 end
@@ -115,9 +124,15 @@ function processEvt(inEvt)
 
 	-- we're done, empty the tracker and return true
 	if (done) then
-		for id,handler in ipairs(EventMap[inEvt.UID]) do
-			Tracker[id] = nil
-		end
+    -- the following check is needed in the case that a new state
+    -- is switched to _inside_ an event handler which will cause
+    -- the event map to be erased and will segfault if we don't
+    -- check for it here
+		if EventMap[inEvt.UID] then
+      for id,handler in ipairs(EventMap[inEvt.UID]) do
+        Tracker[id] = nil
+      end
+    end
 		tracking = false
 		return true
 	end

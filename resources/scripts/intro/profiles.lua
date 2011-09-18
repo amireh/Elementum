@@ -1,127 +1,89 @@
 -- UISheet : Profiles
 
---require("pixy")
-require("helpers")
-if not Profiles then
-  Profiles = {}
-end
---Profiles.New = {}
+if not Profiles then Profiles = {} end
 
-local isSetup = nil
-local mProfiles = {}
-local Name, Stats = nil
-local Listbox = nil
-local RaceText = nil
+require("helpers")
+require("intro/profiles/new_profile")
+require("intro/profiles/listing")
+
+
 
 SelectedPuppetName = nil
 Selected = nil
 
-local Buttons = {
-  JoinLobby = nil,
-  Back = nil
-}
-
-local Races = {
-  Earth =
-"With dirt, stone, and bone, the followers of the call of Nature have risen." ..
-" Bound to the ground for millenias, Earthens have mastered matters of" ..
-" Life and Death.\
- \
-Preserving life, or reanimating it, the followers" ..
-" of the Earth dominion are" ..
-" bound to surpass their foes."
-, Fire =
-"Fire shizzle, fingers burned etc.",
-  Water =
-"In calamity there's also peace, at least that's what the Water guys believe.\
- \
-Water is definitely every gay gentleman's choice.",
-  Air = "Unavailable."
-}
---require("intro/profiles/new_info")
+Profiles.Knights = { Earth = nil, Air = nil, Water = nil, Fire = nil }
+Profiles.CurrentScreen = nil
 
 local UID = 100
 Profiles.CreateKnight = function(name, material, scale, pos)
-    UID = UID+1
+  UID = UID+1
 
-    local unit = Pixy.CUnit()
-    unit:setRank(Pixy.PUPPET)
-    unit:setName(name)
-    unit:setUID(UID)
-    unit:live()
-    unit:setMesh("DarkKnight.mesh")
-    unit:setMaterial("Elementum/DarkKnight/" .. material)
+  local unit = Pixy.CUnit()
+  unit:setRank(Pixy.PUPPET)
+  unit:setName(name)
+  unit:setUID(UID)
+  unit:live()
+  unit:setMesh("DarkKnight.mesh")
+  unit:setMaterial("Elementum/DarkKnight/" .. material)
 
-    --[[rnd = unit:getRenderable()
+  rnd = unit:getRenderable()
 
-    local node = SceneMgr:createSceneNode("knight_node_" .. material)
-    SceneMgr:getRootSceneNode():addChild(node)
-    local ent = SceneMgr:createEntity("Knight_" .. material, unit:getMesh());
-    ent:setMaterialName(unit:getMaterial())
-    ent:setCastShadows(true)
-    ent:setQueryFlags(Pixy.GfxEngine.ENTITY_MASK)
-    node:attachObject(ent)
-    node:setScale(scale)
-    node:setPosition(pos)
-    node:lookAt(Ogre.Vector3(0,0,-100),Ogre.Node.TS_WORLD)
-    rnd:attachSceneObject(ent)
-    rnd:attachSceneNode(node)
-    rnd:setup(SceneMgr)
+  local node = SceneMgr:createSceneNode("knight_node_" .. material)
+  SceneMgr:getRootSceneNode():addChild(node)
+  local ent = SceneMgr:createEntity("Knight_" .. material, unit:getMesh());
+  ent:setMaterialName(unit:getMaterial())
+  ent:setCastShadows(true)
+  ent:setQueryFlags(Pixy.GfxEngine.ENTITY_MASK)
+  node:attachObject(ent)
+  node:setScale(scale)
+  node:setPosition(pos)
+  --~ node:lookAt(Ogre.Vector3(0,0,-100),Ogre.Node.TS_WORLD)
+  rnd:attachSceneObject(ent)
+  rnd:attachSceneNode(node)
+  rnd:setup(SceneMgr)
 
-    GfxEngine:attachToScene(rnd)
-    local sword = nil
-    if (material ~= "Water" and material ~= "Air") then
-      --~ sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
-      --~ sword:setMaterialName("Elementum/DarkKnight/" .. material .. "/Sword")
-      rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
-    end
-    if (material == "Water") then
-      rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_2")
+  GfxEngine:attachToScene(rnd)
+  local sword = nil
+  if (material ~= "Water" and material ~= "Air") then
+    sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
+    sword:setMaterialName("Elementum/DarkKnight/" .. material .. "/Sword")
+    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
+  end
+  if (material == "Water") then
+    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_2")
 
-    end
-    if (material == "Air") then
-      rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
-    end
+  end
+  if (material == "Air") then
+    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
+  end
 
+  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_1", false)
+  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_2", false)
+  rnd:animateIdle()
 
-    --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_1", false)
-    --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_2", false)
-    rnd:animateIdle()]]
-
-    table.insert(Units, unit)
+  --~ table.insert(Units, unit)
 
   return unit
 end
 
-Profiles.onEntitySelected = function(e)
-  rnd = tolua.cast(e.Any, "Pixy::Renderable")
-  Selected = rnd
-
-  Profiles.updateRaceText()
-  FxEngine:highlight(rnd)
+Profiles.HideKnights = function()
+  Profiles.Knights.Earth:getRenderable():hide()
+  Profiles.Knights.Air:getRenderable():hide()
+  Profiles.Knights.Fire:getRenderable():hide()
+  Profiles.Knights.Water:getRenderable():hide()
 end
 
-Profiles.onEntityDeselected = function(e)
-  FxEngine:dehighlight()
+Profiles.ShowKnights = function()
+  Profiles.Knights.Earth:getRenderable():show()
+  Profiles.Knights.Air:getRenderable():show()
+  Profiles.Knights.Fire:getRenderable():show()
+  Profiles.Knights.Water:getRenderable():show()
 end
 
--- ************************
--- ** Profiles Listing
--- ************************
-Profiles.attach = function()
-	Profiles.Layout = Pixy.UI.attach("intro/profiles.layout")
-  RaceText = CEWindowMgr:getWindow("Elementum/Intro/Text/RaceDescription")
-  Buttons.JoinLobby = CEWindowMgr:getWindow("Elementum/Intro/Buttons/JoinLobby")
-  Buttons.Back = CEWindowMgr:getWindow("Elementum/Intro/Buttons/BackToLogin")
-
-	if isSetup then return true end
-
-  --~ unit = next(Units)
-  --~ Units[unit]:die()
-
+Profiles.CalcScale = function(sf)
   local ar_orig = 1600 / 900
-  local sf = 4
   local scale = Ogre.Vector3(sf)
+
   -- find the aspect ratio and calculate the scale based on that
   local vw = GfxEngine:getViewport():getActualWidth()
   local vh = GfxEngine:getViewport():getActualHeight()
@@ -131,36 +93,60 @@ Profiles.attach = function()
     scale = Ogre.Vector3(sf)
   end
 
-  earth_knight = Profiles.CreateKnight("Sugar", "Earth", scale, Ogre.Vector3:new(-14 * ar,0,3 * ar))
-  earth_knight:setRace(Pixy.EARTH)
-  water_knight = Profiles.CreateKnight("Unknown", "Water", scale, Ogre.Vector3:new(-8 * ar,0,0))
-  water_knight:setRace(Pixy.WATER)
-  air_knight = Profiles.CreateKnight("Unknown", "Air", scale, Ogre.Vector3:new(0,0,0))
-  air_knight:setRace(Pixy.AIR)
-  fire_knight = Profiles.CreateKnight("Kandie", "Fire", scale, Ogre.Vector3:new(6 * ar,0,3 * ar))
-  fire_knight:setRace(Pixy.FIRE)
+  return scale, ar
+end
 
-  --~ fire_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-26 * ar))
-  --~ earth_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(26 * ar))
-  --~ air_knight:getRenderable():getSceneNode():yaw(Ogre.Degree(-6 * ar))
+-- ************************
+-- ** Profiles Listing
+-- ************************
+local isSetup = false
+Profiles.attach = function()
 
-  --~ GfxEngine:trackNode(fire_knight:getRenderable():getSceneNode())
-  --~ GfxEngine:trackNode(nil)
-  --~ GfxEngine:setYawPitchDist(Ogre.Vector3:new(-30, 0, 0))
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
-  GfxEngine:getCamera():setPosition(Ogre.Vector3(-6 * ar, 3 * ar, 29 * ar))
-  --~ GfxEngine:getCamera():yaw(Ogre.Radian(-30))
-  GfxEngine:getCamera():lookAt(Ogre.Vector3(-4 * ar ,6 * ar ,-58 * ar))
+  Pixy.Log("Attaching Profiles[]")
 
-	isSetup = true
+  if not isSetup then
+
+    do
+      -- create the Knights
+      local scale = Ogre.Vector3(1,1,1)
+      local pos = Ogre.Vector3(0,0,0)
+
+      Profiles.Knights.Earth = Profiles.CreateKnight("EarthKnight", "Earth", scale, pos)
+      Profiles.Knights.Earth:setRace(Pixy.EARTH)
+
+      Profiles.Knights.Water = Profiles.CreateKnight("WaterKnight", "Water", scale, pos)
+      Profiles.Knights.Water:setRace(Pixy.WATER)
+
+      Profiles.Knights.Air = Profiles.CreateKnight("AirKnight", "Air", scale, pos)
+      Profiles.Knights.Air:setRace(Pixy.AIR)
+
+      Profiles.Knights.Fire = Profiles.CreateKnight("FireKnight", "Fire", scale, pos)
+      Profiles.Knights.Fire:setRace(Pixy.FIRE)
+    end
+
+    Profiles.HideKnights()
+    isSetup = true
+  end
+
+  if table.getn(Puppets) > 0 then
+    Profiles.Listing.attach()
+  else
+    Profiles.NewProfile.attach()
+  end
+
 end
 
 Profiles.detach = function()
   --~ CEWindowMgr:destroyWindow(Profiles.Layout)
   --Profiles.Layout:hide()
+  Pixy.Log("Detaching Profiles[]")
+
+  if Profiles.CurrentScreen == "New" then
+    Profiles.NewProfile.detach()
+  else
+    Profiles.Listing.detach()
+  end
   Pixy.UI.detach(Profiles.Layout)
-  Buttons = {}
-  RaceText = nil
 end
 
 Profiles.Back = function()
@@ -176,6 +162,27 @@ Profiles.Back = function()
 	MainMenu.attach()
 end
 
+
+Profiles.onSyncPuppets = function(e)
+  print("Puppets are synced!")
+
+  for k,v in ipairs(Puppets) do
+    print("\t" .. k .. " => " .. v:getName())
+  end
+
+  MainMenu.detach()
+  Profiles.attach()
+  --Decks.attach()
+
+  return true
+end
+
+Profiles.onCreatePuppet = function(e)
+  Profiles.detach()
+  Profiles.NewProfile.attach()
+end
+
+
 Profiles.JoinLobby = function()
 
 	--~ local evt = Pixy.Event(Pixy.EventUID.JoinQueue)
@@ -184,7 +191,7 @@ Profiles.JoinLobby = function()
 
 	-- wait for feedback
 	--Pixy.UI.waiting("Looking for an opponent", Layout)
-	Buttons.JoinLobby:disable()
+	--~ Buttons.JoinLobby:disable()
   --~ FxEngine:dehighlight()
 
   for unit in list_iter(Units) do
@@ -192,42 +199,33 @@ Profiles.JoinLobby = function()
     --~ GfxEngine:detachFromScene(unit:getRenderable())
   end
 
-  local puppet_name = Selected:getEntity():getName()
-  SelectedPuppetName = puppet_name
+  local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
+  evt:setProperty("Puppet", Selected:getName())
+  NetMgr:send(evt)
+
+  --~ Pixy.Log("Joining the Lobby with " .. IntroState:getPuppetName())
+  Pixy.Log("Joining the Lobby with " .. Selected:getName())
 
   --~ MainMenu.cleanup()
   Profiles.detach()
-  GameMgr:changeState(LobbyState)
-  --~ local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
-  --~ evt:setProperty("Puppet", puppet_name)
-  --~ EvtMgr:hook(evt)
+  --~ require("lobby/entry_point")
+  --~ clearBindings()
+  --~ Lobby.bind()
+  Chat.attach()
+  --~ GameMgr:changeState(LobbyState)
 
   return true
-
-  --GameMgr:changeState(Pixy.Lobby:getSingletonPtr())
-
-
-  --~ ScriptEngine:callMeAfter(1, "doJoinLobby")
 end
 
-Combat.doJoinLobby = function()
-  for unit in list_iter(Units) do
-    --~ unit:die()
-    --~ unit:delete()
+
+Profiles.onJoinLobby = function(e)
+  if e.Feedback ~= Pixy.EventFeedback.Ok then
+    local box = Pixy.UI.attachOverlay("ProgressBox")
+    PBox_Label:setText("Unable to connect to lobby. Please try again later.")
+    return true
   end
-end
 
-Profiles.updateRaceText = function()
-  if (Selected == nil) then return false end
-  local race = Selected:getEntity():getRace()
 
-  -- display the race description
-  RaceText:setText(Races[raceToString(race)])
 
-  -- if it's earth or fire, enable the play button
-  if (race == Pixy.EARTH or race == Pixy.FIRE) then
-    Buttons.JoinLobby:enable()
-  else
-    Buttons.JoinLobby:disable()
-  end
+  return true
 end

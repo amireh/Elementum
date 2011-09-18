@@ -5,6 +5,7 @@
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "ScriptEngine.h"
+#include "CResourceManager.h"
 #include "CPuppet.h"
 #include "CDeck.h"
 #include "CSpell.h"
@@ -24,6 +25,7 @@ namespace Pixy
     //~ mWorker(0),
     fSetup(false) {
     mLog = 0;
+    mPuppet = 0;
     mId = STATE_INTRO;
 	}
 
@@ -60,6 +62,8 @@ namespace Pixy
 		mScriptEngine->setup();
 
     //~ bind(EventUID::JoinLobby, boost::bind(&Intro::onJoinLobby, this, _1));
+    bind(EventUID::SyncPuppets, boost::bind(&Intro::onSyncPuppets, this, _1));
+    bind(EventUID::SyncPuppetData, boost::bind(&Intro::onSyncPuppetData, this, _1));
 
 		// start the interface chain
 		mScriptEngine->runScript("intro/entry_point.lua");
@@ -82,10 +86,10 @@ namespace Pixy
 		}
 		*/
 
-		if (!mNetMgr->connect()) {
-      mLog->errorStream() << "Could not connect to server, aborting";
-      return GameManager::getSingleton().requestShutdown();
-		}
+		//~ if (!mNetMgr->connect()) {
+      //~ mLog->errorStream() << "Could not connect to server, aborting";
+      //~ return GameManager::getSingleton().requestShutdown();
+		//~ }
 
 		//mLog->debugStream() << "evt id " << _evt->getId();
 
@@ -108,10 +112,21 @@ namespace Pixy
     //~ mScriptEngine->cleanup();
     //~ mUIEngine->cleanup();
 
+    for (Intro::puppets_t::iterator puppet = mPuppets.begin();
+      puppet != mPuppets.end();
+      ++puppet)
+    {
+      delete *puppet;
+    }
+    mPuppets.clear();
+
 		mLog->infoStream() << "---- Exited ----";
 
 		delete mLog;
 		mLog = 0;
+
+    delete mPuppet;
+    mPuppet = 0;
 
     //~ mIOService.stop();
     //~ mWorker->join();
@@ -188,6 +203,43 @@ namespace Pixy
 		return *getSingletonPtr();
 	}
 
+  bool Intro::onSyncPuppets(const Event& e)
+  {
+    if (e.Feedback != EventFeedback::Ok)
+      return true;
+
+    for (Intro::puppets_t::iterator puppet = mPuppets.begin();
+      puppet != mPuppets.end();
+      ++puppet)
+    {
+      delete *puppet;
+    }
+    mPuppets.clear();
+
+    std::istringstream in(e.getProperty("Data"));
+    mPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(in);
+
+    mScriptEngine->_passPuppetListing();
+    return true;
+  }
+
+  bool Intro::onSyncPuppetData(const Event& e)
+  {
+    if (e.Feedback != EventFeedback::Ok)
+      return true;
+
+    if (mPuppet)
+      delete mPuppet;
+
+    std::istringstream in(e.getProperty("Data"));
+    mPuppet = GameManager::getSingleton().getResMgr().puppetsFromStream(in).front();
+
+    mScriptEngine->_passPuppet();
+    return true;
+  }
+
+
+
   bool Intro::onJoinLobby(const Event& e)
   {
     mPuppetName = e.getProperty("Puppet");
@@ -203,6 +255,15 @@ namespace Pixy
   void Intro::setPuppetName(std::string inName)
   {
     mPuppetName = inName;
+  }
+
+  Intro::puppets_t const& Intro::getPuppets()
+  {
+    return mPuppets;
+  }
+  CPuppet* Intro::getPuppet()
+  {
+    return mPuppet;
   }
 
 } // end of namespace

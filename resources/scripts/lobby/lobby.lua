@@ -1,4 +1,4 @@
-Lobby = {}
+if not Lobby then Lobby = {} end
 
 Lobby.doJoinQueue = function(args)
   args = CEGUI.toWindowEventArgs(args)
@@ -57,8 +57,17 @@ end
 
 Lobby.doLogout = function(e)
   NetMgr:disconnect()
-  GameMgr:changeState(IntroState)
+  --GameMgr:changeState(IntroState)
   Chat.detach()
-  require("intro/entry_point")
+  Decks.cleanup()
+
+  clearBindings()
+  Intro.bind()
+
+  --require("intro/entry_point")
   MainMenu.attach()
+end
+
+Lobby.showDecks = function()
+  Decks.attach()
 end
