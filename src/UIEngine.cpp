@@ -142,6 +142,8 @@ namespace Pixy {
 		mOgreRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 		mUISystem = &CEGUI::System::getSingleton();
 
+    lUILog = 0;
+
 		// load resources
 		loadResources();
 

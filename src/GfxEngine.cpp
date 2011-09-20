@@ -89,6 +89,7 @@ namespace Pixy {
     mGenericPicker = 0;
     mPolyPicker = 0;
     mTrayMgr = 0;
+    mCameraYawPitchDist = Ogre::Vector3::ZERO;
 	}
 
 	GfxEngine::~GfxEngine() {
@@ -231,11 +232,13 @@ namespace Pixy {
     setupNodes();
     setupWaypoints();
 
-		std::ostringstream lNodeName;
-		lNodeName << getNodeIdPrefix(mPlayer) << "_node_puppet";
-    mCameraMan->setStyle(OgreBites::CS_ORBIT);
-    trackNode(mSceneMgr->getSceneNode(lNodeName.str()));
-    setYawPitchDist(mCameraYawPitchDist);
+		//~ std::ostringstream lNodeName;
+		//~ lNodeName << getNodeIdPrefix(mPlayer) << "_node_puppet";
+    //~ assert(mSceneMgr->getSceneNode(lNodeName.str()));
+    //~ setYawPitchDist(mCameraYawPitchDist);
+    //~ mCameraMan->setStyle(OgreBites::CS_ORBIT);
+    //~ trackNode(mSceneMgr->getSceneNode(lNodeName.str()));
+
 
     //mCamera->yaw(Ogre::Degree(-180));
 

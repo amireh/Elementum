@@ -1,14 +1,15 @@
 -- UISheet : MainMenu
 
 MainMenu = {}
-Units = {}
+local Gremlin = nil
 
 local Form = {}
 
 MainMenu.CreateGremlin = function()
 
-  unit = Pixy.CUnit()
+  local unit = Pixy.CUnit:new()
   --~ unit:setRank(Pixy.PUPPET)
+  unit:setName("IntroGremlin")
   unit:live()
   unit:setMesh("Gremlin1.mesh")
   unit:setMaterial("Elementum/Gremlin/Intro")
@@ -21,8 +22,8 @@ MainMenu.CreateGremlin = function()
   ent:setMaterialName(unit:getMaterial())
   ent:setCastShadows(true)
   node:attachObject(ent)
-  node:setScale(Ogre.Vector3:new(20))
-  node:setPosition(Ogre.Vector3:new(0,0,0))
+  node:setScale(Ogre.Vector3(20))
+  node:setPosition(Ogre.Vector3(0,0,0))
   rnd:attachSceneObject(ent)
   rnd:attachSceneNode(node)
 
@@ -38,7 +39,7 @@ MainMenu.CreateGremlin = function()
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   --~ GfxEngine:getCameraMan():setTarget(gremlin:getRenderable():getSceneNode())
   GfxEngine:trackNode(node)
-  GfxEngine:setYawPitchDist(Ogre.Vector3:new(0, 20, 40))
+  GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
 
   rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
   rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
@@ -47,11 +48,6 @@ MainMenu.CreateGremlin = function()
   rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_2", false)
 --~
   rnd:animateIdle()
-
-  table.insert(Units, unit)
-
-
-
 
   return unit
 end
@@ -77,12 +73,12 @@ MainMenu.attach = function()
 
   SceneMgr:setAmbientLight(Ogre.ColourValue(100,100,100))
 
-  fadeColour = Ogre.ColourValue:new(0, 0, 0)
+  fadeColour = Ogre.ColourValue(0, 0, 0)
   --~ SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0075)
   --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_MODULATIVE)
 
   -- Movable Text Overlay attributes
-  --~ GfxEngine.mMTOFontColor = Ogre.ColourValue:new(1,1,1)
+  --~ GfxEngine.mMTOFontColor = Ogre.ColourValue(1,1,1)
   --~ GfxEngine.mMTOFontName = "DejaVuSans"
   --~ GfxEngine.mMTOFontSize = 16
   --~ GfxEngine.mMTOMaterialName = "RedTransparent"
@@ -108,26 +104,28 @@ MainMenu.attach = function()
   ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
   SceneMgr:getRootSceneNode():attachObject(ent)
 
-  Pos = { Me = Ogre.Vector3:new(0,100,30) }
-  local pos = Ogre.Vector3:new(Pos.Me.x, Pos.Me.y, Pos.Me.z)
-  dcol = Ogre.ColourValue:new(155,155,155)
-  scol = Ogre.ColourValue:new(155,155,155)
+  -- Lights
+  local pos = Ogre.Vector3(0,100,30)
+  local dcol = Ogre.ColourValue(155,155,155)
+  local scol = Ogre.ColourValue(155,155,155)
+  local light = nil
+
   light = SceneMgr:createLight()
   light:setType(Ogre.Light.LT_POINT)
   light:setPosition(pos)
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-  pos = Ogre.Vector3:new(Pos.Me.x, 0, 80)
-  dcol = Ogre.ColourValue:new(155,155,155)
-  scol = Ogre.ColourValue:new(155,155,155)
+  pos = Ogre.Vector3(pos.x, 0, 80)
+  dcol = Ogre.ColourValue(155,155,155)
+  scol = Ogre.ColourValue(155,155,155)
   light = SceneMgr:createLight()
   light:setType(Ogre.Light.LT_POINT)
   light:setPosition(pos)
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-  MainMenu.Gremlin = MainMenu.CreateGremlin()
+  Gremlin = MainMenu.CreateGremlin()
 
   isSetup = true
 end
@@ -135,19 +133,26 @@ end
 MainMenu.detach = function()
   --~ unbind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
 
-  Pixy.UI.doneWaiting(false)
+  --~ Pixy.UI.doneWaiting(false)
 	--~ CEWindowMgr:destroyWindow(MainMenu.Layout)
   --~ MainMenu.Layout:hide()
   Pixy.UI.detach(MainMenu.Layout)
   Form = {}
 
-  MainMenu.Gremlin:die()
-  removeByValue(MainMenu, MainMenu.Gremlin)
+  Gremlin:die()
 end
 
 MainMenu.Quit = function(e)
-	MainMenu.detach()
+  --Intro.cleanup()
   IntroState:requestShutdown()
+end
+
+MainMenu.cleanup = function()
+  if not isSetup then return false end
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
+  GfxEngine:getCameraMan():setTarget(nil)
+  if Gremlin then Gremlin:delete() end
+  Gremlin = nil
 end
 
 
@@ -195,26 +200,6 @@ MainMenu.onLogin = function(inEvt)
 end
 
 
-MainMenu.cleanup = function()
-  if not isSetup then return true end
-
-  Pixy.Log("Cleaning up in Intro state")
-
-  for unit in list_iter(Units) do
-    --~ unit:die()
-    --~ GfxEngine:detachFromScene(unit:getRenderable())
-    unit:delete()
-  end
-  Units = {}
-
-
-  FxEngine:dehighlight()
-  FxEngine:unloadAllEffects()
-  SceneMgr:clearScene()
-
-  return true
-end
-
 MainMenu.onEntityDied = function(e)
   rnd = tolua.cast(e.Any, "Pixy::Renderable")
   rnd:hide()
@@ -222,5 +207,3 @@ MainMenu.onEntityDied = function(e)
 
   return true
 end
-
-MainMenu.attach()

@@ -71,8 +71,8 @@ namespace Pixy
     delete FxEngine::getSingletonPtr();
     //delete SfxEngine::getSingletonPtr();
     //delete PhyxEngine::getSingletonPtr();
-    delete ScriptEngine::getSingletonPtr();
     delete UIEngine::getSingletonPtr();
+    delete ScriptEngine::getSingletonPtr();
     delete NetworkManager::getSingletonPtr();
 
     delete mResMgr;
@@ -227,7 +227,7 @@ namespace Pixy
     mInputMgr->addMouseListener( this, "GameManager" );
 
     // Change to first state
-    this->changeState( Combat::getSingletonPtr() );
+    this->changeState( Intro::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame
@@ -353,11 +353,9 @@ namespace Pixy
 		// Cleanup the current state
 		if( !mStates.empty() ) {
 
-        //~ Event evt(EventUID::ChangingState);
-        //~ EventManager::getSingleton().hook(evt);
-        //~ for (int i=0; i < 5; ++i)
-          //~ mStates.back()->update(1);
-
+        Event evt(EventUID::ChangingState);
+        EventManager::getSingleton().hook(evt);
+        mStates.back()->update(1);
 
 		    mStates.back()->exit();
 		    mStates.pop_back();

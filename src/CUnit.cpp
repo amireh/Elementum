@@ -50,6 +50,8 @@ namespace Pixy
 
   CUnit::~CUnit() {
 
+    GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
+
     if (mTimer)
       delete mTimer;
 

@@ -119,7 +119,7 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    //~ Event e(EventUID::SyncPuppetData); // __DEBUG__
+    //~ Event e(EventUID::SyncMatchPuppets); // __DEBUG__
     //~ mNetMgr->send(e); // __DEBUG__
 
     inBlockPhase = false;
@@ -148,6 +148,8 @@ namespace Pixy
 
 		delete mLog;
 		mLog = 0;
+
+    unbindAll();
 
     //~ mIOService.stop();
     //~ mWorker->join();

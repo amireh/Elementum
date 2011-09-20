@@ -1,0 +1,59 @@
+Siphon Source
+Target hero loses 1 source, you gain 1 source.
+  * you gain 1 source, you pay 3 health
+
+Shadow Dance
+All friendly creatures have their stats modified by +1/0 and become unblockable until end of turn.
+
+  * Too op
+
+Autumn’s Veil
+You are protected from all direct damage, either through spells or creatures for 1 turn.
+
+Bind Spirits
+Merges two creatures of the same species. This new creature will have the cumulative stats of both creatures. After 3 turns, the creatures are split again, any enchantments gained in the merged form will be removed.
+
+  * too much to implement
+
+Death Stroke
+Destroy target resting creature. If cast on creature you own, it will refund it’s source and WP cost.
+  * too op
+
+Immolation
+Target creature has it’s stats modified by 0/-2 if creature is Scorchpid the stats are modified by 0/+2
+
+  * should increase AP instead of HP
+
+Pyroclasm
+Destroy 1 source of target hero, you lose 1 health.
+
+  * you lose 3 health
+
+Bribe
+Target creature joins your cause for 1 turn, can be cast during blocking phase.
+
+  * shouldn't be cast during block phase because it might be too op and it's technically difficult
+
+Evaporate Source
+Target hero loses 1 source.
+  * it's the same as pyroclasm!!
+
+Endless Furor
+Target creature gains Endless Furor; it must attack during every Attacking Phase, if it fails to do so, it dies.
+  * not clear
+
+Lone Ember
+Target creature has it’s stats modified by +5/0, but can only attack alone.
+  * also gains trample
+
+Destructive Reach
+Target creature gains Destructive Reach; every time this creature deals direct damage to a hero, that hero loses 1 source.
+  * target creature loses Trample if it has any
+
+Burning Hatred
+Target creature gains Burning Hatred; every time this creature hits a hero, that creature’s owner loses 1 source.
+  * too much
+
+Gremlin Bomb
+Put Gremlin Bomb on the battlefield with stats 0/1. Every turn Gremlin Bomb’s stats are modified by 0/+1 up to a maximum of 0/5. When the Gremlin Bomb is hit by any damage spell, it will explode and deal damage to all the creatures and heroes equal to it’s current Defense value.
+  * this has to be changed to "Living Bomb": casted on a creature and can be "ticked" to explode

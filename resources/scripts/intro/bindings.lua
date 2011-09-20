@@ -1,10 +1,14 @@
 Intro.bind = function()
+  bind(Pixy.EventUID.ChangingState, Intro.cleanup)
+  bind(Pixy.EventUID.ShuttingDown, Intro.shutdown)
+
+  bind(Pixy.EventUID.GameDataSynced, Pixy.onGameDataSynced);
+
   bind(Pixy.EventUID.Login, MainMenu.onLogin)
   bind(Pixy.EventUID.Connected, MainMenu.onConnected)
-  bind(Pixy.EventUID.GameDataSynced, Pixy.onGameDataSynced);
-  bind(Pixy.EventUID.SyncPuppets, Profiles.onSyncPuppets);
   bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
-  bind(Pixy.EventUID.ShuttingDown, MainMenu.cleanup)
+
+  bind(Pixy.EventUID.PuppetListSynced, Profiles.onPuppetListSynced);
   bind(Pixy.EventUID.JoinLobby, Profiles.onJoinLobby)
 
   bind(Pixy.EventUID.JoinRoom, Chat.onJoinRoom)

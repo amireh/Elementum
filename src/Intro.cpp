@@ -26,6 +26,7 @@ namespace Pixy
     fSetup(false) {
     mLog = 0;
     mPuppet = 0;
+    mPuppetName = "";
     mId = STATE_INTRO;
 	}
 
@@ -125,10 +126,13 @@ namespace Pixy
 		delete mLog;
 		mLog = 0;
 
-    mPuppetName = mPuppet->getName();
+    //~ mPuppetName = mPuppet->getName();
 
-    delete mPuppet;
+    if (mPuppet)
+      delete mPuppet;
     mPuppet = 0;
+
+    unbindAll();
 
     //~ mIOService.stop();
     //~ mWorker->join();

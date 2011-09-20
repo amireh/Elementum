@@ -1,10 +1,7 @@
-if not Lobby then Lobby = {} end
-
 Lobby.doJoinQueue = function(args)
   args = CEGUI.toWindowEventArgs(args)
   local button = args.window
   button:disable()
-
 
   local e = Pixy.Event(Pixy.EventUID.JoinQueue)
   NetMgr:send(e)
@@ -39,7 +36,7 @@ Lobby.onJoinQueue = function(e)
     button:enable()
     button:show()
 
-    IntroState:setPuppetName(SelectedPuppetName)
+    IntroState:setPuppetName(Selected:getName())
 
     Pixy.UI.waiting("Looking for opponents", Chat.Layout)
   else
@@ -52,7 +49,8 @@ end
 Lobby.onMatchFound = function(e)
   clearBindings()
   Chat.detach()
-  MainMenu.cleanup()
+  Intro.cleanup()
+  Lobby.cleanup()
   GameMgr:changeState(CombatState)
 end
 
@@ -62,8 +60,8 @@ Lobby.doLogout = function(e)
   Chat.detach()
   Decks.cleanup()
 
-  clearBindings()
-  Intro.bind()
+  --~ clearBindings()
+  --~ Intro.bind()
 
   --require("intro/entry_point")
   MainMenu.attach()
@@ -71,4 +69,8 @@ end
 
 Lobby.showDecks = function()
   Decks.attach()
+end
+
+Lobby.cleanup = function()
+
 end

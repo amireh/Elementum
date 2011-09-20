@@ -119,7 +119,7 @@ Profiles.NewProfile.attach = function()
     -- set up the camera
     --~ GfxEngine:trackNode(fire_knight:getRenderable():getSceneNode())
     --~ GfxEngine:trackNode(nil)
-    --~ GfxEngine:setYawPitchDist(Ogre.Vector3:new(-30, 0, 0))
+    --~ GfxEngine:setYawPitchDist(Ogre.Vector3(-30, 0, 0))
     GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
     GfxEngine:getCamera():setPosition(Ogre.Vector3(-6 * ar, 3 * ar, 29 * ar))
     --~ GfxEngine:getCamera():yaw(Ogre.Radian(-30))

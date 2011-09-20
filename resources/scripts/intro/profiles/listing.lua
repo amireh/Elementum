@@ -19,7 +19,7 @@ local populate = function()
   Listbox:resetList()
 
   local selected = nil
-  for puppet in list_iter(Puppets) do
+  for puppet in list_iter(Intro.Puppets) do
     local item = CEGUI.createListboxTextItem(puppet:getName())
     item:setTextParsingEnabled(true)
     item:setSelectionBrushImage("TaharezLook", "MultiListSelectionBrush")

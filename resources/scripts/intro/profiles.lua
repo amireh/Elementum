@@ -6,11 +6,6 @@ require("helpers")
 require("intro/profiles/new_profile")
 require("intro/profiles/listing")
 
-
-
-SelectedPuppetName = nil
-Selected = nil
-
 Profiles.Knights = { Earth = nil, Air = nil, Water = nil, Fire = nil }
 Profiles.CurrentScreen = nil
 
@@ -18,7 +13,7 @@ local UID = 100
 Profiles.CreateKnight = function(name, material, scale, pos)
   UID = UID+1
 
-  local unit = Pixy.CUnit()
+  local unit = Pixy.CUnit:new()
   unit:setRank(Pixy.PUPPET)
   unit:setName(name)
   unit:setUID(UID)
@@ -128,7 +123,9 @@ Profiles.attach = function()
     isSetup = true
   end
 
-  if table.getn(Puppets) > 0 then
+  -- if there are any existing chars, go to the character selection screen
+  -- otherwise go to the new character screen
+  if table.getn(Intro.Puppets) > 0 then
     Profiles.Listing.attach()
   else
     Profiles.NewProfile.attach()
@@ -149,6 +146,16 @@ Profiles.detach = function()
   Pixy.UI.detach(Profiles.Layout)
 end
 
+Profiles.cleanup = function()
+  if not isSetup then return true end
+
+  Profiles.Knights.Earth:delete()
+  Profiles.Knights.Air:delete()
+  Profiles.Knights.Fire:delete()
+  Profiles.Knights.Water:delete()
+
+end
+
 Profiles.Back = function()
 
   NetMgr:disconnect()
@@ -163,16 +170,18 @@ Profiles.Back = function()
 end
 
 
-Profiles.onSyncPuppets = function(e)
+Profiles.onPuppetListSynced = function(e)
+  Intro.Puppets = Puppets
+  Puppets = nil
+
   print("Puppets are synced!")
 
-  for k,v in ipairs(Puppets) do
+  for k,v in ipairs(Intro.Puppets) do
     print("\t" .. k .. " => " .. v:getName())
   end
 
   MainMenu.detach()
   Profiles.attach()
-  --Decks.attach()
 
   return true
 end
@@ -193,11 +202,6 @@ Profiles.JoinLobby = function()
 	--Pixy.UI.waiting("Looking for an opponent", Layout)
 	--~ Buttons.JoinLobby:disable()
   --~ FxEngine:dehighlight()
-
-  for unit in list_iter(Units) do
-    --~ unit:die()
-    --~ GfxEngine:detachFromScene(unit:getRenderable())
-  end
 
   local evt = Pixy.Event(Pixy.EventUID.JoinLobby)
   evt:setProperty("Puppet", Selected:getName())
@@ -224,8 +228,6 @@ Profiles.onJoinLobby = function(e)
     PBox_Label:setText("Unable to connect to lobby. Please try again later.")
     return true
   end
-
-
 
   return true
 end

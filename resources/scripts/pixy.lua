@@ -18,8 +18,9 @@ Pixy.UI = {}
 if not Pixy.Models then
   Pixy.Models = { Spells = {}, Units = {} }
 end
-if not Pixy.Puppets then
-  Pixy.Puppets = {}
+
+Pixy.cleanup = function()
+  Pixy.Models = {}
 end
 
 PBox, PBox_Label, regularizer, loadingText = nil, nil, 0, ""
@@ -78,13 +79,6 @@ Pixy.registerGlobals = function()
   ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
 
   SceneMgr = GfxEngine:getSceneMgr()
-
-  --Pixy.Combat = {}
-
-  Puppets = {}
-  SelfPuppet = nil
-  EnemyPuppet = nil
-  Active = nil
 
 	-- progress box , used for loading
 	PBox = Pixy.UI.attachOverlay("ProgressBox")

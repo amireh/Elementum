@@ -50,8 +50,10 @@ Combat.PrepareScene = function()
   Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
   Camera:setNearClipDistance( 10 )
   Camera:setFarClipDistance( 10000 )
-  GfxEngine.mCameraYawPitchDist = Ogre.Vector3:new(180, 30, 140)
+  --~ GfxEngine.mCameraYawPitchDist = Ogre.Vector3(180, 30, 140)
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
+  --~ GfxEngine:getCameraMan():setTarget(nil)
+  --~ GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   -- Sky
   --SceneMgr:setSkyDome(true, "Elementum/Sky", 1, 1,1000,true);
   --SceneMgr:setSkyBox(true, "Elementum/Sky", 5000, true);
@@ -156,6 +158,8 @@ Combat.GameStarted = function()
 	Pixy.Log("Game has started! Pwning time")
 
   --~ GfxEngine:enableCompositorEffect("Bloom")
-
+  GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
+  GfxEngine:getCameraMan():setTarget(SelfPuppet:getRenderable():getSceneNode())
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
 	return true
 end

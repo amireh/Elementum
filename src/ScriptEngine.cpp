@@ -51,6 +51,8 @@ namespace Pixy {
     mCEGUILua = 0;
     mTimer = 0;
 		fSetup = false;
+
+    mCEGUILua = &CEGUI::LuaScriptModule::create();
 	}
 
 	ScriptEngine::~ScriptEngine() {
@@ -74,7 +76,6 @@ namespace Pixy {
 
 		mLog->infoStream() << "Setting up";
 
-		mCEGUILua = &CEGUI::LuaScriptModule::create();
 		CEGUI::System::getSingleton().setScriptingModule(mCEGUILua);
 
 		mLUA = mCEGUILua->getLuaState();
@@ -121,7 +122,7 @@ namespace Pixy {
     unbind(EventUID::Unassigned);
 
 		//~ CEGUI::System::getSingleton().setScriptingModule(0);
-    //~ CEGUI::LuaScriptModule::destroy(*mCEGUILua);
+    CEGUI::LuaScriptModule::destroy(*mCEGUILua);
 
 		mCEGUILua = 0;
 		mLUA = 0;
