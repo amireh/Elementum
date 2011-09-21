@@ -5,6 +5,11 @@ function arbitraryFuncCombat(name, ...)
     Combat[name](unpack(arg))
   end
 end
+function arbitraryFuncIntro(name, ...)
+  if Intro[name] then
+    Intro[name](unpack(arg))
+  end
+end
 function arbitraryFuncAll(name, ...)
   if Pixy[name] then
     Pixy[name](unpack(arg))
@@ -12,6 +17,11 @@ function arbitraryFuncAll(name, ...)
 end
 
 arbitraryFunc = arbitraryFuncAll
+
+-- called on GameState::exit() ... if any state scripts need to clean
+-- up before changing the state, they need to bind this function, which is usually
+-- done in bindings.lua
+cleanup = function() end
 
 local attached = {} -- tracks all attached layouts
 Pixy.UI = {}

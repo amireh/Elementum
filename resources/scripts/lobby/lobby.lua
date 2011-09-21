@@ -4,6 +4,7 @@ Lobby.doJoinQueue = function(args)
   button:disable()
 
   local e = Pixy.Event(Pixy.EventUID.JoinQueue)
+  e:setProperty("D", Lobby.DeckList:getSelectedItem():getText())
   NetMgr:send(e)
 
 end
@@ -47,11 +48,12 @@ Lobby.onJoinQueue = function(e)
 end
 
 Lobby.onMatchFound = function(e)
-  clearBindings()
+  --clearBindings()
   Chat.detach()
-  Intro.cleanup()
-  Lobby.cleanup()
-  GameMgr:changeState(CombatState)
+  --Intro.cleanup()
+  --~ GameMgr:changeState(CombatState)
+
+  return true
 end
 
 Lobby.doLogout = function(e)
@@ -71,6 +73,3 @@ Lobby.showDecks = function()
   Decks.attach()
 end
 
-Lobby.cleanup = function()
-
-end

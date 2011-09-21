@@ -11,15 +11,8 @@ Intro.oneTimeRun = function()
 end
 
 Intro.cleanup = function(e)
-  --~ if not isSetup then return true end
-
   Pixy.Log("Cleaning up in Intro state")
 
-  --~ for unit in list_iter(Units) do
-    --~ unit:die()
-    --~ GfxEngine:detachFromScene(unit:getRenderable())
-    --~ unit:delete()
-  --~ end
   FxEngine:dehighlight()
 
   MainMenu.cleanup()
@@ -27,7 +20,7 @@ Intro.cleanup = function(e)
   Chat.cleanup()
   Decks.cleanup()
 
-  CEWindowMgr:destroyAllWindows()
+  --~ CEWindowMgr:destroyAllWindows()
 
   FxEngine:unloadAllEffects()
   SceneMgr:clearScene()

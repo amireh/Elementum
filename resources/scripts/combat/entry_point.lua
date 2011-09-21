@@ -20,6 +20,7 @@ require("pixy")
 Pixy.registerGlobals()
 clearBindings()
 
+require("combat/combat")
 require("combat/bootstrap")
 --require("combat/debug")
 require("combat/ui")
@@ -37,4 +38,4 @@ Pixy.UI.Combat.registerGlobals()
 
 Combat.bind()
 Combat.PrepareScene()
-Pixy.Effects.Configure()
+--~ Pixy.Effects.Configure()

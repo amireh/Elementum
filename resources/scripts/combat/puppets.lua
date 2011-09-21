@@ -4,7 +4,7 @@ local Handlers = {}
 -- job: stores the names of the player's puppet and his opponent
 -- and tells the graphics engine about them
 Combat.addPuppet = function(inPuppet)
-  table.insert(Puppets, inPuppet)
+  table.insert(Combat.Puppets, inPuppet)
   Pixy.Log("Registering a new Puppet to the instance, named: " .. inPuppet:getName())
 end
 
@@ -66,7 +66,7 @@ Combat.createPuppet = function(inEvt)
 		lEvt = nil
 	end
 
-	Puppets[lPuppet:getName()] = lPuppet
+	Combat.Puppets[lPuppet:getName()] = lPuppet
 	Pixy.Log("Registered puppet " .. lPuppet:getName())
 	return true
 end

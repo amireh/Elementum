@@ -70,6 +70,7 @@ namespace Pixy
     bool onSyncPuppets(const Event&);
     bool onSyncPuppetData(const Event&);
     bool onJoinLobby(const Event&);
+    bool onMatchFound(const Event&);
 
     //~ boost::asio::io_service mIOService;
     boost::asio::strand mStrand;

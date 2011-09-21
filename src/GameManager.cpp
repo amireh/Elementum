@@ -353,9 +353,10 @@ namespace Pixy
 		// Cleanup the current state
 		if( !mStates.empty() ) {
 
-        Event evt(EventUID::ChangingState);
-        EventManager::getSingleton().hook(evt);
-        mStates.back()->update(1);
+        //~ Event evt(EventUID::ChangingState);
+        //~ EventManager::getSingleton().hook(evt);
+        //~ for (int i=0; i < 5; ++i)
+          //~ mStates.back()->update(1);
 
 		    mStates.back()->exit();
 		    mStates.pop_back();

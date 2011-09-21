@@ -13,7 +13,7 @@ Combat.bind = function()
   bind(Pixy.EventUID.StartBlockPhase, Pixy.UI.Combat.onStartBlockPhase)
 
   bind(Pixy.EventUID.InvalidAction, Pixy.UI.Combat.onInvalidAction)
-  bind(Pixy.EventUID.Lifetap, Pixy.FX.Combat.onLifetap)
+  --~ bind(Pixy.EventUID.Lifetap, Pixy.FX.Combat.onLifetap)
   bind(Pixy.EventUID.Lifetap, Pixy.UI.Combat.onLifetap)
   bind(Pixy.EventUID.Trample, Pixy.UI.Combat.onTrample)
   bind(Pixy.EventUID.FirstStrike, Pixy.UI.Combat.onFirstStrike)
@@ -28,4 +28,6 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntitySelected, Pixy.UI.Combat.updateHand)
   bind(Pixy.EventUID.EntityDeselected, Pixy.UI.Combat.updateHand)
   bind(Pixy.EventUID.StartBlockPhase, Pixy.UI.Combat.updateHand)
+
+  cleanup = Combat.cleanup
 end

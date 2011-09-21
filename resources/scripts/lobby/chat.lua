@@ -11,7 +11,7 @@ if not Chat then
 end
 
 local SelectedRnd = nil
-local DeckList = nil
+Lobby.DeckList = nil
 
 Chat = {
   History = {},
@@ -71,7 +71,7 @@ Chat.attach = function()
   --MsgBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Text/Messages"))
   InputBox = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Chat/Editbox/Message"))
   RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"))
-  DeckList = CEGUI.toCombobox(CEWindowMgr:getWindow("Elementum/Chat/Comboboxes/Decks"))
+  Lobby.DeckList = CEGUI.toCombobox(CEWindowMgr:getWindow("Elementum/Chat/Comboboxes/Decks"))
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
   Tabs = CEGUI.toTabControl(CEWindowMgr:getWindow("Elementum/Containers/Rooms"))
 
@@ -631,16 +631,16 @@ Chat.nextChatMessage = function()
 end
 
 Chat.onPuppetDecksSynced = function(e)
-  DeckList:clearAllSelections()
-  DeckList:resetList()
+  Lobby.DeckList:clearAllSelections()
+  Lobby.DeckList:resetList()
 
   for deck in list_iter(PuppetDecks) do
     item = CEGUI.createListboxTextItem(deck:getName())
-    DeckList:addItem(item)
+    Lobby.DeckList:addItem(item)
   end
 
-  if DeckList:getItemCount() > 0 then
-    DeckList:setItemSelectState(0, true)
+  if Lobby.DeckList:getItemCount() > 0 then
+    Lobby.DeckList:setItemSelectState(0, true)
   end
 
   return true

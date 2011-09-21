@@ -1,5 +1,4 @@
 Pixy.Effects = {}
-Pixy.FX = { Combat = {} }
 Pixy.Effects.Configure = function()
   Pixy.Log("Registering spell effects")
   FxEngine:loadEffect("Elementum/Fx/Highlight")
@@ -24,8 +23,3 @@ Pixy.Effects.Configure = function()
 
   FxEngine:registerHighlightEffect("Elementum/Fx/Aurora")
 end
-
-Pixy.FX.Combat.onLifetap = function(e)
-end
-
-Pixy.Effects.Configure()

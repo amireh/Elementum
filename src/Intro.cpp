@@ -11,6 +11,7 @@
 #include "CSpell.h"
 #include "Lobby.h"
 #include "FxEngine.h"
+#include "Combat.h"
 
 using namespace Ogre;
 namespace Pixy
@@ -65,6 +66,7 @@ namespace Pixy
     //~ bind(EventUID::JoinLobby, boost::bind(&Intro::onJoinLobby, this, _1));
     bind(EventUID::SyncPuppets, boost::bind(&Intro::onSyncPuppets, this, _1));
     bind(EventUID::SyncPuppetData, boost::bind(&Intro::onSyncPuppetData, this, _1));
+    bind(EventUID::MatchFound, boost::bind(&Intro::onMatchFound, this, _1));
 
 		// start the interface chain
 		mScriptEngine->runScript("intro/entry_point.lua");
@@ -101,8 +103,8 @@ namespace Pixy
 
 	void Intro::exit( void ) {
 
-    //~ if (fSetup)
-      //~ mScriptEngine->passToLua("cleanup", 0);
+    if (fSetup)
+      mScriptEngine->passToLua("cleanup", 0);
 
 		//mNetMgr->disconnect();
 
@@ -251,6 +253,13 @@ namespace Pixy
     mPuppetName = e.getProperty("Puppet");
 
     GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
+    return true;
+  }
+
+  bool Intro::onMatchFound(const Event& e)
+  {
+    GameManager::getSingleton().changeState(Combat::getSingletonPtr());
+
     return true;
   }
 

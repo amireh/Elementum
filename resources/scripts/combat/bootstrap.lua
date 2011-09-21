@@ -46,12 +46,9 @@ Combat.PrepareScene = function()
   -- Viewport
   Viewport:setBackgroundColour(Ogre.ColourValue:new(0,0,0))
 
-  -- Camera
-  Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
-  Camera:setNearClipDistance( 10 )
-  Camera:setFarClipDistance( 10000 )
+
   --~ GfxEngine.mCameraYawPitchDist = Ogre.Vector3(180, 30, 140)
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
+  --~ GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
   --~ GfxEngine:getCameraMan():setTarget(nil)
   --~ GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   -- Sky
@@ -106,6 +103,8 @@ Combat.PrepareScene = function()
 end
 
 Combat.SetupScene = function()
+
+
 end
 
 Combat.cleanup = function()
@@ -152,14 +151,24 @@ Combat.SetupLights = function()
   --~ light:setDiffuseColour(dcol)
   --~ light:setSpecularColour(scol)
 
+  Pixy.Effects.Configure()
 end
 
 Combat.GameStarted = function()
 	Pixy.Log("Game has started! Pwning time")
 
+  -- Camera
+  Camera = GfxEngine:getCamera()
+
+  Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
+  Camera:setNearClipDistance( 10 )
+  Camera:setFarClipDistance( 10000 )
+
   --~ GfxEngine:enableCompositorEffect("Bloom")
-  GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
-  GfxEngine:getCameraMan():setTarget(SelfPuppet:getRenderable():getSceneNode())
+  GfxEngine:getCameraMan():setTarget(nil)
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
+  GfxEngine:getCameraMan():setTarget(SelfPuppet:getRenderable():getSceneNode())
+  GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
+
 	return true
 end

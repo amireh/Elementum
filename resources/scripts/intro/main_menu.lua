@@ -54,6 +54,8 @@ end
 
 local isSetup = false
 MainMenu.attach = function()
+  Pixy.Effects.Configure()
+
 	MainMenu.Layout = Pixy.UI.attach("intro/login.layout")
   Form.Username = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username")
 	Form.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
@@ -149,8 +151,8 @@ end
 
 MainMenu.cleanup = function()
   if not isSetup then return false end
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
   GfxEngine:getCameraMan():setTarget(nil)
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
   if Gremlin then Gremlin:delete() end
   Gremlin = nil
 end

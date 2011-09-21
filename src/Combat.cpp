@@ -91,14 +91,14 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    //~ mPuppetName = Intro::getSingleton().getPuppetName(); // __DEBUG__
-    mPuppetName = "Cranberry"; // __DEBUG__
+    mPuppetName = Intro::getSingleton().getPuppetName(); // __DEBUG__
+    //~ mPuppetName = "Cranberry"; // __DEBUG__
 
     // sync the game data when we're connected
-    bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
-    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
-    bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
-    bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
+    //~ bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
+    //~ bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
+    //~ bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
+    //~ bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
     //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::MatchFound, boost::bind(&Combat::onMatchFound, this, _1));
@@ -119,8 +119,8 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    //~ Event e(EventUID::SyncMatchPuppets); // __DEBUG__
-    //~ mNetMgr->send(e); // __DEBUG__
+    Event e(EventUID::SyncMatchPuppets); // __DEBUG__
+    mNetMgr->send(e); // __DEBUG__
 
     inBlockPhase = false;
     fSetup = true;

@@ -102,11 +102,15 @@ namespace Pixy {
       mPolyPicker = 0;
       mPicker = 0;
 
+      delete mCameraMan;
+      mCameraMan = 0;
+
 			mRoot = 0;
 			mSceneMgr = 0;
 			mCamera = mCamera2 = mCamera3 = mCamera4 = 0;
 			mViewport = 0;
 			mRenderWindow = 0;
+
 
       delete mTrayMgr;
 
@@ -167,10 +171,7 @@ namespace Pixy {
     */
 
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);
-    /*if (GameManager::getSingleton().getCurrentState()->getId() == STATE_INTRO)
-      mCameraMan->setStyle(OgreBites::CS_FREELOOK);
-    else*/
-      mCameraMan->setStyle(OgreBites::CS_ORBIT);
+    mCameraMan->setStyle(OgreBites::CS_ORBIT);
 
 	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
 		//~ compMgr.registerCompositorLogic("HDR", new HDRLogic);
@@ -213,7 +214,7 @@ namespace Pixy {
 
 		mLog->infoStream() << "preparing combat scene";
 
-    mRenderables.clear();
+    //~ mRenderables.clear();
 
     mPlayer = Combat::getSingleton().getPuppet();
     for (Combat::puppets_t::const_iterator puppet = Combat::getSingleton().getPuppets().begin();
@@ -238,7 +239,7 @@ namespace Pixy {
     //~ setYawPitchDist(mCameraYawPitchDist);
     //~ mCameraMan->setStyle(OgreBites::CS_ORBIT);
     //~ trackNode(mSceneMgr->getSceneNode(lNodeName.str()));
-
+    mCamera = mSceneMgr->getCamera("Combat_Camera");
 
     //mCamera->yaw(Ogre::Degree(-180));
 

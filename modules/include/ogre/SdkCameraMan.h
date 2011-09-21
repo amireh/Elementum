@@ -92,6 +92,7 @@ namespace OgreBites
 		-----------------------------------------------------------------------------*/
 		virtual void setTarget(Ogre::SceneNode* target)
 		{
+      mTarget = target;
 			if (mStyle == CS_ORBIT)
 			{
 				mTarget = target ? target : mCamera->getSceneManager()->getRootSceneNode();
@@ -112,8 +113,11 @@ namespace OgreBites
 		{
 			if (mStyle == CS_ORBIT)
 			{
-				mCamera->setPosition(mTarget->_getDerivedPosition());
-				mCamera->setOrientation(mTarget->_getDerivedOrientation());
+				if (mTarget)
+        {
+          mCamera->setPosition(mTarget->_getDerivedPosition());
+          mCamera->setOrientation(mTarget->_getDerivedOrientation());
+        }
 				mCamera->yaw(yaw);
 				mCamera->pitch(-pitch);
 				mCamera->moveRelative(Ogre::Vector3(0, 0, dist));

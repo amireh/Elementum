@@ -260,7 +260,8 @@ namespace Pixy {
 		lua_getfield(mLUA, LUA_GLOBALSINDEX, "processEvt");
 		if(!lua_isfunction(mLUA, 1))
 		{
-			mLog->errorStream() << "could not find Lua event processor!";
+			mLog->errorStream() << "could not find Lua event processor!"
+        << " event: " << Event::_uid_to_string(inEvt.UID) << "#" << (int)inEvt.UID;
 			lua_pop(mLUA,1);
 			return true;
 		}
