@@ -12,13 +12,13 @@
 
 #include <iostream>
 
-#include "PixyLog.h"
+#include "Pixy.h"
 #include "Connection.hpp"
 #include <boost/thread.hpp>
 
 namespace Pixy {
 
-	class Event;
+	struct Event;
 
 	/*! \class NetworkManager
 	 *	\brief
@@ -50,6 +50,8 @@ namespace Pixy {
     bool isConnected() const;
 
 	protected:
+    void doConnect();
+
 		/*! \brief
 		 *	uses dispatchEvent() method to broadcast an incoming event
 		 */

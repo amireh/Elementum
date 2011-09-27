@@ -54,6 +54,11 @@ IF(APPLE)
   set(OIS_INC_SEARCH_PATH ${OIS_INC_SEARCH_PATH} /opt/local/include/OIS)  
 ENDIF()
 
+IF(WIN32)
+  set(OIS_LIB_SEARCH_PATH ${OIS_LIB_SEARCH_PATH} C:/Workspace/Build/OIS/lib)
+  set(OIS_INC_SEARCH_PATH ${OIS_INC_SEARCH_PATH} C:/Workspace/Build/OIS/include)  
+ENDIF()
+
 findpkg_framework(OIS)
 if (OIS_HOME)
   # OIS uses the 'includes' path for its headers in the source release, not 'include'

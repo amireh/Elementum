@@ -10,7 +10,7 @@
 # Created by David Guthrie with code from Robert Osfield.
 # Modified by Ahmad Amireh.
 
-FIND_PATH(CEGUI_INCLUDE_DIR CEGUI/CEGUI.h
+FIND_PATH(CEGUI_INCLUDE_DIR CEGUI/CEGUI.h CEGUI.h
     PATHS
     $ENV{CEGUI_DIR}/include
     $ENV{CEGUIDIR}/include
@@ -26,6 +26,8 @@ FIND_PATH(CEGUI_INCLUDE_DIR CEGUI/CEGUI.h
     /opt/csw/include # Blastwave
     /opt/include
     /usr/freeware/include
+	C:/Workspace/Build/CEGUI/include
+	C:/Workspace/Build/CEGUI/cegui/include
 )
 
 IF (APPLE)
@@ -67,11 +69,37 @@ MACRO(FIND_CEGUI_LIBRARY MYLIBRARY MYLIBRARYNAMES)
         /opt/lib
         [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;CEGUI_ROOT]/lib
         /usr/freeware/lib64
+		C:/Workspace/Build/CEGUI/lib
+		C:/Workspace/Build/CEGUI/lib/ReleaseWithSymbols
+		C:/Workspace/Build/CEGUI/lib/Release
     )
+	
+	FIND_PATH(CEGUI_LIBRARY_DIRS CEGUIBase.lib CEGUIBase.so CEGUIBase.a
+	    PATHS
+        $ENV{CEGUI_DIR}/lib
+        $ENV{CEGUI_DIR}
+        $ENV{CEGUIDIR}/lib
+        $ENV{CEGUIDIR}
+        $ENV{CEGUI_ROOT}/lib
+        ${DELTA3D_EXT_DIR}/lib
+        $ENV{DELTA_ROOT}/ext/lib
+        ~/Library/Frameworks
+        /Library/Frameworks
+        /usr/local/lib
+        /usr/local/lib/CEGUI
+        /usr/lib
+        /sw/lib
+        /opt/local/lib
+        /opt/csw/lib
+        /opt/lib
+        [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;CEGUI_ROOT]/lib
+        /usr/freeware/lib64
+		C:/Workspace/Build/CEGUI/lib/ReleaseWithSymbols
+		C:/Workspace/Build/CEGUI/lib/Release)
 
 ENDMACRO(FIND_CEGUI_LIBRARY LIBRARY LIBRARYNAME)
 
-SET(CEGUIList CEGUIBase CEGUI)
+SET(CEGUIList CEGUIBase CEGUI CEGUILuaScriptModule)
 FIND_CEGUI_LIBRARY(CEGUI_LIBRARY "${CEGUIList}")
 
 SET(CEGUIOgreList CEGUIOgreRenderer)

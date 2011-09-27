@@ -1,0 +1,144 @@
+import * from "CelShading.material"
+
+/*
+material Ogre/Eyes : CelShading
+{
+	technique
+	{
+		set $diffuse "1 0.7 0 1"
+		set $specular "1 0.8 0 1"
+		set $edge "0 0 0 0"
+	}
+}
+*/
+material CelShadingTemplate : CelShadingSpecular
+{
+	technique
+	{
+		set $diffuse "1 1 1 1"
+		set $specular "0.7 0.7 0.7 1"
+		set $edge "0 0 0 1"
+		pass decal
+		{
+			texture_unit decalmap
+			{
+				texture_alias Skin
+			}
+		}
+		pass specular
+		{
+			texture_unit specMap
+			{
+				texture_alias Skin
+			}
+		}
+	}
+}
+
+material Elementum/DarkKnight/Earth : CelShadingTemplate
+{
+	set_texture_alias Skin knight_01.jpg
+}
+material Elementum/DarkKnight/Fire : CelShadingTemplate
+{
+	set_texture_alias Skin knight_02.jpg
+}
+material Elementum/DarkKnight/Water : CelShadingTemplate
+{
+	set_texture_alias Skin knight_05.jpg
+}
+material Elementum/DarkKnight/Air : CelShadingTemplate
+{
+	set_texture_alias Skin knight_11.jpg
+}
+
+material Elementum/DarkKnight/Earth/Sword : CelShadingTemplate
+{
+	set_texture_alias Skin sword_01.jpg
+}
+material Elementum/DarkKnight/Fire/Sword : CelShadingTemplate
+{
+	set_texture_alias Skin sword_04.jpg
+}
+material Elementum/DarkKnight/Air/Sword : CelShadingTemplate
+{
+	set_texture_alias Skin sword_03.jpg
+}
+material Elementum/DarkKnight/Water/Sword : CelShadingTemplate
+{
+	set_texture_alias Skin sword_05.jpg
+}
+
+material Elementum/Gremlin/Master : CelShadingTemplate
+{
+  set_texture_alias Skin gremlin-17.jpg
+}
+material Elementum/Gremlin/Brawler : CelShadingTemplate
+{
+  set_texture_alias Skin gremlin-04.jpg
+}
+material Elementum/Gremlin/Mechanical : CelShadingTemplate
+{
+  set_texture_alias Skin gremlin-02.jpg
+}
+material Elementum/Gremlin/Engineer : CelShadingTemplate
+{
+  set_texture_alias Skin gremlin-16.jpg
+}
+
+
+material Elementum/Dragon/Bronze : CelShadingTemplate
+{
+  set_texture_alias Skin dragon-27.jpg
+}
+material Elementum/Dragon/Black : CelShadingTemplate
+{
+  set_texture_alias Skin dragon-01.jpg
+}
+material Elementum/Dragon/Ruby : CelShadingTemplate
+{
+  set_texture_alias Skin dragon-06.jpg
+}
+material Elementum/Dragon/Emerald : CelShadingTemplate
+{
+  set_texture_alias Skin dragon-09.jpg
+}
+material Elementum/Dragon/Blue : CelShadingTemplate
+{
+  set_texture_alias Skin dragon-25.jpg
+}
+
+
+material Elementum/Skeleton/Footsoldier : CelShadingTemplate
+{
+  set_texture_alias Skin skeleton_01.jpg
+}
+material Elementum/Skeleton/Warrior : CelShadingTemplate
+{
+  set_texture_alias Skin skeleton_02.jpg
+}
+material Elementum/Skeleton/Mage : CelShadingTemplate
+{
+  set_texture_alias Skin skeleton_04.jpg
+}
+material Elementum/Skeleton/Acolyte : CelShadingTemplate
+{
+  set_texture_alias Skin skeleton_06.jpg
+}
+
+material Elementum/Bargor/Stomper : CelShadingTemplate
+{
+  set_texture_alias Skin troll-04.jpg
+}
+material Elementum/Bargor/Pulverizer : CelShadingTemplate
+{
+  set_texture_alias Skin troll-09.jpg
+}
+material Elementum/Bargor/Chieftain : CelShadingTemplate
+{
+  set_texture_alias Skin troll-08.jpg
+}
+material Elementum/Bargor/Maimer : CelShadingTemplate
+{
+  set_texture_alias Skin troll-19.jpg
+}

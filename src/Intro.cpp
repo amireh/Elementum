@@ -216,6 +216,8 @@ namespace Pixy
     if (e.Feedback != EventFeedback::Ok)
       return true;
 
+    mLog->debugStream() << "Syncing puppet listing";
+
     for (Intro::puppets_t::iterator puppet = mPuppets.begin();
       puppet != mPuppets.end();
       ++puppet)

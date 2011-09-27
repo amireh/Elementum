@@ -347,10 +347,10 @@ namespace Pixy
     // if there are pending mini-anims, play them
     if (!mAnimQueue.empty()) {
       _nextAnim = mAnimQueue.front();
-      std::cout << "Playing a mini-animation " << _nextAnim->ID << " (" << mAnimQueue.size() << " in queue)\n";
+      //std::cout << "Playing a mini-animation " << _nextAnim->ID << " (" << mAnimQueue.size() << " in queue)\n";
     } else { // otherwise we play the loop animation
       _nextAnim = mLoopAnim;
-      std::cout << "Playing loop animation " << mLoopAnim->ID << "\n";
+      //std::cout << "Playing loop animation " << mLoopAnim->ID << "\n";
     }
 
     assert(_nextAnim);

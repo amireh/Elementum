@@ -32,6 +32,7 @@ Combat.reqEndTurn = function()
     local lEvt = Pixy.Event:new()
     lEvt.UID = Pixy.EventUID.EndTurn
     NetMgr:send(lEvt)
+	lEvt:delete()
 
     local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation("ClickEndTurn")
     instance:setTargetWindow(CEWindowMgr:getWindow("Elementum/Combat/Buttons/EndTurn"))

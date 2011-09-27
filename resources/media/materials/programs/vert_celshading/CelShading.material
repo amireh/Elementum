@@ -1,0 +1,298 @@
+vertex_program AmbientOneTexture cg
+{
+   source CelShading.cg
+   entry_point ambientOneTexture_vp
+   profiles vs_1_1 arbvp1
+ 
+   default_params
+   {
+      param_named_auto worldViewProj worldviewproj_matrix
+      param_named_auto ambient ambient_light_colour
+      param_named diffuse float4 1 1 1 1
+   }
+}
+vertex_program CelEdgeVP cg
+{
+   source CelShading.cg
+   entry_point celEdge_vp
+   profiles vs_1_1 arbvp1
+ 
+   default_params
+   {
+      param_named_auto worldViewProj worldviewproj_matrix
+      param_named_auto eyePosition camera_position_object_space
+   }
+ 
+}
+fragment_program CelEdgeFP cg
+{
+   source CelShading.cg
+   entry_point celEdge_fp
+   profiles ps_1_1 arbfp1 fp20
+ 
+   default_params
+   {
+      param_named edgeColor float4 0 0 0 1
+   }
+ 
+}
+vertex_program VertEdge cg
+{
+   source VertEdge.cg
+   entry_point EdgeVP
+   profiles vs_1_1 arbvp1
+ 
+   default_params
+   {
+      param_named_auto worldViewProj worldviewproj_matrix
+      param_named_auto eyePosition camera_position_object_space
+      param_named scale float 2
+      param_named edgeScale float 1
+   }
+ 
+}
+vertex_program CelShadingVP cg
+{
+   source CelShading.cg
+   entry_point lighting_vp
+   profiles vs_1_1 arbvp1
+ 
+   default_params
+   {
+      param_named_auto lightPosition light_position_object_space 0
+      param_named_auto lightAttenuation light_attenuation 0
+      param_named_auto worldViewProj worldviewproj_matrix
+   }
+}
+fragment_program CelShadingFP cg
+{
+   source CelShading.cg
+   entry_point lighting_fp
+   profiles ps_1_1 arbfp1 fp20
+}
+vertex_program CelSpecularVP cg
+{
+   source CelShading.cg
+   entry_point specular_vp
+   profiles vs_1_1 arbvp1
+ 
+   default_params
+   {
+      param_named_auto lightPosition light_position_object_space 0
+      param_named_auto lightAttenuation light_attenuation 0
+      param_named_auto eyePosition camera_position_object_space
+      param_named_auto worldViewProj worldviewproj_matrix
+      param_named shininess float 10 
+   }
+}
+fragment_program CelSpecularFP cg
+{
+   source CelShading.cg
+   entry_point specular_fp
+   profiles ps_1_1 arbfp1 fp20
+}
+fragment_program CelSpecularTexFP cg
+{
+   source CelShading.cg
+   entry_point specularTex_fp
+   profiles ps_1_1 arbfp1 fp20
+}
+ 
+material CelShading
+{
+   technique
+   {
+      set $diffuse "1 1 1 1"
+      set $specular "1 1 1 1"
+      set $edge "0 0 0 1"
+      set $shininess "25"
+      set $modscale "2"
+      set $edgescale "1"
+ 
+      pass edge
+      {
+         vertex_program_ref VertEdge
+         {
+            param_named edgeColor float4 $edge
+            param_named scale float $modscale
+            param_named edgeScale float $edgescale
+         }
+      }
+      // Base ambient pass
+      pass ambient
+      {
+         // base colours, not needed for rendering, but as information
+         // to lighting pass categorisation routine
+         ambient 1 1 1
+         diffuse 0 0 0 
+         specular 0 0 0 0 
+         // Really basic vertex program
+         // NB we don't use fixed function here because GL does not like
+         // mixing fixed function and vertex programs, depth fighting can
+         // be an issue
+         vertex_program_ref AmbientOneTexture
+         {
+         }
+      }
+      pass perlight
+      {
+         ambient 0 0 0
+         iteration once_per_light
+         scene_blend add
+ 
+         vertex_program_ref CelShadingVP
+         {
+         }
+         fragment_program_ref CelShadingFP
+         {
+         }
+         texture_unit
+         {
+            texture cel_shading_diffuse.png 1d
+            tex_address_mode clamp
+            filtering trilinear
+            colour_op replace
+         }
+      }
+      pass decal
+      {
+         lighting off
+ 
+         vertex_program_ref AmbientOneTexture
+         {
+            param_named_auto worldViewProj worldviewproj_matrix
+            param_named ambient float4 1 1 1 1
+            param_named diffuse float4 $diffuse
+         }
+         scene_blend dest_colour zero
+         texture_unit decalmap
+         {
+         }
+      }
+      pass specular
+      {
+         ambient 0 0 0
+         iteration once_per_light
+         scene_blend add
+ 
+         vertex_program_ref CelSpecularVP
+         {
+            // map shininess from custom renderable param 1
+            param_named shininess float $shininess
+         }
+         fragment_program_ref CelSpecularFP
+         {
+            // map specular from custom renderable param 2
+            param_named specular float4 $specular
+         }
+         texture_unit
+         {
+            texture cel_shading_specular.png 1d
+            tex_address_mode clamp
+            filtering trilinear
+            colour_op replace
+         }
+      }
+   }      
+}
+material CelShadingSpecular
+{
+   technique
+   {
+      set $diffuse "1 1 1 1"
+      set $specular "1 1 1 1"
+      set $edge "0 0 0 1"
+      set $shininess "25"
+      set $modscale "2"
+      set $edgescale "1"
+ 
+      pass edge
+      {
+         vertex_program_ref VertEdge
+         {
+            param_named edgeColor float4 $edge
+            param_named scale float $modscale
+            param_named edgeScale float $edgescale
+         }
+      }
+      // Base ambient pass
+      pass ambient
+      {
+         // base colours, not needed for rendering, but as information
+         // to lighting pass categorisation routine
+         ambient 1 1 1
+         diffuse 0 0 0 
+         specular 0 0 0 0 
+         // Really basic vertex program
+         // NB we don't use fixed function here because GL does not like
+         // mixing fixed function and vertex programs, depth fighting can
+         // be an issue
+         vertex_program_ref AmbientOneTexture
+         {
+         }
+      }
+      pass perlight
+      {
+         ambient 0 0 0
+         iteration once_per_light
+         scene_blend add
+ 
+         vertex_program_ref CelShadingVP
+         {
+         }
+         fragment_program_ref CelShadingFP
+         {
+         }
+         texture_unit
+         {
+            texture cel_shading_diffuse.png 1d
+            tex_address_mode clamp
+            filtering trilinear
+            colour_op replace
+         }
+      }
+      pass decal
+      {
+         lighting off
+ 
+         vertex_program_ref AmbientOneTexture
+         {
+            param_named_auto worldViewProj worldviewproj_matrix
+            param_named ambient float4 1 1 1 1
+            param_named diffuse float4 $diffuse
+         }
+         scene_blend dest_colour zero
+         texture_unit decalmap
+         {
+         }
+      }
+      pass specular
+      {
+         ambient 0 0 0
+         iteration once_per_light
+         scene_blend add
+ 
+         vertex_program_ref CelSpecularVP
+         {
+            // map shininess from custom renderable param 1
+            param_named shininess float $shininess
+         }
+         fragment_program_ref CelSpecularTexFP
+         {
+            // map specular from custom renderable param 2
+            param_named specular float4 $specular
+         }
+         texture_unit
+         {
+            texture cel_shading_specular.png 1d
+            tex_address_mode clamp
+            filtering trilinear
+            colour_op replace
+         }
+         texture_unit specMap
+         {
+            texture white.png
+         }
+      }
+   }   
+}

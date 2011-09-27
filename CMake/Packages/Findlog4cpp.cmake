@@ -13,6 +13,7 @@ FIND_PATH(LOG4CPP_INCLUDE_DIR log4cpp/Category.hh
     "$ENV{LOG4CPP}/include"
     /usr/local/include
     /usr/include
+	C:/Workspace/Build/log4cpp/include
 )
 
 FIND_LIBRARY(LOG4CPP_LIBRARIES log4cpp
@@ -20,6 +21,7 @@ FIND_LIBRARY(LOG4CPP_LIBRARIES log4cpp
     "$ENV{LOG4CPP}/lib"
     /usr/local/lib
     /usr/lib
+	C:/Workspace/Build/log4cpp/lib
 )
 
 SET(LOG4CPP_FOUND 0)

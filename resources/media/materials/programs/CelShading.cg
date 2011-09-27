@@ -1,0 +1,158 @@
+//
+//Basic lighting functions
+//
+void lighting_vp(float4 position	: POSITION,
+			 float3 normal		: NORMAL,
+			 // outputs
+			 out float4 oPosition : POSITION,
+			 out float  diffuse		 : TEXCOORD0,
+			 // parameters
+			 uniform float3 lightPosition, // object space
+			 uniform float4 lightAttenuation,
+			 uniform float4x4 worldViewProj)
+{
+	// calculate output position
+	oPosition = mul(worldViewProj, position);
+ 
+	// calculate light vector
+	float3 N = normalize(normal);
+	float3 L = normalize(lightPosition - position.xyz);
+ 
+	//Calculate distance from light to object.
+	float lightDist = length( lightPosition - position.xyz );
+	float luminosity = 0;
+	if( lightAttenuation.x > lightDist)
+		luminosity = 1.0 / ( lightAttenuation.y + lightAttenuation.z*lightDist + lightAttenuation.w*(lightDist*lightDist) );
+ 
+	// Calculate diffuse component
+	diffuse = max(dot(N, L) , 0)*luminosity;
+}
+ 
+void lighting_fp(float diffuseIn 	: TEXCOORD0,
+ 
+				out float4 colour	: COLOR,
+ 
+				uniform sampler1D diffuseRamp : register(s0))
+{
+	// Step functions from textures
+	diffuseIn = tex1D(diffuseRamp, diffuseIn).x;
+	colour = diffuseIn;
+}
+ 
+//
+//Specular
+//
+void specular_vp(float4 position	: POSITION,
+			 float3 normal		: NORMAL,
+			 // outputs
+			 out float4 oPosition : POSITION,
+			 out float  specular	 : TEXCOORD0,
+			 float2 texCoord : TEXCOORD0, 
+             out float2 uv : TEXCOORD1,
+			 // parameters
+			 uniform float3 lightPosition, // object space
+			 uniform float4 lightAttenuation,
+			 uniform float3 eyePosition,   // object space
+			 uniform float4  shininess,
+			 uniform float4x4 worldViewProj)
+{
+	// calculate output position
+	oPosition = mul(worldViewProj, position);
+ 
+	// calculate light vector
+	float3 N = normalize(normal);
+	float3 L = normalize(lightPosition - position.xyz);
+ 
+	// Calculate specular component
+	float3 E = normalize(eyePosition - position.xyz);
+	float3 H = normalize(L + E);
+ 
+	//Calculate distance from light to object.
+	float lightDist = length( lightPosition - position.xyz );
+	float luminosity = 0;
+	if( lightAttenuation.x > lightDist)
+		luminosity = 1.0 / ( lightAttenuation.y + lightAttenuation.z*lightDist + lightAttenuation.w*(lightDist*lightDist) );
+ 
+	specular = pow(max(dot(N, H), 0), shininess)*luminosity;
+	uv = texCoord;
+}
+ 
+void specular_fp(float specularIn	: TEXCOORD0,
+				 float2 uv			: TEXCOORD1,
+ 
+			 out float4 colour	: COLOR,
+ 
+			 uniform float4 specular,
+			 uniform sampler1D specularRamp : register(s0))
+{
+	// Step functions from textures
+	specularIn = tex1D(specularRamp, specularIn).x;
+	colour = specular * specularIn;
+}
+//
+//Specular with specular mapping image
+//
+void specularTex_fp(float specularIn	: TEXCOORD0,
+				 float2 uv			: TEXCOORD1,
+ 
+			 out float4 colour	: COLOR,
+ 
+			 uniform float4 specular,
+			 uniform sampler1D specularRamp : register(s0),
+			 uniform sampler2D specMap : register(s1))
+{
+	// Step functions from textures
+	specularIn = tex1D(specularRamp, specularIn).x;
+	float4 specValue = tex2D(specMap, uv);
+ 
+	colour = specular * specValue * specularIn;
+}
+ 
+//
+//Basic ambent lighting
+//
+void ambientOneTexture_vp(float4 position : POSITION,
+						  float2 uv		  : TEXCOORD0,
+ 
+						  out float4 oPosition : POSITION,
+						  out float2 oUv	   : TEXCOORD0,
+						  out float4 colour    : COLOR,
+ 
+						  uniform float4x4 worldViewProj,
+						  uniform float4 ambient,
+						  uniform float4 diffuse)
+{
+	oPosition = mul(worldViewProj, position);
+	oUv = uv;
+	colour = diffuse*ambient;
+}
+ 
+//
+//Edge shading
+//
+void celEdge_vp(float4 position : POSITION,
+				   float2 uv	   : TEXCOORD0,
+				   float3 normal   : NORMAL,
+ 
+				   out float4 oPosition : POSITION,
+				   out float  edge      : TEXCOORD0,
+ 
+				   uniform float4x4 worldViewProj,
+				   uniform float3 eyePosition )
+{
+	oPosition = mul(worldViewProj, position);
+ 
+	float3 N = normalize(normal);
+	float3 E = normalize(eyePosition - position.xyz);
+	edge = max(dot(N, E), 0);
+}
+void celEdge_fp(float  edge     : TEXCOORD0,
+ 
+				   out float4 colour    : COLOR,
+ 
+				   uniform float4 edgeColor,
+				   uniform sampler1D edgeRamp : register(s0))
+{
+	edge = tex1D(edgeRamp, edge).x;
+	colour = (1-edge)*edgeColor;
+}

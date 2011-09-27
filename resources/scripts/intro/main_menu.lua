@@ -4,7 +4,7 @@ MainMenu = {}
 local Gremlin = nil
 
 local Form = {}
-
+require "lfs"
 MainMenu.CreateGremlin = function()
 
   local unit = Pixy.CUnit:new()
@@ -155,6 +155,7 @@ MainMenu.cleanup = function()
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
   if Gremlin then Gremlin:delete() end
   Gremlin = nil
+  isSetup = false
 end
 
 
@@ -164,23 +165,30 @@ MainMenu.reqLogin = function(inEvt)
 	Pixy.Log("firing Login event")
 
 	Pixy.UI.waiting("Connecting...", MainMenu.Layout)
-  connected = NetMgr:connect()
-  if (connected) then
-    Pixy.UI.doneWaiting(false)
-    Pixy.UI.waiting("Authenticating", MainMenu.Layout)
-
-    -- hook login event
-    local mEvt = Pixy.Event(Pixy.EventUID.Login)
-    mEvt:setProperty("Username", Form.Username:getText())
-    mEvt:setProperty("Password", Form.Password:getText())
-    NetMgr:send(mEvt)
-    mEvt = nil
-  else
-    PBox_Label:setText("Unable to connect to server.")
-    Pixy.UI.doneWaiting(true)
-  end
+  NetMgr:disconnect()
+  NetMgr:connect()
 
 	return true
+end
+
+MainMenu.onConnected = function(e)
+  if e.Feedback == Pixy.EventFeedback.Error then
+    PBox_Label:setText("Unable to connect to server.")
+    Pixy.UI.doneWaiting(true)  
+    return true
+  end
+  
+  Pixy.UI.doneWaiting(false)
+  Pixy.UI.waiting("Authenticating", MainMenu.Layout)
+
+  -- hook login event
+  local mEvt = Pixy.Event(Pixy.EventUID.Login)
+  mEvt:setProperty("Username", Form.Username:getText())
+  mEvt:setProperty("Password", Form.Password:getText())
+  NetMgr:send(mEvt)
+  
+  Pixy.Log("Awaiting authentication reply...")
+  return true
 end
 
 MainMenu.onLogin = function(inEvt)
@@ -196,7 +204,7 @@ MainMenu.onLogin = function(inEvt)
 	end
 
 	Pixy.Log("login failed")
-	PBox_Label:setText("Failed")
+	PBox_Label:setText("Login failed.")
 
 	return true
 end

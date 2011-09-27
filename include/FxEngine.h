@@ -21,7 +21,7 @@ namespace Ogre {
 
 namespace Pixy {
 
-  class Event;
+  struct Event;
   class Renderable;
   class GfxEngine;
 	class FxEngine : public ParticleUniverse::ParticleSystemListener, public Engine, public EventListener {

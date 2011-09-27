@@ -13,23 +13,24 @@ end
 Intro.cleanup = function(e)
   Pixy.Log("Cleaning up in Intro state")
 
-  FxEngine:dehighlight()
-
   MainMenu.cleanup()
   Profiles.cleanup()
   Chat.cleanup()
   Decks.cleanup()
 
   --~ CEWindowMgr:destroyAllWindows()
-
   FxEngine:unloadAllEffects()
   SceneMgr:clearScene()
-
+  
   return true
 end
 
 Intro.shutdown = function(e)
-  Intro.cleanup()
+  --Intro.cleanup()
+  MainMenu.cleanup()
+  Profiles.cleanup()
+  Chat.cleanup()
+  Decks.cleanup()  
   Pixy.cleanup()
 
   return true

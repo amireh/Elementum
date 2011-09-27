@@ -23,6 +23,7 @@ SET(Elementum_Modules_SRCS
   src/ogre/HDRCompositor.cpp
   src/ogre/HelperLogics.cpp
   src/ogre/MovableTextOverlay.cpp
+  src/ogre/RectLayoutManager.cpp
 
   src/OgreMax/OgreMaxModel.cpp
   src/OgreMax/OgreMaxScene.cpp
@@ -43,10 +44,16 @@ if(APPLE OR LINUX)
   LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib)
 endif()
 
+IF(WIN32)
+  SET(LIB_TYPE STATIC)
+ELSE()
+  SET(LIB_TYPE SHARED)
+ENDIF()
+
 LIST(APPEND PROJECT_LIBS ${ESHARED_LIBRARIES})
 
 SET(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
-ADD_LIBRARY( Elementum_Modules SHARED ${Elementum_Modules_SRCS} )
+ADD_LIBRARY( Elementum_Modules ${LIB_TYPE} ${Elementum_Modules_SRCS} )
 TARGET_LINK_LIBRARIES( Elementum_Modules ${PROJECT_LIBS} )
 
 IF(APPLE)

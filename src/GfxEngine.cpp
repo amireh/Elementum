@@ -93,7 +93,9 @@ namespace Pixy {
 	}
 
 	GfxEngine::~GfxEngine() {
-		mLog->infoStream() << "shutting down";
+		if (mLog)
+      mLog->infoStream() << "shutting down";
+
 		if (fSetup) {
 
       delete mGenericPicker;
@@ -851,13 +853,13 @@ namespace Pixy {
     attackPos.z += (inOwner == ME) ? -5 : 5;
     attackPos.y = passivePos.y;
 
-    std::cout
-      << "Waypoint for node: " << inOwner << "#" << inNode << ":\n"
-      << "\tIdle: " << passivePos.x << "," << passivePos.y << "," << passivePos.z << "\n"
-      << "\tCharging: " << chargingPos.x << "," << chargingPos.y << "," << chargingPos.z << "\n"
-      << "\tBlock: " << defensePos.x << "," << defensePos.y << "," << defensePos.z << "\n"
-      << "\tOffense: " << offensePos.x << "," << offensePos.y << "," << offensePos.z << "\n"
-      << "\tAttack: " << attackPos.x << "," << attackPos.y << "," << attackPos.z << "\n";
+    //std::cout
+    //  << "Waypoint for node: " << inOwner << "#" << inNode << ":\n"
+    //  << "\tIdle: " << passivePos.x << "," << passivePos.y << "," << passivePos.z << "\n"
+    //  << "\tCharging: " << chargingPos.x << "," << chargingPos.y << "," << chargingPos.z << "\n"
+    //  << "\tBlock: " << defensePos.x << "," << defensePos.y << "," << defensePos.z << "\n"
+    //  << "\tOffense: " << offensePos.x << "," << offensePos.y << "," << offensePos.z << "\n"
+    //  << "\tAttack: " << attackPos.x << "," << attackPos.y << "," << attackPos.z << "\n";
 
     (*mWalklist).push_back(passivePos);
     (*mWalklist).push_back(chargingPos);
@@ -919,7 +921,7 @@ namespace Pixy {
       MovableTextOverlay *p =
         new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
       p->enable(false); // make it invisible for now
-      p->setUpdateFrequency(0.01);// set update frequency to 0.01 seconds
+      p->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
       inRenderable->setText(p);
       p = 0;
 
@@ -973,7 +975,7 @@ namespace Pixy {
       MovableTextOverlay *p =
         new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
       p->enable(false); // make it invisible for now
-      p->setUpdateFrequency(0.01);// set update frequency to 0.01 seconds
+      p->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
       inRenderable->setText(p);
       p = 0;
 

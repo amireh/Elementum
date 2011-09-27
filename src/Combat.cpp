@@ -91,14 +91,14 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    mPuppetName = Intro::getSingleton().getPuppetName(); // __DEBUG__
+    mPuppetName = Intro::getSingleton().getPuppetName();
     //~ mPuppetName = "Cranberry"; // __DEBUG__
 
     // sync the game data when we're connected
-    //~ bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
-    //~ bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
-    //~ bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
-    //~ bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
+    bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
+    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
+    bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
+    bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
     //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::MatchFound, boost::bind(&Combat::onMatchFound, this, _1));
@@ -119,8 +119,8 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    Event e(EventUID::SyncMatchPuppets); // __DEBUG__
-    mNetMgr->send(e); // __DEBUG__
+    Event e(EventUID::SyncMatchPuppets);
+    mNetMgr->send(e);
 
     inBlockPhase = false;
     fSetup = true;
@@ -437,6 +437,7 @@ namespace Pixy
   }
   bool Combat::onJoinLobby(const Event& inEvt) {
     Event _evt(EventUID::JoinQueue);
+    _evt.setProperty("D", "Earth Template 1");
     mNetMgr->send(_evt);
     return true;
   }
@@ -768,7 +769,7 @@ namespace Pixy
       "Pixy::Renderable", lTarget,
       "Pixy::CSpell", lSpell);
     // ...
-    std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
+    //std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
     // remove it from the UI
     if (lCaster == mPuppet)
       mScriptEngine->passToLua("DropSpell", 1, "Pixy::CSpell", (void*)lSpell);
@@ -785,7 +786,7 @@ namespace Pixy
     CPuppet* _owner = getPuppet(convertTo<int>(evt.getProperty("OUID")));
     assert(_owner);
 
-    std::cout << "CreateUnit name: " << evt.getProperty("Name") << "\n";
+    //std::cout << "CreateUnit name: " << evt.getProperty("Name") << "\n";
     CResourceManager& rmgr_ = GameManager::getSingleton().getResMgr();
     CUnit* _unit = rmgr_.getUnit(evt.getProperty("Name"), _owner->getRace());
     assert(_unit);
@@ -793,7 +794,7 @@ namespace Pixy
     _unit->fromEvent(evt);
     _owner->attachUnit(_unit);
 
-    std::cout << "new units UID=" << _unit->getUID() << "\n";
+    //std::cout << "new units UID=" << _unit->getUID() << "\n";
     assert(_unit->getOwner());
 
     _unit->live();
@@ -813,7 +814,7 @@ namespace Pixy
     CPuppet* _puppet = getPuppet(convertTo<int>(evt.getProperty("UID")));
     assert(_puppet);
 
-    std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
+    //std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
 
     _puppet->updateFromEvent(evt);
     mScriptEngine->passToLua("UpdatePuppet", 1, "Pixy::CPuppet", (void*)_puppet);
@@ -827,7 +828,7 @@ namespace Pixy
     CUnit* _unit = getUnit(convertTo<int>(evt.getProperty("UID")));
     assert(_unit);
 
-    std::cout << "Updating unit named: " << _unit->getName() << "#" << _unit->getUID() << "\n";
+    //std::cout << "Updating unit named: " << _unit->getName() << "#" << _unit->getUID() << "\n";
 
     _unit->updateFromEvent(evt);
     if (_unit->isDead())
@@ -871,7 +872,7 @@ namespace Pixy
     }
 
     // move the unit
-    std::cout << evt.getProperty("UID") << " is charging for an attack\n";
+    //std::cout << evt.getProperty("UID") << " is charging for an attack\n";
 
     mAttackers.push_back(attacker);
     attacker->setAttackOrder(mAttackers.size());
@@ -892,7 +893,7 @@ namespace Pixy
       return true;
     }
 
-    std::cout << evt.getProperty("UID") << " is no longer charging\n";
+    //std::cout << evt.getProperty("UID") << " is no longer charging\n";
     mAttackers.remove(attacker);
 
     // recalculate attack orders and display them

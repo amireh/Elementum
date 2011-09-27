@@ -58,7 +58,9 @@ namespace Pixy {
 	ScriptEngine::~ScriptEngine() {
 		cleanup();
 
-		mLog->infoStream() << "shutting down.";
+		if (mLog)
+    {
+      mLog->infoStream() << "shutting down.";
 		//if (fSetup) {
 			//mLUA = NULL; mCEGUILua = NULL;
 			//fSetup = false;
@@ -68,6 +70,7 @@ namespace Pixy {
 
       //delete mTimer;
 		//}
+    }
 	}
 
 	bool ScriptEngine::setup() {
@@ -283,7 +286,7 @@ namespace Pixy {
 			mLog->errorStream() << "Lua did NOT return a boolean";
 		*/
 
-		bool result = lua_toboolean(mLUA, lua_gettop(mLUA));
+		int result = lua_toboolean(mLUA, lua_gettop(mLUA));
 
 		lua_remove(mLUA, lua_gettop(mLUA));
 
@@ -376,6 +379,8 @@ namespace Pixy {
 
   int ScriptEngine::_passPuppetListing()
   {
+    mLog->debugStream() << "Exporting puppet listing to Lua";
+
     lua_newtable(mLUA); // spells master table
     Intro::puppets_t mPuppets = Intro::getSingleton().getPuppets();
 
@@ -452,6 +457,7 @@ namespace Pixy {
 	bool ScriptEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
 		//return passToLua("onMouseMoved", 1, "OIS::MouseEvent", &e);
+		return true;
 	}
 
 	bool ScriptEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
@@ -485,7 +491,7 @@ namespace Pixy {
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
     return macBundlePath() + "/Contents/Plugins";
 #elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
-    return "./";
+    return GameManager::getSingleton().getBinPath();
 #else // UNIX
     return "../lib";
 #endif

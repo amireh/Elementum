@@ -4,8 +4,8 @@ Intro.bind = function()
 
   bind(Pixy.EventUID.GameDataSynced, Pixy.onGameDataSynced);
 
-  bind(Pixy.EventUID.Login, MainMenu.onLogin)
   bind(Pixy.EventUID.Connected, MainMenu.onConnected)
+  bind(Pixy.EventUID.Login, MainMenu.onLogin)
   bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
 
   bind(Pixy.EventUID.PuppetListSynced, Profiles.onPuppetListSynced);

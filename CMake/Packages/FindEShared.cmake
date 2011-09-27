@@ -9,6 +9,7 @@ SET(EShared_PATHS
   /home/kandie/Workspace/Projects/Elementum/Shared
   /Volumes/kandie/Workspace/Projects/Elementum/Shared
   /Users/kandie/Workspace/Projects/Elementum/Shared
+  C:/Workspace/Projects/Elementum/Shared
 )
 
 FIND_PATH(ESHARED_INCLUDE_DIRS Pixy.h
@@ -21,7 +22,7 @@ FIND_PATH(ESHARED_INCLUDE_DIRS Pixy.h
 FIND_LIBRARY(ESHARED_LIBRARY
   NAMES EShared
   HINTS
-  PATH_SUFFIXES lib
+  PATH_SUFFIXES lib lib/Release
   PATHS
   ${EShared_PATHS}
 )
@@ -29,7 +30,7 @@ FIND_LIBRARY(ESHARED_LIBRARY
 FIND_LIBRARY(ESHARED_MODULES_LIBRARY
   NAMES EShared_Modules
   HINTS
-  PATH_SUFFIXES lib
+  PATH_SUFFIXES lib lib/Release
   PATHS
   ${EShared_PATHS}
 )

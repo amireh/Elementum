@@ -60,7 +60,7 @@ namespace Pixy {
         fflush(stdout);
       }
 
-    } catch (std::exception& e) {
+    } catch (std::exception&) {
 
     } catch (...) {
 
@@ -148,7 +148,7 @@ namespace Pixy {
     vector<string> names = Utility::split(inTalents,',');
     vector<string>::iterator name;
     for (name = names.begin(); name != names.end(); ++name) {
-      std::cout << "assigning talent named " << *name << " to puppet " << inPuppet.getName() << "\n";
+      //std::cout << "assigning talent named " << *name << " to puppet " << inPuppet.getName() << "\n";
       inPuppet.addTalent(getTalent(*name, inPuppet.getRace()));
     }
 

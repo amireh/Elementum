@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="CombatSkin">
+	<Imageset Filename="Combat.imageset" />
+	<LookNFeel Filename="Combat.looknfeel" />
+	<WindowRendererSet Filename="CEGUIFalagardWRBase" />
+	<FalagardMapping WindowType="Combat/Titlebar" TargetType="CEGUI/Titlebar" Renderer="Falagard/Titlebar" LookNFeel="Combat/Titlebar" />
+	<FalagardMapping WindowType="Combat/Button" TargetType="CEGUI/PushButton" Renderer="Falagard/Button" LookNFeel="Combat/Button" />
+	<FalagardMapping WindowType="Combat/FrameWindow" TargetType="CEGUI/FrameWindow" Renderer="Falagard/FrameWindow" LookNFeel="Combat/FrameWindow" />
+	<FalagardMapping WindowType="Combat/Static" TargetType="CEGUI/FrameWindow" Renderer="Falagard/FrameWindow" LookNFeel="Combat/Static" />
+	<FalagardMapping WindowType="Combat/Editbox" TargetType="CEGUI/Editbox" Renderer="Falagard/Editbox" LookNFeel="Combat/Editbox" />
+	<FalagardMapping WindowType="Combat/VerticalScrollbarThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="Combat/VerticalScrollbarThumb" />
+	<FalagardMapping WindowType="Combat/VerticalScrollbar" TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="Combat/VerticalScrollbar" />
+	<FalagardMapping WindowType="Combat/HorizontalScrollbarThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="Combat/HorizontalScrollbarThumb" />
+	<FalagardMapping WindowType="Combat/HorizontalScrollbar" TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="Combat/HorizontalScrollbar" />
+	<FalagardMapping WindowType="Combat/StaticImage" TargetType="DefaultWindow" Renderer="Falagard/StaticImage" LookNFeel="Combat/StaticImage" />
+	<FalagardMapping WindowType="Combat/StaticText" TargetType="DefaultWindow" Renderer="Falagard/StaticText" LookNFeel="Combat/StaticText" />
+	<FalagardMapping WindowType="Combat/Listbox" TargetType="CEGUI/Listbox" Renderer="Falagard/Listbox" LookNFeel="Combat/Listbox" />
+	<FalagardMapping WindowType="Combat/MultiLineEditbox" TargetType="CEGUI/MultiLineEditbox" Renderer="Falagard/MultiLineEditbox" LookNFeel="Combat/MultiLineEditbox" />
+	<FalagardMapping WindowType="Combat/ComboDropList" TargetType="CEGUI/ComboDropList" Renderer="Falagard/Listbox" LookNFeel="Combat/ComboDropList" />
+	<FalagardMapping WindowType="Combat/Combobox" TargetType="CEGUI/Combobox" Renderer="Falagard/Default" LookNFeel="Combat/Combobox" />
+	<FalagardMapping WindowType="Combat/ProgressBar" TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="Combat/ProgressBar" />
+<!--
+	<FalagardMapping WindowType="Combat/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Combat/ScrollablePane" />
+	<FalagardMapping WindowType="Combat/Checkbox" TargetType="Falagard/Checkbox" LookNFeel="Combat/Checkbox" />
+	<FalagardMapping WindowType="Combat/RadioButton" TargetType="Falagard/RadioButton" LookNFeel="Combat/RadioButton" />
+	<FalagardMapping WindowType="Combat/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Combat/ScrollablePane" />
+-->
+</GUIScheme>

@@ -83,7 +83,7 @@ namespace Pixy
       mLog = 0;
     }
 
-    std::cout << "CUnit: " << mName << "#" << mUID << " destroyed\n";
+    //std::cout << "CUnit: " << mName << "#" << mUID << " destroyed\n";
   };
 
   void CUnit::copyFrom(const CUnit& src) {
@@ -139,10 +139,10 @@ namespace Pixy
 	void CUnit::attachSpell(CSpell* inSpell)
 	{
 		mSpells.push_back(inSpell);
-		std::cout
-      <<"CUnit: Spell " << inSpell->getName()
-      << "#" << inSpell->getUID()
-      << " attached to hand.\n";
+		//std::cout
+    //  <<"CUnit: Spell " << inSpell->getName()
+    //  << "#" << inSpell->getUID()
+    //  << " attached to hand.\n";
 
     mSpells.back()->setCaster(mRenderable);
 	};
@@ -161,10 +161,10 @@ namespace Pixy
 
     assert(lSpell);
 
-    std::cout
-      << "CUnit: Spell " << lSpell->getName()
-      << "#" << lSpell->getUID()
-      << " detached from hand.\n";
+    //std::cout
+    //  << "CUnit: Spell " << lSpell->getName()
+    //  << "#" << lSpell->getUID()
+    //  << " detached from hand.\n";
 
     if (remove)
       delete lSpell;
@@ -298,12 +298,12 @@ namespace Pixy
     if (mDestination == Vector3::ZERO) {
 
       mDestination = mWaypoints->at(inDestination);  // get walkpoint to our required destination
-      std::cout
-        << "\tMoving to : "
-        << mDestination.x << "," << mDestination.y << "," << mDestination.z
-        << " from "
-        << mNode->getPosition().x << "," << mNode->getPosition().y << "," << mNode->getPosition().z
-        << "\n";
+      //std::cout
+      //  << "\tMoving to : "
+      //  << mDestination.x << "," << mDestination.y << "," << mDestination.z
+      //  << " from "
+      //  << mNode->getPosition().x << "," << mNode->getPosition().y << "," << mNode->getPosition().z
+      //  << "\n";
 
       if (inDestination == POS_ATTACK) {
         assert(mEnemy);
@@ -315,7 +315,7 @@ namespace Pixy
           mEnemy->getRenderable()->getSceneNode()->getPosition().z +
           (radius * /*scale*/2 * mod);
         //calculatePositionOffset();
-        std::cout << "\tPosition for attacking node: " << mDestination.z <<"\n";
+        //std::cout << "\tPosition for attacking node: " << mDestination.z <<"\n";
       } else if (inDestination == POS_OFFENCE) {
         Ogre::Vector3 bbox = mBlockers.front()->getRenderable()->getSceneObject()->getBoundingBox().getSize();
         Ogre::Real radius = mBlockers.front()->getRenderable()->getSceneObject()->getBoundingBox().getSize().z;
@@ -324,10 +324,10 @@ namespace Pixy
           //mBlockers.front()->getRenderable()->getSceneNode()->getPosition().z +
           ((radius * mBlockers.front()->getRenderable()->getSceneNode()->getScale().z) /2 * mod);
 
-        std::cout << "My blocker's bbox: "
-          << bbox.x << ","
-          << bbox.y << ","
-          << bbox.z << "\n";
+        //std::cout << "My blocker's bbox: "
+        //  << bbox.x << ","
+        //  << bbox.y << ","
+        //  << bbox.z << "\n";
       }
     }
 
@@ -337,7 +337,7 @@ namespace Pixy
     Vector3 src = mNode->getOrientation() * Vector3::UNIT_Z;
     if ((1.0f + src.dotProduct(mMoveDirection)) < 0.0001f)
     {
-      std::cout << " ***** YAWING 180 ****** \n";
+      //std::cout << " ***** YAWING 180 ****** \n";
         mNode->yaw(Ogre::Degree(180));
     } else
     {
@@ -389,7 +389,7 @@ namespace Pixy
   void CUnit::move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback) {
     mCallback = callback;
 
-    std::cout << "Unit " << mUID << " moving to position: " << inDestination << " from " << mPosition << "\n";
+    //std::cout << "Unit " << mUID << " moving to position: " << inDestination << " from " << mPosition << "\n";
     mPDestination = inDestination;
     GfxEngine::getSingletonPtr()->updateMe(this);
     mDestination = Ogre::Vector3::ZERO;
@@ -478,7 +478,7 @@ namespace Pixy
       mRenderable->animateIdle();
 
       mPosition = mPDestination;
-      std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
+      //std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
 
       //~ this->mRenderable->resetOrientation();
 
@@ -550,11 +550,12 @@ namespace Pixy
 
     float length_sec = mRenderable->animateAttack();
 
-    std::cout << "Animation is " << length_sec << " seconds long\n";
+    //std::cout << "Animation is " << length_sec << " seconds long\n";
 
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait( boost::bind(&CUnit::attackAfterAnimation, this, callback, inTarget) );
 
+    return true;
   }
 
   void
@@ -600,6 +601,7 @@ namespace Pixy
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
     mTimer->async_wait(boost::bind(&CUnit::attackAfterAnimation, this, callback, inTarget, block));
 
+    return true;
   }
 
   void CUnit::attackAfterAnimation(boost::function<void()> callback, CUnit* inTarget, bool block) {
@@ -663,14 +665,14 @@ namespace Pixy
 
     this->mAttackTarget = 0;
 
-    std::cout << "I attacked puppet, going back now\n";
+    //std::cout << "I attacked puppet, going back now\n";
 
     // move back and tell Combat that we're done to fetch the next attacker
     this->move(POS_CHARGING, boost::bind(&CUnit::cleanupAfterMovingBack, this, inTarget) );
   }
 
   void CUnit::cleanupAfterMovingBack(CPuppet* inTarget) {
-    std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
+    //std::cout << "I'm back to charging position now, asking Combat to continue battle\n";
     Combat::getSingleton().unitAttacked(this);
     Combat::getSingleton().doBattle();
   }

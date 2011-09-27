@@ -116,7 +116,7 @@ namespace Pixy
 	{
 		mHand.push_back(inSpell);
     inSpell->setCaster(mRenderable);
-		std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
+		//std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
 	};
 
 	void CPuppet::detachSpell(int inUID, bool remove)

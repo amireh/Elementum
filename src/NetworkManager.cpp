@@ -32,10 +32,11 @@ namespace Pixy {
     poller_ = 0;
 
 
-		mLog->infoStream() << "shutting down";
-
-		if (mLog)
+		if (mLog) {
+      mLog->infoStream() << "shutting down";
 			delete mLog;
+    }
+
 		mLog = 0;
 		fOnline = false;
 	}
@@ -55,6 +56,13 @@ namespace Pixy {
     if (fOnline)
 	    return true;
 
+    boost::thread(boost::bind(&NetworkManager::doConnect, this));
+
+		return true;
+	}
+
+  void NetworkManager::doConnect()
+  {
     mLog->infoStream() << "Connecting to server";
 
    // Build hosts list
@@ -100,14 +108,18 @@ namespace Pixy {
     if (!_connected)
     {
       mLog->errorStream() << "couldnt start the conn .. ";
-      return false;
+      Event e(EventUID::Connected, EventFeedback::Error);
+      EventManager::getSingleton().hook(e);
+      return;
     }
 
     try {
       conn_->start();
     } catch (std::exception& e) {
       mLog->errorStream() << "a connection error occured: " << e.what();
-      return false;
+      Event evt(EventUID::Connected, EventFeedback::Error);
+      EventManager::getSingleton().hook(evt);
+      return;
     }
 
     conn_->get_dispatcher().bind(EventUID::Unassigned, this, &NetworkManager::onInbound);
@@ -115,7 +127,7 @@ namespace Pixy {
 
 		{
 			// notify components that we're connected
-      Event evt(EventUID::Connected);
+      Event evt(EventUID::Connected, EventFeedback::Ok);
       EventManager::getSingleton().hook(evt);
 
       // sync the game data
@@ -125,9 +137,7 @@ namespace Pixy {
 		fOnline = true;
 
     mLog->infoStream() << "connected";
-
-		return true;
-	}
+  }
 
 	bool NetworkManager::disconnect() {
     if (!fOnline)
@@ -147,9 +157,12 @@ namespace Pixy {
 	}
 
   void NetworkManager::send(const Event& inEvt) {
+    assert(isConnected());
+
     mLog->debugStream() << "sending an event " << (int)inEvt.UID;
-    inEvt.dump();
-    conn_->send(inEvt);
+    //inEvt.dump();
+    Event clone(inEvt);
+    conn_->send(clone);
   }
 
 	void NetworkManager::onInbound(const Event& inEvt) {

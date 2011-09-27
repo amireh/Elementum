@@ -1,6 +1,7 @@
 // -------------------------------
 // Cel Shading Section
 // -------------------------------
+/*
 vertex_program Ogre/CelShadingVPCg cg
 {
 	source Example_CelShading.cg
@@ -212,6 +213,7 @@ material Elementum/Bargor/Maimer : Examples/CelShading
 {
   set_texture_alias Skin troll-19.jpg
 }
+*/
 /*
 material statue-03 : Examples/CelShading
 {
@@ -238,7 +240,7 @@ material Elementum/Gremlin/Intro
 
 }
 
-
+/*
 material Elementum/Scorpid/Intro : Examples/CelShading
 {
   set_texture_alias Skin scorp-04.jpg
@@ -248,7 +250,7 @@ material Elementum/Troll/Intro : Examples/CelShading
 {
   set_texture_alias Skin troll-17.jpg
 }
-
+*/
 /*
 material Elementum/Bargor/Stomper
 {

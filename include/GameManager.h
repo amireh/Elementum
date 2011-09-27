@@ -216,7 +216,7 @@ namespace Pixy
 		unsigned long lTimeLastFrame, lTimeCurrentFrame, lTimeSinceLastFrame;
 
 		//! do we want to shutdown?
-		bool fShutdown;
+		bool fShutdown, fSetup;
 		std::vector<GameState*> mStates;
 		static GameManager *mGameManager;
 		log4cpp::Category* mLog;

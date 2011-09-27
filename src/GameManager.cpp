@@ -52,9 +52,12 @@ namespace Pixy
   mIOService(),
   mWork(mIOService),
   mWorker(0),
-	mRoot(NULL),
-	mInputMgr(NULL),
-	fShutdown(false) {
+	mRoot(0),
+  mResMgr(0),
+	mInputMgr(0),
+  mLog(0),
+	fShutdown(false),
+  fSetup(false) {
 	}
 
 	GameManager::~GameManager() {
@@ -64,18 +67,23 @@ namespace Pixy
 		    mStates.back()->exit();
 		    mStates.pop_back();
 		}
+    
+    if (mLog)
+      mLog->infoStream() << "tearing down all engines";
 
-    mLog->infoStream() << "tearing down all engines";
+    if (fSetup)
+    {
+      delete GfxEngine::getSingletonPtr();
+      delete FxEngine::getSingletonPtr();
+      //delete SfxEngine::getSingletonPtr();
+      //delete PhyxEngine::getSingletonPtr();
+      delete UIEngine::getSingletonPtr();
+      delete ScriptEngine::getSingletonPtr();
+      delete NetworkManager::getSingletonPtr();
+    }
 
-    delete GfxEngine::getSingletonPtr();
-    delete FxEngine::getSingletonPtr();
-    //delete SfxEngine::getSingletonPtr();
-    //delete PhyxEngine::getSingletonPtr();
-    delete UIEngine::getSingletonPtr();
-    delete ScriptEngine::getSingletonPtr();
-    delete NetworkManager::getSingletonPtr();
-
-    delete mResMgr;
+    if (mResMgr)
+      delete mResMgr;
 
 		if( mInputMgr )
 		    delete mInputMgr;
@@ -83,16 +91,23 @@ namespace Pixy
 		if( mRoot )
 		    delete mRoot;
 
-		mLog->infoStream() << "++++++ Elementum cleaned up successfully ++++++";
-		if (mLog)
+		if (mLog) {
+      mLog->infoStream() << "++++++ Elementum cleaned up successfully ++++++";
 		  delete mLog;
+      mLog = 0;
 
-		log4cpp::Category::shutdown();
+      log4cpp::Category::shutdown();
+    }
+    		
 		mRoot = NULL; mInputMgr = NULL;
 
-    mIOService.stop();
-    mWorker->join();
-    delete mWorker;
+    if (mWorker)
+    {
+      mIOService.stop();
+      mWorker->join();
+      delete mWorker;
+      mWorker = 0;
+    }
 	}
 
   std::string const& GameManager::getRootPath() const {
@@ -119,6 +134,14 @@ namespace Pixy
   {
     //Root* ogreRoot = Root::getSingletonPtr();
     bool rendererInstalled = false;
+    std::string lPluginsPath;
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+      lPluginsPath = macBundlePath() + "/Contents/Plugins/";
+#elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
+      lPluginsPath = mBinPath + "//";
+#else
+      lPluginsPath = "./";
+#endif
 #if PIXY_PLATFORM == PIXY_PLATFORM_WIN32
 /*    HRESULT hr;
     DWORD dwDirectXVersion = 0;
@@ -133,7 +156,7 @@ namespace Pixy
 */
       //if(dwDirectXVersion >= 0x00090000) {
         try {
-          mRoot->loadPlugin("RenderSystem_Direct3D9");
+          mRoot->loadPlugin(mBinPath + "RenderSystem_Direct3D9");
           mRoot->setRenderSystem(mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem"));
           rendererInstalled = true;
         } catch (Ogre::Exception& e) {
@@ -145,14 +168,6 @@ namespace Pixy
 //    }
 #endif
     try {
-      std::string lPluginsPath;
-#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-      lPluginsPath = macBundlePath() + "/Contents/Plugins/";
-#elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
-      lPluginsPath = ".\\";
-#else
-      lPluginsPath = "./";
-#endif
       mRoot->loadPlugin(lPluginsPath + "RenderSystem_GL");
       if (!rendererInstalled) {
         mRoot->setRenderSystem(mRoot->getRenderSystemByName("OpenGL Rendering Subsystem"));
@@ -237,6 +252,8 @@ namespace Pixy
     lTimeSinceLastFrame = 0;
 
     mRoot->getTimer()->reset();
+
+    fSetup = true;
   }
 
 	void GameManager::startGame(/*int argc, char** argv*/) {
@@ -465,7 +482,14 @@ namespace Pixy
 
   void GameManager::resolvePaths() {
     using boost::filesystem::path;
+    using boost::filesystem::is_directory;
+    using boost::filesystem::create_directories;
+    using boost::filesystem::create_directory;
+    using boost::filesystem::exists;
+
     bool dontOverride = false;
+
+    std::cout << "Resolving paths...\n";
 
     // locate the binary and build its path
 #if PIXY_PLATFORM == PIXY_PLATFORM_LINUX
@@ -495,7 +519,7 @@ namespace Pixy
     if( !GetModuleFileName( NULL, szPath, MAX_PATH ) )
     {
         printf("Cannot install service (%d)\n", GetLastError());
-        return;
+        throw std::runtime_error("could not get runpath!");
     }
 
     mBinPath = std::string(szPath);
@@ -508,11 +532,24 @@ namespace Pixy
       lRoot = lRoot.remove_leaf();
     }
 
+
     mRootPath = lRoot.make_preferred().string();
     if (!dontOverride) {
       mResPath = (path(mRootPath) / PROJECT_RESOURCES).make_preferred().string();
       mCfgPath = (path(mResPath) / "config").make_preferred().string();
       mLogPath = (path(mRootPath) / path(PROJECT_LOG_DIR)).make_preferred().string();
+    }
+
+    if (!is_directory(path(mLogPath)))
+    {
+      try {
+        if (!create_directories(path(mLogPath)))
+        {
+          throw std::runtime_error("Couldn't create log directory!");
+        }
+      } catch(...) {
+        throw std::runtime_error("Couldn't create log directory!");
+      }
     }
 
     std::cout << "Root path: " <<  mRootPath << "\n";

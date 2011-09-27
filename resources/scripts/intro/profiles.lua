@@ -154,6 +154,7 @@ Profiles.cleanup = function()
   Profiles.Knights.Fire:delete()
   Profiles.Knights.Water:delete()
 
+  isSetup = false
 end
 
 Profiles.Back = function()

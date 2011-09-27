@@ -62,6 +62,7 @@ Pixy.registerGlobals = function()
 	CESchemeMgr:create( "TaharezLook.scheme" )
 	CESchemeMgr:create( "WindowsLook.scheme" )
 	CESchemeMgr:create( "VanillaSkin.scheme" )
+	CESchemeMgr:create( "CombatSkin.scheme" )
 
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "spells_earth.imageset" )

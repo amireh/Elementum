@@ -24,8 +24,8 @@ Pixy.UI.Combat.configure = function()
 	cfg.SpellButton["Width"] = 96
   cfg.SpellButton["Dimensions"] =
     CEGUI.UVector2:new(
-      CEGUI.UDim(0.127,0),-- cfg.SpellButton["Width"]),
-      CEGUI.UDim(0.6,0)-- cfg.SpellButton["Height"])
+      CEGUI.UDim(0.15,0),-- cfg.SpellButton["Width"]),
+      CEGUI.UDim(1,0)-- cfg.SpellButton["Height"])
     )
   cfg.SpellButton["LogDimensions"] =
     CEGUI.UVector2:new(
@@ -40,6 +40,7 @@ Pixy.UI.Combat.configure = function()
 
 end
 
+local Hand = nil
 Pixy.UI.Combat.registerGlobals = function()
   Pixy.UI.Combat.Containers["Error"] = CEWindowMgr:getWindow("Elementum/Combat/Containers/Error")
   Pixy.UI.Combat.Containers["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Containers/Tooltip")
@@ -50,8 +51,13 @@ Pixy.UI.Combat.registerGlobals = function()
   Pixy.UI.Combat.Labels["Turns"] = CEWindowMgr:getWindow("Elementum/Combat/Effects/Turns/Text")
   Pixy.UI.Combat.Labels["Tooltip"] = CEWindowMgr:getWindow("Elementum/Combat/Text/Tooltip")
   Pixy.UI.Combat.Labels["Error"] = CEWindowMgr:getWindow("Elementum/Combat/Text/Error")
-  Pixy.UI.Combat.Labels["PlayerWP"] = CEWindowMgr:getWindow("Elementum/Combat/Text/PlayerWP")
-  Pixy.UI.Combat.Labels["EnemyWP"] = CEWindowMgr:getWindow("Elementum/Combat/Text/EnemyWP")
+  Pixy.UI.Combat.Labels["PlayerWP"] = CEWindowMgr:getWindow("Combat/Text/Player/Willpower")
+  Pixy.UI.Combat.Labels["PlayerHP"] = CEWindowMgr:getWindow("Combat/Text/Player/Health")
+  Pixy.UI.Combat.Labels["PlayerC"] = CEWindowMgr:getWindow("Combat/Text/Player/Channels")
+  Pixy.UI.Combat.Labels["EnemyWP"] = CEWindowMgr:getWindow("Combat/Text/Enemy/Willpower")
+  Pixy.UI.Combat.Labels["EnemyHP"] = CEWindowMgr:getWindow("Combat/Text/Enemy/Health")
+  Pixy.UI.Combat.Labels["EnemyC"] = CEWindowMgr:getWindow("Combat/Text/Enemy/Channels")
+  Hand = CEWindowMgr:getWindow("Combat/Hand")
 
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Victory"), "Testing")
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Elementum/Combat/Containers/Message"), "Fade")
@@ -95,14 +101,14 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 		)
 
 	-- assign dimensions
-	lButton["Dimensions"] =
-		CEGUI.UVector2:new(
-			CEGUI.UDim(0.147,0),-- cfg.SpellButton["Width"]),
-			CEGUI.UDim(0.67,0)-- cfg.SpellButton["Height"])
-		)
+	--~ lButton["Dimensions"] =
+		--~ CEGUI.UVector2:new(
+			--~ CEGUI.UDim(0.147,0),-- cfg.SpellButton["Width"]),
+			--~ CEGUI.UDim(0.67,0)-- cfg.SpellButton["Height"])
+		--~ )
 
 	-- generate the button's name
-	lButton["Name"] = "Elementum/Combat/SpellPanel/Player/" .. inSpell:getUID()
+	lButton["Name"] = "SpellButton_" .. inSpell:getUID()
 
 	Pixy.Log("creating a window named " .. lButton["Name"])
 
@@ -130,6 +136,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	lButton["Window"]:setProperty("PushedImage", lButton["Image"] .. "_Pushed")
 	lButton["Window"]:setProperty("DisabledImage", lButton["Image"] .. "_Disabled")
   lButton["Window"]:setProperty("Alpha", "0.0")
+  lButton["Window"]:setProperty("MousePassThroughEnabled", "False")
 
 	-- attach our spell object to the button...
 	lButton["Window"]:setUserString("Spell", inSpell:getUID())
@@ -139,14 +146,14 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	-- ...
 
 	-- attach the window to our layout
-	CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):addChildWindow(lButton["Window"])
+	Hand:addChildWindow(lButton["Window"])
 
   --local item = lButton["Window"]
 	--CEGUI.toItemEntry(list_item)
   --local list = CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand")
   --CEGUI.toListbox(list)
   --list:addItem(list_item)
-	lButton["Window"]:setSize(lButton["Dimensions"])
+	lButton["Window"]:setSize(cfg.SpellButton["Dimensions"])
   UIEngine:setMargin(lButton["Window"],
     CEGUI.UBox(
       CEGUI.UDim(0,0),
@@ -228,7 +235,7 @@ Pixy.UI.Combat.onStartTurn = function()
   inBlockPhase = false
   Pixy.UI.Combat.Labels["Turns"]:setText("Your turn")
 
-  CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):enable()
+  Hand:enable()
   --for button in list_iter(Pixy.UI.Combat.Buttons) do
   --  button:enable()
   --end
@@ -240,7 +247,7 @@ Pixy.UI.Combat.onTurnStarted = function()
   inBlockPhase = true
   Pixy.UI.Combat.Labels["Turns"]:setText("Enemy's turn")
 
-  CEWindowMgr:getWindow("Elementum/Combat/SpellPanel/Player/Hand"):disable()
+  Hand:disable()
   --for button in list_iter(Pixy.UI.Combat.Buttons) do
   --  button:disable()
   --end
@@ -292,9 +299,13 @@ end
 
 Pixy.UI.Combat.UpdatePuppet = function(puppet)
   if (puppet == SelfPuppet) then
-    Pixy.UI.Combat.Labels["PlayerWP"]:setText(puppet:getWP() .. " @" .. puppet:getChannels())
+    Pixy.UI.Combat.Labels["PlayerWP"]:setText(puppet:getWP())
+    Pixy.UI.Combat.Labels["PlayerC"]:setText(puppet:getChannels())
+    Pixy.UI.Combat.Labels["PlayerHP"]:setText(puppet:getHP())
   else
-    Pixy.UI.Combat.Labels["EnemyWP"]:setText(puppet:getWP() .. " @" .. puppet:getChannels())
+    Pixy.UI.Combat.Labels["EnemyWP"]:setText(puppet:getWP())
+    Pixy.UI.Combat.Labels["EnemyC"]:setText(puppet:getChannels())
+    Pixy.UI.Combat.Labels["EnemyHP"]:setText(puppet:getHP())
   end
 end
 

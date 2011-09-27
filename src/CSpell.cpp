@@ -15,12 +15,12 @@ namespace Pixy
     : mButton(0),
       mTooltip("")
     {
-      std::cout << "CSpell is being created\n";
+      //std::cout << "CSpell is being created\n";
     }
 
     CSpell::~CSpell()
     {
-      std::cout << "CSpell is being destroyed\n";
+      //std::cout << "CSpell is being destroyed\n";
       mButton = 0;
     };
 
@@ -54,7 +54,7 @@ namespace Pixy
       mImageSet = "";
       mButton = 0;
 
-      std::cout << "CSpell cloned from Spell, my name is " << mName << "\n";
+      //std::cout << "CSpell cloned from Spell, my name is " << mName << "\n";
     }
 
     void CSpell::setImageSet(std::string inName) {

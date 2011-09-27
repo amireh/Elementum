@@ -20,7 +20,7 @@
 
 namespace Pixy {
 
-  class Event;
+  struct Event;
   class EventManager;
   class CSpell;
   class MyInput;

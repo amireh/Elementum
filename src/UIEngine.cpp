@@ -60,15 +60,18 @@ namespace Pixy {
 	}
 
 	UIEngine::~UIEngine() {
-		mLog->infoStream() << "shutting down";
+		if (mLog)
+      mLog->infoStream() << "shutting down";
+
     cleanup();
 
 		if (fSetup) {
-			mLog->debugStream() << "destroying all windows";
-
-
-
-			delete mLog; mLog = 0;
+			if (mLog)
+      {
+        mLog->debugStream() << "destroying all windows";
+        delete mLog; 
+      }
+      mLog = 0;
 			fSetup = false;
 		}
 	}
@@ -330,6 +333,7 @@ namespace Pixy {
       static_text->setHeight(CEGUI::UDim(0, height));
 
       return static_cast<int>(height);*/
+	  return 0;
   }
 
   void UIEngine::connectAnimation(CEGUI::Window* inWindow, std::string inAnim) {

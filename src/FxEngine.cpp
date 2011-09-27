@@ -39,17 +39,24 @@ namespace Pixy {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "FxEngine");
 		mLog->infoStream() << "firing up";
     mLog->infoStream() << "My Listener UID: " << mUID;
+
+    mDeathlist.clear();
+    mEffects.clear();
 		fSetup = false;
 	}
 
 	FxEngine::~FxEngine() {
-		mLog->infoStream() << "shutting down";
+		if (mLog)
+    {
+      mLog->infoStream() << "shutting down";
+      delete mLog;
+      mLog = 0;
+    }
 
 		if (fSetup) {
       mFxMgr->destroyAllParticleSystems(mSceneMgr);
       mFxMgr = 0;
-
-			delete mLog; mLog = 0;
+            
 			fSetup = false;
 		}
 	}
@@ -88,6 +95,7 @@ namespace Pixy {
          node != mDeathlist.end();
          ++node) {
       (*node)->detachAllObjects();
+      mPortableEffects.remove(*node);
       mSceneMgr->destroySceneNode(*node);
     }
     mDeathlist.clear();
@@ -176,7 +184,7 @@ namespace Pixy {
     Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
     Pixy::Entity* lEntity = lRend->getEntity();
 
-    mLog->infoStream() << "on entity selected";
+    //mLog->infoStream() << "on entity selected";
 
     // double click on an entity
     if (mSelected && mSelected->getEntity()->getUID() == lEntity->getUID()) {
@@ -207,7 +215,7 @@ namespace Pixy {
       //}
     }
 
-    mLog->infoStream() << "on entity attacked";
+    //mLog->infoStream() << "on entity attacked";
 
     // try any of the following effects, whichever is not being played
     bool played = false;
@@ -267,8 +275,8 @@ namespace Pixy {
             if ((*node)->getAttachedObject(inSystem->getName())) {
               //node->detachObject(inSystem);
               inSystem->removeParticleSystemListener(this);
-              mPortableEffects.remove(*node);
               mDeathlist.push_back(*node);
+              //mPortableEffects.remove(*node);
 
               mLog->infoStream() << "destroyed a portable effect node";
               break;
@@ -293,6 +301,7 @@ namespace Pixy {
   void FxEngine::unloadAllEffects() {
     dehighlight();
     mEffects.clear();
+    mDeathlist.clear();
     mFxMgr->destroyAllParticleSystems(mSceneMgr);
     mHighlightEffect = 0;
   }

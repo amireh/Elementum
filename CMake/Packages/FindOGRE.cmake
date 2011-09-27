@@ -78,6 +78,9 @@ if (WIN32)
   set(OGRE_PREFIX_GUESSES
     ${ENV_PROGRAMFILES}/OGRE
     C:/OgreSDK
+	C:/Workspace/Build/Ogre/Byatis/Shared/Threaded
+	C:/Workspace/Repos/ogre
+	C:/Workspace/Repos/ogre/OgreMain
   )
 elseif (UNIX)
   set(OGRE_PREFIX_GUESSES

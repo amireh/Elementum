@@ -60,10 +60,12 @@ SET(Elementum_SRCS
 )
 
 SET(PROJECT_LIBS
-  ${Boost_LIBRARIES}
+  #${Boost_LIBRARIES}
   ${LOG4CPP_LIBRARIES}
   ${LUA_LIBRARIES}
   ${ESHARED_LIBRARIES}
+  ${TOLUAPP_LIBRARIES}
+  ${ParticleUniverse_LIBRARIES}
 
   #${OIS_LIBRARIES}
   #${CEGUI_LIBRARIES}
@@ -71,9 +73,9 @@ SET(PROJECT_LIBS
   #${OGG_LIBRARIES}
   #${VORBISFILE_LIBRARIES}
   #pqxx
-  tolua++
+  #tolua++
   #OgreOggSound
-  Plugin_ParticleUniverse
+  #Plugin_ParticleUniverse
   #~ Caelum
   #PagedGeometry
   #OgreTerrain
@@ -86,27 +88,22 @@ if (APPLE)
   LINK_LIBRARIES(${PROJECT_FRAMEWORKS})
   #LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib/CEGUI)
   #LINK_LIBRARIES(ElementumLua ${PROJECT_FRAMEWORKS} tolua++ ${LUA_LIBRARIES})
-else()
+elseif(UNIX)
   LIST(APPEND PROJECT_LIBS
     ${OGRE_LIBRARIES}
     ${CEGUI_LIBRARIES}
     #CEGUI
     CEGUIOgreRenderer
     CEGUILuaScriptModule
-    ${OIS_LIBRARIES}
-  )
+    ${OIS_LIBRARIES})
+
+  LINK_DIRECTORIES(
+    ${CEGUI_LIBRARY_DIRS}
+    ${ESHARED_LIBRARY_DIR}
+    /usr/local/lib/OGRE
+    /usr/local/lib/CEGUI)
 endif()
-LINK_DIRECTORIES(#${OGRE_LIBRARY_DIRS}
-                 #${OIS_LIBRARY_DIRS}
-                 ${CEGUI_LIBRARY_DIRS}
-                 #~ ${RakNet_LIBRARY_DIRS}
-                 #${OPENAL_LIBRARY_DIRS}
-                 #${OGG_INCLUDE_DIRS}
-                 #${VORBISFILE_INCLUDE_DIRS}
-                 ${ESHARED_LIBRARY_DIR}
-                 /usr/local/lib/OGRE
-                 /usr/local/lib/CEGUI
-                 )
+
 #LINK_LIBRARIES( ${PROJECT_NAME} ${PROJECT_LIBS} Elementum_Modules)
 
 # generate lua bindings
@@ -167,11 +164,6 @@ IF(APPLE)
   SET(OSX_FWK_PATH ${OSX_DEPS_PATH}/Frameworks)
   SET(OSX_PLUGINS_PATH ${OSX_DEPS_PATH}/Plugins)
 
-ENDIF(APPLE)
-
-# --------------------------------------------------------------------------------
-# the bundle is at the root/bin of the install tree
-IF(APPLE)
   SET(plugin_dest_dir Elementum.app/Contents)
   SET(res_dest_dir Elementum.app/Contents/Resources)
   SET(fwk_dest_dir Elementum.app/Contents)
@@ -214,7 +206,43 @@ IF(APPLE)
   INSTALL(FILES "${Patcher_BUNDLE}/Contents/Info.plist" DESTINATION ${bundle_dir} COMPONENT Runtime)
   INSTALL(FILES "${Patcher_BUNDLE}/Contents/MacOS/patch_mirrors.txt" DESTINATION ${bundle_dir}/MacOS COMPONENT Runtime)
 
-ENDIF(APPLE)
+  # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
+  # where CPackConfig.cmake is created by including CPack
+  # And then there's ways to customize this as well
+  set(CPACK_BINARY_DRAGNDROP ON)
+ENDIF(APPLE) # Apple Bundle Installer
+
+IF(WIN32)
+  SET(WIN32_DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../deps/win32)
+  SET(deps_dest_dir bin)
+  SET(res_dest_dir resources)
+  SET(log_dest_dir log)
+	
+  SET(CPACK_NSIS_MODIFY_PATH "ON")
+	SET(CPACK_NSIS_DISPLAY_NAME "Elementum")
+  
+  # Create an empty directory which will hold our log files
+  INSTALL(CODE "FILE(MAKE_DIRECTORY \${ENV}\${CMAKE_INSTALL_PREFIX}/${log_dest_dir})")
+  
+  # Copy Elementum resources
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/config" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/media" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/scripts" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+  INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/ui" DESTINATION ${res_dest_dir} COMPONENT Runtime)
+ 
+  # Copy Win32 Dependencies
+  FILE(GLOB WIN32_DEPS "${WIN32_DEPS_PATH}/*.dll")
+  INSTALL(FILES ${WIN32_DEPS} DESTINATION ${deps_dest_dir} COMPONENT Runtime)
+  
+  set(CPACK_PACKAGE_NAME "Elementum")
+  set(CPACK_PACKAGE_VENDOR "Shroom Studios")
+  set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Elementum - An Online Turn-Based Strategy Game")
+  set(CPACK_PACKAGE_VERSION "1.0.0")
+  set(CPACK_PACKAGE_VERSION_MAJOR "1")
+  set(CPACK_PACKAGE_VERSION_MINOR "0")
+  set(CPACK_PACKAGE_VERSION_PATCH "0")
+  set(CPACK_PACKAGE_INSTALL_DIRECTORY "Elementum")
+ENDIF() # Windows NSIS Installer
 
 # install!
 INSTALL(TARGETS Elementum
@@ -222,8 +250,4 @@ INSTALL(TARGETS Elementum
   RUNTIME DESTINATION bin COMPONENT Runtime
 )
 
-# To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
-# where CPackConfig.cmake is created by including CPack
-# And then there's ways to customize this as well
-set(CPACK_BINARY_DRAGNDROP ON)
 include(CPack)
