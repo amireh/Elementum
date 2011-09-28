@@ -122,6 +122,9 @@ namespace Pixy {
       return;
     }
 
+    mLog->infoStream() << "connected";
+		fOnline = true;
+
     conn_->get_dispatcher().bind(EventUID::Unassigned, this, &NetworkManager::onInbound);
     conn_->get_dispatcher().bind(EventUID::SyncGameData, this, &NetworkManager::onSyncGameData);
 
@@ -134,9 +137,6 @@ namespace Pixy {
       send(Event(EventUID::SyncGameData));
 		}
 
-		fOnline = true;
-
-    mLog->infoStream() << "connected";
   }
 
 	bool NetworkManager::disconnect() {
@@ -146,6 +146,9 @@ namespace Pixy {
     Event evt(EventUID::Logout);
     send(evt);
     EventManager::getSingleton().hook(evt);
+
+    conn_->get_dispatcher().unbind(EventUID::Unassigned);
+    conn_->get_dispatcher().unbind(EventUID::SyncGameData);
 
     mLog->infoStream() << "Disconnecting from server";
 

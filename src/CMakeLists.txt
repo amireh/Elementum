@@ -90,6 +90,7 @@ if (APPLE)
   #LINK_LIBRARIES(ElementumLua ${PROJECT_FRAMEWORKS} tolua++ ${LUA_LIBRARIES})
 elseif(UNIX)
   LIST(APPEND PROJECT_LIBS
+    ${Boost_LIBRARIES}
     ${OGRE_LIBRARIES}
     ${CEGUI_LIBRARIES}
     #CEGUI
@@ -98,7 +99,6 @@ elseif(UNIX)
     ${OIS_LIBRARIES})
 
   LINK_DIRECTORIES(
-    ${CEGUI_LIBRARY_DIRS}
     ${ESHARED_LIBRARY_DIR}
     /usr/local/lib/OGRE
     /usr/local/lib/CEGUI)
@@ -217,23 +217,23 @@ IF(WIN32)
   SET(deps_dest_dir bin)
   SET(res_dest_dir resources)
   SET(log_dest_dir log)
-	
+
   SET(CPACK_NSIS_MODIFY_PATH "ON")
 	SET(CPACK_NSIS_DISPLAY_NAME "Elementum")
-  
+
   # Create an empty directory which will hold our log files
   INSTALL(CODE "FILE(MAKE_DIRECTORY \${ENV}\${CMAKE_INSTALL_PREFIX}/${log_dest_dir})")
-  
+
   # Copy Elementum resources
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/config" DESTINATION ${res_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/media" DESTINATION ${res_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/scripts" DESTINATION ${res_dest_dir} COMPONENT Runtime)
   INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../resources/ui" DESTINATION ${res_dest_dir} COMPONENT Runtime)
- 
+
   # Copy Win32 Dependencies
   FILE(GLOB WIN32_DEPS "${WIN32_DEPS_PATH}/*.dll")
   INSTALL(FILES ${WIN32_DEPS} DESTINATION ${deps_dest_dir} COMPONENT Runtime)
-  
+
   set(CPACK_PACKAGE_NAME "Elementum")
   set(CPACK_PACKAGE_VENDOR "Shroom Studios")
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Elementum - An Online Turn-Based Strategy Game")
