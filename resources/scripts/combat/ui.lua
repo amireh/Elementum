@@ -137,6 +137,7 @@ Pixy.UI.Combat.drawSpell = function(inSpell)
 	lButton["Window"]:setProperty("DisabledImage", lButton["Image"] .. "_Disabled")
   lButton["Window"]:setProperty("Alpha", "0.0")
   lButton["Window"]:setProperty("MousePassThroughEnabled", "False")
+  lButton["Window"]:setProperty("AlwaysOnTop", "True")
 
 	-- attach our spell object to the button...
 	lButton["Window"]:setUserString("Spell", inSpell:getUID())
@@ -273,6 +274,7 @@ end
 
 Pixy.UI.Combat.ShowTooltip = function(e)
 	local win = CEGUI.toWindowEventArgs(e).window
+  assert(win)
 	local spell = SelfPuppet:getSpell(win:getUserString("Spell"))
   assert(spell)
 

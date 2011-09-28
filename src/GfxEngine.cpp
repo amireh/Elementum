@@ -1159,7 +1159,11 @@ namespace Pixy {
 	{
     // check if the mouse is over the UI hand (spell buttons)
     CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
-    if (window && window->getName().find("SpellPanel") != CEGUI::String::npos)
+    { // DEBUG
+      //~ if (window)
+        //~ mLog->debugStream() << "mouse pressed over UI: " << window->getName();
+    }
+    if (window && window->getName().find("SpellButton") != CEGUI::String::npos)
       return false;
 
 		if (mCameraMan)
