@@ -56,7 +56,7 @@ namespace Pixy {
 		if (fSetup) {
       mFxMgr->destroyAllParticleSystems(mSceneMgr);
       mFxMgr = 0;
-            
+
 			fSetup = false;
 		}
 	}
@@ -73,7 +73,7 @@ namespace Pixy {
 		mLog->infoStream() << "Setting up";
 
     //bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
-    bind(EventUID::EntityAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
+    bind(EventUID::UnitAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
     if (GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
     {
       bind(EventUID::EntityDying, boost::bind(&FxEngine::onEntityDying, this, _1));

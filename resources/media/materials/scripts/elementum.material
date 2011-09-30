@@ -109,15 +109,15 @@ material Elementum/Dragon/Blue : CelShadingTemplate
 }
 
 
-material Elementum/Skeleton/Footsoldier : CelShadingTemplate
+material Elementum/Skeleton/Soldier : CelShadingTemplate
 {
   set_texture_alias Skin skeleton_01.jpg
 }
-material Elementum/Skeleton/Warrior : CelShadingTemplate
+material Elementum/Skeleton/Warlord : CelShadingTemplate
 {
   set_texture_alias Skin skeleton_02.jpg
 }
-material Elementum/Skeleton/Mage : CelShadingTemplate
+material Elementum/Skeleton/Ravager : CelShadingTemplate
 {
   set_texture_alias Skin skeleton_04.jpg
 }

@@ -14,7 +14,7 @@ SpellValidators = {}
 -- to draw it
 Combat.DrawSpell = function(Spell)
   Pixy.Log("Drawing spell button: " .. Spell:getName())
-  Pixy.UI.Combat.drawSpell(Spell)
+  Hand.DrawSpell(Spell)
 --[[
   local uid = inEvt:getProperty("Spell")
   tolua.cast(uid, "int")
@@ -35,7 +35,7 @@ end
 
 Combat.DropSpell = function(Spell)
   Pixy.Log("Discarding spell button: " .. Spell:getName())
-  Pixy.UI.Combat.dropSpell(Spell)
+  Hand.DropSpell(Spell)
 end
 
 -- type: CEGUI event handler
@@ -45,7 +45,7 @@ Combat.reqCastSpell = function(inUIEvt)
 	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
 
-	local lSpell = Active:getSpell(lWindow:getUserString("Spell"))
+	local lSpell = Active:getSpell(lWindow:getUserString("UID"))
   assert(lSpell)
 
 	--tolua.cast(lSpell, "Pixy::Spell")
@@ -56,7 +56,7 @@ Combat.reqCastSpell = function(inUIEvt)
   if (lSpell:requiresTarget()) then
     local target = GfxEngine:getSelected()
     if (not target) then
-      Pixy.UI.Combat.ShowError("You need to select a target")
+      UI.ShowError("You need to select a target")
       evt:delete()
       return false
     end
@@ -71,17 +71,20 @@ Combat.CastSpell = function(inCaster, inTarget, inSpell)
 	local spellHandler = Handlers[inSpell:getName()]
   if not inSpell:getCaster() then
     Pixy.Log("Spell has no assigned caster!! returning")
+    assert(false)
     return false
   end
 
+  Pixy.Log("Casting spell " .. inSpell:getName())
+
+  UI.LogSpellCast(inSpell)
+  local result = false
 	if not spellHandler then return false else
-    local caster_is_self = false
-    if (inSpell:getCaster():getEntity():getOwner():getUID() == SelfPuppet:getUID()) then
-      caster_is_self = true
-    end
-    Pixy.UI.Combat.LogSpellCast(inSpell,caster_is_self)
-    return spellHandler(inCaster, inTarget, inSpell)
+    result = spellHandler(inCaster, inTarget, inSpell)
   end
+
+  if inTarget == Selected then Buffs.Show(inTarget) end
+  return result
 end
 
 function subscribe_spell(inSpellName, inMethod)

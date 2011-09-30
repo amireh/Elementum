@@ -67,7 +67,7 @@ namespace Pixy
 		    mStates.back()->exit();
 		    mStates.pop_back();
 		}
-    
+
     if (mLog)
       mLog->infoStream() << "tearing down all engines";
 
@@ -98,7 +98,7 @@ namespace Pixy
 
       log4cpp::Category::shutdown();
     }
-    		
+
 		mRoot = NULL; mInputMgr = NULL;
 
     if (mWorker)
@@ -242,7 +242,7 @@ namespace Pixy
     mInputMgr->addMouseListener( this, "GameManager" );
 
     // Change to first state
-    this->changeState( Intro::getSingletonPtr() );
+    this->changeState( Combat::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame

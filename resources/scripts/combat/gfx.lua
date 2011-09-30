@@ -41,6 +41,8 @@ Combat.onEntitySelected = function(inEvt)
     BBSet:setMaterialName("Elementum/Billboards/EnemyEntitySelection")
   end
 
+  Buffs.Show(entity)
+
   Selected = entity
   updater = rotateBillboard
 end
@@ -50,6 +52,8 @@ Combat.onEntityDeselected = function()
   if (Selected) then
     Selected:getSceneNode():removeChild(BBNode)
   end
+
+  Buffs.Hide()
 
   Selected = nil
   updater = doNothing

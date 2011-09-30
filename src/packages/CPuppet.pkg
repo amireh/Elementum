@@ -25,11 +25,12 @@ public:
   void attachUnit(Pixy::CUnit* inUnit);
   void detachUnit(int inUID, bool);
   Pixy::CUnit* getUnit(int inUID);
-  units_t& getUnits();
+  Pixy::CPuppet::units_t const& getUnits();
 
   virtual void attachBuff(CSpell*);
   virtual void detachBuff(int inUID);
   virtual bool hasBuff(int inUID);
+  Pixy::CPuppet::spells_t const& getBuffs() const;
 
   void updateTextOverlay();
   virtual void setHP(int inHP);

@@ -4,7 +4,7 @@ Skeletons = {
   MaterialPrefix = "Elementum/Skeleton"
 }
 
-Skeletons.CreatePeasant = function(unit)
+Skeletons.CreateSoldier = function(unit)
   --~ GfxEngine:loadScene("SkeletonPeasant.scene")
   --~ local SceneMgr = GfxEngine:getSceneMgr()
 --~
@@ -19,7 +19,7 @@ Skeletons.CreatePeasant = function(unit)
 --~
   --~ rnd:animateIdle()
 
-  Skeletons.Create(unit, "skeleton_peasant01.mesh", "Footsoldier", 5)
+  Skeletons.Create(unit, "skeleton_peasant01.mesh", "Soldier", 5)
   local rnd = unit:getRenderable()
   --~ rnd:getSceneNode():setScale(20)
   local scythe = rnd:attachExtension("scythe.mesh", "Bip01 R Hand")
@@ -66,20 +66,20 @@ Skeletons.RegisterAnimations = function(renderable)
   --~ renderable:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Hit_2", false)
 end
 
-subscribe_unit("Skeleton Footsoldier",
+subscribe_unit("Skeleton Soldier",
   function(inUnit)
-    return Skeletons.CreatePeasant(inUnit)
+    return Skeletons.CreateSoldier(inUnit)
   end)
 
-subscribe_unit("Skeleton Mage",
+subscribe_unit("Skeleton Ravager",
   function(inUnit)
-    return Skeletons.Create(inUnit, "skeleton.mesh", "Mage", 9)
+    return Skeletons.Create(inUnit, "skeleton.mesh", "Ravager", 9)
   end)
 subscribe_unit("Skeleton Acolyte",
   function(inUnit)
     return Skeletons.Create(inUnit, "skeleton_pirate.mesh", "Acolyte", 7.5)
   end)
-subscribe_unit("Skeleton Warrior",
+subscribe_unit("Skeleton Warlord",
   function(inUnit)
-    return Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warrior", 9)
+    return Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warlord", 9)
   end)

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Imageset Name="Spells_Earth" Imagefile="spells_earth.tga" >
-	<Image Name="Summon:_Skeleton_Footsoldier_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Footsoldier_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Footsoldier_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Footsoldier_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warrior_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warrior_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warrior_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warrior_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Mage_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Mage_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Mage_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Mage_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Soldier_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Soldier_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Soldier_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Soldier_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warlord_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warlord_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warlord_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Warlord_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Ravager_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Ravager_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Ravager_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Ravager_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
 	<Image Name="Summon:_Skeleton_Acolyte_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
 	<Image Name="Summon:_Skeleton_Acolyte_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
 	<Image Name="Summon:_Skeleton_Acolyte_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />

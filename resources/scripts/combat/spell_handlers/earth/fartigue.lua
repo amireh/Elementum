@@ -12,7 +12,7 @@ local apply_buff = function(inCaster, inTarget, inSpell)
   turns_left = inSpell:getDuration()
   inSpell:setExpired(false)
 
-  ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", false, inTarget)
+  SCT.ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", false, inTarget)
   FxEngine:playEffect("Elementum/Fx/Fatigue", inSpell:getTarget())
 
   return true
@@ -30,7 +30,7 @@ local process_buff = function(inCaster, inTarget, inSpell)
   Pixy.Log("Processing Fartigue on " .. target:getName() .. "#" .. target:getUID() .. "!")
 
   target:setHP(target:getHP() - 2)
-  ShowScrollingMessage("-2 health (" .. inSpell:getName() .. ")", false, inTarget)
+  SCT.ShowScrollingMessage("-2 health (" .. inSpell:getName() .. ")", false, inTarget)
   if (not target:isDead()) then
     target:updateTextOverlay()
     FxEngine:playEffect("Elementum/Fx/Fatigue", inTarget)

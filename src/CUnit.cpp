@@ -568,7 +568,7 @@ namespace Pixy
 
     // tell interested parties that the target has been attacked (for SCT etc)
     {
-      Event evt(EventUID::EntityAttacked);
+      Event evt(EventUID::UnitAttacked);
       evt.setProperty("Damage", dmg);
       evt.Any = (void*)inTarget->getRenderable();
       EventManager::getSingleton().hook(evt);
@@ -618,7 +618,7 @@ namespace Pixy
 
     // inform other components so they can render particles or w/e
     {
-      Event evt(EventUID::EntityAttacked);
+      Event evt(EventUID::UnitAttacked);
       evt.setProperty("Damage", dmg);
       evt.Any = (void*)inTarget->getRenderable();
       EventManager::getSingleton().hook(evt);

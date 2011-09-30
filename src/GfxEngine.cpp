@@ -1146,6 +1146,7 @@ namespace Pixy {
 
 	bool GfxEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
+    // TODO: refactor this into two methods depending on states
     if (GameManager::getSingleton().getCurrentState()->getId() != STATE_COMBAT)
       return true;
 

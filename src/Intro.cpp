@@ -213,8 +213,10 @@ namespace Pixy
 
   bool Intro::onSyncPuppets(const Event& e)
   {
-    if (e.Feedback != EventFeedback::Ok)
+    if (e.Feedback != EventFeedback::Ok) {
+      mScriptEngine->_passPuppetListing();
       return true;
+    }
 
     mLog->debugStream() << "Syncing puppet listing";
 

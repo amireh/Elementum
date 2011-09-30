@@ -16,12 +16,13 @@ Combat.assignEnemyPuppet = function(inPuppet)
   EnemyPuppet = inPuppet
 end
 Combat.assignActivePuppet = function(puppet)
+  Waiting = Active
   Active = puppet
   Pixy.Log("Current turn is for puppet: " .. Active:getName())
 end
 
 Combat.UpdatePuppet = function(puppet)
-  Pixy.UI.Combat.UpdatePuppet(puppet)
+  UI.UpdatePuppet(puppet)
 end
 -- type: incoming event handler
 -- job: parses the puppet from the event, calls the factory for an instance
@@ -75,7 +76,7 @@ end
 Combat.CreatePuppet = function(puppet)
   Pixy.Log("Creating puppet")
   Handlers[puppet:getRace()](puppet)
-  Pixy.UI.Combat.UpdatePuppet(puppet)
+  UI.UpdatePuppet(puppet)
   Pixy.Log("Created!")
 end
 
