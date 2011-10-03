@@ -69,7 +69,7 @@ namespace Pixy {
 			if (mLog)
       {
         mLog->debugStream() << "destroying all windows";
-        delete mLog; 
+        delete mLog;
       }
       mLog = 0;
 			fSetup = false;
@@ -292,49 +292,7 @@ namespace Pixy {
     //~ sp->setSize(sz);
   }
 
-  CEGUI::Rect getStaticTextArea(const CEGUI::Window* static_text)
-  {
-     const CEGUI::WidgetLookFeel& wlf =
-        CEGUI::WidgetLookManager::getSingleton().
-           getWidgetLook(static_text->getLookNFeel());
 
-     bool AreaExists = wlf.isNamedAreaDefined("WithFrameTextRenderArea");
-     if (AreaExists)
-     {
-        const CEGUI::NamedArea & RenderArea = wlf.getNamedArea("WithFrameTextRenderArea");
-        return RenderArea.getArea().getPixelRect(*static_text);
-     }
-     else
-     {
-        const  CEGUI::ImagerySection& ImageSection = wlf.getImagerySection("image_noframe");
-        return ImageSection.getBoundingRect(*static_text);
-     }
-  }
-  int setHeight(CEGUI::Window* static_text)
-  {
-      /*/ Get the area the text is formatted and drawn into.
-      CEGUI::Rect fmt_area(getStaticTextArea(static_text));
-
-      // Calculate the pixel height of the frame by subtracting the height of the
-      // area above from the total height of the window.
-      float frame_height =
-          static_text->getUnclippedRect(false).getHeight() - fmt_area.getHeight();
-
-      // Get the formatted line count - using the formatting area obtained above.
-      int lines = static_text->getFont()->getFormattedLineCount(
-              static_text->getText(), fmt_area, CEGUI::LeftAlignedWordWrap);
-
-      // Calculate pixel height of window, which is the number of formatted lines
-      // multiplied by the spacing of the font, plus the pixel height of the
-      // frame.
-      float height = (float)lines * static_text->getFont()->getLineSpacing() + frame_height;
-
-      // set the height to the window.
-      static_text->setHeight(CEGUI::UDim(0, height));
-
-      return static_cast<int>(height);*/
-	  return 0;
-  }
 
   void UIEngine::connectAnimation(CEGUI::Window* inWindow, std::string inAnim) {
 
@@ -351,4 +309,5 @@ namespace Pixy {
 
     //std::cout << inWindow->getProperty("HorzExtent") << ", " << inWindow->getProperty("VertExtent") << "\n";
   }
+
 }

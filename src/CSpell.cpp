@@ -77,8 +77,8 @@ namespace Pixy
 
     void CSpell::generateTooltip() {
       std::ostringstream s;
-      s << "[padding='l:5 t:5 r:5 b:20']" << mName << "\n[padding='l:5 t:0 r:5 b:0']" << mDescription;
-      s << "[padding='l:5 t:10 r:5 b:0']Cost: " << mCostWP << "wp[padding='l:5 t:0 r:5 b:0']";
+      s << "[padding='l:5 t:0 r:5 b:0']" << mName << "\n \n" << mDescription;
+      s << "\n \nCost: " << mCostWP << "wp/" << mCostHP << "hp/" << mCostChannels << "c";
 
       mTooltip = s.str();
     }

@@ -75,7 +75,7 @@ UI.registerGlobals = function()
   UI.Buffs = CEWindowMgr:getWindow("Combat/Buffs")
 
   UI.Containers["Error"] = CEWindowMgr:getWindow("Combat/Containers/Error")
-  UI.Containers["Tooltip"] = CEWindowMgr:getWindow("Combat/Containers/Tooltip")
+  --~ UI.Containers["Tooltip"] = CEWindowMgr:getWindow("Combat/Containers/Tooltip")
   UI.Containers["Message"] = CEWindowMgr:getWindow("Combat/Containers/Message")
   UI.Containers["Buffs"] = CEWindowMgr:getWindow("Combat/Containers/Buffs")
   UI.Containers.SpellLog["Player"] = CEWindowMgr:getWindow("Combat/Containers/SpellLog/Player")
