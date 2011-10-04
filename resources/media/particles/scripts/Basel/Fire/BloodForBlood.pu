@@ -1,0 +1,70 @@
+system BloodForBlood
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_bloodsplat_05
+        renderer                                Billboard
+        {
+          render_queue_group                  90
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       250
+            time_to_live                        2
+            velocity                            0
+            duration                            0.3
+            emit_random                         false
+            normal                              0 0 1
+            position 0 200 0
+
+        }
+        emitter                                 Line Emitter31
+        {
+            emission_rate                       250
+            angle                        60
+            time_to_live                        2
+            velocity                            0
+            duration                            0.2
+            enabled                             false
+            position                            100 0 0
+            normal                              0 1 0
+            position 0 50 0
+            end 0 600 0
+        }
+        affector                                TextureRotator Affector39
+        {
+            rotation                            dyn_random
+            {
+                min                             -3
+                max                             3
+            }
+            rotation_speed                      0
+        }
+        affector                                Scale Affector37
+        {
+            xyz_scale                           dyn_random
+            {
+                min                             5
+                max                             15
+            }
+        }
+        observer                                OnTime Observer6
+        {
+            observe_until_event                 true
+            handler                             DoEnableComponent Handler6
+            {
+                enable_component                emitter_component Emitter31 true
+            }
+            since_start_system                  true
+            on_time                             greater_than 0.2
+        }
+        observer                                OnClear Observer28
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler29
+            {
+            }
+        }
+    }
+}

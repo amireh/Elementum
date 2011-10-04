@@ -1,0 +1,58 @@
+system Negate
+{
+  scale 0.15 0.15 0.15
+    technique
+    {
+        material                                mp_explosion_flare_02
+        renderer                                Billboard
+        {
+          render_queue_group 80
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       120
+            time_to_live                        1.5
+            velocity                            0
+            duration                            0.5
+            step                                0.4
+            emit_random                         false
+            normal                              0 0 1
+            position 0 100 0
+        }
+        emitter                                 Point Emitter9
+        {
+            emission_rate                       100
+            angle                               45
+            time_to_live                        dyn_random
+            {
+                min                             0.2
+                max                             0.7
+            }
+            velocity                            50
+            duration                            0.5
+            enabled                             false
+            position                            0 150 0
+        }
+        affector                                Vortex Affector6
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      5
+        }
+        affector                                Colour Affector7
+        {
+            time_colour                         0    0.752941 0.752941 0.752941 0.298039
+            time_colour                         0.821739  0.501961 1 1 0.298039
+            time_colour                         1    0 0 0 0.298039
+        }
+        observer                                OnTime Observer1
+        {
+            observe_until_event                 true
+            handler                             DoEnableComponent Handler1
+            {
+                enable_component                emitter_component Emitter9 true
+            }
+            since_start_system                  true
+            on_time                             greater_than 0.5
+        }
+    }
+}

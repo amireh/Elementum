@@ -1,0 +1,55 @@
+system Redirect
+{
+  scale 0.1 0.1 0.1
+    category                                    LightFX
+    technique
+    {
+        visual_particle_quota                   2000
+        emitted_emitter_quota                   20
+        material                                PUMediaPack/Flare_04
+        default_particle_width                  40
+        default_particle_height                 40
+        renderer                                Billboard
+        {
+          render_queue_group 80
+        }
+        emitter                                 Point Core
+        {
+            emission_rate                       35
+            angle                               60
+            time_to_live                        dyn_random
+            {
+                min                             0.5
+                max                             1
+            }
+            velocity                            40
+            duration                            1
+            direction                           0 0 1
+            emits                               emitter_particle Worms
+            position 0 150 50
+        }
+        emitter                                 Point Worms
+        {
+            emission_rate                       60
+            angle                               360
+            time_to_live                        0.5
+            velocity                            1.5
+            direction                           0 -1 0
+            colour                              1 0.6 0.6 1
+        }
+        affector                                SineForce
+        {
+            exclude_emitter                     Worms
+            force_vector                        50 50 50
+            min_frequency                       5
+            max_frequency                       5
+        }
+        observer                                OnClear Observer1
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler1
+            {
+            }
+        }
+    }
+}

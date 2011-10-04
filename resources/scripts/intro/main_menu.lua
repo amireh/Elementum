@@ -174,10 +174,10 @@ end
 MainMenu.onConnected = function(e)
   if e.Feedback == Pixy.EventFeedback.Error then
     PBox_Label:setText("Unable to connect to server.")
-    Pixy.UI.doneWaiting(true)  
+    Pixy.UI.doneWaiting(true)
     return true
   end
-  
+
   Pixy.UI.doneWaiting(false)
   Pixy.UI.waiting("Authenticating", MainMenu.Layout)
 
@@ -186,7 +186,7 @@ MainMenu.onConnected = function(e)
   mEvt:setProperty("Username", Form.Username:getText())
   mEvt:setProperty("Password", Form.Password:getText())
   NetMgr:send(mEvt)
-  
+
   Pixy.Log("Awaiting authentication reply...")
   return true
 end
@@ -211,7 +211,8 @@ end
 
 
 MainMenu.onEntityDied = function(e)
-  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  local entity = tolua.cast(e.Any, "Pixy::CUnit")
+  local rnd = entity:getRenderable()
   rnd:hide()
   FxEngine:playEffect("Elementum/Fx/Desummon", rnd:getSceneNode():getPosition())
 

@@ -1,4 +1,9 @@
-local Handlers = {}
+local Handlers = { Generic = { Alive = {}, Dead = {} } }
+
+local SummoningEffects = {
+  Earth = "EarthSummoning",
+  Fire = "FireSummoning"
+}
 
 Combat.CreateUnit = function(inUnit)
 
@@ -9,7 +14,12 @@ Combat.CreateUnit = function(inUnit)
   else
     local result = handler(inUnit)
     if result then
-      FxEngine:playEffect("Elementum/Fx/Summon", inUnit:getRenderable())
+      FxEngine:playEffect(SummoningEffects[raceToString(inUnit:getRace())], inUnit:getRenderable(), true)
+
+      -- now call the Generic handlers (Renderable is created)
+      for generic_handler in list_iter(Handlers.Generic.Alive) do
+        generic_handler(inUnit)
+      end
     end
     return result
   end
@@ -20,6 +30,18 @@ end
 function subscribe_unit(inUnitName, inMethod)
 	Pixy.Log("subscribing to " .. inUnitName)
 	Handlers[inUnitName] = inMethod
+end
+
+function subscribe_generic_unit_handler(inState, inMethod)
+  if not Handlers.Generic[inState] then
+    Handlers.Generic[inState] = {}
+  end
+
+  table.insert(Handlers.Generic[inState], inMethod)
+end
+
+function unsubscribe_generic_unit_handler(inState, inMethod)
+  removeByValue(Handlers.Generic[inState], inMethod)
 end
 
 require("d_lister")

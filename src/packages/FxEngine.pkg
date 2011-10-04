@@ -9,7 +9,7 @@ static FxEngine& getSingleton();
 
 void loadEffect(std::string name);
 void registerHighlightEffect(std::string inName);
-void playEffect(std::string, Pixy::Renderable*);
+void playEffect(std::string, Pixy::Renderable*, bool newInstance=false);
 void playEffect(std::string, Ogre::Vector3);
 
 void highlight(Renderable*);

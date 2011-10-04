@@ -23,6 +23,8 @@ namespace Pixy
   };
 
   bool CPuppet::live() {
+    Puppet::live();
+
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, mName);
     mLog->infoStream() << "created";
 

@@ -6,14 +6,14 @@
     </environment>
     <nodes>
       <node name="molten_chasm">
-        <position x="0" y="-49" z="0" />
-        <scale x="10" y="10" z="10" />
+        <position x="0" y="-34" z="0" />
+        <scale x="7" y="7" z="7" />
 
         <node name="arena_02">
             <position x="-3.12402e-006" y="4.20979" z="0" />
             <scale x="5.11746" y="5.11746" z="5.11746" />
             <rotation qx="0" qy="0" qz="0" qw="1" />
-            <entity name="arena_02" castShadows="true" receiveShadows="true" meshFile="arena_02.mesh">
+            <entity name="arena_02" castShadows="false" receiveShadows="true" meshFile="arena_02.mesh">
                 <subentities>
                     <subentity index="0" materialName="statue-03" />
                 </subentities>

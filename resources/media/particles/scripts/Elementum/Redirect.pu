@@ -1,0 +1,52 @@
+system Redirect
+{
+    category                                    LightFX
+    technique 
+    {
+        visual_particle_quota                   2000
+        emitted_emitter_quota                   20
+        material                                PUMediaPack/Flare_04
+        default_particle_width                  40
+        default_particle_height                 40
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point Core
+        {
+            emission_rate                       50
+            angle                               60
+            time_to_live                        dyn_random
+            {
+                min                             0.5
+                max                             1
+            }
+            velocity                            300
+            duration                            1
+            direction                           0 0 1
+            emits                               emitter_particle Worms
+        }
+        emitter                                 Point Worms
+        {
+            emission_rate                       60
+            angle                               360
+            time_to_live                        0.5
+            velocity                            15
+            direction                           0 -1 0
+            colour                              1 0.6 0.6 1
+        }
+        affector                                SineForce 
+        {
+            exclude_emitter                     Worms 
+            force_vector                        500 500 500
+            min_frequency                       5
+            max_frequency                       5
+        }
+        observer                                OnClear Observer1
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler1
+            {
+            }
+        }
+    }
+}

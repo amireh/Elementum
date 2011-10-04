@@ -1,0 +1,21 @@
+
+material Bones
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend src_colour one
+			depth_check off
+
+			texture_unit bone.png
+			{
+				texture_alias bone.png
+				texture bone.png
+			}
+		}
+
+	}
+
+}

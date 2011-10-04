@@ -158,10 +158,12 @@ namespace Pixy
 	void Intro::keyPressed( const OIS::KeyEvent &e )
 	{
     mUIEngine->keyPressed(e);
+    mScriptEngine->keyPressed(e);
 	}
 
 	void Intro::keyReleased( const OIS::KeyEvent &e ) {
     mUIEngine->keyReleased(e);
+    mScriptEngine->keyReleased(e);
 		switch (e.key) {
 			case OIS::KC_ESCAPE:
 				this->requestShutdown();

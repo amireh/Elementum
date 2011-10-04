@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Wed Sep 28 21:37:02 2011.
+** Generated automatically by tolua++-1.0.92 on Tue Oct  4 14:06:56 2011.
 */
 
 #ifndef __cplusplus
@@ -3018,7 +3018,8 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect00(lua_State* tolua_S)
      !tolua_isusertype(tolua_S,1,"Pixy::FxEngine",0,&tolua_err) ||
      !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isusertype(tolua_S,3,"Pixy::Renderable",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isboolean(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
   goto tolua_lerror;
  else
@@ -3027,11 +3028,12 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect00(lua_State* tolua_S)
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
   std::string tolua_var_5 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   Pixy::Renderable* tolua_var_6 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,3,0));
+  bool newInstance = ((bool)  tolua_toboolean(tolua_S,4,false));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
-   self->playEffect(tolua_var_5,tolua_var_6);
+   self->playEffect(tolua_var_5,tolua_var_6,newInstance);
   }
  }
  return 0;
@@ -8158,6 +8160,135 @@ static int tolua_Elementum_Ogre_MovableObject_getUserAny00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setCastShadows of class  Ogre::MovableObject */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_MovableObject_setCastShadows00
+static int tolua_Elementum_Ogre_MovableObject_setCastShadows00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::MovableObject",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::MovableObject* self = (Ogre::MovableObject*)  tolua_tousertype(tolua_S,1,0);
+  bool enabled = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCastShadows'", NULL);
+#endif
+  {
+   self->setCastShadows(enabled);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setCastShadows'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCastShadows of class  Ogre::MovableObject */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_MovableObject_getCastShadows00
+static int tolua_Elementum_Ogre_MovableObject_getCastShadows00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::MovableObject",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::MovableObject* self = (Ogre::MovableObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCastShadows'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->getCastShadows();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCastShadows'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getName of class  Ogre::Node */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_getName00
+static int tolua_Elementum_Ogre_Node_getName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Ogre::Node",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getName'", NULL);
+#endif
+  {
+    const std::string& tolua_ret = (  const std::string&)  self->getName();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getParent of class  Ogre::Node */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_getParent00
+static int tolua_Elementum_Ogre_Node_getParent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Ogre::Node",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getParent'", NULL);
+#endif
+  {
+   Ogre::Node* tolua_ret = (Ogre::Node*)  self->getParent();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Node");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getParent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setPosition of class  Ogre::Node */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_setPosition00
 static int tolua_Elementum_Ogre_Node_setPosition00(lua_State* tolua_S)
@@ -8539,8 +8670,8 @@ static int tolua_Elementum_Ogre_Node_addChild00(lua_State* tolua_S)
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: getChild of class  Ogre::Node */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_getChild00
-static int tolua_Elementum_Ogre_Node_getChild00(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_getChildAt00
+static int tolua_Elementum_Ogre_Node_getChildAt00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -8554,7 +8685,7 @@ static int tolua_Elementum_Ogre_Node_getChild00(lua_State* tolua_S)
 #endif
  {
   const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
-  unsigned short index = ((unsigned short)  tolua_tonumber(tolua_S,2,0));
+  int index = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChild'", NULL);
 #endif
@@ -8566,16 +8697,49 @@ static int tolua_Elementum_Ogre_Node_getChild00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getChild'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getChildAt'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: numChildren of class  Ogre::Node */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_numChildren00
+static int tolua_Elementum_Ogre_Node_numChildren00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Ogre::Node",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'numChildren'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->numChildren();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'numChildren'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: getChild of class  Ogre::Node */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_getChild01
-static int tolua_Elementum_Ogre_Node_getChild01(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Node_getChild00
+static int tolua_Elementum_Ogre_Node_getChild00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"const Ogre::Node",0,&tolua_err) ||
@@ -8584,6 +8748,7 @@ static int tolua_Elementum_Ogre_Node_getChild01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   const Ogre::Node* self = (const Ogre::Node*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
@@ -8596,8 +8761,11 @@ static int tolua_Elementum_Ogre_Node_getChild01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Elementum_Ogre_Node_getChild00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getChild'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -8949,71 +9117,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setCastShadows of class  Ogre::Entity */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Entity_setCastShadows00
-static int tolua_Elementum_Ogre_Entity_setCastShadows00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Ogre::Entity",0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Ogre::Entity* self = (Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
-  bool enabled = ((bool)  tolua_toboolean(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCastShadows'", NULL);
-#endif
-  {
-   self->setCastShadows(enabled);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setCastShadows'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getCastShadows of class  Ogre::Entity */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_Entity_getCastShadows00
-static int tolua_Elementum_Ogre_Entity_getCastShadows00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Ogre::Entity",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Ogre::Entity* self = (Ogre::Entity*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCastShadows'", NULL);
-#endif
-  {
-   bool tolua_ret = (bool)  self->getCastShadows();
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getCastShadows'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: yaw of class  Ogre::SceneNode */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneNode_yaw00
 static int tolua_Elementum_Ogre_SceneNode_yaw00(lua_State* tolua_S)
@@ -9179,8 +9282,8 @@ static int tolua_Elementum_Ogre_SceneNode_numAttachedObjects00(lua_State* tolua_
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: getAttachedObject of class  Ogre::SceneNode */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneNode_getAttachedObject00
-static int tolua_Elementum_Ogre_SceneNode_getAttachedObject00(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneNode_getAttachedObjectAt00
+static int tolua_Elementum_Ogre_SceneNode_getAttachedObjectAt00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -9206,16 +9309,17 @@ static int tolua_Elementum_Ogre_SceneNode_getAttachedObject00(lua_State* tolua_S
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getAttachedObject'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getAttachedObjectAt'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: getAttachedObject of class  Ogre::SceneNode */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneNode_getAttachedObject01
-static int tolua_Elementum_Ogre_SceneNode_getAttachedObject01(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneNode_getAttachedObject00
+static int tolua_Elementum_Ogre_SceneNode_getAttachedObject00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Ogre::SceneNode",0,&tolua_err) ||
@@ -9224,6 +9328,7 @@ static int tolua_Elementum_Ogre_SceneNode_getAttachedObject01(lua_State* tolua_S
  )
   goto tolua_lerror;
  else
+#endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
   const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
@@ -9236,8 +9341,11 @@ static int tolua_Elementum_Ogre_SceneNode_getAttachedObject01(lua_State* tolua_S
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Elementum_Ogre_SceneNode_getAttachedObject00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAttachedObject'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -19493,12 +19601,16 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setQueryFlags",tolua_Elementum_Ogre_MovableObject_setQueryFlags00);
     tolua_function(tolua_S,"setUserAny",tolua_Elementum_Ogre_MovableObject_setUserAny00);
     tolua_function(tolua_S,"getUserAny",tolua_Elementum_Ogre_MovableObject_getUserAny00);
+    tolua_function(tolua_S,"setCastShadows",tolua_Elementum_Ogre_MovableObject_setCastShadows00);
+    tolua_function(tolua_S,"getCastShadows",tolua_Elementum_Ogre_MovableObject_getCastShadows00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Node","Ogre::Node","",NULL);
    tolua_beginmodule(tolua_S,"Node");
     tolua_constant(tolua_S,"TS_LOCAL",Ogre::Node::TS_LOCAL);
     tolua_constant(tolua_S,"TS_PARENT",Ogre::Node::TS_PARENT);
     tolua_constant(tolua_S,"TS_WORLD",Ogre::Node::TS_WORLD);
+    tolua_function(tolua_S,"getName",tolua_Elementum_Ogre_Node_getName00);
+    tolua_function(tolua_S,"getParent",tolua_Elementum_Ogre_Node_getParent00);
     tolua_function(tolua_S,"setPosition",tolua_Elementum_Ogre_Node_setPosition00);
     tolua_function(tolua_S,"getPosition",tolua_Elementum_Ogre_Node_getPosition00);
     tolua_function(tolua_S,"setScale",tolua_Elementum_Ogre_Node_setScale00);
@@ -19511,8 +19623,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"createChild",tolua_Elementum_Ogre_Node_createChild04);
     tolua_function(tolua_S,"createChild",tolua_Elementum_Ogre_Node_createChild05);
     tolua_function(tolua_S,"addChild",tolua_Elementum_Ogre_Node_addChild00);
+    tolua_function(tolua_S,"getChildAt",tolua_Elementum_Ogre_Node_getChildAt00);
+    tolua_function(tolua_S,"numChildren",tolua_Elementum_Ogre_Node_numChildren00);
     tolua_function(tolua_S,"getChild",tolua_Elementum_Ogre_Node_getChild00);
-    tolua_function(tolua_S,"getChild",tolua_Elementum_Ogre_Node_getChild01);
     tolua_function(tolua_S,"removeChild",tolua_Elementum_Ogre_Node_removeChild00);
     tolua_function(tolua_S,"removeChild",tolua_Elementum_Ogre_Node_removeChild01);
     tolua_function(tolua_S,"removeChild",tolua_Elementum_Ogre_Node_removeChild02);
@@ -19527,8 +19640,6 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getWorldBoundingBox",tolua_Elementum_Ogre_Entity_getWorldBoundingBox00);
     tolua_function(tolua_S,"setMaterialName",tolua_Elementum_Ogre_Entity_setMaterialName00);
     tolua_function(tolua_S,"setMaterialName",tolua_Elementum_Ogre_Entity_setMaterialName01);
-    tolua_function(tolua_S,"setCastShadows",tolua_Elementum_Ogre_Entity_setCastShadows00);
-    tolua_function(tolua_S,"getCastShadows",tolua_Elementum_Ogre_Entity_getCastShadows00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"SceneNode","Ogre::SceneNode","Ogre::Node",NULL);
    tolua_beginmodule(tolua_S,"SceneNode");
@@ -19537,8 +19648,8 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"roll",tolua_Elementum_Ogre_SceneNode_roll00);
     tolua_function(tolua_S,"attachObject",tolua_Elementum_Ogre_SceneNode_attachObject00);
     tolua_function(tolua_S,"numAttachedObjects",tolua_Elementum_Ogre_SceneNode_numAttachedObjects00);
+    tolua_function(tolua_S,"getAttachedObjectAt",tolua_Elementum_Ogre_SceneNode_getAttachedObjectAt00);
     tolua_function(tolua_S,"getAttachedObject",tolua_Elementum_Ogre_SceneNode_getAttachedObject00);
-    tolua_function(tolua_S,"getAttachedObject",tolua_Elementum_Ogre_SceneNode_getAttachedObject01);
     tolua_function(tolua_S,"detachObject",tolua_Elementum_Ogre_SceneNode_detachObject00);
     tolua_function(tolua_S,"detachObject",tolua_Elementum_Ogre_SceneNode_detachObject01);
     tolua_function(tolua_S,"detachObject",tolua_Elementum_Ogre_SceneNode_detachObject02);
@@ -19574,9 +19685,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setOrientation",tolua_Elementum_Ogre_SceneNode_setOrientation01);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"Light","Ogre::Light","",tolua_collect_Ogre__Light);
+   tolua_cclass(tolua_S,"Light","Ogre::Light","Ogre::MovableObject",tolua_collect_Ogre__Light);
    #else
-   tolua_cclass(tolua_S,"Light","Ogre::Light","",NULL);
+   tolua_cclass(tolua_S,"Light","Ogre::Light","Ogre::MovableObject",NULL);
    #endif
    tolua_beginmodule(tolua_S,"Light");
     tolua_constant(tolua_S,"LT_POINT",Ogre::Light::LT_POINT);

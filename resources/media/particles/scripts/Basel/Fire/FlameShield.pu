@@ -1,0 +1,64 @@
+system FlameShield
+{
+  scale 0.1 0.1 0.1
+    keep_local                                  true
+    technique
+    {
+        position                                0 0 0
+        visual_particle_quota                   400
+        emitted_emitter_quota                   100
+        material                                mp_fire_02
+        renderer                                Billboard
+        {
+          render_queue_group                  80
+        }
+        emitter                                 Point PointEmitter
+        {
+            emission_rate                       100
+            angle                               0
+            time_to_live                        dyn_random
+            {
+                min                             0.5
+                max                             1
+            }
+            velocity                            dyn_random
+            {
+                min                             1
+                max                             50
+            }
+            duration                            1
+            all_particle_dimensions             dyn_random
+            {
+                min                             80
+                max                             120
+            }
+            colour                              0 0 0 1
+        }
+        emitter                                 Circle CircleEmitter
+        {
+            emission_rate                       16
+            velocity                            0
+            emits                               emitter_particle PointEmitter
+            force_emission                      true
+            radius                              150
+            step                                0.4
+            emit_random                         false
+            normal                              0 1 0
+        }
+        affector                                Scale
+        {
+            xyz_scale                           100
+        }
+        affector                                Colour
+        {
+            time_colour                         0    0 0 0 1
+            time_colour                         0.45  1 0.501961 0.25098 1
+            time_colour                         1    0 0 0 1
+        }
+        affector                                Vortex Affector24
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      5
+        }
+    }
+}

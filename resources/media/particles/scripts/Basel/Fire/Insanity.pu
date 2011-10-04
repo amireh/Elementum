@@ -1,0 +1,85 @@
+system Insanity
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_flare_sun
+        renderer                                Billboard
+        {
+        render_queue_group 80
+        }
+        emitter                                 Point
+        {
+            emission_rate                       300
+            angle                               dyn_random
+            {
+                min                             0
+                max                             60
+            }
+            time_to_live                        dyn_random
+            {
+                min                             0.5
+                max                             0.8
+            }
+            velocity                            dyn_random
+            {
+                min                             10
+                max                             25
+            }
+            duration                            1
+            keep_local                          true
+            position 0 150 0
+        }
+        /*affector                                ForceField Affector172
+        {
+            force                               10
+            octaves                             5
+            frequency                           2
+            amplitude                           15
+            worldsize                           100 100 100
+            movement                            50 50 50
+            movement_frequency                  50
+            position 0 150 0
+        }*/
+        affector Randomiser Affector172
+        {
+          max_deviation_x 50
+          max_deviation_y 50
+          max_deviation_z 50
+          time_step 0.1
+          position 0 150 0
+        }
+        affector                                Colour Affector174
+        {
+            time_colour                         0    1 0 1 1
+            time_colour                         1    0.25098 0 0.501961 1
+        }
+        affector                                Scale Affector173
+        {
+            xyz_scale                           150
+        }
+        affector                                TextureRotator Affector175
+        {
+            rotation                            dyn_random
+            {
+                min                             0
+                max                             360
+            }
+        }
+        affector SphereCollider Affector164
+        {
+          bounciness 0
+          collision_type flow
+          radius 250
+          inner_collision true
+          position 0 150 0
+        }
+        observer                                OnClear Observer14
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler14
+            {
+            }
+        }
+    }
+}

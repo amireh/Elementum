@@ -1,0 +1,55 @@
+system BurnOut
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_fire_03
+        renderer                                Billboard
+        {
+            billboard_rotation_type             vertex
+            render_queue_group                  80
+        }
+        emitter                                 Point
+        {
+            emission_rate                       150
+            angle                               5
+            time_to_live                        dyn_random
+            {
+                min                             0.4
+                max                             0.7
+            }
+            velocity                            50
+            duration                            1
+            direction                           0 0 1
+            position 0 150 50
+        }
+        affector                                Scale Affector167
+        {
+            xyz_scale                           dyn_random
+            {
+                min                             300
+                max                             550
+            }
+        }
+        affector                                Colour Affector166
+        {
+            time_colour                         0    0.831373 0.831373 0.831373 0.4
+            time_colour                         1    1 0.501961 0.25098 0.356863
+        }
+        affector                                TextureRotator Affector168
+        {
+            rotation                            dyn_random
+            {
+                min                             0
+                max                             360
+            }
+        }
+        observer                                OnClear Observer10
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler11
+            {
+            }
+        }
+    }
+}

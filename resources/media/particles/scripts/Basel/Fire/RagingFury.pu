@@ -1,0 +1,51 @@
+system RagingFury
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_fire_02
+        renderer                                Billboard
+        {
+            billboard_rotation_type             vertex
+            render_queue_group 80
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       500
+            time_to_live                        dyn_random
+            {
+                min                             0.5
+                max                             0.8
+            }
+            velocity                            100
+            duration                            0.7
+        }
+        affector                                Scale Affector0
+        {
+            xyz_scale                           350
+        }
+        affector                                TextureRotator Affector1
+        {
+            rotation                            dyn_random
+            {
+                min                             -180
+                max                             180
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             -10
+                max                             10
+            }
+        }
+        affector                                Colour Affector2
+        {
+            time_colour                         0    0.501961 0.501961 0.501961 0.0980392
+            time_colour                         1    0.501961 0.25098 0 1
+        }
+        affector                                Vortex Affector104
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      10
+        }
+    }
+}

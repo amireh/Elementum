@@ -75,7 +75,11 @@ Combat.CastSpell = function(inCaster, inTarget, inSpell)
     return false
   end
 
-  Pixy.Log("Casting spell " .. inSpell:getName())
+  local _msg = inCaster:getEntity():getName() .. "#" .. inCaster:getEntity():getUID()
+  if inTarget and inTarget ~= inCaster then
+    _msg = _msg .. " against " .. inTarget:getEntity():getName() .. "#" .. inTarget:getEntity():getUID()
+  end
+  Pixy.Log("Casting spell " .. inSpell:getName() .. " by " .. _msg)
 
   UI.LogSpellCast(inSpell)
   local result = false
@@ -83,7 +87,7 @@ Combat.CastSpell = function(inCaster, inTarget, inSpell)
     result = spellHandler(inCaster, inTarget, inSpell)
   end
 
-  if inTarget == Selected then Buffs.Show(inTarget) end
+  if inTarget and inTarget == Selected then Buffs.Show(inTarget) end
   return result
 end
 

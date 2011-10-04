@@ -45,10 +45,30 @@
 	<Image Name="Chains_of_Command_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
 	<Image Name="Chains_of_Command_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
 
+	<Image Name="Bone_Armor_Hover"   XPos="256" YPos="0"  Width="256" Height="256" />
+	<Image Name="Bone_Armor_Normal"    XPos="256" YPos="256" Width="256" Height="256" />
+	<Image Name="Bone_Armor_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
+	<Image Name="Bone_Armor_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Bone_Harvest_Hover"   XPos="256" YPos="0"  Width="256" Height="256" />
+	<Image Name="Bone_Harvest_Normal"    XPos="256" YPos="256" Width="256" Height="256" />
+	<Image Name="Bone_Harvest_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
+	<Image Name="Bone_Harvest_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
+
 	<Image Name="Fartigue_Hover"   XPos="3072" YPos="0"  Width="256" Height="256" />
 	<Image Name="Fartigue_Normal"    XPos="3072" YPos="256" Width="256" Height="256" />
 	<Image Name="Fartigue_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
 	<Image Name="Fartigue_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Sudden_Craven_Hover"   XPos="3072" YPos="0"  Width="256" Height="256" />
+	<Image Name="Sudden_Craven_Normal"    XPos="3072" YPos="256" Width="256" Height="256" />
+	<Image Name="Sudden_Craven_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
+	<Image Name="Sudden_Craven_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+
+	<Image Name="Locust_Swarm_Hover"   XPos="3072" YPos="0"  Width="256" Height="256" />
+	<Image Name="Locust_Swarm_Normal"    XPos="3072" YPos="256" Width="256" Height="256" />
+	<Image Name="Locust_Swarm_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
+	<Image Name="Locust_Swarm_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
 </Imageset>
 
 

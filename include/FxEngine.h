@@ -36,7 +36,7 @@ namespace Pixy {
 		virtual bool cleanup();
 
     void loadEffect(std::string inName);
-    void playEffect(std::string inEffect, Renderable* inEntity);
+    void playEffect(std::string inEffect, Renderable* inEntity, bool newInstance = false);
     void playEffect(ParticleUniverse::ParticleSystem*, Renderable* inEntity);
     void playEffect(std::string inEffect, const Ogre::Vector3 pos);
 
@@ -83,6 +83,8 @@ namespace Pixy {
 		FxEngine();
 		FxEngine(const FxEngine& src);
 		FxEngine& operator=(const FxEngine& rhs);
+
+    static int gUID;
 	};
 }
 #endif

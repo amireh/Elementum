@@ -1,0 +1,59 @@
+system BoneArmor
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                Bone
+        renderer                                Billboard
+        {
+            billboard_rotation_type             vertex
+            render_queue_group 80
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       50
+            time_to_live                        dyn_random
+            {
+                min                             0.7
+                max                             1
+            }
+            velocity                            0
+            duration                            1
+            keep_local                          true
+            colour                              0.941176 0.941176 0.941176 1
+            position 0 150 0
+        }
+        emitter                                 Circle Emitter10
+        {
+            emission_rate                       3
+            time_to_live                        50
+            velocity                            0
+            force_emission                      true
+            step                                0.4
+            position 0 150 0
+        }
+        affector                                Scale Affector0
+        {
+            exclude_emitter                     Emitter10
+            xyz_scale                           50
+        }
+        affector                                TextureRotator Affector2
+        {
+            rotation                            dyn_random
+            {
+                min                             -180
+                max                             180
+            }
+            rotation_speed                      1
+        }
+        affector                                Vortex Affector10
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      dyn_curved_linear
+            {
+                control_point                   0 16.4391
+                control_point                   1 1.99224
+            }
+        }
+    }
+}

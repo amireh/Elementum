@@ -17,6 +17,8 @@ Gremlins.Create = function(unit, mesh, material, scale)
   Gremlins.RegisterAnimations(rnd)
 
   rnd:animateRest()
+  rnd:animateAttack()
+  rnd:animateAttack()
   --~ rnd:getSceneNode():pitch(Ogre.Degree(-90))
   --~ rnd:getSceneNode():yaw(Ogre.Degree(180))
   --~ rnd:getSceneNode():setOrientation(Ogre.Quaternion:new(0,180,0,0))
@@ -50,18 +52,18 @@ end
 
 subscribe_unit("Mechanical Gremlin",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin1.mesh", "Mechanical")
+    return Gremlins.Create(inUnit, "Gremlin1.mesh", "Mechanical")
   end)
 
 subscribe_unit("Gremlin Brawler",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin2.mesh", "Engineer", 35)
+    return Gremlins.Create(inUnit, "Gremlin2.mesh", "Engineer", 35)
   end)
 subscribe_unit("Gremlin Engineer",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin1.mesh", "Brawler", 25)
+    return Gremlins.Create(inUnit, "Gremlin1.mesh", "Brawler", 25)
   end)
 subscribe_unit("Master Gremlin",
   function(inUnit)
-    Gremlins.Create(inUnit, "Gremlin3.mesh", "Master", 25)
+    return Gremlins.Create(inUnit, "Gremlin3.mesh", "Master", 25)
   end)

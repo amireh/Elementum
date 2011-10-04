@@ -28,6 +28,7 @@ require("combat/turns")
 require("combat/spells")
 require("combat/gfx")
 require("combat/effects")
+require("combat/input")
 require("combat/bindings")
 
 arbitraryFunc = arbitraryFuncCombat

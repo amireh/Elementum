@@ -1,0 +1,67 @@
+system Anger
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                PUMediaPack/Snow_01
+        renderer                                Billboard
+        {
+          render_queue_group                  80
+        }
+        emitter                                 SphereSurface
+        {
+            emission_rate                       500
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             1.5
+                max                             2
+            }
+            velocity                            0
+            duration                            0.5
+            radius                              150
+            position 0 50 0
+        }
+        affector                                Scale Affector77
+        {
+            xyz_scale                           350
+        }
+        affector                                Colour Affector78
+        {
+            time_colour                         0    0.501961 0 0 0.294118
+            time_colour                         0.495652  0 0 0 0.207843
+            time_colour                         1    0.501961 0 0 0.294118
+        }
+        affector                                TextureRotator Affector79
+        {
+            rotation                            dyn_random
+            {
+                min                             -5
+                max                             5
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             -10
+                max                             10
+            }
+        }
+        affector                                Gravity Affector4
+        {
+            mass_affector                       50
+            gravity                             50
+            position 0 50 0
+        }
+        affector                                SphereCollider Affector7
+        {
+            radius                              750
+            inner_collision                     true
+        }
+        observer                                OnClear Observer2
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler2
+            {
+            }
+        }
+    }
+}

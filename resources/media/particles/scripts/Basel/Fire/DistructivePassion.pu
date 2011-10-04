@@ -1,0 +1,120 @@
+system DestructivePassion
+{
+
+    technique
+    {
+        visual_particle_quota                   10
+        material                                mp_woosh_circle_07
+        renderer                                Billboard
+        {
+            billboard_type                      perpendicular_self
+            billboard_rotation_type             vertex
+            common_direction                    0 1 0
+            common_up_vector                    0 0 1
+            render_queue_group                  90
+        }
+        emitter                                 Point
+        {
+            emission_rate                       20
+            angle                               0
+            time_to_live                        dyn_random
+            {
+                min                             0.4
+                max                             0.5
+            }
+            velocity                            0.0001
+            duration                            0.2
+            colour                              1 0.501961 0.25098 1
+        }
+        emitter                                 Point
+        {
+            emission_rate                       20
+            angle                               0
+            time_to_live                        dyn_random
+            {
+                min                             0.4
+                max                             0.5
+            }
+            velocity                            0.0001
+            duration                            0.2
+            colour                              0.8 0.8 0 1
+        }
+        affector                                Colour
+        {
+            time_colour                         0    0 0 0 1
+            time_colour                         0.4  1 1 1 1
+            time_colour                         0.5  1 1 1 1
+            time_colour                         1    0 0 0 1
+            colour_operation                    multiply
+        }
+        affector                                Scale
+        {
+            xyz_scale                           3000
+        }
+        affector                                TextureRotator
+        {
+            rotation                            dyn_random
+            {
+                min                             -3
+                max                             3
+            }
+            rotation_speed                      0
+        }
+        observer                                OnTime Observer13
+        {
+            observe_particle_type               visual_particle
+            observe_until_event                 true
+            handler                             DoStopSystem Handler14
+            {
+            }
+            since_start_system                  true
+            on_time                             greater_than 2
+        }
+    }
+    technique
+    {
+        position                                0 -200 0
+        material                                ParticleUniverse/Fire
+        renderer                                Billboard
+        {
+            render_queue_group                  90
+        }
+        emitter                                 Box
+        {
+            emission_rate                       dyn_curved_linear
+            {
+                control_point                   0.00184502 801.11
+                control_point                   0.3 0
+            }
+            angle                               10
+            time_to_live                        0.6
+            velocity                            dyn_random
+            {
+                min                             1000
+                max                             1800
+            }
+            duration                            1
+            all_particle_dimensions             dyn_random
+            {
+                min                             30
+                max                             100
+            }
+            colour                              1 0.501961 0.25098 1
+        }
+        affector                                LinearForce
+        {
+            force_vector                        0 -2500 0
+        }
+        affector                                Colour
+        {
+            time_colour                         0    0 0 0 1
+            time_colour                         0.5  1 1 1 1
+            time_colour                         1    0 0 0 1
+            colour_operation                    multiply
+        }
+        affector                                Scale Affector441
+        {
+            xyz_scale                           300
+        }
+    }
+}

@@ -202,6 +202,21 @@ UI.onStatChange = function(e)
     if amount > 0 then _mod = "+" else _mod = "" end
     SCT.ShowScrollingMessage(_mod .. amount .. " health", amount > 0, rnd)
   end
+
+  return true;
+end
+
+UI.onMechanicChanged = function(e)
+  Pixy.Log("Unit Mechanic has changed")
+  local unit = tolua.cast(e.Any, "Pixy::CUnit")
+  local rnd = unit:getRenderable()
+
+  local has_it = e:getProperty("HasIt") == "Yes"
+  local _mod = ""
+  if has_it then _mod = "+" else _mod = "-" end
+  SCT.ShowScrollingMessage(_mod .. " " .. e:getProperty("M"), has_it, rnd)
+
+  return true;
 end
 
 UI.onEntityAttacked = function(e)

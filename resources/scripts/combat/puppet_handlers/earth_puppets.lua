@@ -9,6 +9,7 @@ local create_earth_puppet = function(puppet)
   --rnd:attachExtension("SkeletonPeasantAxe.mesh", "Bone01")
   local sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
   sword:setMaterialName("Elementum/DarkKnight/Earth/Sword")
+  sword:setCastShadows(true)
 
   rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
   rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_2")

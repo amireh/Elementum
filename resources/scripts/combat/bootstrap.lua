@@ -22,6 +22,15 @@ Combat.PrepareScene = function()
   Viewport = GfxEngine:getViewport()
   Camera = GfxEngine:getCamera()
 
+  -- Camera
+  Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
+  Camera:setNearClipDistance( 10 )
+  Camera:setFarClipDistance( 10000 )
+
+  GfxEngine:getCameraMan():setTarget(nil)
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
+  GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
+
   -- Movable Text Overlay attributes
   GfxEngine.mMTOFontColor = Ogre.ColourValue:new(1,1,1)
   GfxEngine.mMTOFontName = "DejaVuSans"
@@ -62,19 +71,38 @@ Combat.PrepareScene = function()
   --~ sphereNode:attachObject(sphereEntity)
 
   -- Terrain
-  --Ogre.MeshManager:getSingleton():createPlane(
-  --  "floor", Ogre.ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
-	--		Ogre.Plane:new(Ogre.Vector3.UNIT_Y, 0), 512, 512, 10, 10, true, 1, 10, 10, Ogre.Vector3.UNIT_Z);
-  --ent = SceneMgr:createEntity("Floor", "floor");
-  --ent:setMaterialName("Elementum/Terrain/Floor");
-  --ent:setCastShadows(true)
-  --ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
-  --SceneMgr:getRootSceneNode():attachObject(ent)
+  --~ Ogre.MeshManager:getSingleton():createPlane(
+    --~ "floor", Ogre.ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
+			--~ Ogre.Plane:new(Ogre.Vector3.UNIT_Y, 0), 512, 512, 10, 10, true, 1, 10, 10, Ogre.Vector3.UNIT_Z);
+  --~ ent = SceneMgr:createEntity("Floor", "floor");
+  --~ ent:setMaterialName("Elementum/Terrain/Floor");
+  --~ ent:setCastShadows(true)
+  --~ ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
+  --~ SceneMgr:getRootSceneNode():attachObject(ent)
   --~ GfxEngine:loadDotScene("Elementum.scene", "General")
   --~ Scene = GfxEngine:loadScene("DarkMansion.scene")
   Scene = GfxEngine:loadScene("MoltenChasm.scene")
-  GfxEngine:getSceneMgr():getEntity("arena_02"):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
-  GfxEngine:getSceneMgr():getEntity("arena_02"):setCastShadows(false)
+  -- loop through all the scene's Entities and set their RenderQueueGroup to background
+  do
+    local root_node = SceneMgr:getSceneNode("molten_chasm")
+    local nr_nodes = root_node:numChildren()
+    local idx = 0
+    print("Scene has " .. nr_nodes .. " child nodes")
+    while idx < nr_nodes do
+      -- get this node's entities
+      local node = root_node:getChildAt(idx)
+      node = tolua.cast(node, "Ogre::SceneNode")
+      local nr_entities = node:numAttachedObjects()
+      local _idx = 0
+      --print("\tNode " .. node:getName() .. " has " .. nr_entities .. " attached objects")
+      while _idx < nr_entities do
+        node:getAttachedObjectAt(_idx):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
+        _idx = _idx + 1
+      end
+      idx = idx + 1
+    end
+  end
+  --~ GfxEngine:getSceneMgr():getEntity("arena_02"):setCastShadows(false)
   --local mask = tolua.cast(Pixy.GfxEngine.TERRAIN_MASK, "Ogre::uint32")
   --GfxEngine:getSceneMgr():getEntity("arena_02"):setQueryFlags(Pixy.GfxEngine.TERRAIN_MASK)
   --Pixy.Log("Arena node is at " .. pos.x .. "," .. pos.y .. "," .. pos.z)
@@ -112,36 +140,109 @@ Combat.cleanup = function()
 end
 
 Combat.SetupLights = function()
-  SceneMgr:setAmbientLight(Ogre.ColourValue(150, 150,150))
+  SceneMgr:setAmbientLight(Ogre.ColourValue(0.1,0.1,0.1))
+  --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_ADDITIVE)
+  --~ SceneMgr:setShadowColour(Ogre.ColourValue(255, 0, 0))
 
-  fadeColour = Ogre.ColourValue:new(0, 0, 0)
-  --SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0035)
+  fadeColour = Ogre.ColourValue(0, 0, 0, 0.5)
+  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0025)
 
   _mod = 0.5
-  dcol = Ogre.ColourValue:new(_mod,_mod,_mod)
-  scol = Ogre.ColourValue:new(_mod,_mod,_mod)
+  dcol = Ogre.ColourValue(_mod,_mod,_mod)
+  scol = Ogre.ColourValue(_mod,_mod,_mod)
 
-  local pos = Ogre.Vector3:new(Pos.Me.x, Pos.Me.y, Pos.Me.z)
+  local pos = Ogre.Vector3(Pos.Me.x, Pos.Me.y, Pos.Me.z)
   pos.y = pos.y + 50
---~
-  dcol = Ogre.ColourValue:new(100,100,100)
-  scol = Ogre.ColourValue:new(100,100,100)
+
+  --[[dcol = Ogre.ColourValue:new(1.0,1.0,1.0)
+  scol = Ogre.ColourValue:new(1.0,1.0,1.0)
   light = SceneMgr:createLight()
   light:setType(Ogre.Light.LT_POINT)
   light:setPosition(pos)
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
-  light:setPowerScale(1000)
+  --~ light:setPowerScale(1000)
+  light:setCastShadows(true)]]
 
-  --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_ADDITIVE)
+  -- Middle Spotlight - between the two heroes
+  pos = Ogre.Vector3(0,10,0)
+  dcol = Ogre.ColourValue(0.9,0.7,0)
+  scol = Ogre.ColourValue(0.9,0.7,0)
+  light = SceneMgr:createLight()
+  light:setType(Ogre.Light.LT_SPOTLIGHT)
+  light:setPosition(pos)
+  light:setDiffuseColour(dcol)
+  light:setSpecularColour(scol)
+  light:setDirection(Ogre.Vector3(0,-1,0))
+  light:setPowerScale(10000)
+  light:setSpotlightRange(Ogre.Radian(1), Ogre.Radian(30), 0.5)
+  light:setCastShadows(true)
 
-  --~ dcol = Ogre.ColourValue:new(0.5,0.5,0.5)
-  --~ scol = Ogre.ColourValue:new(0.5,0.5,0.5)
+  -- Players Lights
+  do
+    -- Player's army light
+    dcol = Ogre.ColourValue(0.8,0.8,0.8)
+    scol = Ogre.ColourValue(0,0,0)
+    pos = Ogre.Vector3(0, 10, Pos.Me.z - 30)
+    light = SceneMgr:createLight()
+    light:setType(Ogre.Light.LT_POINT)
+    light:setPosition(pos)
+    light:setDiffuseColour(dcol)
+    light:setSpecularColour(scol)
+    light:setCastShadows(true)
+
+    -- Enemy's army light
+    pos = Ogre.Vector3(0, 10, Pos.Enemy.z + 30)
+    light = SceneMgr:createLight()
+    light:setType(Ogre.Light.LT_POINT)
+    light:setPosition(pos)
+    light:setDiffuseColour(dcol)
+    light:setSpecularColour(scol)
+    --~ light:setPowerScale(1000)
+    light:setCastShadows(true)
+  end
+
+  -- Side lights
+  do
+    -- Player's army light
+    dcol = Ogre.ColourValue(0.8,0.3,0)
+    scol = Ogre.ColourValue(0,0,0)
+    pos = Ogre.Vector3(30, 10, 0)
+    light = SceneMgr:createLight()
+    light:setType(Ogre.Light.LT_POINT)
+    light:setPosition(pos)
+    light:setDiffuseColour(dcol)
+    light:setSpecularColour(scol)
+    light:setCastShadows(true)
+
+    -- Enemy's army light
+    pos = Ogre.Vector3(-30, 10, 0)
+    light = SceneMgr:createLight()
+    light:setType(Ogre.Light.LT_POINT)
+    light:setPosition(pos)
+    light:setDiffuseColour(dcol)
+    light:setSpecularColour(scol)
+    --~ light:setPowerScale(1000)
+    light:setCastShadows(true)
+  end
+
+  --~ dcol = Ogre.ColourValue:new(1.0,0.5,0.5)
+  --~ scol = Ogre.ColourValue:new(1.0,0.5,0.5)
   --~ light = SceneMgr:createLight()
   --~ light:setType(Ogre.Light.LT_DIRECTIONAL)
-  --~ light:setDirection(Ogre.Vector3:new(0,-1,-1))
+  --~ light:setDirection(Ogre.Vector3:new(0,-1,0))
   --~ light:setDiffuseColour(dcol)
   --~ light:setSpecularColour(scol)
+  --~ light:setCastShadows(true)
+--~
+  --~ dcol = Ogre.ColourValue:new(0,0,1)
+  --~ scol = Ogre.ColourValue:new(0,0,1)
+  --~ light = SceneMgr:createLight()
+  --~ light:setType(Ogre.Light.LT_DIRECTIONAL)
+  --~ light:setDirection(Ogre.Vector3:new(0,-1,1))
+  --~ light:setDiffuseColour(dcol)
+  --~ light:setSpecularColour(scol)
+  --~ light:setCastShadows(true)
 
   --~ dcol = Ogre.ColourValue:new(0.9,0,0)
   --~ scol = Ogre.ColourValue:new(0.9,0,0)
@@ -157,18 +258,10 @@ end
 Combat.GameStarted = function()
 	Pixy.Log("Game has started! Pwning time")
 
-  -- Camera
-  Camera = GfxEngine:getCamera()
-
-  Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
-  Camera:setNearClipDistance( 10 )
-  Camera:setFarClipDistance( 10000 )
-
-  --~ GfxEngine:enableCompositorEffect("Bloom")
-  GfxEngine:getCameraMan():setTarget(nil)
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   GfxEngine:getCameraMan():setTarget(SelfPuppet:getRenderable():getSceneNode())
   GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
+
+  --~ GfxEngine:enableCompositorEffect("HDR")
 
 	return true
 end

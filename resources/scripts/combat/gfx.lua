@@ -41,10 +41,11 @@ Combat.onEntitySelected = function(inEvt)
     BBSet:setMaterialName("Elementum/Billboards/EnemyEntitySelection")
   end
 
-  Buffs.Show(entity)
-
   Selected = entity
   updater = rotateBillboard
+
+  Buffs.Show(entity)
+
 end
 
 Combat.onEntityDeselected = function()

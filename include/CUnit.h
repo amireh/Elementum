@@ -122,6 +122,8 @@ namespace Pixy
     Renderable* mRenderable;
     virtual void copyFrom(const CUnit& src);
 
+    //~ virtual void _onMechanicChange(std::string mechanic, bool has_it);
+
     bool setMoving(bool inMoving) {
       fIsMoving = inMoving;
     }

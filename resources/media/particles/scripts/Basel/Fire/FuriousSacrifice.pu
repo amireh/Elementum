@@ -1,0 +1,123 @@
+system FuriousSacrifice
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_flare_elipse_02
+        renderer                                Billboard
+        {
+            billboard_rotation_type             vertex
+            render_queue_group                  95
+        }
+        emitter                                 Point
+        {
+            emission_rate                       250
+            angle                               360
+            time_to_live                        0.5
+            velocity                            0
+            duration                            1
+            particle_width                      350
+            particle_height                     350
+            particle_depth                      350
+            position 0 100 0
+        }
+        affector                                TextureRotator Affector123
+        {
+            rotation                            dyn_random
+            {
+                min                             -4
+                max                             4
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             -3
+                max                             3
+            }
+        }
+        affector                                Colour Affector135
+        {
+            time_colour                         0    0.501961 0 0 1
+            time_colour                         1    1 0.501961 0 1
+        }
+        observer                                OnTime Observer18
+        {
+            observe_until_event                 true
+            handler                             DoEnableComponent Handler18
+            {
+                enable_component                emitter_component Emitter72 true
+            }
+            since_start_system                  true
+            on_time                             greater_than 1.5
+        }
+    }
+    technique Technique63
+    {
+        material                                mp_fire_04
+        renderer                                Billboard
+        {
+            texture_coords_rows                 2
+            texture_coords_columns              2
+            billboard_rotation_type             vertex
+            render_queue_group                  80
+        }
+        emitter                                 Circle Emitter72
+        {
+            emission_rate                       350
+            angle                               45
+            time_to_live                        dyn_random
+            {
+                min                             0.3
+                max                             0.6
+            }
+            velocity                            50
+            duration                            1
+            enabled                             false
+            radius                              150
+        }
+        affector                                Scale Affector125
+        {
+            xyz_scale                           500
+        }
+        affector                                TextureRotator Affector124
+        {
+            enabled                             false
+            rotation                            dyn_random
+            {
+                min                             -180
+                max                             180
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             -3
+                max                             3
+            }
+        }
+        affector                                Colour Affector136
+        {
+            time_colour                         0    0.501961 0.247059 0 1
+            time_colour                         0.871739  1 0.501961 0 1
+            time_colour                         1    0 0 0 1
+        }
+        affector                                Vortex Affector126
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      dyn_curved_linear
+            {
+                control_point                   1.19557 18.2465
+                control_point                   3.1583 0
+            }
+        }
+        affector                                TextureAnimator Affector6
+        {
+            time_step                           0.1
+            end_texture_coords_range            1
+        }
+        observer                                OnClear Observer20
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler20
+            {
+            }
+        }
+    }
+}

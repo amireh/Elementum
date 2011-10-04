@@ -63,8 +63,11 @@ namespace Pixy
 
 		//mPuppets.clear();
 		//mUpdateQueue.clear();
+    mDeathlist.clear();
 
 		mEvtMgr = EventManager::getSingletonPtr();
+    mEvtMgr->clear();
+
 		mNetMgr = NetworkManager::getSingletonPtr();
 		if (!mNetMgr->connect()) {
       mLog->errorStream() << "Could not connect to server, aborting";
@@ -91,8 +94,8 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    //~ mPuppetName = Intro::getSingleton().getPuppetName();
-    mPuppetName = "Cranberry"; // __DEBUG__
+    mPuppetName = Intro::getSingleton().getPuppetName();
+    //~ mPuppetName = "Cranberry"; // __DEBUG__
 
     // sync the game data when we're connected
     bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
@@ -111,7 +114,7 @@ namespace Pixy
     bind(EventUID::UpdatePuppet, boost::bind(&Combat::onUpdatePuppet, this, _1));
     bind(EventUID::UpdateUnit, boost::bind(&Combat::onUpdateUnit, this, _1));
     bind(EventUID::RemoveUnit, boost::bind(&Combat::onRemoveUnit, this, _1));
-    bind(EventUID::EntityDied, boost::bind(&Combat::onEntityDied, this, _1));
+    //bind(EventUID::EntityDied, boost::bind(&Combat::onEntityDied, this, _1));
     bind(EventUID::StartBlockPhase, boost::bind(&Combat::onStartBlockPhase, this, _1));
     bind(EventUID::Charge, boost::bind(&Combat::onCharge, this, _1));
     bind(EventUID::CancelCharge, boost::bind(&Combat::onCancelCharge, this, _1));
@@ -119,8 +122,8 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    //~ Event e(EventUID::SyncMatchPuppets);
-    //~ mNetMgr->send(e);
+    Event e(EventUID::SyncMatchPuppets);
+    mNetMgr->send(e);
 
     inBlockPhase = false;
     fSetup = true;
@@ -176,12 +179,14 @@ namespace Pixy
 		*/
 		mUIEngine->keyPressed(e);
 		mGfxEngine->keyPressed(e);
+		mScriptEngine->keyPressed(e);
 	}
 
 	void Combat::keyReleased( const OIS::KeyEvent &e ) {
 
 	  mUIEngine->keyReleased(e);
 		mGfxEngine->keyReleased(e);
+		mScriptEngine->keyReleased(e);
 
 		/*
 		mUISystem->injectKeyUp(e.key);

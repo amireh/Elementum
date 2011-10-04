@@ -4,6 +4,24 @@ Skeletons = {
   MaterialPrefix = "Elementum/Skeleton"
 }
 
+Skeletons.Create = function(unit, mesh, model_name, scale)
+  unit:setMesh(mesh)
+  unit:setMaterial(Skeletons.MaterialPrefix .. "/" .. model_name)
+
+  rnd = unit:getRenderable()
+  rnd:setScale(scale)
+
+  GfxEngine:attachToScene(rnd)
+
+  Skeletons.RegisterAnimations(rnd)
+
+  rnd:animateIdle()
+  rnd:animateGetUp()
+  rnd:animateAttack()
+
+  return true
+end
+
 Skeletons.CreateSoldier = function(unit)
   --~ GfxEngine:loadScene("SkeletonPeasant.scene")
   --~ local SceneMgr = GfxEngine:getSceneMgr()
@@ -28,18 +46,23 @@ Skeletons.CreateSoldier = function(unit)
   return true
 end
 
-Skeletons.Create = function(unit, mesh, model_name, scale)
-  unit:setMesh(mesh)
-  unit:setMaterial(Skeletons.MaterialPrefix .. "/" .. model_name)
+local grant_lifetap = function(unit)
+  if not unit:hasLifetap() then unit:setHasLifetap(true) end
+end
 
-  rnd = unit:getRenderable()
-  rnd:setScale(scale)
+Skeletons.CreateWarlord = function(inUnit)
+  Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warlord", 9)
 
-  GfxEngine:attachToScene(rnd)
+  -- Warlord grants Lifetap to all ally skeletons
+  local exporter = Pixy.CUnitListExporter()
+  exporter:export(inUnit:getOwner():getUnits(), "Pixy::CUnit", "Temp")
+  for unit in list_iter(Temp) do
+    print("Lua: granting Lifetap to " .. unit:getName())
+    unit:setHasLifetap(true)
+  end
+  Temp = nil
 
-  Skeletons.RegisterAnimations(rnd)
-
-  rnd:animateIdle()
+  subscribe_generic_unit_handler("Alive", grant_lifetap)
 
   return true
 end
@@ -81,5 +104,5 @@ subscribe_unit("Skeleton Acolyte",
   end)
 subscribe_unit("Skeleton Warlord",
   function(inUnit)
-    return Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warlord", 9)
+    return Skeletons.CreateWarlord(inUnit)
   end)

@@ -22,7 +22,7 @@ SCT.ShowScrollingMessage = function(txt, good, rnd)
   win:setProperty("UnifiedXPosition", "{" .. pos.x .. ",0}")
   win:setProperty("UnifiedYPosition", "{" .. pos.y .. ",0}")
   win:setProperty("UnifiedHeight", "{0,50}")
-  win:setProperty("Font", "Scrolling_Text")
+  win:setProperty("Font", "DejaVuSans-10")
 
   -- color the message
   local color = nil

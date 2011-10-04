@@ -19,6 +19,7 @@ Combat.bind = function()
   bind(Pixy.EventUID.FirstStrike, UI.onFirstStrike)
 
   bind(Pixy.EventUID.EntityStatChanged, UI.onStatChange)
+  bind(Pixy.EventUID.UnitMechanicChanged, UI.onMechanicChanged)
 
 
   -- updating the player's hand --

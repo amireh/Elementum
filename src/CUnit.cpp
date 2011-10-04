@@ -267,9 +267,10 @@ namespace Pixy
 
     //~ FxEngine::getSingleton().onEntityDying(this->mRenderable);
 
-    Event evt(EventUID::EntityDied);
-    evt.Any = (void*)this->mRenderable;
-    EventManager::getSingleton().hook(evt);
+    //Event evt(EventUID::EntityDied);
+    //evt.Any = (void*)this->mRenderable;
+    //EventManager::getSingleton().hook(evt);
+    Combat::getSingleton().markForDeath(this);
 
     //~ mRenderable->hide();
     GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
@@ -894,4 +895,5 @@ namespace Pixy
   void CUnit::_setEnemy(CPuppet* inPuppet) {
     mEnemy = inPuppet;
   }
+
 } // end of namespace

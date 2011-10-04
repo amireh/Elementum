@@ -1,0 +1,55 @@
+system BoneHarvest
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                Bone
+        renderer                                Billboard
+        {
+            //use_soft_particles                  true
+            billboard_rotation_type             vertex
+            render_queue_group 80
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       150
+            angle                               0
+            duration                            1
+            radius                              250
+            velocity 10
+            position 0 250 0
+            time_to_live 1.7
+        }
+        affector                                Gravity Affector33
+        {
+            mass_affector                       50
+            gravity                             50
+            position 0 250 0
+        }
+        affector                                Colour Affector34
+        {
+            time_colour                         0    0.752941 0.752941 0.752941 0.4
+            time_colour                         1    1 1 1 0.4
+        }
+        affector                                TextureRotator Affector36
+        {
+            rotation                            dyn_random
+            {
+                min                             -3
+                max                             3
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             -5
+                max                             5
+            }
+        }
+        observer                                OnClear Observer5
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler5
+            {
+            }
+        }
+    }
+}

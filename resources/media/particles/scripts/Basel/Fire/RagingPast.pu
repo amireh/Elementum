@@ -1,0 +1,50 @@
+system RagingPast
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_spell_flare_02
+        renderer                                Billboard
+        {
+          render_queue_group 80
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       250
+            time_to_live                        dyn_random
+            {
+                min                             0.7
+                max                             1
+            }
+            velocity                            25
+            duration                            1.5
+            direction                           0 -1 0
+            radius                              150
+            position 0 250 0
+        }
+        affector                                LinearForce Affector88
+        {
+            force_vector                        0 -50 0
+        }
+        affector                                Vortex Affector89
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      3
+        }
+        affector                                Gravity Affector90
+        {
+            position                            0 200 0
+            mass_affector                       70
+            gravity                             70
+        }
+        affector                                Scale Affector91
+        {
+            xyz_scale                           150
+        }
+        affector                                Colour Affector92
+        {
+            time_colour                         0    0.752941 0.752941 0.752941 0.298039
+            time_colour                         1    0.501961 0.501961 0.501961 0.298039
+        }
+    }
+}

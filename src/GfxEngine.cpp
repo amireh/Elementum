@@ -175,8 +175,10 @@ namespace Pixy {
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);
     mCameraMan->setStyle(OgreBites::CS_ORBIT);
 
-	  Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
-		//~ compMgr.registerCompositorLogic("HDR", new HDRLogic);
+	  //Ogre::CompositorManager& compMgr = Ogre::CompositorManager::getSingleton();
+		//compMgr.registerCompositorLogic("HDR", new HDRLogic);
+
+
 
 	  //setupSky();
 	  //setupWater();
@@ -910,6 +912,7 @@ namespace Pixy {
       mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
       mEntity->setMaterialName(inEntity->getMaterial());
       mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+      mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
 
       mLog->debugStream() << "attaching user data to ogre entity";
       mEntity->setUserAny(Ogre::Any(inRenderable));
@@ -968,6 +971,7 @@ namespace Pixy {
       mEntity->setMaterialName(inEntity->getMaterial());
       mEntity->setUserAny(Ogre::Any(inRenderable));
       mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+      mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
 
       mNode->attachObject(mEntity);
       mNode->setScale(inRenderable->getScale());
@@ -1391,7 +1395,7 @@ namespace Pixy {
           mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMRIGHT);
         break;
       case OIS::KC_L:
-        //~ ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
+        ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
         break;
       case OIS::KC_V:
         if (mSelected) {

@@ -227,6 +227,8 @@ namespace Ogre {
     virtual void setUserAny(const Any& anything);
     virtual const Any& getUserAny(void) const;
 
+    void setCastShadows(bool enabled);
+    bool getCastShadows(void);
   };
 
   class Node
@@ -238,6 +240,13 @@ namespace Ogre {
       TS_PARENT,
       TS_WORLD
     };
+
+    /** Returns the name of the node. */
+    const String& getName(void) const;
+
+    /** Gets this node's parent (NULL if this is the root).
+    */
+    virtual Node* getParent(void) const;
 
     virtual void setPosition(const Vector3& pos);
     Vector3& getPosition() const;
@@ -254,7 +263,8 @@ namespace Ogre {
 
     virtual void addChild(Node* child);
 
-    virtual Node* getChild(unsigned short index) const;
+    virtual Node* getChild @ getChildAt(int index) const;
+    virtual int numChildren(void) const;
 
     virtual Node* getChild(const String& name) const;
     virtual Node* removeChild(unsigned short index);
@@ -277,8 +287,6 @@ namespace Ogre {
     const AxisAlignedBox& getWorldBoundingBox(bool derive = false) const;
     void setMaterialName( const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME );
 
-    void setCastShadows(bool enabled);
-    bool getCastShadows(void);
 
   };
 
@@ -292,7 +300,7 @@ namespace Ogre {
 
     virtual void attachObject(MovableObject* obj);
     virtual unsigned short numAttachedObjects(void) const;
-    virtual MovableObject* getAttachedObject(unsigned short index);
+    virtual MovableObject* getAttachedObject @ getAttachedObjectAt(unsigned short index);
     virtual MovableObject* getAttachedObject(const String& name);
     virtual MovableObject* detachObject(unsigned short index);
     virtual void detachObject(MovableObject* obj);
@@ -344,7 +352,7 @@ namespace Ogre {
     virtual void setOrientation( Real w, Real x, Real y, Real z);
   };
 
-  class Light {
+  class Light : public MovableObject {
     public:
     /// Defines the type of light
     enum LightTypes

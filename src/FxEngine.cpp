@@ -19,6 +19,7 @@
 
 namespace Pixy {
 	FxEngine* FxEngine::__instance = NULL;
+  int FxEngine::gUID = 0;
 
 	FxEngine* FxEngine::getSingletonPtr() {
 		if( !__instance ) {
@@ -124,7 +125,9 @@ namespace Pixy {
   }
 
   void FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Renderable* inEntity) {
+
     if (inEffect->isAttached()) {
+      //inEffect->stop();
       inEffect->getParentSceneNode()->detachObject(inEffect);
     }
 
@@ -134,7 +137,13 @@ namespace Pixy {
     inEffect->start();
 	};
 
-  void FxEngine::playEffect(std::string inEffect, Renderable* inEntity) {
+  void FxEngine::playEffect(std::string inEffect, Renderable* inEntity, bool newInstance) {
+    if (newInstance)
+    {
+      ParticleUniverse::ParticleSystem* effect
+        = mFxMgr->createParticleSystem( inEffect + "_" + stringify(++gUID), inEffect, mSceneMgr);
+      return playEffect(effect, inEntity);
+    }
     assert(mEffects.find(inEffect) != mEffects.end());
 
     playEffect(mEffects.find(inEffect)->second, inEntity);

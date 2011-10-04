@@ -1,0 +1,61 @@
+system Aftermath
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                mp_fire_03
+        renderer                                Billboard
+        {
+            billboard_rotation_type             vertex
+            render_queue_group                  80
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       250
+            angle                               0
+            time_to_live                        dyn_random
+            {
+                min                             0.5
+                max                             0.8
+            }
+            velocity                            50
+            duration                            1.5
+            radius                              200
+            emit_random                         false
+        }
+        affector                                TextureRotator Affector14
+        {
+            rotation                            dyn_random
+            {
+                min                             -180
+                max                             18
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             -10
+                max                             10
+            }
+        }
+        affector                                Colour Affector13
+        {
+            time_colour                         0    0.501961 0 0 1
+            time_colour                         1    1 0.501961 0 1
+        }
+        affector                                Scale Affector16
+        {
+            xyz_scale                           200
+        }
+        affector                                Vortex Affector17
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      -10
+        }
+        observer                                OnClear Observer0
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler0
+            {
+            }
+        }
+    }
+}

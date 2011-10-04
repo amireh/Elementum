@@ -4,7 +4,7 @@ vertex_program AmbientOneTexture cg
 	source CelShading.cg
 	entry_point ambientOneTexture_vp
 	profiles vs_1_1 arbvp1
- 
+
 	default_params
 	{
 		param_named_auto worldViewProj worldviewproj_matrix
@@ -17,32 +17,32 @@ vertex_program CelEdgeVP cg
 	source CelShading.cg
 	entry_point celEdge_vp
 	profiles vs_1_1 arbvp1
- 
+
 	default_params
 	{
 		param_named_auto worldViewProj worldviewproj_matrix
 		param_named_auto eyePosition camera_position_object_space
 	}
- 
+
 }
 fragment_program CelEdgeFP cg
 {
 	source CelShading.cg
 	entry_point celEdge_fp
 	profiles ps_1_1 arbfp1 fp20
- 
+
 	default_params
 	{
 		param_named edgeColor float4 0 0 0 1
 	}
- 
+
 }
 vertex_program CelShadingVP cg
 {
 	source CelShading.cg
 	entry_point lighting_vp
 	profiles vs_1_1 arbvp1
- 
+
 	default_params
 	{
 		param_named_auto lightPosition light_position_object_space 0
@@ -61,14 +61,14 @@ vertex_program CelSpecularVP cg
 	source CelShading.cg
 	entry_point specular_vp
 	profiles vs_1_1 arbvp1
- 
+
 	default_params
 	{
 		param_named_auto lightPosition light_position_object_space 0
 		param_named_auto lightAttenuation light_attenuation 0
 		param_named_auto eyePosition camera_position_object_space
 		param_named_auto worldViewProj worldviewproj_matrix
-		param_named shininess float 10 
+		param_named shininess float 10
 	}
 }
 fragment_program CelSpecularFP cg
@@ -83,7 +83,7 @@ fragment_program CelSpecularTexFP cg
 	entry_point specularTex_fp
 	profiles ps_1_1 arbfp1 fp20
 }
- 
+
 material CelShading
 {
 	technique
@@ -98,8 +98,8 @@ material CelShading
 			// base colours, not needed for rendering, but as information
 			// to lighting pass categorisation routine
 			ambient 1 1 1
-			diffuse 0 0 0 
-			specular 0 0 0 0 
+			diffuse 0 0 0
+			specular 0 0 0 0
 			// Really basic vertex program
 			// NB we don't use fixed function here because GL does not like
 			// mixing fixed function and vertex programs, depth fighting can
@@ -113,7 +113,7 @@ material CelShading
 			ambient 0 0 0
 			iteration once_per_light
 			scene_blend add
- 
+
 			vertex_program_ref CelShadingVP
 			{
 			}
@@ -131,7 +131,7 @@ material CelShading
 		pass decal
 		{
 			lighting off
- 
+
 			vertex_program_ref AmbientOneTexture
 			{
 				param_named_auto worldViewProj worldviewproj_matrix
@@ -148,7 +148,7 @@ material CelShading
 			ambient 0 0 0
 			iteration once_per_light
 			scene_blend add
- 
+
 			vertex_program_ref CelSpecularVP
 			{
 				// map shininess from custom renderable param 1
@@ -173,8 +173,8 @@ material CelShading
 			// base colours, not needed for rendering, but as information
 			// to lighting pass categorisation routine
 			ambient 1 1 1
-			diffuse 0 0 0 
-			specular 0 0 0 0 
+			diffuse 0 0 0
+			specular 0 0 0 0
 			// Really basic vertex program
 			// NB we don't use fixed function here because GL does not like
 			// mixing fixed function and vertex programs, depth fighting can
@@ -193,7 +193,7 @@ material CelShading
 				filtering none
 			}
 		}
-	}	
+	}
 }
 material CelShadingSpecular
 {
@@ -209,8 +209,8 @@ material CelShadingSpecular
 			// base colours, not needed for rendering, but as information
 			// to lighting pass categorisation routine
 			ambient 1 1 1
-			diffuse 0 0 0 
-			specular 0 0 0 0 
+			diffuse 0 0 0
+			specular 0 0 0 0
 			// Really basic vertex program
 			// NB we don't use fixed function here because GL does not like
 			// mixing fixed function and vertex programs, depth fighting can
@@ -224,7 +224,7 @@ material CelShadingSpecular
 			ambient 0 0 0
 			iteration once_per_light
 			scene_blend add
- 
+
 			vertex_program_ref CelShadingVP
 			{
 			}
@@ -242,7 +242,7 @@ material CelShadingSpecular
 		pass decal
 		{
 			lighting off
- 
+
 			vertex_program_ref AmbientOneTexture
 			{
 				param_named_auto worldViewProj worldviewproj_matrix
@@ -259,7 +259,7 @@ material CelShadingSpecular
 			ambient 0 0 0
 			iteration once_per_light
 			scene_blend add
- 
+
 			vertex_program_ref CelSpecularVP
 			{
 				// map shininess from custom renderable param 1
@@ -288,8 +288,8 @@ material CelShadingSpecular
 			// base colours, not needed for rendering, but as information
 			// to lighting pass categorisation routine
 			ambient 1 1 1
-			diffuse 0 0 0 
-			specular 0 0 0 0 
+			diffuse 0 0 0
+			specular 0 0 0 0
 			// Really basic vertex program
 			// NB we don't use fixed function here because GL does not like
 			// mixing fixed function and vertex programs, depth fighting can
@@ -308,5 +308,5 @@ material CelShadingSpecular
 				filtering none
 			}
 		}
-	}	
+	}
 }

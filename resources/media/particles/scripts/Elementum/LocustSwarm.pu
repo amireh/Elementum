@@ -1,0 +1,52 @@
+system LocustSwarm
+{
+  scale 0.1 0.1 0.1
+    technique
+    {
+        material                                PUMediaPack/Flare_03
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Circle
+        {
+            emission_rate                       50
+            duration                            0.7
+            emits                               emitter_particle Emitter21
+            step                                0.4
+        }
+        emitter                                 Point Emitter21
+        {
+            emission_rate                       250
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.2
+                max                             0.3
+            }
+            velocity                            250
+            duration                            0.7
+        }
+        affector                                Scale Affector34
+        {
+            xyz_scale                           50
+        }
+        affector                                Colour Affector35
+        {
+            time_colour                         0    0.858824 0.858824 0.858824 0.298039
+            time_colour                         0.0782609  0.501961 0.501961 0 0.698039
+            time_colour                         1    0.501961 0.25098 0 0.298039
+        }
+        affector                                Gravity Affector33
+        {
+            mass_affector                       2000
+            gravity                             1000
+        }
+        observer                                OnClear Observer16
+        {
+            observe_until_event                 true
+            handler                             DoStopSystem Handler16
+            {
+            }
+        }
+    }
+}
