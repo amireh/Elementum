@@ -1,0 +1,651 @@
+fragment_program PSBrightPass hlsl
+{
+	source BrightPass.psh
+	target ps_2_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named BRIGHT_PASS_THRESHOLD float 5
+		param_named BRIGHT_PASS_OFFSET float 10
+	}
+}
+
+fragment_program PSHDRFinalReinh hlsl
+{
+	source HDRFinalReinh.psh
+	target ps_2_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named GlareStrength float 1
+	}
+}
+
+fragment_program PSHDRFinalReinhMod hlsl
+{
+  profile arbfp1
+	source HDRFinalReinhMod.psh
+	target ps_2_0
+	entry_point PS
+
+	default_params
+	{
+		param_named GlareStrength float 1
+		param_named WhiteLuminance float 1
+	}
+}
+
+fragment_program PSHDRFinalReinhLocal hlsl
+{
+	source HDRFinalReinhLocal.psh
+	target ps_2_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named GlareStrength float 1
+		param_named StarStrength float 1
+	}
+}
+
+fragment_program PSHDRFinalLinear hlsl
+{
+	source HDRFinalLinear.psh
+	target ps_2_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named GlareStrength float 1
+	}
+}
+
+fragment_program PSBuildLocalAdaptMap hlsl
+{
+	source BuildLocalAdaptMap.psh
+	target ps_3_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named e float 1
+		param_named phi float 1
+	}
+}
+
+fragment_program PSDown2 hlsl
+{
+	source Down2.psh
+	target ps_2_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named rcpScreenSize float2 0.004 0.004
+	}
+}
+
+fragment_program PSDown4 hlsl
+{
+	source Down4.psh
+	target ps_2_0
+  profile arbfp1
+	entry_point PS
+
+	default_params
+	{
+		param_named rcpScreenSize float2 0.004 0.004
+	}
+}
+
+material Down4
+{
+	technique
+	{
+		//Rendering Pass: Scale Scene Down 4
+		pass
+		{
+			fragment_program_ref PSDown4
+			{
+				param_named rcpScreenSize float2 0.00125 0.0016667
+			}
+			texture_unit RT
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material Down2
+{
+	technique
+	{
+		//Rendering Pass: Scale Scene Down 2
+		pass
+		{
+			fragment_program_ref PSDown2
+			{
+				param_named rcpScreenSize float2 0.00125 0.0016667
+			}
+			texture_unit RT
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material HDRFinalReinh
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSHDRFinalReinh
+			{
+				param_named StarStrength float 1
+				param_named GlareStrength float 1
+			}
+			texture_unit
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 2
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material HDRFinalReinhMod
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSHDRFinalReinhMod
+			{
+				param_named GlareStrength float 1
+				param_named StarStrength float 1
+				param_named WhiteLuminance float 2.8
+			}
+			texture_unit
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 2
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material HDRFinalLinear
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSHDRFinalLinear
+			{
+				param_named GlareStrength float 1
+			}
+			texture_unit
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 2
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+		                tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material BuildLocalAdaptMap
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSBuildLocalAdaptMap
+			{
+				param_named e float 1
+				param_named phi float 1
+			}
+			texture_unit // key
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering none none none
+			}
+			texture_unit //scale1
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering none none none
+			}
+			texture_unit //scale2
+			{
+				tex_coord_set 2
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //scale3
+			{
+				tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //scale4
+			{
+				tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //scale5
+			{
+				tex_coord_set 5
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //scale6
+			{
+				tex_coord_set 6
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //scale7
+			{
+				tex_coord_set 7
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material HDRFinalReinhLocal
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSHDRFinalReinhLocal
+			{
+				param_named GlareStrength float 1
+				param_named StarStrength float 1
+			}
+			texture_unit // scene scaled
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering none none none
+			}
+			texture_unit //key
+			{
+				tex_coord_set 2
+				tex_address_mode clamp
+				filtering none none none
+			}
+			texture_unit //glare
+			{
+				tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //star
+			{
+				tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //local
+			{
+				tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material BrightPass
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSBrightPass
+			{
+				param_named BRIGHT_PASS_THRESHOLD float 2.5
+				param_named BRIGHT_PASS_OFFSET float 1
+			}
+			texture_unit //scene
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering none
+			}
+			texture_unit //lum
+			{
+		                tex_coord_set 1
+				tex_address_mode clamp
+				filtering none
+			}
+			texture_unit //key
+			{
+		                tex_coord_set 2
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+fragment_program PSAutoKey hlsl
+{
+	source AutoKey.psh
+	target ps_2_0
+	entry_point PS
+}
+
+material AutoKey
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSAutoKey
+			{
+			}
+			texture_unit //lum
+			{
+		        tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+fragment_program PSManualKey hlsl
+{
+	source ManualKey.psh
+	target ps_2_0
+	entry_point PS
+
+	default_params
+	{
+		param_named Key float 1
+	}
+}
+
+material ManualKey
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSManualKey
+			{
+				param_named Key float 0.18
+			}
+			texture_unit //lum
+			{
+		        tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+fragment_program PSScaleWorldLum hlsl
+{
+	source ScaleWorldLum.psh
+	target ps_2_0
+	entry_point PS
+}
+
+material ScaleWorldLum
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSScaleWorldLum
+			{
+			}
+			texture_unit //scene
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //lum
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit //key
+			{
+		                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+fragment_program PSHDRFinalAdaptiveLog hlsl
+{
+	source HDRFinalAdaptiveLog.psh
+	target ps_2_0
+	entry_point PS
+
+	default_params
+	{
+		param_named GlareStrength float 1
+		param_named GlareStrength float 1
+	}
+}
+
+material HDRFinalAdaptiveLog
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSHDRFinalAdaptiveLog
+			{
+				param_named GlareStrength float 1
+				param_named StarStrength float 1
+			}
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 2
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+fragment_program PSHDRFinalLog hlsl
+{
+	source HDRFinalLog.psh
+	target ps_2_0
+	entry_point PS
+
+	default_params
+	{
+		param_named GlareStrength float 1
+		param_named GlareStrength float 1
+	}
+}
+
+material HDRFinalLog
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref PSHDRFinalLog
+			{
+				param_named GlareStrength float 1
+				param_named StarStrength float 1
+			}
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 2
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 3
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+			texture_unit
+			{
+				tex_coord_set 4
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+		}
+	}
+}
+
+material CompositorCopyback
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+
+			texture_unit Temp
+			{
+				tex_address_mode clamp
+				filtering linear linear none
+				colour_op replace
+               			tex_coord_set 0
+			}
+		}
+	}
+}

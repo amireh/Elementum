@@ -5,22 +5,22 @@ material Elementum/Terrain/Floor
 	{
 		pass
 		{
-			ambient 1 1 1
+			ambient 0.3 0.3 0.3
 			depth_write on
       depth_check on
 			cull_software none
 			cull_hardware none
       scene_blend add
 
-			texture_unit
+			/*texture_unit
 			{
 				texture Crater.jpg
 				scroll_anim 0.01 0
-			}
+			}*/
 
 			texture_unit
 			{
-				texture Dante_Afterlife.jpg
+				texture Disco_Crystals.jpg
         scale 0.5 0.5
 				//scroll_anim 0.1 0
 			}

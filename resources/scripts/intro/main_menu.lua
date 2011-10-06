@@ -5,20 +5,21 @@ local Gremlin = nil
 
 local Form = {}
 require "lfs"
-MainMenu.CreateGremlin = function()
+local idx = 0
+MainMenu.CreateGremlin = function(mesh, material)
 
   local unit = Pixy.CUnit:new()
   --~ unit:setRank(Pixy.PUPPET)
-  unit:setName("IntroGremlin")
+  unit:setName("IntroGremlin" .. idx)
   unit:live()
-  unit:setMesh("Gremlin1.mesh")
-  unit:setMaterial("Elementum/Gremlin/Intro")
+  unit:setMesh(mesh)
+  unit:setMaterial("Elementum/Gremlin/" .. material)
 
   rnd = unit:getRenderable()
 
-  local node = SceneMgr:createSceneNode("gremlin_node")
+  local node = SceneMgr:createSceneNode("gremlin_node" .. idx)
   SceneMgr:getRootSceneNode():addChild(node)
-  local ent = SceneMgr:createEntity("Gremlin", unit:getMesh());
+  local ent = SceneMgr:createEntity("Gremlin" .. idx, unit:getMesh());
   ent:setMaterialName(unit:getMaterial())
   ent:setCastShadows(true)
   node:attachObject(ent)
@@ -35,19 +36,30 @@ MainMenu.CreateGremlin = function()
 
 
   GfxEngine:attachToScene(rnd)
---~
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
-  --~ GfxEngine:getCameraMan():setTarget(gremlin:getRenderable():getSceneNode())
-  GfxEngine:trackNode(node)
-  GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
 
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_1", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_2", false)
---~
+  if material ~= "Master" then
+    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
+    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
+  else
+    -- the master gremlin yawns, the others dont
+    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
+  end
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_WALK,   "Walk_1")
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN,    "Run_1")
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN,    "Run_2")
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,    "Death_1", false)
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,    "Death_2", false)
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_1", false)
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_2", false)
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_3", false)
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,   "Idle_Sitting")
+  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,    "Idle_Sleeping")
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jump", false)
+  rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jumping_Happy", false)
+
   rnd:animateIdle()
+
+  idx = idx + 1
 
   return unit
 end
@@ -73,10 +85,10 @@ MainMenu.attach = function()
   Camera:setNearClipDistance( 10 )
   Camera:setFarClipDistance( 10000 )
 
-  SceneMgr:setAmbientLight(Ogre.ColourValue(100,100,100))
+  SceneMgr:setAmbientLight(Ogre.ColourValue(0,0,0))
 
-  fadeColour = Ogre.ColourValue(0, 0, 0)
-  --~ SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0075)
+  fadeColour = Ogre.ColourValue(0,0,0)
+  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.015)
   --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_MODULATIVE)
 
   -- Movable Text Overlay attributes
@@ -102,14 +114,14 @@ MainMenu.attach = function()
 			Ogre.Plane:new(Ogre.Vector3.UNIT_Y, 0), 512, 512, 10, 10, true, 1, 10, 10, Ogre.Vector3.UNIT_Z);
   ent = SceneMgr:createEntity("Floor", "floor");
   ent:setMaterialName("Elementum/Terrain/Floor");
-  ent:setCastShadows(true)
+  --~ ent:setCastShadows(true)
   ent:setRenderQueueGroup( Ogre.RENDER_QUEUE_BACKGROUND );
   SceneMgr:getRootSceneNode():attachObject(ent)
 
   -- Lights
   local pos = Ogre.Vector3(0,100,30)
-  local dcol = Ogre.ColourValue(155,155,155)
-  local scol = Ogre.ColourValue(155,155,155)
+  local dcol = Ogre.ColourValue(0.9,0.9,0.9)
+  local scol = Ogre.ColourValue(0.9,0.9,0.9)
   local light = nil
 
   light = SceneMgr:createLight()
@@ -118,16 +130,32 @@ MainMenu.attach = function()
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-  pos = Ogre.Vector3(pos.x, 0, 80)
-  dcol = Ogre.ColourValue(155,155,155)
-  scol = Ogre.ColourValue(155,155,155)
+  pos = Ogre.Vector3(pos.x, 15, 10)
+  dcol = Ogre.ColourValue(0.8,0.8,0.8)
+  scol = Ogre.ColourValue(0.8,0.8,0.8)
   light = SceneMgr:createLight()
   light:setType(Ogre.Light.LT_POINT)
   light:setPosition(pos)
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-  Gremlin = MainMenu.CreateGremlin()
+  Gremlin = MainMenu.CreateGremlin("Gremlin2.mesh", "Engineer")
+
+  Gremlin2 = MainMenu.CreateGremlin("Gremlin1.mesh", "Brawler")
+  Gremlin2:getRenderable():getSceneNode():setPosition(Ogre.Vector3(10, 0, 0))
+  Gremlin2:getRenderable():getSceneNode():setScale(Ogre.Vector3(15))
+  Gremlin2:getRenderable():getSceneNode():yaw(Ogre.Degree(-75))
+  Gremlin2:getRenderable():animateRest()
+
+  Gremlin3 = MainMenu.CreateGremlin("Gremlin3.mesh", "Master")
+  Gremlin3:getRenderable():getSceneNode():setPosition(Ogre.Vector3(-10, 0, 0))
+  Gremlin3:getRenderable():getSceneNode():setScale(Ogre.Vector3(10))
+  Gremlin3:getRenderable():getSceneNode():yaw(Ogre.Degree(75))
+
+  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
+  GfxEngine:getCameraMan():setTarget(Gremlin:getRenderable():getSceneNode())
+  --~ GfxEngine:trackNode(node)
+  GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
 
   isSetup = true
 end
@@ -153,8 +181,14 @@ MainMenu.cleanup = function()
   if not isSetup then return false end
   GfxEngine:getCameraMan():setTarget(nil)
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
-  if Gremlin then Gremlin:delete() end
+  if Gremlin then
+    Gremlin:delete()
+    Gremlin2:delete()
+    Gremlin3:delete()
+  end
   Gremlin = nil
+  Gremlin2 = nil
+  Gremlin3 = nil
   isSetup = false
 end
 

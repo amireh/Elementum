@@ -1,0 +1,32 @@
+sampler s0 : register(s0);//scene(down)
+sampler s1 : register(s1);//luminance
+sampler s2 : register(s2);//key;
+
+struct PS_IN
+{
+	float2 TexC : TEXCOORD0;
+};
+
+float4 PS(PS_IN inp, uniform float BRIGHT_PASS_THRESHOLD, uniform float BRIGHT_PASS_OFFSET) : COLOR
+{
+	float4 vSample = tex2D(s0,inp.TexC);
+	float  avgLum = tex2D(s1,float2(0.5f, 0.5f));
+	float Key = tex2D(s2,float2(0.5f,0.5f));
+	
+	// Determine what the pixel's value will be after tone-mapping occurs
+	vSample.rgb *= Key/(avgLum + 0.001f);
+	
+	// Subtract out dark pixels
+	vSample.rgb -= BRIGHT_PASS_THRESHOLD;
+	
+	// Clamp to 0
+	vSample = max(vSample, 0.0f);
+	
+	// Map the resulting value into the 0 to 1 range. Higher values for
+	// BRIGHT_PASS_OFFSET will isolate lights from illuminated scene 
+	// objects.
+	vSample.rgb /= (BRIGHT_PASS_OFFSET + vSample);
+    
+	return vSample;
+	//return float4(1,0,vSample.r,1);
+}

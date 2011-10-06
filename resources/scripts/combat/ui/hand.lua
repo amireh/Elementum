@@ -190,8 +190,14 @@ Buffs.Show = function(rnd)
   Buffs.Hide()
 
   print("Showing buffs for " .. rnd:getEntity():getName() .. rnd:getEntity():getUID())
+  local entity = rnd:getEntity()
+  if entity:getRank() == Pixy.PUPPET then
+    entity = tolua.cast(entity, "Pixy::CPuppet")
+  else
+    entity = tolua.cast(entity, "Pixy::CUnit")
+  end
   local exporter = Pixy.CSpellListExporter()
-  exporter:export(rnd:getEntity():getBuffs(), "Pixy::CSpell", "Temp")
+  exporter:export(entity:getBuffs(), "Pixy::CSpell", "Temp")
   local buffs = Temp
   Temp = nil
 

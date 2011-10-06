@@ -1,0 +1,33 @@
+
+
+sampler sLum : register(s0);//scaledLum
+sampler sKey : register(s1);//key
+sampler sGlare : register(s2);//glare
+sampler sStar : register(s3);//star
+sampler sLocal : register(s4);
+
+static const float3 LUMINANCE_VECTOR  = float3(0.3f, 0.58f, 0.12f);
+
+struct PS_IN
+{
+	float2 TexC : TEXCOORD0;
+};
+
+float4 PS(PS_IN i, uniform float GlareStrength, uniform float StarStrength) : COLOR
+{
+	float Key = tex2D(sKey, float2(0.5f, 0.5f));
+	float4 color = tex2D(sLum, i.TexC);
+	float4 local = tex2D(sLocal, i.TexC);
+	
+	//test to map all channels with the same luinance -> this is wrong
+	//color /= (dot(local, LUMINANCE_VECTOR) + 0.5); 
+	color /= local + 1;	
+	
+	//gamma correction, used to generate the same result than some tonemapping plugin for image processing software
+	//color = pow(color , 1/1.6);
+	
+	color.rgb += tex2D(sGlare, i.TexC) * GlareStrength;//glare
+    color.rgb += tex2D(sStar, i.TexC) * StarStrength;//star
+ 
+	return color;   
+}

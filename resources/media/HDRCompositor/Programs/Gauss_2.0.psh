@@ -1,0 +1,37 @@
+sampler2D S0 : register(s0);//last frame
+
+/*static const float4 GaussStuff[13] =
+{
+	float4(-0.040000,0.000000,0.048871,0),
+	float4(-0.020000,-0.027027,0.076221,0),
+	float4(-0.020000,0.000000,0.095189,0),
+	float4(-0.020000,0.027027,0.076221,0),
+	float4(0.000000,-0.054054,0.048871,0),
+	float4(0.000000,-0.027027,0.095189,0),
+	float4(0.000000,0.000000,0.118876,0),
+	float4(0.000000,0.027027,0.095189,0),
+	float4(0.000000,0.054054,0.048871,0),
+	float4(0.020000,-0.027027,0.076221,0),
+	float4(0.020000,0.000000,0.095189,0),
+	float4(0.020000,0.027027,0.076221,0),
+	float4(0.040000,0.000000,0.048871,0)
+};*/
+	
+struct PS_IN
+{
+	float2 TexC : TEXCOORD0;
+};
+
+float4 PS(PS_IN i,uniform float4 GaussStuff[13]) : COLOR
+{
+	float4 ColorSum = float4(0,0,0,0);
+		
+	//gaussian kernel with  13 samples
+	//basicly its a 5x5, but without pixel with distance > 2
+	for (float j = 0; j < 13; j++)
+	{
+		ColorSum += GaussStuff[j].z * tex2D(S0,i.TexC - GaussStuff[j].xy);
+	}
+	
+	return ColorSum;
+}
