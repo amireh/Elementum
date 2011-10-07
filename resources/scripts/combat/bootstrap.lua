@@ -9,12 +9,21 @@ local Viewport = nil
 local Camera = nil
 
 local Pos = { Me = Ogre.Vector3:new(0,0,0), Enemy = Ogre.Vector3:new(0,0,0) }
-
+Keybindings = {}
 BBSet = nil
 BB = nil
 BBNode = nil
 Scene = nil
-
+RTT = {
+  Player = {
+    Camera = nil,
+    Texture = nil
+  },
+  Enemy = {
+    Camera = nil,
+    Texture = nil
+  }
+}
 Combat.PrepareScene = function()
   Pixy.Log("COMBAT SCENE IS PREPARED")
 
@@ -84,7 +93,7 @@ Combat.PrepareScene = function()
   Scene = GfxEngine:loadScene("MoltenChasm.scene")
   -- loop through all the scene's Entities and set their RenderQueueGroup to background
   do
-    local root_node = SceneMgr:getSceneNode("molten_chasm")
+    local root_node = SceneMgr:getSceneNode("Scene")
     local nr_nodes = root_node:numChildren()
     local idx = 0
     print("Scene has " .. nr_nodes .. " child nodes")
@@ -107,20 +116,47 @@ Combat.PrepareScene = function()
   --GfxEngine:getSceneMgr():getEntity("arena_02"):setQueryFlags(Pixy.GfxEngine.TERRAIN_MASK)
   --Pixy.Log("Arena node is at " .. pos.x .. "," .. pos.y .. "," .. pos.z)
 
-  BBNode = SceneMgr:createSceneNode("EntitySelectionNode")
-  BBSet = SceneMgr:createBillboardSet("EntitySelection")
-  BBSet:setMaterialName("Elementum/Billboards/EntitySelection")
-  BBSet:setDefaultDimensions(1,1)
-  BBSet:setBillboardOrigin(Ogre.BBO_CENTER)
-  BBSet:setBillboardType(Ogre.BBT_PERPENDICULAR_COMMON)
-  BBSet:setBillboardRotationType(Ogre.BBR_VERTEX)
-  BBSet:setCommonDirection(Ogre.Vector3:new(0,1,0))
-  BBSet:setCommonUpVector(Ogre.Vector3:new(0,0,1))
-  BBSet:setRenderQueueGroup(Ogre.RENDER_QUEUE_WORLD_GEOMETRY_1)
-  BBSet:setAutoextend(false)
-  BB = BBSet:createBillboard(Ogre.Vector3:new(0,0,0))
-  BB:setTexcoordRect(0,0,1,1)
-  BBNode:attachObject(BBSet)
+  -- Selection billboard
+  do
+    BBNode = SceneMgr:createSceneNode("EntitySelectionNode")
+    BBSet = SceneMgr:createBillboardSet("EntitySelection")
+    BBSet:setMaterialName("Elementum/Billboards/EntitySelection")
+    BBSet:setDefaultDimensions(1,1)
+    BBSet:setBillboardOrigin(Ogre.BBO_CENTER)
+    BBSet:setBillboardType(Ogre.BBT_PERPENDICULAR_COMMON)
+    BBSet:setBillboardRotationType(Ogre.BBR_VERTEX)
+    BBSet:setCommonDirection(Ogre.Vector3:new(0,1,0))
+    BBSet:setCommonUpVector(Ogre.Vector3:new(0,0,1))
+    BBSet:setRenderQueueGroup(Ogre.RENDER_QUEUE_WORLD_GEOMETRY_1)
+    BBSet:setAutoextend(false)
+    BB = BBSet:createBillboard(Ogre.Vector3:new(0,0,0))
+    BB:setTexcoordRect(0,0,1,1)
+    BBNode:attachObject(BBSet)
+  end
+
+  -- RTTs
+  do
+    -- create the RTT cameras
+    RTT.Player.Camera = SceneMgr:createCamera("RTT.Player.Camera")
+    RTT.Player.Camera:setNearClipDistance( 1 )
+    RTT.Player.Camera:setFarClipDistance( 100 )
+
+    RTT.Enemy.Camera = SceneMgr:createCamera("RTT.Enemy.Camera")
+    RTT.Enemy.Camera:setNearClipDistance( 1 )
+    RTT.Enemy.Camera:setFarClipDistance( 100 )
+
+    -- create the RTT texture (Player's)
+    RTT.Player.Texture = Pixy.OgreRTT:new()
+    RTT.Player.Texture:setup(SceneMgr, GfxEngine:getWindow(), RTT.Player.Camera)
+    RTT.Player.Texture:setCorners(-0.985, -0.40, -0.73, -0.785)
+    RTT.Player.Texture:enable()
+
+    -- create the RTT texture (Enemy's)
+    RTT.Enemy.Texture = Pixy.OgreRTT:new()
+    RTT.Enemy.Texture:setup(SceneMgr, GfxEngine:getWindow(), RTT.Enemy.Camera)
+    RTT.Enemy.Texture:setCorners(0.73, -0.40, 0.985, -0.785)
+    RTT.Enemy.Texture:enable()
+  end
 
   Pixy.CUnit:setDefaultWalkSpeed(0.10)
   Pixy.Renderable:setRotationFactor(60.0)
@@ -136,6 +172,9 @@ Combat.SetupScene = function()
 end
 
 Combat.cleanup = function()
+  UI.cleanup()
+  RTT.Player.Texture:delete()
+  RTT.Enemy.Texture:delete()
   GfxEngine:unloadScene(Scene)
 end
 
@@ -190,6 +229,7 @@ Combat.SetupLights = function()
     light:setDiffuseColour(dcol)
     light:setSpecularColour(scol)
     light:setCastShadows(true)
+    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
 
     -- Enemy's army light
     pos = Ogre.Vector3(0, 10, Pos.Enemy.z + 30)
@@ -200,6 +240,7 @@ Combat.SetupLights = function()
     light:setSpecularColour(scol)
     --~ light:setPowerScale(1000)
     light:setCastShadows(true)
+    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
   end
 
   -- Side lights
@@ -214,6 +255,7 @@ Combat.SetupLights = function()
     light:setDiffuseColour(dcol)
     light:setSpecularColour(scol)
     light:setCastShadows(true)
+    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
 
     -- Enemy's army light
     pos = Ogre.Vector3(-30, 10, 0)
@@ -224,6 +266,7 @@ Combat.SetupLights = function()
     light:setSpecularColour(scol)
     --~ light:setPowerScale(1000)
     light:setCastShadows(true)
+    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
   end
 
   --~ dcol = Ogre.ColourValue:new(1.0,0.5,0.5)
@@ -261,7 +304,26 @@ Combat.GameStarted = function()
   GfxEngine:getCameraMan():setTarget(SelfPuppet:getRenderable():getSceneNode())
   GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
 
+  Gfx.ShowPortrait(SelfPuppet:getRenderable(), true)
+  UI.Highlight(SelfPuppet, true)
+  Gfx.ShowPortrait(EnemyPuppet:getRenderable(), false)
+  UI.Highlight(EnemyPuppet, false)
+
   --~ GfxEngine:enableCompositorEffect("HDR")
 
 	return true
+end
+
+local RTTCompositorEffect = "ASCII"
+local RTTCompositorEnabled = false
+local RTTCompositorRegistered = false
+Combat.ToggleRTTCompositor = function()
+  if not RTTCompositorRegistered then
+    CompositorMgr:addCompositor(RTT.Player.Camera:getViewport(), RTTCompositorEffect)
+    CompositorMgr:addCompositor(RTT.Enemy.Camera:getViewport(), RTTCompositorEffect)
+  end
+
+  RTTCompositorEnabled = not RTTCompositorEnabled
+  CompositorMgr:setCompositorEnabled(RTT.Player.Camera:getViewport(), RTTCompositorEffect, RTTCompositorEnabled)
+  CompositorMgr:setCompositorEnabled(RTT.Enemy.Camera:getViewport(), RTTCompositorEffect, RTTCompositorEnabled)
 end

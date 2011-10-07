@@ -90,6 +90,7 @@ Pixy.registerGlobals = function()
   ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
 
   SceneMgr = GfxEngine:getSceneMgr()
+  CompositorMgr = Ogre.CompositorManager:getSingletonPtr()
 
 	-- progress box , used for loading
 	PBox = Pixy.UI.attachOverlay("ProgressBox")

@@ -1,0 +1,17 @@
+$#include "OgreRTT.h"
+$#include "Ogre.h"
+
+  class OgreRTT : public Ogre::RenderTargetListener
+  {
+    public:
+    OgreRTT();
+    virtual ~OgreRTT();
+
+    void setup(Ogre::SceneManager *mSceneMgr, Ogre::RenderWindow *inWindow, Ogre::Camera *inCamera);
+    void setCorners(Ogre::Real left, Ogre::Real right, Ogre::Real top, Ogre::Real bot);
+
+    void enable();
+    void disable();
+
+    bool isEnabled() const;
+  };

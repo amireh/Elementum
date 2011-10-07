@@ -16,7 +16,6 @@
 
 #include <Ogre.h>
 
-
 // forward declarations
 /*namespace Ogre {
   class Root;
@@ -71,13 +70,14 @@ namespace Pixy {
   class MousePicker;
   class GenericMousePicker;
   class PolyMousePicker;
+  class OgreRTT;
 	/*! \class GfxEngine
 	 *	\brief
 	 *	Handles all graphics related features of the game, acts as the immediate
 	 *	wrapper over OGRE3D. The game scene is entirely managed by and through
 	 *	this Engine.
 	 */
-	class GfxEngine : public Engine, public EventListener, public InputListener {
+	class GfxEngine : public Engine, public EventListener, public InputListener, public Ogre::RenderTargetListener {
 
 	public:
 
@@ -239,12 +239,18 @@ namespace Pixy {
 
     void _setUserAny(Ogre::MovableObject*, void*);
 
+    void attachRTT(OgreRTT*);
+    void detachRTT(OgreRTT*);
+
 	protected:
 	  void (GfxEngine::*mUpdate)(unsigned long);
 
 	  void updateNothing(unsigned long lTimeElapsed);
 	  void updateIntro(unsigned long lTimeElapsed);
 	  void updateCombat(unsigned long lTimeElapsed);
+
+    virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
+    virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 
 		Ogre::Root           *mRoot;
 		Ogre::Camera         *mCamera, *mCamera2, *mCamera3, *mCamera4;
@@ -332,6 +338,8 @@ namespace Pixy {
     GenericMousePicker *mGenericPicker;
     PolyMousePicker *mPolyPicker;
     MousePicker* mPicker;
+
+    std::list<OgreRTT*> mRTTs;
 
 	private:
 		static GfxEngine* _myGfxEngine;

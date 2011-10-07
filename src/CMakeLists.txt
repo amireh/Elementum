@@ -27,6 +27,7 @@ SET(Elementum_SRCS
   ../include/UIEngine.h
   ../include/MousePicker.h
   ../include/AutoRepeatKey.h
+  ../include/OgreRTT.h
 
   Connection.cpp
 
@@ -51,6 +52,7 @@ SET(Elementum_SRCS
   UIEngine.cpp
   MousePicker.cpp
   AutoRepeatKey.cpp
+  OgreRTT.cpp
 
   main.cpp
 

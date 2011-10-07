@@ -40,6 +40,7 @@ OgreBites::SdkCameraMan* getCameraMan();
 Ogre::Root* getRoot();
 Ogre::SceneManager* getSceneMgr();
 Ogre::Viewport* getViewport();
+Ogre::RenderWindow* getWindow();
 
 void setupSceneManager();
 
@@ -71,4 +72,7 @@ void setYawPitchDist(Ogre::Vector3 inVec);
 void trackNode(Ogre::SceneNode* inNode);
 
 void _setUserAny(Ogre::MovableObject* inObj, void* any);
+
+void attachRTT(OgreRTT*);
+void detachRTT(OgreRTT*);
 };

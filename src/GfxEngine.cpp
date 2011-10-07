@@ -22,6 +22,7 @@
 #include "OgreMax/OgreMaxScene.hpp"
 #include "PixyUtility.h"
 #include "MousePicker.h"
+#include "OgreRTT.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUI/CEGUI.h>
@@ -161,6 +162,7 @@ namespace Pixy {
     bind(EventUID::MatchFinished, boost::bind(&GfxEngine::onMatchFinished, this, _1));
 
     Ogre::MovableObject::setDefaultQueryFlags(TERRAIN_MASK);
+    Ogre::MovableObject::setDefaultVisibilityFlags(TERRAIN_MASK);
 
     //mSceneLoader = new DotSceneLoader();
 
@@ -912,6 +914,7 @@ namespace Pixy {
       mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
       mEntity->setMaterialName(inEntity->getMaterial());
       mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+      mEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
       mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
 
       mLog->debugStream() << "attaching user data to ogre entity";
@@ -971,6 +974,7 @@ namespace Pixy {
       mEntity->setMaterialName(inEntity->getMaterial());
       mEntity->setUserAny(Ogre::Any(inRenderable));
       mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+      mEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
       mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
 
       mNode->attachObject(mEntity);
@@ -1831,4 +1835,31 @@ namespace Pixy {
     inObj->setUserAny(Ogre::Any(any));
   }
 
+  void GfxEngine::attachRTT(OgreRTT* inRTT)
+  {
+    mRTTs.push_back(inRTT);
+  }
+  void GfxEngine::detachRTT(OgreRTT* inRTT)
+  {
+    mRTTs.remove(inRTT);
+  }
+
+
+  void GfxEngine::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+  {
+    mSceneMgr->getSceneNode("EntitySelectionNode")->setVisible(false);
+    //~ mSceneMgr->getSceneNode("Scene")->setVisible(false);
+    for (std::list<OgreRTT*>::iterator rtt = mRTTs.begin(); rtt != mRTTs.end(); ++rtt)
+      (*rtt)->hide();
+    //~ mMiniScreen->setVisible(false);
+  }
+
+  void GfxEngine::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+  {
+    mSceneMgr->getSceneNode("EntitySelectionNode")->setVisible(true);
+    //~ mSceneMgr->getSceneNode("Scene")->setVisible(true);
+    for (std::list<OgreRTT*>::iterator rtt = mRTTs.begin(); rtt != mRTTs.end(); ++rtt)
+      (*rtt)->show();
+    //~ mMiniScreen->setVisible(true);
+  }
 }

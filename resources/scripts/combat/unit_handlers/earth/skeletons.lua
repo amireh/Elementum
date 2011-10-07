@@ -37,7 +37,7 @@ Skeletons.CreateSoldier = function(unit)
 --~
   --~ rnd:animateIdle()
 
-  Skeletons.Create(unit, "skeleton_peasant01.mesh", "Soldier", 5)
+  Skeletons.Create(unit, "skeleton_peasant01.mesh", "Soldier", 11)
   local rnd = unit:getRenderable()
   --~ rnd:getSceneNode():setScale(20)
   local scythe = rnd:attachExtension("scythe.mesh", "Bip01 R Hand")
@@ -96,7 +96,7 @@ subscribe_unit("Skeleton Soldier",
 
 subscribe_unit("Skeleton Ravager",
   function(inUnit)
-    return Skeletons.Create(inUnit, "skeleton.mesh", "Ravager", 9)
+    return Skeletons.Create(inUnit, "skeleton.mesh", "Ravager", 18)
   end)
 subscribe_unit("Skeleton Acolyte",
   function(inUnit)

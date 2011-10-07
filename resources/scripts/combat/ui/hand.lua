@@ -6,19 +6,9 @@ local gen_spell_name = function(inSpell, inSuffix)
   return "SpellButton_" .. inSpell:getUID() .. "_" .. inSuffix
 end
 
+MaxSpellsInHand = 4
 UI.__DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isActive)
   local lButton = {}
-  --~ local margin = 5
-
-  --~ if (firstButton) then margin = 0; firstButton = false end
-
-	-- calculate position
-	--~ lButton["Position"] =
-		--~ CEGUI.UVector2:new(
-			--~ --CEGUI.UDim(0, cfg.SpellButton["Width"] * (SelfPuppet:nrSpellsInHand() - 2) + (margin*SelfPuppet:nrSpellsInHand())),
-      --~ CEGUI.UDim(UI.Config.Dim.HandButton.x.scale * (SelfPuppet:nrSpellsInHand() - 2),0),
-			--~ CEGUI.UDim(0, 0)
-		--~ )
 
 	-- generate the button's name
 	lButton["Name"] = gen_spell_name(inSpell, inSuffix)
@@ -49,6 +39,7 @@ UI.__DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isActive)
   end
 	lButton["Window"]:setProperty("DisabledImage", lButton["Image"] .. "_Disabled")
   lButton["Window"]:setProperty("MousePassThroughEnabled", "False")
+  lButton["Window"]:setProperty("ClippedByParent", "False")
   lButton["Window"]:setProperty("AlwaysOnTop", "True")
 
 	-- attach our spell object to the button
@@ -90,32 +81,126 @@ Hand.DrawSpell = function(inSpell)
 	lButton["Window"]:subscribeEvent("Clicked", "Combat.reqCastSpell")
   lButton["Window"]:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   lButton["Window"]:subscribeEvent("MouseLeave", "UI.HideTooltip")
-  lButton["Window"]:subscribeEvent("AlphaChanged", "UI.Helpers.DestroyAfterFade")
   --lButton["Window"]:subscribeEvent("Clicked", "UI.castSpellAnimation")
 
+  UI.Hand:layout()
   UI.Animate(lButton["Window"], "DrawSpell")
 
   table.insert(MyHand, inSpell)
 
+  Hand.CheckForDiscards()
+
   return true
 end
 
+local Win2Anims = {}
 Hand.DropSpell = function(inSpell)
   local win = CEWindowMgr:getWindow(gen_spell_name(inSpell, "Hand"))
 
-  UI.HideTooltip(nil)
-  --~ UI.Animate(inSpell:getButton(), "DropSpell")
-  UI.Animate(win, "DropSpell")
+  -- move all the spells to the right of this window to the left
+  do
+    -- find the index of this window
+    local found = false
+    local idx = 0
+    while not found do
+      local _win = UI.Hand:getChildAtIdx(idx)
+      if _win == win then
+        found = true
+        break
+      end
+      idx = idx + 1
+    end
+    assert(found)
+    -- if it's not the last button, move the right ones
+    idx = idx + 1
+    while idx < UI.Hand:getChildCount() do
+      local _win = UI.Hand:getChildAtIdx(idx)
+      UI.Animate(_win, "MoveToLeftInHand")
+      idx = idx + 1
+    end
+  end
 
   win:removeEvent("Clicked")
   win:removeEvent("MouseEnter")
   win:removeEvent("MouseLeave")
 
   removeByValue(MyHand, inSpell)
+  --~ UI.Hand:removeChildWindow(win)
+  --~ UI.Hand:destroyWindow(win)
+  --~ CEWindowMgr:destroyWindow(win)
+
+  if win:isUserStringDefined("Marked") and win:getUserString("Marked") == "True" then
+    win:setUserString("Marked", "False")
+    --Win2Anims[win]:stop()
+    --CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(Win2Anims[win])
+  end
+
+  UI.ClearAnimations(win)
+
+  UI.HideTooltip(nil)
+  win:subscribeEvent("AlphaChanged", "UI.Helpers.DestroyAfterFade")
+  UI.Animate(win, "DropSpell")
+
+  win:setUserString("Destroyed", "True")
+
+  --~ UI.Hand:layout()
+
+  print("Spell discarded")
+
+  -- we pass a -1 pad because the button is not yet removed from the container,
+  -- it will be when it fades out but the method should consider it removed
+  -- all the same
+  Hand.CheckForDiscards(-1)
 
   return true
 end
+Hand.CheckForDiscards = function(pad)
+  print("Checking for spells to be discarded")
+  local idx = 0
+  -- now unmark the rest of the buttons, if any
+  print("\tUnmarking:")
+  while idx < UI.Hand:getChildCount() do
+    local win = UI.Hand:getChildAtIdx(idx)
+    if win:isUserStringDefined("Marked") and win:getUserString("Marked") == "True" then
+      print("\tfound one! unmarking...")
+      -- do unmark
+      win:setUserString("Marked", "False")
+      --~ win:setProperty("Alpha", "1.0")
+      -- revert the button to its original state
+      Win2Anims[win]:setPosition(Win2Anims[win]:getDefinition():getDuration())
+      Win2Anims[win]:step(0)
+      -- destroy the animation instance
+      UI.RemoveAnimation(win, Win2Anims[win])
+      Win2Anims[win] = nil
+      --~ Win2Anims[win]:stop()
+      --~ CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(Win2Anims[win])
+    end
+    idx = idx + 1
+  end
 
+  if not pad then pad = 0 end
+  -- if there is an overflow in the hand, mark the buttons that will be discarded
+  local nr_spells = UI.Hand:getChildCount() + pad
+  idx = 0
+  print("\tMarking:")
+  if nr_spells > MaxSpellsInHand then
+    local delta = nr_spells - MaxSpellsInHand
+    while idx < delta do
+      local win = UI.Hand:getChildAtIdx(idx)
+      -- do mark unless this window is being destroyed
+      if not win:isUserStringDefined("Destroyed") then
+        print("\tfound one! marking...")
+        win:setUserString("Marked", "True")
+        assert(not Win2Anims[win])
+        --~ win:setProperty("Alpha", "0.5")
+        Win2Anims[win] = UI.Animate(win, "MarkForRemoval")
+      end
+      idx = idx + 1
+    end
+  end
+
+  print("Done checking for spells to be discarded")
+end
 
 local prereqs_met = function(spell)
   if ((spell:requiresTarget() or spell:requiresEnemyTarget()) and Selected == nil) then
@@ -176,18 +261,23 @@ Hand.Update = function(e)
   return true
 end
 
-Buffs.DrawSpell = function(spell)
-  local lButton = UI.__DrawSpellButton(spell, UI.Buffs, UI.Config.Dim.HandButton, "Buff")
+Buffs.DrawSpell = function(spell,wnd)
+  local lButton = UI.__DrawSpellButton(spell, wnd, UI.Config.Dim.BuffButton, "Buff")
   lButton["Window"]:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   lButton["Window"]:subscribeEvent("MouseLeave", "UI.HideTooltip")
-
+  UIEngine:setMargin(lButton["Window"],
+    CEGUI.UBox(
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,0),
+      CEGUI.UDim(0,5),
+      CEGUI.UDim(0,5)))
   --table.insert(MyBuffs, spell)
 
   return true
 end
 
-Buffs.Show = function(rnd)
-  Buffs.Hide()
+Buffs.Show = function(rnd, is_friendly)
+  --Buffs.Hide()
 
   print("Showing buffs for " .. rnd:getEntity():getName() .. rnd:getEntity():getUID())
   local entity = rnd:getEntity()
@@ -202,24 +292,36 @@ Buffs.Show = function(rnd)
   Temp = nil
 
   print("\tFound " .. table.getn(buffs) .. " buffs on unit " .. rnd:getEntity():getName())
+
+  -- clear the current buff panel
+  local selector = ""; if is_friendly then selector = "Player" else selector = "Enemy" end
+  local wnd = UI.Buffs[selector]
+  local container = UI.Containers[selector].Selected
+
+  Buffs.Hide(wnd)
+
   -- draw the spell buttons
   for buff in list_iter(buffs) do
     print("\t\tdrawing buff " .. buff:getName())
-    Buffs.DrawSpell(buff)
+    Buffs.DrawSpell(buff, wnd)
   end
 
-  if table.getn(buffs) > 0 then
-    UI.Containers["Buffs"]:show()
-  end
+  wnd:layout()
+  container:layout()
+
+  --if table.getn(buffs) > 0 then
+  --  UI.Containers["Buffs"]:show()
+  --end
 
   return true
 end
 
-Buffs.Hide = function(rnd)
-  while UI.Buffs:getChildCount() > 0 do
-    CEWindowMgr:destroyWindow(UI.Buffs:getChildAtIdx(0))
+Buffs.Hide = function(wnd)
+  while wnd:getChildCount() > 0 do
+    CEWindowMgr:destroyWindow(wnd:getChildAtIdx(0))
   end
-  UI.Containers["Buffs"]:hide()
+  wnd:layout()
+  --UI.Containers["Buffs"]:hide()
 
   return true
 end

@@ -5,7 +5,7 @@
         <clipping near="0" far="100000" />
     </environment>
     <nodes>
-      <node name="molten_chasm">
+      <node name="Scene">
         <position x="0" y="-34" z="0" />
         <scale x="7" y="7" z="7" />
 

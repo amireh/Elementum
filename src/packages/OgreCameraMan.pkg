@@ -16,6 +16,7 @@ namespace OgreBites
 	class SdkCameraMan
     {
     public:
+    SdkCameraMan(Ogre::Camera* cam);
 
 		/*-----------------------------------------------------------------------------
 		| Swaps the camera on our camera man for another camera.
@@ -35,6 +36,7 @@ namespace OgreBites
 		| Sets the spatial offset from the target. Only applies for orbit style.
 		-----------------------------------------------------------------------------*/
 		virtual void setYawPitchDist(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Real dist);
+		virtual void setYawPitchDist(Ogre::Degree yaw, Ogre::Degree pitch, Ogre::Real dist);
 
 		/*-----------------------------------------------------------------------------
 		| Sets the camera's top speed. Only applies for free-look style.

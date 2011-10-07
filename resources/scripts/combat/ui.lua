@@ -10,14 +10,19 @@ UI = {
   Config = {
     Layout = "combat/ui.layout",
     Dim = {
-      HandButton = CEGUI.UVector2:new(CEGUI.UDim(0.15,0),CEGUI.UDim(1,0)),
-      LogButton = CEGUI.UVector2:new(CEGUI.UDim(0.06,0),CEGUI.UDim(1,0))
+      HandButton = CEGUI.UVector2:new(CEGUI.UDim(0.125,0),CEGUI.UDim(1,0)),
+      BuffButton = CEGUI.UVector2:new(CEGUI.UDim(0.25,0),CEGUI.UDim(0.05,0)),
+      LogButton = CEGUI.UVector2:new(CEGUI.UDim(0.05,0),CEGUI.UDim(1,0))
     }
+  },
+  Animes = {
+    ShowTooltip = nil,
+    HideTooltip = nil
   },
 
   Root = nil,
   Hand = nil,
-  Buffs = nil,
+  Buffs = { Player = nil, Enemy = nil },
 
   Labels = {
     Message = nil,
@@ -41,8 +46,13 @@ UI = {
     Tooltip = nil,
     Buffs = nil,
     SpellLog = {
-      Player = nil,
       Enemy = nil
+    },
+    Player = {
+      Selected = nil
+    },
+    Enemy = {
+      Selected = nil
     }
   },
 
@@ -63,23 +73,30 @@ UI.configure = function()
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "spells_earth.imageset" )
 	CEImagesetMgr:create( "spells_fire.imageset" )
-  CEImagesetMgr:create( "huds.imageset" )
+  --~ CEImagesetMgr:create( "huds.imageset" )
 
 end
 
+UI.cleanup = function()
+  --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.ShowTooltip:getDefinition():getName())
+  --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.HideTooltip:getDefinition():getName())
+end
 
 UI.registerGlobals = function()
 
   UI.Root = CEWindowMgr:getWindow("Combat")
-  UI.Hand = CEWindowMgr:getWindow("Combat/Hand")
-  UI.Buffs = CEWindowMgr:getWindow("Combat/Buffs")
+  UI.Hand = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Hand"))
+  --~ UI.Buffs = CEWindowMgr:getWindow("Combat/Buffs")
+  UI.Buffs.Player = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Buffs/Player"))
+  UI.Buffs.Enemy = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Buffs/Enemy"))
 
   UI.Containers["Error"] = CEWindowMgr:getWindow("Combat/Containers/Error")
   --~ UI.Containers["Tooltip"] = CEWindowMgr:getWindow("Combat/Containers/Tooltip")
   UI.Containers["Message"] = CEWindowMgr:getWindow("Combat/Containers/Message")
   UI.Containers["Buffs"] = CEWindowMgr:getWindow("Combat/Containers/Buffs")
-  UI.Containers.SpellLog["Player"] = CEWindowMgr:getWindow("Combat/Containers/SpellLog/Player")
   UI.Containers.SpellLog["Enemy"] = CEWindowMgr:getWindow("Combat/Containers/SpellLog/Enemy")
+  UI.Containers.Player["Selected"] = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Containers/Selected/Player"))
+  UI.Containers.Enemy["Selected"] = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Containers/Selected/Enemy"))
 
   UI.Labels["Turns"] = CEWindowMgr:getWindow("Combat/Effects/Turns/Text")
   UI.Labels["Tooltip"] = CEWindowMgr:getWindow("Combat/Text/Tooltip")
@@ -87,19 +104,21 @@ UI.registerGlobals = function()
   UI.Labels.Player["WP"] = CEWindowMgr:getWindow("Combat/Text/Player/Willpower")
   UI.Labels.Player["HP"] = CEWindowMgr:getWindow("Combat/Text/Player/Health")
   UI.Labels.Player["C"] = CEWindowMgr:getWindow("Combat/Text/Player/Channels")
+  UI.Labels.Player["Selected"] = CEWindowMgr:getWindow("Combat/Labels/Player/Selected")
   UI.Labels.Enemy["WP"] = CEWindowMgr:getWindow("Combat/Text/Enemy/Willpower")
   UI.Labels.Enemy["HP"] = CEWindowMgr:getWindow("Combat/Text/Enemy/Health")
   UI.Labels.Enemy["C"] = CEWindowMgr:getWindow("Combat/Text/Enemy/Channels")
+  UI.Labels.Enemy["Selected"] = CEWindowMgr:getWindow("Combat/Labels/Enemy/Selected")
 
   UI.Buttons["EndTurn"] = CEWindowMgr:getWindow("Combat/Buttons/EndTurn")
   UI.Buttons["Attack"] = CEWindowMgr:getWindow("Combat/Buttons/Attack")
   UI.Buttons["Menu"] = CEWindowMgr:getWindow("Combat/Buttons/Menu")
 
-
-
   UIEngine:connectAnimation(UI.Containers["Message"], "Fade")
   UIEngine:connectAnimation(UI.Containers["Error"], "LongFadeOut")
 
+  --~ UI.Animes.ShowTooltip = CEGUI.AnimationManager:getSingleton():instantiateAnimation("ShowTooltip")
+  --~ UI.Animes.HideTooltip = CEGUI.AnimationManager:getSingleton():instantiateAnimation("HideTooltip")
 end
 
 -- effectively reloads the UI components and sheets
@@ -248,12 +267,81 @@ UI.onUpdatePuppet = function(e)
   UI.updateHand(e)
 end
 
+UI.Animations = {}
 UI.Animate = function(win, anim)
   local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
   instance:setTargetWindow(win)
   --if (not instance:isRunning()) then
   instance:start()
+  if not UI.Animations[win] then UI.Animations[win] = { } end
+  table.insert(UI.Animations[win], instance)
+  return instance
   --end
+end
+UI.RemoveAnimation = function(win, in_anim)
+  assert(UI.Animations[win])
+
+  local idx = 1
+  for anim in list_iter(UI.Animations[win]) do
+    if anim == in_anim then
+      table.remove(UI.Animations[win], idx)
+    end
+    idx = idx + 1
+  end
+
+  in_anim:stop()
+  in_anim:setTargetWindow(nil)
+  CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(in_anim)
+
+end
+UI.ClearAnimations = function(win)
+  assert(UI.Animations[win])
+  local count = 0
+  for anim in list_iter(UI.Animations[win]) do
+    anim:stop()
+    anim:setTargetWindow(nil)
+    CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(anim)
+    count = count + 1
+  end
+  print("\t--destroyed " .. count .. " animation instances for window: " .. win:getName())
+  UI.Animations[win] = {}
+end
+UI.isAnimating = function(anim)
+  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
+  return instance:isRunning()
+end
+UI.StopAnimating = function(anim)
+  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
+  instance:stop()
+end
+
+UI.Highlight = function(entity, is_friendly)
+  local lbl = nil
+  if is_friendly then
+    lbl = UI.Labels.Player["Selected"]
+  else
+    lbl = UI.Labels.Enemy["Selected"]
+  end
+  lbl:setText(entity:getName())
+  height = tonumber(lbl:getProperty("VertExtent"))
+  lbl:setHeight(CEGUI.UDim(0, height + 20))
+end
+
+UI.onSelectPlayer = function(e)
+  -- if we don't have any selection or the selection isn't a friendly target,
+  -- override it
+  if not Selected or not SelectedIsFriendly then
+    Combat.Highlight(SelfPuppet:getRenderable())
+  end
+end
+
+UI.onSelectEnemy = function(e)
+  -- if we don't have any selection or the selection isn't a friendly target,
+  -- override it
+  if not Selected or SelectedIsFriendly then
+    Combat.Highlight(EnemyPuppet:getRenderable())
+  end
+  print("I'm selected!")
 end
 
 -- configure

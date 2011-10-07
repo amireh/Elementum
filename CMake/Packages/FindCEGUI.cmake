@@ -20,6 +20,7 @@ FIND_PATH(CEGUI_INCLUDE_DIR CEGUI/CEGUI.h CEGUI.h
     ~/Library/Frameworks
     /Library/Frameworks
     /usr/local/include
+    /usr/local/include/CEGUI
     /usr/include
     /sw/include # Fink
     /opt/local/include # DarwinPorts
@@ -73,7 +74,7 @@ MACRO(FIND_CEGUI_LIBRARY MYLIBRARY MYLIBRARYNAMES)
 		C:/Workspace/Build/CEGUI/lib/ReleaseWithSymbols
 		C:/Workspace/Build/CEGUI/lib/Release
     )
-	
+
 	FIND_PATH(CEGUI_LIBRARY_DIRS CEGUIBase.lib CEGUIBase.so CEGUIBase.a
 	    PATHS
         $ENV{CEGUI_DIR}/lib

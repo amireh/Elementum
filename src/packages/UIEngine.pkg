@@ -1,6 +1,4 @@
 $#include "UIEngine.h"
-$#include <CEGUI/CEGUI.h>
-$#include <CEGUI/CEGUISystem.h>
 
 class UIEngine : public Pixy::Engine, public Pixy::EventListener {
 

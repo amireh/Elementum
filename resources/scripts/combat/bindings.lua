@@ -30,5 +30,7 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntityDeselected, Hand.Update)
   bind(Pixy.EventUID.StartBlockPhase, Hand.Update)
 
+  Input.bindToKeyReleased(OIS.KC_X, Combat.ToggleRTTCompositor)
+
   cleanup = Combat.cleanup
 end

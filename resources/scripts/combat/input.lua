@@ -1,3 +1,5 @@
+Input = {}
+
 local last_effect = 1
 local _effects = {}
 table.insert(_effects, "BoneHarvest")
@@ -45,10 +47,20 @@ key_map[OIS.KC_7] = "Negate"
 key_map[OIS.KC_8] = "Gloom"
 key_map[OIS.KC_9] = "GladeBlessing"
 
+Input.bindToKeyReleased = function(key, handler)
+  if not Keybindings[key] then Keybindings[key] = {} end
+  table.insert(Keybindings[key], handler)
+end
 Combat.onKeyReleased = function(e)
   if (Selected) then
     if not key_map[e.key] then return true end
     FxEngine:playEffect(key_map[e.key], Selected)
+  end
+
+  if Keybindings[e.key] then
+    for handler in list_iter(Keybindings[e.key]) do
+      handler()
+    end
   end
 
   return true

@@ -19,12 +19,17 @@ MainMenu.CreateGremlin = function(mesh, material)
 
   local node = SceneMgr:createSceneNode("gremlin_node" .. idx)
   SceneMgr:getRootSceneNode():addChild(node)
-  local ent = SceneMgr:createEntity("Gremlin" .. idx, unit:getMesh());
+  --~ node:showBoundingBox(true)
+  local ent = SceneMgr:createEntity("Gremlin" .. idx, unit:getMesh())
   ent:setMaterialName(unit:getMaterial())
   ent:setCastShadows(true)
   node:attachObject(ent)
   node:setScale(Ogre.Vector3(20))
   node:setPosition(Ogre.Vector3(0,0,0))
+
+  local _size = ent:getWorldBoundingBox(true):getSize()
+  print("\tGremlin " .. mesh .. " Size: " .. _size.x .. "," .. _size.y .. "," .. _size.z)
+
   rnd:attachSceneObject(ent)
   rnd:attachSceneNode(node)
 
@@ -79,6 +84,7 @@ MainMenu.attach = function()
 
   SceneMgr = GfxEngine:getSceneMgr()
   Viewport = GfxEngine:getViewport()
+  Window = GfxEngine:getWindow()
   Camera = GfxEngine:getCamera()
 
   Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
@@ -154,7 +160,6 @@ MainMenu.attach = function()
 
   GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
   GfxEngine:getCameraMan():setTarget(Gremlin:getRenderable():getSceneNode())
-  --~ GfxEngine:trackNode(node)
   GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
 
   isSetup = true
@@ -185,6 +190,12 @@ MainMenu.cleanup = function()
     Gremlin:delete()
     Gremlin2:delete()
     Gremlin3:delete()
+  end
+  if RTT then
+    --~ RTT:delete()
+    --~ SceneMgr:destroyCamera(testCamera)
+    RTT = nil
+    testCamera = nil
   end
   Gremlin = nil
   Gremlin2 = nil

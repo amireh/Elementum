@@ -73,3 +73,7 @@ function find_by_cond(in_table, functor)
 
   return nil
 end
+
+function getByValue(in_table, in_val)
+  return find_by_cond(in_table, function(item) if item == in_val then return true end end)
+end

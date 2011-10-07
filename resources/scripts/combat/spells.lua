@@ -87,7 +87,7 @@ Combat.CastSpell = function(inCaster, inTarget, inSpell)
     result = spellHandler(inCaster, inTarget, inSpell)
   end
 
-  if inTarget and inTarget == Selected then Buffs.Show(inTarget) end
+  if inTarget and inTarget == Selected then Buffs.Show(inTarget, SelectedIsFriendly) end
   return result
 end
 
