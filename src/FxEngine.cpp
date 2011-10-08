@@ -75,11 +75,11 @@ namespace Pixy {
 
     //bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
     bind(EventUID::UnitAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
-    if (GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
-    {
-      bind(EventUID::EntityDying, boost::bind(&FxEngine::onEntityDying, this, _1));
-    } else
-      unbind(EventUID::EntityDying);
+    //~ if (GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
+    //~ {
+      //~ bind(EventUID::EntityDying, boost::bind(&FxEngine::onEntityDying, this, _1));
+    //~ } else
+      //~ unbind(EventUID::EntityDying);
 
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
     mFxMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -124,7 +124,7 @@ namespace Pixy {
     mHighlightEffect = mEffects.find(inName)->second;
   }
 
-  void FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Renderable* inEntity) {
+  ParticleUniverse::ParticleSystem* FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Renderable* inEntity) {
 
     if (inEffect->isAttached()) {
       //inEffect->stop();
@@ -135,9 +135,11 @@ namespace Pixy {
     //~ inEffect->setScale(inEntity->getSceneNode()->getScale());
     inEntity->getSceneNode()->attachObject(inEffect);
     inEffect->start();
+
+    return inEffect;
 	};
 
-  void FxEngine::playEffect(std::string inEffect, Renderable* inEntity, bool newInstance) {
+  ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Renderable* inEntity, bool newInstance) {
     if (newInstance)
     {
       ParticleUniverse::ParticleSystem* effect
@@ -149,7 +151,7 @@ namespace Pixy {
     playEffect(mEffects.find(inEffect)->second, inEntity);
   }
 
-  void FxEngine::playEffect(std::string inEffect, Ogre::Vector3 pos) {
+  ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Ogre::Vector3 pos) {
     Ogre::SceneNode* mNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     mNode->setPosition(pos);
 
@@ -167,6 +169,8 @@ namespace Pixy {
     mLog->infoStream() << "created a portable effect node";
 
     mPortableEffects.push_back(mNode);
+
+    return mEffect;
   }
 
   void FxEngine::highlight(Renderable* inEntity) {

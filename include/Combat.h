@@ -65,6 +65,7 @@ namespace Pixy
     puppets_t const& getPuppets();
     void assignPuppet(CPuppet* inPuppet);
     CPuppet* getPuppet();
+    CPuppet* getEnemy(int inUID);
     CPuppet* getPuppet(int inUID);
     CPuppet* getActivePuppet();
 

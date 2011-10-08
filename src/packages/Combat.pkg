@@ -10,4 +10,6 @@ class Combat : public Pixy::GameState
 	//void registerPuppet(Pixy::Puppet* inPuppet);
 	//void updateMe(Pixy::Engine* inEngine);
   std::list<Pixy::CPuppet*> const& getPuppets();
+  CPuppet* getEnemy(int inUID);
+  CPuppet* getPuppet(int inUID);
 };

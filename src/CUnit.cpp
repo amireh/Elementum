@@ -193,7 +193,7 @@ namespace Pixy
   void CUnit::attachBuff(CSpell* inSpell)
 	{
 		mBuffs.push_back(inSpell);
-    inSpell->setCaster(mRenderable);
+    inSpell->setTarget(mRenderable);
 		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
 	};
 

@@ -8,7 +8,7 @@ local apply_buff = function(inCaster, inSpell)
   inSpell:setExpired(false)
   SCT.ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", true, inCaster:getRenderable())
 
-  FxEngine:playEffect("Elementum/Fx/Nourish", inCaster:getRenderable())
+  FxEngine:playEffect("GladeBlessing", inCaster:getRenderable())
 
   return true
 end
@@ -17,7 +17,7 @@ local process_buff = function(inCaster, inSpell)
   Pixy.Log("Processing Nourish on " .. inCaster:getName() .. "#" .. inCaster:getUID() .. "!")
   inCaster:setHP(inCaster:getHP() + 3)
   inCaster:updateTextOverlay()
-  FxEngine:playEffect("Elementum/Fx/Nourish", inCaster:getRenderable())
+  FxEngine:playEffect("GladeBlessing", inCaster:getRenderable())
   SCT.ShowScrollingMessage("+3 health (Nourish)", true, inCaster:getRenderable())
 
   turns_left = turns_left - 1

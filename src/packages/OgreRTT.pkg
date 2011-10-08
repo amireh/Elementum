@@ -14,4 +14,7 @@ $#include "Ogre.h"
     void disable();
 
     bool isEnabled() const;
+
+    void hide();
+    void show();
   };

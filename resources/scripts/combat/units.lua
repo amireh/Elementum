@@ -4,7 +4,7 @@ local SummoningEffects = {
   Earth = "EarthSummoning",
   Fire = "FireSummoning"
 }
-
+Units = {}
 Combat.CreateUnit = function(inUnit)
 
 	local handler = Handlers[inUnit:getName()]
@@ -25,6 +25,11 @@ Combat.CreateUnit = function(inUnit)
   end
 
   return true
+end
+
+Units.onEntityDying = function(e)
+  local rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  FxEngine:playEffect(SummoningEffects[raceToString(rnd:getEntity():getRace())], rnd, true)
 end
 
 function subscribe_unit(inUnitName, inMethod)

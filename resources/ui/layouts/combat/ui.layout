@@ -95,10 +95,12 @@
       <Property Name="AlwaysOnTop" Value="True" />
       <Property Name="HorizontalAlignment" Value="Left" />
       <Property Name="VerticalAlignment" Value="Bottom" />
-      <Window Type="HorizontalLayoutContainer" Name="Combat/Buffs/Player">
+      <Window Type="DefaultWindow" Name="Combat/Buffs/Player">
         <Property Name="Visible" Value="True" />
         <Property Name="AlwaysOnTop" Value="True" />
+<!--
         <Property Name="HorizontalAlignment" Value="Left" />
+-->
         <Property Name="UnifiedSize" Value="{{0.95,0}, {0.5,0}}" />
       </Window>
       <Window Type="Combat/StaticText" Name="Combat/Labels/Player/Selected">
@@ -134,7 +136,7 @@
       <Property Name="AlwaysOnTop" Value="True" />
       <Property Name="HorizontalAlignment" Value="Left" />
       <Property Name="VerticalAlignment" Value="Bottom" />
-      <Window Type="HorizontalLayoutContainer" Name="Combat/Buffs/Enemy">
+      <Window Type="DefaultWindow" Name="Combat/Buffs/Enemy">
         <Property Name="Visible" Value="True" />
         <Property Name="AlwaysOnTop" Value="True" />
         <Property Name="HorizontalAlignment" Value="Right" />
@@ -306,20 +308,20 @@
       <Window Type="Combat/Button" Name="Combat/Buttons/Attack" >
         <Property Name="Visible" Value="True" />
         <Property Name="Text" Value="Attack" />
-        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.25,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.32,0},{1,0}}" />
         <Property Name="Disabled" Value="False" />
       </Window>
       <Window Type="Combat/Button" Name="Combat/Buttons/EndTurn" >
         <Property Name="Visible" Value="True" />
         <Property Name="Text" Value="End Turn" />
-        <Property Name="UnifiedAreaRect" Value="{{0.25,0},{0,0},{0.75,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0.33,0},{0,0},{0.65,0},{1,0}}" />
         <Property Name="Disabled" Value="False" />
         <Event Name="Clicked" Function="Combat.reqEndTurn" />
       </Window>
       <Window Type="Combat/Button" Name="Combat/Buttons/Menu" >
         <Property Name="Visible" Value="True" />
         <Property Name="Text" Value="Menu" />
-        <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0.66,0},{0,0},{1,0},{1,0}}" />
         <Property Name="Disabled" Value="False" />
       </Window>
     </Window>

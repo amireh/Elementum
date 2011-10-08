@@ -36,9 +36,9 @@ namespace Pixy {
 		virtual bool cleanup();
 
     void loadEffect(std::string inName);
-    void playEffect(std::string inEffect, Renderable* inEntity, bool newInstance = false);
-    void playEffect(ParticleUniverse::ParticleSystem*, Renderable* inEntity);
-    void playEffect(std::string inEffect, const Ogre::Vector3 pos);
+    ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, Renderable* inEntity, bool newInstance = false);
+    ParticleUniverse::ParticleSystem* playEffect(ParticleUniverse::ParticleSystem*, Renderable* inEntity);
+    ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, const Ogre::Vector3 pos);
 
     void registerHighlightEffect(std::string inName);
 

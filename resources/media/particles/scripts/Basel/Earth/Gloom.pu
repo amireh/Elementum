@@ -6,7 +6,7 @@ system Gloom
     technique
     {
         visual_particle_quota                   300
-        emitted_emitter_quota                   60
+        emitted_emitter_quota                   600
         material                                mp_flare_04
         renderer                                Billboard
         {
@@ -15,10 +15,10 @@ system Gloom
         emitter                                 Circle CircleEmitter
         {
             emission_rate                       50
-            time_to_live                        1
+            time_to_live                        120
             emits                               emitter_particle PointEmitter
             auto_direction                      true
-            force_emission                      true
+            //force_emission                      false
             step                                0.2
             position 0 220 0
             velocity 10
@@ -27,7 +27,8 @@ system Gloom
         {
             angle                               0
             velocity                            0
-            duration                            1
+            //duration                            120
+            time_to_live 120
             all_particle_dimensions             dyn_random
             {
                 min                             5
@@ -54,7 +55,7 @@ system Gloom
         {
             xyz_scale                           dyn_oscillate
             {
-                oscillate_frequency             10
+                oscillate_frequency             320
                 oscillate_phase                 0
                 oscillate_base                  0
                 oscillate_amplitude             500

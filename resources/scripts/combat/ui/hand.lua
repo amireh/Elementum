@@ -7,6 +7,7 @@ local gen_spell_name = function(inSpell, inSuffix)
 end
 
 MaxSpellsInHand = 4
+Win2Spells = {}
 UI.__DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isActive)
   local lButton = {}
 
@@ -21,7 +22,7 @@ UI.__DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isActive)
   --list_item:addChildWindow(lButton["Window"])
 
 	-- attach the button to the Pixy::CSpell object
-	inSpell:setButton(lButton["Window"])
+	--~ inSpell:setButton(lButton["Window"])
   inSpell:setImageSet("Spells_" .. raceToString(inSpell:getRace()))
   -- sanitize spell name to match image set name
   local sane_name = string.gsub(inSpell:getName(), "%s", "_")
@@ -87,8 +88,8 @@ Hand.DrawSpell = function(inSpell)
   UI.Animate(lButton["Window"], "DrawSpell")
 
   table.insert(MyHand, inSpell)
-
-  Hand.CheckForDiscards()
+  Win2Spells[inSpell] = lButton["Window"]
+  Hand.CheckForDiscards(0)
 
   return true
 end
@@ -125,6 +126,7 @@ Hand.DropSpell = function(inSpell)
   win:removeEvent("MouseLeave")
 
   removeByValue(MyHand, inSpell)
+  Win2Spells[inSpell] = nil
   --~ UI.Hand:removeChildWindow(win)
   --~ UI.Hand:destroyWindow(win)
   --~ CEWindowMgr:destroyWindow(win)
@@ -158,11 +160,11 @@ Hand.CheckForDiscards = function(pad)
   print("Checking for spells to be discarded")
   local idx = 0
   -- now unmark the rest of the buttons, if any
-  print("\tUnmarking:")
+  --~ print("\tUnmarking:")
   while idx < UI.Hand:getChildCount() do
     local win = UI.Hand:getChildAtIdx(idx)
     if win:isUserStringDefined("Marked") and win:getUserString("Marked") == "True" then
-      print("\tfound one! unmarking...")
+      --~ print("\tfound one! unmarking...")
       -- do unmark
       win:setUserString("Marked", "False")
       --~ win:setProperty("Alpha", "1.0")
@@ -182,24 +184,26 @@ Hand.CheckForDiscards = function(pad)
   -- if there is an overflow in the hand, mark the buttons that will be discarded
   local nr_spells = UI.Hand:getChildCount() + pad
   idx = 0
-  print("\tMarking:")
+  --~ print("\tMarking:")
   if nr_spells > MaxSpellsInHand then
     local delta = nr_spells - MaxSpellsInHand
     while idx < delta do
       local win = UI.Hand:getChildAtIdx(idx)
       -- do mark unless this window is being destroyed
       if not win:isUserStringDefined("Destroyed") then
-        print("\tfound one! marking...")
+        --~ print("\tfound one! marking...")
         win:setUserString("Marked", "True")
         assert(not Win2Anims[win])
         --~ win:setProperty("Alpha", "0.5")
         Win2Anims[win] = UI.Animate(win, "MarkForRemoval")
+      else
+        delte = delta + 1
       end
       idx = idx + 1
     end
   end
 
-  print("Done checking for spells to be discarded")
+  --~ print("Done checking for spells to be discarded")
 end
 
 local prereqs_met = function(spell)
@@ -249,9 +253,9 @@ Hand.Update = function(e)
 
   for spell in list_iter(MyHand) do
     if prereqs_met(spell) then
-      spell:getButton():enable()
+      Win2Spells[spell]:enable()
     else
-      spell:getButton():disable()
+      Win2Spells[spell]:disable()
       --~ Pixy.Log("-=-=-= disabling spell due to not meeting requirements")
     end
   end
@@ -261,16 +265,29 @@ Hand.Update = function(e)
   return true
 end
 
-Buffs.DrawSpell = function(spell,wnd)
-  local lButton = UI.__DrawSpellButton(spell, wnd, UI.Config.Dim.BuffButton, "Buff")
-  lButton["Window"]:subscribeEvent("MouseEnter", "UI.ShowTooltip")
-  lButton["Window"]:subscribeEvent("MouseLeave", "UI.HideTooltip")
-  UIEngine:setMargin(lButton["Window"],
-    CEGUI.UBox(
-      CEGUI.UDim(0,0),
-      CEGUI.UDim(0,0),
-      CEGUI.UDim(0,5),
-      CEGUI.UDim(0,5)))
+Hand.UpdateTooltips = function()
+  local exporter = Pixy.CSpellListExporter()
+  exporter:export(SelfPuppet:getHand(), "Pixy::CSpell", "Temp")
+  for spell in list_iter(Temp) do
+    spell:updateTooltip();
+    Win2Spells[spell]:setUserString("Tooltip", spell:getTooltip())
+  end
+end
+
+Buffs.DrawSpell = function(spell,wnd, idx)
+  local btn = UI.__DrawSpellButton(spell, wnd, UI.Config.Dim.BuffButton, "Buff")["Window"]
+  btn:subscribeEvent("MouseEnter", "UI.ShowTooltip")
+  btn:subscribeEvent("MouseLeave", "UI.HideTooltip")
+  -- position the button
+  local col = idx % 3
+  local row = math.floor(idx / 3) + 1
+  local dim = UI.Config.Dim.BuffButton
+  local margin = { x= 5, y= 5 }
+  btn:setPosition(CEGUI.UVector2(
+    CEGUI.UDim(col * dim.x.scale, margin.x * col),
+    CEGUI.UDim(1 - (row * dim.y.scale), margin.y * row * -1)))
+  local pos = btn:getPosition()
+  print("Buff position @ " .. pos.x.scale .. "," .. pos.y.scale .. " => " .. row .. "x" .. col)
   --table.insert(MyBuffs, spell)
 
   return true
@@ -301,12 +318,14 @@ Buffs.Show = function(rnd, is_friendly)
   Buffs.Hide(wnd)
 
   -- draw the spell buttons
+  local idx = 0
   for buff in list_iter(buffs) do
     print("\t\tdrawing buff " .. buff:getName())
-    Buffs.DrawSpell(buff, wnd)
+    Buffs.DrawSpell(buff, wnd, idx)
+    idx = idx + 1
   end
 
-  wnd:layout()
+  --~ wnd:layout()
   container:layout()
 
   --if table.getn(buffs) > 0 then
@@ -320,7 +339,7 @@ Buffs.Hide = function(wnd)
   while wnd:getChildCount() > 0 do
     CEWindowMgr:destroyWindow(wnd:getChildAtIdx(0))
   end
-  wnd:layout()
+  --~ wnd:layout()
   --UI.Containers["Buffs"]:hide()
 
   return true

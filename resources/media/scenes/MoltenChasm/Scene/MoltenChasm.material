@@ -10,8 +10,6 @@ material Lava_02
 			diffuse 1 1 1 1
 			specular 0 0 0 1 10
 			scene_blend add
-      depth_check on
-      cull_hardware node
       lighting on
 
 			texture_unit
@@ -27,40 +25,7 @@ material Lava_02
 			  scroll_anim 0.01 0.01
 			}
 		}
-		pass
-		{
-			ambient 1 1 1 1
-			diffuse 1 1 1 1
-			specular 1 1 1 1 10
-			scene_blend add
-      depth_check on
-      cull_hardware node
-      lighting on
 
-			texture_unit
-			{
-				texture Lava.jpg
-			  scale 0.5 0.5
-			  scroll_anim 0.01 0.01
-			}
-		}
-		pass
-		{
-			ambient 1 1 1 1
-			diffuse 1 1 1 1
-			specular 1 1 1 1 10
-			scene_blend add
-      depth_check on
-      cull_hardware node
-      lighting on
-
-			texture_unit
-			{
-				texture Lava.jpg
-			  scale 0.5 0.5
-			  scroll_anim 0.01 0.01
-			}
-		}
 	}
 
 }

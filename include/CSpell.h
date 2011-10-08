@@ -39,6 +39,7 @@ namespace Pixy
     CEGUI::Window* getButton();
 
     std::string getTooltip() const;
+    void updateTooltip();
 
     void setCaster(Renderable* inCaster) {
       mCaster = inCaster;

@@ -67,9 +67,14 @@ namespace Pixy
         mButton = inButton;
     }
 
+    void CSpell::updateTooltip()
+    {
+      this->generateTooltip();
+    }
+
     std::string CSpell::getTooltip() const {
       if (mTooltip.empty()) {
-        ((CSpell*)this)->generateTooltip();
+        ((CSpell*)this)->updateTooltip();
       }
 
       return mTooltip;

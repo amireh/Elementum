@@ -13,6 +13,7 @@ class CSpell : public Pixy::Spell
   std::string  getImageName();
   CEGUI::Window*  getButton();
   std::string getTooltip() const;
+  void updateTooltip();
 
   Renderable* getCaster();
   Renderable* getTarget();

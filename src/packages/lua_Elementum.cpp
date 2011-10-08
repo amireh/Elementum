@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sat Oct  8 02:19:27 2011.
+** Generated automatically by tolua++-1.0.92 on Sat Oct  8 16:15:46 2011.
 */
 
 #ifndef __cplusplus
@@ -118,6 +118,13 @@ static int tolua_collect_Ogre__Degree (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_size_t (lua_State* tolua_S)
+{
+ size_t* self = (size_t*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_Pixy__OgreRTT (lua_State* tolua_S)
 {
  Pixy::OgreRTT* self = (Pixy::OgreRTT*) tolua_tousertype(tolua_S,1,0);
@@ -149,6 +156,13 @@ static int tolua_collect_Ogre__Plane (lua_State* tolua_S)
 static int tolua_collect_Pixy__CLuaExporter_CPuppetList_ (lua_State* tolua_S)
 {
  Pixy::CLuaExporter<CPuppetList>* self = (Pixy::CLuaExporter<CPuppetList>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_ParticleUniverse__ParticleSystem (lua_State* tolua_S)
+{
+ ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -326,55 +340,57 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Pixy::CLuaExporter<CSpellList>");
  tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::Deck");
+ tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystem");
  tolua_usertype(tolua_S,"Pixy::CSpell");
  tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
+ tolua_usertype(tolua_S,"ParticleUniverse::ParticleTechnique");
+ tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"CEGUI::ListboxTextItem");
- tolua_usertype(tolua_S,"CEGUI::FormattedListboxTextItem");
  tolua_usertype(tolua_S,"Ogre::MeshPtr");
+ tolua_usertype(tolua_S,"CEGUI::FormattedListboxTextItem");
  tolua_usertype(tolua_S,"OIS::Keyboard");
- tolua_usertype(tolua_S,"OIS::KeyEvent");
  tolua_usertype(tolua_S,"Ogre::CompositorLogic");
- tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
- tolua_usertype(tolua_S,"Ogre::Any");
- tolua_usertype(tolua_S,"Pixy::OgreRTT");
+ tolua_usertype(tolua_S,"OIS::KeyEvent");
+ tolua_usertype(tolua_S,"Ogre::RibbonTrail");
+ tolua_usertype(tolua_S,"Pixy::UIEngine");
  tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Ogre::Billboard");
+ tolua_usertype(tolua_S,"Ogre::Any");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
- tolua_usertype(tolua_S,"Ogre::SceneManager");
- tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
- tolua_usertype(tolua_S,"Ogre::Viewport");
+ tolua_usertype(tolua_S,"Ogre::Billboard");
+ tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
  tolua_usertype(tolua_S,"Ogre::BillboardSet");
  tolua_usertype(tolua_S,"Ogre::Plane");
  tolua_usertype(tolua_S,"Pixy::CLuaExporter<CPuppetList>");
  tolua_usertype(tolua_S,"Pixy::Intro");
- tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
+ tolua_usertype(tolua_S,"ParticleUniverse::Particle");
  tolua_usertype(tolua_S,"Ogre::CompositorInstance");
- tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
  tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"Pixy::CUnit");
  tolua_usertype(tolua_S,"Ogre::Quaternion");
  tolua_usertype(tolua_S,"Ogre::ResourceManager");
- tolua_usertype(tolua_S,"Ogre::Entity");
+ tolua_usertype(tolua_S,"Ogre::SceneManager");
  tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Ogre::RenderTarget::FrameStats");
- tolua_usertype(tolua_S,"Ogre::RibbonTrail");
  tolua_usertype(tolua_S,"std::type_info");
  tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
+ tolua_usertype(tolua_S,"Pixy::OgreRTT");
  tolua_usertype(tolua_S,"Ogre::Camera");
- tolua_usertype(tolua_S,"Ogre::SceneNode");
- tolua_usertype(tolua_S,"list<Pixy::CSpell*>");
+ tolua_usertype(tolua_S,"Ogre::Entity");
  tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
  tolua_usertype(tolua_S,"LuaExporter");
- tolua_usertype(tolua_S,"Ogre::Node");
  tolua_usertype(tolua_S,"Pixy::Engine");
- tolua_usertype(tolua_S,"Pixy::UIEngine");
+ tolua_usertype(tolua_S,"Ogre::Node");
+ tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
  tolua_usertype(tolua_S,"Ogre::StaticGeometry");
 }
 
@@ -1410,8 +1426,8 @@ static int tolua_Elementum_Pixy_CPuppet_getHand00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHand'", NULL);
 #endif
   {
-    list<Pixy::CSpell*>& tolua_ret = (  list<Pixy::CSpell*>&)  self->getHand();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"list<Pixy::CSpell*>");
+   Pixy::CPuppet::hand_t const& tolua_ret = (Pixy::CPuppet::hand_t const&)  self->getHand();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
   }
  }
  return 1;
@@ -2188,6 +2204,37 @@ static int tolua_Elementum_Pixy_CSpell_getTooltip00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getTooltip'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateTooltip of class  Pixy::CSpell */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpell_updateTooltip00
+static int tolua_Elementum_Pixy_CSpell_updateTooltip00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CSpell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CSpell* self = (Pixy::CSpell*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateTooltip'", NULL);
+#endif
+  {
+   self->updateTooltip();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'updateTooltip'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3055,17 +3102,18 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect00(lua_State* tolua_S)
 #endif
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  std::string tolua_var_5 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
-  Pixy::Renderable* tolua_var_6 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,3,0));
+  std::string inEffect = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+  Pixy::Renderable* inEntity = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,3,0));
   bool newInstance = ((bool)  tolua_toboolean(tolua_S,4,false));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
-   self->playEffect(tolua_var_5,tolua_var_6,newInstance);
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(inEffect,inEntity,newInstance);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'playEffect'.",&tolua_err);
@@ -3081,26 +3129,58 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect01(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::FxEngine",0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"Ogre::Vector3",0,&tolua_err)) ||
+     !tolua_isusertype(tolua_S,2,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"Pixy::Renderable",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
  else
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  std::string tolua_var_7 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
-  Ogre::Vector3 tolua_var_8 = *((Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
+  ParticleUniverse::ParticleSystem* tolua_var_5 = ((ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Renderable* inEntity = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
-   self->playEffect(tolua_var_7,tolua_var_8);
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(tolua_var_5,inEntity);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
   }
  }
- return 0;
+ return 1;
 tolua_lerror:
  return tolua_Elementum_Pixy_FxEngine_playEffect00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: playEffect of class  Pixy::FxEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_FxEngine_playEffect02
+static int tolua_Elementum_Pixy_FxEngine_playEffect02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::FxEngine",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const Ogre::Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
+  std::string inEffect = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+  const Ogre::Vector3 pos = *((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
+#endif
+  {
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(inEffect,pos);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Elementum_Pixy_FxEngine_playEffect01(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -3120,12 +3200,12 @@ static int tolua_Elementum_Pixy_FxEngine_highlight00(lua_State* tolua_S)
 #endif
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Renderable* tolua_var_9 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Renderable* tolua_var_6 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'highlight'", NULL);
 #endif
   {
-   self->highlight(tolua_var_9);
+   self->highlight(tolua_var_6);
   }
  }
  return 0;
@@ -3701,6 +3781,74 @@ static int tolua_Elementum_Pixy_Combat_getPuppets00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getEnemy of class  Pixy::Combat */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Combat_getEnemy00
+static int tolua_Elementum_Pixy_Combat_getEnemy00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Combat",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Combat* self = (Pixy::Combat*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEnemy'", NULL);
+#endif
+  {
+   Pixy::CPuppet* tolua_ret = (Pixy::CPuppet*)  self->getEnemy(inUID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CPuppet");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEnemy'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPuppet of class  Pixy::Combat */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Combat_getPuppet00
+static int tolua_Elementum_Pixy_Combat_getPuppet00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Combat",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Combat* self = (Pixy::Combat*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPuppet'", NULL);
+#endif
+  {
+   Pixy::CPuppet* tolua_ret = (Pixy::CPuppet*)  self->getPuppet(inUID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CPuppet");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPuppet'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: delete of class  Pixy::UIEngine */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_UIEngine_delete00
 static int tolua_Elementum_Pixy_UIEngine_delete00(lua_State* tolua_S)
@@ -3872,13 +4020,13 @@ static int tolua_Elementum_Pixy_UIEngine_setMargin00(lua_State* tolua_S)
 #endif
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_10 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-  CEGUI::UBox tolua_var_11 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
+  CEGUI::Window* tolua_var_7 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  CEGUI::UBox tolua_var_8 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMargin'", NULL);
 #endif
   {
-   self->setMargin(tolua_var_10,tolua_var_11);
+   self->setMargin(tolua_var_7,tolua_var_8);
   }
  }
  return 0;
@@ -3907,13 +4055,13 @@ static int tolua_Elementum_Pixy_UIEngine_connectAnimation00(lua_State* tolua_S)
 #endif
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_12 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-  std::string tolua_var_13 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+  CEGUI::Window* tolua_var_9 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  std::string tolua_var_10 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'connectAnimation'", NULL);
 #endif
   {
-   self->connectAnimation(tolua_var_12,tolua_var_13);
+   self->connectAnimation(tolua_var_9,tolua_var_10);
   }
  }
  return 0;
@@ -5294,12 +5442,12 @@ static int tolua_Elementum_Pixy_GfxEngine_attachRTT00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::OgreRTT* tolua_var_14 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::OgreRTT* tolua_var_11 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachRTT'", NULL);
 #endif
   {
-   self->attachRTT(tolua_var_14);
+   self->attachRTT(tolua_var_11);
   }
  }
  return 0;
@@ -5327,12 +5475,12 @@ static int tolua_Elementum_Pixy_GfxEngine_detachRTT00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::OgreRTT* tolua_var_15 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::OgreRTT* tolua_var_12 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachRTT'", NULL);
 #endif
   {
-   self->detachRTT(tolua_var_15);
+   self->detachRTT(tolua_var_12);
   }
  }
  return 0;
@@ -5497,12 +5645,12 @@ static int tolua_Elementum_Pixy_NetworkManager_send00(lua_State* tolua_S)
 #endif
  {
   Pixy::NetworkManager* self = (Pixy::NetworkManager*)  tolua_tousertype(tolua_S,1,0);
-  const Pixy::Event* tolua_var_16 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+  const Pixy::Event* tolua_var_13 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'", NULL);
 #endif
   {
-   self->send(*tolua_var_16);
+   self->send(*tolua_var_13);
   }
  }
  return 0;
@@ -6711,6 +6859,68 @@ static int tolua_Elementum_Pixy_OgreRTT_isEnabled00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'isEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hide of class  Pixy::OgreRTT */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_OgreRTT_hide00
+static int tolua_Elementum_Pixy_OgreRTT_hide00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::OgreRTT",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::OgreRTT* self = (Pixy::OgreRTT*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hide'", NULL);
+#endif
+  {
+   self->hide();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hide'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: show of class  Pixy::OgreRTT */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_OgreRTT_show00
+static int tolua_Elementum_Pixy_OgreRTT_show00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::OgreRTT",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::OgreRTT* self = (Pixy::OgreRTT*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'show'", NULL);
+#endif
+  {
+   self->show();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'show'.",&tolua_err);
  return 0;
 #endif
 }
@@ -9675,12 +9885,12 @@ static int tolua_Elementum_Ogre_SceneNode_yaw00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_17 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_14 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'", NULL);
 #endif
   {
-   self->yaw(tolua_var_17);
+   self->yaw(tolua_var_14);
   }
  }
  return 0;
@@ -9708,12 +9918,12 @@ static int tolua_Elementum_Ogre_SceneNode_pitch00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_18 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_15 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'", NULL);
 #endif
   {
-   self->pitch(tolua_var_18);
+   self->pitch(tolua_var_15);
   }
  }
  return 0;
@@ -9741,12 +9951,12 @@ static int tolua_Elementum_Ogre_SceneNode_roll00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_19 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_16 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'", NULL);
 #endif
   {
-   self->roll(tolua_var_19);
+   self->roll(tolua_var_16);
   }
  }
  return 0;
@@ -15131,12 +15341,12 @@ static int tolua_Elementum_Ogre_SceneManager_destroyCamera00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::Camera* tolua_var_20 = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
+  Ogre::Camera* tolua_var_17 = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyCamera'", NULL);
 #endif
   {
-   self->destroyCamera(tolua_var_20);
+   self->destroyCamera(tolua_var_17);
   }
  }
  return 0;
@@ -21785,6 +21995,2643 @@ static int tolua_Elementum_CEGUI_createFormattedListboxTextItem00(lua_State* tol
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: DEFAULT_KEEP_LOCAL of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_KEEP_LOCAL
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_KEEP_LOCAL(lua_State* tolua_S)
+{
+  tolua_pushboolean(tolua_S,(bool)ParticleUniverse::ParticleSystem::DEFAULT_KEEP_LOCAL);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_ITERATION_INTERVAL of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_ITERATION_INTERVAL
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_ITERATION_INTERVAL(lua_State* tolua_S)
+{
+  tolua_pushnumber(tolua_S,(lua_Number)ParticleUniverse::ParticleSystem::DEFAULT_ITERATION_INTERVAL);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_FIXED_TIMEOUT of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_FIXED_TIMEOUT
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_FIXED_TIMEOUT(lua_State* tolua_S)
+{
+  tolua_pushnumber(tolua_S,(lua_Number)ParticleUniverse::ParticleSystem::DEFAULT_FIXED_TIMEOUT);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_NON_VISIBLE_UPDATE_TIMEOUT of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_NON_VISIBLE_UPDATE_TIMEOUT
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_NON_VISIBLE_UPDATE_TIMEOUT(lua_State* tolua_S)
+{
+  tolua_pushnumber(tolua_S,(lua_Number)ParticleUniverse::ParticleSystem::DEFAULT_NON_VISIBLE_UPDATE_TIMEOUT);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_SMOOTH_LOD of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SMOOTH_LOD
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SMOOTH_LOD(lua_State* tolua_S)
+{
+  tolua_pushboolean(tolua_S,(bool)ParticleUniverse::ParticleSystem::DEFAULT_SMOOTH_LOD);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_FAST_FORWARD_TIME of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_FAST_FORWARD_TIME
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_FAST_FORWARD_TIME(lua_State* tolua_S)
+{
+  tolua_pushnumber(tolua_S,(lua_Number)ParticleUniverse::ParticleSystem::DEFAULT_FAST_FORWARD_TIME);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_MAIN_CAMERA_NAME of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_MAIN_CAMERA_NAME
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_MAIN_CAMERA_NAME(lua_State* tolua_S)
+{
+  tolua_pushstring(tolua_S,(const char*)ParticleUniverse::ParticleSystem::DEFAULT_MAIN_CAMERA_NAME);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_SCALE_VELOCITY of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE_VELOCITY
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE_VELOCITY(lua_State* tolua_S)
+{
+  tolua_pushnumber(tolua_S,(lua_Number)ParticleUniverse::ParticleSystem::DEFAULT_SCALE_VELOCITY);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_SCALE_TIME of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE_TIME
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE_TIME(lua_State* tolua_S)
+{
+  tolua_pushnumber(tolua_S,(lua_Number)ParticleUniverse::ParticleSystem::DEFAULT_SCALE_TIME);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_SCALE of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE(lua_State* tolua_S)
+{
+   tolua_pushusertype(tolua_S,(void*)&ParticleUniverse::ParticleSystem::DEFAULT_SCALE,"const Ogre::Vector3");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: DEFAULT_TIGHT_BOUNDINGBOX of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_TIGHT_BOUNDINGBOX
+static int tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_TIGHT_BOUNDINGBOX(lua_State* tolua_S)
+{
+  tolua_pushboolean(tolua_S,(bool)ParticleUniverse::ParticleSystem::DEFAULT_TIGHT_BOUNDINGBOX);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_new00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  {
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  Mtolua_new((ParticleUniverse::ParticleSystem)(name));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_new00_local
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  {
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  Mtolua_new((ParticleUniverse::ParticleSystem)(name));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_new01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_new01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  const std::string resourceGroupName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+  {
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  Mtolua_new((ParticleUniverse::ParticleSystem)(name,resourceGroupName));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_new00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_new01_local
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_new01_local(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  const std::string resourceGroupName = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+  {
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  Mtolua_new((ParticleUniverse::ParticleSystem)(name,resourceGroupName));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_new00_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_delete00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDerivedPosition of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getDerivedPosition00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getDerivedPosition00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDerivedPosition'", NULL);
+#endif
+  {
+   const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getDerivedPosition();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Ogre::Vector3");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDerivedPosition'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDerivedOrientation of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getDerivedOrientation00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getDerivedOrientation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDerivedOrientation'", NULL);
+#endif
+  {
+   const Ogre::Quaternion& tolua_ret = (const Ogre::Quaternion&)  self->getDerivedOrientation();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Ogre::Quaternion");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDerivedOrientation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLatestOrientation of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getLatestOrientation00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getLatestOrientation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLatestOrientation'", NULL);
+#endif
+  {
+   const Ogre::Quaternion& tolua_ret = (const Ogre::Quaternion&)  self->getLatestOrientation();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Ogre::Quaternion");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLatestOrientation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasRotatedBetweenUpdates of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_hasRotatedBetweenUpdates00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_hasRotatedBetweenUpdates00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasRotatedBetweenUpdates'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasRotatedBetweenUpdates();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasRotatedBetweenUpdates'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: rotationOffset of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_rotationOffset00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_rotationOffset00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Ogre::Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::Vector3* pos = ((Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotationOffset'", NULL);
+#endif
+  {
+   self->rotationOffset(*pos);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'rotationOffset'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isSmoothLod of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_isSmoothLod00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_isSmoothLod00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSmoothLod'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isSmoothLod();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isSmoothLod'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSmoothLod of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setSmoothLod00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setSmoothLod00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool smoothLod = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSmoothLod'", NULL);
+#endif
+  {
+   self->setSmoothLod(smoothLod);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSmoothLod'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTimeElapsedSinceStart of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getTimeElapsedSinceStart00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getTimeElapsedSinceStart00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTimeElapsedSinceStart'", NULL);
+#endif
+  {
+    float tolua_ret = (  float)  self->getTimeElapsedSinceStart();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTimeElapsedSinceStart'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getResourceGroupName of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getResourceGroupName00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getResourceGroupName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getResourceGroupName'", NULL);
+#endif
+  {
+    const std::string tolua_ret = (  const std::string)  self->getResourceGroupName();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getResourceGroupName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setResourceGroupName of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setResourceGroupName00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setResourceGroupName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const std::string resourceGroupName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setResourceGroupName'", NULL);
+#endif
+  {
+   self->setResourceGroupName(resourceGroupName);
+   tolua_pushcppstring(tolua_S,(const char*)resourceGroupName);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setResourceGroupName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_createTechnique00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_createTechnique00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createTechnique'", NULL);
+#endif
+  {
+   ParticleUniverse::ParticleTechnique* tolua_ret = (ParticleUniverse::ParticleTechnique*)  self->createTechnique();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleTechnique");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createTechnique'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_addTechnique00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_addTechnique00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"ParticleUniverse::ParticleTechnique",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  ParticleUniverse::ParticleTechnique* technique = ((ParticleUniverse::ParticleTechnique*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addTechnique'", NULL);
+#endif
+  {
+   self->addTechnique(technique);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addTechnique'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_removeTechnique00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_removeTechnique00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"ParticleUniverse::ParticleTechnique",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  ParticleUniverse::ParticleTechnique* technique = ((ParticleUniverse::ParticleTechnique*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeTechnique'", NULL);
+#endif
+  {
+   self->removeTechnique(technique);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeTechnique'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"size_t",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  size_t index = *((size_t*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTechnique'", NULL);
+#endif
+  {
+   ParticleUniverse::ParticleTechnique* tolua_ret = (ParticleUniverse::ParticleTechnique*)  self->getTechnique(index);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleTechnique");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTechnique'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTechnique'", NULL);
+#endif
+  {
+   ParticleUniverse::ParticleTechnique* tolua_ret = (ParticleUniverse::ParticleTechnique*)  self->getTechnique(name);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleTechnique");
+   tolua_pushcppstring(tolua_S,(const char*)name);
+  }
+ }
+ return 2;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getNumTechniques of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getNumTechniques00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getNumTechniques00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumTechniques'", NULL);
+#endif
+  {
+   size_t tolua_ret = (size_t)  self->getNumTechniques();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNumTechniques'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"ParticleUniverse::ParticleTechnique",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  ParticleUniverse::ParticleTechnique* particleTechnique = ((ParticleUniverse::ParticleTechnique*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyTechnique'", NULL);
+#endif
+  {
+   self->destroyTechnique(particleTechnique);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'destroyTechnique'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyTechnique of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"size_t",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  size_t index = *((size_t*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyTechnique'", NULL);
+#endif
+  {
+   self->destroyTechnique(index);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyAllTechniques of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_destroyAllTechniques00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_destroyAllTechniques00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllTechniques'", NULL);
+#endif
+  {
+   self->destroyAllTechniques();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'destroyAllTechniques'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRenderQueueGroup of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setRenderQueueGroup00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setRenderQueueGroup00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   int queueId = ((  int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRenderQueueGroup'", NULL);
+#endif
+  {
+   self->setRenderQueueGroup(queueId);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setRenderQueueGroup'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getNonVisibleUpdateTimeout of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getNonVisibleUpdateTimeout00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getNonVisibleUpdateTimeout00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNonVisibleUpdateTimeout'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getNonVisibleUpdateTimeout();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNonVisibleUpdateTimeout'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setNonVisibleUpdateTimeout of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setNonVisibleUpdateTimeout00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setNonVisibleUpdateTimeout00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float timeout = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setNonVisibleUpdateTimeout'", NULL);
+#endif
+  {
+   self->setNonVisibleUpdateTimeout(timeout);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setNonVisibleUpdateTimeout'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: prepare of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_prepare00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_prepare00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'prepare'", NULL);
+#endif
+  {
+   self->prepare();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'prepare'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: start of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_start00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_start00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'start'", NULL);
+#endif
+  {
+   self->start();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'start'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: start of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_start01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_start01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float stopTime = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'start'", NULL);
+#endif
+  {
+   self->start(stopTime);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_start00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: startAndStopFade of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_startAndStopFade00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_startAndStopFade00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float stopTime = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'startAndStopFade'", NULL);
+#endif
+  {
+   self->startAndStopFade(stopTime);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'startAndStopFade'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: stop of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_stop00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_stop00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stop'", NULL);
+#endif
+  {
+   self->stop();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'stop'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: stop of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_stop01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_stop01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float stopTime = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stop'", NULL);
+#endif
+  {
+   self->stop(stopTime);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_stop00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: stopFade of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stopFade'", NULL);
+#endif
+  {
+   self->stopFade();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'stopFade'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: stopFade of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float stopTime = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stopFade'", NULL);
+#endif
+  {
+   self->stopFade(stopTime);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pause of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_pause00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_pause00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pause'", NULL);
+#endif
+  {
+   self->pause();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pause'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pause of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_pause01
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_pause01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float pauseTime = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pause'", NULL);
+#endif
+  {
+   self->pause(pauseTime);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_ParticleUniverse_ParticleSystem_pause00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resume of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_resume00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_resume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resume'", NULL);
+#endif
+  {
+   self->resume();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getState of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getState00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getState00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getState'", NULL);
+#endif
+  {
+   ParticleUniverse::ParticleSystem::ParticleSystemState tolua_ret = (ParticleUniverse::ParticleSystem::ParticleSystemState)  self->getState();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getState'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFastForwardTime of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getFastForwardTime00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getFastForwardTime00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFastForwardTime'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getFastForwardTime();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFastForwardTime'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFastForwardInterval of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getFastForwardInterval00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getFastForwardInterval00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFastForwardInterval'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getFastForwardInterval();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFastForwardInterval'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFastForward of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setFastForward00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setFastForward00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float time = ((  float)  tolua_tonumber(tolua_S,2,0));
+   float interval = ((  float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFastForward'", NULL);
+#endif
+  {
+   self->setFastForward(time,interval);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFastForward'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMainCameraName of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getMainCameraName00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getMainCameraName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMainCameraName'", NULL);
+#endif
+  {
+    const std::string tolua_ret = (  const std::string)  self->getMainCameraName();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMainCameraName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMainCamera of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getMainCamera00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getMainCamera00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMainCamera'", NULL);
+#endif
+  {
+   Ogre::Camera* tolua_ret = (Ogre::Camera*)  self->getMainCamera();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Camera");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMainCamera'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasMainCamera of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_hasMainCamera00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_hasMainCamera00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasMainCamera'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasMainCamera();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasMainCamera'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setMainCameraName of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setMainCameraName00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setMainCameraName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   std::string cameraName = ((  std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMainCameraName'", NULL);
+#endif
+  {
+   self->setMainCameraName(cameraName);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setMainCameraName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setMainCamera of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setMainCamera00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setMainCamera00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::Camera",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::Camera* camera = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMainCamera'", NULL);
+#endif
+  {
+   self->setMainCamera(camera);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setMainCamera'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCurrentCamera of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getCurrentCamera00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getCurrentCamera00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCurrentCamera'", NULL);
+#endif
+  {
+   Ogre::Camera* tolua_ret = (Ogre::Camera*)  self->getCurrentCamera();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Camera");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCurrentCamera'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fastForward of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_fastForward00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_fastForward00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fastForward'", NULL);
+#endif
+  {
+   self->fastForward();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fastForward'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getNumEmittedTechniques of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getNumEmittedTechniques00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getNumEmittedTechniques00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumEmittedTechniques'", NULL);
+#endif
+  {
+   size_t tolua_ret = (size_t)  self->getNumEmittedTechniques();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNumEmittedTechniques'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _markForEmission of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem__markForEmission00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem__markForEmission00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_markForEmission'", NULL);
+#endif
+  {
+   self->_markForEmission();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_markForEmission'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _resetMarkForEmission of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem__resetMarkForEmission00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem__resetMarkForEmission00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_resetMarkForEmission'", NULL);
+#endif
+  {
+   self->_resetMarkForEmission();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_resetMarkForEmission'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: suppressNotifyEmissionChange of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_suppressNotifyEmissionChange00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_suppressNotifyEmissionChange00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool suppress = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'suppressNotifyEmissionChange'", NULL);
+#endif
+  {
+   self->suppressNotifyEmissionChange(suppress);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'suppressNotifyEmissionChange'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _notifyEmissionChange of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem__notifyEmissionChange00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem__notifyEmissionChange00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_notifyEmissionChange'", NULL);
+#endif
+  {
+   self->_notifyEmissionChange();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_notifyEmissionChange'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getIterationInterval of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getIterationInterval00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getIterationInterval00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIterationInterval'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getIterationInterval();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getIterationInterval'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setIterationInterval of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setIterationInterval00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setIterationInterval00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const float iterationInterval = ((const float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIterationInterval'", NULL);
+#endif
+  {
+   self->setIterationInterval(iterationInterval);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIterationInterval'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFixedTimeout of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getFixedTimeout00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getFixedTimeout00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFixedTimeout'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getFixedTimeout();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFixedTimeout'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFixedTimeout of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setFixedTimeout00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setFixedTimeout00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const float fixedTimeout = ((const float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFixedTimeout'", NULL);
+#endif
+  {
+   self->setFixedTimeout(fixedTimeout);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFixedTimeout'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBoundsAutoUpdated of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setBoundsAutoUpdated00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setBoundsAutoUpdated00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool autoUpdate = ((bool)  tolua_toboolean(tolua_S,2,0));
+   float stopIn = ((  float)  tolua_tonumber(tolua_S,3,0.0f));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBoundsAutoUpdated'", NULL);
+#endif
+  {
+   self->setBoundsAutoUpdated(autoUpdate,stopIn);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBoundsAutoUpdated'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _resetBounds of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem__resetBounds00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem__resetBounds00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_resetBounds'", NULL);
+#endif
+  {
+   self->_resetBounds();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_resetBounds'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getScale of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getScale00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getScale00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScale'", NULL);
+#endif
+  {
+   const Ogre::Vector3& tolua_ret = (const Ogre::Vector3&)  self->getScale();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const Ogre::Vector3");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setScale00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setScale00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Ogre::Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const Ogre::Vector3* scale = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(*scale);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getScaleVelocity of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getScaleVelocity00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getScaleVelocity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScaleVelocity'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getScaleVelocity();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScaleVelocity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScaleVelocity of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setScaleVelocity00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setScaleVelocity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const float scaleVelocity = ((const float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleVelocity'", NULL);
+#endif
+  {
+   self->setScaleVelocity(scaleVelocity);
+   tolua_pushnumber(tolua_S,(lua_Number)scaleVelocity);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScaleVelocity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getScaleTime of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getScaleTime00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getScaleTime00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScaleTime'", NULL);
+#endif
+  {
+    const float tolua_ret = (  const float)  self->getScaleTime();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScaleTime'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScaleTime of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setScaleTime00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setScaleTime00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const float scaleTime = ((const float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleTime'", NULL);
+#endif
+  {
+   self->setScaleTime(scaleTime);
+   tolua_pushnumber(tolua_S,(lua_Number)scaleTime);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScaleTime'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isKeepLocal of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_isKeepLocal00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_isKeepLocal00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isKeepLocal'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isKeepLocal();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isKeepLocal'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setKeepLocal of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setKeepLocal00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setKeepLocal00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool keepLocal = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setKeepLocal'", NULL);
+#endif
+  {
+   self->setKeepLocal(keepLocal);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setKeepLocal'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasTightBoundingBox of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_hasTightBoundingBox00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_hasTightBoundingBox00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasTightBoundingBox'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasTightBoundingBox();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasTightBoundingBox'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTightBoundingBox of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setTightBoundingBox00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setTightBoundingBox00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool tightBoundingBox = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTightBoundingBox'", NULL);
+#endif
+  {
+   self->setTightBoundingBox(tightBoundingBox);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTightBoundingBox'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPauseTime of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getPauseTime00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getPauseTime00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPauseTime'", NULL);
+#endif
+  {
+    float tolua_ret = (  float)  self->getPauseTime();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPauseTime'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPauseTime of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setPauseTime00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setPauseTime00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+   float pauseTime = ((  float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPauseTime'", NULL);
+#endif
+  {
+   self->setPauseTime(pauseTime);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPauseTime'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setEnabled of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setEnabled00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool enabled = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEnabled'", NULL);
+#endif
+  {
+   self->setEnabled(enabled);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSceneManager of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getSceneManager00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getSceneManager00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneManager'", NULL);
+#endif
+  {
+   Ogre::SceneManager* tolua_ret = (Ogre::SceneManager*)  self->getSceneManager();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::SceneManager");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSceneManager'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSceneManager of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setSceneManager00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setSceneManager00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::SceneManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::SceneManager* sceneManager = ((Ogre::SceneManager*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSceneManager'", NULL);
+#endif
+  {
+   self->setSceneManager(sceneManager);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSceneManager'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUseController of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setUseController00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setUseController00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool useController = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUseController'", NULL);
+#endif
+  {
+   self->setUseController(useController);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUseController'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasExternType of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_hasExternType00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_hasExternType00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const std::string externType = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasExternType'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasExternType(externType);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+   tolua_pushcppstring(tolua_S,(const char*)externType);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasExternType'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCategory of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_getCategory00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_getCategory00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const ParticleUniverse::ParticleSystem* self = (const ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCategory'", NULL);
+#endif
+  {
+    const std::string tolua_ret = (  const std::string)  self->getCategory();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCategory'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setCategory of class  ParticleUniverse::ParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Elementum_ParticleUniverse_ParticleSystem_setCategory00
+static int tolua_Elementum_ParticleUniverse_ParticleSystem_setCategory00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ParticleUniverse::ParticleSystem",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  const std::string category = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCategory'", NULL);
+#endif
+  {
+   self->setCategory(category);
+   tolua_pushcppstring(tolua_S,(const char*)category);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setCategory'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
 {
@@ -21895,6 +24742,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getImageName",tolua_Elementum_Pixy_CSpell_getImageName00);
     tolua_function(tolua_S,"getButton",tolua_Elementum_Pixy_CSpell_getButton00);
     tolua_function(tolua_S,"getTooltip",tolua_Elementum_Pixy_CSpell_getTooltip00);
+    tolua_function(tolua_S,"updateTooltip",tolua_Elementum_Pixy_CSpell_updateTooltip00);
     tolua_function(tolua_S,"getCaster",tolua_Elementum_Pixy_CSpell_getCaster00);
     tolua_function(tolua_S,"getTarget",tolua_Elementum_Pixy_CSpell_getTarget00);
     tolua_function(tolua_S,"setCaster",tolua_Elementum_Pixy_CSpell_setCaster00);
@@ -21942,6 +24790,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"registerHighlightEffect",tolua_Elementum_Pixy_FxEngine_registerHighlightEffect00);
     tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect00);
     tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect01);
+    tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect02);
     tolua_function(tolua_S,"highlight",tolua_Elementum_Pixy_FxEngine_highlight00);
     tolua_function(tolua_S,"dehighlight",tolua_Elementum_Pixy_FxEngine_dehighlight00);
     tolua_function(tolua_S,"unloadAllEffects",tolua_Elementum_Pixy_FxEngine_unloadAllEffects00);
@@ -21980,6 +24829,8 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getSingleton",tolua_Elementum_Pixy_Combat_getSingleton00);
     tolua_function(tolua_S,"getSingletonPtr",tolua_Elementum_Pixy_Combat_getSingletonPtr00);
     tolua_function(tolua_S,"getPuppets",tolua_Elementum_Pixy_Combat_getPuppets00);
+    tolua_function(tolua_S,"getEnemy",tolua_Elementum_Pixy_Combat_getEnemy00);
+    tolua_function(tolua_S,"getPuppet",tolua_Elementum_Pixy_Combat_getPuppet00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"UIEngine","Pixy::UIEngine","Pixy::Engine",tolua_collect_Pixy__UIEngine);
@@ -22154,6 +25005,8 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"enable",tolua_Elementum_Pixy_OgreRTT_enable00);
     tolua_function(tolua_S,"disable",tolua_Elementum_Pixy_OgreRTT_disable00);
     tolua_function(tolua_S,"isEnabled",tolua_Elementum_Pixy_OgreRTT_isEnabled00);
+    tolua_function(tolua_S,"hide",tolua_Elementum_Pixy_OgreRTT_hide00);
+    tolua_function(tolua_S,"show",tolua_Elementum_Pixy_OgreRTT_show00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Ogre",0);
@@ -23168,6 +26021,118 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setFormatting",tolua_Elementum_CEGUI_FormattedListboxTextItem_setFormatting00);
    tolua_endmodule(tolua_S);
    tolua_function(tolua_S,"createFormattedListboxTextItem",tolua_Elementum_CEGUI_createFormattedListboxTextItem00);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"ParticleUniverse",0);
+  tolua_beginmodule(tolua_S,"ParticleUniverse");
+   tolua_cclass(tolua_S,"Particle","ParticleUniverse::Particle","",NULL);
+   tolua_beginmodule(tolua_S,"Particle");
+   tolua_endmodule(tolua_S);
+   tolua_cclass(tolua_S,"ParticleTechnique","ParticleUniverse::ParticleTechnique","",NULL);
+   tolua_beginmodule(tolua_S,"ParticleTechnique");
+   tolua_endmodule(tolua_S);
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"ParticleSystem","ParticleUniverse::ParticleSystem","Ogre::MovableObject",tolua_collect_ParticleUniverse__ParticleSystem);
+   #else
+   tolua_cclass(tolua_S,"ParticleSystem","ParticleUniverse::ParticleSystem","Ogre::MovableObject",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"ParticleSystem");
+    tolua_variable(tolua_S,"DEFAULT_KEEP_LOCAL",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_KEEP_LOCAL,NULL);
+    tolua_variable(tolua_S,"DEFAULT_ITERATION_INTERVAL",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_ITERATION_INTERVAL,NULL);
+    tolua_variable(tolua_S,"DEFAULT_FIXED_TIMEOUT",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_FIXED_TIMEOUT,NULL);
+    tolua_variable(tolua_S,"DEFAULT_NON_VISIBLE_UPDATE_TIMEOUT",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_NON_VISIBLE_UPDATE_TIMEOUT,NULL);
+    tolua_variable(tolua_S,"DEFAULT_SMOOTH_LOD",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SMOOTH_LOD,NULL);
+    tolua_variable(tolua_S,"DEFAULT_FAST_FORWARD_TIME",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_FAST_FORWARD_TIME,NULL);
+    tolua_variable(tolua_S,"DEFAULT_MAIN_CAMERA_NAME",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_MAIN_CAMERA_NAME,NULL);
+    tolua_variable(tolua_S,"DEFAULT_SCALE_VELOCITY",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE_VELOCITY,NULL);
+    tolua_variable(tolua_S,"DEFAULT_SCALE_TIME",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE_TIME,NULL);
+    tolua_variable(tolua_S,"DEFAULT_SCALE",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_SCALE,NULL);
+    tolua_variable(tolua_S,"DEFAULT_TIGHT_BOUNDINGBOX",tolua_get_ParticleUniverse__ParticleSystem_DEFAULT_TIGHT_BOUNDINGBOX,NULL);
+    tolua_constant(tolua_S,"PSS_PREPARED",ParticleUniverse::ParticleSystem::PSS_PREPARED);
+    tolua_constant(tolua_S,"PSS_STARTED",ParticleUniverse::ParticleSystem::PSS_STARTED);
+    tolua_constant(tolua_S,"PSS_STOPPED",ParticleUniverse::ParticleSystem::PSS_STOPPED);
+    tolua_constant(tolua_S,"PSS_PAUSED",ParticleUniverse::ParticleSystem::PSS_PAUSED);
+    tolua_function(tolua_S,"new",tolua_Elementum_ParticleUniverse_ParticleSystem_new00);
+    tolua_function(tolua_S,"new_local",tolua_Elementum_ParticleUniverse_ParticleSystem_new00_local);
+    tolua_function(tolua_S,".call",tolua_Elementum_ParticleUniverse_ParticleSystem_new00_local);
+    tolua_function(tolua_S,"new",tolua_Elementum_ParticleUniverse_ParticleSystem_new01);
+    tolua_function(tolua_S,"new_local",tolua_Elementum_ParticleUniverse_ParticleSystem_new01_local);
+    tolua_function(tolua_S,".call",tolua_Elementum_ParticleUniverse_ParticleSystem_new01_local);
+    tolua_function(tolua_S,"delete",tolua_Elementum_ParticleUniverse_ParticleSystem_delete00);
+    tolua_function(tolua_S,"getDerivedPosition",tolua_Elementum_ParticleUniverse_ParticleSystem_getDerivedPosition00);
+    tolua_function(tolua_S,"getDerivedOrientation",tolua_Elementum_ParticleUniverse_ParticleSystem_getDerivedOrientation00);
+    tolua_function(tolua_S,"getLatestOrientation",tolua_Elementum_ParticleUniverse_ParticleSystem_getLatestOrientation00);
+    tolua_function(tolua_S,"hasRotatedBetweenUpdates",tolua_Elementum_ParticleUniverse_ParticleSystem_hasRotatedBetweenUpdates00);
+    tolua_function(tolua_S,"rotationOffset",tolua_Elementum_ParticleUniverse_ParticleSystem_rotationOffset00);
+    tolua_function(tolua_S,"isSmoothLod",tolua_Elementum_ParticleUniverse_ParticleSystem_isSmoothLod00);
+    tolua_function(tolua_S,"setSmoothLod",tolua_Elementum_ParticleUniverse_ParticleSystem_setSmoothLod00);
+    tolua_function(tolua_S,"getTimeElapsedSinceStart",tolua_Elementum_ParticleUniverse_ParticleSystem_getTimeElapsedSinceStart00);
+    tolua_function(tolua_S,"getResourceGroupName",tolua_Elementum_ParticleUniverse_ParticleSystem_getResourceGroupName00);
+    tolua_function(tolua_S,"setResourceGroupName",tolua_Elementum_ParticleUniverse_ParticleSystem_setResourceGroupName00);
+    tolua_function(tolua_S,"createTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_createTechnique00);
+    tolua_function(tolua_S,"addTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_addTechnique00);
+    tolua_function(tolua_S,"removeTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_removeTechnique00);
+    tolua_function(tolua_S,"getTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique00);
+    tolua_function(tolua_S,"getTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_getTechnique01);
+    tolua_function(tolua_S,"getNumTechniques",tolua_Elementum_ParticleUniverse_ParticleSystem_getNumTechniques00);
+    tolua_function(tolua_S,"destroyTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique00);
+    tolua_function(tolua_S,"destroyTechnique",tolua_Elementum_ParticleUniverse_ParticleSystem_destroyTechnique01);
+    tolua_function(tolua_S,"destroyAllTechniques",tolua_Elementum_ParticleUniverse_ParticleSystem_destroyAllTechniques00);
+    tolua_function(tolua_S,"setRenderQueueGroup",tolua_Elementum_ParticleUniverse_ParticleSystem_setRenderQueueGroup00);
+    tolua_function(tolua_S,"getNonVisibleUpdateTimeout",tolua_Elementum_ParticleUniverse_ParticleSystem_getNonVisibleUpdateTimeout00);
+    tolua_function(tolua_S,"setNonVisibleUpdateTimeout",tolua_Elementum_ParticleUniverse_ParticleSystem_setNonVisibleUpdateTimeout00);
+    tolua_function(tolua_S,"prepare",tolua_Elementum_ParticleUniverse_ParticleSystem_prepare00);
+    tolua_function(tolua_S,"start",tolua_Elementum_ParticleUniverse_ParticleSystem_start00);
+    tolua_function(tolua_S,"start",tolua_Elementum_ParticleUniverse_ParticleSystem_start01);
+    tolua_function(tolua_S,"startAndStopFade",tolua_Elementum_ParticleUniverse_ParticleSystem_startAndStopFade00);
+    tolua_function(tolua_S,"stop",tolua_Elementum_ParticleUniverse_ParticleSystem_stop00);
+    tolua_function(tolua_S,"stop",tolua_Elementum_ParticleUniverse_ParticleSystem_stop01);
+    tolua_function(tolua_S,"stopFade",tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade00);
+    tolua_function(tolua_S,"stopFade",tolua_Elementum_ParticleUniverse_ParticleSystem_stopFade01);
+    tolua_function(tolua_S,"pause",tolua_Elementum_ParticleUniverse_ParticleSystem_pause00);
+    tolua_function(tolua_S,"pause",tolua_Elementum_ParticleUniverse_ParticleSystem_pause01);
+    tolua_function(tolua_S,"resume",tolua_Elementum_ParticleUniverse_ParticleSystem_resume00);
+    tolua_function(tolua_S,"getState",tolua_Elementum_ParticleUniverse_ParticleSystem_getState00);
+    tolua_function(tolua_S,"getFastForwardTime",tolua_Elementum_ParticleUniverse_ParticleSystem_getFastForwardTime00);
+    tolua_function(tolua_S,"getFastForwardInterval",tolua_Elementum_ParticleUniverse_ParticleSystem_getFastForwardInterval00);
+    tolua_function(tolua_S,"setFastForward",tolua_Elementum_ParticleUniverse_ParticleSystem_setFastForward00);
+    tolua_function(tolua_S,"getMainCameraName",tolua_Elementum_ParticleUniverse_ParticleSystem_getMainCameraName00);
+    tolua_function(tolua_S,"getMainCamera",tolua_Elementum_ParticleUniverse_ParticleSystem_getMainCamera00);
+    tolua_function(tolua_S,"hasMainCamera",tolua_Elementum_ParticleUniverse_ParticleSystem_hasMainCamera00);
+    tolua_function(tolua_S,"setMainCameraName",tolua_Elementum_ParticleUniverse_ParticleSystem_setMainCameraName00);
+    tolua_function(tolua_S,"setMainCamera",tolua_Elementum_ParticleUniverse_ParticleSystem_setMainCamera00);
+    tolua_function(tolua_S,"getCurrentCamera",tolua_Elementum_ParticleUniverse_ParticleSystem_getCurrentCamera00);
+    tolua_function(tolua_S,"fastForward",tolua_Elementum_ParticleUniverse_ParticleSystem_fastForward00);
+    tolua_function(tolua_S,"getNumEmittedTechniques",tolua_Elementum_ParticleUniverse_ParticleSystem_getNumEmittedTechniques00);
+    tolua_function(tolua_S,"_markForEmission",tolua_Elementum_ParticleUniverse_ParticleSystem__markForEmission00);
+    tolua_function(tolua_S,"_resetMarkForEmission",tolua_Elementum_ParticleUniverse_ParticleSystem__resetMarkForEmission00);
+    tolua_function(tolua_S,"suppressNotifyEmissionChange",tolua_Elementum_ParticleUniverse_ParticleSystem_suppressNotifyEmissionChange00);
+    tolua_function(tolua_S,"_notifyEmissionChange",tolua_Elementum_ParticleUniverse_ParticleSystem__notifyEmissionChange00);
+    tolua_function(tolua_S,"getIterationInterval",tolua_Elementum_ParticleUniverse_ParticleSystem_getIterationInterval00);
+    tolua_function(tolua_S,"setIterationInterval",tolua_Elementum_ParticleUniverse_ParticleSystem_setIterationInterval00);
+    tolua_function(tolua_S,"getFixedTimeout",tolua_Elementum_ParticleUniverse_ParticleSystem_getFixedTimeout00);
+    tolua_function(tolua_S,"setFixedTimeout",tolua_Elementum_ParticleUniverse_ParticleSystem_setFixedTimeout00);
+    tolua_function(tolua_S,"setBoundsAutoUpdated",tolua_Elementum_ParticleUniverse_ParticleSystem_setBoundsAutoUpdated00);
+    tolua_function(tolua_S,"_resetBounds",tolua_Elementum_ParticleUniverse_ParticleSystem__resetBounds00);
+    tolua_function(tolua_S,"getScale",tolua_Elementum_ParticleUniverse_ParticleSystem_getScale00);
+    tolua_function(tolua_S,"setScale",tolua_Elementum_ParticleUniverse_ParticleSystem_setScale00);
+    tolua_function(tolua_S,"getScaleVelocity",tolua_Elementum_ParticleUniverse_ParticleSystem_getScaleVelocity00);
+    tolua_function(tolua_S,"setScaleVelocity",tolua_Elementum_ParticleUniverse_ParticleSystem_setScaleVelocity00);
+    tolua_function(tolua_S,"getScaleTime",tolua_Elementum_ParticleUniverse_ParticleSystem_getScaleTime00);
+    tolua_function(tolua_S,"setScaleTime",tolua_Elementum_ParticleUniverse_ParticleSystem_setScaleTime00);
+    tolua_function(tolua_S,"isKeepLocal",tolua_Elementum_ParticleUniverse_ParticleSystem_isKeepLocal00);
+    tolua_function(tolua_S,"setKeepLocal",tolua_Elementum_ParticleUniverse_ParticleSystem_setKeepLocal00);
+    tolua_function(tolua_S,"hasTightBoundingBox",tolua_Elementum_ParticleUniverse_ParticleSystem_hasTightBoundingBox00);
+    tolua_function(tolua_S,"setTightBoundingBox",tolua_Elementum_ParticleUniverse_ParticleSystem_setTightBoundingBox00);
+    tolua_function(tolua_S,"getPauseTime",tolua_Elementum_ParticleUniverse_ParticleSystem_getPauseTime00);
+    tolua_function(tolua_S,"setPauseTime",tolua_Elementum_ParticleUniverse_ParticleSystem_setPauseTime00);
+    tolua_function(tolua_S,"setEnabled",tolua_Elementum_ParticleUniverse_ParticleSystem_setEnabled00);
+    tolua_function(tolua_S,"getSceneManager",tolua_Elementum_ParticleUniverse_ParticleSystem_getSceneManager00);
+    tolua_function(tolua_S,"setSceneManager",tolua_Elementum_ParticleUniverse_ParticleSystem_setSceneManager00);
+    tolua_function(tolua_S,"setUseController",tolua_Elementum_ParticleUniverse_ParticleSystem_setUseController00);
+    tolua_function(tolua_S,"hasExternType",tolua_Elementum_ParticleUniverse_ParticleSystem_hasExternType00);
+    tolua_function(tolua_S,"getCategory",tolua_Elementum_ParticleUniverse_ParticleSystem_getCategory00);
+    tolua_function(tolua_S,"setCategory",tolua_Elementum_ParticleUniverse_ParticleSystem_setCategory00);
+   tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

@@ -7,6 +7,7 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntitySelected, Combat.onEntitySelected)
   bind(Pixy.EventUID.EntityDeselected, Combat.onEntityDeselected)
   bind(Pixy.EventUID.UnitAttacked, UI.onEntityAttacked)
+  bind(Pixy.EventUID.EntityDying, Units.onEntityDying)
 
   bind(Pixy.EventUID.StartTurn, UI.onStartTurn)
   bind(Pixy.EventUID.TurnStarted, UI.onTurnStarted)
@@ -31,6 +32,7 @@ Combat.bind = function()
   bind(Pixy.EventUID.StartBlockPhase, Hand.Update)
 
   Input.bindToKeyReleased(OIS.KC_X, Combat.ToggleRTTCompositor)
+  Input.bindToKeyReleased(OIS.KC_Z, UI.Toggle)
 
   cleanup = Combat.cleanup
 end

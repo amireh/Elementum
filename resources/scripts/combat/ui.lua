@@ -10,9 +10,9 @@ UI = {
   Config = {
     Layout = "combat/ui.layout",
     Dim = {
-      HandButton = CEGUI.UVector2:new(CEGUI.UDim(0.125,0),CEGUI.UDim(1,0)),
-      BuffButton = CEGUI.UVector2:new(CEGUI.UDim(0.25,0),CEGUI.UDim(0.05,0)),
-      LogButton = CEGUI.UVector2:new(CEGUI.UDim(0.05,0),CEGUI.UDim(1,0))
+      HandButton = CEGUI.UVector2(CEGUI.UDim(0.125,0),CEGUI.UDim(1,0)),
+      BuffButton = CEGUI.UVector2(CEGUI.UDim(0.3,0),CEGUI.UDim(0.1,0)),
+      LogButton = CEGUI.UVector2(CEGUI.UDim(0.05,0),CEGUI.UDim(1,0))
     }
   },
   Animes = {
@@ -73,7 +73,7 @@ UI.configure = function()
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "spells_earth.imageset" )
 	CEImagesetMgr:create( "spells_fire.imageset" )
-  --~ CEImagesetMgr:create( "huds.imageset" )
+  CEImagesetMgr:create( "huds.imageset" )
 
 end
 
@@ -87,8 +87,10 @@ UI.registerGlobals = function()
   UI.Root = CEWindowMgr:getWindow("Combat")
   UI.Hand = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Hand"))
   --~ UI.Buffs = CEWindowMgr:getWindow("Combat/Buffs")
-  UI.Buffs.Player = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Buffs/Player"))
-  UI.Buffs.Enemy = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Buffs/Enemy"))
+  --~ UI.Buffs.Player = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Buffs/Player"))
+  --~ UI.Buffs.Enemy = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Buffs/Enemy"))
+  UI.Buffs.Player = CEWindowMgr:getWindow("Combat/Buffs/Player")
+  UI.Buffs.Enemy = CEWindowMgr:getWindow("Combat/Buffs/Enemy")
 
   UI.Containers["Error"] = CEWindowMgr:getWindow("Combat/Containers/Error")
   --~ UI.Containers["Tooltip"] = CEWindowMgr:getWindow("Combat/Containers/Tooltip")
@@ -342,6 +344,24 @@ UI.onSelectEnemy = function(e)
     Combat.Highlight(EnemyPuppet:getRenderable())
   end
   print("I'm selected!")
+end
+
+UI.Toggle = function()
+  if UI.Root:isVisible() then
+    UI.Root:hide()
+    CEGUI.MouseCursor:getSingleton():hide()
+    RTT.Player.Texture:disable()
+    RTT.Player.Texture:hide()
+    RTT.Enemy.Texture:disable()
+    RTT.Enemy.Texture:hide()
+  else
+    UI.Root:show()
+    CEGUI.MouseCursor:getSingleton():show()
+    RTT.Player.Texture:enable()
+    RTT.Player.Texture:show()
+    RTT.Enemy.Texture:enable()
+    RTT.Enemy.Texture:show()
+  end
 end
 
 -- configure

@@ -53,8 +53,7 @@ Input.bindToKeyReleased = function(key, handler)
 end
 Combat.onKeyReleased = function(e)
   if (Selected) then
-    if not key_map[e.key] then return true end
-    FxEngine:playEffect(key_map[e.key], Selected)
+    if key_map[e.key] then FxEngine:playEffect(key_map[e.key], Selected) end
   end
 
   if Keybindings[e.key] then

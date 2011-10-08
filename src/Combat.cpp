@@ -368,6 +368,16 @@ namespace Pixy
     throw invalid_uid("in Combat::getPuppet() : " + stringify(inUID));
   }
 
+  CPuppet* Combat::getEnemy(int inUID) {
+    puppets_t::const_iterator itr;
+    for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
+      if ((*itr)->getUID() != inUID)
+        return *itr;
+
+    //assert(false);
+    throw invalid_uid("in Combat::getEnemy() : " + stringify(inUID));
+  }
+
   CUnit* Combat::getUnit(int inUID) {
     puppets_t::const_iterator puppet;
     for (puppet = mPuppets.begin();
@@ -513,6 +523,18 @@ namespace Pixy
     mScriptEngine->passToLua("assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
     mScriptEngine->passToLua("onHandleNewTurn", 0);
 
+    // apply active buffs
+    for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
+         buff != mActivePuppet->getBuffs().end();
+         ++buff)
+    {
+      mScriptEngine->passToLua(
+        "CastSpell", 3,
+        "Pixy::Renderable", (*buff)->getCaster(),
+        "Pixy::Renderable", (*buff)->getTarget(),
+        "Pixy::CSpell", *buff);
+    }
+
     // remove all expired puppet buffs
     {
       std::vector<CSpell*> expired;
@@ -527,17 +549,6 @@ namespace Pixy
            ++expired_spell)
         mActivePuppet->detachBuff((*expired_spell)->getUID());
     }
-    // apply active buffs
-    for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
-         buff != mActivePuppet->getBuffs().end();
-         ++buff)
-    {
-      mScriptEngine->passToLua(
-        "CastSpell", 3,
-        "Pixy::Renderable", (*buff)->getCaster(),
-        "Pixy::Renderable", (*buff)->getTarget(),
-        "Pixy::CSpell", *buff);
-    }
 
     for (CPuppet::units_t::const_iterator unit_itr = mActivePuppet->getUnits().begin();
          unit_itr != mActivePuppet->getUnits().end();
@@ -546,6 +557,18 @@ namespace Pixy
       CUnit* unit = *unit_itr;
       unit->reset();
       unit->getUp();
+
+      // apply active buffs
+      for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
+           buff != unit->getBuffs().end();
+           ++buff)
+      {
+        mScriptEngine->passToLua(
+        "CastSpell", 3,
+        "Pixy::Renderable", (*buff)->getCaster(),
+        "Pixy::Renderable", (*buff)->getTarget(),
+        "Pixy::CSpell", *buff);
+      }
 
       // remove all expired puppet buffs
       {
@@ -561,17 +584,7 @@ namespace Pixy
              ++expired_spell)
           unit->detachBuff((*expired_spell)->getUID());
       }
-      // apply active buffs
-      for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
-           buff != unit->getBuffs().end();
-           ++buff)
-      {
-        mScriptEngine->passToLua(
-        "CastSpell", 3,
-        "Pixy::Renderable", (*buff)->getCaster(),
-        "Pixy::Renderable", (*buff)->getTarget(),
-        "Pixy::CSpell", *buff);
-      }
+
     }
 
   }

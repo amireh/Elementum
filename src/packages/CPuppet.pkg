@@ -16,7 +16,7 @@ public:
   virtual ~CPuppet();
   virtual Pixy::CSpell* getSpell(int inUID);
   virtual Pixy::Renderable* getRenderable();
-  hand_t& getHand();
+  Pixy::CPuppet::hand_t const& getHand();
   virtual int nrSpellsInHand();
   virtual Pixy::CSpell* getSpell(int inUID);
   virtual void attachSpell(Pixy::CSpell* inSpell);

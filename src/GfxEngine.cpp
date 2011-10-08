@@ -1417,6 +1417,9 @@ namespace Pixy {
 	void GfxEngine::highlight(Renderable* inEntity) {
 	  //~ dehighlight();
 
+    if (inEntity->getEntity()->isDead())
+      return;
+
     Event e(EventUID::EntitySelected);
     e.Any = (void*)inEntity;
     mEvtMgr->hook(e);

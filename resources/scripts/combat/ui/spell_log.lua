@@ -42,6 +42,7 @@ UI.LogSpellCast = function(inSpell)
   win:subscribeEvent("MouseLeave", "UI.HideLogTooltip")
   --]]
 
+  lButton["Window"]:setProperty("Alpha", "0.5")
   lButton["Window"]:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   lButton["Window"]:subscribeEvent("MouseLeave", "UI.HideTooltip")
 
