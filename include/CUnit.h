@@ -73,6 +73,7 @@ namespace Pixy
     virtual void setHasFirstStrike(bool inF);
     virtual void setHasLifetap(bool inF);
 
+    virtual void setAP(int inU);
     virtual void setHP(int inU);
     virtual void setBaseHP(int inU);
     virtual void setBaseAP(int inU);

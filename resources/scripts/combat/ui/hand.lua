@@ -18,7 +18,7 @@ UI.__DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isActive)
 
 	-- create the actual button element
   --local list_item = CEWindowMgr:createWindow("TaharezLook/ListboxItem", lButton["Name"] .. "/ListItem")
-	lButton["Window"] = CEWindowMgr:createWindow("TaharezLook/ImageButton", lButton["Name"])
+	lButton["Window"] = CEWindowMgr:createWindow("Combat/ImageButton", lButton["Name"])
   --list_item:addChildWindow(lButton["Window"])
 
 	-- attach the button to the Pixy::CSpell object
@@ -279,8 +279,8 @@ Buffs.DrawSpell = function(spell,wnd, idx)
   btn:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   btn:subscribeEvent("MouseLeave", "UI.HideTooltip")
   -- position the button
-  local col = idx % 3
-  local row = math.floor(idx / 3) + 1
+  local col = idx % 4
+  local row = math.floor(idx / 4) + 1
   local dim = UI.Config.Dim.BuffButton
   local margin = { x= 5, y= 5 }
   btn:setPosition(CEGUI.UVector2(

@@ -892,6 +892,23 @@ namespace Pixy
     updateTextOverlay();
   }
 
+  void CUnit::setAP(int inAP)
+  {
+    if (!mRenderable)
+      return Unit::setAP(inAP);
+
+    int lastAP = getAP();
+    Unit::setAP(inAP);
+    int incAP = getAP() - lastAP;
+
+    Event e(EventUID::EntityStatChanged);
+    e.setProperty("Stat", "AP");
+    e.setProperty("Value", incAP);
+    e.Any = (void*)this->mRenderable;
+    EventManager::getSingleton().hook(e);
+    updateTextOverlay();
+  }
+
   void CUnit::_setEnemy(CPuppet* inPuppet) {
     mEnemy = inPuppet;
   }

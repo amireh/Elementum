@@ -151,16 +151,21 @@ namespace Pixy {
     playEffect(mEffects.find(inEffect)->second, inEntity);
   }
 
-  ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Ogre::Vector3 pos) {
+  ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Ogre::Vector3 pos, bool newInstance) {
     Ogre::SceneNode* mNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     mNode->setPosition(pos);
 
-    assert(mEffects.find(inEffect) != mEffects.end());
+    ParticleUniverse::ParticleSystem* mEffect = 0;
+    if (newInstance)
+    {
+      mEffect = mFxMgr->createParticleSystem( inEffect + "_" + stringify(++gUID), inEffect, mSceneMgr);
+    } else {
+      assert(mEffects.find(inEffect) != mEffects.end());
+      mEffect = mEffects.find(inEffect)->second;
 
-    ParticleUniverse::ParticleSystem* mEffect = mEffects.find(inEffect)->second;
-
-    if (mEffect->isAttached())
-      mEffect->getParentSceneNode()->detachObject(mEffect);
+      if (mEffect->isAttached())
+        mEffect->getParentSceneNode()->detachObject(mEffect);
+    }
 
     mNode->attachObject(mEffect);
     mEffect->addParticleSystemListener(this);

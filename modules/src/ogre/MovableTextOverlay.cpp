@@ -38,6 +38,7 @@ MovableTextOverlay::MovableTextOverlay(const Ogre::String & name, const Ogre::St
 	mpOvContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement(
               "Panel", name+"_OvC"));
 	mpOvContainer->setDimensions(0.0, 0.0);
+  mpOvContainer->setMaterialName("Elementum/MTO/Panel");
 
 	mpOv->add2D(mpOvContainer);
 
@@ -250,7 +251,7 @@ void MovableTextOverlay::_updateOverlayAttrs()
 	mpOvText->setParameter("char_height", Ogre::StringConverter::toString(mAttrs->getCharacterHeight()));
 	mpOvText->setParameter("horz_align", "left");
 	mpOvText->setParameter("vert_align", "middle");
-  mpOvText->setParameter("top", Ogre::StringConverter::toString(-1*mAttrs->getCharacterHeight()/4));
+  mpOvText->setParameter("top", Ogre::StringConverter::toString(-1*mAttrs->getCharacterHeight()/2.5f));
 }
 
 

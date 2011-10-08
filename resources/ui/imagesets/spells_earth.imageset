@@ -1,84 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Imageset Name="Spells_Earth" Imagefile="spells_earth.tga" >
-	<Image Name="Summon:_Skeleton_Soldier_Normal" XPos="0" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Soldier_Hover"  XPos="0" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Soldier_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Soldier_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warlord_Normal"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warlord_Hover"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warlord_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Warlord_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Ravager_Normal"   XPos="2560" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Ravager_Hover"    XPos="2560" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Ravager_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Ravager_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Acolyte_Normal"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Acolyte_Hover"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Acolyte_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Skeleton_Acolyte_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Skeleton_Soldier_Normal" XPos="0" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Soldier_Hover"  XPos="0" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Soldier_Pushed" XPos="0" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Soldier_Disabled" XPos="0" YPos="384" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Warlord_Normal"   XPos="768" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Warlord_Hover"    XPos="768" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Warlord_Pushed"   XPos="768" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Warlord_Disabled" XPos="768" YPos="384" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Ravager_Normal"   XPos="1280" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Ravager_Hover"    XPos="1280" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Ravager_Pushed"   XPos="1280" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Ravager_Disabled" XPos="1280" YPos="384" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Acolyte_Normal"   XPos="768" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Acolyte_Hover"    XPos="768" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Acolyte_Pushed"   XPos="768" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Skeleton_Acolyte_Disabled" XPos="768" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Summon:_Bargor_Stomper_Hover" XPos="0" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Stomper_Normal"  XPos="0" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Stomper_Pushed" XPos="0" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Stomper_Disabled" XPos="0" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Pulverizer_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Pulverizer_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Pulverizer_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Pulverizer_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Chieftain_Hover"   XPos="2560" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Chieftain_Normal"    XPos="2560" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Chieftain_Pushed"   XPos="2560" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Chieftain_Disabled" XPos="2560" YPos="768" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Maimer_Hover"   XPos="1536" YPos="0"  Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Maimer_Normal"    XPos="1536" YPos="256" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Maimer_Pushed"   XPos="1536" YPos="512" Width="256" Height="256" />
-	<Image Name="Summon:_Bargor_Maimer_Disabled" XPos="1536" YPos="768" Width="256" Height="256" />
+	<Image Name="Summon:_Bargor_Stomper_Hover" XPos="0" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Stomper_Normal"  XPos="0" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Stomper_Pushed" XPos="0" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Stomper_Disabled" XPos="0" YPos="384" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Pulverizer_Hover"   XPos="384" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Pulverizer_Normal"    XPos="384" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Pulverizer_Pushed"   XPos="384" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Pulverizer_Disabled" XPos="384" YPos="384" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Chieftain_Hover"   XPos="1280" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Chieftain_Normal"    XPos="1280" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Chieftain_Pushed"   XPos="1280" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Chieftain_Disabled" XPos="1280" YPos="384" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Maimer_Hover"   XPos="384" YPos="0"  Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Maimer_Normal"    XPos="384" YPos="128" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Maimer_Pushed"   XPos="384" YPos="256" Width="128" Height="128" />
+	<Image Name="Summon:_Bargor_Maimer_Disabled" XPos="384" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Nourish_Normal"   XPos="1280" YPos="0"  Width="256" Height="256" />
-	<Image Name="Nourish_Hover"    XPos="1280" YPos="256" Width="256" Height="256" />
-	<Image Name="Nourish_Pushed"   XPos="1280" YPos="512" Width="256" Height="256" />
-	<Image Name="Nourish_Disabled" XPos="1280" YPos="768" Width="256" Height="256" />
+	<Image Name="Nourish_Normal"   XPos="640" YPos="0"  Width="128" Height="128" />
+	<Image Name="Nourish_Hover"    XPos="640" YPos="128" Width="128" Height="128" />
+	<Image Name="Nourish_Pushed"   XPos="640" YPos="256" Width="128" Height="128" />
+	<Image Name="Nourish_Disabled" XPos="640" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Chains_of_Command_Normal"    XPos="256" YPos="0" Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Hover"   XPos="256" YPos="256"  Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
-	<Image Name="Chains_of_Command_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
+	<Image Name="Chains_of_Command_Normal"   XPos="128" YPos="0" Width="128" Height="128" />
+	<Image Name="Chains_of_Command_Hover"    XPos="128" YPos="128"  Width="128" Height="128" />
+	<Image Name="Chains_of_Command_Pushed"   XPos="128" YPos="256" Width="128" Height="128" />
+	<Image Name="Chains_of_Command_Disabled" XPos="128" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Bone_Armor_Normal"    XPos="256" YPos="0" Width="256" Height="256" />
-	<Image Name="Bone_Armor_Hover"   XPos="256" YPos="256"  Width="256" Height="256" />
-	<Image Name="Bone_Armor_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
-	<Image Name="Bone_Armor_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
+	<Image Name="Bone_Armor_Normal"   XPos="0" YPos="512" Width="128" Height="128" />
+	<Image Name="Bone_Armor_Hover"    XPos="0" YPos="640"  Width="128" Height="128" />
+	<Image Name="Bone_Armor_Pushed"   XPos="0" YPos="768" Width="128" Height="128" />
+	<Image Name="Bone_Armor_Disabled" XPos="0" YPos="896" Width="128" Height="128" />
 
-	<Image Name="Bone_Harvest_Normal"    XPos="256" YPos="0" Width="256" Height="256" />
-	<Image Name="Bone_Harvest_Hover"   XPos="256" YPos="256"  Width="256" Height="256" />
-	<Image Name="Bone_Harvest_Pushed"   XPos="256" YPos="512" Width="256" Height="256" />
-	<Image Name="Bone_Harvest_Disabled" XPos="256" YPos="768" Width="256" Height="256" />
+	<Image Name="Bone_Harvest_Normal"   XPos="1152" YPos="0" Width="128" Height="128" />
+	<Image Name="Bone_Harvest_Hover"    XPos="1152" YPos="128"  Width="128" Height="128" />
+	<Image Name="Bone_Harvest_Pushed"   XPos="1152" YPos="256" Width="128" Height="128" />
+	<Image Name="Bone_Harvest_Disabled" XPos="1152" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Fartigue_Normal"    XPos="3072" YPos="0" Width="256" Height="256" />
-	<Image Name="Fartigue_Hover"   XPos="3072" YPos="256"  Width="256" Height="256" />
-	<Image Name="Fartigue_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
-	<Image Name="Fartigue_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+	<Image Name="Fartigue_Normal"   XPos="3072" YPos="0" Width="128" Height="128" />
+	<Image Name="Fartigue_Hover"    XPos="3072" YPos="128"  Width="128" Height="128" />
+	<Image Name="Fartigue_Pushed"   XPos="3072" YPos="256" Width="128" Height="128" />
+	<Image Name="Fartigue_Disabled" XPos="3072" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Sudden_Craven_Normal"    XPos="3072" YPos="0" Width="256" Height="256" />
-	<Image Name="Sudden_Craven_Hover"   XPos="3072" YPos="256"  Width="256" Height="256" />
-	<Image Name="Sudden_Craven_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
-	<Image Name="Sudden_Craven_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+	<Image Name="Sudden_Craven_Normal"   XPos="192" YPos="512" Width="128" Height="128" />
+	<Image Name="Sudden_Craven_Hover"    XPos="192" YPos="640"  Width="128" Height="128" />
+	<Image Name="Sudden_Craven_Pushed"   XPos="192" YPos="768" Width="128" Height="128" />
+	<Image Name="Sudden_Craven_Disabled" XPos="192" YPos="896" Width="128" Height="128" />
 
-	<Image Name="Locust_Swarm_Normal"    XPos="3072" YPos="0" Width="256" Height="256" />
-	<Image Name="Locust_Swarm_Hover"   XPos="3072" YPos="256"  Width="256" Height="256" />
-	<Image Name="Locust_Swarm_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
-	<Image Name="Locust_Swarm_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+	<Image Name="Locust_Swarm_Normal"   XPos="1536" YPos="0" Width="128" Height="128" />
+	<Image Name="Locust_Swarm_Hover"    XPos="1536" YPos="128"  Width="128" Height="128" />
+	<Image Name="Locust_Swarm_Pushed"   XPos="1536" YPos="256" Width="128" Height="128" />
+	<Image Name="Locust_Swarm_Disabled" XPos="1536" YPos="384" Width="128" Height="128" />
 
-	<Image Name="Death_Exchange_Normal"    XPos="3072" YPos="0" Width="256" Height="256" />
-	<Image Name="Death_Exchange_Hover"   XPos="3072" YPos="256"  Width="256" Height="256" />
-	<Image Name="Death_Exchange_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
-	<Image Name="Death_Exchange_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+	<Image Name="Death_Exchange_Normal"   XPos="256" YPos="512" Width="128" Height="128" />
+	<Image Name="Death_Exchange_Hover"    XPos="256" YPos="640"  Width="128" Height="128" />
+	<Image Name="Death_Exchange_Pushed"   XPos="256" YPos="768" Width="128" Height="128" />
+	<Image Name="Death_Exchange_Disabled" XPos="256" YPos="896" Width="128" Height="128" />
 
-	<Image Name="Gloom_Normal"    XPos="3072" YPos="0" Width="256" Height="256" />
-	<Image Name="Gloom_Hover"   XPos="3072" YPos="256"  Width="256" Height="256" />
-	<Image Name="Gloom_Pushed"   XPos="3072" YPos="512" Width="256" Height="256" />
-	<Image Name="Gloom_Disabled" XPos="3072" YPos="768" Width="256" Height="256" />
+	<Image Name="Gloom_Normal"   XPos="128" YPos="0" Width="128" Height="128" />
+	<Image Name="Gloom_Hover"    XPos="128" YPos="128"  Width="128" Height="128" />
+	<Image Name="Gloom_Pushed"   XPos="128" YPos="256" Width="128" Height="128" />
+	<Image Name="Gloom_Disabled" XPos="128" YPos="384" Width="128" Height="128" />
+
+	<Image Name="Kiss_of_Death_Normal"   XPos="1024" YPos="512" Width="128" Height="128" />
+	<Image Name="Kiss_of_Death_Hover"    XPos="1024" YPos="640"  Width="128" Height="128" />
+	<Image Name="Kiss_of_Death_Pushed"   XPos="1024" YPos="768" Width="128" Height="128" />
+	<Image Name="Kiss_of_Death_Disabled" XPos="1024" YPos="896" Width="128" Height="128" />
+
+	<Image Name="Shadow_Dance_Normal"   XPos="384" YPos="512" Width="128" Height="128" />
+	<Image Name="Shadow_Dance_Hover"    XPos="384" YPos="640"  Width="128" Height="128" />
+	<Image Name="Shadow_Dance_Pushed"   XPos="384" YPos="768" Width="128" Height="128" />
+	<Image Name="Shadow_Dance_Disabled" XPos="384" YPos="896" Width="128" Height="128" />
+
+	<Image Name="Stygian_Disease_Normal"   XPos="1536" YPos="0" Width="128" Height="128" />
+	<Image Name="Stygian_Disease_Hover"    XPos="1536" YPos="128"  Width="128" Height="128" />
+	<Image Name="Stygian_Disease_Pushed"   XPos="1536" YPos="256" Width="128" Height="128" />
+	<Image Name="Stygian_Disease_Disabled" XPos="1536" YPos="384" Width="128" Height="128" />
+
+  <Image Name="Harlequin_Curse_Normal"   XPos="1792" YPos="0" Width="128" Height="128" />
+	<Image Name="Harlequin_Curse_Hover"    XPos="1792" YPos="128"  Width="128" Height="128" />
+	<Image Name="Harlequin_Curse_Pushed"   XPos="1792" YPos="256" Width="128" Height="128" />
+	<Image Name="Harlequin_Curse_Disabled" XPos="1792" YPos="384" Width="128" Height="128" />
+
+
 </Imageset>
 
 

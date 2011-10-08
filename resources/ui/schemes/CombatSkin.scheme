@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <GUIScheme Name="CombatSkin">
 	<Imageset Filename="Combat.imageset" />
+	<Imageset Filename="CombatFrames.imageset" />
 	<LookNFeel Filename="Combat.looknfeel" />
 	<WindowRendererSet Filename="CEGUIFalagardWRBase" />
 	<FalagardMapping WindowType="Combat/Titlebar" TargetType="CEGUI/Titlebar" Renderer="Falagard/Titlebar" LookNFeel="Combat/Titlebar" />
@@ -19,6 +20,7 @@
 	<FalagardMapping WindowType="Combat/ComboDropList" TargetType="CEGUI/ComboDropList" Renderer="Falagard/Listbox" LookNFeel="Combat/ComboDropList" />
 	<FalagardMapping WindowType="Combat/Combobox" TargetType="CEGUI/Combobox" Renderer="Falagard/Default" LookNFeel="Combat/Combobox" />
 	<FalagardMapping WindowType="Combat/ProgressBar" TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="Combat/ProgressBar" />
+  <FalagardMapping WindowType="Combat/ImageButton" TargetType="CEGUI/PushButton"  Renderer="Falagard/Button"       LookNFeel="Combat/ImageButton" />
 <!--
 	<FalagardMapping WindowType="Combat/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Combat/ScrollablePane" />
 	<FalagardMapping WindowType="Combat/Checkbox" TargetType="Falagard/Checkbox" LookNFeel="Combat/Checkbox" />

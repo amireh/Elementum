@@ -27,6 +27,9 @@ public:
   static float getDefaultWalkSpeed();
 
   CPuppet* getEnemy() const;
+  virtual void setBaseAP(int inHP);
+  virtual void setAP(int inHP);
+  virtual void setBaseHP(int inHP);
   virtual void setHP(int inHP);
 
 };

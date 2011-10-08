@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sat Oct  8 16:15:46 2011.
+** Generated automatically by tolua++-1.0.92 on Sat Oct  8 17:54:13 2011.
 */
 
 #ifndef __cplusplus
@@ -2900,6 +2900,105 @@ static int tolua_Elementum_Pixy_CUnit_getEnemy00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setBaseAP of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnit_setBaseAP00
+static int tolua_Elementum_Pixy_CUnit_setBaseAP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+  int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBaseAP'", NULL);
+#endif
+  {
+   self->setBaseAP(inHP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBaseAP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAP of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnit_setAP00
+static int tolua_Elementum_Pixy_CUnit_setAP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+  int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAP'", NULL);
+#endif
+  {
+   self->setAP(inHP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBaseHP of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnit_setBaseHP00
+static int tolua_Elementum_Pixy_CUnit_setBaseHP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+  int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBaseHP'", NULL);
+#endif
+  {
+   self->setBaseHP(inHP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBaseHP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setHP of class  Pixy::CUnit */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnit_setHP00
 static int tolua_Elementum_Pixy_CUnit_setHP00(lua_State* tolua_S)
@@ -3162,7 +3261,8 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect02(lua_State* tolua_S)
      !tolua_isusertype(tolua_S,1,"Pixy::FxEngine",0,&tolua_err) ||
      !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const Ogre::Vector3",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isboolean(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
   goto tolua_lerror;
  else
@@ -3170,11 +3270,12 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect02(lua_State* tolua_S)
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
   std::string inEffect = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   const Ogre::Vector3 pos = *((const Ogre::Vector3*)  tolua_tousertype(tolua_S,3,0));
+  bool newInstance = ((bool)  tolua_toboolean(tolua_S,4,false));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
-   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(inEffect,pos);
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(inEffect,pos,newInstance);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
   }
  }
@@ -24775,6 +24876,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setDefaultWalkSpeed",tolua_Elementum_Pixy_CUnit_setDefaultWalkSpeed00);
     tolua_function(tolua_S,"getDefaultWalkSpeed",tolua_Elementum_Pixy_CUnit_getDefaultWalkSpeed00);
     tolua_function(tolua_S,"getEnemy",tolua_Elementum_Pixy_CUnit_getEnemy00);
+    tolua_function(tolua_S,"setBaseAP",tolua_Elementum_Pixy_CUnit_setBaseAP00);
+    tolua_function(tolua_S,"setAP",tolua_Elementum_Pixy_CUnit_setAP00);
+    tolua_function(tolua_S,"setBaseHP",tolua_Elementum_Pixy_CUnit_setBaseHP00);
     tolua_function(tolua_S,"setHP",tolua_Elementum_Pixy_CUnit_setHP00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus

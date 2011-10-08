@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<Imageset Name="Combat-Frames" Imagefile="combat_frame.tga" NativeHorzRes="800" NativeVertRes="600" AutoScaled="true">
+	<Image Name="ImageFrameTopLeft" XPos="1" YPos="1" Width="6" Height="6" />
+	<Image Name="ImageFrameTopRight" XPos="10" YPos="1" Width="6" Height="6" />
+	<Image Name="ImageFrameBottomLeft" XPos="1" YPos="10" Width="6" Height="6" />
+	<Image Name="ImageFrameBottomRight" XPos="10" YPos="10" Width="6" Height="6" />
+	<Image Name="ImageFrameLeft" XPos="1" YPos="18" Width="6" Height="1" />
+	<Image Name="ImageFrameRight" XPos="10" YPos="18" Width="6" Height="1" />
+	<Image Name="ImageFrameTop" XPos="18" YPos="1" Width="1" Height="6" />
+	<Image Name="ImageFrameBottom" XPos="18" YPos="10" Width="1" Height="6" />
+</Imageset>

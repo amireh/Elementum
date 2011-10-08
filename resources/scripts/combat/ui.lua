@@ -11,7 +11,7 @@ UI = {
     Layout = "combat/ui.layout",
     Dim = {
       HandButton = CEGUI.UVector2(CEGUI.UDim(0.125,0),CEGUI.UDim(1,0)),
-      BuffButton = CEGUI.UVector2(CEGUI.UDim(0.3,0),CEGUI.UDim(0.1,0)),
+      BuffButton = CEGUI.UVector2(CEGUI.UDim(0.25,0),CEGUI.UDim(0.1,0)),
       LogButton = CEGUI.UVector2(CEGUI.UDim(0.05,0),CEGUI.UDim(1,0))
     }
   },

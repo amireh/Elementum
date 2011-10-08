@@ -29,7 +29,7 @@ end
 
 Units.onEntityDying = function(e)
   local rnd = tolua.cast(e.Any, "Pixy::Renderable")
-  FxEngine:playEffect(SummoningEffects[raceToString(rnd:getEntity():getRace())], rnd, true)
+  FxEngine:playEffect(SummoningEffects[raceToString(rnd:getEntity():getRace())], rnd:getSceneNode():getPosition(), true)
 end
 
 function subscribe_unit(inUnitName, inMethod)
