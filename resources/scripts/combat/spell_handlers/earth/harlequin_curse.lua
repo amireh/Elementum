@@ -9,7 +9,7 @@ local process = function(inCaster, inTarget, inSpell)
   SCT.ShowScrollingMessage("dead (Harlequin Curse)", false, inTarget)
   target:die()
   if Selected == inTarget then
-    Combat.Dehighlight()
+    Gfx.Dehighlight()
   end
 
   FxEngine:playEffect("KissOfDeath", inCaster)

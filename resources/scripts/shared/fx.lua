@@ -55,6 +55,7 @@ end
 
 Fx.cleanup = function()
   FxEngine:unloadAllEffects()
+  isSetup = false
 end
 
 Fx.highlight = function(rnd)

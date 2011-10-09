@@ -105,6 +105,7 @@ namespace Pixy
     bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
     //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
     //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
+    bind(EventUID::ChangingState, boost::bind(&Combat::onChangingState, this, _1));
     bind(EventUID::MatchFound, boost::bind(&Combat::onMatchFound, this, _1));
     bind(EventUID::SyncMatchPuppets, boost::bind(&Combat::onSyncMatchPuppets, this, _1));
     bind(EventUID::StartTurn, boost::bind(&Combat::onStartTurn, this, _1));
@@ -461,6 +462,13 @@ namespace Pixy
   bool Combat::onMatchFound(const Event& inEvt) {
     Event e(EventUID::SyncMatchPuppets);
     mNetMgr->send(e);
+
+    return true;
+  }
+
+  bool Combat::onChangingState(const Event& e) {
+    //if (e.hasProperty("State") && e.getProperty("State") == "Intro")
+    changeState(Intro::getSingletonPtr());
 
     return true;
   }

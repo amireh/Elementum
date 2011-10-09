@@ -186,8 +186,8 @@ end
 
 
 Profiles.onPuppetListSynced = function(e)
-  Intro.Puppets = Puppets
-  Puppets = nil
+  Intro.Puppets = __PuppetsTemp
+  __PuppetsTemp = nil
 
   print("Puppets are synced!")
 

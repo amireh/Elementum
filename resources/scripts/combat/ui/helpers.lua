@@ -1,9 +1,21 @@
 UI.Helpers = { }
 
+local fadeCallback = nil
+UI.Helpers.AssignFadeCallback = function(handler)
+  fadeCallback = handler
+end
+
 UI.Helpers.DestroyAfterFade = function(e)
   local win = CEGUI.toWindowEventArgs(e).window
   if (win and tonumber(win:getProperty("Alpha")) <= 0) then
+    UI.ClearAnimations(win)
+
     CEWindowMgr:destroyWindow(win)
+
+    if fadeCallback then
+      print("window faded out, calling the handler");
+      fadeCallback() end
+    fadeCallback = nil
   end
 end
 
@@ -70,5 +82,5 @@ UI.Helpers.DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isA
   lButton["Window"]:moveToFront()
 	lButton["Window"]:show()
 
-  return lButton
+  return lButton["Window"]
 end

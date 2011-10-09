@@ -897,6 +897,9 @@ namespace Pixy {
       if (!inParent)
           inParent = mSceneMgr->getRootSceneNode();
 
+      if (mSceneMgr->hasSceneNode(inName))
+        mSceneMgr->destroySceneNode(inName);
+
       mNode = inParent->createChildSceneNode(inName, inPosition);
       mNode->setScale(inScale);
       //mNode->lookAt(inDirection, Ogre::Node::TS_WORLD);

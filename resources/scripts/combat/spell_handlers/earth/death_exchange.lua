@@ -4,7 +4,7 @@ local process = function(inCaster, inTarget, inSpell)
 
   inSpell:getTarget():getEntity():die()
   SCT.ShowScrollingMessage("+2 channels (Death Exchange)", true, inCaster)
-  Combat.Dehighlight()
+  Gfx.Dehighlight()
 
 	return true
 end

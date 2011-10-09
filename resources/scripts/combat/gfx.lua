@@ -295,6 +295,12 @@ Gfx.cleanup = function()
     RTT.Enemy.Texture:delete()
     SceneMgr:destroyCamera(RTT.Player.Camera)
     SceneMgr:destroyCamera(RTT.Enemy.Camera)
+
+    RTT.Player.Texture = nil
+    RTT.Enemy.Texture = nil
+    RTT.Player.Camera = nil
+    RTT.Enemy.Camera = nil
+
   end
 
   SceneMgr:destroyAllLights()
@@ -385,6 +391,8 @@ Gfx.Highlight = function(rnd)
 end
 
 Gfx.Dehighlight = function()
+  Pixy.dontUpdateMe(rotateBillboard) -- stop rotating the billboard
+
   --~ Pixy.Log("Deselecting entity")
   if not Selected then return true end
   --if (Selected) then

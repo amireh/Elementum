@@ -7,20 +7,25 @@ Combat.onEnter = function()
   UI:attach()
 
   Combat.bind()
+  Fx.setup()
 end
 
 Combat.onExit = function()
   Pixy.Log("Exiting Combat state")
 
   --~ UI:detach()
+  Turns.cleanup()
+  Spells.cleanup()
   UI.cleanup()
   Gfx.cleanup()
+  Puppets.cleanup()
 
   --~ CEWindowMgr:destroyAllWindows()
 
   --Keybindings = {}
 
   --FxEngine:unloadAllEffects()
+  Fx.cleanup()
   --~ SceneMgr:clearScene()
 
 end

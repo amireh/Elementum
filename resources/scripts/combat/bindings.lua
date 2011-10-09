@@ -6,6 +6,7 @@ Combat.bind = function()
   --bind("GameStarted", Combat.gameStarted)
   bind(Pixy.EventUID.ShuttingDown, Combat.onShutdown)
   bind(Pixy.EventUID.Disconnected, UI.onDisconnected)
+  bind(Pixy.EventUID.PlayerDroppedOut, UI.onPlayerDroppedOut)
 
   bind(Pixy.EventUID.EntitySelected, Gfx.onEntitySelected)
   bind(Pixy.EventUID.EntityDeselected, Gfx.onEntityDeselected)
@@ -34,8 +35,8 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntityDeselected, Hand.Update)
   bind(Pixy.EventUID.StartBlockPhase, Hand.Update)
 
-  Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
-  Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
-  Input.KeyRelease.bindToAll(Debug.playSpellEffect)
+  --Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
+  --Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
+  --Input.KeyRelease.bindToAll(Debug.playSpellEffect)
 
 end

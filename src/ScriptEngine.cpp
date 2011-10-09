@@ -199,10 +199,11 @@ namespace Pixy {
 
 		// update Lua
 		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
+    lua_pushinteger(mLUA,lTimeElapsed);
 		if(lua_isfunction(mLUA, 1))
 		{
 			try {
-				lua_call(mLUA, 0, 0);
+				lua_call(mLUA, 1, 0);
 			} catch (...) { // do nothing
 			}
 		} else
@@ -372,7 +373,7 @@ namespace Pixy {
       lua_settable(mLUA, -3); // assign the new spells table
     }
 
-    lua_setglobal(mLUA, "Spells"); /* set bottom table as global variable t */
+    lua_setglobal(mLUA, "__SpellsTemp"); /* set bottom table as global variable t */
 
     return 0;
   }
@@ -395,7 +396,7 @@ namespace Pixy {
       ++count;
     }
 
-    lua_setglobal(mLUA, "Puppets");
+    lua_setglobal(mLUA, "__PuppetsTemp");
 
     Event e(EventUID::PuppetListSynced);
     EventManager::getSingleton().hook(e);

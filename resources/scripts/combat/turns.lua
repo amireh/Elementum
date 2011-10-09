@@ -21,3 +21,7 @@ Turns.onNewTurn = function()
 
   TurnNumber = TurnNumber + 1
 end
+
+Turns.cleanup = function()
+  TurnNumber = 0
+end

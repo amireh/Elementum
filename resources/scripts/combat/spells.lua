@@ -8,6 +8,12 @@
 local Handlers = {}
 SpellValidators = {}
 Spells = {}
+
+Spells.cleanup = function()
+  --~ SpellValidators = {}
+  --~ Handlers = {}
+end
+
 -- type: incoming event handler
 -- job: parses the spell attributes from the given event,
 -- and attaches it to the puppet's hand, and finally calls the UI script
@@ -87,7 +93,24 @@ Spells.onCastSpell = function(inCaster, inTarget, inSpell)
     result = spellHandler(inCaster, inTarget, inSpell)
   end
 
-  if inTarget and inTarget == Selected then Buffs.Show(inTarget, SelectedIsFriendly) end
+  -- check whether to show buffs or not:
+  -- 1) if the spell has a target and that target is already selected
+  -- 2) no entity is selected, and the buff affects a puppet
+  do
+    local show_buffs = false
+    local target_rnd = nil
+    if Selected and inTarget and inTarget == Selected then
+      show_buffs = true
+      target_rnd = Selected
+    elseif not Selected and inCaster:getEntity():getRank() == Pixy.PUPPET then
+      show_buffs = true
+      target_rnd = inCaster
+    end
+    if show_buffs then
+      local target_is_friendly = target_rnd:getEntity():getOwner():getUID() == SelfPuppet:getUID()
+      Buffs.Show(target_rnd, target_is_friendly)
+    end
+  end
   return result
 end
 

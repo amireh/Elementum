@@ -1,16 +1,201 @@
+Hand = {}
 local MyHand = {}
-if not Hand then Hand = {} end
-
-
+--local Win2Anims = {}
 
 MaxSpellsInHand = 4
-Win2Spells = {}
+--Win2Spells = {}
+
+
+HandItem = {}
+function HandItem:New(in_spell)
+  local o = {
+    Spell = in_spell,
+    Window = nil,
+    isMarked = false,
+    isFaded = false,
+    toBeDestroyed = false,
+    Anims = {}
+  }
+  setmetatable(o, {__index = self})
+  self.__index = self
+  o:Draw():Bind()
+
+  return o
+end
+
+HandItem.cleanup = function()
+  for item in list_iter(MyHand) do
+    if item.isFaded then
+    item:__DoDestroy()
+    end
+  end
+
+  Pixy.dontUpdateMe(HandItem.cleanup)
+end
+
+function HandItem:Destroy()
+  self.toBeDestroyed = true
+  self.Window:subscribeEvent("AlphaChanged", "HandItem.DestroyAfterFade")
+
+  self:Unmark()
+
+  -- move all the spells to the right of this window to the left
+  do
+    -- find the index of this window
+    local found = false
+    local idx = 0
+    while not found do
+      local _win = self.Window:getParent():getChildAtIdx(idx)
+      if _win == self.Window then
+        found = true
+        break
+      end
+      idx = idx + 1
+    end
+    assert(found)
+    -- if it's not the last button, move the right ones
+    idx = idx + 1
+    while idx < self.Window:getParent():getChildCount() do
+      local _win = self.Window:getParent():getChildAtIdx(idx)
+      local _item = HandItem.FindByWindow(_win)
+      if not _item.toBeDestroyed then
+        _item:Animate("MoveToLeftInHand")
+      end
+      idx = idx + 1
+    end
+  end
+
+  return self:Animate("DropSpell")
+end
+
+HandItem.DestroyAfterFade = function(e)
+  local win = CEGUI.toWindowEventArgs(e).window
+  if (win and tonumber(win:getProperty("Alpha")) <= 0) then
+    --~ return HandItem.FindByWindow(win):__DoDestroy()
+    HandItem.FindByWindow(win).isFaded = true
+    Pixy.doUpdateMe(HandItem.cleanup)
+  end
+  return true
+end
+
+function HandItem:__DoDestroy()
+  self:Unbind()
+
+  -- destroy all animation instances
+  for anim in list_iter(self.Anims) do
+    anim:stop()
+    anim:setTargetWindow(nil)
+    CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(anim)
+  end
+
+  CEWindowMgr:destroyWindow(self.Window)
+  self.Window = nil
+  self.Spell = nil
+  self.isMarked = nil
+  self.isFaded = nil
+  self.toBeDestroyed = nil
+  self.Anims = {}
+
+  remove_by_value(MyHand, self)
+  return nil
+end
+
+function HandItem:Draw()
+  self.Window = UI.Helpers.DrawSpellButton(self.Spell, UI.Hand, UI.Config.Dim.HandButton, "Hand", true --[[is active]])
+  self.Window:setProperty("Alpha", "0")
+
+  UI.Hand:layout()
+  --~ table.insert(self.Anims, UI.Animate(self.Window, "DrawSpell"))
+  self:Animate("DrawSpell")
+
+  return self
+end
+
+function HandItem:Bind()
+	self.Window:subscribeEvent("Clicked", "Spells.reqCastSpell")
+  self.Window:subscribeEvent("MouseEnter", "UI.ShowTooltip")
+  self.Window:subscribeEvent("MouseLeave", "UI.HideTooltip")
+
+  return self
+end
+
+function HandItem:Unbind()
+	self.Window:removeEvent("Clicked")
+  self.Window:removeEvent("MouseEnter")
+  self.Window:removeEvent("MouseLeave")
+  self.Window:removeEvent("AlphaChanged")
+
+  return self
+end
+
+function HandItem:Animate(anim_name)
+  -- let's check if we already have an instance of this animation
+  local __anim = find_by_cond(self.Anims, function(anim) return anim:getDefinition():getName() == anim_name end)
+  if __anim then
+    return __anim:start()
+  end
+  -- the instance doesn't exist, let's create one
+  table.insert(self.Anims, UI.Animate(self.Window, anim_name))
+
+  return self
+end
+
+function HandItem:StopAnimating(anim_name, reset)
+  if not self:isAnimating(anim_name) then return true end
+
+  local __anim = find_by_cond(self.Anims, function(anim) return anim:getDefinition():getName() == anim_name end)
+  if __anim then
+    if reset then __anim:setPosition(0); __anim:step(0) end
+    return __anim:stop()
+  end
+
+  return nil
+end
+
+function HandItem:isAnimating(anim_name)
+  for anim in list_iter(self.Anims) do
+    if anim:getDefinition():getName() == anim_name then
+      return anim:isRunning()
+    end
+  end
+
+  return false
+end
+
+function HandItem:Mark()
+  self.isMarked = true
+  return self:Animate("SpellBlink")
+end
+function HandItem:Unmark()
+  if not self.isMarked then return true end
+
+  self.isMarked = false
+  return self:StopAnimating("SpellBlink", true)
+end
+
+HandItem.FindBySpell = function(spell)
+  return find_by_condition(MyHand, function(item) return item.Spell:getUID() == spell:getUID() end)
+end
+HandItem.FindByWindow = function(win)
+  return find_by_condition(MyHand, function(item) return item.Window:getName() == win:getName() end)
+end
+
+Hand.cleanup = function()
+  --~ Win2Spells = {}
+  --for item in list_iter(MyHand) do
+  --  item:__DoDestroy()
+  --end
+  while #MyHand > 0 do MyHand[1]:__DoDestroy() end
+  MyHand = {}
+  --~ Win2Anims = {}
+end
 
 -- draws a CEGUI::ImageButton element representing the given spell
 -- and attaches it to the Puppet's hand
 Hand.DrawSpell = function(inSpell)
 
-  local lButton = UI.Helpers.DrawSpellButton(inSpell, UI.Hand, UI.Config.Dim.HandButton, "Hand", true --[[is active]])
+  --[[
+  local lButton = UI.Helpers.DrawSpellButton(inSpell, UI.Hand, UI.Config.Dim.HandItem, "Hand", true)
 
   -- finally, subscribe the button to its event handlers
   --lButton["Window"]:subscribeEvent("Shown", "UI.DrawSpell")
@@ -22,19 +207,23 @@ Hand.DrawSpell = function(inSpell)
 
   UI.Hand:layout()
   UI.Animate(lButton["Window"], "DrawSpell")
+  ]]
 
-  table.insert(MyHand, inSpell)
-  Win2Spells[inSpell] = lButton["Window"]
+  local button = HandItem:New(inSpell)
+  table.insert(MyHand, button)
+
+  --~ Win2Spells[inSpell] = lButton["Window"]
   Hand.CheckForDiscards(0)
 
   return true
 end
 
-local Win2Anims = {}
+
 Hand.DropSpell = function(inSpell)
-  local win = CEWindowMgr:getWindow(UI.Helpers.GenerateSpellName(inSpell, "Hand"))
+  --~ local win = CEWindowMgr:getWindow(UI.Helpers.GenerateSpellName(inSpell, "Hand"))
 
   -- move all the spells to the right of this window to the left
+  --[[
   do
     -- find the index of this window
     local found = false
@@ -52,23 +241,31 @@ Hand.DropSpell = function(inSpell)
     idx = idx + 1
     while idx < UI.Hand:getChildCount() do
       local _win = UI.Hand:getChildAtIdx(idx)
+      -- if the button is already animating (being dropped or moved to the left by another spell)
+      -- then animating it again will crash the client, because in the latter case, the pointer
+      -- is invalidated _before_ the next animation is over
       if not UI.isAnimating(_win, "MoveToLeftInHand") and not UI.isAnimating(_win, "DropSpell") then
         UI.Animate(_win, "MoveToLeftInHand")
       end
       idx = idx + 1
     end
   end
+  ]]
 
+  --[[
   win:removeEvent("Clicked")
   win:removeEvent("MouseEnter")
   win:removeEvent("MouseLeave")
+  ]]
+  local item = HandItem.FindBySpell(inSpell)
+  assert(item)
+  item:Destroy()
+  Hand.CheckForDiscards(0)
+  --~ remove_by_value(MyHand, item)
+  --~ remove_by_value(MyHand, inSpell)
+  --~ Win2Spells[inSpell] = nil
 
-  remove_by_value(MyHand, inSpell)
-  Win2Spells[inSpell] = nil
-  --~ UI.Hand:removeChildWindow(win)
-  --~ UI.Hand:destroyWindow(win)
-  --~ CEWindowMgr:destroyWindow(win)
-
+  --[[
   if win:isUserStringDefined("Marked") and win:getUserString("Marked") == "True" then
     win:setUserString("Marked", "False")
     --Win2Anims[win]:stop()
@@ -79,6 +276,7 @@ Hand.DropSpell = function(inSpell)
 
   UI.HideTooltip(nil)
   win:subscribeEvent("AlphaChanged", "UI.Helpers.DestroyAfterFade")
+  UI.Helpers.AssignFadeCallback( Hand.CheckForDiscards )
   UI.Animate(win, "DropSpell")
 
   win:setUserString("Destroyed", "True")
@@ -90,68 +288,47 @@ Hand.DropSpell = function(inSpell)
   -- we pass a -1 pad because the button is not yet removed from the container,
   -- it will be when it fades out but the method should consider it removed
   -- all the same
-  Hand.CheckForDiscards(-1)
+  --~ Hand.CheckForDiscards(0)
+  ]]
 
   return true
 end
 Hand.CheckForDiscards = function(pad)
   print("Checking for spells to be discarded")
-  local idx = 0
-  -- now unmark the rest of the buttons, if any
-  --~ print("\tUnmarking:")
-  while idx < UI.Hand:getChildCount() do
-    local win = UI.Hand:getChildAtIdx(idx)
-    if win:isUserStringDefined("Marked") and win:getUserString("Marked") == "True" then
-      --~ print("\tfound one! unmarking...")
-      -- do unmark
-      win:setUserString("Marked", "False")
-      --~ win:setProperty("Alpha", "1.0")
-      -- revert the button to its original state
-      Win2Anims[win]:setPosition(Win2Anims[win]:getDefinition():getDuration())
-      Win2Anims[win]:step(0)
-      -- destroy the animation instance
-      UI.RemoveAnimation(win, Win2Anims[win])
-      Win2Anims[win] = nil
-      --~ Win2Anims[win]:stop()
-      --~ CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(Win2Anims[win])
-    end
-    idx = idx + 1
+
+  -- unmark currently blinking buttons and calculate the number of active
+  -- buttons in hand (active here means they're not marked for destruction)
+  local nr_active_spells = 0
+  for item in list_iter(MyHand) do
+    if item.isMarked then item:Unmark() end
+    if not item.toBeDestroyed then nr_active_spells = nr_active_spells + 1 end
   end
 
-  if not pad then pad = 0 end
-  -- if there is an overflow in the hand, mark the buttons that will be discarded
-  local nr_spells = UI.Hand:getChildCount() + pad
-  idx = 0
-  --~ print("\tMarking:")
-  if nr_spells > MaxSpellsInHand then
-    local delta = nr_spells - MaxSpellsInHand
-    while idx < delta do
-      local win = UI.Hand:getChildAtIdx(idx)
-      -- do mark unless this window is being destroyed
-      if not win:isUserStringDefined("Destroyed") then
-        --~ print("\tfound one! marking...")
-        win:setUserString("Marked", "True")
-        assert(not Win2Anims[win])
-        --~ win:setProperty("Alpha", "0.5")
-        Win2Anims[win] = UI.Animate(win, "MarkForRemoval")
-      else
-        delte = delta + 1
-      end
-      idx = idx + 1
+  local overflow = nr_active_spells - MaxSpellsInHand
+  if overflow <= 0 then return true end
+
+  local marked_ctr = 0
+  for item in list_iter(MyHand) do
+    if not item.toBeDestroyed then
+      item:Mark()
+      marked_ctr = marked_ctr + 1
+      if marked_ctr == overflow then break end
     end
   end
 
-  --~ print("Done checking for spells to be discarded")
+  return true
 end
 
 local prereqs_met = function(spell)
+  Pixy.Log("validating spell requirements")
+  Pixy.Log("\tcurrent spell: " .. spell:getName() .. "#" .. spell:getUID())
   if ((spell:requiresTarget() or spell:requiresEnemyTarget()) and Selected == nil) then
     Pixy.Log("-=-= spell requires a target, none is selected")
     return false
   end
   if (spell:requiresEnemyTarget()
     and
-    Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID())
+    Selected and Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID())
   then
     return false
   end
@@ -187,19 +364,22 @@ local prereqs_met = function(spell)
   end
 end
 
-Hand.Update = function(e)
-
-  for spell in list_iter(MyHand) do
-    if prereqs_met(spell) then
-      Win2Spells[spell]:enable()
-    else
-      Win2Spells[spell]:disable()
-      --~ Pixy.Log("-=-=-= disabling spell due to not meeting requirements")
+Hand.__DoUpdate = function()
+  for item in list_iter(MyHand) do
+    if not item.toBeDestroyed then
+      if prereqs_met(item.Spell) then
+        item.Window:enable()
+      else
+        item.Window:disable()
+        --~ Pixy.Log("-=-=-= disabling spell due to not meeting requirements")
+      end
     end
   end
+  Pixy.dontUpdateMe(Hand.__DoUpdate)
+end
 
-  --~ Pixy.Log("== Hand has " .. table.getn(MyHand) .. " spells")
-
+Hand.Update = function(e)
+  Pixy.doUpdateMe(Hand.__DoUpdate)
   return true
 end
 
@@ -208,6 +388,7 @@ Hand.UpdateTooltips = function()
   exporter:export(SelfPuppet:getHand(), "Pixy::CSpell", "Temp")
   for spell in list_iter(Temp) do
     spell:updateTooltip();
-    Win2Spells[spell]:setUserString("Tooltip", spell:getTooltip())
+    HandItem.FindBySpell(spell).Window:setUserString("Tooltip", spell:getTooltip())
+    --~ Win2Spells[spell]:setUserString("Tooltip", spell:getTooltip())
   end
 end

@@ -185,7 +185,8 @@ namespace Pixy
     MovableTextOverlay  *mText;
     Pixy::Entity        *mOwner;
     Ogre::SceneManager  *mSceneMgr;
-    std::vector<Ogre::Entity*> mExtensions;
+    typedef std::vector<Ogre::Entity*> extensions_t;
+    extensions_t mExtensions;
     static float mAnimFadeSpeed;
 
     //bool mFadingIn[NUM_ANIMS];            // which animations are fading in

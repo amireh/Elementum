@@ -5,6 +5,12 @@ local SummoningEffects = {
   Fire = "FireSummoning"
 }
 Units = {}
+
+Units.cleanup = function()
+  --~ SpellValidators = {}
+  --~ Handlers = { Generic = { Alive = {}, Dead = {} } }
+end
+
 Units.onCreateUnit = function(inUnit)
 
 	local handler = Handlers[inUnit:getName()]

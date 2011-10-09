@@ -78,10 +78,10 @@ end
 
 function UISheet:isAttached()
   return
-    self.Window and
-    self.Window == CESystem:getGUISheet() and
-    Pixy.UI.CurrentSheet and
-    Pixy.UI.CurrentSheet.Window == self.Window
+    (self.Window and
+    self.Window == CESystem:getGUISheet()) or
+    (Pixy.UI.CurrentSheet and
+    Pixy.UI.CurrentSheet.Path == self.Path)
 end
 
 function UISheet:detach()
@@ -89,9 +89,9 @@ function UISheet:detach()
 
   if not layout then return true end
 
-  if UISheet.isDialogShown() then
+  --~ if UISheet.isDialogShown() then
     UISheet.hideDialog()
-  end
+  --~ end
 
   -- unregister this UISheet from being the current one if it is
   if self:isAttached() then
@@ -110,8 +110,16 @@ end
 -- detaches the sheet, destroys its windows, and removes it from the UISheet master table
 function UISheet:destroy()
   if self:isAttached() then self:detach() end
+
+  -- detach the dialog if it's attached to any window
+  local layout = Pixy.UI.Dialog.Window:getParent()
+  if layout then
+    layout:removeChildWindow(Pixy.UI.Dialog.Window)
+  end
+
   if self.Window then
     CEWindowMgr:destroyWindow(self.Window)
+    self.Window = nil
   end
   remove_by_value(attached, self)
 
@@ -127,14 +135,15 @@ function UISheet.onDialogOk()
   local dialog = Pixy.UI.Dialog
   -- call the registered handler
   --~ self.Callbacks.DialogOk()
-  dialog.OkCallback()
   -- remove the subscription
-  dialog.OkButton:removeEvent("Clicked")
+  --~ dialog.OkButton:removeEvent("Clicked")
 
-  dialog.OkCallback = nil
   --~ self.Callbacks.DialogOk = nil
   --~ self:hideDialog()
   UISheet.hideDialog()
+
+  dialog.OkCallback()
+  dialog.OkCallback = nil
 
   return true
 end
@@ -187,6 +196,8 @@ function UISheet.isDialogShown()
 end
 
 function UISheet.hideDialog(e)
+  if not UISheet.isDialogShown() then return true end
+
   local dialog = Pixy.UI.Dialog
   local layout = dialog.Window:getParent()
   print(dialog.Window:getName())

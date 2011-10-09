@@ -32,6 +32,13 @@ Puppets.onCreatePuppet = function(puppet)
   Pixy.Log("Created!")
 end
 
+Puppets.cleanup = function()
+  Combat.Puppets = {}
+  EnemyPuppet = nil
+  SelfPuppet = nil
+  Waiting = nil
+  Active = nil
+end
 
 function subscribe_puppet(inRace, inMethod)
 	Pixy.Log("subscribing to " .. inRace .. " puppets")

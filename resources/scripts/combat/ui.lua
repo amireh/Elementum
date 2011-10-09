@@ -70,14 +70,21 @@ UI = UISheet:new("combat/ui.layout", UI)
 local inBlockPhase = false
 
 UI.cleanup = function()
-  UI:detach()
 
-  local idx = 0
+  --[[local idx = 0
   while idx < UI.Hand:getChildCount() do
     local win = UI.Hand:getChildAtIdx(idx)
     UI.ClearAnimations(win)
     idx = idx + 1
-  end
+  end]]
+  print("UI: destroying animation instances:")
+
+  Animator.cleanup()
+  Hand.cleanup()
+
+  UI:detach()
+  --~ UI:destroy()
+
   --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.ShowTooltip:getDefinition():getName())
   --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.HideTooltip:getDefinition():getName())
 end
@@ -275,59 +282,6 @@ UI.onUpdatePuppet = function(e)
   UI.updateHand(e)
 end
 
-UI.Animations = {}
-UI.Animate = function(win, anim)
-  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
-  instance:setTargetWindow(win)
-  --if (not instance:isRunning()) then
-  instance:start()
-  if not UI.Animations[win] then UI.Animations[win] = { } end
-  table.insert(UI.Animations[win], instance)
-  return instance
-  --end
-end
-UI.RemoveAnimation = function(win, in_anim)
-  assert(UI.Animations[win])
-
-  local idx = 1
-  for anim in list_iter(UI.Animations[win]) do
-    if anim == in_anim then
-      table.remove(UI.Animations[win], idx)
-    end
-    idx = idx + 1
-  end
-
-  in_anim:stop()
-  in_anim:setTargetWindow(nil)
-  CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(in_anim)
-
-end
-UI.ClearAnimations = function(win)
-  assert(UI.Animations[win])
-  local count = 0
-  for anim in list_iter(UI.Animations[win]) do
-    anim:stop()
-    anim:setTargetWindow(nil)
-    CEGUI.AnimationManager:getSingleton():destroyAnimationInstance(anim)
-    count = count + 1
-  end
-  print("\t--destroyed " .. count .. " animation instances for window: " .. win:getName())
-  UI.Animations[win] = {}
-end
-UI.isAnimating = function(win, anim_name)
-  for anim in list_iter(UI.Animations[win]) do
-    if anim:getDefinition():getName() == anim_name then
-      return anim:isRunning()
-    end
-  end
-
-  return false
-end
-UI.StopAnimating = function(anim)
-  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
-  instance:stop()
-end
-
 UI.Highlight = function(entity, is_friendly)
   local lbl = nil
   if is_friendly then
@@ -354,7 +308,6 @@ UI.onSelectEnemy = function(e)
   if not Selected or SelectedIsFriendly then
     Combat.Highlight(EnemyPuppet:getRenderable())
   end
-  print("I'm selected!")
 end
 
 UI.Toggle = function()
@@ -381,9 +334,20 @@ UI.onDisconnected = function(e)
   end)
 end
 
+UI.foobar = function()
+  UI.hideDialog()
+  --~ return GameMgr:changeState(IntroState)
+  local e = Pixy.Event(Pixy.EventUID.ChangingState)
+  return EvtMgr:hook(e) --GameMgr:changeState(IntroState)
+end
+UI.onPlayerDroppedOut = function(e)
+  return UI.showDialog("Your opponent has dropped out, click the button to rejoin the lobby.", UI.foobar)
+end
+
 require("combat/ui/helpers")
 require("combat/ui/tooltips")
 require("combat/ui/sct")
 require("combat/ui/hand")
 require("combat/ui/buffs")
 require("combat/ui/spell_log")
+require("combat/ui/animator")

@@ -10,6 +10,7 @@ Intro.onEnter = function()
 
   Pixy.Log("Entering Intro state")
 
+  Fx.setup()
   Intro.bind()
   MainMenu:attach()
 end
@@ -21,6 +22,7 @@ Intro.onExit = function()
   Profiles.cleanup()
   Chat.cleanup()
   Decks.cleanup()
+  Fx.cleanup()
 
   --~ CEWindowMgr:destroyAllWindows()
   --~ FxEngine:unloadAllEffects()
@@ -45,8 +47,8 @@ Intro.onGameDataSynced = function(e)
   Pixy.Log("Game data synced, parsing it in lua")
   local ret = ScriptEngine:_passGameData()
 
-  Pixy.Models.Spells = Spells
-  Spells = nil
+  Pixy.Models.Spells = __SpellsTemp
+  __SpellsTemp = nil
 
   --~ local race = 0
   --~ while race ~= 4 do

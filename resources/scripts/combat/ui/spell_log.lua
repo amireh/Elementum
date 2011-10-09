@@ -13,8 +13,8 @@ UI.LogSpellCast = function(inSpell)
   local lButton = UI.Helpers.DrawSpellButton(inSpell, UI.Containers.SpellLog[target], UI.Config.Dim.LogButton, "Log")
 
   --~ lButton["Window"]:setProperty("Alpha", "0.5")
-  lButton["Window"]:subscribeEvent("MouseEnter", "UI.ShowTooltip")
-  lButton["Window"]:subscribeEvent("MouseLeave", "UI.HideTooltip")
+  lButton:subscribeEvent("MouseEnter", "UI.ShowTooltip")
+  lButton:subscribeEvent("MouseLeave", "UI.HideTooltip")
 
   Pixy.Log("Logged Spell cast ! " .. inSpell:getName() .. inSpell:getUID())
 end

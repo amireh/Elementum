@@ -108,6 +108,7 @@ function find_by_cond(in_table, functor)
 
   return nil
 end
+find_by_condition = find_by_cond
 
 function find_by_value(in_table, in_val)
   return find_by_cond(in_table, function(item) if item == in_val then return true end end)

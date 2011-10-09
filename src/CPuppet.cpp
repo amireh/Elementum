@@ -72,6 +72,11 @@ namespace Pixy
       mBuffs.pop_back();
     }
 
+    while (!mUnits.empty()) {
+      delete mUnits.back();
+      mUnits.pop_back();
+    }
+
     mRenderable = 0;
 
     if (mLog) {

@@ -1,7 +1,11 @@
 if not Buffs then Buffs = {} end
 
+Buffs.cleanup = function()
+
+end
+
 Buffs.DrawSpell = function(spell,wnd, idx)
-  local btn = UI.Helpers.DrawSpellButton(spell, wnd, UI.Config.Dim.BuffButton, "Buff")["Window"]
+  local btn = UI.Helpers.DrawSpellButton(spell, wnd, UI.Config.Dim.BuffButton, "Buff")
   btn:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   btn:subscribeEvent("MouseLeave", "UI.HideTooltip")
   -- position the button

@@ -61,7 +61,7 @@
     </Affector>
   </AnimationDefinition>
 
-  <AnimationDefinition name="MarkForRemoval" duration="2" replayMode="loop">
+  <AnimationDefinition name="SpellBlink" duration="2" replayMode="loop">
     <Affector property="Alpha" interpolator="float">
       <KeyFrame position="0.0" value="1.0" />
       <KeyFrame position="1.0" value="0.1" />

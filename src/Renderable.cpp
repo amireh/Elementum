@@ -46,6 +46,12 @@ namespace Pixy
       itr->second.clear();
     }
 
+    for (extensions_t::iterator ext = mExtensions.begin(); ext != mExtensions.end(); ++ext)
+    {
+      mSceneMgr->destroyEntity((*ext)->getName());
+    }
+    mExtensions.clear();
+
     if (mText)
       delete mText;
 
