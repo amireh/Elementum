@@ -34,9 +34,9 @@ require("combat/bindings")
 arbitraryFunc = arbitraryFuncCombat
 
 -- and attach UI layout!
-Pixy.UI.attach(UI.Config.Layout)
-UI.registerGlobals()
+--Pixy.UI.attach(UI.Config.Layout)
+--UI.registerGlobals()
 
 Combat.bind()
-Combat.PrepareScene()
+--~ Combat.PrepareScene()
 --~ Pixy.Effects.Configure()

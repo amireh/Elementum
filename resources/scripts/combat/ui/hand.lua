@@ -242,8 +242,8 @@ local prereqs_met = function(spell)
     return false
   end
 
-  if (SpellValidators[spell:getName()] ~= nil) then
-    return SpellValidators[spell:getName()]()
+  if SpellValidators[spell:getName()] then
+    return SpellValidators[spell:getName()](spell)
   else
     return true
   end

@@ -4,6 +4,8 @@ Combat.bind = function()
   --bind("AssignPuppets", Combat.assignPuppets)
   --bind("CreatePuppet", Combat.createPuppet)
   --bind("GameStarted", Combat.gameStarted)
+  bind(Pixy.EventUID.Disconnected, UI.onDisconnected)
+
   bind(Pixy.EventUID.EntitySelected, Combat.onEntitySelected)
   bind(Pixy.EventUID.EntityDeselected, Combat.onEntityDeselected)
   bind(Pixy.EventUID.UnitAttacked, UI.onEntityAttacked)

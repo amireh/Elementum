@@ -50,19 +50,19 @@ Combat.reqCastSpell = function(inUIEvt)
 
 	--tolua.cast(lSpell, "Pixy::Spell")
 	Pixy.Log( "request to cast a spell named " .. lSpell:getName() .. "@" .. lSpell:getUID() )
-  local evt = Pixy.Event:new()
-  evt.UID = Pixy.EventUID.CastSpell
+  local evt = Pixy.Event(Pixy.EventUID.CastSpell)
   evt:setProperty("Spell", lSpell:getUID())
   if (lSpell:requiresTarget()) then
     local target = GfxEngine:getSelected()
     if (not target) then
       UI.ShowError("You need to select a target")
-      evt:delete()
-      return false
+      return true
     end
     evt:setProperty("T", target:getEntity():getUID())
   end
   NetMgr:send(evt)
+
+  return true
 end
 
 -- type: incoming event handler

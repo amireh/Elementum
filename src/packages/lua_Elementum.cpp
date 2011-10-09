@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sat Oct  8 17:54:13 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Oct  9 18:53:46 2011.
 */
 
 #ifndef __cplusplus
@@ -3032,6 +3032,69 @@ static int tolua_Elementum_Pixy_CUnit_setHP00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: live of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnit_live00
+static int tolua_Elementum_Pixy_CUnit_live00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'live'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->live();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'live'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: die of class  Pixy::CUnit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnit_die00
+static int tolua_Elementum_Pixy_CUnit_die00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CUnit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'die'", NULL);
+#endif
+  {
+   self->die();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'die'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: delete of class  Pixy::FxEngine */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_FxEngine_delete00
 static int tolua_Elementum_Pixy_FxEngine_delete00(lua_State* tolua_S)
@@ -3138,46 +3201,14 @@ static int tolua_Elementum_Pixy_FxEngine_loadEffect00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadEffect'", NULL);
 #endif
   {
-   self->loadEffect(name);
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->loadEffect(name);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'loadEffect'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: registerHighlightEffect of class  Pixy::FxEngine */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_FxEngine_registerHighlightEffect00
-static int tolua_Elementum_Pixy_FxEngine_registerHighlightEffect00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::FxEngine",0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerHighlightEffect'", NULL);
-#endif
-  {
-   self->registerHighlightEffect(inName);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'registerHighlightEffect'.",&tolua_err);
  return 0;
 #endif
 }
@@ -24880,6 +24911,8 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setAP",tolua_Elementum_Pixy_CUnit_setAP00);
     tolua_function(tolua_S,"setBaseHP",tolua_Elementum_Pixy_CUnit_setBaseHP00);
     tolua_function(tolua_S,"setHP",tolua_Elementum_Pixy_CUnit_setHP00);
+    tolua_function(tolua_S,"live",tolua_Elementum_Pixy_CUnit_live00);
+    tolua_function(tolua_S,"die",tolua_Elementum_Pixy_CUnit_die00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"FxEngine","Pixy::FxEngine","Pixy::Engine",tolua_collect_Pixy__FxEngine);
@@ -24891,7 +24924,6 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getSingletonPtr",tolua_Elementum_Pixy_FxEngine_getSingletonPtr00);
     tolua_function(tolua_S,"getSingleton",tolua_Elementum_Pixy_FxEngine_getSingleton00);
     tolua_function(tolua_S,"loadEffect",tolua_Elementum_Pixy_FxEngine_loadEffect00);
-    tolua_function(tolua_S,"registerHighlightEffect",tolua_Elementum_Pixy_FxEngine_registerHighlightEffect00);
     tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect00);
     tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect01);
     tolua_function(tolua_S,"playEffect",tolua_Elementum_Pixy_FxEngine_playEffect02);

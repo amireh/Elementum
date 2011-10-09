@@ -58,9 +58,9 @@ namespace Pixy
 		mScriptEngine = ScriptEngine::getSingletonPtr();
 		mScriptEngine->setup();
 
-    mScriptEngine->runScript("lobby/entry_point.lua");
+    //~ mScriptEngine->runScript("lobby/entry_point.lua");
 
-    mLog->infoStream() << "Joined the lobby with puppet " << Intro::getSingleton().getPuppetName();
+    //~ mLog->infoStream() << "Joined the lobby with puppet " << Intro::getSingleton().getPuppetName();
 	}
 
 	void Lobby::exit( void ) {
@@ -84,6 +84,9 @@ namespace Pixy
 		switch (e.key) {
 			case OIS::KC_ESCAPE:
 				this->requestShutdown();
+				break;
+      case OIS::KC_SPACE:
+				GameManager::getSingleton().changeState(Intro::getSingletonPtr());
 				break;
 		}
 

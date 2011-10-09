@@ -32,4 +32,7 @@ public:
   virtual void setBaseHP(int inHP);
   virtual void setHP(int inHP);
 
+  virtual bool live();
+  virtual void die();
+
 };

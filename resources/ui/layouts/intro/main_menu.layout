@@ -4,7 +4,9 @@
     <!--><Window Type="DefaultWindow" Name="Elementum" >-->
 
         <Window Type="DefaultWindow" Name="Elementum/Scenes/Intro/MainMenu" >
+<!--
             <Property Name="Font" Value="DejaVuSans-10" />
+-->
             <Property Name="Text" Value="Elementum" />
 <!--
             <Property Name="FrameEnabled" Value="False" />

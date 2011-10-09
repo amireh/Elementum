@@ -1,6 +1,10 @@
 -- UISheet : Decks
+Decks = UISheet:new("intro/decks.layout")
 
-if not Decks then Decks = {} end
+-- we force the loading of Decks because we will populate its windows before
+-- the layout is actually attached, so it must be loaded in order to reference
+-- those windows (see Decks.onPuppetSynced)
+Decks:load()
 
 local Spells = {}
 local I2D = {} -- Items to Decks
@@ -20,8 +24,6 @@ local attached = false
 local last_puppet_race = nil
 local spells_populated = false
 
-
-Decks.Layout = CEWindowMgr:loadWindowLayout("intro/decks.layout")
 RaceSpells = CEWindowMgr:getWindow("Decks/RaceSpells")
 Tooltip = CEWindowMgr:getWindow("Decks/Text/Tooltip")
 DeckList = CEGUI.toCombobox(CEWindowMgr:getWindow("Decks/Combobox/Decks"))
@@ -31,10 +33,8 @@ DeckGrid = CEGUI.toGridLayoutContainer(CEWindowMgr:getWindow("Decks/Containers/D
 ModelGrid:setGridDimensions(4,16)
 DeckGrid:setGridDimensions(8,2)
 
---Decks.Layout:hide()
-
-Decks.attach = function()
-  Pixy.UI.attach("Elementum/Intro/Decks")
+function Decks:attach()
+  UISheet.attach(self)
   attached = true
 
   Decks.populateDecks()
@@ -46,11 +46,14 @@ Decks.attach = function()
   isSetup = true
 end
 
-Decks.detach = function()
+function Decks:detach()
+  UISheet.detach(Decks)
   attached = false
+end
 
-  Pixy.UI.detach(Decks.Layout)
-  Chat.attach()
+Decks.backToChat = function()
+  Decks:detach()
+  Chat:attach()
 end
 
 local Deck = {}
@@ -107,7 +110,7 @@ end
 local Spells = {}
 Decks.populateRaceSpells = function(race)
   local dim =
-  CEGUI.UVector2:new(CEGUI.UDim(0.25,0),	CEGUI.UDim(0.23,0))
+  CEGUI.UVector2:new(CEGUI.UDim(0.22,0),	CEGUI.UDim(0.20,0))
 
   for idx, spell in ipairs(Pixy.Models.Spells[race]) do
     -- check if this slot has been created before
@@ -129,19 +132,23 @@ Decks.populateRaceSpells = function(race)
       dragger:subscribeEvent("MouseClick", "Decks.addSpellToDeck")
       dragger:subscribeEvent("MouseEnter", "Decks.showTooltip")
       dragger:subscribeEvent("MouseLeave", "Decks.hideTooltip")
+      dragger:setUserString("Spell", spell:getName())
+      dragger:setUserString("Race", raceToString(race))
 
-      button = CEWindowMgr:createWindow("Vanilla/StaticImage", dragger:getName() .. "Image")
+      button = CEWindowMgr:createWindow("Combat/ImageButton", dragger:getName() .. "Image")
       dragger:addChildWindow(button)
       button:setSize(CEGUI.UVector2(CEGUI.UDim(1,0), CEGUI.UDim(1,0)))
-      button:setProperty("Image", spell_image_name(spell))
+      button:setProperty("NormalImage", spell_image_name(spell))
       button:setProperty("MousePassThroughEnabled", "True")
 
       ModelGrid:addChildWindow(slot)
     else
       slot = CEWindowMgr:getWindow("Decks/RaceSpells/Slot" .. idx)
       dragger = slot:getChild(slot:getName() .. "Drag")
+      dragger:setUserString("Spell", spell:getName())
+      dragger:setUserString("Race", raceToString(race))
       button = dragger:getChild(dragger:getName() .. "Image")
-      button:setProperty("Image", spell_image_name(spell))
+      button:setProperty("NormalImage", spell_image_name(spell))
     end
 
     Spells[dragger:getName()] = spell
@@ -178,13 +185,17 @@ Decks.doAddSpellToDeck = function(spell)
 
   if not target then print("ERROR! Couldn't find an empty slot in the grid"); return true end
 
-  local button = CEWindowMgr:createWindow("Vanilla/StaticImage", target:getParent():getName() .. "Spell")
+  local button = CEWindowMgr:createWindow("Combat/ImageButton", target:getParent():getName() .. "Spell")
   button:setSize(CEGUI.UVector2(CEGUI.UDim(1,0), CEGUI.UDim(1,0)))
-  button:setProperty("Image", spell_image_name(spell))
+  button:setProperty("NormalImage", spell_image_name(spell))
   button:setProperty("MousePassThroughEnabled", "True")
-  target:addChildWindow(button)
 
-  print("player wants to add " .. spell:getName() .. " to his deck at slot " .. target:getName())
+  target:subscribeEvent("MouseEnter", "Decks.showTooltip")
+  target:subscribeEvent("MouseLeave", "Decks.hideTooltip")
+  target:setUserString("Spell", spell:getName())
+  target:setUserString("Race", raceToString(spell:getRace()))
+
+  target:addChildWindow(button)
 
   Deck[target:getName()] = spell
   table.insert(Grid, spell)
@@ -207,7 +218,7 @@ Decks.removeSpellFromDeck = function(args)
   CEWindowMgr:destroyWindow(button)
   Deck[dragger:getName()] = nil
 
-  removeByValue(Grid, spell)
+  remove_by_value(Grid, spell)
 
   print("player removed " .. spell:getName() .. " from slot " .. dragger:getName())
   return true
@@ -216,22 +227,17 @@ end
 Decks.showTooltip = function(args)
   local args = CEGUI.toWindowEventArgs(args)
   local dragger = args.window
-  local spell = Spells[dragger:getName()]
-
-  assert(spell)
-
-  Tooltip:setText(spell:getTooltip())
+  for spell in list_iter(Pixy.Models.Spells[raceFromString(dragger:getUserString("Race"))]) do
+    if spell:getName() == dragger:getUserString("Spell") then
+      Tooltip:setText(spell:getTooltip())
+      return true
+    end
+  end
 
 end
 
 Decks.hideTooltip = function(args)
-  local args = CEGUI.toWindowEventArgs(args)
-  local dragger = args.window
-  local spell = Spells[dragger:getName()]
-
-  assert(spell)
   Tooltip:setText("")
-
 end
 
 Decks.clearGrid = function()
@@ -305,17 +311,17 @@ Decks.onSaveDeck = function(args)
   e:setProperty("Data", tmp)
   NetMgr:send(e)
 
-  Pixy.UI.waiting("Updating deck...", Decks.Layout)
+  UISheet.showDialog("Updating deck...")
 
   return true
 end
 
 Decks.onUpdateDeck = function(e)
-  Pixy.UI.doneWaiting(true)
+
   if e.Feedback == Pixy.EventFeedback.Error then
-    PBox_Label:setText("An error occured while updating the deck.")
+    UISheet.showDialog("An error occured while updating the deck.")
   else
-    PBox_Label:setText("Deck is updated.")
+    UISheet.showDialog("Deck is updated.")
   end
 
   return true
@@ -344,8 +350,8 @@ Decks.onDecksSynced = function(e)
 end
 
 Decks.cleanup = function()
+  Decks:detach()
   isSetup = false
-
 end
 
 Decks.RemoveDeck = function()
@@ -355,16 +361,16 @@ Decks.RemoveDeck = function()
   e:setProperty("Name", CurrentDeck:getName())
   NetMgr:send(e)
 
-  Pixy.UI.waiting("Deleting deck...", Decks.Layout)
+  UISheet.showDialog("Deleting deck...")
   return true
 end
 
 Decks.onRemoveDeck = function(e)
-  Pixy.UI.doneWaiting(true)
+
   if e.Feedback == Pixy.EventFeedback.Error then
-    PBox_Label:setText("An error occured while deleting the deck.")
+    UISheet.showDialog("An error occured while deleting the deck.")
   else
-    PBox_Label:setText("Deck is deleted.")
+    UISheet.showDialog("Deck is deleted.")
     Decks.clearGrid()
   end
 end

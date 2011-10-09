@@ -22,7 +22,7 @@
  */
 
 #include "Connection.hpp"
-
+#include "EventManager.h"
 namespace Pixy {
 
   Connection::Connection(boost::asio::io_service& io_service)
@@ -82,7 +82,10 @@ namespace Pixy {
 
   void Connection::start() {
     base_connection::start();
-
+  }
+  void Connection::stop() {
+    base_connection::stop();
+    EventManager::getSingleton().hook(Event(EventUID::Disconnected));
   }
 
   /*void Connection::on_ping(const message &msg) {

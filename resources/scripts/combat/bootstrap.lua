@@ -8,7 +8,7 @@ local SceneMgr = nil
 local Viewport = nil
 local Camera = nil
 
-local Pos = { Me = Ogre.Vector3:new(0,0,0), Enemy = Ogre.Vector3:new(0,0,0) }
+local Pos = { Me = Ogre.Vector3(0,0,0), Enemy = Ogre.Vector3(0,0,0) }
 Keybindings = {}
 BBSet = nil
 BB = nil
@@ -172,10 +172,41 @@ Combat.SetupScene = function()
 end
 
 Combat.cleanup = function()
-  UI.cleanup()
-  RTT.Player.Texture:delete()
-  RTT.Enemy.Texture:delete()
+  --[[Combat.Dehighlight()
+  Selected = nil
+
+  do
+    if BBNode:getParentSceneNode() then BBNode:getParentSceneNode():removeChild(BBNode) end
+    BBSet:removeBillboard(BB)
+    SceneMgr:destroyBillboardSet(BBSet)
+    SceneMgr:destroySceneNode(BBNode)
+    BB = nil
+    BBSet = nil
+    BBNode = nil
+  end
+
+  updateCombat = function() end
+
+  --~ UI.cleanup()
+  --~ CEWindowMgr:destroyAllWindows()
+
   GfxEngine:unloadScene(Scene)
+  Scene = nil
+
+  do
+    --~ GfxEngine:detachRTT(RTT.Player.Texture)
+    --~ GfxEngine:detachRTT(RTT.Enemy.Texture)
+    RTT.Player.Texture:delete()
+    RTT.Enemy.Texture:delete()
+    SceneMgr:destroyCamera(RTT.Player.Camera)
+    SceneMgr:destroyCamera(RTT.Enemy.Camera)
+  end
+
+
+  Keybindings = {}
+
+  FxEngine:unloadAllEffects()
+  SceneMgr:clearScene()]]
 end
 
 Combat.SetupLights = function()

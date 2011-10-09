@@ -1,4 +1,4 @@
-Profiles.NewProfile = {}
+Profiles.NewProfile = UISheet:new("intro/profiles/new_profile.layout")
 
 local isSetup = false
 local mProfiles = {}
@@ -11,6 +11,7 @@ local Buttons = {
   CreatePuppet = nil,
   Back = nil
 }
+
 local Races = {
   Earth =
 "With dirt, stone, and bone, the followers of the call of Nature have risen." ..
@@ -49,32 +50,26 @@ local onEntitySelected = function(e)
   SelectedRnd = rnd
 
   updateRaceText()
-  FxEngine:highlight(rnd)
-
-  return true
-end
-
-local onEntityDeselected = function(e)
-  FxEngine:dehighlight()
+  Fx.highlight(rnd)
 
   return true
 end
 
 local onCreatePuppet = function(e)
-  Pixy.UI.doneWaiting(true)
-
   if e.Feedback == Pixy.EventFeedback.Ok then
+    UISheet.hideDialog()
     Profiles.detach()
-    Profiles.Listing.attach()
+    Profiles.Listing:attach()
   else
-    PBox_Label:setText("Unable to create character.")
+    UISheet.showDialog("Unable to create character.")
   end
 
   return true
 end
 
-Profiles.NewProfile.attach = function()
-  Profiles.Layout = Pixy.UI.attach("intro/profiles.layout")
+function Profiles.NewProfile:attach()
+  UISheet.attach(self)
+  --~ Profiles.Layout = Pixy.UI.attach("intro/profiles.layout")
   RaceText = CEWindowMgr:getWindow("Intro/NewPuppet/Text/RaceDescription")
   Buttons.CreatePuppet = CEWindowMgr:getWindow("Intro/NewPuppet/Buttons/CreatePuppet")
   Buttons.Back = CEWindowMgr:getWindow("Intro/NewPuppet/Buttons/BackToListing")
@@ -84,12 +79,13 @@ Profiles.NewProfile.attach = function()
   Pixy.Log("Attaching Profiles[NewProfile]")
 
   bind(Pixy.EventUID.EntitySelected, onEntitySelected)
-  bind(Pixy.EventUID.EntityDeselected, onEntityDeselected)
   bind(Pixy.EventUID.CreatePuppet, onCreatePuppet)
 
   local scale, ar = Profiles.CalcScale(4)
 
   -- prepare the scene
+  -- hide the gremlins
+  MainMenu.hideGremlins()
   do
     -- set the scale of all knights
     Profiles.Knights.Earth:getRenderable():getSceneNode():setScale(scale)
@@ -131,12 +127,15 @@ Profiles.NewProfile.attach = function()
 	if isSetup then return true end
 end
 
-Profiles.NewProfile.detach = function()
+function Profiles.NewProfile:detach()
+  UISheet.detach(self)
+
   unbind(Pixy.EventUID.EntitySelected, onEntitySelected)
-  unbind(Pixy.EventUID.EntityDeselected, onEntityDeselected)
   unbind(Pixy.EventUID.CreatePuppet, onCreatePuppet)
 
   Pixy.Log("Detaching Profiles[NewProfile]")
+
+  MainMenu.showGremlins()
 
   Buttons = {}
   RaceText = nil
@@ -144,7 +143,7 @@ end
 
 Profiles.NewProfile.Back = function()
   Profiles.detach()
-  Profiles.Listing.attach()
+  Profiles.Listing:attach()
 end
 
 local valid = function(name)
@@ -163,6 +162,6 @@ Profiles.NewProfile.CreatePuppet = function()
   e:setProperty("Race", raceToString(SelectedRnd:getEntity():getRace()))
   NetMgr:send(e)
 
-  Pixy.UI.waiting("Creating character...", Profiles.Layout)
+  UISheet.showDialog("Creating character...")
 end
 

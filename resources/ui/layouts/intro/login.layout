@@ -4,8 +4,9 @@
   <Window Type="DefaultWindow" Name="Elementum/Scenes/Intro/Login" >
   <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
 
+<!--
       <Window Type="TaharezLook/StaticText" Name="Elementum/Intro/Text/Login">
-        <Property Name="Font" Value="Alice" />
+        <Property Name="Font" Value="DejaVuSans96" />
         <Property Name="Visible" Value="True" />
         <Property Name="BackgroundEnabled" Value="False" />
         <Property Name="FrameEnabled" Value="False" />
@@ -14,9 +15,10 @@
         <Property Name="VerticalAlignment" Value="Top" />
         <Property Name="VertFormatting" Value="TopAligned" />
         <Property Name="Text" Value="Elementum" />
-        <Property Name="TextColours" Value="tl:FFFF0000 tr:FF8f0000 bl:FF8f0000 br:FF8f1e00" />
-        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{0.2,0}}" />
+        <Property Name="TextColours" Value="tl:FFFF0000 tr:FF666666 bl:FF111111 br:FF111111" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0.025,0},{1,0},{0.2,0}}" />
       </Window>
+-->
 
       <Window Type="TaharezLook/FrameWindow" Name="Elementum/Intro/Containers/Login">
         <Property Name="UnifiedAreaRect" Value="{{0.045,0},{0.6,0},{1,0},{0.8.0}}" />

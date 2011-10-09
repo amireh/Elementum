@@ -7,8 +7,8 @@ virtual ~FxEngine();
 static FxEngine* getSingletonPtr();
 static FxEngine& getSingleton();
 
-void loadEffect(std::string name);
-void registerHighlightEffect(std::string inName);
+ParticleUniverse::ParticleSystem* loadEffect(std::string name);
+//void registerHighlightEffect(std::string inName);
 ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, Renderable* inEntity, bool newInstance = false);
 ParticleUniverse::ParticleSystem* playEffect(ParticleUniverse::ParticleSystem*, Renderable* inEntity);
 ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, const Ogre::Vector3 pos, bool newInstance = false);

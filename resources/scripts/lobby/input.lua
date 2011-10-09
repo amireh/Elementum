@@ -1,10 +1,4 @@
-local Keyboard = nil
-local function isAltDown()
-  Keyboard = InputMgr:getKeyboard()
-  return Keyboard:isModifierDown(OIS.Keyboard.Alt)
-end
-
-Pixy.onKeyReleased = function(e)
+Input.onKeyReleased = function(e)
 
   -- ## typing context ## --
   if Chat.Context == Chat.Contexts.Typing then
@@ -15,7 +9,7 @@ Pixy.onKeyReleased = function(e)
       return Chat.nextChatMessage()
 
     -- Alt+R switches into Whisper mode
-    --[[elseif e.key == OIS.KC_R and isAltDown() then
+    --[[elseif e.key == OIS.KC_R and Input.isAltDown() then
       return Chat.switchContext(Chat.Contexts.Whispering)
     end]]
 

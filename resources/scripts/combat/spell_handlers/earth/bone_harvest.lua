@@ -17,4 +17,19 @@ local process = function(inCaster, inTarget, inSpell)
 	return true
 end
 
+SpellValidators["Bone Harvest"] = function(spell)
+  local exporter = Pixy.CUnitListExporter()
+  exporter:export(spell:getCaster():getEntity():getUnits(), "Pixy::CUnit", "_tmp")
+
+  local nr_skeletons = 0
+  for unit in list_iter(_tmp) do
+    if unit:getName():find("Skeleton") then
+      nr_skeletons = nr_skeletons + 1
+    end
+  end
+  _tmp = nil
+
+  return nr_skeletons > 0
+end
+
 subscribe_spell("Bone Harvest", process)

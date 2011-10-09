@@ -216,11 +216,30 @@ namespace Pixy {
         mMTOFontName,mMTOFontSize,mMTOFontColor,mMTOMaterialName);
   }
 
+  bool GfxEngine::setupIntro()
+  {
+    if (!fSetup)
+      setup();
+
+    mRenderables.clear();
+    mUpdatees.clear();
+    mRTTs.clear();
+    mPlayer = 0;
+    mEnemy = 0;
+
+    mUpdate = &GfxEngine::updateIntro;
+  }
 	bool GfxEngine::setupCombat() {
+    if (!fSetup)
+      setup();
 
 		mLog->infoStream() << "preparing combat scene";
 
-    //~ mRenderables.clear();
+    mRenderables.clear();
+    mUpdatees.clear();
+    mRTTs.clear();
+    mPlayer = 0;
+    mEnemy = 0;
 
     mPlayer = Combat::getSingleton().getPuppet();
     for (Combat::puppets_t::const_iterator puppet = Combat::getSingleton().getPuppets().begin();
@@ -1172,8 +1191,9 @@ namespace Pixy {
       //~ if (window)
         //~ mLog->debugStream() << "mouse pressed over UI: " << window->getName();
     }
-    if (window && window->getName().find("SpellButton") != CEGUI::String::npos)
+    if (window && window->getName().find("SpellButton") != CEGUI::String::npos) {
       return false;
+    }
 
 		if (mCameraMan)
 			mCameraMan->injectMouseDown(e, id);
@@ -1188,6 +1208,7 @@ namespace Pixy {
 
     if (!result)
     {
+
       dehighlight();
       return true;
     }
@@ -1195,140 +1216,6 @@ namespace Pixy {
     assert(resultObj);
     highlight(Ogre::any_cast<Pixy::Renderable*>(resultObj->getUserAny()));
 
-#if 0
-
-    /*bool result =
-    mPicker->cast(
-      mouseRay.getOrigin(),
-      mouseRay.getDirection(),
-      &resultObj,
-      ENTITY_MASK);*/
-
-    // Setup the ray scene query, use CEGUI's mouse position
-    /*Ogre::Ray mouseRay =
-      mCamera->getCameraToViewportRay(
-        mousePos.d_x/float(e.state.width),
-        mousePos.d_y/float(e.state.height)
-      );*/
-
-    /*
-    using Ogre::Vector2;
-    float step = 20;
-    Vector2 states[9] = {
-      Vector2(-step, -step), Vector2(0, -step), Vector2(step, -step),
-      Vector2(-step, 0), Vector2(0, 0), Vector2(step, 0),
-      Vector2(-step, step), Vector2(0, step), Vector2(step, step)
-    };
-
-    std::map<Ogre::MovableObject*, int> objects;
-
-    for (int i=0; i < 9; ++i)
-    {
-      Ogre::Ray mouseRay =
-      mCamera->getCameraToViewportRay(
-        (mousePos.d_x + states[i].x)/float(e.state.width),
-        (mousePos.d_y + states[i].y)/float(e.state.height)
-      );
-
-      Ogre::Vector3 resultPoint;
-      Ogre::MovableObject* resultObj = 0;
-      bool result =
-      mPicker->RaycastFromPoint(
-        mouseRay.getOrigin(),
-        mouseRay.getDirection(),
-        resultPoint,
-        &resultObj,
-        GfxEngine::ENTITY_MASK);
-
-      if (result)
-      {
-        if (objects.find(resultObj) == objects.end())
-          objects.insert(std::make_pair(resultObj, 1));
-        else
-          objects.find(resultObj)->second++;
-      }
-    }
-
-    bool result = !objects.empty();
-
-    if (!result)
-    {
-      dehighlight();
-      return true;
-    }
-
-    // find the best hit
-    int max = 0;
-    Ogre::MovableObject* bestHit = 0;
-    for (std::map<Ogre::MovableObject*, int>::const_iterator object = objects.begin();
-    object != objects.end();
-    ++object)
-    {
-      if (object->second > max)
-      {
-        max = object->second;
-        bestHit = object->first;
-      }
-    }*/
-
-    /*Ogre::Vector3 resultPoint;
-    Ogre::MovableObject* resultObj = 0;
-    bool result = mPicker->RaycastFromPoint(mouseRay.getOrigin(), mouseRay.getDirection(), resultPoint, &resultObj, GfxEngine::ENTITY_MASK);
-    if (result)
-    {
-      highlight(Ogre::any_cast<Pixy::Renderable*>(resultObj->getUserAny()));
-      std::cout << "raycast hit was successful @ "
-        << resultPoint.x << "," << resultPoint.y << "," << resultPoint.z
-        << " .. name : " << resultObj->getName() << "\n";
-    } else
-      dehighlight();*/
-
-
-    Ogre::RaySceneQuery *mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
-    mRaySceneQuery->setRay(mouseRay);
-    mRaySceneQuery->setSortByDistance(true);
-    // Execute query
-    Ogre::RaySceneQueryResult &result = mRaySceneQuery->execute();
-    Ogre::RaySceneQueryResult::iterator itr;
-
-
-    //dehighlight(); // remove any unit selection
-    bool found = false;
-    for (itr = result.begin(); itr != result.end(); itr++)
-    {
-      if (itr->movable)
-        mLog->infoStream() << "Ray target name: " << itr->movable->getName();
-      if (itr->movable &&
-          (itr->movable->getName().find(mPlayer->getName()) != std::string::npos ||
-          itr->movable->getName().find(mEnemy->getName()) != std::string::npos
-          //(itr->movable->getName().find("Fx") == std::string::npos &&
-          // itr->movable->getName().find("Blood") == std::string::npos)
-          )
-         /*(itr->movable->getName().substr(0,6) != "Caelum") &&
-         itr->movable->getName() != "" &&
-         //~ itr->movable->getName() != "mySphereEntity" &&
-         itr->movable->getName() != "Floor" &&
-         itr->movable->getName() != "Ceiling" &&
-         itr->movable->getName() != "LeftWall" &&
-         itr->movable->getName() != "RightWall" &&
-         itr->movable->getName() != "FrontWall" &&
-         itr->movable->getName() != "BackWall"*/) {
-
-        Event e(EventUID::EntitySelected);
-        e.Any = ((void*)Ogre::any_cast<Pixy::Renderable*>(itr->movable->getUserAny()));
-        mEvtMgr->hook(e);
-
-        found = true;
-
-        break;
-
-      }
-    }
-    if (!found) {
-      // ignore any terrain selection
-      dehighlight();
-    }
-#endif
     return true;
 
 	}
@@ -1396,10 +1283,10 @@ namespace Pixy {
         if (mTrayMgr->areFrameStatsVisible())
           mTrayMgr->hideFrameStats();
         else
-          mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMRIGHT);
+          mTrayMgr->showFrameStats(OgreBites::TL_TOPRIGHT);
         break;
       case OIS::KC_L:
-        ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
+        //~ ScriptEngine::getSingletonPtr()->passToLua("onKeyReleased", 0);
         break;
       case OIS::KC_V:
         if (mSelected) {
@@ -1417,8 +1304,9 @@ namespace Pixy {
 	void GfxEngine::highlight(Renderable* inEntity) {
 	  //~ dehighlight();
 
-    if (inEntity->getEntity()->isDead())
+    if (inEntity->getEntity()->isDead() && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT) {
       return;
+    }
 
     Event e(EventUID::EntitySelected);
     e.Any = (void*)inEntity;

@@ -209,6 +209,7 @@ namespace Pixy {
 		 */
 		void setupWaypoints();
 
+		bool setupIntro();
 		bool setupCombat();
 
 		void keyPressed( const OIS::KeyEvent &e );

@@ -41,6 +41,8 @@ namespace Pixy
     Ogre::Rectangle2D *mMiniScreen;
     Ogre::SceneNode* mSceneNode;
 
+    Ogre::SceneManager* mSceneMgr;
+
     bool fEnabled;
 
     static int gUID;

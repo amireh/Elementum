@@ -2,7 +2,6 @@
 
 if not Profiles then Profiles = {} end
 
-require("helpers")
 require("intro/profiles/new_profile")
 require("intro/profiles/listing")
 
@@ -57,6 +56,7 @@ Profiles.CreateKnight = function(name, material, scale, pos)
   rnd:animateIdle()
 
   --~ table.insert(Units, unit)
+  unit:setIsDead(false)
 
   return unit
 end
@@ -126,9 +126,9 @@ Profiles.attach = function()
   -- if there are any existing chars, go to the character selection screen
   -- otherwise go to the new character screen
   if table.getn(Intro.Puppets) > 0 then
-    Profiles.Listing.attach()
+    Profiles.Listing:attach()
   else
-    Profiles.NewProfile.attach()
+    Profiles.NewProfile:attach()
   end
 
 end
@@ -139,20 +139,34 @@ Profiles.detach = function()
   Pixy.Log("Detaching Profiles[]")
 
   if Profiles.CurrentScreen == "New" then
-    Profiles.NewProfile.detach()
+    Profiles.NewProfile:detach()
   else
-    Profiles.Listing.detach()
+    Profiles.Listing:detach()
   end
-  Pixy.UI.detach(Profiles.Layout)
+  --~ Pixy.UI.detach(Profiles.Layout)
 end
 
 Profiles.cleanup = function()
   if not isSetup then return true end
 
+  Profiles.NewProfile:detach()
+  Profiles.Listing:detach()
+
+  nodes = {
+    Profiles.Knights.Earth:getRenderable():getSceneNode():getName(),
+    Profiles.Knights.Air:getRenderable():getSceneNode():getName(),
+    Profiles.Knights.Fire:getRenderable():getSceneNode():getName(),
+    Profiles.Knights.Water:getRenderable():getSceneNode():getName(),
+  }
+
   Profiles.Knights.Earth:delete()
   Profiles.Knights.Air:delete()
   Profiles.Knights.Fire:delete()
   Profiles.Knights.Water:delete()
+
+  -- we must destroy the Knights' scene nodes because GfxEngine does not do that
+  for node in list_iter(nodes) do SceneMgr:destroySceneNode(node) end
+  nodes = {}
 
   isSetup = false
 end
@@ -167,7 +181,7 @@ Profiles.Back = function()
   ]]
 
 	Profiles.detach()
-	MainMenu.attach()
+	MainMenu:attach()
 end
 
 
@@ -181,7 +195,7 @@ Profiles.onPuppetListSynced = function(e)
     print("\t" .. k .. " => " .. v:getName())
   end
 
-  MainMenu.detach()
+  MainMenu:detach()
   Profiles.attach()
 
   return true
@@ -189,7 +203,7 @@ end
 
 Profiles.onCreatePuppet = function(e)
   Profiles.detach()
-  Profiles.NewProfile.attach()
+  Profiles.NewProfile:attach()
 end
 
 
@@ -216,7 +230,7 @@ Profiles.JoinLobby = function()
   --~ require("lobby/entry_point")
   --~ clearBindings()
   --~ Lobby.bind()
-  Chat.attach()
+  Chat:attach()
   --~ GameMgr:changeState(LobbyState)
 
   return true
@@ -225,8 +239,7 @@ end
 
 Profiles.onJoinLobby = function(e)
   if e.Feedback ~= Pixy.EventFeedback.Ok then
-    local box = Pixy.UI.attachOverlay("ProgressBox")
-    PBox_Label:setText("Unable to connect to lobby. Please try again later.")
+    UISheet.showDialog("Unable to connect to lobby. Please try again later.")
     return true
   end
 

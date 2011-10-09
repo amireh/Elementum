@@ -212,7 +212,7 @@ namespace Pixy {
 
 	void ScriptEngine::updateCombat(unsigned long lTimeElapsed) {
 
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "updateCombat");
+		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
     lua_pushinteger(mLUA,lTimeElapsed);
 		if(lua_isfunction(mLUA, 1))
 		{
@@ -306,7 +306,7 @@ namespace Pixy {
     va_list argp;
     va_start(argp, argc);
 
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitraryFunc");
+		lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitrary");
 		if(!lua_isfunction(mLUA, 1))
 		{
 			mLog->errorStream() << "could not find Lua arbitrary functor!";
@@ -445,8 +445,8 @@ namespace Pixy {
   }
 
   bool ScriptEngine::onMatchFinished(const Event& inEvt) {
-    lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitraryFunc");
-    lua_pushfstring(mLUA, "onMatchFinished");
+    lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitrary");
+    lua_pushfstring(mLUA, "Combat.onMatchFinished");
     lua_pushinteger(mLUA, convertTo<int>(inEvt.getProperty("W")));
     lua_call(mLUA, 2, 0);
 
@@ -461,20 +461,20 @@ namespace Pixy {
 	}
 
 	bool ScriptEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		return passToLua("onMousePressed", 2, "OIS::MouseEvent", &e, "OIS::MouseButtonID", &id);
+		return passToLua("Input.onMousePressed", 2, "OIS::MouseEvent", &e, "OIS::MouseButtonID", &id);
 	}
 
 	bool ScriptEngine::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
-		return passToLua("onMouseReleased", 2, "OIS::MouseEvent", &e, "OIS::MouseButtonID", &id);
+		return passToLua("Input.onMouseReleased", 2, "OIS::MouseEvent", &e, "OIS::MouseButtonID", &id);
     //CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
     //return (window && window->isVisible() && window->getAlpha() > 0.0f && (window->getType() != "DefaultWindow"));
   }
 
 	void ScriptEngine::keyReleased( const OIS::KeyEvent &e ) {
-    passToLua("onKeyReleased", 1, "OIS::KeyEvent", &e);
+    passToLua("Input.onKeyReleased", 1, "OIS::KeyEvent", &e);
 	}
 	void ScriptEngine::keyPressed( const OIS::KeyEvent &e ) {
-		passToLua("onKeyPressed", 1, "OIS::KeyEvent", &e);
+		passToLua("Input.onKeyPressed", 1, "OIS::KeyEvent", &e);
 	}
 
   std::string ScriptEngine::getScriptPathPrefix() const {

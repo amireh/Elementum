@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout >
+    <Window Type="Vanilla/FrameWindow" Name="Elementum/Overlays/Dialog" >
+      <Property Name="UnifiedSize" Value="{{0.4, 0}, {0.3, 0}}" />
+      <Property Name="UnifiedPosition" Value="{{0, 0}, {0.05, 0}}" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="SizingEnabled" Value="False" />
+      <Property Name="BackgroundEnabled" Value="False" />
+      <Property Name="TitlebarEnabled" Value="False" />
+      <Property Name="DragMovingEnabled" Value="False" />
+      <Property Name="CloseButtonEnabled" Value="False" />
+      <Property Name="HorizontalAlignment" Value="Centre" />
+      <Property Name="Visible" Value="True" />
+      <Property Name="AlwaysOnTop" Value="True" />
+      <Property Name="Alpha" Value="0.7" />
+
+      <Window Type="Vanilla/StaticText" Name="Elementum/Overlays/Dialog/Label" >
+          <Property Name="Font" Value="DejaVuSans-10" />
+          <Property Name="Text" Value="" />
+          <Property Name="UnifiedSize" Value="{{1, 0}, {1, -30}}" />
+      </Window>
+
+      <Window Type="Vanilla/Button" Name="Elementum/Overlays/Dialog/OkButton" >
+          <Property Name="Font" Value="DejaVuSans-10" />
+          <Property Name="Text" Value="Ok" />
+          <Property Name="UnifiedSize" Value="{{0, 60}, {0, 30}}" />
+          <Property Name="UnifiedPosition" Value="{{0, 0}, {1, -30}}" />
+          <Property Name="HorizontalAlignment" Value="Centre" />
+      </Window>
+
+    </Window>
+</GUILayout>

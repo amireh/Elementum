@@ -48,11 +48,12 @@ namespace Pixy
 		mLog->infoStream() << "---- Entering ----";
 
 		mEvtMgr = EventManager::getSingletonPtr();
+    mEvtMgr->clear();
 		mNetMgr = NetworkManager::getSingletonPtr();
 
 		// init engines
 		mGfxEngine = GfxEngine::getSingletonPtr();
-		mGfxEngine->setup();
+    mGfxEngine->setupIntro();
 
     mFxEngine = FxEngine::getSingletonPtr();
     mFxEngine->setup();
@@ -61,7 +62,7 @@ namespace Pixy
 		mUIEngine->setup();
 
 		mScriptEngine = ScriptEngine::getSingletonPtr();
-		mScriptEngine->setup();
+		mScriptEngine->setup(mId);
 
     //~ bind(EventUID::JoinLobby, boost::bind(&Intro::onJoinLobby, this, _1));
     bind(EventUID::SyncPuppets, boost::bind(&Intro::onSyncPuppets, this, _1));
@@ -70,6 +71,7 @@ namespace Pixy
 
 		// start the interface chain
 		mScriptEngine->runScript("intro/entry_point.lua");
+    mScriptEngine->passToLua("Intro.onEnter", 0);
 
 		/*
 		mLog->infoStream() << "creating puppet and a deck";
@@ -104,7 +106,7 @@ namespace Pixy
 	void Intro::exit( void ) {
 
     if (fSetup)
-      mScriptEngine->passToLua("cleanup", 0);
+      mScriptEngine->passToLua("Intro.onExit", 0);
 
 		//mNetMgr->disconnect();
 
@@ -170,7 +172,8 @@ namespace Pixy
 				break;
 			case OIS::KC_SPACE:
 				//fireLoginEvt();
-				//GameManager::getSingleton().changeState(Combat::getSingletonPtr());
+				//~ GameManager::getSingleton().changeState(Combat::getSingletonPtr());
+				GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
 				break;
 		}
 

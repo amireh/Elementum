@@ -1,4 +1,4 @@
-Profiles.Listing = {}
+Profiles.Listing = UISheet:new("intro/profiles/listing.layout")
 
 local isSetup = false
 local Listbox = nil
@@ -78,8 +78,10 @@ local onItemSelectionChanged = function(args)
   return true
 end
 
-Profiles.Listing.attach = function()
-  Profiles.Layout = Pixy.UI.attach("intro/profiles/listing.layout")
+function Profiles.Listing:attach()
+  UISheet.attach(self)
+
+  --~ Profiles.Layout = Pixy.UI.attach("intro/profiles/listing.layout")
   Buttons.JoinLobby = CEWindowMgr:getWindow("Elementum/Intro/Buttons/JoinLobby")
   Buttons.Back = CEWindowMgr:getWindow("Elementum/Intro/Buttons/BackToLogin")
   Buttons.CreatePuppet = CEWindowMgr:getWindow("Elementum/Intro/Buttons/CreatePuppet")
@@ -112,7 +114,9 @@ Profiles.Listing.attach = function()
   --isSetup = true
 end
 
-Profiles.Listing.detach = function()
+function Profiles.Listing:detach()
+  UISheet.detach(self)
+
   Buttons = {}
   RaceText = nil
   Listbox:removeEvent("ItemSelectionChanged")

@@ -44,9 +44,14 @@
         <Property Name="SizingEnabled" Value="False" />
         <Property Name="CloseButtonEnabled" Value="False" />
         <Property Name="Text" Value="Available Spells" />
+        <Window Type="TaharezLook/ScrollablePane" Name="Decks/Scroller/Spells">
+          <Property Name="UnifiedAreaRect" Value="{{00,0},{0,0},{1,0},{1,0}}" />
 
-        <Window Type="GridLayoutContainer" Name="Decks/Containers/Spells">
+          <Window Type="GridLayoutContainer" Name="Decks/Containers/Spells">
+            <Property Name="UnifiedAreaRect" Value="{{00,0},{0,0},{0.95,0},{0.95,0}}" />
+          </Window>
         </Window>
+
 
       </Window>
 
@@ -92,7 +97,7 @@
     <Window Type="Vanilla/Button" Name="Decks/Buttons/Back">
       <Property Name="Text" Value="Back" />
       <Property Name="UnifiedAreaRect" Value="{{0.025,0},{0.925,0},{0.15,0},{0.975,0}}" />
-      <Event Name="Clicked" Function="Decks.detach" />
+      <Event Name="Clicked" Function="Decks.backToChat" />
     </Window>
 
   </Window>

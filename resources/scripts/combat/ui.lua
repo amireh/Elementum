@@ -78,6 +78,12 @@ UI.configure = function()
 end
 
 UI.cleanup = function()
+  local idx = 0
+  while idx < UI.Hand:getChildCount() do
+    local win = UI.Hand:getChildAtIdx(idx)
+    UI.ClearAnimations(win)
+    idx = idx + 1
+  end
   --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.ShowTooltip:getDefinition():getName())
   --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.HideTooltip:getDefinition():getName())
 end
@@ -364,6 +370,13 @@ UI.Toggle = function()
   end
 end
 
+UI.onDisconnected = function(e)
+  Pixy.UI.waiting("The connection to the server has been lost.", UI.Root, function()
+    GameMgr:changeState(IntroState)
+  end)
+
+  return true
+end
 -- configure
 UI.configure()
 

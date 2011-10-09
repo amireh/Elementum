@@ -25,7 +25,7 @@ Lobby.doLeaveQueue = function(args)
   button:enable()
   button:show()
 
-  Pixy.UI.doneWaiting(false)
+  UISheet.hideDialog()
 end
 
 Lobby.onJoinQueue = function(e)
@@ -39,17 +39,17 @@ Lobby.onJoinQueue = function(e)
 
     IntroState:setPuppetName(Selected:getName())
 
-    Pixy.UI.waiting("Looking for opponents", Chat.Layout)
+    UISheet.showDialog("Looking for opponents")
   else
     CEWindowMgr:getWindow("Elementum/Chat/Buttons/JoinQueue"):enable()
-    Pixy.UI.attachOverlay("ProgressBox"):setText("Unable to join the queue.")
+    UISheet.showDialog("Unable to join the queue.")
   end
 
 end
 
 Lobby.onMatchFound = function(e)
   --clearBindings()
-  Chat.detach()
+  Chat:detach()
   --Intro.cleanup()
   --~ GameMgr:changeState(CombatState)
 
@@ -59,17 +59,18 @@ end
 Lobby.doLogout = function(e)
   NetMgr:disconnect()
   --GameMgr:changeState(IntroState)
-  Chat.detach()
+  Chat:detach()
+  Chat.cleanup()
   Decks.cleanup()
 
   --~ clearBindings()
   --~ Intro.bind()
 
   --require("intro/entry_point")
-  MainMenu.attach()
+  MainMenu:attach()
 end
 
 Lobby.showDecks = function()
-  Decks.attach()
+  Decks:attach()
 end
 

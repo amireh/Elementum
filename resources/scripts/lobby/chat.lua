@@ -1,14 +1,10 @@
 -- UISheet : Chat
 
-require("helpers")
-
 MinMessageLength = 2
 MaxMessageLength = 255
 MaxMessages = 50
 
-if not Chat then
-  Chat = { Errors = { General = {} } }
-end
+Chat = { Errors = { General = {} } }
 
 local SelectedRnd = nil
 Lobby.DeckList = nil
@@ -53,8 +49,8 @@ Chat = {
     help = nil
   }
 }
-
 Chat.Errors.Whisper.TooShort = Chat.Errors.General.TooShort
+Chat = UISheet:new("lobby/chat.layout", Chat)
 
 require("lobby/chat_commands")
 
@@ -66,8 +62,8 @@ CurrentWhisperTarget = nil
 CurrentChatMessage = nil
 
 local isSetup = false
-Chat.attach = function()
-	Chat.Layout = Pixy.UI.attach("lobby/chat.layout")
+function Chat:attach()
+  UISheet.attach(self)
   --MsgBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Text/Messages"))
   InputBox = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Chat/Editbox/Message"))
   RoomBox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Chat/Listboxes/Clients"))
@@ -84,7 +80,10 @@ Chat.attach = function()
   isSetup = true
 end
 
-Chat.detach = function()
+function Chat:detach()
+  UISheet.detach(self)
+
+  if not isSetup then return true end
 
   -- destroy rooms
   for room in list_iter(__RoomNames__) do
@@ -104,13 +103,17 @@ Chat.detach = function()
 
 	--~ CEWindowMgr:destroyWindow(Chat.Layout)
 	--~ Chat.Layout:hide()
-  FxEngine:dehighlight()
-  Pixy.UI.detach(Chat.Layout)
+  --~ FxEngine:dehighlight()
+
 end
 
 Chat.cleanup = function()
   if not isSetup then return true end
 
+  Fx.dehighlight()
+  Chat:detach()
+
+  isSetup = false
   return true
 end
 
@@ -649,7 +652,7 @@ end
 Chat.onPuppetSynced = function(e)
   CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(Puppet:getName())
   SelectedRnd = Profiles.Knights[raceToString(Puppet:getRace())]:getRenderable()
-  FxEngine:highlight(SelectedRnd)
+  Fx.highlight(SelectedRnd)
 
   return true
 end

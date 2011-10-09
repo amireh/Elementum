@@ -68,6 +68,9 @@ namespace Pixy {
 
 
 	bool FxEngine::setup() {
+    mPortableEffects.clear();
+    mDeathlist.clear();
+
 		if (fSetup)
 			return true;
 
@@ -102,10 +105,10 @@ namespace Pixy {
     mDeathlist.clear();
 	}
 
-  void FxEngine::loadEffect(std::string inName) {
+  ParticleUniverse::ParticleSystem* FxEngine::loadEffect(std::string inName) {
     // make sure it's not already registered
     if (mEffects.find(inName) != mEffects.end())
-      return;
+      return mEffects.find(inName)->second;
 
     ParticleUniverse::ParticleSystem* effect = 0;
     effect =
@@ -115,14 +118,14 @@ namespace Pixy {
 
     mEffects.insert(std::make_pair(inName, effect));
 
-    effect = 0;
+    return effect;
   }
 
-  void FxEngine::registerHighlightEffect(std::string inName) {
+  /*void FxEngine::registerHighlightEffect(std::string inName) {
     assert(mEffects.find(inName) != mEffects.end());
 
     mHighlightEffect = mEffects.find(inName)->second;
-  }
+  }*/
 
   ParticleUniverse::ParticleSystem* FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Renderable* inEntity) {
 
@@ -317,7 +320,7 @@ namespace Pixy {
   }
 
   void FxEngine::unloadAllEffects() {
-    dehighlight();
+    //~ dehighlight();
     mEffects.clear();
     mDeathlist.clear();
     mFxMgr->destroyAllParticleSystems(mSceneMgr);

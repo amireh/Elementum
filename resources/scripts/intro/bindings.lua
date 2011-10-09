@@ -2,7 +2,7 @@ Intro.bind = function()
   --bind(Pixy.EventUID.ChangingState, Intro.cleanup)
   bind(Pixy.EventUID.ShuttingDown, Intro.shutdown)
 
-  bind(Pixy.EventUID.GameDataSynced, Pixy.onGameDataSynced);
+  bind(Pixy.EventUID.GameDataSynced, Intro.onGameDataSynced);
 
   bind(Pixy.EventUID.Connected, MainMenu.onConnected)
   bind(Pixy.EventUID.Login, MainMenu.onLogin)
@@ -31,7 +31,5 @@ Intro.bind = function()
   bind(Pixy.EventUID.PuppetSynced, Chat.onPuppetSynced)
   bind(Pixy.EventUID.PuppetDecksSynced, Chat.onPuppetDecksSynced)
 
-  cleanup = Intro.cleanup
-  arbitraryFunc = arbitraryFuncIntro
 end
 --Pixy.Log("I'm BEING CALLED")

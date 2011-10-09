@@ -46,6 +46,7 @@ namespace Pixy {
     }
 
     virtual void start();
+    virtual void stop();
 
   protected:
     //void on_ping(const message &);

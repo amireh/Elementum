@@ -15,11 +15,21 @@ namespace Pixy
   OgreRTT::~OgreRTT()
   {
     GfxEngine::getSingletonPtr()->detachRTT(this);
-    //~ delete mMiniScreen;
+    this->disable();
+    delete mMiniScreen;
+    mSceneMgr->destroySceneNode(mSceneNode);
+    Ogre::MaterialManager::getSingleton().remove(mMatPtr->getName());
+    //~ Ogre::TextureManager::getSingleton().remove(mTexture->getName());
+
+    //~ delete mMatTechnique;
+    //~ mSceneNode = 0;
+
+    //~ delete mRenderTexture;
   }
 
-  void OgreRTT::setup(Ogre::SceneManager *mSceneMgr, Ogre::RenderWindow *inWindow, Ogre::Camera *inCamera)
+  void OgreRTT::setup(Ogre::SceneManager *inSceneMgr, Ogre::RenderWindow *inWindow, Ogre::Camera *inCamera)
   {
+    mSceneMgr = inSceneMgr;
     mWindow = inWindow;
     mCamera = inCamera;
 

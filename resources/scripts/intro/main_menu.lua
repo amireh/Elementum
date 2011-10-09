@@ -1,12 +1,12 @@
 -- UISheet : MainMenu
 
-MainMenu = {}
-local Gremlin = nil
+MainMenu = UISheet:new("intro/login.layout")
 
+local Gremlin = nil
 local Form = {}
-require "lfs"
+
 local idx = 0
-MainMenu.CreateGremlin = function(mesh, material)
+local createGremlin = function(mesh, material)
 
   local unit = Pixy.CUnit:new()
   --~ unit:setRank(Pixy.PUPPET)
@@ -70,22 +70,15 @@ MainMenu.CreateGremlin = function(mesh, material)
 end
 
 local isSetup = false
-MainMenu.attach = function()
-  Pixy.Effects.Configure()
+function MainMenu:attach()
+  UISheet.attach(self)
 
-	MainMenu.Layout = Pixy.UI.attach("intro/login.layout")
   Form.Username = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username")
 	Form.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
   Form.Username:activate()
 
-  --~ MainMenu.Layout:hide()
-  --~ bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
+  bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
 	if isSetup then return true end
-
-  SceneMgr = GfxEngine:getSceneMgr()
-  Viewport = GfxEngine:getViewport()
-  Window = GfxEngine:getWindow()
-  Camera = GfxEngine:getCamera()
 
   Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
   Camera:setNearClipDistance( 10 )
@@ -145,36 +138,36 @@ MainMenu.attach = function()
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
 
-  Gremlin = MainMenu.CreateGremlin("Gremlin2.mesh", "Engineer")
+  do
+    Gremlin = createGremlin("Gremlin2.mesh", "Engineer")
 
-  Gremlin2 = MainMenu.CreateGremlin("Gremlin1.mesh", "Brawler")
-  Gremlin2:getRenderable():getSceneNode():setPosition(Ogre.Vector3(10, 0, 0))
-  Gremlin2:getRenderable():getSceneNode():setScale(Ogre.Vector3(15))
-  Gremlin2:getRenderable():getSceneNode():yaw(Ogre.Degree(-75))
-  Gremlin2:getRenderable():animateRest()
+    Gremlin2 = createGremlin("Gremlin1.mesh", "Brawler")
+    Gremlin2:getRenderable():getSceneNode():setPosition(Ogre.Vector3(10, 0, 0))
+    Gremlin2:getRenderable():getSceneNode():setScale(Ogre.Vector3(15))
+    Gremlin2:getRenderable():getSceneNode():yaw(Ogre.Degree(-75))
+    Gremlin2:getRenderable():animateRest()
 
-  Gremlin3 = MainMenu.CreateGremlin("Gremlin3.mesh", "Master")
-  Gremlin3:getRenderable():getSceneNode():setPosition(Ogre.Vector3(-10, 0, 0))
-  Gremlin3:getRenderable():getSceneNode():setScale(Ogre.Vector3(10))
-  Gremlin3:getRenderable():getSceneNode():yaw(Ogre.Degree(75))
+    Gremlin3 = createGremlin("Gremlin3.mesh", "Master")
+    Gremlin3:getRenderable():getSceneNode():setPosition(Ogre.Vector3(-10, 0, 0))
+    Gremlin3:getRenderable():getSceneNode():setScale(Ogre.Vector3(10))
+    Gremlin3:getRenderable():getSceneNode():yaw(Ogre.Degree(75))
 
-  GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
-  GfxEngine:getCameraMan():setTarget(Gremlin:getRenderable():getSceneNode())
-  GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
+    GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
+    GfxEngine:getCameraMan():setTarget(Gremlin:getRenderable():getSceneNode())
+    GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
+  end
 
   isSetup = true
 end
 
-MainMenu.detach = function()
+function MainMenu:detach()
   --~ unbind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
-
+  UISheet.detach(self)
   --~ Pixy.UI.doneWaiting(false)
 	--~ CEWindowMgr:destroyWindow(MainMenu.Layout)
   --~ MainMenu.Layout:hide()
-  Pixy.UI.detach(MainMenu.Layout)
-  Form = {}
 
-  Gremlin:die()
+  if Gremlin then Gremlin:die() end
 end
 
 MainMenu.Quit = function(e)
@@ -191,25 +184,26 @@ MainMenu.cleanup = function()
     Gremlin2:delete()
     Gremlin3:delete()
   end
-  if RTT then
-    --~ RTT:delete()
-    --~ SceneMgr:destroyCamera(testCamera)
-    RTT = nil
-    testCamera = nil
+  if SceneMgr:hasEntity("Floor") then
+    SceneMgr:destroyEntity("Floor")
   end
+
   Gremlin = nil
   Gremlin2 = nil
   Gremlin3 = nil
+
+  MainMenu:detach()
   isSetup = false
 end
 
 
 MainMenu.reqLogin = function(inEvt)
+  local self = MainMenu
 
 	-- nop, send the event now then
 	Pixy.Log("firing Login event")
 
-	Pixy.UI.waiting("Connecting...", MainMenu.Layout)
+	UISheet.showDialog("Connecting...")
   NetMgr:disconnect()
   NetMgr:connect()
 
@@ -217,14 +211,14 @@ MainMenu.reqLogin = function(inEvt)
 end
 
 MainMenu.onConnected = function(e)
+  local self = MainMenu
+
   if e.Feedback == Pixy.EventFeedback.Error then
-    PBox_Label:setText("Unable to connect to server.")
-    Pixy.UI.doneWaiting(true)
+    UISheet.showDialog("Unable to connect to server.")
     return true
   end
 
-  Pixy.UI.doneWaiting(false)
-  Pixy.UI.waiting("Authenticating", MainMenu.Layout)
+  UISheet.showDialog("Authenticating...")
 
   -- hook login event
   local mEvt = Pixy.Event(Pixy.EventUID.Login)
@@ -236,20 +230,18 @@ MainMenu.onConnected = function(e)
   return true
 end
 
-MainMenu.onLogin = function(inEvt)
-	Pixy.UI.doneWaiting(true)
+MainMenu.onLogin = function(e)
 
-	if (inEvt.Feedback == Pixy.EventFeedback.Ok) then
-		Pixy.Log("login successful")
-
+	if e.Feedback == Pixy.EventFeedback.Ok then
     local req = Pixy.Event(Pixy.EventUID.SyncPuppets)
     NetMgr:send(req)
+
+    UISheet.showDialog("Retrieving character list...")
 
 		return true
 	end
 
-	Pixy.Log("login failed")
-	PBox_Label:setText("Login failed.")
+  UISheet.showDialog("Login failed.")
 
 	return true
 end
@@ -259,7 +251,23 @@ MainMenu.onEntityDied = function(e)
   local entity = tolua.cast(e.Any, "Pixy::CUnit")
   local rnd = entity:getRenderable()
   rnd:hide()
-  FxEngine:playEffect("Elementum/Fx/Desummon", rnd:getSceneNode():getPosition())
+  --~ FxEngine:playEffect("Elementum/Fx/Desummon", rnd:getSceneNode():getPosition())
 
   return true
 end
+
+MainMenu.showGremlins = function()
+  if Gremlin and not Gremlin:isDead() then
+    Gremlin:getRenderable():show()
+  end
+  if Gremlin2 then Gremlin2:getRenderable():show() end
+  if Gremlin3 then Gremlin3:getRenderable():show() end
+end
+MainMenu.hideGremlins = function()
+  if Gremlin and not Gremlin:isDead() then
+    Gremlin:getRenderable():hide()
+  end
+  if Gremlin2 then Gremlin2:getRenderable():hide() end
+  if Gremlin3 then Gremlin3:getRenderable():hide() end
+end
+
