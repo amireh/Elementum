@@ -5,7 +5,7 @@ local SummoningEffects = {
   Fire = "FireSummoning"
 }
 Units = {}
-Combat.CreateUnit = function(inUnit)
+Units.onCreateUnit = function(inUnit)
 
 	local handler = Handlers[inUnit:getName()]
 	if not handler then
@@ -46,10 +46,9 @@ function subscribe_generic_unit_handler(inState, inMethod)
 end
 
 function unsubscribe_generic_unit_handler(inState, inMethod)
-  removeByValue(Handlers.Generic[inState], inMethod)
+  remove_by_value(Handlers.Generic[inState], inMethod)
 end
 
-require("d_lister")
 path_to_handlers = ScriptPrefix .. "/combat/unit_handlers"
 races = {"earth", "air", "fire", "water"}
 package.path = path_to_handlers .. "/?.lua;" .. package.path

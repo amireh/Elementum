@@ -10,39 +10,9 @@ UI.LogSpellCast = function(inSpell)
   if (self_cast) then target = "Player" else target = "Enemy" end
   Pixy.Log("Spell's log target : " .. target)
 
-  local lButton = UI.__DrawSpellButton(inSpell, UI.Containers.SpellLog[target], UI.Config.Dim.LogButton, "Log")
+  local lButton = UI.Helpers.DrawSpellButton(inSpell, UI.Containers.SpellLog[target], UI.Config.Dim.LogButton, "Log")
 
-  --[[
-  local name = inSpell:getUID() .. "_log"
-  local win = CEWindowMgr:createWindow("TaharezLook/ImageButton", name)
-  UI.Containers.SpellLog[target]:addChildWindow(win)
-
-  -- sanitize spell name to match image set name
-  local image_set = "Spells_" .. raceToString(inSpell:getRace())
-  local image_name = string.gsub(inSpell:getName(), "%s", "_")
-
-	local image = "set:" .. image_set .. " image:" .. image_name
-	win:setProperty("NormalImage",   image .. "_Normal")
-	win:setProperty("HoverImage",    image .. "_Hover")
-	win:setProperty("PushedImage",   image .. "_Pushed")
-	win:setProperty("DisabledImage", image .. "_Disabled")
-  --win:setUserString("Tooltip", inSpell:getTooltip())
-	win:setSize(UI.Config.Dim.LogButton)
-  UIEngine:setMargin(win,
-    CEGUI.UBox(
-      CEGUI.UDim(0,5),
-      CEGUI.UDim(0,5),
-      CEGUI.UDim(0,0),
-      CEGUI.UDim(0,5)))
-
-  win:moveToFront()
-  win:show()
-
-  win:subscribeEvent("MouseEnter", "UI.ShowLogTooltip")
-  win:subscribeEvent("MouseLeave", "UI.HideLogTooltip")
-  --]]
-
-  lButton["Window"]:setProperty("Alpha", "0.5")
+  --~ lButton["Window"]:setProperty("Alpha", "0.5")
   lButton["Window"]:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   lButton["Window"]:subscribeEvent("MouseLeave", "UI.HideTooltip")
 

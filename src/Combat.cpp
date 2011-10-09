@@ -89,6 +89,7 @@ namespace Pixy
 
 		// start the interface chain
 		mScriptEngine->runScript("combat/entry_point.lua");
+    mScriptEngine->passToLua("Combat.onEnter", 0);
     //~ mScriptEngine->passToLua("PrepareScene", 0);
 
 		mLog->infoStream() << "i'm up!";
@@ -132,7 +133,7 @@ namespace Pixy
 
 	void Combat::exit( void ) {
     if (fSetup)
-      mScriptEngine->passToLua("cleanup", 0);
+      mScriptEngine->passToLua("Combat.onExit", 0);
 
 		puppets_t::iterator lPuppet;
 		for (lPuppet = mPuppets.begin(); lPuppet != mPuppets.end(); ++lPuppet) {
@@ -329,18 +330,18 @@ namespace Pixy
 
 	void Combat::registerPuppet(CPuppet* inPuppet) {
 		mPuppets.push_back(inPuppet);
-    mScriptEngine->passToLua("Combat.addPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
+    mScriptEngine->passToLua("Puppets.onAddPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
     if (inPuppet->getName() == mPuppetName)
       assignPuppet(inPuppet);
     else
-      mScriptEngine->passToLua("Combat.assignEnemyPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
+      mScriptEngine->passToLua("Puppets.onAssignEnemyPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
 	}
 
   void Combat::assignPuppet(CPuppet* inPuppet) {
     assert(inPuppet);
     mLog->infoStream() << "I'm playing with a puppet named " << inPuppet->getName();
     mPuppet = inPuppet;
-    mScriptEngine->passToLua("Combat.assignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
+    mScriptEngine->passToLua("Puppets.onAssignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
   }
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
@@ -495,7 +496,7 @@ namespace Pixy
 
     // set up the scene
     mGfxEngine->setupCombat();
-    mScriptEngine->passToLua("Combat.setupScene", 0);
+    //~ mScriptEngine->passToLua("Gfx.PrepareScene", 0);
 
     // render all the puppets
     for (puppets_t::iterator puppet_itr = mPuppets.begin();
@@ -506,7 +507,7 @@ namespace Pixy
         mPuppet = puppet;
 
       puppet->live();
-      mScriptEngine->passToLua("Combat.createPuppet", 1, "Pixy::CPuppet", (void*)puppet);
+      mScriptEngine->passToLua("Puppets.onCreatePuppet", 1, "Pixy::CPuppet", (void*)puppet);
       //~ mGfxEngine->attachToScene(puppet->getRenderable());
     }
 
@@ -520,8 +521,8 @@ namespace Pixy
 
   void Combat::handleNewTurn() {
 
-    mScriptEngine->passToLua("Combat.assignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
-    mScriptEngine->passToLua("Combat.onHandleNewTurn", 0);
+    mScriptEngine->passToLua("Puppets.onAssignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+    mScriptEngine->passToLua("Turns.onNewTurn", 0);
 
     // apply active buffs
     for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
@@ -529,7 +530,7 @@ namespace Pixy
          ++buff)
     {
       mScriptEngine->passToLua(
-        "CastSpell", 3,
+        "Spells.onCastSpell", 3,
         "Pixy::Renderable", (*buff)->getCaster(),
         "Pixy::Renderable", (*buff)->getTarget(),
         "Pixy::CSpell", *buff);
@@ -564,7 +565,7 @@ namespace Pixy
            ++buff)
       {
         mScriptEngine->passToLua(
-        "CastSpell", 3,
+        "Spells.onCastSpell", 3,
         "Pixy::Renderable", (*buff)->getCaster(),
         "Pixy::Renderable", (*buff)->getTarget(),
         "Pixy::CSpell", *buff);
@@ -667,7 +668,7 @@ namespace Pixy
 
         if (lPuppet == mPuppet) {
           //mUIEngine->drawSpell(lSpell);
-          mScriptEngine->passToLua("Combat.onDrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
+          mScriptEngine->passToLua("Spells.onDrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
           mUIEngine->refreshSize();
         }
@@ -707,7 +708,7 @@ namespace Pixy
 
           if (lPuppet == mPuppet)
             //mUIEngine->dropSpell(lSpell);
-            mScriptEngine->passToLua("Combat.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+            mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
 
           lPuppet->detachSpell(lSpell->getUID());
           lSpell = 0;
@@ -782,7 +783,7 @@ namespace Pixy
       lSpell->setTarget(lCaster->getRenderable());
 
     mScriptEngine->passToLua(
-      "CastSpell", 3,
+      "Spells.onCastSpell", 3,
       "Pixy::Renderable", lCaster->getRenderable(),
       "Pixy::Renderable", lTarget,
       "Pixy::CSpell", lSpell);
@@ -790,7 +791,7 @@ namespace Pixy
     //std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
     // remove it from the UI
     if (lCaster == mPuppet)
-      mScriptEngine->passToLua("Combat.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+      mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
     //mUIEngine->dropSpell(_spell);
     // remove it from the puppet's hand if it's not a buff
     lCaster->detachSpell(lSpell->getUID(), lSpell->getDuration() == 0);
@@ -818,7 +819,7 @@ namespace Pixy
     _unit->live();
     //~ mGfxEngine->attachToScene(_unit->getRenderable());
 
-    mScriptEngine->passToLua("Combat.onCreateUnit", 1, "Pixy::CUnit", (void*)_unit);
+    mScriptEngine->passToLua("Units.onCreateUnit", 1, "Pixy::CUnit", (void*)_unit);
 
     _unit = 0;
     _owner = 0;
@@ -835,7 +836,7 @@ namespace Pixy
     //std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
 
     _puppet->updateFromEvent(evt);
-    mScriptEngine->passToLua("Combat.onUpdatePuppet", 1, "Pixy::CPuppet", (void*)_puppet);
+    mScriptEngine->passToLua("Puppets.onUpdatePuppet", 1, "Pixy::CPuppet", (void*)_puppet);
 
     return true;
   }

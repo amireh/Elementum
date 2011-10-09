@@ -1,6 +1,5 @@
 Intro.bind = function()
-  --bind(Pixy.EventUID.ChangingState, Intro.cleanup)
-  bind(Pixy.EventUID.ShuttingDown, Intro.shutdown)
+  bind(Pixy.EventUID.ShuttingDown, Intro.onShutdown)
 
   bind(Pixy.EventUID.GameDataSynced, Intro.onGameDataSynced);
 

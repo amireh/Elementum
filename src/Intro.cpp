@@ -172,8 +172,8 @@ namespace Pixy
 				break;
 			case OIS::KC_SPACE:
 				//fireLoginEvt();
-				//~ GameManager::getSingleton().changeState(Combat::getSingletonPtr());
-				GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
+				GameManager::getSingleton().changeState(Combat::getSingletonPtr());
+				//~ GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
 				break;
 		}
 

@@ -34,9 +34,9 @@ Pixy.dontUpdateMe = function(inCallback)
 	end
 end
 
-Pixy.update = function()
+Pixy.update = function(dt)
 	for callback in list_iter(WantUpdates) do
-		callback()
+		callback(dt)
 	end
 end
 

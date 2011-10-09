@@ -101,6 +101,8 @@ function Chat:detach()
   Chat.WhisperHistory = {}
   Chat.Context = nil
 
+  isSetup = false
+
 	--~ CEWindowMgr:destroyWindow(Chat.Layout)
 	--~ Chat.Layout:hide()
   --~ FxEngine:dehighlight()

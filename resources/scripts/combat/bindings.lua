@@ -4,10 +4,12 @@ Combat.bind = function()
   --bind("AssignPuppets", Combat.assignPuppets)
   --bind("CreatePuppet", Combat.createPuppet)
   --bind("GameStarted", Combat.gameStarted)
+  bind(Pixy.EventUID.ShuttingDown, Combat.onShutdown)
   bind(Pixy.EventUID.Disconnected, UI.onDisconnected)
 
-  bind(Pixy.EventUID.EntitySelected, Combat.onEntitySelected)
-  bind(Pixy.EventUID.EntityDeselected, Combat.onEntityDeselected)
+  bind(Pixy.EventUID.EntitySelected, Gfx.onEntitySelected)
+  bind(Pixy.EventUID.EntityDeselected, Gfx.onEntityDeselected)
+
   bind(Pixy.EventUID.UnitAttacked, UI.onEntityAttacked)
   bind(Pixy.EventUID.EntityDying, Units.onEntityDying)
 
@@ -24,7 +26,6 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntityStatChanged, UI.onStatChange)
   bind(Pixy.EventUID.UnitMechanicChanged, UI.onMechanicChanged)
 
-
   -- updating the player's hand --
   bind(Pixy.EventUID.StartTurn, Hand.Update)
   bind(Pixy.EventUID.TurnStarted, Hand.Update)
@@ -33,8 +34,8 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntityDeselected, Hand.Update)
   bind(Pixy.EventUID.StartBlockPhase, Hand.Update)
 
-  Input.bindToKeyReleased(OIS.KC_X, Combat.ToggleRTTCompositor)
-  Input.bindToKeyReleased(OIS.KC_Z, UI.Toggle)
+  Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
+  Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
+  Input.KeyRelease.bindToAll(Debug.playSpellEffect)
 
-  cleanup = Combat.cleanup
 end

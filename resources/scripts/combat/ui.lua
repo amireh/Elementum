@@ -8,7 +8,7 @@ if not UI then UI = {} end
 UI = {
 
   Config = {
-    Layout = "combat/ui.layout",
+    --~ Layout = "combat/ui.layout",
     Dim = {
       HandButton = CEGUI.UVector2(CEGUI.UDim(0.125,0),CEGUI.UDim(1,0)),
       BuffButton = CEGUI.UVector2(CEGUI.UDim(0.25,0),CEGUI.UDim(0.1,0)),
@@ -65,19 +65,13 @@ UI = {
 
 }
 
--- maps CEGUI Windows to CSpell objects
+UI = UISheet:new("combat/ui.layout", UI)
+
 local inBlockPhase = false
 
-UI.configure = function()
-
-	-- create our imagesets used for spell buttons
-	CEImagesetMgr:create( "spells_earth.imageset" )
-	CEImagesetMgr:create( "spells_fire.imageset" )
-  CEImagesetMgr:create( "huds.imageset" )
-
-end
-
 UI.cleanup = function()
+  UI:detach()
+
   local idx = 0
   while idx < UI.Hand:getChildCount() do
     local win = UI.Hand:getChildAtIdx(idx)
@@ -88,7 +82,8 @@ UI.cleanup = function()
   --~ CEGUI.AnimationManager:getSingleton():destroyAnimation(UI.Animes.HideTooltip:getDefinition():getName())
 end
 
-UI.registerGlobals = function()
+function UI:attach()
+  UISheet.attach(self)
 
   UI.Root = CEWindowMgr:getWindow("Combat")
   UI.Hand = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Hand"))
@@ -129,9 +124,14 @@ UI.registerGlobals = function()
   --~ UI.Animes.HideTooltip = CEGUI.AnimationManager:getSingleton():instantiateAnimation("HideTooltip")
 end
 
+function UI:detach()
+  UISheet.detach(self)
+
+end
+
 -- effectively reloads the UI components and sheets
 -- NOTE: this destroys all currently drawn spell buttons too!
-UI.reload = function()
+UI.Reload = function()
 	CEWindowMgr:destroyWindow(CEWindowMgr:getWindow("Combat"))
 
 	local lLayout = CEWindowMgr:loadWindowLayout(UI.Config.LayoutPath)
@@ -314,9 +314,14 @@ UI.ClearAnimations = function(win)
   print("\t--destroyed " .. count .. " animation instances for window: " .. win:getName())
   UI.Animations[win] = {}
 end
-UI.isAnimating = function(anim)
-  local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
-  return instance:isRunning()
+UI.isAnimating = function(win, anim_name)
+  for anim in list_iter(UI.Animations[win]) do
+    if anim:getDefinition():getName() == anim_name then
+      return anim:isRunning()
+    end
+  end
+
+  return false
 end
 UI.StopAnimating = function(anim)
   local instance = CEGUI.AnimationManager:getSingleton():instantiateAnimation(anim)
@@ -371,17 +376,14 @@ UI.Toggle = function()
 end
 
 UI.onDisconnected = function(e)
-  Pixy.UI.waiting("The connection to the server has been lost.", UI.Root, function()
-    GameMgr:changeState(IntroState)
+  return UI.showDialog("The connection to the server has been lost.", function()
+    return GameMgr:changeState(IntroState)
   end)
-
-  return true
 end
--- configure
-UI.configure()
 
 require("combat/ui/helpers")
 require("combat/ui/tooltips")
 require("combat/ui/sct")
 require("combat/ui/hand")
+require("combat/ui/buffs")
 require("combat/ui/spell_log")

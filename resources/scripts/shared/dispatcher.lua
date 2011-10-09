@@ -97,4 +97,4 @@ Dispatcher.processEvt = function(inEvt)
 end
 
 Dispatcher.setup = setupEvtMap
-Dispatcher.cleanup = setupEvtMap
+Dispatcher.clearBindings = setupEvtMap

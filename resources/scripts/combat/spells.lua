@@ -7,12 +7,12 @@
 
 local Handlers = {}
 SpellValidators = {}
-
+Spells = {}
 -- type: incoming event handler
 -- job: parses the spell attributes from the given event,
 -- and attaches it to the puppet's hand, and finally calls the UI script
 -- to draw it
-Combat.DrawSpell = function(Spell)
+Spells.onDrawSpell = function(Spell)
   Pixy.Log("Drawing spell button: " .. Spell:getName())
   Hand.DrawSpell(Spell)
 --[[
@@ -33,7 +33,7 @@ Combat.DrawSpell = function(Spell)
 	return true
 end
 
-Combat.DropSpell = function(Spell)
+Spells.onDropSpell = function(Spell)
   Pixy.Log("Discarding spell button: " .. Spell:getName())
   Hand.DropSpell(Spell)
 end
@@ -41,7 +41,7 @@ end
 -- type: CEGUI event handler
 -- job: sends a request to the instance with the spell id
 -- awaiting EVT_OK feedback to actually cast it
-Combat.reqCastSpell = function(inUIEvt)
+Spells.reqCastSpell = function(inUIEvt)
 	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
 
@@ -67,7 +67,7 @@ end
 
 -- type: incoming event handler
 -- job: locates the spell given in the event and calls its registered handler
-Combat.CastSpell = function(inCaster, inTarget, inSpell)
+Spells.onCastSpell = function(inCaster, inTarget, inSpell)
 	local spellHandler = Handlers[inSpell:getName()]
   if not inSpell:getCaster() then
     Pixy.Log("Spell has no assigned caster!! returning")
@@ -100,7 +100,6 @@ function subscribe_spell_prereq(inSpellName, inMethod)
   SpellValidators[inSpellName] = inMethod
 end
 
-require("d_lister")
 path_to_handlers = ScriptPrefix .. "/combat/spell_handlers"
 races = {"earth", "air", "fire", "water"}
 package.path = path_to_handlers .. "/?.lua;" .. package.path

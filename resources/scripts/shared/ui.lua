@@ -4,7 +4,8 @@ Pixy.UI = {
   Dialog = {
     Window = nil,
     Label = nil,
-    OkButton = nil
+    OkButton = nil,
+    OkCallback = nil
   },
   Defaults = {
     Font = "DejaVuSans-10",
@@ -35,7 +36,7 @@ function UISheet:new(path_to_layout, o)
   local o = o or {}
   o.Path = path_to_layout
   o.Window = nil
-  o.Callbacks = {}
+  --~ o.Callbacks = {}
 
   setmetatable(o, {__index = self})
   self.__index = self
@@ -122,14 +123,18 @@ end
 
 -- this is called when the Dialog is attached to this sheet
 -- and its Ok button is pressed, and a callback is registered
-function UISheet:onDialogOk()
+function UISheet.onDialogOk()
+  local dialog = Pixy.UI.Dialog
   -- call the registered handler
-  self.Callbacks.DialogOk()
+  --~ self.Callbacks.DialogOk()
+  dialog.OkCallback()
   -- remove the subscription
   dialog.OkButton:removeEvent("Clicked")
 
-  self.Callbacks.DialogOk = nil
-  self:hideDialog()
+  dialog.OkCallback = nil
+  --~ self.Callbacks.DialogOk = nil
+  --~ self:hideDialog()
+  UISheet.hideDialog()
 
   return true
 end
@@ -164,11 +169,13 @@ function UISheet.showDialog(text, callback)
 
   if callback then
     -- call the registered handler when the Ok button is pressed
-    self.Callbacks.DialogOk = callback
+    --~ self.Callbacks.DialogOk = callback
+    dialog.OkCallback = callback
     dialog.OkButton:subscribeEvent("Clicked", self.onDialogOk)
   else
     -- hide the dialog when the Ok button is pressed
-    self.Callbacks.DialogOk = nil
+    --~ self.Callbacks.DialogOk = nil
+    dialog.OkCallback = nil
     dialog.OkButton:subscribeEvent("Clicked", UISheet.hideDialog)
   end
 
@@ -201,6 +208,7 @@ Pixy.UI.setup = function()
 	-- create our imagesets used for spell buttons
 	CEImagesetMgr:create( "spells_earth.imageset" )
 	CEImagesetMgr:create( "spells_fire.imageset" )
+  CEImagesetMgr:create( "huds.imageset" )
 
 	-- load a default font
   local defaults = Pixy.UI.Defaults

@@ -767,6 +767,9 @@ namespace Ogre {
 		virtual Light* createLight();
     virtual Light* getLight(const String& name) const;
 		virtual bool hasLight(const String& name) const;
+    virtual void destroyLight(const String& name);
+    virtual void destroyLight(Light*);
+    virtual void destroyAllLights(void);
 
 
     void setAmbientLight(const ColourValue& colour);

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sun Oct  9 18:53:46 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Oct  9 21:45:46 2011.
 */
 
 #ifndef __cplusplus
@@ -15619,6 +15619,98 @@ static int tolua_Elementum_Ogre_SceneManager_hasLight00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: destroyLight of class  Ogre::SceneManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneManager_destroyLight00
+static int tolua_Elementum_Ogre_SceneManager_destroyLight00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::SceneManager",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
+  const std::string name = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyLight'", NULL);
+#endif
+  {
+   self->destroyLight(name);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'destroyLight'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyLight of class  Ogre::SceneManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneManager_destroyLight01
+static int tolua_Elementum_Ogre_SceneManager_destroyLight01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::SceneManager",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::Light",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::Light* tolua_var_18 = ((Ogre::Light*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyLight'", NULL);
+#endif
+  {
+   self->destroyLight(tolua_var_18);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_Ogre_SceneManager_destroyLight00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyAllLights of class  Ogre::SceneManager */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneManager_destroyAllLights00
+static int tolua_Elementum_Ogre_SceneManager_destroyAllLights00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Ogre::SceneManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyAllLights'", NULL);
+#endif
+  {
+   self->destroyAllLights();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'destroyAllLights'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setAmbientLight of class  Ogre::SceneManager */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Ogre_SceneManager_setAmbientLight00
 static int tolua_Elementum_Ogre_SceneManager_setAmbientLight00(lua_State* tolua_S)
@@ -25684,6 +25776,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"createLight",tolua_Elementum_Ogre_SceneManager_createLight01);
     tolua_function(tolua_S,"getLight",tolua_Elementum_Ogre_SceneManager_getLight00);
     tolua_function(tolua_S,"hasLight",tolua_Elementum_Ogre_SceneManager_hasLight00);
+    tolua_function(tolua_S,"destroyLight",tolua_Elementum_Ogre_SceneManager_destroyLight00);
+    tolua_function(tolua_S,"destroyLight",tolua_Elementum_Ogre_SceneManager_destroyLight01);
+    tolua_function(tolua_S,"destroyAllLights",tolua_Elementum_Ogre_SceneManager_destroyAllLights00);
     tolua_function(tolua_S,"setAmbientLight",tolua_Elementum_Ogre_SceneManager_setAmbientLight00);
     tolua_function(tolua_S,"getAmbientLight",tolua_Elementum_Ogre_SceneManager_getAmbientLight00);
     tolua_function(tolua_S,"setWorldGeometry",tolua_Elementum_Ogre_SceneManager_setWorldGeometry00);

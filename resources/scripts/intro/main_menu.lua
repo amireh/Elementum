@@ -77,7 +77,7 @@ function MainMenu:attach()
 	Form.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
   Form.Username:activate()
 
-  bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
+  --~ bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
 	if isSetup then return true end
 
   Camera:setAspectRatio(Viewport:getActualWidth() / Viewport:getActualHeight())
@@ -167,7 +167,8 @@ function MainMenu:detach()
 	--~ CEWindowMgr:destroyWindow(MainMenu.Layout)
   --~ MainMenu.Layout:hide()
 
-  if Gremlin then Gremlin:die() end
+  --~ if Gremlin then Gremlin:die() end
+  if Gremlin then Gremlin:getRenderable():hide() end
 end
 
 MainMenu.Quit = function(e)
@@ -187,6 +188,8 @@ MainMenu.cleanup = function()
   if SceneMgr:hasEntity("Floor") then
     SceneMgr:destroyEntity("Floor")
   end
+
+  SceneMgr:destroyAllLights()
 
   Gremlin = nil
   Gremlin2 = nil

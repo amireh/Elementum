@@ -316,7 +316,7 @@
         <Property Name="Text" Value="End Turn" />
         <Property Name="UnifiedAreaRect" Value="{{0.33,0},{0,0},{0.65,0},{1,0}}" />
         <Property Name="Disabled" Value="False" />
-        <Event Name="Clicked" Function="Combat.reqEndTurn" />
+        <Event Name="Clicked" Function="Turns.reqEndTurn" />
       </Window>
       <Window Type="Combat/Button" Name="Combat/Buttons/Menu" >
         <Property Name="Visible" Value="True" />

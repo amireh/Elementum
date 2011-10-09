@@ -1305,9 +1305,11 @@ namespace Pixy {
 	  //~ dehighlight();
 
     if (inEntity->getEntity()->isDead() && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT) {
+      std::cout << "will not select a dead entity!\n";
       return;
     }
 
+    std::cout << "broadcasting entity selected!\n";
     Event e(EventUID::EntitySelected);
     e.Any = (void*)inEntity;
     mEvtMgr->hook(e);
@@ -1563,6 +1565,7 @@ namespace Pixy {
 
   void GfxEngine::unloadScene(OgreMax::OgreMaxScene* inScene) {
     inScene->Destroy();
+    delete inScene;
   }
 
   Ogre::Vector2 GfxEngine::getScreenCoords(Ogre::MovableObject* inObject) {
