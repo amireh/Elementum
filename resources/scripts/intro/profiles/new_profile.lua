@@ -124,11 +124,15 @@ function Profiles.NewProfile:attach()
 
   Profiles.ShowKnights()
 
+  Input.KeyRelease.bind(OIS.KC_ESCAPE, Profiles.NewProfile.Back)
+
 	if isSetup then return true end
 end
 
 function Profiles.NewProfile:detach()
   UISheet.detach(self)
+
+  Input.KeyRelease.bind(OIS.KC_ESCAPE, Profiles.NewProfile.Back)
 
   unbind(Pixy.EventUID.EntitySelected, onEntitySelected)
   unbind(Pixy.EventUID.CreatePuppet, onCreatePuppet)

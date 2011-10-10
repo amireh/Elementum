@@ -10,10 +10,6 @@ end
 
 require("pixy")
 
--- clear all event bindings
-Dispatcher.clearBindings()
-Input.clearBindings()
-
 if not Intro then Intro = {} end
 if not Lobby then Lobby = {} end
 

@@ -35,8 +35,8 @@ Combat.bind = function()
   bind(Pixy.EventUID.EntityDeselected, Hand.Update)
   bind(Pixy.EventUID.StartBlockPhase, Hand.Update)
 
-  --Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
-  --Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
-  --Input.KeyRelease.bindToAll(Debug.playSpellEffect)
+  Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
+  Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
+  Input.KeyRelease.bindToAll(Debug.playSpellEffect)
 
 end

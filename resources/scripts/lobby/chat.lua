@@ -17,6 +17,7 @@ Chat = {
     Whispering = nil
   },
   Context = nil,
+  InputBox = nil,
 
   Handlers = {
     Message = nil, -- a message sent to the room
@@ -52,14 +53,15 @@ Chat = {
 Chat.Errors.Whisper.TooShort = Chat.Errors.General.TooShort
 Chat = UISheet:new("lobby/chat.layout", Chat)
 
-require("lobby/chat_commands")
+require "lobby/chat/chat_commands"
+require "lobby/chat/chat_history"
+require "lobby/chat/chat_whispers"
 
 __RoomNames__ = {}
 
 Rooms = {}
 CurrentRoom = nil
 CurrentWhisperTarget = nil
-CurrentChatMessage = nil
 
 local isSetup = false
 function Chat:attach()
@@ -70,38 +72,34 @@ function Chat:attach()
   Lobby.DeckList = CEGUI.toCombobox(CEWindowMgr:getWindow("Elementum/Chat/Comboboxes/Decks"))
   RoomLabel = CEWindowMgr:getWindow("Elementum/Chat/Labels/ClientsNr")
   Tabs = CEGUI.toTabControl(CEWindowMgr:getWindow("Elementum/Containers/Rooms"))
+  Chat.InputBox = InputBox -- export it so chat_history.lua can see this
 
-  --~ GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
-  --~ GfxEngine:trackNode(Selected:getSceneNode())
-  --~ GfxEngine:setYawPitchDist(Ogre.Vector3:new(0, 20, 30))
+  Input.KeyRelease.bindToAll(Chat.onKeyReleased)
+  Input.KeyRelease.bind(OIS.KC_ESCAPE, Chat.backToListing)
+
+  if not isSetup then
+    Chat.History = Cyclable:new()
+    Chat.WhisperHistory = Cyclable:new()
+    isSetup = true
+  end
 
   InputBox:activate()
+end
 
-  isSetup = true
+Chat.backToListing = function()
+  local e = Pixy.Event(Pixy.EventUID.LeaveLobby)
+  NetMgr:send(e)
+
+  Decks.cleanup()
+  Chat.cleanup()
+  Profiles.attach()
 end
 
 function Chat:detach()
   UISheet.detach(self)
 
-  if not isSetup then return true end
-
-  -- destroy rooms
-  for room in list_iter(__RoomNames__) do
-    Chat.unregisterRoom(room)
-  end
-  Tabs:removeTab(Rooms["General"].Window:getName())
-  CEWindowMgr:destroyWindow(Rooms["General"].Window)
-
-  __RoomNames__ = {}
-  Rooms = {}
-  CurrentRoom = nil
-  CurrentWhisperTarget = nil
-  CurrentChatMessage = nil
-  Chat.History = {}
-  Chat.WhisperHistory = {}
-  Chat.Context = nil
-
-  isSetup = false
+  Input.KeyRelease.unbind(OIS.KC_ESCAPE, Chat.backToListing)
+  Input.KeyRelease.unbindFromAll(Chat.onKeyReleased)
 
 	--~ CEWindowMgr:destroyWindow(Chat.Layout)
 	--~ Chat.Layout:hide()
@@ -114,6 +112,21 @@ Chat.cleanup = function()
 
   Fx.dehighlight()
   Chat:detach()
+
+  -- destroy rooms
+  for room in list_iter(__RoomNames__) do
+    Chat.unregisterRoom(room)
+  end
+  Tabs:removeTab(Rooms["General"].Window:getName())
+  CEWindowMgr:destroyWindow(Rooms["General"].Window)
+
+  __RoomNames__ = {}
+  Rooms = {}
+  CurrentRoom = nil
+  --~ Chat.History = {}
+  Chat.History:destroy()
+  Chat.WhisperHistory:destroy()
+  Chat.Context = nil
 
   isSetup = false
   return true
@@ -219,7 +232,7 @@ Chat.unregisterRoom = function(room)
   Tabs:removeTab(Rooms[room].Window:getName())
   CEWindowMgr:destroyWindow(Rooms[room].Window)
   Rooms[room] = nil
-  removeByValue(__RoomNames__, room)
+  remove_by_value(__RoomNames__, room)
 
 end
 
@@ -279,8 +292,9 @@ Chat.onLeftRoom = function(e)
   local client = e:getProperty("S")
 
   Chat.showMessage(room, "has left the room.", client)
+  remove_by_value(Rooms[room].Clients, client)
 
-  if CurrentRoom == room then
+  if CurrentRoom.Name == room then
     Chat.refreshCurrentRoom()
 
     -- remove the client from the clients list
@@ -353,7 +367,7 @@ Chat.onSendWhisper = function(e)
   end
 end
 
-Chat.Send = function(e)
+Chat.send = function(e)
   local msg = InputBox:getText()
   local len = msg:len()
   local e = nil
@@ -487,26 +501,9 @@ Chat.Contexts.Typing = function()
 end
 
 Chat.onTextChanged = function(e)
-  if InputBox:getText() == "" then
-    CurrentChatMessage = nil
-    CurrentWhisperTarget = nil
-  end
 end
 
-Chat.saveMessage = function(msg)
-  -- history shouldn't be bigger than MaxMessages
-  local overflow = table.getn(Chat.History) - MaxMessages
-  if overflow > 0 then
-    for item in list_iter(Chat.History) do
-      print("removing message history overflow of " .. overflow .. " messages")
-      table.remove(Chat.History, item)
-      overflow = overflow+1
-      if overflow == 0 then break end
-    end
-  end
 
-  table.insert(Chat.History, msg)
-end
 
 Chat.Contexts.Whispering = function()
   -- there's no current whisper target set, see if there's any whisper history
@@ -524,122 +521,37 @@ Chat.Contexts.Whispering = function()
 end
 
 Chat.trackWhisperTarget = function(target)
-  local tracked = false
-  for favorite in list_iter(Chat.WhisperHistory) do
-    if favorite == target then
-      --tracked = true
-      removeByValue(Chat.WhisperHistory, target)
-      CurrentWhisperTarget = target
-      --table.remove(Chat.WhisperHistory, target)
-      break
-    end
+  local history = Chat.WhisperHistory
+  if history:find(target) then
+    history:remove(target)
   end
-  if not tracked then table.insert(Chat.WhisperHistory, target) end
+  history:add(target)
+  history:reset(true)
 end
 
 -- search for the cursor whisper target in the history
 -- and get the previous one
 -- if there is no cursor, simply fetch the first in history
 Chat.prevWhisperTarget = function()
-  local found = false
+  local history = Chat.WhisperHistory
 
-  -- is there any history at all?
-  if table.getn(Chat.WhisperHistory) == 0 then return false end
+  if history:isEmpty() then return true end
 
-  -- special case: CurrentWhisperTarget is the last in the list, so we rewind
-  if CurrentWhisperTarget == Chat.WhisperHistory[1] then
-    CurrentWhisperTarget = Chat.WhisperHistory[table.getn(Chat.WhisperHistory)]
-    --~ for dummy in rlist_iter(Chat.WhisperHistory) do
-      --~ CurrentWhisperTarget = dummy
-      --~ break
-    --~ end
-    found = true
-  else
-    -- normal case, get the next one if any
-    for client in rlist_iter(Chat.WhisperHistory) do
-      if not CurrentWhisperTarget or found then
-        CurrentWhisperTarget = client
-        found = true
-        break
-      end
+  InputBox:setText("/w " .. history:prev() .. " ")
+  InputBox:setCaratIndex(InputBox:getText():len()+1)
 
-      if client == CurrentWhisperTarget then found = true end
-    end
-  end
-
-  if found then
-    InputBox:setText("/w " .. CurrentWhisperTarget .. " ")
-    InputBox:setCaratIndex(MaxMessageLength+1)
-  end
-
-  return found
+  return true
 end
 
-Chat.prevChatMessage = function()
-  if not CurrentChatMessage and table.getn(Chat.History) > 0 then
-    for dummy in rlist_iter(Chat.History) do
-      CurrentChatMessage = dummy
-      break
-    end
-    InputBox:setText(CurrentChatMessage)
-    InputBox:setCaratIndex(MaxMessageLength+1)
-    return true
-  end
-
-  local found = false
-  for msg in rlist_iter(Chat.History) do
-    if not CurrentChatMessage or found then
-      CurrentChatMessage = msg
-      found = true
-      break
-    end
-
-    if msg == CurrentChatMessage then found = true end
-  end
-
-  if found then
-    InputBox:setText(CurrentChatMessage)
-    InputBox:setCaratIndex(MaxMessageLength+1)
-  end
-
-  return found
-end
-
-Chat.nextChatMessage = function()
-  if not CurrentChatMessage and table.getn(Chat.History) > 0 then
-    for dummy in list_iter(Chat.History) do
-      CurrentChatMessage = dummy
-      break
-    end
-    InputBox:setText(CurrentChatMessage)
-    InputBox:setCaratIndex(MaxMessageLength+1)
-    return true
-  end
-
-  local found = false
-  for msg in list_iter(Chat.History) do
-    if not CurrentChatMessage or found then
-      CurrentChatMessage = msg
-      found = true
-      break
-    end
-
-    if msg == CurrentChatMessage then found = true end
-  end
-
-  if found then
-    InputBox:setText(CurrentChatMessage)
-    InputBox:setCaratIndex(MaxMessageLength+1)
-  end
-
-  return found
-end
 
 Chat.onPuppetDecksSynced = function(e)
+  Intro.PuppetDecks = __PuppetDecksTemp
+  __PuppetDecksTemp = nil
+
   Lobby.DeckList:clearAllSelections()
   Lobby.DeckList:resetList()
 
-  for deck in list_iter(PuppetDecks) do
+  for deck in list_iter(Intro.PuppetDecks) do
     item = CEGUI.createListboxTextItem(deck:getName())
     Lobby.DeckList:addItem(item)
   end
@@ -648,13 +560,20 @@ Chat.onPuppetDecksSynced = function(e)
     Lobby.DeckList:setItemSelectState(0, true)
   end
 
+  Decks.onDecksSynced(Intro.PuppetDecks)
+
   return true
 end
 
 Chat.onPuppetSynced = function(e)
-  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(Puppet:getName())
-  SelectedRnd = Profiles.Knights[raceToString(Puppet:getRace())]:getRenderable()
+  Intro.Puppet = __PuppetTemp
+  __PuppetTemp = nil
+
+  CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(Intro.Puppet:getName())
+  SelectedRnd = Profiles.Knights[raceToString(Intro.Puppet:getRace())]:getRenderable()
   Fx.highlight(SelectedRnd)
+
+  Decks.onPuppetSynced(Intro.Puppet)
 
   return true
 end

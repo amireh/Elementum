@@ -37,7 +37,7 @@ Lobby.onJoinQueue = function(e)
     button:enable()
     button:show()
 
-    IntroState:setPuppetName(Selected:getName())
+    IntroState:setPuppetName(Intro.Puppet:getName())
 
     UISheet.showDialog("Looking for opponents")
   else
@@ -71,6 +71,7 @@ Lobby.doLogout = function(e)
 end
 
 Lobby.showDecks = function()
+  Chat:detach()
   Decks:attach()
 end
 

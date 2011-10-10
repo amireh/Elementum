@@ -48,7 +48,6 @@ Input.KeyRelease.unbindFromAll = function(handler)
 end
 
 Input.onKeyReleased = function(e)
-  print("got key hit")
   if Keybindings[e.key] then
     for handler in list_iter(Keybindings[e.key]) do
       handler(e)

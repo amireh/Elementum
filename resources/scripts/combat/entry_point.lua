@@ -10,10 +10,6 @@ end
 
 require("pixy")
 
--- clear all event bindings
-Dispatcher.clearBindings()
-Input.clearBindings()
-
 if not Combat then Combat = {} end
 
 require("combat/globals")

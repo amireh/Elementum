@@ -32,6 +32,17 @@ namespace Pixy
 	}
 
 	Intro::~Intro() {
+    for (Intro::puppets_t::iterator puppet = mPuppets.begin();
+      puppet != mPuppets.end();
+      ++puppet)
+    {
+      delete *puppet;
+    }
+    mPuppets.clear();
+    if (mPuppet)
+      delete mPuppet;
+    mPuppet = 0;
+
     if (mLog) {
 		  delete mLog;
 		  mLog = 0;
@@ -117,13 +128,7 @@ namespace Pixy
     //~ mScriptEngine->cleanup();
     //~ mUIEngine->cleanup();
 
-    for (Intro::puppets_t::iterator puppet = mPuppets.begin();
-      puppet != mPuppets.end();
-      ++puppet)
-    {
-      delete *puppet;
-    }
-    mPuppets.clear();
+
 
 		mLog->infoStream() << "---- Exited ----";
 
@@ -132,9 +137,7 @@ namespace Pixy
 
     //~ mPuppetName = mPuppet->getName();
 
-    if (mPuppet)
-      delete mPuppet;
-    mPuppet = 0;
+
 
     unbindAll();
 
@@ -166,7 +169,7 @@ namespace Pixy
 	void Intro::keyReleased( const OIS::KeyEvent &e ) {
     mUIEngine->keyReleased(e);
     mScriptEngine->keyReleased(e);
-		switch (e.key) {
+		/*switch (e.key) {
 			case OIS::KC_ESCAPE:
 				this->requestShutdown();
 				break;
@@ -175,7 +178,7 @@ namespace Pixy
 				GameManager::getSingleton().changeState(Combat::getSingletonPtr());
 				//~ GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
 				break;
-		}
+		}*/
 
 	}
 

@@ -3,6 +3,10 @@ if not Combat.Puppets then Combat.Puppets = {} end
 Combat.onEnter = function()
   Pixy.Log("Entering Combat state")
 
+  -- clear all event bindings
+  Dispatcher.clearBindings()
+  Input.clearBindings()
+
   Gfx.PrepareScene()
   UI:attach()
 

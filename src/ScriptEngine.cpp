@@ -409,7 +409,7 @@ namespace Pixy {
     CPuppet* mPuppet = Intro::getSingleton().getPuppet();
 
     tolua_pushusertype(mLUA, (void*)mPuppet, "Pixy::CPuppet");
-    lua_setglobal(mLUA, "Puppet");
+    lua_setglobal(mLUA, "__PuppetTemp");
 
     Event e(EventUID::PuppetSynced);
     EventManager::getSingleton().hook(e);
@@ -434,7 +434,7 @@ namespace Pixy {
         ++count;
       }
 
-      lua_setglobal(mLUA, "PuppetDecks");
+      lua_setglobal(mLUA, "__PuppetDecksTemp");
     }
 
     {

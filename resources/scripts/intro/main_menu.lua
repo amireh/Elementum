@@ -73,9 +73,17 @@ local isSetup = false
 function MainMenu:attach()
   UISheet.attach(self)
 
-  Form.Username = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username")
-	Form.Password = CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password")
+  Form.Username = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Username"))
+	Form.Password = CEGUI.toEditbox(CEWindowMgr:getWindow("Elementum/Scenes/Intro/Login/TextFields/Password"))
+
+  InputBoxes = Cyclable:new()
+  InputBoxes:add(Form.Password):add(Form.Username)
+
   Form.Username:activate()
+
+  Input.KeyRelease.bind(OIS.KC_ESCAPE, MainMenu.Quit)
+  Input.KeyRelease.bind(OIS.KC_RETURN, MainMenu.reqLogin)
+  Input.KeyRelease.bind(OIS.KC_TAB, MainMenu.onTab)
 
   --~ bind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
 	if isSetup then return true end
@@ -157,12 +165,18 @@ function MainMenu:attach()
     GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
   end
 
+
   isSetup = true
 end
 
 function MainMenu:detach()
   --~ unbind(Pixy.EventUID.EntityDied, MainMenu.onEntityDied)
   UISheet.detach(self)
+  Input.KeyRelease.unbind(OIS.KC_ESCAPE, MainMenu.Quit)
+  Input.KeyRelease.unbind(OIS.KC_RETURN, MainMenu.reqLogin)
+  Input.KeyRelease.unbind(OIS.KC_TAB, MainMenu.onTab)
+
+  InputBoxes:destroy()
   --~ Pixy.UI.doneWaiting(false)
 	--~ CEWindowMgr:destroyWindow(MainMenu.Layout)
   --~ MainMenu.Layout:hide()
@@ -257,6 +271,10 @@ MainMenu.onEntityDied = function(e)
   --~ FxEngine:playEffect("Elementum/Fx/Desummon", rnd:getSceneNode():getPosition())
 
   return true
+end
+
+MainMenu.onTab = function(e)
+  InputBoxes:next():activate()
 end
 
 MainMenu.showGremlins = function()

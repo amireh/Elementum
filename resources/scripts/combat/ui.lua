@@ -337,10 +337,13 @@ end
 UI.foobar = function()
   UI.hideDialog()
   --~ return GameMgr:changeState(IntroState)
+
   local e = Pixy.Event(Pixy.EventUID.ChangingState)
   return EvtMgr:hook(e) --GameMgr:changeState(IntroState)
 end
 UI.onPlayerDroppedOut = function(e)
+  local evt = Pixy.Event(Pixy.EventUID.PlayerDroppedOut)
+  NetMgr:send(evt)
   return UI.showDialog("Your opponent has dropped out, click the button to rejoin the lobby.", UI.foobar)
 end
 

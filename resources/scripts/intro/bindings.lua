@@ -23,8 +23,8 @@ Intro.bind = function()
   --bind(Pixy.EventUID.LeaveQueue, Lobby.onLeaveQueue)
 
   bind(Pixy.EventUID.UpdateDeck, Decks.onUpdateDeck)
-  bind(Pixy.EventUID.PuppetSynced, Decks.onPuppetSynced)
-  bind(Pixy.EventUID.PuppetDecksSynced, Decks.onDecksSynced)
+  --~ bind(Pixy.EventUID.PuppetSynced, Decks.onPuppetSynced)
+  --~ bind(Pixy.EventUID.PuppetDecksSynced, Decks.onDecksSynced)
   bind(Pixy.EventUID.RemoveDeck, Decks.onRemoveDeck)
 
   bind(Pixy.EventUID.PuppetSynced, Chat.onPuppetSynced)

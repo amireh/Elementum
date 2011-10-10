@@ -1,7 +1,3 @@
-Intro = {
-  Puppets = {}
-}
-
 Intro.onEnter = function()
   -- Selected points to the puppet that is chosen to join the lobby with.
   -- On switching to Combat state, Intro::setPuppetName() is called with
@@ -10,9 +6,20 @@ Intro.onEnter = function()
 
   Pixy.Log("Entering Intro state")
 
+  -- clear all event bindings
+  Dispatcher.clearBindings()
+  Input.clearBindings()
+
   Fx.setup()
-  Intro.bind()
   MainMenu:attach()
+  if Intro.Puppets and #Intro.Puppets > 0 then
+    MainMenu:detach()
+    Profiles.attach()
+    Profiles.JoinLobbyWithLastPuppet()
+  end
+
+  Intro.bind()
+
 end
 
 Intro.onExit = function()

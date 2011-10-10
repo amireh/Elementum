@@ -125,7 +125,7 @@ Profiles.attach = function()
 
   -- if there are any existing chars, go to the character selection screen
   -- otherwise go to the new character screen
-  if table.getn(Intro.Puppets) > 0 then
+  if #Intro.Puppets > 0 then
     Profiles.Listing:attach()
   else
     Profiles.NewProfile:attach()
@@ -236,6 +236,11 @@ Profiles.JoinLobby = function()
   return true
 end
 
+Profiles.JoinLobbyWithLastPuppet = function()
+  assert(Intro.Puppet)
+  Selected = Intro.Puppet
+  Profiles.JoinLobby()
+end
 
 Profiles.onJoinLobby = function(e)
   if e.Feedback ~= Pixy.EventFeedback.Ok then

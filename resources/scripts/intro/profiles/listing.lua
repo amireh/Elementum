@@ -2,6 +2,7 @@ Profiles.Listing = UISheet:new("intro/profiles/listing.layout")
 
 local isSetup = false
 local Listbox = nil
+local Listing = nil
 local Buttons = {
   JoinLobby = nil,
   Back = nil,
@@ -9,6 +10,7 @@ local Buttons = {
   DeletePuppet = nil
 }
 local Labels = { Name = nil, Level = nil }
+
 -- listbox Items To Puppets mapping
 local I2P = {}
 local last_selected = nil
@@ -24,6 +26,7 @@ local populate = function()
     item:setTextParsingEnabled(true)
     item:setSelectionBrushImage("TaharezLook", "MultiListSelectionBrush")
     Listbox:addItem(item)
+    Listing:add(item)
     I2P[item] = puppet
 
     if not selected then
@@ -39,23 +42,7 @@ local showKnight = function(rnd)
   rnd:show()
 end
 
-
-local onItemSelectionChanged = function(args)
-  print("im selecting a puppet!")
-
-  local item = Listbox:getFirstSelectedItem()
-
-  -- make sure the selection is never cleared
-  if item then last_selected = item else
-    if last_selected then
-      Listbox:setItemSelectState(last_selected, true)
-    end
-    return true
-  end
-
-  assert( I2P[item] )
-
-  local puppet = I2P[item]
+local doSelect = function(puppet)
   Selected = puppet
 
   Labels.Name:setText(puppet:getName())
@@ -78,6 +65,24 @@ local onItemSelectionChanged = function(args)
   return true
 end
 
+local onItemSelectionChanged = function(args)
+  print("im selecting a puppet!")
+
+  local item = Listbox:getFirstSelectedItem()
+
+  -- make sure the selection is never cleared
+  if item then last_selected = item else
+    if last_selected then
+      Listbox:setItemSelectState(last_selected, true)
+    end
+    return true
+  end
+
+  assert( I2P[item] )
+
+  return doSelect(I2P[item])
+end
+
 function Profiles.Listing:attach()
   UISheet.attach(self)
 
@@ -90,6 +95,13 @@ function Profiles.Listing:attach()
   Labels.Level = CEWindowMgr:getWindow("Elementum/Intro/Labels/Level")
   Listbox = CEGUI.toListbox(CEWindowMgr:getWindow("Elementum/Intro/Listboxes/Puppets"))
   Listbox:subscribeEvent("ItemSelectionChanged", onItemSelectionChanged)
+
+  Listing = Cyclable:new()
+
+  Input.KeyRelease.bind(OIS.KC_UP, Profiles.Listing.selectNext)
+  Input.KeyRelease.bind(OIS.KC_DOWN, Profiles.Listing.selectPrev)
+  Input.KeyRelease.bind(OIS.KC_RETURN, Profiles.JoinLobby)
+  Input.KeyRelease.bind(OIS.KC_ESCAPE, Profiles.Back)
 
   Profiles.CurrentScreen = "Listing"
   Pixy.Log("Attaching Profiles[Listing]")
@@ -111,11 +123,19 @@ function Profiles.Listing:attach()
 
   populate()
 
+
   --isSetup = true
 end
 
 function Profiles.Listing:detach()
   UISheet.detach(self)
+
+  Listing:destroy()
+
+  Input.KeyRelease.unbind(OIS.KC_ESCAPE, Profiles.Back)
+  Input.KeyRelease.unbind(OIS.KC_UP, Profiles.Listing.selectNext)
+  Input.KeyRelease.unbind(OIS.KC_DOWN, Profiles.Listing.selectPrev)
+  Input.KeyRelease.unbind(OIS.KC_RETURN, Profiles.JoinLobby)
 
   Buttons = {}
   RaceText = nil
@@ -131,3 +151,16 @@ Profiles.DeletePuppet = function(args)
   e:setProperty("Name", Selected:getName())
   NetMgr:send(e)
 end
+
+Profiles.Listing.selectNext = function()
+  Listbox:clearAllSelections();
+  Listbox:setItemSelectState(Listing:next(), true)
+  doSelect(I2P[Listing:get()])
+end
+
+Profiles.Listing.selectPrev = function()
+  Listbox:clearAllSelections();
+  Listbox:setItemSelectState(Listing:prev(), true)
+  doSelect(I2P[Listing:get()])
+end
+

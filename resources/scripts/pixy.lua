@@ -1,6 +1,7 @@
 require "shared/helpers"
 require "shared/globals"
 require "shared/dispatcher"
+require "shared/cyclable"
 require "shared/input"
 require "shared/ui"
 require "shared/fx"

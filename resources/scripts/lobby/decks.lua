@@ -37,18 +37,23 @@ function Decks:attach()
   UISheet.attach(self)
   attached = true
 
-  Decks.populateDecks()
+  Input.KeyRelease.bind(OIS.KC_ESCAPE, Decks.backToChat)
 
-	if isSetup then return true end
+	if not isSetup then
+    Decks.createDeckGrid()
+    isSetup = true
+  end
 
-  Decks.createDeckGrid()
+  assert(Intro.PuppetDecks)
+  Decks.populateDecks(Intro.PuppetDecks)
 
-  isSetup = true
 end
 
 function Decks:detach()
   UISheet.detach(Decks)
   attached = false
+
+  Input.KeyRelease.unbind(OIS.KC_ESCAPE, Decks.backToChat)
 end
 
 Decks.backToChat = function()
@@ -88,21 +93,30 @@ local function spell_image_name(spell)
   return "set:" .. spell:getImageSet() .. " image:" .. spell:getImageName() .. "_Normal"
 end
 
-Decks.populateDecks = function()
-  assert(Puppet and PuppetDecks)
+Decks.populateDecks = function(in_decks)
+  --~ assert(Intro.Puppet and Intro.PuppetDecks)
 
   DeckList:clearAllSelections()
   DeckList:resetList()
   DeckList:setText("")
 
-  for k,v in ipairs(PuppetDecks) do
+  for k,v in ipairs(in_decks) do
     print("\tDeck: " .. k .. " => " .. v:getName())
   end
-  for deck in list_iter(PuppetDecks) do
-    item = CEGUI.createListboxTextItem(deck:getName())
+  I2D = {}
+  for deck in list_iter(in_decks) do
+    local item = CEGUI.createListboxTextItem(deck:getName())
     DeckList:addItem(item)
 
     I2D[item] = deck
+  end
+
+  Decks.clearGrid()
+  if #in_decks > 0 then
+    --~ DeckList:setSelectedItem(DeckList:getChildAtIdx(0))
+    DeckList:setItemSelectState(0, true)
+    Decks.showDeck(I2D[DeckList:getSelectedItem()])
+    --~ DeckList:setSelection(0,1)
   end
 
 end
@@ -241,6 +255,8 @@ Decks.hideTooltip = function(args)
 end
 
 Decks.clearGrid = function()
+  if not isSetup then return true end
+
   local idx = 0
   while idx < 16 do
     CEWindowMgr:destroyWindow("Deck/Slot" .. idx .. "Spell")
@@ -249,21 +265,16 @@ Decks.clearGrid = function()
   Grid = {}
 end
 
-Decks.onListSelectionChanged = function(args)
-  local item = DeckList:getSelectedItem()
-
-  assert(I2D[item])
-
+Decks.showDeck = function(deck)
   if CurrentDeck then
     Decks.clearGrid()
   end
 
-  local deck = I2D[item]
   print("Populating deck " .. deck:getName() .. " which has ")
   -- populate deck grid with the spells in this deck
   local idx = 0
   while idx < 16 do
-    local spell = find_by_cond(Pixy.Models.Spells[Puppet:getRace()], function(in_spell)
+    local spell = find_by_cond(Pixy.Models.Spells[Intro.Puppet:getRace()], function(in_spell)
       if in_spell:getName() == deck:getSpell(idx):getName() then return true end
     end)
 
@@ -272,6 +283,14 @@ Decks.onListSelectionChanged = function(args)
   end
 
   CurrentDeck = deck
+end
+
+Decks.onListSelectionChanged = function(args)
+  local item = DeckList:getSelectedItem()
+
+  assert(I2D[item])
+  Decks.showDeck(I2D[item])
+
   return true
 end
 
@@ -327,23 +346,23 @@ Decks.onUpdateDeck = function(e)
   return true
 end
 
-Decks.onPuppetSynced = function(e)
+Decks.onPuppetSynced = function(in_puppet)
 
-  print("Populating race spells in deck menu for puppet " .. Puppet:getName() .. " race : " .. Puppet:getRace())
+  print("Populating race spells in deck menu for puppet " .. in_puppet:getName() .. " race : " .. in_puppet:getRace())
   --~ if not last_puppet_race or last_puppet_race ~= Puppet:getRace() then
-    Decks.populateRaceSpells( Puppet:getRace() )
-    last_puppet_race = Puppet:getRace()
+    Decks.populateRaceSpells( in_puppet:getRace() )
+    last_puppet_race = in_puppet:getRace()
     spells_populated = false
   --~ end
   return true
 end
 
-Decks.onDecksSynced = function(e)
+Decks.onDecksSynced = function(in_decks)
   if not attached then return true end
 
   print("Got decks")
   I2D = {}
-  Decks.populateDecks()
+  Decks.populateDecks(in_decks)
   Decks.clearGrid()
 
   return true

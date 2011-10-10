@@ -1,12 +1,14 @@
-Input.onKeyReleased = function(e)
+Chat.onKeyReleased = function(e)
 
   -- ## typing context ## --
   if Chat.Context == Chat.Contexts.Typing then
     -- cycle through msg history using Up and Down arrows
     if e.key == OIS.KC_UP then
       return Chat.prevChatMessage()
-    elseif e.key == OIS_KC_DOWN then
+    elseif e.key == OIS.KC_DOWN then
       return Chat.nextChatMessage()
+    elseif e.key == OIS.KC_RETURN then
+      return Chat.send()
 
     -- Alt+R switches into Whisper mode
     --[[elseif e.key == OIS.KC_R and Input.isAltDown() then

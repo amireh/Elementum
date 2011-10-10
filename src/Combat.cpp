@@ -195,7 +195,7 @@ namespace Pixy
 
 		mGfxEngine->getCameraMan()->injectKeyUp(e);
 		*/
-		switch (e.key) {
+		/*switch (e.key) {
 			case OIS::KC_ESCAPE:
 				this->requestShutdown();
 				break;
@@ -228,7 +228,7 @@ namespace Pixy
           }
         }
       break;
-		}
+		}*/
 
 	}
 

@@ -52,7 +52,9 @@
       <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.86,0},{0.49,0},{0.95,0}}" />
       <Property Name="MaxTextLength" Value="255" />
       <Property Name="MousePassThroughEnabled" Value="False" />
+<!--
       <Event Name="TextAccepted" Function="Chat.Send" />
+-->
       <Event Name="Activated" Function="Chat.onCaptureGained" />
       <Event Name="Deactivated" Function="Chat.onCaptureLost" />
       <Event Name="TextChanged" Function="Chat.onTextChanged" />
@@ -71,7 +73,7 @@
         <Property Name="Text" Value="Logout" />
         <Property Name="UnifiedAreaRect" Value="{{0.3,0},{0.075,0},{0.39,0},{0.125,0}}" />
         <Property Name="Disabled" Value="False" />
-        <Event Name="Clicked" Function="Lobby.doLogout" />
+        <Event Name="Clicked" Function="Chat.backToListing" />
     </Window>
     <Window Type="Vanilla/Button" Name="Elementum/Chat/Buttons/JoinQueue" >
         <Property Name="Text" Value="Join Queue" />
