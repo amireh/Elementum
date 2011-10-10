@@ -38,11 +38,16 @@ Pixy.UI.setup = function()
 
 	-- set up the dialog
 	Pixy.UI.Dialog.Window = CEWindowMgr:loadWindowLayout("overlays/dialog.layout")
-	Pixy.UI.Dialog.Label = Pixy.UI.Dialog.Window:getChild("Elementum/Overlays/Dialog/Label")
-	Pixy.UI.Dialog.OkButton = Pixy.UI.Dialog.Window:getChild("Elementum/Overlays/Dialog/OkButton")
+	--~ Pixy.UI.Dialog.Label = Pixy.UI.Dialog.Window:getChild("Elementum/Overlays/Dialog/Label")
+	Pixy.UI.Dialog.Label = Pixy.UI.Dialog.Window:getChild("Dialog_Label")
+	Pixy.UI.Dialog.OkButton = Pixy.UI.Dialog.Window:getChild("Dialog_OkButton")
+	Pixy.UI.Dialog.CancelButton = Pixy.UI.Dialog.Window:getChild("Dialog_CancelButton")
+  Pixy.UI.Dialog.CancelButton:hide()
+  Pixy.UI.Dialog.OkButton:setProperty("HorizontalAlignment", "Centre")
 	Pixy.UI.Dialog.Window:hide()
 
   require "shared/ui/ui_sheet"
+  require "shared/ui/ui_dialogs"
 
   isSetup = true
   return true
@@ -53,9 +58,6 @@ Pixy.UI.cleanup = function()
 
   Pixy.Log("Cleaning up all registered UI Sheets. Total = " .. #Pixy.UI.Attached)
 
-  CEWindowMgr:destroyWindow(Pixy.UI.Dialog.Window)
-  Pixy.UI.Dialog = {}
-
   -- destroy all UISheets
   while #Pixy.UI.Attached > 0 do
     Pixy.UI.Attached[1]:destroy()
@@ -65,6 +67,9 @@ Pixy.UI.cleanup = function()
   end
 
   assert(#Pixy.UI.Attached == 0)
+
+  CEWindowMgr:destroyWindow(Pixy.UI.Dialog.Window)
+  Pixy.UI.Dialog = {}
 
   isSetup = false
   return true

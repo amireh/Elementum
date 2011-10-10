@@ -1,3 +1,13 @@
+-- resolve script paths
+do
+  ScriptPrefix = Pixy.ScriptEngine:getSingletonPtr():getScriptPathPrefix()
+  package.path = ScriptPrefix .. "/?.lua;" .. package.path
+  ModulePrefix = Pixy.ScriptEngine:getSingletonPtr():getModulePathPrefix()
+  package.cpath = ModulePrefix .. "/?.so;" .. package.cpath
+
+  print("Scripts path: " .. ScriptPrefix .. "\nModule path: " .. ModulePrefix)
+end
+
 require "shared/helpers"
 require "shared/globals"
 require "shared/dispatcher"
@@ -44,7 +54,7 @@ end
 -- this should be called once during the client's lifetime
 -- for state bootstrapping, see State.onEnter
 local isSetup = false
-Pixy.setup = function()
+Pixy.onEnter = function()
   if isSetup then return true end
 
   Pixy.registerGlobals()
@@ -61,7 +71,7 @@ end
 
 -- this should be called only when a shutdown is performed
 -- for state cleanups, see State.onExit
-Pixy.cleanup = function()
+Pixy.onExit = function()
   Pixy.Models.Spells = {}
   Pixy.Models.Units = {}
   Pixy.Models = {}
@@ -71,5 +81,3 @@ Pixy.cleanup = function()
   Pixy.UI.cleanup()
   Dispatcher.cleanup()
 end
-
-Pixy.setup()

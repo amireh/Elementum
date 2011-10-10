@@ -3,6 +3,12 @@
 	<Imageset Filename="Combat.imageset" />
 	<Imageset Filename="CombatFrames.imageset" />
 	<LookNFeel Filename="Combat.looknfeel" />
+  <Font Filename="Alice.font" />
+  <Font Filename="Alice_64.font" />
+  <Font Filename="Alice-12.font" />
+  <Font Filename="Alice_16.font" />
+  <Font Filename="Scrolling_Text.font" />
+  <Font Filename="DejaVuSans-16.font" />
 	<WindowRendererSet Filename="CEGUIFalagardWRBase" />
 	<FalagardMapping WindowType="Combat/Titlebar" TargetType="CEGUI/Titlebar" Renderer="Falagard/Titlebar" LookNFeel="Combat/Titlebar" />
 	<FalagardMapping WindowType="Combat/Button" TargetType="CEGUI/PushButton" Renderer="Falagard/Button" LookNFeel="Combat/Button" />

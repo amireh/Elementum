@@ -61,53 +61,6 @@ namespace Pixy
 	}
 
 	GameManager::~GameManager() {
-
-		// Clean up all the states
-		while( !mStates.empty() ) {
-		    mStates.back()->exit();
-		    mStates.pop_back();
-		}
-
-    if (mLog)
-      mLog->infoStream() << "tearing down all engines";
-
-    if (fSetup)
-    {
-      delete GfxEngine::getSingletonPtr();
-      delete FxEngine::getSingletonPtr();
-      //delete SfxEngine::getSingletonPtr();
-      //delete PhyxEngine::getSingletonPtr();
-      delete UIEngine::getSingletonPtr();
-      delete ScriptEngine::getSingletonPtr();
-      delete NetworkManager::getSingletonPtr();
-    }
-
-    if (mResMgr)
-      delete mResMgr;
-
-		if( mInputMgr )
-		    delete mInputMgr;
-
-		if( mRoot )
-		    delete mRoot;
-
-		if (mLog) {
-      mLog->infoStream() << "++++++ Elementum cleaned up successfully ++++++";
-		  delete mLog;
-      mLog = 0;
-
-      log4cpp::Category::shutdown();
-    }
-
-		mRoot = NULL; mInputMgr = NULL;
-
-    if (mWorker)
-    {
-      mIOService.stop();
-      mWorker->join();
-      delete mWorker;
-      mWorker = 0;
-    }
 	}
 
   std::string const& GameManager::getRootPath() const {
@@ -236,14 +189,22 @@ namespace Pixy
     // load initial resources
     this->setupResources(lPathOgreRes);
 
-    mResMgr = new CResourceManager();
-
     mInputMgr->addKeyListener( this, "GameManager" );
     mInputMgr->addMouseListener( this, "GameManager" );
 
+    mResMgr = new CResourceManager();
+
+    GfxEngine::getSingletonPtr()->setup();
+    UIEngine::getSingletonPtr()->setup();
+    FxEngine::getSingletonPtr()->setup();
+    ScriptEngine::getSingletonPtr()->setup();
+
+    ScriptEngine::getSingletonPtr()->runScript("pixy.lua");
+    ScriptEngine::getSingletonPtr()->passToLua("Pixy.onEnter", 0);
+
     // Change to first state
-    //~ this->changeState( Combat::getSingletonPtr() );
-    this->changeState( Intro::getSingletonPtr() );
+    this->changeState( Combat::getSingletonPtr() );
+    //~ this->changeState( Intro::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame
@@ -266,11 +227,64 @@ namespace Pixy
       _update();
 		}
 
-    Event evt(EventUID::ShuttingDown);
-    EventManager::getSingleton().hook(evt);
-    //~ for (int i=0; i < 1; ++i)
-      mStates.back()->update(1);
+    this->_cleanup();
 	}
+
+  void GameManager::_cleanup()
+  {
+    // Clean up all the states
+		while( !mStates.empty() ) {
+		    mStates.back()->exit();
+		    mStates.pop_back();
+		}
+
+    if (fSetup)
+    {
+      if (mLog)
+        mLog->infoStream() << "cleaning up the scripts";
+
+      // make the scripts clean up
+      ScriptEngine::getSingletonPtr()->passToLua("Pixy.onExit", 0);
+
+      if (mLog)
+        mLog->infoStream() << "tearing down all engines";
+
+      delete GfxEngine::getSingletonPtr();
+      delete FxEngine::getSingletonPtr();
+      //delete SfxEngine::getSingletonPtr();
+      //delete PhyxEngine::getSingletonPtr();
+      delete UIEngine::getSingletonPtr();
+      delete ScriptEngine::getSingletonPtr();
+      delete NetworkManager::getSingletonPtr();
+    }
+
+    if (mResMgr)
+      delete mResMgr;
+
+		if( mInputMgr )
+		    delete mInputMgr;
+
+		if( mRoot )
+		    delete mRoot;
+
+		if (mLog) {
+      mLog->infoStream() << "++++++ Elementum cleaned up successfully ++++++";
+		  delete mLog;
+      mLog = 0;
+
+      log4cpp::Category::shutdown();
+    }
+
+		mRoot = NULL; mInputMgr = NULL;
+
+    if (mWorker)
+    {
+      mIOService.stop();
+      mWorker->join();
+      delete mWorker;
+      mWorker = 0;
+    }
+  }
 
 	Ogre::RenderWindow* GameManager::getRenderWindow() const {
     return mRenderWindow;
@@ -348,7 +362,7 @@ namespace Pixy
 		// Initialise resources
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Bootstrap");
 		OgreBites::SdkTrayManager *mTrayMgr =
-		  new OgreBites::SdkTrayManager("Vertigo/UI/Loader", mRenderWindow, InputManager::getSingletonPtr()->getMouse(), 0);
+		  new OgreBites::SdkTrayManager("Elementum/Loader", mRenderWindow, InputManager::getSingletonPtr()->getMouse(), 0);
 		//mTrayMgr->showAll();
 		mTrayMgr->showLoadingBar(1,1, 1);
 		//ResourceGroupManager::getSingleton().initialiseAllResourceGroups();

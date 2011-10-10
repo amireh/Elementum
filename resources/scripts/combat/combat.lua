@@ -34,10 +34,6 @@ Combat.onExit = function()
 
 end
 
-Combat.onShutdown = function()
-  Pixy.Log("Combat: preparing for obtrusive shutdown")
-end
-
 Combat.onGameStarted = function()
 	Pixy.Log("Game has started! Pwning time")
 

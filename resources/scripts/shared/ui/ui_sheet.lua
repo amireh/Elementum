@@ -150,6 +150,7 @@ function UISheet.showDialog(text, callback)
     local lbl_height = tonumber(lbl:getProperty("VertExtent"))
     local btn_height = tonumber(dialog.OkButton:getHeight().offset)-- * AR.Height
     dialog.Window:setHeight(CEGUI.UDim(0, lbl_height + btn_height + 20))
+    dialog.Window:setWidth(CEGUI.UDim(0, lbl:getProperty("HorzExtent") + 40))
     --~ dialog.Window:setPosition(
       --~ CEGUI.UVector2(
         --~ lbl:getPosition().x,

@@ -291,4 +291,3 @@ MainMenu.hideGremlins = function()
   if Gremlin2 then Gremlin2:getRenderable():hide() end
   if Gremlin3 then Gremlin3:getRenderable():hide() end
 end
-

@@ -38,18 +38,6 @@ Intro.onExit = function()
   return true
 end
 
-Intro.shutdown = function(e)
-  Intro.onExit()
-  --~ MainMenu.cleanup()
-  --~ Profiles.cleanup()
-  --~ Chat.cleanup()
-  --~ Decks.cleanup()
-
-  Pixy.cleanup()
-
-  return true
-end
-
 Intro.onGameDataSynced = function(e)
   Pixy.Log("Game data synced, parsing it in lua")
   local ret = ScriptEngine:_passGameData()

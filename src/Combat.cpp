@@ -95,8 +95,8 @@ namespace Pixy
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    mPuppetName = Intro::getSingleton().getPuppetName();
-    //~ mPuppetName = "Cranberry"; // __DEBUG__
+    //~ mPuppetName = Intro::getSingleton().getPuppetName();
+    mPuppetName = "Cranberry"; // __DEBUG__
 
     // sync the game data when we're connected
     bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
@@ -124,8 +124,8 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    Event e(EventUID::SyncMatchPuppets);
-    mNetMgr->send(e);
+    //~ Event e(EventUID::SyncMatchPuppets);
+    //~ mNetMgr->send(e);
 
     inBlockPhase = false;
     fSetup = true;

@@ -63,6 +63,8 @@ namespace Pixy
 		//! only called manually when running on OS X
     void _setup();
 
+    void _cleanup();
+
 		//! Loads StateGame game state to start the game.
 		/*!
 		 *
