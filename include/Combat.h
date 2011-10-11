@@ -80,6 +80,9 @@ namespace Pixy
     //~ boost::asio::io_service& getIOService();
     boost::asio::strand& getStrand();
 
+    void __setIsDebugging(bool setting);
+    bool __isDebugging() const;
+
   protected:
     friend class UIEngine;
     void castSpell(CSpell*);
@@ -180,6 +183,8 @@ namespace Pixy
 		std::vector<Engine*>::const_iterator mUpdater;
 
 		bool fUpdateGfx;
+
+    bool fIsDebugging;
 
     //~ boost::asio::io_service& mIOService;
     boost::asio::strand mStrand;

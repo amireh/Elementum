@@ -26,6 +26,8 @@ virtual ~GfxEngine();
 static GfxEngine* getSingletonPtr();
 //void setCamera(const Ogre::String& inCameraName);
 
+void disableMouseCaptureOverUIElement(std::string& inElementName);
+void enableMouseCaptureOverUIElement(std::string& inElementName);
 
 void setupMovableTextOverlays();
 

@@ -45,6 +45,8 @@ UI = {
     Error = nil,
     Tooltip = nil,
     Buffs = nil,
+    Chat = nil,
+    Messages = nil,
     SpellLog = {
       Enemy = nil
     },
@@ -63,11 +65,12 @@ UI = {
     Menu = nil
   },
 
+  ChatInput = nil
 }
 
 UI = UISheet:new("combat/ui.layout", UI)
 
-local inBlockPhase = false
+inBlockPhase = false
 
 UI.cleanup = function()
 
@@ -104,6 +107,8 @@ function UI:attach()
   --~ UI.Containers["Tooltip"] = CEWindowMgr:getWindow("Combat/Containers/Tooltip")
   UI.Containers["Message"] = CEWindowMgr:getWindow("Combat/Containers/Message")
   UI.Containers["Buffs"] = CEWindowMgr:getWindow("Combat/Containers/Buffs")
+  UI.Containers["Chat"] = CEWindowMgr:getWindow("Combat/Containers/Chat")
+  UI.Containers["Messages"] = CEGUI.toListbox(CEWindowMgr:getWindow("Combat/Containers/Chat/Messages"))
   UI.Containers.SpellLog["Enemy"] = CEWindowMgr:getWindow("Combat/Containers/SpellLog/Enemy")
   UI.Containers.Player["Selected"] = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Containers/Selected/Player"))
   UI.Containers.Enemy["Selected"] = CEGUI.toLayoutContainer(CEWindowMgr:getWindow("Combat/Containers/Selected/Enemy"))
@@ -124,6 +129,13 @@ function UI:attach()
   UI.Buttons["Attack"] = CEWindowMgr:getWindow("Combat/Buttons/Attack")
   UI.Buttons["Menu"] = CEWindowMgr:getWindow("Combat/Buttons/Menu")
 
+  UI.ChatInput = CEWindowMgr:getWindow("Combat/Editboxes/Message")
+
+  UI.Chat.setup()
+
+  GfxEngine:disableMouseCaptureOverUIElement("Spell")
+  GfxEngine:disableMouseCaptureOverUIElement(UI.ChatInput:getName())
+
   UIEngine:connectAnimation(UI.Containers["Message"], "Fade")
   UIEngine:connectAnimation(UI.Containers["Error"], "LongFadeOut")
 
@@ -133,7 +145,8 @@ end
 
 function UI:detach()
   UISheet.detach(self)
-
+  GfxEngine:enableMouseCaptureOverUIElement(UI.Containers["Messages"]:getName())
+  GfxEngine:enableMouseCaptureOverUIElement(UI.ChatInput:getName())
 end
 
 -- effectively reloads the UI components and sheets
@@ -158,6 +171,9 @@ UI.onStartTurn = function()
   UI.ShowBigMessage("Attacking Phase")
 
   inBlockPhase = false
+  UI.Buttons["EndTurn"]:setText("End Turn")
+  UI.Buttons["EndTurn"]:enable()
+  UI.Buttons["Attack"]:enable()
   UI.Labels["Turns"]:setText("Your turn")
 
   UI.Hand:enable()
@@ -170,6 +186,8 @@ end
 UI.onTurnStarted = function()
   UI.ShowBigMessage("Waiting")
   inBlockPhase = true
+  UI.Buttons["EndTurn"]:disable()
+  UI.Buttons["Attack"]:disable()
   UI.Labels["Turns"]:setText("Enemy's turn")
 
   UI.Hand:disable()
@@ -178,9 +196,31 @@ UI.onTurnStarted = function()
   --end
 end
 
+UI.onReqEndTurn = function()
+  UI.Buttons["EndTurn"]:disable()
+end
+
+local nr_blockers = 0
 UI.onStartBlockPhase = function()
   UI.ShowBigMessage("Blocking Phase")
   UI.Labels["Turns"]:setText("Blocking Phase")
+  UI.Buttons["EndTurn"]:setText("Pass")
+  UI.Buttons["EndTurn"]:enable()
+
+  nr_blockers = 0
+end
+
+UI.onBlock = function()
+  nr_blockers = nr_blockers + 1
+  UI.Buttons["EndTurn"]:setText("Block")
+  return true
+end
+
+UI.onCancelBlock = function()
+  nr_blockers = nr_blockers - 1
+  if nr_blockers <= 0 then
+    UI.Buttons["EndTurn"]:setText("Pass")
+  end
 end
 
 UI.onMatchFinished = function(wuid)
@@ -354,3 +394,4 @@ require("combat/ui/hand")
 require("combat/ui/buffs")
 require("combat/ui/spell_log")
 require("combat/ui/animator")
+require("combat/ui/chat")

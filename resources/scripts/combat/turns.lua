@@ -10,10 +10,14 @@ TurnNumber = 0
 -- type: event transmitter
 -- job: hooks an event requesting the turn to end for the current player
 Turns.reqEndTurn = function()
+  local e = nil
   if Active:getUID() == SelfPuppet:getUID() then
-    local lEvt = Pixy.Event(Pixy.EventUID.EndTurn)
-    NetMgr:send(lEvt)
+    e = Pixy.Event(Pixy.EventUID.EndTurn)
+  else
+    e = Pixy.Event(Pixy.EventUID.EndBlockPhase)
   end
+  UI.onReqEndTurn()
+  NetMgr:send(e)
 end
 
 Turns.onNewTurn = function()

@@ -203,8 +203,8 @@ namespace Pixy
     ScriptEngine::getSingletonPtr()->passToLua("Pixy.onEnter", 0);
 
     // Change to first state
-    this->changeState( Combat::getSingletonPtr() );
-    //~ this->changeState( Intro::getSingletonPtr() );
+    //~ this->changeState( Combat::getSingletonPtr() );
+    this->changeState( Intro::getSingletonPtr() );
 
     // lTimeLastFrame remembers the last time that it was checked
     // we use it to calculate the time since last frame

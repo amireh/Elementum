@@ -5,6 +5,7 @@ CEWindowMgr = nil
 CEFontMgr = nil
 CESchemeMgr = nil
 CEImagesetMgr = nil
+CEAnimMgr = nil
 
 -- Elementum globals
   if not Pixy then Pixy = {} end
@@ -78,9 +79,10 @@ Pixy.registerGlobals = function()
 	CEFontMgr   = CEGUI.FontManager:getSingleton()
 	CESchemeMgr = CEGUI.SchemeManager:getSingleton()
 	CEImagesetMgr = CEGUI.ImagesetManager:getSingleton()
+  CEAnimMgr = CEGUI.AnimationManager:getSingleton()
 
-	EvtMgr = Pixy.EventManager:getSingletonPtr()
 	GameMgr = Pixy.GameManager:getSingleton()
+	EvtMgr = Pixy.EventManager:getSingletonPtr()
   NetMgr = Pixy.NetworkManager:getSingleton()
   InputMgr = Pixy.InputManager:getSingletonPtr()
 

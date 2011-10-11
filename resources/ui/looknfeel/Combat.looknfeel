@@ -21,6 +21,17 @@
             </FrameComponent>
         </ImagerySection>
 
+        <ImagerySection name="Transparent">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge"><AbsoluteDim value="0" /></Dim>
+                    <Dim type="RightEdge"><UnifiedDim scale="1" type="RightEdge" /></Dim>
+                    <Dim type="BottomEdge"><UnifiedDim scale="1" type="BottomEdge" /></Dim>
+                </Area>
+            </FrameComponent>
+        </ImagerySection>
+
         <ImagerySection name="FrameOnly">
             <FrameComponent>
                 <Area>
@@ -655,9 +666,9 @@
 
     <WidgetLook name="Combat/Editbox">
         <PropertyDefinition name="ReadOnlyBGColour" initialValue="FFDFDFDF" redrawOnWrite="true" />
-        <PropertyDefinition name="NormalTextColour" initialValue="FF000000" redrawOnWrite="true" />
+        <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-        <PropertyDefinition name="ActiveSelectionColour" initialValue="FFAAAAAA" redrawOnWrite="true" />
+        <PropertyDefinition name="ActiveSelectionColour" initialValue="FFEE3300" redrawOnWrite="true" />
         <PropertyDefinition name="InactiveSelectionColour" initialValue="FF808080" redrawOnWrite="true" />
         <NamedArea name="TextArea">
             <Area>
@@ -1366,7 +1377,7 @@
     </WidgetLook>
 
     <WidgetLook name="Combat/Listbox">
-        <Property name="ForceVertScrollbar" value="True" />
+        <Property name="ForceVertScrollbar" value="False" />
         <NamedArea name="ItemRenderingArea">
             <Area>
                 <Dim type="LeftEdge" ><ImageDim imageset="Combat-Images" image="FrameLeft" dimension="Width" /></Dim>
@@ -1407,7 +1418,7 @@
         </Child>
         <StateImagery name="Enabled">
             <Layer>
-                <Section look="Combat/Shared" section="Frame">
+                <Section look="Combat/Shared" section="Transparent">
                     <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
                 </Section>
             </Layer>

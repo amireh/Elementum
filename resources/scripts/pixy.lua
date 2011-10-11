@@ -29,7 +29,7 @@ function arbitrary(name, ...)
   return _p(unpack(arg))
 end
 
-local WantUpdates = {}
+WantUpdates = {}
 Pixy.doUpdateMe = function(inCallback)
 	table.insert(WantUpdates, inCallback)
 end

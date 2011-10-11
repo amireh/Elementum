@@ -12,4 +12,7 @@ class Combat : public Pixy::GameState
   std::list<Pixy::CPuppet*> const& getPuppets();
   CPuppet* getEnemy(int inUID);
   CPuppet* getPuppet(int inUID);
+
+  void __setIsDebugging @ setIsDebugging(bool setting);
+  bool __isDebugging @ isDebugging() const;
 };

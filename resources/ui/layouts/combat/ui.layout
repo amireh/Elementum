@@ -310,6 +310,7 @@
         <Property Name="Text" Value="Attack" />
         <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0.32,0},{1,0}}" />
         <Property Name="Disabled" Value="False" />
+        <Event Name="Clicked" Function="Puppets.attackWithAll" />
       </Window>
       <Window Type="Combat/Button" Name="Combat/Buttons/EndTurn" >
         <Property Name="Visible" Value="True" />
@@ -525,6 +526,41 @@
       <Property Name="ClippedByParent" Value="False" />
     </Window> <!-- Player end turn button -->
 
+
+    <Window Type="DefaultWindow" Name="Combat/Containers/Chat" >
+      <Property Name="AlwaysOnTop" Value="True" />
+      <Property Name="UnifiedAreaRect" Value="{{0.15,0},{0.7,0},{0.6,0},{0.9,30}}" />
+      <Property Name="FrameEnabled" Value="False" />
+      <Property Name="BackgroundEnabled" Value="True" />
+      <Property Name="ClippedByParent" Value="False" />
+      <Window Type="Combat/Editbox" Name="Combat/Editboxes/Message">
+        <Property Name="ClippedByParent" Value="False" />
+        <Property Name="AlwaysOnTop" Value="True" />
+        <Property Name="UnifiedAreaRect" Value="{{0.01,0},{1,-30},{0.99,0},{1,0}}" />
+        <Property Name="MaxTextLength" Value="255" />
+        <Property Name="TextColours" Value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
+        <Property Name="MousePassThroughEnabled" Value="False" />
+  <!--
+        <Event Name="Activated" Function="Chat.onCaptureGained" />
+        <Event Name="Deactivated" Function="Chat.onCaptureLost" />
+        <Event Name="TextChanged" Function="Chat.onTextChanged" />
+  -->
+      </Window>
+      <Window Type="Combat/Listbox" Name="Combat/Containers/Chat/Messages">
+        <Property Name="Font" Value="DejaVuSans-10" />
+        <Property Name="Visible" Value="True" />
+        <Property Name="AlwaysOnTop" Value="True" />
+        <Property Name="Text" Value="" />
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,-30}}" />
+        <Property Name="ClippedByParent" Value="True" />
+        <Property Name="BackgroundEnabled" Value="False" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="MousePassThroughEnabled" Value="False" />
+        <Event Name="Activated" Function="UI.Chat.showMsgBox" />
+      </Window>
+
+
+    </Window>
 
 </Window>
 </GUILayout>

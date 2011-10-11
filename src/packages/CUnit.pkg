@@ -22,6 +22,10 @@ public:
 
   void setWalkSpeed(const float inSpeed);
   float getWalkSpeed() const;
+  UNIT_POS getPosition() const;
+  bool isDying() const;
+  bool isMoving() const;
+  CPuppet* getEnemy() const;
 
   static void setDefaultWalkSpeed(const float inSpeed);
   static float getDefaultWalkSpeed();

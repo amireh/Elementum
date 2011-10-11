@@ -423,3 +423,17 @@ end
 Gfx.onEntityDeselected = function()
   return Gfx.Dehighlight()
 end
+
+local RTTCompositorEffect = "ASCII"
+local RTTCompositorEnabled = false
+local RTTCompositorRegistered = false
+Gfx.ToggleRTTCompositor = function()
+  if not RTTCompositorRegistered then
+    CompositorMgr:addCompositor(RTT.Player.Camera:getViewport(), RTTCompositorEffect)
+    CompositorMgr:addCompositor(RTT.Enemy.Camera:getViewport(), RTTCompositorEffect)
+  end
+
+  RTTCompositorEnabled = not RTTCompositorEnabled
+  CompositorMgr:setCompositorEnabled(RTT.Player.Camera:getViewport(), RTTCompositorEffect, RTTCompositorEnabled)
+  CompositorMgr:setCompositorEnabled(RTT.Enemy.Camera:getViewport(), RTTCompositorEffect, RTTCompositorEnabled)
+end

@@ -915,127 +915,95 @@ namespace Pixy {
     mLog->debugStream() << "rendering entity " << inEntity->getName();
 
     bool isPuppet = inEntity->getRank() == PUPPET;
-    bool found = false;
-    SceneNode* mNode;
-    Ogre::Entity* mEntity;
+    Ogre::SceneNode* mNode = 0;
+    Ogre::Entity* mEntity = 0;
+    int idNode = -1;
 
     String entityName = "", nodeName = "", ownerName = "";
-
-    //ownerName = (inEntity->getOwner() == ME) ? "host" : "client";
-    //ownerName = stringify(inEntity->getUID());
     ownerName = getNodeIdPrefix(static_cast<CPuppet*>(inEntity->getOwner()->getOwner()));
     if (isPuppet)
     {
       entityName = ownerName + "_entity_puppet";
       nodeName = ownerName + "_node_puppet";
-      /* TO_DO: add functionality to retrieve entitie's mesh pathes from factory */
 
-      mLog->debugStream() << "puppet node name " << nodeName;
       mNode = mSceneMgr->getSceneNode(nodeName);
-
-      mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
-      mEntity->setMaterialName(inEntity->getMaterial());
-      mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
-      mEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
-      mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
-
-      mLog->debugStream() << "attaching user data to ogre entity";
-      mEntity->setUserAny(Ogre::Any(inRenderable));
-
-      mLog->infoStream() << "Attaching puppet entity " << mEntity->getName() << " to node " << mNode->getName();
-      mNode->attachObject(mEntity);
-      mNode->setScale(inRenderable->getScale());
-
-      MovableTextOverlay *p =
-        new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
-      p->enable(false); // make it invisible for now
-      p->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
-      inRenderable->setText(p);
-      p = 0;
-
-      inRenderable->attachSceneNode(mNode);
-      inRenderable->attachSceneObject(mEntity);
-
-      inRenderable->setup(mSceneMgr);
-
-      static_cast<CPuppet*>(inEntity)->updateTextOverlay();
-
-      mRenderables.push_back(inRenderable);
-
-      return mSceneMgr->getSceneNode(nodeName);
-    };
-
-    // handle units
-    entityName = ownerName + "_entity_" + stringify<int>(inEntity->getUID());
-    // now we need to locate the nearest empty SceneNode
-    // to render our Entity in
-    int idNode;
-    for (int i=0; i<10; i++)
+    } else
     {
-      nodeName = ownerName + "_node_" + Ogre::StringConverter::toString(i);
-      mNode = mSceneMgr->getSceneNode(nodeName);
-      if (mNode->numAttachedObjects() == 0) {
-        idNode = i;
-        if (i < 5 &&
-          mSceneMgr->getSceneNode(ownerName + "_node_" + Ogre::StringConverter::toString(i+5))->numAttachedObjects() == 0
-        ) {
-          idNode += 5;
-          mNode = mSceneMgr->getSceneNode(ownerName + "_node_" + Ogre::StringConverter::toString(i+5));
+      // handle units
+      entityName = ownerName + "_entity_" + stringify(inEntity->getUID());
+      // now we need to locate the nearest empty SceneNode
+      Ogre::SceneNode* _node1 = 0;
+      Ogre::SceneNode* _node2 = 0;
+      for (int i=0; i<5; i++)
+      {
+        _node1 = mSceneMgr->getSceneNode( ownerName + "_node_" + stringify(i) );
+        _node2 = mSceneMgr->getSceneNode( ownerName + "_node_" + stringify(i+5) );
+
+        if (_node1->numAttachedObjects() == 0) {
+          mNode = _node1;
+          idNode = i;
+        } else if(_node2->numAttachedObjects() == 0) {
+          mNode = _node2;
+          idNode = i+5;
         }
-        found = true;
-        break;
+
+        if (mNode)
+          break;
       }
-    };
+    }
 
-    // now we've got our Node, create the Entity & attach
-    if (found)
+    if (!mNode)
     {
-      /* TO_DO */
-      std::string _meshPath = "";
-      mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
-      mEntity->setMaterialName(inEntity->getMaterial());
-      mEntity->setUserAny(Ogre::Any(inRenderable));
-      mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
-      mEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
-      mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
-
-      mNode->attachObject(mEntity);
-      mNode->setScale(inRenderable->getScale());
-
-      MovableTextOverlay *p =
-        new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
-      p->enable(false); // make it invisible for now
-      p->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
-      inRenderable->setText(p);
-      p = 0;
-
-      inRenderable->attachSceneNode(mNode);
-      inRenderable->attachSceneObject(mEntity);
-
-      inRenderable->setup(mSceneMgr);
-
-      static_cast<CUnit*>(inEntity)->
-        setWaypoints(&mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode]);
-
-      static_cast<CUnit*>(inEntity)->updateTextOverlay();
-
-      mRenderables.push_back(inRenderable);
-
-      /* ugly 3-legged monkey hack: because I don't know what's happening,
-       * some units scenenodes are getting translated to undefined positions
-       * after units die and are re-attached, so here we force the node back
-       * to its original position
-       */
-      mNode->setPosition(mWaypoints[inEntity->getOwner() == mPlayer ? 0 : 1][idNode][POS_READY]);
-
-      return mNode;
-      //mSceneMgr->getSceneNode(nodeName)->setUserAny(
-    } else {
       mLog->errorStream() << "Could not attach Entity! No empty SceneNodes available";
       assert(false);
-      return NULL;
     }
-    //LOG_F(__FUNCTION__);
+
+    mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+    mEntity->setMaterialName(inEntity->getMaterial());
+    mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+    mEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
+    mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
+    mEntity->setUserAny(Ogre::Any(inRenderable));
+
+    mNode->attachObject(mEntity);
+    mNode->setScale(inRenderable->getScale());
+
+    MovableTextOverlay *p =
+      new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
+    p->enable(false); // make it invisible for now
+    p->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
+    inRenderable->setText(p);
+    p = 0;
+
+    inRenderable->attachSceneNode(mNode);
+    inRenderable->attachSceneObject(mEntity);
+
+    inRenderable->setup(mSceneMgr);
+
+
+    /* ugly 3-legged monkey hack: because I don't know what's happening,
+     * some units scenenodes are getting translated to undefined positions
+     * after units die and are re-attached, so here we force the node back
+     * to its original position
+     */
+    if (!isPuppet){
+      assert(idNode >= 0);
+      std::vector<Ogre::Vector3>* lWaypoints = &mWaypoints[inEntity->getOwner()->getUID() == mPlayer->getUID() ? 0 : 1][idNode];
+
+      static_cast<CUnit*>(inEntity)->setWaypoints(lWaypoints);
+      mNode->setPosition((*lWaypoints)[POS_READY]);
+
+      // update the MTO
+      static_cast<CUnit*>(inEntity)->updateTextOverlay();
+    } else
+    {
+      // update the MTO
+      static_cast<CPuppet*>(inEntity)->updateTextOverlay();
+    }
+
+    mRenderables.push_back(inRenderable);
+
+    return mNode;
   };
 
 
@@ -1084,13 +1052,14 @@ namespace Pixy {
     mTmpNode = inRenderable->getSceneNode();
 
     // move the node back to its original spot
-    if (inRenderable->getEntity()->getRank() != PUPPET
-      && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
-      mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
+    //~ if (inRenderable->getEntity()->getRank() != PUPPET
+      //~ && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
+      //~ mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
 
     mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
     mTmpNode->showBoundingBox(false);
-    mTmpNode->detachObject(inRenderable->getSceneObject());
+    //~ mTmpNode->detachObject(inRenderable->getSceneObject());
+    mTmpNode->detachAllObjects();
 
     // destroy entity
     mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
@@ -1188,14 +1157,17 @@ namespace Pixy {
 
 	bool GfxEngine::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )
 	{
-    // check if the mouse is over the UI hand (spell buttons)
+    // check if the mouse is over any UI element that wants to capture the input
     CEGUI::Window *window = CEGUI::System::getSingletonPtr()->getWindowContainingMouse();
-    { // DEBUG
-      //~ if (window)
-        //~ mLog->debugStream() << "mouse pressed over UI: " << window->getName();
-    }
-    if (window && window->getName().find("SpellButton") != CEGUI::String::npos) {
-      return false;
+    if (window)
+    {
+      typedef std::list<std::string> list_t;
+      for (list_t::const_iterator itr = mUIInputCapturingElements.begin();
+        itr != mUIInputCapturingElements.end();
+        ++itr)
+      {
+        if (window->getName().find((*itr)) != CEGUI::String::npos) return false;
+      }
     }
 
 		if (mCameraMan)
@@ -1758,5 +1730,21 @@ namespace Pixy {
     for (std::list<OgreRTT*>::iterator rtt = mRTTs.begin(); rtt != mRTTs.end(); ++rtt)
       (*rtt)->show();
     //~ mMiniScreen->setVisible(true);
+  }
+
+  void GfxEngine::disableMouseCaptureOverUIElement(std::string const& inElementName)
+  {
+    // make sure the element isn't already tracked
+    std::list<std::string>::const_iterator itr;
+    for (itr = mUIInputCapturingElements.begin();
+      itr != mUIInputCapturingElements.end();
+      ++itr)
+      if ((*itr) == inElementName) return;
+
+    mUIInputCapturingElements.push_back(inElementName);
+  }
+  void GfxEngine::enableMouseCaptureOverUIElement(std::string const& inElementName)
+  {
+    mUIInputCapturingElements.remove(inElementName);
   }
 }

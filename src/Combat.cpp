@@ -30,7 +30,8 @@ namespace Pixy
     mStrand(GameManager::getSingleton().getIOService()),
     //~ mWork(GameManager::getSingleton().getIOService()),
     //~ mWorker(0),
-    fSetup(false) {
+    fSetup(false),
+    fIsDebugging(false) {
 
   }
 	Combat* Combat::mCombat = 0;
@@ -90,21 +91,20 @@ namespace Pixy
 		// start the interface chain
 		mScriptEngine->runScript("combat/entry_point.lua");
     mScriptEngine->passToLua("Combat.onEnter", 0);
-    //~ mScriptEngine->passToLua("PrepareScene", 0);
 
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
 
-    //~ mPuppetName = Intro::getSingleton().getPuppetName();
-    mPuppetName = "Cranberry"; // __DEBUG__
+    if (__isDebugging())
+    {
+      mLog->infoStream() << "running in debug mode";
+      mPuppetName = "Cranberry"; // __DEBUG__
+      bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
+      bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
+      bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
+      bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
+    }
 
-    // sync the game data when we're connected
-    bind(EventUID::GameDataSynced, boost::bind(&Combat::onGameDataSynced, this, _1)); // __DEBUG__
-    bind(EventUID::Login, boost::bind(&Combat::onLogin, this, _1)); // __DEBUG__
-    bind(EventUID::SyncPuppets, boost::bind(&Combat::onSyncPuppets, this, _1)); // __DEBUG__
-    bind(EventUID::JoinLobby, boost::bind(&Combat::onJoinLobby, this, _1)); // __DEBUG__
-    //~ bind(EventUID::SyncGameData, boost::bind(&Combat::onSyncGameData, this, _1));
-    //~ bind(EventUID::JoinQueue, boost::bind(&Combat::onJoinQueue, this, _1));
     bind(EventUID::ChangingState, boost::bind(&Combat::onChangingState, this, _1));
     bind(EventUID::MatchFound, boost::bind(&Combat::onMatchFound, this, _1));
     bind(EventUID::SyncMatchPuppets, boost::bind(&Combat::onSyncMatchPuppets, this, _1));
@@ -124,8 +124,13 @@ namespace Pixy
     bind(EventUID::CancelBlock, boost::bind(&Combat::onCancelBlock, this, _1));
     bind(EventUID::EndBlockPhase, boost::bind(&Combat::onEndBlockPhase, this, _1));
 
-    //~ Event e(EventUID::SyncMatchPuppets);
-    //~ mNetMgr->send(e);
+
+    if (!__isDebugging())
+    {
+      mPuppetName = Intro::getSingleton().getPuppetName();
+      Event e(EventUID::SyncMatchPuppets);
+      mNetMgr->send(e);
+    }
 
     inBlockPhase = false;
     fSetup = true;
@@ -171,6 +176,16 @@ namespace Pixy
 	void Combat::updateGfx() {
 		fUpdateGfx = true;
 	}
+
+  void Combat::__setIsDebugging(bool setting)
+  {
+    fIsDebugging = setting;
+  }
+
+  bool Combat::__isDebugging() const
+  {
+    return fIsDebugging;
+  }
 
 	void Combat::keyPressed( const OIS::KeyEvent &e )	{
 

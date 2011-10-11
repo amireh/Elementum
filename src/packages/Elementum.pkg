@@ -23,6 +23,15 @@ namespace Pixy
     PUPPET
   };
 
+	enum UNIT_POS
+	{
+		POS_READY,
+		POS_CHARGING,
+		POS_DEFENCE,
+		POS_OFFENCE,
+		POS_ATTACK
+	};
+
   $pfile "Renderable.pkg"
   $pfile "CPuppet.pkg"
   $pfile "CSpell.pkg"

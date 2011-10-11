@@ -112,6 +112,9 @@ namespace Pixy {
 		virtual void update(unsigned long lTimeElapsed);
 		virtual bool cleanup();
 
+    void disableMouseCaptureOverUIElement(std::string const& inElementName);
+    void enableMouseCaptureOverUIElement(std::string const& inElementName);
+
 		void setCamera(const Ogre::String& inCameraName);
 
     void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
@@ -278,6 +281,7 @@ namespace Pixy {
     //! used for setting Objects' direction in Scene
 		Vector3 mDirection[2];
 
+    std::list<std::string> mUIInputCapturingElements;
 
     typedef std::map<CUnit*, bool> updatees_t;
     updatees_t mUpdatees;

@@ -65,7 +65,7 @@
         <Property Name="Text" Value="Send" />
         <Property Name="UnifiedAreaRect" Value="{{0.5,0},{0.86,0},{0.6,0},{0.95,0}}" />
         <Property Name="Disabled" Value="False" />
-        <Event Name="Clicked" Function="Chat.Send" />
+        <Event Name="Clicked" Function="Chat.send" />
     </Window>
 
 

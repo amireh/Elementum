@@ -48,6 +48,7 @@ Pixy.UI.setup = function()
 
   require "shared/ui/ui_sheet"
   require "shared/ui/ui_dialogs"
+  require "shared/ui/ui_animatable"
 
   isSetup = true
   return true
