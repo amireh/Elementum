@@ -35,7 +35,7 @@
 
         </Window>
         <Window Type="Vanilla/Editbox" Name="Elementum/Scenes/Intro/Login/TextFields/Username">
-          <Property Name="Text" Value="Kandie" />
+          <Property Name="Text" Value="" />
           <Property Name="Visible" Value="True" />
           <Property Name="UnifiedSize" Value="{{0.2, 0}, {0.3, 0}}" />
           <Property Name="UnifiedPosition" Value="{{0.4,0},{0,0}}" />
@@ -49,7 +49,7 @@
           <Property Name="FrameEnabled" Value="False" />
         </Window>
         <Window Type="Vanilla/Editbox" Name="Elementum/Scenes/Intro/Login/TextFields/Password">
-          <Property Name="Text" Value="tuonela" />
+          <Property Name="Text" Value="" />
           <Property Name="Visible" Value="True" />
           <Property Name="MaskText" Value="True" />
           <Property Name="UnifiedSize" Value="{{0.2, 0}, {0.3,}}" />

@@ -151,7 +151,7 @@ namespace Pixy {
     }
     assert(mEffects.find(inEffect) != mEffects.end());
 
-    playEffect(mEffects.find(inEffect)->second, inEntity);
+    return playEffect(mEffects.find(inEffect)->second, inEntity);
   }
 
   ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Ogre::Vector3 pos, bool newInstance) {

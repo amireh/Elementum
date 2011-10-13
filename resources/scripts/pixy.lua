@@ -64,6 +64,8 @@ Pixy.onEnter = function()
   Pixy.UI.setup()
   Input.setup()
   Fx.setup()
+  
+  --CombatState:setIsDebugging(true)
 
   isSetup = true
   return true

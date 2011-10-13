@@ -30,6 +30,7 @@ Combat.bind = function()
 
   -- updating the player's hand --
   bind(Pixy.EventUID.StartTurn, Hand.Update)
+  --bind(Pixy.EventUID.TurnStarted, UI.onTurnStarted)
   bind(Pixy.EventUID.TurnStarted, Hand.Update)
   bind(Pixy.EventUID.UpdatePuppet, Hand.Update)
   bind(Pixy.EventUID.EntitySelected, Hand.Update)

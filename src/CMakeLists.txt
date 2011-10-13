@@ -215,12 +215,12 @@ IF(APPLE)
 ENDIF(APPLE) # Apple Bundle Installer
 
 IF(WIN32)
-  SET(WIN32_DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../deps/win32)
+  SET(WIN32_DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../deps/win32/bin)
   SET(deps_dest_dir bin)
   SET(res_dest_dir resources)
   SET(log_dest_dir log)
 
-  SET(CPACK_NSIS_MODIFY_PATH "ON")
+  SET(CPACK_NSIS_MODIFY_PATH "OFF")
 	SET(CPACK_NSIS_DISPLAY_NAME "Elementum")
 
   # Create an empty directory which will hold our log files
@@ -239,10 +239,10 @@ IF(WIN32)
   set(CPACK_PACKAGE_NAME "Elementum")
   set(CPACK_PACKAGE_VENDOR "Shroom Studios")
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Elementum - An Online Turn-Based Strategy Game")
-  set(CPACK_PACKAGE_VERSION "1.0.0")
+  set(CPACK_PACKAGE_VERSION "1.0.1")
   set(CPACK_PACKAGE_VERSION_MAJOR "1")
   set(CPACK_PACKAGE_VERSION_MINOR "0")
-  set(CPACK_PACKAGE_VERSION_PATCH "0")
+  set(CPACK_PACKAGE_VERSION_PATCH "1")
   set(CPACK_PACKAGE_INSTALL_DIRECTORY "Elementum")
 ENDIF() # Windows NSIS Installer
 

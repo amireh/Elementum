@@ -47,7 +47,7 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "OgreRTT.h"
 #include "Ogre.h"
 #include "Ogre.h"
-#include "SdkCameraMan.h"
+#include "ogre/SdkCameraMan.h"
 #include "OIS.h"
 #include "cegui/FormattedListboxTextItem.h"
 #include "CEGUI/CEGUI.h"
@@ -22351,7 +22351,7 @@ static int tolua_Elementum_OIS_Keyboard_isModifierDown00(lua_State* tolua_S)
  else
 #endif
  {
-  const OIS::Keyboard* self = (const OIS::Keyboard*)  tolua_tousertype(tolua_S,1,0);
+  OIS::Keyboard* self = (OIS::Keyboard*)  tolua_tousertype(tolua_S,1,0);
   OIS::Keyboard::Modifier mod = ((OIS::Keyboard::Modifier) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isModifierDown'", NULL);

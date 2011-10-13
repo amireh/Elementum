@@ -159,7 +159,7 @@ namespace Pixy
     lSuffix = "linux";
 #endif
     lPathOgreRes = path(path(mCfgPath) / std::string("resources_" + lSuffix+ ".cfg")).make_preferred().string();
-    lPathOgrePlugins = path(path(mCfgPath) / "plugins.cfg").make_preferred().string();
+    lPathOgrePlugins = path(path(mCfgPath) / std::string("plugins_" + lSuffix + ".cfg")).make_preferred().string();
     lPathOgreCfg = path(path(mCfgPath) / "ogre.cfg").make_preferred().string();
     lPathOgreLog = path(path(mLogPath) / "Ogre.log").make_preferred().string();
 

@@ -29,7 +29,7 @@ local apply_buff = function(inCaster, inTarget, inSpell)
 
   -- attach the buff to the puppet
   caster:attachBuff(inSpell)
-  turns_left = inSpell:getDuration()
+  turns_left = 1
   inSpell:setExpired(false)
 
   SCT.ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", true, inCaster)
@@ -37,11 +37,11 @@ local apply_buff = function(inCaster, inTarget, inSpell)
 
   -- update the AP of all the units
   local exporter = Pixy.CUnitListExporter()
-  exporter:export(caster:getUnits(), "Pixy::CUnit", "Temp")
-  for unit in list_iter(Temp) do
+  exporter:export(caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+  for unit in list_iter(__TempUnits) do
     increase_ap(unit)
   end
-  Temp = nil
+  __TempUnits = nil
 
   -- update the AP of all units to be created
   subscribe_generic_unit_handler("Alive", increase_ap)
@@ -50,7 +50,12 @@ local apply_buff = function(inCaster, inTarget, inSpell)
 end
 
 local process_buff = function(inCaster, inTarget, inSpell)
-
+  local target = inTarget:getEntity()
+  caster = inCaster:getEntity()
+  
+  Pixy.Log("Processing Shadow Dance's buff")
+  Pixy.Log("\tcaster is : " .. caster:getName() .. "#" .. caster:getUID())
+  
   turns_left = turns_left - 1
   -- remove spell when the duration expires
   if (turns_left == 0) then
@@ -59,11 +64,11 @@ local process_buff = function(inCaster, inTarget, inSpell)
 
     -- revert the AP of all the units
     local exporter = Pixy.CUnitListExporter()
-    exporter:export(caster:getUnits(), "Pixy::CUnit", "Temp")
-    for unit in list_iter(Temp) do
+    exporter:export(caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+    for unit in list_iter(__TempUnits) do
       revert_ap(unit)
     end
-    Temp = nil
+    __TempUnits = nil
 
     SCT.ShowScrollingMessage("-" .. inSpell:getName(), false, inCaster)
 

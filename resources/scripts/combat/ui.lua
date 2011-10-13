@@ -134,7 +134,7 @@ function UI:attach()
   UI.Chat.setup()
 
   GfxEngine:disableMouseCaptureOverUIElement("Spell")
-  GfxEngine:disableMouseCaptureOverUIElement(UI.ChatInput:getName())
+  --GfxEngine:disableMouseCaptureOverUIElement(UI.ChatInput:getName())
 
   UIEngine:connectAnimation(UI.Containers["Message"], "Fade")
   UIEngine:connectAnimation(UI.Containers["Error"], "LongFadeOut")
@@ -145,8 +145,9 @@ end
 
 function UI:detach()
   UISheet.detach(self)
-  GfxEngine:enableMouseCaptureOverUIElement(UI.Containers["Messages"]:getName())
-  GfxEngine:enableMouseCaptureOverUIElement(UI.ChatInput:getName())
+  GfxEngine:enableMouseCaptureOverUIElement("Spell")
+  --GfxEngine:enableMouseCaptureOverUIElement(UI.Containers["Messages"]:getName())
+  --GfxEngine:enableMouseCaptureOverUIElement(UI.ChatInput:getName())
 end
 
 -- effectively reloads the UI components and sheets
@@ -177,10 +178,7 @@ UI.onStartTurn = function()
   UI.Labels["Turns"]:setText("Your turn")
 
   UI.Hand:enable()
-  --for button in list_iter(UI.Buttons) do
-  --  button:enable()
-  --end
-
+  return true
 end
 
 UI.onTurnStarted = function()
@@ -191,9 +189,8 @@ UI.onTurnStarted = function()
   UI.Labels["Turns"]:setText("Enemy's turn")
 
   UI.Hand:disable()
-  --for button in list_iter(UI.Buttons) do
-  --  button:disable()
-  --end
+  
+  return true
 end
 
 UI.onReqEndTurn = function()

@@ -14,6 +14,7 @@ function HandItem:New(in_spell)
     isMarked = false,
     isFaded = false,
     toBeDestroyed = false,
+    __isDisabled = false,
     Anims = {}
   }
   setmetatable(o, {__index = self})
@@ -112,18 +113,23 @@ function HandItem:Draw()
 end
 
 function HandItem:Bind()
-	self.Window:subscribeEvent("Clicked", "Spells.reqCastSpell")
+	self.Window:subscribeEvent("Clicked", "HandItem.onClicked")
   self.Window:subscribeEvent("MouseEnter", "UI.ShowTooltip")
   self.Window:subscribeEvent("MouseLeave", "UI.HideTooltip")
 
   return self
 end
 
-function HandItem:Unbind()
+function HandItem:Unbind(weak)
 	self.Window:removeEvent("Clicked")
   self.Window:removeEvent("MouseEnter")
   self.Window:removeEvent("MouseLeave")
-  self.Window:removeEvent("AlphaChanged")
+  
+  -- HandItem:__Disable() calls a "weak" unbinding that removes the top 3 events above
+  -- but not the destruction event ("AlphaChanged") because it might be rebound again
+  if not weak then
+    self.Window:removeEvent("AlphaChanged")
+  end
 
   return self
 end
@@ -173,11 +179,55 @@ function HandItem:Unmark()
   return self:StopAnimating("SpellBlink", true)
 end
 
-HandItem.FindBySpell = function(spell)
-  return find_by_condition(MyHand, function(item) return item.Spell:getUID() == spell:getUID() end)
+function HandItem:__Enable()
+  self.Window:enable()
+  self.__isDisabled = false
+  return self
 end
+function HandItem:__Disable()
+  self.Window:disable()
+  self.__isDisabled = true
+  return self
+end
+
+HandItem.FindBySpell = function(spell)
+  return HandItem.FindBySpellUID(spell:getUID())
+  --return find_by_condition(MyHand, function(item) return item.Spell:getUID() == spell:getUID() end)
+end
+HandItem.FindBySpellUID = function(uid)
+  return find_by_condition(MyHand, function(item) return item.Spell:getUID() == uid end)
+end
+
 HandItem.FindByWindow = function(win)
   return find_by_condition(MyHand, function(item) return item.Window:getName() == win:getName() end)
+end
+
+-- when a spell button is pressed, we send a CastSpell request event, but in the meantime, the button must be disabled
+-- so the client doesn't send duplicate requests on multi clicks
+-- note: if the request was rejected, the HandItem must be enabled again
+HandItem.onClicked = function(e)
+  local win = CEGUI.toWindowEventArgs(e).window
+  assert(win)
+  local item = HandItem.FindByWindow(win)
+  assert(item)
+  if item.__isDisabled then return true end
+  
+  item:__Disable()
+  
+  Spells.reqCastSpell(item.Spell)
+  return true
+end
+
+-- here is where we re-enable the HandItem after a spell reject, note this is called from Spells.onCastSpellRejected()
+Hand.onCastSpellRejected = function(uid)
+  local item = HandItem.FindBySpellUID(uid)
+  if item then
+    item:__Enable()
+    return true
+  end
+  
+  Pixy.Log("ERROR! Can't find HandItem for a rejected spell request of UID: " .. uid)
+  return true
 end
 
 Hand.cleanup = function()

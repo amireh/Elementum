@@ -21,8 +21,8 @@ end
 
 UI.ClearSpellLog = function(target)
 
-  local name = ""
-  if target:getUID() == SelfPuppet:getUID() then name = "Player" else name = "Enemy" end
+  local name = "Enemy"
+  --if target:getUID() == SelfPuppet:getUID() then name = "Player" else name = "Enemy" end
 
   Pixy.Log("Clearing spell log")
   while UI.Containers.SpellLog[name]:getChildCount() > 0 do
@@ -31,4 +31,8 @@ UI.ClearSpellLog = function(target)
     CEWindowMgr:destroyWindow(win)
   end
 
+end
+
+UI.onTurnStarted = function()
+  UI.ClearSpellLog(nil)
 end

@@ -469,7 +469,10 @@ namespace Pixy
   }
   bool Combat::onJoinLobby(const Event& inEvt) {
     Event _evt(EventUID::JoinQueue);
-    _evt.setProperty("D", "Earth Template 1");
+    if (mPuppetName == "Candy")
+      _evt.setProperty("D", "Fire Template 1");
+    else
+      _evt.setProperty("D", "Earth Template 1");
     mNetMgr->send(_evt);
     return true;
   }
@@ -758,7 +761,8 @@ namespace Pixy
   bool Combat::onCastSpell(const Event& inEvt) {
     if (inEvt.Feedback == EventFeedback::InvalidRequest) {
       // the UID was invalid
-      std::cout << "my request to cast a spell was rejected!\n";
+      mLog->errorStream() << "my request to cast a spell was rejected!\n";
+      mScriptEngine->passToLua("Spells.onCastSpellRejected", 1, "Pixy::Event", &inEvt);
       return true;
     }
 

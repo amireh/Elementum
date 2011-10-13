@@ -228,6 +228,8 @@ namespace Pixy {
     mEnemy = 0;
 
     mUpdate = &GfxEngine::updateIntro;
+
+    return true;
   }
 	bool GfxEngine::setupCombat() {
     if (!fSetup)

@@ -47,12 +47,12 @@ end
 -- type: CEGUI event handler
 -- job: sends a request to the instance with the spell id
 -- awaiting EVT_OK feedback to actually cast it
-Spells.reqCastSpell = function(inUIEvt)
-	local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
+Spells.reqCastSpell = function(lSpell)
+	--[[local lWindow = CEGUI.toWindowEventArgs(inUIEvt).window
 	lWindow:setText("handled from Lua");
 
 	local lSpell = Active:getSpell(lWindow:getUserString("UID"))
-  assert(lSpell)
+  assert(lSpell)]]
 
 	--tolua.cast(lSpell, "Pixy::Spell")
 	Pixy.Log( "request to cast a spell named " .. lSpell:getName() .. "@" .. lSpell:getUID() )
@@ -112,6 +112,14 @@ Spells.onCastSpell = function(inCaster, inTarget, inSpell)
     end
   end
   return result
+end
+
+-- this is called by Combat when the CastSpell request is rejected
+Spells.onCastSpellRejected = function(e)
+  assert(e:hasProperty("Spell"))
+  Pixy.Log("Spell cast was rejected, re-enabling button for " .. e:getProperty("Spell"))
+  Hand.onCastSpellRejected(e:getProperty("Spell"))
+  return true
 end
 
 function subscribe_spell(inSpellName, inMethod)

@@ -22,7 +22,7 @@ FIND_PATH(ESHARED_INCLUDE_DIRS Pixy.h
 FIND_LIBRARY(ESHARED_LIBRARY
   NAMES EShared
   HINTS
-  PATH_SUFFIXES lib lib/Release
+  PATH_SUFFIXES lib lib/Release lib/RelWithDebInfo
   PATHS
   ${EShared_PATHS}
 )
@@ -30,7 +30,7 @@ FIND_LIBRARY(ESHARED_LIBRARY
 FIND_LIBRARY(ESHARED_MODULES_LIBRARY
   NAMES EShared_Modules
   HINTS
-  PATH_SUFFIXES lib lib/Release
+  PATH_SUFFIXES lib lib/Release lib/RelWithDebInfo
   PATHS
   ${EShared_PATHS}
 )
