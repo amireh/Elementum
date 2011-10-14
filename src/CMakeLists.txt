@@ -85,11 +85,11 @@ SET(PROJECT_LIBS
 
 if (APPLE)
 
-  SET( PROJECT_FRAMEWORKS "-framework IOKit -framework Cocoa -framework Carbon -F/usr/local/lib/CEGUI -framework CEGUIBase -framework CEGUILuaScriptModule -framework CEGUIOgreRenderer -lOIS")
+  SET( PROJECT_FRAMEWORKS "-framework IOKit -framework Cocoa -framework Carbon -F/usr/local/lib/CEGUI -framework CEGUIBase -framework CEGUILuaScriptModule -framework CEGUIOgreRenderer")
 
-  LINK_LIBRARIES(${PROJECT_FRAMEWORKS})
-  #LINK_DIRECTORIES(/usr/local/lib/OGRE /usr/local/lib/CEGUI)
-  #LINK_LIBRARIES(ElementumLua ${PROJECT_FRAMEWORKS} tolua++ ${LUA_LIBRARIES})
+  LINK_DIRECTORIES(/opt/local/lib /usr/local/lib)
+  LINK_LIBRARIES(${PROJECT_FRAMEWORKS} ${Boost_LIBRARIES} ${OIS_LIBRARIES})
+  
 elseif(UNIX)
   LIST(APPEND PROJECT_LIBS
     ${Boost_LIBRARIES}

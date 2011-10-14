@@ -6,7 +6,14 @@
 
 #pragma once
 
+#ifndef H_AutoRepeatKey_H
+#define H_AutoRepeatKey_H
+
 #include <OIS.h>
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+# include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include <CEGUI/CEGUI.h>
 
 namespace Pixy
@@ -53,3 +60,5 @@ namespace Pixy
     void repeatKey(OIS::KeyCode a_nKey, unsigned int a_nChar);
   };
 }
+
+#endif

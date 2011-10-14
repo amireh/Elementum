@@ -35,7 +35,7 @@ SET(Elementum_Modules_SRCS
 )
 
 if(APPLE)
-  LINK_LIBRARIES("-F/usr/local/lib/OGRE -framework Ogre -framework Cocoa")
+  LINK_LIBRARIES("-F/usr/local/lib/OGRE -framework Ogre -framework Cocoa -F/usr/local/lib/CEGUI -framework CEGUIBase")
 else()
   #SET(PROJECT_LIBS PagedGeometry)
 endif()

@@ -16,6 +16,7 @@
 #include "CPuppet.h"
 #include "CUnit.h"
 #include "GameState.h"
+#include "PixyUtility.h"
 
 namespace Pixy {
 	FxEngine* FxEngine::__instance = NULL;

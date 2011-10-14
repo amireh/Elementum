@@ -171,6 +171,6 @@ namespace OIS
 			Alt   = 0x0000100
 		};
 
-		bool isModifierDown(Modifier mod) const;
+		//bool isModifierDown(Modifier mod);
     };
 }

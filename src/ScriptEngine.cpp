@@ -480,7 +480,7 @@ namespace Pixy {
 
   std::string ScriptEngine::getScriptPathPrefix() const {
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-    return macBundlePath() + "/Contents/Resources/scripts";
+    return Utility::macBundlePath() + "/Contents/Resources/scripts";
 #elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
     return "../resources/scripts";
 #else // UNIX
@@ -490,7 +490,7 @@ namespace Pixy {
 
   std::string ScriptEngine::getModulePathPrefix() const {
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
-    return macBundlePath() + "/Contents/Plugins";
+    return Utility::macBundlePath() + "/Contents/Plugins";
 #elif PIXY_PLATFORM == PIXY_PLATFORM_WIN32
     return GameManager::getSingleton().getBinPath();
 #else // UNIX
