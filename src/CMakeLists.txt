@@ -66,7 +66,7 @@ SET(PROJECT_LIBS
   ${LOG4CPP_LIBRARIES}
   ${LUA_LIBRARIES}
   ${ESHARED_LIBRARIES}
-  ${TOLUAPP_LIBRARIES}
+  
   ${ParticleUniverse_LIBRARIES}
 
   #${OIS_LIBRARIES}
@@ -95,6 +95,7 @@ elseif(UNIX)
     ${Boost_LIBRARIES}
     ${OGRE_LIBRARIES}
     ${CEGUI_LIBRARIES}
+    ${TOLUAPP_LIBRARIES}
     #CEGUI
     CEGUIOgreRenderer
     CEGUILuaScriptModule
