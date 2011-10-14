@@ -32,7 +32,3 @@ UI.ClearSpellLog = function(target)
   end
 
 end
-
-UI.onTurnStarted = function()
-  UI.ClearSpellLog(nil)
-end

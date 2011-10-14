@@ -177,19 +177,19 @@ UI.onStartTurn = function()
   UI.Buttons["Attack"]:enable()
   UI.Labels["Turns"]:setText("Your turn")
 
-  UI.Hand:enable()
+  --~ UI.Hand:enable()
   return true
 end
 
-UI.onTurnStarted = function()
+UI.onTurnStarted = function(e)
   UI.ShowBigMessage("Waiting")
   inBlockPhase = true
   UI.Buttons["EndTurn"]:disable()
   UI.Buttons["Attack"]:disable()
   UI.Labels["Turns"]:setText("Enemy's turn")
 
-  UI.Hand:disable()
-  
+  --~ UI.Hand:disable()
+
   return true
 end
 

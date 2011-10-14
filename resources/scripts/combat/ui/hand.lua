@@ -370,10 +370,12 @@ Hand.CheckForDiscards = function(pad)
 end
 
 local prereqs_met = function(spell)
-  Pixy.Log("validating spell requirements")
-  Pixy.Log("\tcurrent spell: " .. spell:getName() .. "#" .. spell:getUID())
+  if Active:getUID() ~= SelfPuppet:getUID() then return false end
+
+  --~ Pixy.Log("validating spell requirements")
+  --~ Pixy.Log("\tcurrent spell: " .. spell:getName() .. "#" .. spell:getUID())
   if ((spell:requiresTarget() or spell:requiresEnemyTarget()) and Selected == nil) then
-    Pixy.Log("-=-= spell requires a target, none is selected")
+    --~ Pixy.Log("-=-= spell requires a target, none is selected")
     return false
   end
   if (spell:requiresEnemyTarget()

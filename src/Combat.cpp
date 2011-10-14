@@ -633,10 +633,10 @@ namespace Pixy
   }
 
   bool Combat::onTurnStarted(const Event& inEvt) {
-    assert(inEvt.hasProperty("Puppet")); // _DEBUG_
+    assert(inEvt.hasProperty("P")); // _DEBUG_
 
     mWaitingPuppet = mActivePuppet;
-    mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("Puppet")));
+    mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("P")));
 
     assert(mActivePuppet); // _DEBUG_
 
@@ -965,7 +965,7 @@ namespace Pixy
       attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("A")));
       blocker = mWaitingPuppet->getUnit(convertTo<int>(evt.getProperty("B")));
     } catch (invalid_uid& e) {
-      std::cout  << "invalid block event parameters : " << e.what();
+      mLog->errorStream()  << "invalid block event parameters : " << e.what();
     }
 
     // does the attacker have any other units blocking?
@@ -1042,7 +1042,7 @@ namespace Pixy
     // first call
     if (mChargers.empty()) {
       // simulate the battle
-      mLog->infoStream() << "simulating battle with : "
+      mLog->debugStream() << "simulating battle with : "
       << mAttackers.size() << " attacking units and "
       << mBlockers.size() << " units being blocked";
 
