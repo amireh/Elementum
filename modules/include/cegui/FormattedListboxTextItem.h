@@ -1,6 +1,12 @@
 #ifndef H_FormattedListboxTextItem_H
 #define H_FormattedListboxTextItem_H
 
+#include "PixyPlatform.h"
+
+#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
+# include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include "CEGUI/CEGUI.h"
 
 namespace CEGUI
