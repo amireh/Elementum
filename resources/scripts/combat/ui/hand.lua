@@ -124,7 +124,7 @@ function HandItem:Unbind(weak)
 	self.Window:removeEvent("Clicked")
   self.Window:removeEvent("MouseEnter")
   self.Window:removeEvent("MouseLeave")
-  
+
   -- HandItem:__Disable() calls a "weak" unbinding that removes the top 3 events above
   -- but not the destruction event ("AlphaChanged") because it might be rebound again
   if not weak then
@@ -211,9 +211,9 @@ HandItem.onClicked = function(e)
   local item = HandItem.FindByWindow(win)
   assert(item)
   if item.__isDisabled then return true end
-  
+
   item:__Disable()
-  
+
   Spells.reqCastSpell(item.Spell)
   return true
 end
@@ -225,7 +225,7 @@ Hand.onCastSpellRejected = function(uid)
     item:__Enable()
     return true
   end
-  
+
   Pixy.Log("ERROR! Can't find HandItem for a rejected spell request of UID: " .. uid)
   return true
 end

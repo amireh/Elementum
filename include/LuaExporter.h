@@ -1,7 +1,7 @@
-#ifndef H_CPixyLua_H
-#define H_CPixyLua_H
+#ifndef H_LuaExporter_H
+#define H_LuaExporter_H
 
-#include "PixyLua.h"
+#include "BaseLuaExporter.h"
 #include "ScriptEngine.h"
 
 typedef std::vector<Pixy::CUnit*> CUnitVec;
@@ -16,19 +16,19 @@ namespace Pixy {
   using std::list;
 
   template <typename T>
-  class CLuaExporter : public LuaExporter<T>
+  class LuaExporter : public BaseLuaExporter<T>
   {
     TOLUA_TEMPLATE_BIND(T)
 
     public:
-      CLuaExporter() { }
-      virtual ~CLuaExporter() {}
+      LuaExporter() { }
+      virtual ~LuaExporter() {}
 
 
       inline virtual void
       __export(T const& container, const char* data_type, const char* out_table)
       {
-        LuaExporter<T>::__export(ScriptEngine::getSingleton().getLuaState(), container, data_type, out_table);
+        BaseLuaExporter<T>::__export(ScriptEngine::getSingleton().getLuaState(), container, data_type, out_table);
       }
   };
 }

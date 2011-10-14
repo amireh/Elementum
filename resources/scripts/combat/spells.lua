@@ -118,7 +118,7 @@ end
 Spells.onCastSpellRejected = function(e)
   assert(e:hasProperty("Spell"))
   Pixy.Log("Spell cast was rejected, re-enabling button for " .. e:getProperty("Spell"))
-  Hand.onCastSpellRejected(e:getProperty("Spell"))
+  Hand.onCastSpellRejected(tonumber(e:getProperty("Spell")))
   return true
 end
 

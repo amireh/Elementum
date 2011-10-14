@@ -1,0 +1,21 @@
+$#include "LuaExporter.h"
+$#include "CPuppet.h"
+$#include "CUnit.h"
+$#include "CSpell.h"
+
+class LuaExporter : public BaseLuaExporter {
+  TOLUA_TEMPLATE_BIND(T, CUnitVec, CSpellVec, CPuppetVec, CUnitList, CSpellList, CPuppetList)
+
+  LuaExporter();
+  virtual ~LuaExporter();
+
+  void __export @ export(T const& container, const char* data_type, const char* out_table);
+};
+
+$renaming LuaExporter<CUnitVec> @ CUnitVecExporter
+$renaming LuaExporter<CSpellVec> @ CSpellVecExporter
+$renaming LuaExporter<CPuppetVec> @ CPuppetVecExporter
+$renaming LuaExporter<CUnitList> @ CUnitListExporter
+$renaming LuaExporter<CSpellList> @ CSpellListExporter
+$renaming LuaExporter<CPuppetList> @ CPuppetListExporter
+

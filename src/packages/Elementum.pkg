@@ -49,7 +49,7 @@ namespace Pixy
   $pfile "Logger.pkg"
   $pfile "NetworkManager.pkg"
   $pfile "ScriptEngine.pkg"
-  $pfile "CPixyLua.pkg"
+  $pfile "LuaExporter.pkg"
   $pfile "OgreRTT.pkg"
 
 }

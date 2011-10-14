@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Tue Oct 11 23:28:38 2011.
+** Generated automatically by tolua++-1.0.92 on Fri Oct 14 20:09:46 2011.
 */
 
 #ifndef __cplusplus
@@ -40,14 +40,14 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "NetworkManager.h"
 #include "ScriptEngine.h"
 #include <lua.h>
-#include "CPixyLua.h"
+#include "LuaExporter.h"
 #include "CPuppet.h"
 #include "CUnit.h"
 #include "CSpell.h"
 #include "OgreRTT.h"
 #include "Ogre.h"
 #include "Ogre.h"
-#include "ogre/SdkCameraMan.h"
+#include "SdkCameraMan.h"
 #include "OIS.h"
 #include "cegui/FormattedListboxTextItem.h"
 #include "CEGUI/CEGUI.h"
@@ -69,13 +69,6 @@ static int tolua_collect_Pixy__FxEngine (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Pixy__CLuaExporter_CSpellList_ (lua_State* tolua_S)
-{
- Pixy::CLuaExporter<CSpellList>* self = (Pixy::CLuaExporter<CSpellList>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_Ogre__uint16 (lua_State* tolua_S)
 {
  Ogre::uint16* self = (Ogre::uint16*) tolua_tousertype(tolua_S,1,0);
@@ -93,6 +86,13 @@ static int tolua_collect_Ogre__Radian (lua_State* tolua_S)
 static int tolua_collect_Ogre__RenderWindow (lua_State* tolua_S)
 {
  Ogre::RenderWindow* self = (Ogre::RenderWindow*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Pixy__LuaExporter_CSpellList_ (lua_State* tolua_S)
+{
+ Pixy::LuaExporter<CSpellList>* self = (Pixy::LuaExporter<CSpellList>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -153,13 +153,6 @@ static int tolua_collect_Ogre__Plane (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Pixy__CLuaExporter_CPuppetList_ (lua_State* tolua_S)
-{
- Pixy::CLuaExporter<CPuppetList>* self = (Pixy::CLuaExporter<CPuppetList>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_ParticleUniverse__ParticleSystem (lua_State* tolua_S)
 {
  ParticleUniverse::ParticleSystem* self = (ParticleUniverse::ParticleSystem*) tolua_tousertype(tolua_S,1,0);
@@ -174,9 +167,9 @@ static int tolua_collect_OgreBites__SdkCameraMan (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Ogre__SharedPtr_Ogre__Resource_ (lua_State* tolua_S)
+static int tolua_collect_Pixy__LuaExporter_CSpellVec_ (lua_State* tolua_S)
 {
- Ogre::SharedPtr<Ogre::Resource>* self = (Ogre::SharedPtr<Ogre::Resource>*) tolua_tousertype(tolua_S,1,0);
+ Pixy::LuaExporter<CSpellVec>* self = (Pixy::LuaExporter<CSpellVec>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -202,16 +195,16 @@ static int tolua_collect_Ogre__Quaternion (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Pixy__CPuppet (lua_State* tolua_S)
+static int tolua_collect_Pixy__LuaExporter_CUnitList_ (lua_State* tolua_S)
 {
- Pixy::CPuppet* self = (Pixy::CPuppet*) tolua_tousertype(tolua_S,1,0);
+ Pixy::LuaExporter<CUnitList>* self = (Pixy::LuaExporter<CUnitList>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_Pixy__CLuaExporter_CPuppetVec_ (lua_State* tolua_S)
+static int tolua_collect_Pixy__CPuppet (lua_State* tolua_S)
 {
- Pixy::CLuaExporter<CPuppetVec>* self = (Pixy::CLuaExporter<CPuppetVec>*) tolua_tousertype(tolua_S,1,0);
+ Pixy::CPuppet* self = (Pixy::CPuppet*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -230,9 +223,9 @@ static int tolua_collect_Ogre__ColourValue (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Pixy__CLuaExporter_CSpellVec_ (lua_State* tolua_S)
+static int tolua_collect_Pixy__LuaExporter_CPuppetList_ (lua_State* tolua_S)
 {
- Pixy::CLuaExporter<CSpellVec>* self = (Pixy::CLuaExporter<CSpellVec>*) tolua_tousertype(tolua_S,1,0);
+ Pixy::LuaExporter<CPuppetList>* self = (Pixy::LuaExporter<CPuppetList>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -240,6 +233,13 @@ static int tolua_collect_Pixy__CLuaExporter_CSpellVec_ (lua_State* tolua_S)
 static int tolua_collect_Ogre__Billboard (lua_State* tolua_S)
 {
  Ogre::Billboard* self = (Ogre::Billboard*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Ogre__MeshPtr (lua_State* tolua_S)
+{
+ Ogre::MeshPtr* self = (Ogre::MeshPtr*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -258,30 +258,30 @@ static int tolua_collect_Ogre__Vector3 (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Pixy__CLuaExporter_CUnitVec_ (lua_State* tolua_S)
-{
- Pixy::CLuaExporter<CUnitVec>* self = (Pixy::CLuaExporter<CUnitVec>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_Ogre__MeshPtr (lua_State* tolua_S)
-{
- Ogre::MeshPtr* self = (Ogre::MeshPtr*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_Pixy__CLuaExporter_CUnitList_ (lua_State* tolua_S)
-{
- Pixy::CLuaExporter<CUnitList>* self = (Pixy::CLuaExporter<CUnitList>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_Pixy__GfxEngine (lua_State* tolua_S)
 {
  Pixy::GfxEngine* self = (Pixy::GfxEngine*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Ogre__SharedPtr_Ogre__Resource_ (lua_State* tolua_S)
+{
+ Ogre::SharedPtr<Ogre::Resource>* self = (Ogre::SharedPtr<Ogre::Resource>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Pixy__LuaExporter_CUnitVec_ (lua_State* tolua_S)
+{
+ Pixy::LuaExporter<CUnitVec>* self = (Pixy::LuaExporter<CUnitVec>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Pixy__LuaExporter_CPuppetVec_ (lua_State* tolua_S)
+{
+ Pixy::LuaExporter<CPuppetVec>* self = (Pixy::LuaExporter<CPuppetVec>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -321,76 +321,76 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::SubEntity");
  tolua_usertype(tolua_S,"Pixy::NetworkManager");
  tolua_usertype(tolua_S,"OgreMax::OgreMaxScene");
- tolua_usertype(tolua_S,"Pixy::CLuaExporter<CSpellVec>");
  tolua_usertype(tolua_S,"CEGUI::UBox");
  tolua_usertype(tolua_S,"OgreBites::SdkCameraMan");
  tolua_usertype(tolua_S,"Ogre::Resource");
+ tolua_usertype(tolua_S,"BaseLuaExporter");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<CUnitList>");
  tolua_usertype(tolua_S,"Ogre::Root");
  tolua_usertype(tolua_S,"Pixy::CPuppet");
  tolua_usertype(tolua_S,"Pixy::EventListener");
- tolua_usertype(tolua_S,"Pixy::CLuaExporter<CPuppetVec>");
- tolua_usertype(tolua_S,"Pixy::CLuaExporter<CUnitList>");
  tolua_usertype(tolua_S,"Pixy::Puppet");
- tolua_usertype(tolua_S,"Pixy::CLuaExporter<CUnitVec>");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
  tolua_usertype(tolua_S,"Pixy::Lobby");
  tolua_usertype(tolua_S,"Ogre::Vector2");
  tolua_usertype(tolua_S,"Ogre::CompositorManager");
  tolua_usertype(tolua_S,"Pixy::FxEngine");
- tolua_usertype(tolua_S,"Pixy::CLuaExporter<CSpellList>");
+ tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystem");
+ tolua_usertype(tolua_S,"ParticleUniverse::ParticleTechnique");
  tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::Deck");
- tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystem");
+ tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<CSpellList>");
  tolua_usertype(tolua_S,"Pixy::CSpell");
  tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
- tolua_usertype(tolua_S,"ParticleUniverse::ParticleTechnique");
- tolua_usertype(tolua_S,"Ogre::Viewport");
  tolua_usertype(tolua_S,"CEGUI::ListboxTextItem");
- tolua_usertype(tolua_S,"Ogre::MeshPtr");
  tolua_usertype(tolua_S,"CEGUI::FormattedListboxTextItem");
  tolua_usertype(tolua_S,"OIS::Keyboard");
- tolua_usertype(tolua_S,"Ogre::CompositorLogic");
+ tolua_usertype(tolua_S,"Ogre::MeshPtr");
  tolua_usertype(tolua_S,"OIS::KeyEvent");
- tolua_usertype(tolua_S,"Ogre::RibbonTrail");
+ tolua_usertype(tolua_S,"Ogre::Camera");
+ tolua_usertype(tolua_S,"Ogre::CompositorLogic");
+ tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Ogre::Billboard");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
  tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
  tolua_usertype(tolua_S,"Pixy::Unit");
  tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
- tolua_usertype(tolua_S,"Ogre::Billboard");
- tolua_usertype(tolua_S,"Ogre::MeshManager");
- tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
+ tolua_usertype(tolua_S,"Ogre::Viewport");
+ tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
+ tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Ogre::BillboardSet");
  tolua_usertype(tolua_S,"Ogre::Plane");
- tolua_usertype(tolua_S,"Pixy::CLuaExporter<CPuppetList>");
+ tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
  tolua_usertype(tolua_S,"Pixy::Intro");
  tolua_usertype(tolua_S,"ParticleUniverse::Particle");
  tolua_usertype(tolua_S,"Ogre::CompositorInstance");
- tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
- tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
+ tolua_usertype(tolua_S,"Ogre::SceneManager");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<CSpellVec>");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"Pixy::CUnit");
- tolua_usertype(tolua_S,"Ogre::Quaternion");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<CUnitVec>");
  tolua_usertype(tolua_S,"Ogre::ResourceManager");
- tolua_usertype(tolua_S,"Ogre::SceneManager");
- tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Ogre::RenderTarget::FrameStats");
+ tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"Ogre::RibbonTrail");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<CPuppetVec>");
  tolua_usertype(tolua_S,"std::type_info");
  tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
- tolua_usertype(tolua_S,"Pixy::OgreRTT");
- tolua_usertype(tolua_S,"Ogre::Camera");
  tolua_usertype(tolua_S,"Ogre::Entity");
+ tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"Ogre::Node");
  tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"LuaExporter");
- tolua_usertype(tolua_S,"Pixy::Engine");
- tolua_usertype(tolua_S,"Ogre::Node");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<CPuppetList>");
  tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
+ tolua_usertype(tolua_S,"Ogre::Quaternion");
+ tolua_usertype(tolua_S,"Pixy::OgreRTT");
  tolua_usertype(tolua_S,"Ogre::StaticGeometry");
 }
 
@@ -6258,14 +6258,14 @@ static int tolua_get_Pixy__ScriptEngine___Pixy__EventListener__(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  Pixy::CLuaExporter<CUnitVec> */
+/* method: new of class  Pixy::LuaExporter<CUnitVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitVecExporter_new00
 static int tolua_Elementum_Pixy_CUnitVecExporter_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CUnitVec>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CUnitVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6273,8 +6273,8 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_new00(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CUnitVec>* tolua_ret = (Pixy::CLuaExporter<CUnitVec>*)  Mtolua_new((Pixy::CLuaExporter<CUnitVec>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CUnitVec>");
+   Pixy::LuaExporter<CUnitVec>* tolua_ret = (Pixy::LuaExporter<CUnitVec>*)  Mtolua_new((Pixy::LuaExporter<CUnitVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CUnitVec>");
   }
  }
  return 1;
@@ -6286,14 +6286,14 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  Pixy::CLuaExporter<CUnitVec> */
+/* method: new_local of class  Pixy::LuaExporter<CUnitVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitVecExporter_new00_local
 static int tolua_Elementum_Pixy_CUnitVecExporter_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CUnitVec>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CUnitVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6301,8 +6301,8 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_new00_local(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CUnitVec>* tolua_ret = (Pixy::CLuaExporter<CUnitVec>*)  Mtolua_new((Pixy::CLuaExporter<CUnitVec>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CUnitVec>");
+   Pixy::LuaExporter<CUnitVec>* tolua_ret = (Pixy::LuaExporter<CUnitVec>*)  Mtolua_new((Pixy::LuaExporter<CUnitVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CUnitVec>");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -6315,21 +6315,21 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_new00_local(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  Pixy::CLuaExporter<CUnitVec> */
+/* method: delete of class  Pixy::LuaExporter<CUnitVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitVecExporter_delete00
 static int tolua_Elementum_Pixy_CUnitVecExporter_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CUnitVec>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CUnitVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::CLuaExporter<CUnitVec>* self = (Pixy::CLuaExporter<CUnitVec>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CUnitVec>* self = (Pixy::LuaExporter<CUnitVec>*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -6344,14 +6344,14 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: __export of class  Pixy::CLuaExporter<CUnitVec> */
+/* method: __export of class  Pixy::LuaExporter<CUnitVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitVecExporter_export00
 static int tolua_Elementum_Pixy_CUnitVecExporter_export00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CUnitVec>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CUnitVec>",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -6361,7 +6361,7 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_export00(lua_State* tolua_S)
  else
 #endif
  {
-  Pixy::CLuaExporter<CUnitVec>* self = (Pixy::CLuaExporter<CUnitVec>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CUnitVec>* self = (Pixy::LuaExporter<CUnitVec>*)  tolua_tousertype(tolua_S,1,0);
   CUnitVec const* container = ((CUnitVec const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
@@ -6381,14 +6381,14 @@ static int tolua_Elementum_Pixy_CUnitVecExporter_export00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  Pixy::CLuaExporter<CSpellVec> */
+/* method: new of class  Pixy::LuaExporter<CSpellVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellVecExporter_new00
 static int tolua_Elementum_Pixy_CSpellVecExporter_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CSpellVec>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CSpellVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6396,8 +6396,8 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_new00(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CSpellVec>* tolua_ret = (Pixy::CLuaExporter<CSpellVec>*)  Mtolua_new((Pixy::CLuaExporter<CSpellVec>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CSpellVec>");
+   Pixy::LuaExporter<CSpellVec>* tolua_ret = (Pixy::LuaExporter<CSpellVec>*)  Mtolua_new((Pixy::LuaExporter<CSpellVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CSpellVec>");
   }
  }
  return 1;
@@ -6409,14 +6409,14 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  Pixy::CLuaExporter<CSpellVec> */
+/* method: new_local of class  Pixy::LuaExporter<CSpellVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellVecExporter_new00_local
 static int tolua_Elementum_Pixy_CSpellVecExporter_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CSpellVec>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CSpellVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6424,8 +6424,8 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_new00_local(lua_State* tolua_S
 #endif
  {
   {
-   Pixy::CLuaExporter<CSpellVec>* tolua_ret = (Pixy::CLuaExporter<CSpellVec>*)  Mtolua_new((Pixy::CLuaExporter<CSpellVec>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CSpellVec>");
+   Pixy::LuaExporter<CSpellVec>* tolua_ret = (Pixy::LuaExporter<CSpellVec>*)  Mtolua_new((Pixy::LuaExporter<CSpellVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CSpellVec>");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -6438,21 +6438,21 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_new00_local(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  Pixy::CLuaExporter<CSpellVec> */
+/* method: delete of class  Pixy::LuaExporter<CSpellVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellVecExporter_delete00
 static int tolua_Elementum_Pixy_CSpellVecExporter_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CSpellVec>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CSpellVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::CLuaExporter<CSpellVec>* self = (Pixy::CLuaExporter<CSpellVec>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CSpellVec>* self = (Pixy::LuaExporter<CSpellVec>*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -6467,14 +6467,14 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: __export of class  Pixy::CLuaExporter<CSpellVec> */
+/* method: __export of class  Pixy::LuaExporter<CSpellVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellVecExporter_export00
 static int tolua_Elementum_Pixy_CSpellVecExporter_export00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CSpellVec>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CSpellVec>",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -6484,7 +6484,7 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_export00(lua_State* tolua_S)
  else
 #endif
  {
-  Pixy::CLuaExporter<CSpellVec>* self = (Pixy::CLuaExporter<CSpellVec>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CSpellVec>* self = (Pixy::LuaExporter<CSpellVec>*)  tolua_tousertype(tolua_S,1,0);
   CSpellVec const* container = ((CSpellVec const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
@@ -6504,14 +6504,14 @@ static int tolua_Elementum_Pixy_CSpellVecExporter_export00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  Pixy::CLuaExporter<CPuppetVec> */
+/* method: new of class  Pixy::LuaExporter<CPuppetVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetVecExporter_new00
 static int tolua_Elementum_Pixy_CPuppetVecExporter_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CPuppetVec>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CPuppetVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6519,8 +6519,8 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_new00(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CPuppetVec>* tolua_ret = (Pixy::CLuaExporter<CPuppetVec>*)  Mtolua_new((Pixy::CLuaExporter<CPuppetVec>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CPuppetVec>");
+   Pixy::LuaExporter<CPuppetVec>* tolua_ret = (Pixy::LuaExporter<CPuppetVec>*)  Mtolua_new((Pixy::LuaExporter<CPuppetVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CPuppetVec>");
   }
  }
  return 1;
@@ -6532,14 +6532,14 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  Pixy::CLuaExporter<CPuppetVec> */
+/* method: new_local of class  Pixy::LuaExporter<CPuppetVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetVecExporter_new00_local
 static int tolua_Elementum_Pixy_CPuppetVecExporter_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CPuppetVec>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CPuppetVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6547,8 +6547,8 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_new00_local(lua_State* tolua_
 #endif
  {
   {
-   Pixy::CLuaExporter<CPuppetVec>* tolua_ret = (Pixy::CLuaExporter<CPuppetVec>*)  Mtolua_new((Pixy::CLuaExporter<CPuppetVec>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CPuppetVec>");
+   Pixy::LuaExporter<CPuppetVec>* tolua_ret = (Pixy::LuaExporter<CPuppetVec>*)  Mtolua_new((Pixy::LuaExporter<CPuppetVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CPuppetVec>");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -6561,21 +6561,21 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_new00_local(lua_State* tolua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  Pixy::CLuaExporter<CPuppetVec> */
+/* method: delete of class  Pixy::LuaExporter<CPuppetVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetVecExporter_delete00
 static int tolua_Elementum_Pixy_CPuppetVecExporter_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CPuppetVec>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CPuppetVec>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::CLuaExporter<CPuppetVec>* self = (Pixy::CLuaExporter<CPuppetVec>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CPuppetVec>* self = (Pixy::LuaExporter<CPuppetVec>*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -6590,14 +6590,14 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: __export of class  Pixy::CLuaExporter<CPuppetVec> */
+/* method: __export of class  Pixy::LuaExporter<CPuppetVec> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetVecExporter_export00
 static int tolua_Elementum_Pixy_CPuppetVecExporter_export00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CPuppetVec>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CPuppetVec>",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -6607,7 +6607,7 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_export00(lua_State* tolua_S)
  else
 #endif
  {
-  Pixy::CLuaExporter<CPuppetVec>* self = (Pixy::CLuaExporter<CPuppetVec>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CPuppetVec>* self = (Pixy::LuaExporter<CPuppetVec>*)  tolua_tousertype(tolua_S,1,0);
   CPuppetVec const* container = ((CPuppetVec const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
@@ -6627,14 +6627,14 @@ static int tolua_Elementum_Pixy_CPuppetVecExporter_export00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  Pixy::CLuaExporter<CUnitList> */
+/* method: new of class  Pixy::LuaExporter<CUnitList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitListExporter_new00
 static int tolua_Elementum_Pixy_CUnitListExporter_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CUnitList>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CUnitList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6642,8 +6642,8 @@ static int tolua_Elementum_Pixy_CUnitListExporter_new00(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CUnitList>* tolua_ret = (Pixy::CLuaExporter<CUnitList>*)  Mtolua_new((Pixy::CLuaExporter<CUnitList>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CUnitList>");
+   Pixy::LuaExporter<CUnitList>* tolua_ret = (Pixy::LuaExporter<CUnitList>*)  Mtolua_new((Pixy::LuaExporter<CUnitList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CUnitList>");
   }
  }
  return 1;
@@ -6655,14 +6655,14 @@ static int tolua_Elementum_Pixy_CUnitListExporter_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  Pixy::CLuaExporter<CUnitList> */
+/* method: new_local of class  Pixy::LuaExporter<CUnitList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitListExporter_new00_local
 static int tolua_Elementum_Pixy_CUnitListExporter_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CUnitList>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CUnitList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6670,8 +6670,8 @@ static int tolua_Elementum_Pixy_CUnitListExporter_new00_local(lua_State* tolua_S
 #endif
  {
   {
-   Pixy::CLuaExporter<CUnitList>* tolua_ret = (Pixy::CLuaExporter<CUnitList>*)  Mtolua_new((Pixy::CLuaExporter<CUnitList>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CUnitList>");
+   Pixy::LuaExporter<CUnitList>* tolua_ret = (Pixy::LuaExporter<CUnitList>*)  Mtolua_new((Pixy::LuaExporter<CUnitList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CUnitList>");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -6684,21 +6684,21 @@ static int tolua_Elementum_Pixy_CUnitListExporter_new00_local(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  Pixy::CLuaExporter<CUnitList> */
+/* method: delete of class  Pixy::LuaExporter<CUnitList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitListExporter_delete00
 static int tolua_Elementum_Pixy_CUnitListExporter_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CUnitList>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CUnitList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::CLuaExporter<CUnitList>* self = (Pixy::CLuaExporter<CUnitList>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CUnitList>* self = (Pixy::LuaExporter<CUnitList>*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -6713,14 +6713,14 @@ static int tolua_Elementum_Pixy_CUnitListExporter_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: __export of class  Pixy::CLuaExporter<CUnitList> */
+/* method: __export of class  Pixy::LuaExporter<CUnitList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CUnitListExporter_export00
 static int tolua_Elementum_Pixy_CUnitListExporter_export00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CUnitList>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CUnitList>",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -6730,7 +6730,7 @@ static int tolua_Elementum_Pixy_CUnitListExporter_export00(lua_State* tolua_S)
  else
 #endif
  {
-  Pixy::CLuaExporter<CUnitList>* self = (Pixy::CLuaExporter<CUnitList>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CUnitList>* self = (Pixy::LuaExporter<CUnitList>*)  tolua_tousertype(tolua_S,1,0);
   CUnitList const* container = ((CUnitList const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
@@ -6750,14 +6750,14 @@ static int tolua_Elementum_Pixy_CUnitListExporter_export00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  Pixy::CLuaExporter<CSpellList> */
+/* method: new of class  Pixy::LuaExporter<CSpellList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellListExporter_new00
 static int tolua_Elementum_Pixy_CSpellListExporter_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CSpellList>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CSpellList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6765,8 +6765,8 @@ static int tolua_Elementum_Pixy_CSpellListExporter_new00(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CSpellList>* tolua_ret = (Pixy::CLuaExporter<CSpellList>*)  Mtolua_new((Pixy::CLuaExporter<CSpellList>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CSpellList>");
+   Pixy::LuaExporter<CSpellList>* tolua_ret = (Pixy::LuaExporter<CSpellList>*)  Mtolua_new((Pixy::LuaExporter<CSpellList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CSpellList>");
   }
  }
  return 1;
@@ -6778,14 +6778,14 @@ static int tolua_Elementum_Pixy_CSpellListExporter_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  Pixy::CLuaExporter<CSpellList> */
+/* method: new_local of class  Pixy::LuaExporter<CSpellList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellListExporter_new00_local
 static int tolua_Elementum_Pixy_CSpellListExporter_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CSpellList>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CSpellList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6793,8 +6793,8 @@ static int tolua_Elementum_Pixy_CSpellListExporter_new00_local(lua_State* tolua_
 #endif
  {
   {
-   Pixy::CLuaExporter<CSpellList>* tolua_ret = (Pixy::CLuaExporter<CSpellList>*)  Mtolua_new((Pixy::CLuaExporter<CSpellList>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CSpellList>");
+   Pixy::LuaExporter<CSpellList>* tolua_ret = (Pixy::LuaExporter<CSpellList>*)  Mtolua_new((Pixy::LuaExporter<CSpellList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CSpellList>");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -6807,21 +6807,21 @@ static int tolua_Elementum_Pixy_CSpellListExporter_new00_local(lua_State* tolua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  Pixy::CLuaExporter<CSpellList> */
+/* method: delete of class  Pixy::LuaExporter<CSpellList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellListExporter_delete00
 static int tolua_Elementum_Pixy_CSpellListExporter_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CSpellList>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CSpellList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::CLuaExporter<CSpellList>* self = (Pixy::CLuaExporter<CSpellList>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CSpellList>* self = (Pixy::LuaExporter<CSpellList>*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -6836,14 +6836,14 @@ static int tolua_Elementum_Pixy_CSpellListExporter_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: __export of class  Pixy::CLuaExporter<CSpellList> */
+/* method: __export of class  Pixy::LuaExporter<CSpellList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CSpellListExporter_export00
 static int tolua_Elementum_Pixy_CSpellListExporter_export00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CSpellList>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CSpellList>",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -6853,7 +6853,7 @@ static int tolua_Elementum_Pixy_CSpellListExporter_export00(lua_State* tolua_S)
  else
 #endif
  {
-  Pixy::CLuaExporter<CSpellList>* self = (Pixy::CLuaExporter<CSpellList>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CSpellList>* self = (Pixy::LuaExporter<CSpellList>*)  tolua_tousertype(tolua_S,1,0);
   CSpellList const* container = ((CSpellList const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
@@ -6873,14 +6873,14 @@ static int tolua_Elementum_Pixy_CSpellListExporter_export00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  Pixy::CLuaExporter<CPuppetList> */
+/* method: new of class  Pixy::LuaExporter<CPuppetList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetListExporter_new00
 static int tolua_Elementum_Pixy_CPuppetListExporter_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CPuppetList>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CPuppetList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6888,8 +6888,8 @@ static int tolua_Elementum_Pixy_CPuppetListExporter_new00(lua_State* tolua_S)
 #endif
  {
   {
-   Pixy::CLuaExporter<CPuppetList>* tolua_ret = (Pixy::CLuaExporter<CPuppetList>*)  Mtolua_new((Pixy::CLuaExporter<CPuppetList>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CPuppetList>");
+   Pixy::LuaExporter<CPuppetList>* tolua_ret = (Pixy::LuaExporter<CPuppetList>*)  Mtolua_new((Pixy::LuaExporter<CPuppetList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CPuppetList>");
   }
  }
  return 1;
@@ -6901,14 +6901,14 @@ static int tolua_Elementum_Pixy_CPuppetListExporter_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  Pixy::CLuaExporter<CPuppetList> */
+/* method: new_local of class  Pixy::LuaExporter<CPuppetList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetListExporter_new00_local
 static int tolua_Elementum_Pixy_CPuppetListExporter_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"Pixy::CLuaExporter<CPuppetList>",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<CPuppetList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -6916,8 +6916,8 @@ static int tolua_Elementum_Pixy_CPuppetListExporter_new00_local(lua_State* tolua
 #endif
  {
   {
-   Pixy::CLuaExporter<CPuppetList>* tolua_ret = (Pixy::CLuaExporter<CPuppetList>*)  Mtolua_new((Pixy::CLuaExporter<CPuppetList>)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::CLuaExporter<CPuppetList>");
+   Pixy::LuaExporter<CPuppetList>* tolua_ret = (Pixy::LuaExporter<CPuppetList>*)  Mtolua_new((Pixy::LuaExporter<CPuppetList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<CPuppetList>");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -6930,21 +6930,21 @@ static int tolua_Elementum_Pixy_CPuppetListExporter_new00_local(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  Pixy::CLuaExporter<CPuppetList> */
+/* method: delete of class  Pixy::LuaExporter<CPuppetList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetListExporter_delete00
 static int tolua_Elementum_Pixy_CPuppetListExporter_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CPuppetList>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CPuppetList>",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::CLuaExporter<CPuppetList>* self = (Pixy::CLuaExporter<CPuppetList>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CPuppetList>* self = (Pixy::LuaExporter<CPuppetList>*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
@@ -6959,14 +6959,14 @@ static int tolua_Elementum_Pixy_CPuppetListExporter_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: __export of class  Pixy::CLuaExporter<CPuppetList> */
+/* method: __export of class  Pixy::LuaExporter<CPuppetList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppetListExporter_export00
 static int tolua_Elementum_Pixy_CPuppetListExporter_export00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::CLuaExporter<CPuppetList>",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<CPuppetList>",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -6976,7 +6976,7 @@ static int tolua_Elementum_Pixy_CPuppetListExporter_export00(lua_State* tolua_S)
  else
 #endif
  {
-  Pixy::CLuaExporter<CPuppetList>* self = (Pixy::CLuaExporter<CPuppetList>*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::LuaExporter<CPuppetList>* self = (Pixy::LuaExporter<CPuppetList>*)  tolua_tousertype(tolua_S,1,0);
   CPuppetList const* container = ((CPuppetList const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
@@ -22351,7 +22351,7 @@ static int tolua_Elementum_OIS_Keyboard_isModifierDown00(lua_State* tolua_S)
  else
 #endif
  {
-  OIS::Keyboard* self = (OIS::Keyboard*)  tolua_tousertype(tolua_S,1,0);
+  const OIS::Keyboard* self = (const OIS::Keyboard*)  tolua_tousertype(tolua_S,1,0);
   OIS::Keyboard::Modifier mod = ((OIS::Keyboard::Modifier) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isModifierDown'", NULL);
@@ -25416,9 +25416,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__ScriptEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CUnitVecExporter","Pixy::CLuaExporter<CUnitVec>","LuaExporter",tolua_collect_Pixy__CLuaExporter_CUnitVec_);
+   tolua_cclass(tolua_S,"CUnitVecExporter","Pixy::LuaExporter<CUnitVec>","BaseLuaExporter",tolua_collect_Pixy__LuaExporter_CUnitVec_);
    #else
-   tolua_cclass(tolua_S,"CUnitVecExporter","Pixy::CLuaExporter<CUnitVec>","LuaExporter",NULL);
+   tolua_cclass(tolua_S,"CUnitVecExporter","Pixy::LuaExporter<CUnitVec>","BaseLuaExporter",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CUnitVecExporter");
     tolua_function(tolua_S,"new",tolua_Elementum_Pixy_CUnitVecExporter_new00);
@@ -25428,9 +25428,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_CUnitVecExporter_export00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CSpellVecExporter","Pixy::CLuaExporter<CSpellVec>","LuaExporter",tolua_collect_Pixy__CLuaExporter_CSpellVec_);
+   tolua_cclass(tolua_S,"CSpellVecExporter","Pixy::LuaExporter<CSpellVec>","BaseLuaExporter",tolua_collect_Pixy__LuaExporter_CSpellVec_);
    #else
-   tolua_cclass(tolua_S,"CSpellVecExporter","Pixy::CLuaExporter<CSpellVec>","LuaExporter",NULL);
+   tolua_cclass(tolua_S,"CSpellVecExporter","Pixy::LuaExporter<CSpellVec>","BaseLuaExporter",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CSpellVecExporter");
     tolua_function(tolua_S,"new",tolua_Elementum_Pixy_CSpellVecExporter_new00);
@@ -25440,9 +25440,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_CSpellVecExporter_export00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CPuppetVecExporter","Pixy::CLuaExporter<CPuppetVec>","LuaExporter",tolua_collect_Pixy__CLuaExporter_CPuppetVec_);
+   tolua_cclass(tolua_S,"CPuppetVecExporter","Pixy::LuaExporter<CPuppetVec>","BaseLuaExporter",tolua_collect_Pixy__LuaExporter_CPuppetVec_);
    #else
-   tolua_cclass(tolua_S,"CPuppetVecExporter","Pixy::CLuaExporter<CPuppetVec>","LuaExporter",NULL);
+   tolua_cclass(tolua_S,"CPuppetVecExporter","Pixy::LuaExporter<CPuppetVec>","BaseLuaExporter",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CPuppetVecExporter");
     tolua_function(tolua_S,"new",tolua_Elementum_Pixy_CPuppetVecExporter_new00);
@@ -25452,9 +25452,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_CPuppetVecExporter_export00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CUnitListExporter","Pixy::CLuaExporter<CUnitList>","LuaExporter",tolua_collect_Pixy__CLuaExporter_CUnitList_);
+   tolua_cclass(tolua_S,"CUnitListExporter","Pixy::LuaExporter<CUnitList>","BaseLuaExporter",tolua_collect_Pixy__LuaExporter_CUnitList_);
    #else
-   tolua_cclass(tolua_S,"CUnitListExporter","Pixy::CLuaExporter<CUnitList>","LuaExporter",NULL);
+   tolua_cclass(tolua_S,"CUnitListExporter","Pixy::LuaExporter<CUnitList>","BaseLuaExporter",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CUnitListExporter");
     tolua_function(tolua_S,"new",tolua_Elementum_Pixy_CUnitListExporter_new00);
@@ -25464,9 +25464,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_CUnitListExporter_export00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CSpellListExporter","Pixy::CLuaExporter<CSpellList>","LuaExporter",tolua_collect_Pixy__CLuaExporter_CSpellList_);
+   tolua_cclass(tolua_S,"CSpellListExporter","Pixy::LuaExporter<CSpellList>","BaseLuaExporter",tolua_collect_Pixy__LuaExporter_CSpellList_);
    #else
-   tolua_cclass(tolua_S,"CSpellListExporter","Pixy::CLuaExporter<CSpellList>","LuaExporter",NULL);
+   tolua_cclass(tolua_S,"CSpellListExporter","Pixy::LuaExporter<CSpellList>","BaseLuaExporter",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CSpellListExporter");
     tolua_function(tolua_S,"new",tolua_Elementum_Pixy_CSpellListExporter_new00);
@@ -25476,9 +25476,9 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_CSpellListExporter_export00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CPuppetListExporter","Pixy::CLuaExporter<CPuppetList>","LuaExporter",tolua_collect_Pixy__CLuaExporter_CPuppetList_);
+   tolua_cclass(tolua_S,"CPuppetListExporter","Pixy::LuaExporter<CPuppetList>","BaseLuaExporter",tolua_collect_Pixy__LuaExporter_CPuppetList_);
    #else
-   tolua_cclass(tolua_S,"CPuppetListExporter","Pixy::CLuaExporter<CPuppetList>","LuaExporter",NULL);
+   tolua_cclass(tolua_S,"CPuppetListExporter","Pixy::LuaExporter<CPuppetList>","BaseLuaExporter",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CPuppetListExporter");
     tolua_function(tolua_S,"new",tolua_Elementum_Pixy_CPuppetListExporter_new00);

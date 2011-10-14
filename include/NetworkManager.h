@@ -64,14 +64,11 @@ namespace Pixy {
 		bool fOnline;
 
 	private:
-
-
-
-
 		static NetworkManager* mInstance;
 		NetworkManager();
 
     Connection_ptr conn_;
+    std::string mHost;
 
     boost::asio::io_service& io_service_;
     boost::asio::io_service::work work_;

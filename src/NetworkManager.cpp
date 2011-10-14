@@ -101,6 +101,7 @@ namespace Pixy {
       mLog->infoStream() << "attempting to connect to host " << *lHost << ":" << _port;
       if (conn_->connect(*lHost, _port) ) {
         _connected = true;
+        mHost = *lHost;
         break;
       }
     }
@@ -122,7 +123,7 @@ namespace Pixy {
       return;
     }
 
-    mLog->infoStream() << "connected";
+    mLog->infoStream() << "connected to: " << mHost;
 		fOnline = true;
 
     conn_->get_dispatcher().bind(EventUID::Unassigned, this, &NetworkManager::onInbound);
@@ -140,8 +141,10 @@ namespace Pixy {
   }
 
 	bool NetworkManager::disconnect() {
-    if (!fOnline)
+    if (!fOnline) {
+      mLog->warnStream() << "attempting to disconnect while not connected!";
       return true;
+    }
 
     Event evt(EventUID::Logout);
     send(evt);
@@ -162,13 +165,14 @@ namespace Pixy {
   void NetworkManager::send(const Event& inEvt) {
     assert(isConnected());
 
-    mLog->debugStream() << "sending an event " << (int)inEvt.UID;
+    mLog->debugStream() << "sending an event " << inEvt;
     //inEvt.dump();
     Event clone(inEvt);
     conn_->send(clone);
   }
 
 	void NetworkManager::onInbound(const Event& inEvt) {
+    mLog->debugStream() << "received an event " << inEvt;
     EventManager::getSingleton().hook(inEvt);
 	}
 
