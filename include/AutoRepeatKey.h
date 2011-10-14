@@ -9,11 +9,12 @@
 #ifndef H_AutoRepeatKey_H
 #define H_AutoRepeatKey_H
 
-#include <OIS.h>
+#include "PixyPlatform.h"
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 # include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#include <OIS.h>
 #include <CEGUI/CEGUI.h>
 
 namespace Pixy
