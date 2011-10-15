@@ -59,11 +59,9 @@ namespace Pixy
 
 		void registerPuppet(CPuppet* inPuppet);
 
-		void updateMe(Engine* inEngine);
-		void updateGfx();
+    void assignPuppet(CPuppet* inPuppet);
 
     puppets_t const& getPuppets();
-    void assignPuppet(CPuppet* inPuppet);
     CPuppet* getPuppet();
     CPuppet* getEnemy(int inUID);
     CPuppet* getPuppet(int inUID);
@@ -84,8 +82,6 @@ namespace Pixy
     bool __isDebugging() const;
 
   protected:
-    friend class UIEngine;
-    void castSpell(CSpell*);
 
 	private:
 
@@ -178,11 +174,6 @@ namespace Pixy
     rdeathlist_t mRDeathlist;
 
     bool inBlockPhase;
-
-		std::vector<Engine*>		mUpdateQueue;
-		std::vector<Engine*>::const_iterator mUpdater;
-
-		bool fUpdateGfx;
 
     bool fIsDebugging;
 

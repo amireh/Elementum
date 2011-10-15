@@ -1,4 +1,4 @@
-$#include "OgreRTT.h"
+$#include "ogre/OgreRTT.h"
 $#include "Ogre.h"
 
   class OgreRTT : public Ogre::RenderTargetListener

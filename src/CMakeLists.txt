@@ -2,7 +2,6 @@
 SET(Elementum_SRCS
   ${Elementum_SRCS}
 
-  ../include/AudioEngine.h
   ../include/CDeck.h
   ../include/CEntity.h
   ../include/Combat.h
@@ -19,15 +18,12 @@ SET(Elementum_SRCS
   ../include/InputListener.h
   ../include/InputManager.h
   ../include/Intro.h
-  ../include/Lobby.h
+  #../include/Lobby.h
   ../include/NetworkManager.h
   ../include/PhyxEngine.h
   ../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
-  ../include/MousePicker.h
-  ../include/AutoRepeatKey.h
-  ../include/OgreRTT.h
 
   Connection.cpp
 
@@ -46,13 +42,13 @@ SET(Elementum_SRCS
   GfxEngine.cpp
   InputManager.cpp
   Intro.cpp
-  Lobby.cpp
+  #Lobby.cpp
   NetworkManager.cpp
   ScriptEngine.cpp
   UIEngine.cpp
-  MousePicker.cpp
-  AutoRepeatKey.cpp
-  OgreRTT.cpp
+  #MousePicker.cpp
+  #AutoRepeatKey.cpp
+  #OgreRTT.cpp
 
   main.cpp
 

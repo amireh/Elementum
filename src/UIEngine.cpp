@@ -12,7 +12,7 @@
 #include "PixyUtility.h"
 #include "GameManager.h"
 #include <boost/filesystem.hpp>
-#include "AutoRepeatKey.h"
+#include "cegui/AutoRepeatKey.h"
 
 // CEGUI
 // For some reason, on OS X CEGUI.h complains that CFBundleRef is undeclared

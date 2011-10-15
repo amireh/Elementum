@@ -18,7 +18,7 @@
 #include "CPuppet.h"
 #include "CDeck.h"
 #include "CSpell.h"
-#include "Lobby.h"
+//#include "Lobby.h"
 #include "FxEngine.h"
 #include "Combat.h"
 
@@ -273,7 +273,7 @@ namespace Pixy
   {
     mPuppetName = e.getProperty("Puppet");
 
-    GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
+    //GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
     return true;
   }
 

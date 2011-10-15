@@ -42,7 +42,7 @@ namespace Pixy
   $pfile "InputManager.pkg"
   $pfile "GameState.pkg"
   $pfile "Intro.pkg"
-  $pfile "Lobby.pkg"
+  //$pfile "Lobby.pkg"
   $pfile "Combat.pkg"
   $pfile "UIEngine.pkg"
   $pfile "GfxEngine.pkg"

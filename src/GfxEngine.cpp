@@ -21,8 +21,8 @@
 #include "ScriptEngine.h"
 #include "OgreMax/OgreMaxScene.hpp"
 #include "PixyUtility.h"
-#include "MousePicker.h"
-#include "OgreRTT.h"
+#include "ogre/MousePicker.h"
+#include "ogre/OgreRTT.h"
 
 #if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 #include <CEGUI/CEGUI.h>
@@ -52,9 +52,9 @@
 //#include "Plugins/Caelum/CaelumSystem.h"
 
 //#include "dotscene/DotSceneLoader.h"
-#include "ogre/HelperLogics.h"
+//#include "ogre/HelperLogics.h"
 #include "ogre/SdkCameraMan.h"
-#include "ogre/HDRCompositor.h"
+//#include "ogre/HDRCompositor.h"
 #include "ogre/MovableTextOverlay.h"
 #include "ogre/RectLayoutManager.h"
 #include "ogre/OgreSdkTrays.h"

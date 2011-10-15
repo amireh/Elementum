@@ -1,8 +1,8 @@
 SET(Elementum_Modules_INCLUDE_DIRS
   include
   include/cegui
-  include/dotscene
   include/ogre
+  #include/dotscene
   include/tinyxml
   include/tinyxmlresource
   include/OgreMax
@@ -14,14 +14,18 @@ INCLUDE_DIRECTORIES(${Elementum_Modules_INCLUDE_DIRS})
 # add sources
 SET(Elementum_Modules_SRCS
 
+  include/cegui/AutoRepeatKey.h
+  include/ogre/MousePicker.h
+  include/ogre/OgreRTT.h
+
   #src/dotscene/DotSceneLoader.cpp
   src/cegui/FormattedListboxTextItem.cpp
 
   src/tinyxmlresource/TinyXMLResource.cpp
   src/tinyxmlresource/TinyXMLResourceManager.cpp
 
-  src/ogre/HDRCompositor.cpp
-  src/ogre/HelperLogics.cpp
+  #src/ogre/HDRCompositor.cpp
+  #src/ogre/HelperLogics.cpp
   src/ogre/MovableTextOverlay.cpp
   src/ogre/RectLayoutManager.cpp
 

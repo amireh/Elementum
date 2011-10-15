@@ -62,9 +62,11 @@ namespace Pixy
 		mLog->infoStream() << "---- Entering ----";
     mLog->infoStream() << "My Listener UID: " << mUID;
 
-		//mPuppets.clear();
-		//mUpdateQueue.clear();
+		mPuppets.clear();
     mDeathlist.clear();
+    mChargers.clear();
+    mAttackers.clear();
+    mBlockers.clear();
 
 		mEvtMgr = EventManager::getSingletonPtr();
     mEvtMgr->clear();
@@ -75,7 +77,6 @@ namespace Pixy
       return GameManager::getSingleton().requestShutdown();
 		}
 
-		fUpdateGfx = false;
 		mGfxEngine = GfxEngine::getSingletonPtr();
 		mGfxEngine->setup();
 
@@ -138,16 +139,27 @@ namespace Pixy
 
 
 	void Combat::exit( void ) {
+    mLog->infoStream() << "Exiting";
+    
     if (fSetup)
       mScriptEngine->passToLua("Combat.onExit", 0);
 
+    mLog->debugStream() << "\tdestroying " << mPuppets.size() << " puppets";
 		puppets_t::iterator lPuppet;
 		for (lPuppet = mPuppets.begin(); lPuppet != mPuppets.end(); ++lPuppet) {
 			delete (*lPuppet);
 		}
 		mPuppets.clear();
-
-		mUpdateQueue.clear();
+		mDeathlist.clear();
+    mChargers.clear();
+    mAttackers.clear();
+    mBlockers.clear();
+        
+    mPuppet = 0;
+    mActivePuppet = 0;
+    mWaitingPuppet = 0;
+    
+    inBlockPhase = false;
 
 		/*delete mScriptEngine;
 		delete mUIEngine;
@@ -170,13 +182,6 @@ namespace Pixy
 	 *	Misc
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
-	void Combat::updateMe(Engine* inEngine) {
-		mUpdateQueue.push_back(inEngine);
-	}
-	void Combat::updateGfx() {
-		fUpdateGfx = true;
-	}
-
   void Combat::__setIsDebugging(bool setting)
   {
     fIsDebugging = setting;
@@ -188,63 +193,15 @@ namespace Pixy
   }
 
 	void Combat::keyPressed( const OIS::KeyEvent &e )	{
-
-		/*mUISystem->injectKeyDown(e.key);
-		mUISystem->injectChar(e.text);
-
-		mGfxEngine->getCameraMan()->injectKeyDown(e);
-		*/
 		mUIEngine->keyPressed(e);
 		mGfxEngine->keyPressed(e);
 		mScriptEngine->keyPressed(e);
 	}
 
 	void Combat::keyReleased( const OIS::KeyEvent &e ) {
-
 	  mUIEngine->keyReleased(e);
 		mGfxEngine->keyReleased(e);
 		mScriptEngine->keyReleased(e);
-
-		/*
-		mUISystem->injectKeyUp(e.key);
-
-		mGfxEngine->getCameraMan()->injectKeyUp(e);
-		*/
-		/*switch (e.key) {
-			case OIS::KC_ESCAPE:
-				this->requestShutdown();
-				break;
-			case OIS::KC_SPACE:
-			  GameManager::getSingleton().changeState(Intro::getSingletonPtr());
-				break;
-      case OIS::KC_RETURN:
-      //~ case OIS::KC_E:
-        if (mActivePuppet == mPuppet)
-          mNetMgr->send(Event(EventUID::EndTurn));
-        //~ else
-          //~ mNetMgr->send(Event(EventUID::EndBlockPhase));
-      break;
-      case OIS::KC_F:
-        if (inBlockPhase)
-          mNetMgr->send(Event(EventUID::EndBlockPhase));
-      break;
-      case OIS::KC_A:
-        if (mActivePuppet == mPuppet) {
-          CPuppet::units_t::const_iterator unit_itr;
-          for (unit_itr = mPuppet->getUnits().begin();
-               unit_itr != mPuppet->getUnits().end();
-               ++unit_itr) {
-            CUnit* unit = *unit_itr;
-            if (unit->getAP() > 0 && !unit->isResting() && !unit->isMoving() && !unit->getPosition() == POS_CHARGING) {
-              Event req(EventUID::Charge);
-              req.setProperty("UID", unit->getUID());
-              mNetMgr->send(req);
-            }
-          }
-        }
-      break;
-		}*/
-
 	}
 
 	bool Combat::mouseMoved( const OIS::MouseEvent &e )	{
@@ -328,23 +285,11 @@ namespace Pixy
 
       mDeathlist.clear();
     }
-
-		/*for (mUpdater = mUpdateQueue.begin();
-			 mUpdater != mUpdateQueue.end();
-			 ++mUpdater) {
-			(*mUpdater)->update(lTimeElapsed);
-		}
-
-		if (fUpdateGfx)
-			mGfxEngine->update(lTimeElapsed);*/
-		/*
-		mUIEngine->update(lTimeElapsed);
-		mGfxEngine->update(lTimeElapsed);
-		mScriptEngine->update(lTimeElapsed);
-		 */
 	}
 
 	void Combat::registerPuppet(CPuppet* inPuppet) {
+    mLog->infoStream() << "a new Puppet has joined the battle: " << inPuppet;
+    
 		mPuppets.push_back(inPuppet);
     mScriptEngine->passToLua("Puppets.onAddPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
     if (inPuppet->getName() == mPuppetName)
@@ -355,7 +300,8 @@ namespace Pixy
 
   void Combat::assignPuppet(CPuppet* inPuppet) {
     assert(inPuppet);
-    mLog->infoStream() << "I'm playing with a puppet named " << inPuppet->getName();
+    
+    mLog->infoStream() << "I'm playing with the puppet: " << inPuppet;
     mPuppet = inPuppet;
     mScriptEngine->passToLua("Puppets.onAssignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
   }
@@ -507,14 +453,16 @@ namespace Pixy
     string raw2str(raw.begin(), raw.end());
 
     std::cout << "Uncompressed puppet data: " << raw2str << "\n";*/
-
+    mLog->infoStream() << "match puppet data received:";
+    
+    mLog->infoStream() << "\tparsing puppet data";
     std::istringstream datastream(inEvt.getProperty("Data"));
-    std::cout << "----- INSTANCE PUPPETS DUMP -----\n" << inEvt.getProperty("Data") << "\n";
     list<CPuppet*> lPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
     datastream.clear();
 
     assert(lPuppets.size() > 1);
 
+    mLog->infoStream() << "\tpuppets parsed, registering them";
     for (list<CPuppet*>::iterator puppet = lPuppets.begin();
          puppet != lPuppets.end();
          ++puppet)
@@ -529,16 +477,15 @@ namespace Pixy
          puppet_itr != mPuppets.end();
          ++puppet_itr) {
       CPuppet* puppet = *puppet_itr;
-      if (puppet->getName() == mPuppetName) // is this the puppet we're playing with?
-        mPuppet = puppet;
-
       puppet->live();
       mScriptEngine->passToLua("Puppets.onCreatePuppet", 1, "Pixy::CPuppet", (void*)puppet);
       //~ mGfxEngine->attachToScene(puppet->getRenderable());
     }
-
+    mLog->infoStream() << "\tpuppet parsing was successful";
+    
+    mLog->infoStream() << "battle has begun, informing server we are ready";
     mScriptEngine->passToLua("Combat.onGameStarted", 0);
-
+    
     Event resp(EventUID::Ready);
     mNetMgr->send(resp);
 
@@ -547,10 +494,16 @@ namespace Pixy
 
   void Combat::handleNewTurn() {
 
+    mLog->infoStream() << "handling a new turn:";
+    mLog->debugStream() 
+      << "\tactive puppet is: " << mActivePuppet
+      << ", inactive puppet is: " << mWaitingPuppet;
+    
     mScriptEngine->passToLua("Puppets.onAssignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
     mScriptEngine->passToLua("Turns.onNewTurn", 0);
 
     // apply active buffs
+    mLog->debugStream() << "\tapplying buffs on puppet";
     for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
          buff != mActivePuppet->getBuffs().end();
          ++buff)
@@ -564,6 +517,7 @@ namespace Pixy
 
     // remove all expired puppet buffs
     {
+      mLog->debugStream() << "\tdetermining expired buffs on puppet for removal";
       std::vector<CSpell*> expired;
       for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
            buff != mActivePuppet->getBuffs().end();
@@ -571,12 +525,14 @@ namespace Pixy
         if ((*buff)->hasExpired())
           expired.push_back(*buff);
 
+      mLog->debugStream() << "\tremoving " << expired.size() << " expired buffs on puppet";
       for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
            expired_spell != expired.end();
            ++expired_spell)
         mActivePuppet->detachBuff((*expired_spell)->getUID());
     }
 
+    mLog->debugStream() << "\tprocessing buffs on puppet units";
     for (CPuppet::units_t::const_iterator unit_itr = mActivePuppet->getUnits().begin();
          unit_itr != mActivePuppet->getUnits().end();
          ++unit_itr)
@@ -586,10 +542,12 @@ namespace Pixy
       unit->getUp();
 
       // apply active buffs
+      mLog->debugStream() << "\t\tunit " << unit << " has " << unit->getBuffs().size() << " buffs";
       for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
            buff != unit->getBuffs().end();
            ++buff)
       {
+        mLog->debugStream() << "\t\tapplying active buff " << (*buff) << " on unit " << unit;
         mScriptEngine->passToLua(
         "Spells.onCastSpell", 3,
         "Pixy::Renderable", (*buff)->getCaster(),
@@ -603,13 +561,18 @@ namespace Pixy
         for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
              buff != unit->getBuffs().end();
              ++buff)
+        {
           if ((*buff)->hasExpired())
             expired.push_back(*buff);
+        }
 
         for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
              expired_spell != expired.end();
              ++expired_spell)
+        {
+          mLog->debugStream() << "\t\tremoving expired buff " << (*expired_spell) << " from unit " << unit;
           unit->detachBuff((*expired_spell)->getUID());
+        }
       }
 
     }
@@ -617,7 +580,8 @@ namespace Pixy
   }
 
   bool Combat::onStartTurn(const Event& inEvt) {
-
+    mLog->debugStream() << "my turn is starting";
+    
     mActivePuppet = mPuppet;
     if (mPuppet == mPuppets.front())
       mWaitingPuppet = mPuppets.back();
@@ -635,14 +599,14 @@ namespace Pixy
   bool Combat::onTurnStarted(const Event& inEvt) {
     assert(inEvt.hasProperty("P")); // _DEBUG_
 
+    mLog->infoStream() << "opponent's turn has started";
+    
     mWaitingPuppet = mActivePuppet;
     mActivePuppet = getPuppet(convertTo<int>(inEvt.getProperty("P")));
 
     assert(mActivePuppet); // _DEBUG_
 
     handleNewTurn();
-
-    mLog->infoStream() << mActivePuppet->getName() << "'s turn has started, not mine";
 
     return true;
   }
@@ -682,7 +646,7 @@ namespace Pixy
 
       //int nrSpells = convertTo<int>(elements[1].c_str());
       assert((elements.size()-1)/2 == nrDrawSpells);
-
+      mLog->debugStream() << "\tpuppet " << lPuppet << " has received " << nrDrawSpells << " spells";
       int spellsParsed = 0;
       int index = 0;
       while (++spellsParsed <= nrDrawSpells) {
@@ -690,13 +654,11 @@ namespace Pixy
         lSpell->setUID(convertTo<int>(elements[++index]));
         lPuppet->attachSpell(lSpell);
 
-        mLog->debugStream() << "attaching spell with UID: " << lSpell->getUID() << " to puppet " << lPuppet->getUID();
+        mLog->debugStream() << "attaching spell: " << lSpell << " to puppet " << lPuppet;
 
+        // draw the spell button in the UI
         if (lPuppet == mPuppet) {
-          //mUIEngine->drawSpell(lSpell);
           mScriptEngine->passToLua("Spells.onDrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
-
-          mUIEngine->refreshSize();
         }
 
         lSpell = 0;
@@ -712,8 +674,6 @@ namespace Pixy
 
       if (nrDropSpells > 0) {
 
-        mLog->debugStream() << "dropping " << nrDropSpells << " spells";
-
         // the next line contains the actual string UIDs/names and the owner uid
         getline(lData, lLine);
         vector<string> elements = Utility::split(lLine, ';');
@@ -725,16 +685,21 @@ namespace Pixy
         //int nrSpells = convertTo<int>(elements[1].c_str());
         assert((elements.size()-1) == nrDropSpells);
 
+        mLog->debugStream() << "dropping " << nrDropSpells << " spells from puppet " << lPuppet;
+        
         int spellsParsed = 0;
         int index = 0;
-        while (++spellsParsed <= nrDropSpells) {
+        while (++spellsParsed <= nrDropSpells)
+        {
           CSpell* lSpell = lPuppet->getSpell(convertTo<int>(elements[++index]));
-          mLog->debugStream() << "removing spell with UID " << elements[index] << " from puppet " << lPuppet->getUID();;
+          mLog->debugStream() << "removing spell " << lSpell << " from puppet " << lPuppet;
+          
           assert(lSpell); // _DEBUG_
 
           if (lPuppet == mPuppet)
-            //mUIEngine->dropSpell(lSpell);
+          {
             mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+          }
 
           lPuppet->detachSpell(lSpell->getUID());
           lSpell = 0;
@@ -747,18 +712,8 @@ namespace Pixy
     return true;
   }
 
-  void Combat::castSpell(CSpell* inSpell) {
-    if (mActivePuppet != mPuppet) {
-      mLog->errorStream() << "attempting to cast spell while it's not my turn";
-      return;
-    }
-
-    Event evt(EventUID::CastSpell);
-    evt.setProperty("Spell", inSpell->getUID());
-    mNetMgr->send(evt);
-  }
-
   bool Combat::onCastSpell(const Event& inEvt) {
+    mLog->debugStream() << "casting a spell";
     if (inEvt.Feedback == EventFeedback::InvalidRequest) {
       // the UID was invalid
       mLog->errorStream() << "my request to cast a spell was rejected!\n";
@@ -782,13 +737,16 @@ namespace Pixy
       } catch (...) { lSpell = 0; }*/
 
     assert(lSpell && lCaster && lSpell->getCaster()->getEntity()->getUID() == lCaster->getUID());
+    
+    mLog->debugStram() << "\tspell is: " << lSpell << " and its caster is: " << lCaster;
+    
     Entity* _lTarget = 0;
     Renderable* lTarget = 0;
     if (inEvt.hasProperty("T")) {
       try {
         // is the target a puppet?
         _lTarget = getPuppet(convertTo<int>(inEvt.getProperty("T")));
-        mLog->debugStream() << "target: " << _lTarget->getUID() << "#" << _lTarget->getName();
+        mLog->debugStream() << "target: " << _lTarget;
       } catch (invalid_uid& e) {
         try {
           // a unit?
@@ -817,16 +775,20 @@ namespace Pixy
     // ...
     //std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
     // remove it from the UI
-    if (lCaster == mPuppet)
+    if (lCaster == mPuppet) {
+      mLog->debugStream() << "\tcasting of " << lSpell << " was successful, now removing the spell";
       mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+    }
     //mUIEngine->dropSpell(_spell);
     // remove it from the puppet's hand if it's not a buff
     lCaster->detachSpell(lSpell->getUID(), lSpell->getDuration() == 0);
 
+    mLog->debugStream() << "\tthe spell casting process is complete";
     return true;
   }
 
   bool Combat::onCreateUnit(const Event& evt) {
+    mLog->debugStream() << "creating a unit:";
     assert(evt.hasProperty("Name") && evt.hasProperty("OUID") && evt.hasProperty("UID"));
 
     CPuppet* _owner = getPuppet(convertTo<int>(evt.getProperty("OUID")));
@@ -840,9 +802,10 @@ namespace Pixy
     _unit->fromEvent(evt);
     _owner->attachUnit(_unit);
 
-    //std::cout << "new units UID=" << _unit->getUID() << "\n";
     assert(_unit->getOwner());
 
+    mLog->debugStream() << "\tthe created unit is: " << _unit;
+    
     _unit->live();
     //~ mGfxEngine->attachToScene(_unit->getRenderable());
 
@@ -851,6 +814,8 @@ namespace Pixy
     _unit = 0;
     _owner = 0;
 
+    mLog->debugStream() << "\tunit creation successful";
+    
     return true;
   }
 
@@ -914,7 +879,7 @@ namespace Pixy
     try {
       attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
     } catch (invalid_uid& e) {
-      std::cout  << "invalid charge event parameters : " << e.what();
+      mLog->errorStream()  << "invalid charge event parameters : " << e.what();
     }
 
     // move the unit

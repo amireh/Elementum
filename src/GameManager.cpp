@@ -12,7 +12,7 @@
 #include "GameState.h"
 #include "EventManager.h"
 #include "Intro.h"
-#include "Lobby.h"
+//#include "Lobby.h"
 #include "Combat.h"
 #include "log4cpp/PixyLogLayout.h"
 #include <boost/filesystem.hpp>
