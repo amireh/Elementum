@@ -1,4 +1,10 @@
 /*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * ************
  * MousePicker - an interface for querying objects in an Ogre3D scene
  *
  * Written by:
@@ -9,6 +15,7 @@
  *
  * Modified by: Ahmad Amireh <ahmad@shroom-studios.com>
  */
+
 #ifndef H_MousePicker_H
 #define H_MousePicker_H
 

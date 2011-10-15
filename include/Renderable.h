@@ -1,14 +1,11 @@
-/* -----------------------------------------------
- *  Filename: Entity.h
- *  Date Created: ??/2009
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
  *
- *  Original Author:
- *      Ahmad Amireh ( ahmad.amireh@gmail.com )
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
  *
- *  Last Update:
- *      Date:   20/4/2009
- *      By:     Ahmad Amireh
- * ----------------------------------------------- */
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
 
 #ifndef H_Renderable_H
 #define H_Renderable_H

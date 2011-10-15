@@ -1,10 +1,10 @@
 /*
- *  Engine.h
- *  Elementum
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
  *
- *  Created by Ahmad Amireh on 2/11/10.
- *  Copyright 2010 JU. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
  *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
  */
 
 #ifndef H_Engine_H
@@ -31,7 +31,7 @@ namespace Pixy
     inline Engine() { mLog = NULL; fSetup = false; }
     log4cpp::Category* mLog;
     bool fSetup;
-    
+
   private:
     Engine(const Engine& src);
     Engine& operator=(const Engine& rhs);

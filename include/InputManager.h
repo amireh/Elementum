@@ -1,13 +1,11 @@
-/* -----------------------------------------------
- *  Filename: InputManager.h
- *  Date Created: ??/2009
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
  *
- *  Original Author: spacegaier <http://www.spacegaier.de>
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
  *
- *  Last Update:
- *      Date:   20/4/2009
- *      By:     Ahmad Amireh
- * ----------------------------------------------- */
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
 
 #ifndef H_InputManager_H
 #define H_InputManager_H

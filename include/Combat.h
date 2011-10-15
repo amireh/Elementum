@@ -1,10 +1,10 @@
 /*
- *  Combat.h
- *  Elementum
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
  *
- *  Created by Ahmad Amireh on 4/4/10.
- *  Copyright 2010 JU. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
  *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
  */
 
 #ifndef H_Combat_H

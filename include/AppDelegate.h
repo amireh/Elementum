@@ -1,3 +1,12 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
 #ifndef __AppDelegate_H__
 #define __AppDelegate_H__
 
@@ -74,25 +83,25 @@ static id mAppDelegate;
 }
 
 - (void)go {
-    
+
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     mLastFrameTime = 1;
     mStartTime = 0;
     mTimer = nil;
     mGameMgr = GameManager::getSingletonPtr();
-    
+
     try {
       mGameMgr->_setup();
-        
+
       Ogre::Root::getSingleton().getRenderSystem()->_initRenderTargets();
-        
+
       // Clear event times
   		Ogre::Root::getSingleton().clearEventTimes();
     } catch( Ogre::Exception& e ) {
       std::cerr << "An exception has occurred: " <<
       e.getFullDescription().c_str() << std::endl;
     }
-    
+
     mTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0f / 60.0f) * mLastFrameTime
                                               target:self
                                             selector:@selector(renderOneFrame:)
@@ -105,14 +114,14 @@ static id mAppDelegate;
     mLastFrameTime = 1;
     mStartTime = 0;
     mTimer = nil;
-    
+
     [self go];
 }
 
 - (void)renderOneFrame:(id)sender
 {
     if(!mGameMgr->shuttingDown() &&
-       Ogre::Root::getSingletonPtr() && 
+       Ogre::Root::getSingletonPtr() &&
        Ogre::Root::getSingleton().isInitialised())
     {
   		if(mGameMgr->getRenderWindow()->isActive())
@@ -137,7 +146,7 @@ static id mAppDelegate;
         [mTimer invalidate];
         mTimer = nil;
     }
-    
+
     [super dealloc];
 }
 

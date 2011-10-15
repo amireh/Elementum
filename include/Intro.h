@@ -1,14 +1,11 @@
-/* -----------------------------------------------
- *  Filename: Intro.h
- *  Date Created: ??/2009
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
  *
- *  Original Author:
- *      IMPORTANT : GET AUTHOR NAME FROM OGRE WIKI
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
  *
- *  Last Update:
- *      Date:   20/4/2009
- *      By:     Ahmad Amireh
- * ----------------------------------------------- */
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
 
 #ifndef H_Intro_H
 #define H_Intro_H

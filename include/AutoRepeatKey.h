@@ -1,7 +1,10 @@
 /*
- * This code is shamelessly stolen from CEGUI Wiki.
- * Link: http://www.cegui.org.uk/wiki/index.php/CEGUI_In_Practice_-_Auto_Repeat_Key
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
  *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
  */
 
 #pragma once
