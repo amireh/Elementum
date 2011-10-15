@@ -26,7 +26,7 @@ CEAnimMgr = nil
 
   -- GameStates
   IntroState = nil
-  LobbyState = nil
+  --~ LobbyState = nil
   CombatState = nil
 
   -- Engines
@@ -87,7 +87,7 @@ Pixy.registerGlobals = function()
   InputMgr = Pixy.InputManager:getSingletonPtr()
 
   IntroState = Pixy.Intro:getSingletonPtr()
-  LobbyState = Pixy.Lobby:getSingletonPtr()
+  --~ LobbyState = Pixy.Lobby:getSingletonPtr()
   CombatState = Pixy.Combat:getSingletonPtr()
 
   GfxEngine = Pixy.GfxEngine:getSingletonPtr()

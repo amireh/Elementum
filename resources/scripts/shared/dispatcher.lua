@@ -19,7 +19,7 @@ Dispatcher.subscribeToEvt = function(inUID, inHandler)
 
 	table.insert(EventMap[inUID], inHandler)
 
-	Pixy.Log("Subscribed handler to " .. inUID)
+	Pixy.Log("Subscribed handler to " .. inUID .. " => " .. Pixy.Event:UIDToString(inUID))
 end
 
 -- unregisters an event handler
@@ -91,7 +91,7 @@ Dispatcher.processEvt = function(inEvt)
 		return true
 	end
 
-	Pixy.Log("handling evt " .. inEvt.UID .. ":" .. Pixy.Event:_uid_to_string(inEvt.UID))
+	Pixy.Log("handling evt " .. inEvt.UID .. " => " .. Pixy.Event:UIDToString(inEvt.UID))
 
 	return false
 end

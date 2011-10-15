@@ -10,13 +10,13 @@
 #ifndef H_PixyNet_Connection_H
 #define H_PixyNet_Connection_H
 
-#include "base_connection.hpp"
+#include "BaseConnection.hpp"
 
 namespace Pixy {
 
-  using Net::base_connection;
+  using Net::BaseConnection;
   /// Represents a single Connection from a client.
-  class Connection : public base_connection
+  class Connection : public BaseConnection
   {
 
   public:
@@ -29,7 +29,7 @@ namespace Pixy {
     void disconnect();
 
     virtual boost::shared_ptr<Connection> shared_from_this() {
-      return boost::static_pointer_cast<Connection>(base_connection::shared_from_this());
+      return boost::static_pointer_cast<Connection>(BaseConnection::shared_from_this());
     }
 
     virtual void start();

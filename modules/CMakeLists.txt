@@ -20,6 +20,7 @@ SET(Elementum_Modules_SRCS
 
   #src/dotscene/DotSceneLoader.cpp
   src/cegui/FormattedListboxTextItem.cpp
+  src/cegui/AutoRepeatKey.cpp
 
   src/tinyxmlresource/TinyXMLResource.cpp
   src/tinyxmlresource/TinyXMLResourceManager.cpp
@@ -28,6 +29,8 @@ SET(Elementum_Modules_SRCS
   #src/ogre/HelperLogics.cpp
   src/ogre/MovableTextOverlay.cpp
   src/ogre/RectLayoutManager.cpp
+  src/ogre/MousePicker.cpp
+  src/ogre/OgreRTT.cpp
 
   src/OgreMax/OgreMaxModel.cpp
   src/OgreMax/OgreMaxScene.cpp

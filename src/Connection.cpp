@@ -12,7 +12,7 @@
 namespace Pixy {
 
   Connection::Connection(boost::asio::io_service& io_service)
-    : base_connection(io_service),
+    : BaseConnection(io_service),
       resolver_(io_service),
       host_(""),
       port_(""),
@@ -67,10 +67,10 @@ namespace Pixy {
   }
 
   void Connection::start() {
-    base_connection::start();
+    BaseConnection::start();
   }
   void Connection::stop() {
-    base_connection::stop();
+    BaseConnection::stop();
     EventManager::getSingleton().hook(Event(EventUID::Disconnected));
   }
 

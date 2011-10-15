@@ -180,6 +180,8 @@ namespace Pixy
 
     mResMgr = new CResourceManager();
 
+    NetworkManager::getSingletonPtr();
+    EventManager::getSingletonPtr();
     GfxEngine::getSingletonPtr()->setup();
     UIEngine::getSingletonPtr()->setup();
     FxEngine::getSingletonPtr()->setup();
@@ -241,6 +243,7 @@ namespace Pixy
       //delete PhyxEngine::getSingletonPtr();
       delete UIEngine::getSingletonPtr();
       delete ScriptEngine::getSingletonPtr();
+      delete EventManager::getSingletonPtr();
       delete NetworkManager::getSingletonPtr();
     }
 
