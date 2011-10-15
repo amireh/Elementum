@@ -23,7 +23,7 @@ end
 Turns.onNewTurn = function()
   --if Active == EnemyPuppet then UI.ClearSpellLog(Active) end
   UI.ClearSpellLog(nil)
-  
+
   TurnNumber = TurnNumber + 1
 end
 

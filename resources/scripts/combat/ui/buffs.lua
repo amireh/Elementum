@@ -1,7 +1,8 @@
 if not Buffs then Buffs = {} end
 
 Buffs.cleanup = function()
-
+  Buffs.Hide(UI.Buffs["Player"])
+  Buffs.Hide(UI.Buffs["Enemy"])
 end
 
 Buffs.DrawSpell = function(spell,wnd, idx)

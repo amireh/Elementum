@@ -220,7 +220,8 @@ UI.onCancelBlock = function()
   end
 end
 
-UI.onMatchFinished = function(wuid)
+UI.onMatchFinished = function(e)
+  local wuid = tonumber(e:getProperty("W"))
   local suid = tonumber(SelfPuppet:getUID())
   Pixy.Log("Winner's UID : " .. wuid .. " mine: " .. suid)
   UIEngine:connectAnimation(CEWindowMgr:getWindow("Combat/Containers/Message"), "LongFade")

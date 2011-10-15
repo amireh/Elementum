@@ -18,6 +18,7 @@ Combat.bind = function()
   bind(Pixy.EventUID.StartBlockPhase, UI.onStartBlockPhase)
   bind(Pixy.EventUID.Block, UI.onBlock)
   bind(Pixy.EventUID.CancelBlock, UI.onCancelBlock)
+  bind(Pixy.EventUID.MatchFinished, UI.onMatchFinished)
 
   bind(Pixy.EventUID.InvalidAction, UI.onInvalidAction)
   --~ bind(Pixy.EventUID.Lifetap, Pixy.FX.Combat.onLifetap)
@@ -40,6 +41,9 @@ Combat.bind = function()
 
   Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
   Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
+  Input.KeyRelease.bind(OIS.KC_E, Turns.reqEndTurn)
+  Input.KeyRelease.bind(OIS.KC_A, Puppets.attackWithAll)
+
   Input.KeyRelease.bindToAll(Debug.playSpellEffect)
   Input.KeyRelease.bind(OIS.KC_Q, function() return GameMgr:requestShutdown() end)
 

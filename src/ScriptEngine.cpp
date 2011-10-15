@@ -86,7 +86,7 @@ namespace Pixy {
     tolua_Elementum_open(mLUA);
     tolua_Event_open(mLUA);
 
-    bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
+    //~ bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
 
     mUpdater = &ScriptEngine::updateNothing;
@@ -445,14 +445,14 @@ namespace Pixy {
     return true;
   }
 
-  bool ScriptEngine::onMatchFinished(const Event& inEvt) {
+  /*bool ScriptEngine::onMatchFinished(const Event& inEvt) {
     lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitrary");
     lua_pushfstring(mLUA, "Combat.onMatchFinished");
     lua_pushinteger(mLUA, convertTo<int>(inEvt.getProperty("W")));
     lua_call(mLUA, 2, 0);
 
     return true;
-  }
+  }*/
 
 
 	bool ScriptEngine::mouseMoved( const OIS::MouseEvent &e )
