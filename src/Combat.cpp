@@ -281,6 +281,17 @@ namespace Pixy
         }
         assert(found);
         mLog->debugStream() << "destroying unit " << (*unit) << " permanently";
+        // remove the unit from the attackers list if it was charging
+        for (attackers_t::iterator _attacker = mAttackers.begin();
+          _attacker != mAttackers.end();
+          ++_attacker)
+        {
+          if ((*_attacker)->getUID() == (*unit)->getUID())
+          {
+            mAttackers.erase(_attacker);
+            break;
+          }
+        }
         static_cast<CPuppet*>((Entity*)(*unit)->getOwner())->detachUnit((*unit)->getUID());
       }
 
