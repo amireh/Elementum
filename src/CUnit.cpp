@@ -147,6 +147,7 @@ namespace Pixy
 
 	void CUnit::attachSpell(CSpell* inSpell)
 	{
+    assert(inSpell);
 		mSpells.push_back(inSpell);
 		//std::cout
     //  <<"CUnit: Spell " << inSpell->getName()
@@ -201,6 +202,7 @@ namespace Pixy
   }
   void CUnit::attachBuff(CSpell* inSpell)
 	{
+    assert(inSpell);
 		mBuffs.push_back(inSpell);
     inSpell->setTarget(mRenderable);
 		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";

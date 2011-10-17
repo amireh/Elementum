@@ -1,20 +1,21 @@
-local damage = 2
-local lifetap = 3
-local process = function(inCaster, inTarget, inSpell)
-  local caster = inCaster:getEntity()
-  local target = CombatState:getEnemy(caster:getUID())
-  inTarget = target:getRenderable()
+local __Damage = 2
+local __Lifetap = 3
 
-	Pixy.Log("Casting Kiss of Death on "
-    .. target:getName() .. "#" .. target:getUID()
-    .. " by " .. caster:getUID() .. "!")
+local KissOfDeath = {}
+function KissOfDeath:bootstrap()
+  self.Target = CombatState:getEnemy(self.Caster:getUID())
+  self.TargetRnd = self.Target:getRenderable()
+end
 
-  SCT.ShowScrollingMessage("+" .. lifetap .. " health (Kiss of Death)", true, inCaster)
-  SCT.ShowScrollingMessage("-" .. damage .. " health (Kiss of Death)", false, inTarget)
+function KissOfDeath:cast()
+  self:logMe()
 
-  FxEngine:playEffect("KissOfDeath", inCaster)
+  SCT.ShowScrollingMessage("+" .. __Lifetap .. " health (Kiss of Death)", true, self.CasterRnd)
+  SCT.ShowScrollingMessage("-" .. __Damage .. " health (Kiss of Death)", false, self.TargetRnd)
+
+  FxEngine:playEffect("KissOfDeath", self.CasterRnd)
 
 	return true
 end
 
-subscribe_spell("Kiss of Death", process)
+subscribe_spell("Kiss of Death", KissOfDeath)

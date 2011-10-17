@@ -5,7 +5,9 @@
 	once a spell is cast it gets propagated to its registered handler
 ]]
 
-local Handlers = {}
+--~ local Handlers = {}
+local Definitions = {}
+local HandlerInstances = {}
 SpellValidators = {}
 Spells = {}
 
@@ -71,8 +73,59 @@ Spells.reqCastSpell = function(lSpell)
   return true
 end
 
+-- this is called by every buff handler when the spell effect is over
+Spells.__destroyInstance = function(inUID)
+  local handler = HandlerInstances[inUID]
+  --~ handler:destroy()
+
+  HandlerInstances[inUID] = nil
+  return true
+end
+
+Spells.onProcessBuff = function(inCasterRnd, inTargetRnd, inSpell)
+  local instance = HandlerInstances[inSpell:getUID()]
+  if not instance then
+    return error("Could not find the spell handler instance for " .. inSpell:getName() .. "#" .. inSpell:getUID())
+  end
+
+  instance:process()
+
+  if instance:isDone() then instance:destroy() end
+end
+
+Spells.onCastSpell = function(inCasterRnd, inTargetRnd, inSpell)
+  -- 1. if there is no registered handler for this spell, error out
+  local definition = Definitions[inSpell:getName()]
+  if not definition then
+    return Pixy.Log("Could not find a spell definition for " .. inSpell:getName())
+  end
+
+  -- 2. create a new instance of the SpellHandler for this type of spell
+  local instance = SpellHandler:new(inSpell, inCasterRnd, inTargetRnd, definition)
+  instance:bootstrap()
+
+  -- 3. track it
+  assert(not HandlerInstances[inSpell:getUID()])
+  HandlerInstances[inSpell:getUID()] = instance
+
+  -- 4. show the spell in the spell log
+  UI.LogSpellCast(inSpell)
+
+  -- 5. call it
+  instance:cast()
+
+  -- 6. create an SCT entry if it's a (de)buff
+  if instance:isBuff() then instance:logSCT() end
+
+  -- 7. if it's not a buff, destroy it
+  if instance:isDone() then instance:destroy() end
+
+  return true
+end
+
 -- type: incoming event handler
 -- job: locates the spell given in the event and calls its registered handler
+--[[
 Spells.onCastSpell = function(inCaster, inTarget, inSpell)
 	local spellHandler = Handlers[inSpell:getName()]
   if not inSpell:getCaster() then
@@ -112,7 +165,7 @@ Spells.onCastSpell = function(inCaster, inTarget, inSpell)
     end
   end
   return result
-end
+end]]
 
 -- this is called by Combat when the CastSpell request is rejected
 Spells.onCastSpellRejected = function(e)
@@ -122,9 +175,9 @@ Spells.onCastSpellRejected = function(e)
   return true
 end
 
-function subscribe_spell(inSpellName, inMethod)
-	Pixy.Log("subscribing to " .. inSpellName)
-	Handlers[inSpellName] = inMethod
+function subscribe_spell(inSpellName, inDef)
+	Pixy.Log("\t subscribing a Spell handler for " .. inSpellName)
+	Definitions[inSpellName] = inDef
 end
 
 function subscribe_spell_prereq(inSpellName, inMethod)
@@ -142,3 +195,5 @@ for race in list_iter(races) do
     require(stripped_name)
   end
 end
+
+require "combat/spell_handlers/spell_handler"

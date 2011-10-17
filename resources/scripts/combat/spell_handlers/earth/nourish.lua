@@ -1,44 +1,20 @@
-local turns_left = 0
-local apply_buff = function(inCaster, inSpell)
-  Pixy.Log("Applying Nourish on " .. inCaster:getName() .. "#" .. inCaster:getUID() .. "!")
+local __HPT = 3
+local Nourish = { IsPositive = true }
+function Nourish:cast()
+  self:logMe()
 
   -- attach the buff to the puppet
   inCaster:attachBuff(inSpell)
-  turns_left = inSpell:getDuration()
-  inSpell:setExpired(false)
-  SCT.ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", true, inCaster:getRenderable())
 
-  FxEngine:playEffect("GladeBlessing", inCaster:getRenderable())
-
-  return true
+  FxEngine:playEffect("GladeBlessing", self.CasterRnd)
 end
 
-local process_buff = function(inCaster, inSpell)
-  Pixy.Log("Processing Nourish on " .. inCaster:getName() .. "#" .. inCaster:getUID() .. "!")
-  inCaster:setHP(inCaster:getHP() + 3)
-  inCaster:updateTextOverlay()
-  FxEngine:playEffect("GladeBlessing", inCaster:getRenderable())
-  SCT.ShowScrollingMessage("+3 health (Nourish)", true, inCaster:getRenderable())
+function Nourish:process()
+  self.Caster:setHP(self.Caster:getHP() + __HPT)
+  FxEngine:playEffect("GladeBlessing", self.CasterRnd)
+  SCT.ShowScrollingMessage("+" .. __HPT .. " health (Nourish)", true, self.CasterRnd)
 
-  turns_left = turns_left - 1
-  -- remove spell when the duration expires
-  if (turns_left == 0) then
-    inSpell:setExpired(true)
-  end
-
-  return true
+  self:__tick()
 end
 
-local process = function(inCaster, inTarget, inSpell)
-  local caster = inCaster:getEntity()
-  tolua.cast(caster, "Pixy::CPuppet")
-
-  if (caster:hasBuff(inSpell:getUID())) then
-    return process_buff(caster, inSpell)
-  else
-    return apply_buff(caster, inSpell)
-  end
-
-end
-
-subscribe_spell("Nourish", process)
+subscribe_spell("Nourish", Nourish)

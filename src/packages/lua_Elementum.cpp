@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Sat Oct 15 21:03:39 2011.
+** Generated automatically by tolua++-1.0.92 on Mon Oct 17 21:02:28 2011.
 */
 
 #ifndef __cplusplus
@@ -1698,6 +1698,40 @@ static int tolua_Elementum_Pixy_CPuppet_getUnits00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: hasUnitWithName of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppet_hasUnitWithName00
+static int tolua_Elementum_Pixy_CPuppet_hasUnitWithName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+  std::string tolua_var_3 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasUnitWithName'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasUnitWithName(tolua_var_3);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasUnitWithName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: attachBuff of class  Pixy::CPuppet */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppet_attachBuff00
 static int tolua_Elementum_Pixy_CPuppet_attachBuff00(lua_State* tolua_S)
@@ -1714,12 +1748,12 @@ static int tolua_Elementum_Pixy_CPuppet_attachBuff00(lua_State* tolua_S)
 #endif
  {
   Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::CSpell* tolua_var_3 = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::CSpell* tolua_var_4 = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'", NULL);
 #endif
   {
-   self->attachBuff(tolua_var_3);
+   self->attachBuff(tolua_var_4);
   }
  }
  return 0;
@@ -1793,6 +1827,40 @@ static int tolua_Elementum_Pixy_CPuppet_hasBuff00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'hasBuff'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasBuffWithName of class  Pixy::CPuppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_CPuppet_hasBuffWithName00
+static int tolua_Elementum_Pixy_CPuppet_hasBuffWithName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::CPuppet",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::CPuppet* self = (Pixy::CPuppet*)  tolua_tousertype(tolua_S,1,0);
+  std::string tolua_var_5 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuffWithName'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasBuffWithName(tolua_var_5);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasBuffWithName'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2567,12 +2635,12 @@ static int tolua_Elementum_Pixy_CUnit_attachBuff00(lua_State* tolua_S)
 #endif
  {
   Pixy::CUnit* self = (Pixy::CUnit*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::CSpell* tolua_var_4 = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::CSpell* tolua_var_6 = ((Pixy::CSpell*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'", NULL);
 #endif
   {
-   self->attachBuff(tolua_var_4);
+   self->attachBuff(tolua_var_6);
   }
  }
  return 0;
@@ -3388,13 +3456,13 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect01(lua_State* tolua_S)
  else
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  ParticleUniverse::ParticleSystem* tolua_var_5 = ((ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,2,0));
+  ParticleUniverse::ParticleSystem* tolua_var_7 = ((ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,2,0));
   Pixy::Renderable* inEntity = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
-   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(tolua_var_5,inEntity);
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(tolua_var_7,inEntity);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
   }
  }
@@ -3453,12 +3521,12 @@ static int tolua_Elementum_Pixy_FxEngine_highlight00(lua_State* tolua_S)
 #endif
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Renderable* tolua_var_6 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Renderable* tolua_var_8 = ((Pixy::Renderable*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'highlight'", NULL);
 #endif
   {
-   self->highlight(tolua_var_6);
+   self->highlight(tolua_var_8);
   }
  }
  return 0;
@@ -4310,13 +4378,13 @@ static int tolua_Elementum_Pixy_UIEngine_setMargin00(lua_State* tolua_S)
 #endif
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_7 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-  CEGUI::UBox tolua_var_8 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
+  CEGUI::Window* tolua_var_9 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  CEGUI::UBox tolua_var_10 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMargin'", NULL);
 #endif
   {
-   self->setMargin(tolua_var_7,tolua_var_8);
+   self->setMargin(tolua_var_9,tolua_var_10);
   }
  }
  return 0;
@@ -4345,13 +4413,13 @@ static int tolua_Elementum_Pixy_UIEngine_connectAnimation00(lua_State* tolua_S)
 #endif
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_9 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-  std::string tolua_var_10 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+  CEGUI::Window* tolua_var_11 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  std::string tolua_var_12 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'connectAnimation'", NULL);
 #endif
   {
-   self->connectAnimation(tolua_var_9,tolua_var_10);
+   self->connectAnimation(tolua_var_11,tolua_var_12);
   }
  }
  return 0;
@@ -5800,12 +5868,12 @@ static int tolua_Elementum_Pixy_GfxEngine_attachRTT00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::OgreRTT* tolua_var_11 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::OgreRTT* tolua_var_13 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachRTT'", NULL);
 #endif
   {
-   self->attachRTT(tolua_var_11);
+   self->attachRTT(tolua_var_13);
   }
  }
  return 0;
@@ -5833,12 +5901,12 @@ static int tolua_Elementum_Pixy_GfxEngine_detachRTT00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::OgreRTT* tolua_var_12 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::OgreRTT* tolua_var_14 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachRTT'", NULL);
 #endif
   {
-   self->detachRTT(tolua_var_12);
+   self->detachRTT(tolua_var_14);
   }
  }
  return 0;
@@ -6003,12 +6071,12 @@ static int tolua_Elementum_Pixy_NetworkManager_send00(lua_State* tolua_S)
 #endif
  {
   Pixy::NetworkManager* self = (Pixy::NetworkManager*)  tolua_tousertype(tolua_S,1,0);
-  const Pixy::Event* tolua_var_13 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+  const Pixy::Event* tolua_var_15 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'", NULL);
 #endif
   {
-   self->send(*tolua_var_13);
+   self->send(*tolua_var_15);
   }
  }
  return 0;
@@ -10243,12 +10311,12 @@ static int tolua_Elementum_Ogre_SceneNode_yaw00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_14 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_16 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'", NULL);
 #endif
   {
-   self->yaw(tolua_var_14);
+   self->yaw(tolua_var_16);
   }
  }
  return 0;
@@ -10276,12 +10344,12 @@ static int tolua_Elementum_Ogre_SceneNode_pitch00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_15 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_17 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'", NULL);
 #endif
   {
-   self->pitch(tolua_var_15);
+   self->pitch(tolua_var_17);
   }
  }
  return 0;
@@ -10309,12 +10377,12 @@ static int tolua_Elementum_Ogre_SceneNode_roll00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_16 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_18 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'", NULL);
 #endif
   {
-   self->roll(tolua_var_16);
+   self->roll(tolua_var_18);
   }
  }
  return 0;
@@ -15699,12 +15767,12 @@ static int tolua_Elementum_Ogre_SceneManager_destroyCamera00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::Camera* tolua_var_17 = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
+  Ogre::Camera* tolua_var_19 = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyCamera'", NULL);
 #endif
   {
-   self->destroyCamera(tolua_var_17);
+   self->destroyCamera(tolua_var_19);
   }
  }
  return 0;
@@ -15892,12 +15960,12 @@ static int tolua_Elementum_Ogre_SceneManager_destroyLight01(lua_State* tolua_S)
  else
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::Light* tolua_var_18 = ((Ogre::Light*)  tolua_tousertype(tolua_S,2,0));
+  Ogre::Light* tolua_var_20 = ((Ogre::Light*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyLight'", NULL);
 #endif
   {
-   self->destroyLight(tolua_var_18);
+   self->destroyLight(tolua_var_20);
   }
  }
  return 0;
@@ -25139,9 +25207,11 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"detachUnit",tolua_Elementum_Pixy_CPuppet_detachUnit00);
     tolua_function(tolua_S,"getUnit",tolua_Elementum_Pixy_CPuppet_getUnit00);
     tolua_function(tolua_S,"getUnits",tolua_Elementum_Pixy_CPuppet_getUnits00);
+    tolua_function(tolua_S,"hasUnitWithName",tolua_Elementum_Pixy_CPuppet_hasUnitWithName00);
     tolua_function(tolua_S,"attachBuff",tolua_Elementum_Pixy_CPuppet_attachBuff00);
     tolua_function(tolua_S,"detachBuff",tolua_Elementum_Pixy_CPuppet_detachBuff00);
     tolua_function(tolua_S,"hasBuff",tolua_Elementum_Pixy_CPuppet_hasBuff00);
+    tolua_function(tolua_S,"hasBuffWithName",tolua_Elementum_Pixy_CPuppet_hasBuffWithName00);
     tolua_function(tolua_S,"getBuffs",tolua_Elementum_Pixy_CPuppet_getBuffs00);
     tolua_function(tolua_S,"updateTextOverlay",tolua_Elementum_Pixy_CPuppet_updateTextOverlay00);
     tolua_function(tolua_S,"setHP",tolua_Elementum_Pixy_CPuppet_setHP00);

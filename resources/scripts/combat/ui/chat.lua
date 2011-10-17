@@ -11,11 +11,13 @@ UI.Chat.setup = function()
 
   MsgBoxAnimator = Animatable:new(MsgBox)
   MsgBoxAnimator:registerAnime("ShowChatBox")
-  MsgBoxAnimator:registerAnime("HideChatBox")
+  --~ MsgBoxAnimator:registerAnime("HideChatBox")
 
   InputBox:hide()
   isTyping = false
+  UI.Chat.showMsgBox()
 
+  --~ InputBox:subscribeEvent("TextAccepted", UI.Chat.onReturn)
   Input.KeyRelease.bind(OIS.KC_RETURN, UI.Chat.onReturn)
   --~ Input.KeyRelease.bind(OIS.KC_TAB, UI.Chat.onReturn)
   Input.KeyRelease.bind(OIS.KC_ESCAPE, UI.Chat.hideInput)
@@ -41,6 +43,7 @@ UI.Chat.onReturn = function()
       NetMgr:send(e)
     end
     UI.Chat.hideInput()
+    --~ UI.Chat.showMsgBox()
   else
     UI.Chat.showInput()
   end
@@ -53,7 +56,9 @@ UI.Chat.hideInput = function()
   InputBox:setText("")
   InputBox:hide()
 
-  UI.Chat.hideMsgBox()
+  --~ UI.Chat.hideMsgBox()
+  Combat.bindKeys()
+  --~ Input.enableCapture()
 
   --~ GfxEngine:enableMouseCaptureOverUIElement("Chat")
 
@@ -64,6 +69,9 @@ UI.Chat.showInput = function()
   InputBox:moveToFront()
   InputBox:activate()
 
+  Combat.unbindKeys()
+  --~ Input.disableCapture()
+
   UI.Chat.showMsgBox()
 
   --~ GfxEngine:disableMouseCaptureOverUIElement("Chat")
@@ -71,18 +79,21 @@ UI.Chat.showInput = function()
   isTyping = true
 end
 UI.Chat.hideMsgBox = function()
-  if tonumber(MsgBox:getProperty("Alpha")) > 0 then
+  --~ if tonumber(MsgBox:getProperty("Alpha")) > 0 then
     --~ MsgBoxAnimator:stopAnime("ShowChatBox")
     --~ MsgBoxAnimator:startAnime("HideChatBox")
+    --~ MsgBoxAnimator:resetAnime("ShowChatBox")
     MsgBoxAnimator:startAnime("ShowChatBox")
-  end
+  --~ end
 end
 
 UI.Chat.showMsgBox = function()
-  if tonumber(MsgBox:getProperty("Alpha")) < 1.0 then
+  --~ if tonumber(MsgBox:getProperty("Alpha")) < 1.0 then
     --~ MsgBoxAnimator:stopAnime("HideChatBox")
+    --~ MsgBoxAnimator:resetAnime("ShowChatBox")
     MsgBoxAnimator:startAnime("ShowChatBox")
-  end
+    --~ MsgBox:setProperty("Alpha", "1.0")
+  --~ end
 end
 
 

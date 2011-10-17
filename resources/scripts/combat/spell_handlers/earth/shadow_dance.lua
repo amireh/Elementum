@@ -1,91 +1,68 @@
-local turns_left = 0
-local effect = nil
-local _ap = 1
-local caster = nil
+local __Dmg = 1
+local ShadowDance = { IsPositive = true }
 
-local increase_ap = function(unit)
-  if unit:getOwner():getUID() == caster:getUID() then
-    unit:setBaseAP(unit:getBaseAP() + _ap)
-    SCT.ShowScrollingMessage("+" .. _ap .. " AP (Shadow dance)", true, unit:getRenderable())
+local increase_ap = function(unit, override)
+  print("\tgranting the AP by shadow dance on " .. unit:getName())
+  if override or unit:getOwner():hasBuffWithName("Shadow Dance") then
+    unit:setBaseAP(unit:getBaseAP() + __Dmg)
+    SCT.ShowScrollingMessage("+" .. __Dmg .. " AP (Shadow dance)", true, unit:getRenderable())
   end
 
   return true
 end
 
-local revert_ap = function(unit)
-  if unit:getOwner():getUID() == caster:getUID() then
-    unit:setBaseAP(unit:getBaseAP() - _ap)
-    SCT.ShowScrollingMessage("-" .. _ap .. " AP (Shadow dance)", false, unit:getRenderable())
+local revert_ap = function(unit, caster)
+  print("\treverting the AP granted by shadow dance on " .. unit:getName())
+  if override or unit:getOwner():hasBuffWithName("Shadow Dance") then
+    unit:setBaseAP(unit:getBaseAP() - __Dmg)
+    SCT.ShowScrollingMessage("-" .. __Dmg .. " AP (Shadow dance)", false, unit:getRenderable())
   end
 
   return true
 end
 
-local apply_buff = function(inCaster, inTarget, inSpell)
-  local target = inTarget:getEntity()
-  caster = inCaster:getEntity()
+function ShadowDance:bootstrap()
+  self.__Effect = nil
+end
 
-  Pixy.Log("Applying " .. inSpell:getName() .. " on " .. caster:getName() .. "#" .. caster:getUID() .. " by " .. caster:getName() .. "!")
+function ShadowDance:cast()
+  self:logMe()
 
   -- attach the buff to the puppet
-  caster:attachBuff(inSpell)
-  turns_left = 1
-  inSpell:setExpired(false)
-
-  SCT.ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", true, inCaster)
-  effect = FxEngine:playEffect("Gloom", inCaster)
+  self.Caster:attachBuff(self.Spell)
+  self.__Effect = FxEngine:playEffect("Gloom", self.CasterRnd)
 
   -- update the AP of all the units
   local exporter = Pixy.CUnitListExporter()
-  exporter:export(caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+  exporter:export(self.Caster:getUnits(), "Pixy::CUnit", "__TempUnits")
   for unit in list_iter(__TempUnits) do
-    increase_ap(unit)
+    increase_ap(unit, true --[[override checks for performance]])
   end
   __TempUnits = nil
 
   -- update the AP of all units to be created
   subscribe_generic_unit_handler("Alive", increase_ap)
-
-  return true
 end
 
-local process_buff = function(inCaster, inTarget, inSpell)
-  local target = inTarget:getEntity()
-  caster = inCaster:getEntity()
-  
-  Pixy.Log("Processing Shadow Dance's buff")
-  Pixy.Log("\tcaster is : " .. caster:getName() .. "#" .. caster:getUID())
-  
-  turns_left = turns_left - 1
-  -- remove spell when the duration expires
-  if (turns_left == 0) then
-    inSpell:setExpired(true)
-    effect:stop()
+function ShadowDance:process()
+  -- Shadow Dance lasts only for a turn, so we revert the changes in cleanup()
+  self:__tick()
+end
 
-    -- revert the AP of all the units
-    local exporter = Pixy.CUnitListExporter()
-    exporter:export(caster:getUnits(), "Pixy::CUnit", "__TempUnits")
-    for unit in list_iter(__TempUnits) do
-      revert_ap(unit)
-    end
-    __TempUnits = nil
+function ShadowDance:cleanup()
+  self.__Effect:stop()
 
-    SCT.ShowScrollingMessage("-" .. inSpell:getName(), false, inCaster)
-
-    unsubscribe_generic_unit_handler("Alive", increase_ap)
+  -- revert the AP of all the units
+  local exporter = Pixy.CUnitListExporter()
+  exporter:export(self.Caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+  for unit in list_iter(__TempUnits) do
+    revert_ap(unit, true --[[override checks for performance]])
   end
+  __TempUnits = nil
 
-  return true
+  SCT.ShowScrollingMessage("-" .. self.Spell:getName(), false, self.CasterRnd)
+
+  unsubscribe_generic_unit_handler("Alive", increase_ap)
 end
 
-local process = function(inCaster, inTarget, inSpell)
-  inTarget = inCaster
-  if (inCaster:getEntity():hasBuff(inSpell:getUID())) then
-    return process_buff(inCaster, inTarget, inSpell)
-  else
-    return apply_buff(inCaster, inTarget, inSpell)
-  end
-
-end
-
-subscribe_spell("Shadow Dance", process)
+subscribe_spell("Shadow Dance", ShadowDance)

@@ -1,20 +1,21 @@
-local process = function(inCaster, inTarget, inSpell)
+local BoneHarvest = {}
+function BoneHarvest:cast()
 	Pixy.Log("I'm casting Bone Harvest!")
-  FxEngine:playEffect("BoneHarvest", inCaster)
+  FxEngine:playEffect("BoneHarvest", self.CasterRnd)
 
   local exporter = Pixy.CUnitListExporter()
-  exporter:export(inCaster:getEntity():getUnits(), "Pixy::CUnit", "Temp")
+  exporter:export(self.Caster:getUnits(), "Pixy::CUnit", "__TempUnits")
 
   local nr_skeletons = 0
-  for unit in list_iter(Temp) do
+  for unit in list_iter(__TempUnits) do
     if unit:getName():find("Skeleton") then
       nr_skeletons = nr_skeletons + 1
     end
   end
-  SCT.ShowScrollingMessage("+" .. nr_skeletons .. " health (Bone Harvest)", true, inCaster)
+  __TempUnits = nil
+  SCT.ShowScrollingMessage("+" .. nr_skeletons .. " health (Bone Harvest)", true, self.CasterRnd)
 
-
-	return true
+  return true
 end
 
 SpellValidators["Bone Harvest"] = function(spell)
@@ -32,4 +33,4 @@ SpellValidators["Bone Harvest"] = function(spell)
   return nr_skeletons > 0
 end
 
-subscribe_spell("Bone Harvest", process)
+subscribe_spell("Bone Harvest", BoneHarvest)

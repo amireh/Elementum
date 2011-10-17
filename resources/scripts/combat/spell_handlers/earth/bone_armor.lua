@@ -1,19 +1,19 @@
-local process = function(inCaster, inTarget, inSpell)
-  local unit = nil
-  if not inSpell:getTarget() then unit = inTarget:getEntity() else
-    unit = inSpell:getTarget():getEntity()
-  end
+local BoneArmor = { IsPositive = true }
+function BoneArmor:cast()
+  self:logMe()
 
-  if unit:hasBuff(inSpell:getUID()) then return true end
+  if self.Target:hasBuff(self.Spell:getUID()) then return true end
 
-	Pixy.Log("I'm shielding with Bone Armor!")
-
-  FxEngine:playEffect("BoneArmor", inTarget)
-  unit:attachBuff(inSpell)
-  inSpell:setExpired(false)
-  SCT.ShowScrollingMessage(inSpell:getName(), true, inTarget)
+  FxEngine:playEffect("BoneArmor", self.TargetRnd)
+  self.Target:attachBuff(self.Spell)
+  --~ self.Spell:setExpired(false)
+  --~ self.__TurnsLeft = 120 -- bone armor is supposed to be permanent
+  --~ SCT.ShowScrollingMessage(self.Spell:getName(), true, self.TargetRnd)
 
 	return true
 end
 
-subscribe_spell("Bone Armor", process)
+function BoneArmor:process()
+end
+
+subscribe_spell("Bone Armor", BoneArmor)

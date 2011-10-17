@@ -47,7 +47,11 @@ Skeletons.CreateSoldier = function(unit)
 end
 
 local grant_lifetap = function(unit)
-  if not unit:hasLifetap() then unit:setHasLifetap(true) end
+  if unit:getOwner():getRace() == Pixy.EARTH
+    and unit:getOwner():hasUnitWithName("Skeleton Warlord")
+    and not unit:hasLifetap() then
+    unit:setHasLifetap(true)
+  end
 end
 
 Skeletons.CreateWarlord = function(inUnit)

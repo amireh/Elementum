@@ -49,3 +49,5 @@ Combat.onGameStarted = function()
 
 	return true
 end
+
+Combat.reqShutdown = function() return GameMgr:requestShutdown() end

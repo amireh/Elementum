@@ -1,12 +1,13 @@
-local process = function(inCaster, inTarget, inSpell)
+local DeathExchange = {}
+function DeathExchange:cast()
 	Pixy.Log("I'm casting Death Exchange!")
-  FxEngine:playEffect("BloodForBlood", inCaster)
+  FxEngine:playEffect("BloodForBlood", self.CasterRnd)
 
-  inSpell:getTarget():getEntity():die()
-  SCT.ShowScrollingMessage("+2 channels (Death Exchange)", true, inCaster)
+  self.Target:die()
+  SCT.ShowScrollingMessage("+2 channels (Death Exchange)", true, self.CasterRnd)
   Gfx.Dehighlight()
 
 	return true
 end
 
-subscribe_spell("Death Exchange", process)
+subscribe_spell("Death Exchange", DeathExchange)

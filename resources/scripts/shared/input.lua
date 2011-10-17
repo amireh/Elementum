@@ -56,3 +56,13 @@ Input.onKeyReleased = function(e)
 
   for handler in list_iter(MasterBindings) do handler(e) end
 end
+
+local __doNothing = function() end
+local __oldFunc = Input.onKeyReleased
+Input.disableCapture = function()
+  __oldFunc = Input.onKeyReleased
+  Input.onKeyReleased = __doNothing
+end
+Input.enableCapture = function()
+  Input.onKeyReleased = __oldFunc
+end

@@ -525,7 +525,7 @@ namespace Pixy
          ++buff)
     {
       mScriptEngine->passToLua(
-        "Spells.onCastSpell", 3,
+        "Spells.onProcessBuff", 3,
         "Pixy::Renderable", (*buff)->getCaster(),
         "Pixy::Renderable", (*buff)->getTarget(),
         "Pixy::CSpell", *buff);
@@ -565,7 +565,7 @@ namespace Pixy
       {
         mLog->debugStream() << "\t\tapplying active buff " << (*buff) << " on unit " << unit;
         mScriptEngine->passToLua(
-        "Spells.onCastSpell", 3,
+        "Spells.onProcessBuff", 3,
         "Pixy::Renderable", (*buff)->getCaster(),
         "Pixy::Renderable", (*buff)->getTarget(),
         "Pixy::CSpell", *buff);
@@ -782,6 +782,9 @@ namespace Pixy
       lSpell->setTarget(lTarget);
     } else
       lSpell->setTarget(lCaster->getRenderable());
+
+    if (lSpell->getTarget() != lCaster->getRenderable())
+      mLog->debugStream()<<"\t\tspell's target is " << lSpell->getTarget()->getEntity();
 
     mScriptEngine->passToLua(
       "Spells.onCastSpell", 3,

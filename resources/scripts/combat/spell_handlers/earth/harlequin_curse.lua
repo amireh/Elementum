@@ -1,20 +1,16 @@
-local process = function(inCaster, inTarget, inSpell)
-  local caster = inCaster:getEntity()
-  local target = inTarget:getEntity()
+local HarlequinCurse = {}
+function HarlequinCurse:cast()
+  self:logMe()
 
-	Pixy.Log("Casting Harlequin Curse on "
-    .. target:getName() .. "#" .. target:getUID()
-    .. " by " .. caster:getUID() .. "!")
-
-  SCT.ShowScrollingMessage("dead (Harlequin Curse)", false, inTarget)
-  target:die()
-  if Selected == inTarget then
+  SCT.ShowScrollingMessage("dead (Harlequin Curse)", false, self.TargetRnd)
+  self.Target:die()
+  if Selected == self.TargetRnd then
     Gfx.Dehighlight()
   end
 
-  FxEngine:playEffect("KissOfDeath", inCaster)
+  FxEngine:playEffect("KissOfDeath", self.CasterRnd)
 
 	return true
 end
 
-subscribe_spell("Harlequin Curse", process)
+subscribe_spell("Harlequin Curse", HarlequinCurse)

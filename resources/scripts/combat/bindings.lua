@@ -39,12 +39,23 @@ Combat.bind = function()
 
   bind(Pixy.EventUID.IncomingMessage, UI.Chat.onIncomingMessage)
 
+  Combat.bindKeys()
+end
+
+Combat.bindKeys = function()
   Input.KeyRelease.bind(OIS.KC_X, Gfx.ToggleRTTCompositor)
   Input.KeyRelease.bind(OIS.KC_Z, UI.Toggle)
   Input.KeyRelease.bind(OIS.KC_E, Turns.reqEndTurn)
   Input.KeyRelease.bind(OIS.KC_A, Puppets.attackWithAll)
 
-  Input.KeyRelease.bindToAll(Debug.playSpellEffect)
-  Input.KeyRelease.bind(OIS.KC_Q, function() return GameMgr:requestShutdown() end)
+  --Input.KeyRelease.bindToAll(Debug.playSpellEffect)
+  Input.KeyRelease.bind(OIS.KC_Q, Combat.reqShutdown)
+end
 
+Combat.unbindKeys = function()
+  Input.KeyRelease.unbind(OIS.KC_X, Gfx.ToggleRTTCompositor)
+  Input.KeyRelease.unbind(OIS.KC_Z, UI.Toggle)
+  Input.KeyRelease.unbind(OIS.KC_E, Turns.reqEndTurn)
+  Input.KeyRelease.unbind(OIS.KC_A, Puppets.attackWithAll)
+  Input.KeyRelease.unbind(OIS.KC_Q, Combat.reqShutdown)
 end

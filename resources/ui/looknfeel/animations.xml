@@ -19,21 +19,12 @@
     </Affector>
   </AnimationDefinition>
 
-  <AnimationDefinition name="ShowChatBox" duration="10" replayMode="once">
+  <AnimationDefinition name="ShowChatBox" duration="15" replayMode="once">
     <Affector property="Alpha" interpolator="float">
-      <KeyFrame position="0.0" value="0.0" />
-      <KeyFrame position="0.5" value="1.0" />
-      <KeyFrame position="5.0" value="1.0" />
-      <KeyFrame position="7.5" value="0.5" />
-      <KeyFrame position="10.0" value="0.0" />
-    </Affector>
-  </AnimationDefinition>
-  <AnimationDefinition name="HideChatBox" duration="10" replayMode="once">
-    <Affector property="Alpha" interpolator="float">
-      <KeyFrame position="0.0" value="1.0" />
-      <KeyFrame position="5.0" value="1.0" />
-      <KeyFrame position="7.5" value="0.5" />
-      <KeyFrame position="10.0" value="0.0" />
+      <KeyFrame position="0" value="1.0" />
+      <KeyFrame position="10.0" value="1.0" />
+      <KeyFrame position="12.5" value="0.5" />
+      <KeyFrame position="15.0" value="0.0" />
     </Affector>
   </AnimationDefinition>
 

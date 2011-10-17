@@ -1,53 +1,24 @@
-local turns_left = 0
-local apply_buff = function(inCaster, inTarget, inSpell)
-  local target = inTarget:getEntity()
-  local caster = inCaster:getEntity()
+local __DPT = 1 -- damage caused per turn
 
-  Pixy.Log("Applying Locust Swarm on " .. target:getName() .. "#" .. target:getUID() .. " by " .. caster:getName() .. "!")
-
+local LocustSwarm = {}
+function LocustSwarm:cast()
   -- attach the buff to the puppet
-  target:attachBuff(inSpell)
-  inSpell:setCaster(inCaster)
-  inSpell:setTarget(inTarget)
-  turns_left = inSpell:getDuration()
-  inSpell:setExpired(false)
-
-  SCT.ShowScrollingMessage(inSpell:getName() .. " (" .. turns_left .. " turns)", false, inTarget)
-  FxEngine:playEffect("LocustSwarm", inSpell:getTarget())
-
-  return true
+  self.Target:attachBuff(self.Spell)
+  --~ SCT.ShowScrollingMessage(self.Spell:getName() .. " (" .. self.__TurnsLeft .. " turns)", false, self.TargetRnd)
+  FxEngine:playEffect("LocustSwarm", self.TargetRnd)
 end
 
-local process_buff = function(inCaster, inTarget, inSpell)
-  local target = inTarget:getEntity()
-  local caster = inCaster:getEntity()
+function LocustSwarm:process()
+  self.Target:setBaseHP(self.Target:getBaseHP() - __DPT)
+  SCT.ShowScrollingMessage("-1 health (" .. self.Spell:getName() .. ")", false, self.TargetRnd)
+  --if (not target:isDead()) then
+  --  target:updateTextOverlay()
 
-  Pixy.Log("Processing Locust Swarm on " .. target:getName() .. "#" .. target:getUID() .. "!")
+    -- we play over the target's position because the target might have died
+    FxEngine:playEffect("LocustSwarm", self.TargetRnd:getSceneNode():getPosition())
+  --end
 
-  target:setBaseHP(target:getBaseHP() - 1)
-  SCT.ShowScrollingMessage("-1 health (" .. inSpell:getName() .. ")", false, inTarget)
-  if (not target:isDead()) then
-    target:updateTextOverlay()
-    FxEngine:playEffect("LocustSwarm", inTarget)
-  end
-
-  turns_left = turns_left - 1
-  -- remove spell when the duration expires
-  if (turns_left == 0) then
-    inSpell:setExpired(true)
-  end
-
-  return true
+  self:__tick()
 end
 
-local process = function(inCaster, inTarget, inSpell)
-
-  if (inTarget:getEntity():hasBuff(inSpell:getUID())) then
-    return process_buff(inCaster, inTarget, inSpell)
-  else
-    return apply_buff(inCaster, inTarget, inSpell)
-  end
-
-end
-
-subscribe_spell("Locust Swarm", process)
+subscribe_spell("Locust Swarm", LocustSwarm)

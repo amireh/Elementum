@@ -1,6 +1,6 @@
-local process = function(inCaster, inTarget, inSpell)
-  FxEngine:playEffect("SuddenCraven", inCaster)
-	return true
+local SuddenCraven = {}
+function SuddenCraven:cast()
+  FxEngine:playEffect("SuddenCraven", self.CasterRnd)
 end
 
-subscribe_spell("Sudden Craven", process)
+subscribe_spell("Sudden Craven", SuddenCraven)

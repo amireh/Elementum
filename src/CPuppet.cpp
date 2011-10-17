@@ -130,6 +130,7 @@ namespace Pixy
   }
 	void CPuppet::attachSpell(CSpell* inSpell)
 	{
+    assert(inSpell);
 		mHand.push_back(inSpell);
     inSpell->setCaster(mRenderable);
 		//std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
@@ -159,6 +160,7 @@ namespace Pixy
   }
   void CPuppet::attachBuff(CSpell* inSpell)
 	{
+    assert(inSpell);
 		mBuffs.push_back(inSpell);
     inSpell->setTarget(mRenderable);
 		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
@@ -262,4 +264,27 @@ namespace Pixy
     EventManager::getSingleton().hook(e);
     updateTextOverlay();*/
   }
+  bool CPuppet::hasBuffWithName(std::string const& inName)
+  {
+		spells_t::const_iterator lSpell;
+		for (lSpell = mBuffs.begin(); lSpell != mBuffs.end(); ++lSpell)
+			if ((*lSpell)->getName() == inName)
+				return true;
+
+    //std::cout << "**** I don't have the requested buff!" << inUID << "\n";
+    return false;
+  }
+
+  bool CPuppet::hasUnitWithName(std::string const& inName)
+  {
+		units_t::const_iterator lUnit;
+		for (lUnit = mUnits.begin(); lUnit != mUnits.end(); ++lUnit)
+			if ((*lUnit)->getName() == inName)
+				return true;
+
+    //std::cout << "**** I don't have the requested buff!" << inUID << "\n";
+    return false;
+  }
+
+
 } // end of namespace

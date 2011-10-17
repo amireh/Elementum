@@ -56,11 +56,13 @@ namespace Pixy
     virtual void attachBuff(CSpell*);
     virtual void detachBuff(int inUID);
     virtual bool hasBuff(int inUID);
+    virtual bool hasBuffWithName(std::string const&);
 
 		virtual void attachUnit(CUnit* inUnit);
 		virtual void detachUnit(int inUID, bool remove=true);
 		virtual CUnit* getUnit(int inUID);
 		units_t const& getUnits() const;
+    virtual bool hasUnitWithName(std::string const&);
 
     virtual void updateFromEvent(const Event& evt);
 
