@@ -10,9 +10,10 @@
 #include "GfxEngine.h"
 #include "GameManager.h"
 #include "EventManager.h"
+#include "CEntity.h"
 #include "CPuppet.h"
 #include "CUnit.h"
-#include "Renderable.h"
+//~ #include "Renderable.h"
 #include "Combat.h"
 #include "UIEngine.h"
 #include "NetworkManager.h"
@@ -1009,7 +1010,7 @@ namespace Pixy {
   };
 
 
-  bool GfxEngine::attachToScene(Renderable* inEntity)
+  bool GfxEngine::attachToScene(CEntity* inEntity)
   {
       //bool isPuppet = (inEntity->getRank() == 0) ? true : false;
 
@@ -1040,18 +1041,16 @@ namespace Pixy {
 
 
 
-  void GfxEngine::detachFromScene(Renderable* inRenderable)
+  void GfxEngine::detachFromScene(CEntity* inEntity)
   {
     dehighlight();
-
-    Entity* inEntity = inRenderable->getEntity();
 
     /*Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
     Ogre::String nodeName = ownerName + "_node_";
     Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());*/
     Ogre::SceneNode* mTmpNode = NULL;
 
-    mTmpNode = inRenderable->getSceneNode();
+    mTmpNode = inEntity->getSceneNode();
 
     // move the node back to its original spot
     //~ if (inRenderable->getEntity()->getRank() != PUPPET
@@ -1064,14 +1063,14 @@ namespace Pixy {
     mTmpNode->detachAllObjects();
 
     // destroy entity
-    mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
+    mSceneMgr->destroyEntity((Ogre::Entity*)inEntity->getSceneObject());
 
-    mRenderables.remove(inRenderable);
+    mRenderables.remove(inEntity);
 
-    inRenderable->attachSceneNode(NULL);
-    inRenderable->attachSceneObject(NULL);
+    inEntity->attachSceneNode(NULL);
+    inEntity->attachSceneObject(NULL);
 
-    if (inRenderable->getEntity()->getRank() != PUPPET)
+    if (inEntity->isUnit())
       mUpdatees.erase(static_cast<CUnit*>(inRenderable->getEntity()));
       inEntity = 0;
   }

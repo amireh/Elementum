@@ -21,13 +21,14 @@ SET(Elementum_SRCS
   #../include/Lobby.h
   ../include/NetworkManager.h
   ../include/PhyxEngine.h
-  ../include/Renderable.h
+  #../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
 
   Connection.cpp
 
-  Renderable.cpp
+  #Renderable.cpp
+  CEntity.cpp
   CPuppet.cpp
   #CPuppetFactory.cpp
   CSpell.cpp
@@ -62,7 +63,7 @@ SET(PROJECT_LIBS
   ${LOG4CPP_LIBRARIES}
   ${LUA_LIBRARIES}
   ${ESHARED_LIBRARIES}
-  
+
   ${ParticleUniverse_LIBRARIES}
 
   #${OIS_LIBRARIES}
@@ -85,7 +86,7 @@ if (APPLE)
 
   LINK_DIRECTORIES(/opt/local/lib /usr/local/lib)
   LINK_LIBRARIES(${PROJECT_FRAMEWORKS} ${Boost_LIBRARIES} ${OIS_LIBRARIES})
-  
+
 elseif(UNIX)
   LIST(APPEND PROJECT_LIBS
     ${Boost_LIBRARIES}

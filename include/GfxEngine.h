@@ -63,9 +63,12 @@ using OgreBites::SdkCameraMan;
 using OgreBites::SdkTrayManager;
 namespace Pixy {
 
+  class CEntity;
+  typedef CEntity Renderable;
+
   class CUnit;
   class CPuppet;
-  class Renderable;
+  //~ class Renderable;
   class EventManager;
   class MousePicker;
   class GenericMousePicker;
@@ -80,6 +83,8 @@ namespace Pixy {
 	class GfxEngine : public Engine, public EventListener, public InputListener, public Ogre::RenderTargetListener {
 
 	public:
+
+
 
     enum QueryFlags {
       TERRAIN_MASK = 1<<0,
@@ -130,7 +135,7 @@ namespace Pixy {
 		 * to the given Ogre::Entity for later retrieval, thus,
 		 * linking the GameObject with SceneObject.
 		 */
-		bool attachToScene(Renderable* inEntity);
+		bool attachToScene(CEntity* inEntity);
 
 		//! Detaches a Pixy::Entity from an SceneNode and removes it from Scene
 		/*!
@@ -139,7 +144,7 @@ namespace Pixy {
 		 * stops rendering it. Also detaches Pixy::Entity
 		 * from the Ogre::Entity.
 		 */
-		void detachFromScene(Renderable* inEntity);
+		void detachFromScene(CEntity* inEntity);
 
     void setupMovableTextOverlays();
 

@@ -8,7 +8,7 @@
  */
 
 #include "CPuppet.h"
-#include "Renderable.h"
+//~ #include "Renderable.h"
 #include "CDeck.h"
 #include "CUnit.h"
 #include "CSpell.h"
@@ -22,7 +22,8 @@ namespace Pixy
 {
 
   CPuppet::CPuppet()
-  : mRenderable(0), mEnemy(0) {
+  : //mRenderable(0),
+    mEnemy(0) {
 
     /*mSceneObject = 0;
     mSceneNode = 0;
@@ -33,11 +34,12 @@ namespace Pixy
 
   bool CPuppet::live() {
     Puppet::live();
+    CEntity::live();
 
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, mName);
     mLog->infoStream() << "created";
 
-    mRenderable = new Renderable(this);
+    //~ mRenderable = new Renderable(this);
     updateTextOverlay();
 
     mEnemy = 0;
@@ -58,7 +60,7 @@ namespace Pixy
   void CPuppet::die() {
     Puppet::die();
 
-    mRenderable->hide();
+    //~ mRenderable->hide();
 
     mLog->infoStream() << "dead";
   };
@@ -68,8 +70,8 @@ namespace Pixy
     mSceneObject = 0;
     mSceneNode = 0;
     mEntity = 0;*/
-    if (mRenderable)
-      delete mRenderable;
+    //~ if (mRenderable)
+      //~ delete mRenderable;
 
     while (!mSpells.empty()) {
       delete mSpells.back();
@@ -86,7 +88,7 @@ namespace Pixy
       mUnits.pop_back();
     }
 
-    mRenderable = 0;
+    //~ mRenderable = 0;
 
     if (mLog) {
       mLog->infoStream() << "destroyed";
@@ -94,11 +96,6 @@ namespace Pixy
       mLog = 0;
     }
   };
-
-  Renderable* CPuppet::getRenderable() {
-    return mRenderable;
-
-  }
 
   /*CDeck* CPuppet::getDeck() {
     mLog->infoStream() << "returning deck;";
@@ -112,89 +109,13 @@ namespace Pixy
     return mDeck;
   }*/
 
-	std::list<CSpell*> const& CPuppet::getHand(){ return mHand; };
-
-	int CPuppet::nrSpellsInHand() {
-		return mHand.size();
-	}
-
-  CSpell* CPuppet::getSpell(int inUID) {
-    hand_t::const_iterator lSpell;
-    for (lSpell = mHand.begin(); lSpell != mHand.end(); ++lSpell)
-      if ((*lSpell)->getUID() == inUID)
-        return *lSpell;
-
-    assert(false);
-    throw invalid_uid("couldn't find a spell with uid" + stringify(inUID));
-    return 0;
-  }
-	void CPuppet::attachSpell(CSpell* inSpell)
-	{
-		mHand.push_back(inSpell);
-    inSpell->setCaster(mRenderable);
-		//std::cout<<"Hero: Spell " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
-	};
-
-	void CPuppet::detachSpell(int inUID, bool remove)
-	{
-		CSpell* lSpell = 0;
-		hand_t::iterator it;
-		for(it = mHand.begin(); it != mHand.end(); ++it)
-			if ((*it)->getUID() == inUID)
-			{
-        lSpell = *it;
-				mHand.erase(it);
-				break;
-			}
-
-    assert(lSpell);
-    if (remove)
-      delete lSpell;
-
-    lSpell = 0;
-	};
-
-  CPuppet::spells_t const& CPuppet::getBuffs() const {
-    return mBuffs;
-  }
-  void CPuppet::attachBuff(CSpell* inSpell)
-	{
-		mBuffs.push_back(inSpell);
-    inSpell->setTarget(mRenderable);
-		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
-	};
-
-	void CPuppet::detachBuff(int inUID)
-	{
-		CSpell* lSpell = 0;
-		spells_t::iterator it;
-		for(it = mBuffs.begin(); it != mBuffs.end(); ++it)
-			if ((*it)->getUID() == inUID)
-			{
-        lSpell = *it;
-				mBuffs.erase(it);
-				break;
-			}
-
-    assert(lSpell);
-    delete lSpell;
-	};
-
-  bool CPuppet::hasBuff(int inUID) {
-		spells_t::iterator lSpell = mBuffs.begin();
-		for (lSpell; lSpell != mBuffs.end(); ++lSpell)
-			if ((*lSpell)->getUID() == inUID)
-				return true;
-
-    return false;
-  }
 
 	/* ------------------------
 	 * UNITS
 	 * ------------------------ */
-  void CPuppet::attachUnit(CUnit* inUnit) {
+  /*void CPuppet::attachUnit(CUnit* inUnit) {
     mUnits.push_back(inUnit);
-    inUnit->setOwner(this);
+    inUnit->_setOwner(this);
     inUnit->_setEnemy(mEnemy);
 
     mLog->infoStream()
@@ -219,27 +140,27 @@ namespace Pixy
       delete lUnit;
     else
       mLog->infoStream() << "softly removed a unit from my control " << inUID;
-  }
+  }*/
   CUnit* CPuppet::getUnit(const int inUID) {
     units_t::iterator lUnit = mUnits.begin();
 		for (lUnit; lUnit != mUnits.end(); ++lUnit)
 			if ((*lUnit)->getUID() == inUID)
-				return *lUnit;
+				return dynamic_cast<CUnit*>(*lUnit);
 
     throw invalid_uid("couldn't find a unit with uid" + stringify(inUID));
   }
 
-  CPuppet::units_t const& CPuppet::getUnits() const { return mUnits; }
+  /*CPuppet::units_t const& CPuppet::getUnits() const { return mUnits; }*/
 
-  void CPuppet::updateFromEvent(const Event& evt) {
-    Puppet::updateFromEvent(evt);
+  void CPuppet::deserialize(const Event& evt) {
+    Puppet::deserialize(evt);
 
     updateTextOverlay();
   }
 
   void CPuppet::updateTextOverlay() {
-    if (mRenderable && mRenderable->getText())
-      mRenderable->getText()->setCaption(stringify(mHP));
+    if (getText())
+      getText()->setCaption(stringify(mHP));
   }
 
   void CPuppet::onVictory() {

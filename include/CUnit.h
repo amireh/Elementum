@@ -11,7 +11,8 @@
 #define H_CUnit_H
 
 #include "Unit.h"
-#include "CSpell.h"
+#include "CEntity.h"
+#include "Logger.h"
 #include <Ogre.h>
 #include <list>
 #include <vector>
@@ -27,54 +28,59 @@ using Ogre::Vector3;
 namespace Pixy
 {
   class GfxEngine;
-  class Renderable;
+  //~ class Renderable;
   class CPuppet;
-	class CUnit : public Unit
+	class CUnit : public Unit//, public CEntity, public Logger
 	{
 	public:
-    typedef std::list<CSpell*> spells_t;
 
-    bool fRequiresYawFix;
+    struct Position
+    {
+     enum {
+       Casting, // the Unit is passive/in casting position (the starting one)
+       Charging, // the Unit is charging
+       Blocking, // the Unit is blocking an attacker
+       Clearing, // the Unit is attacking a blocker
+       Attacking // the Unit is attacking the puppet
+     };
+    };
 
     CUnit();
     CUnit(const CUnit& src);
     CUnit& operator=(const CUnit& rhs);
     virtual ~CUnit();
 
-    virtual Renderable* getRenderable();
+    //~ virtual Renderable* getRenderable();
 
     virtual bool live();
     virtual void die();
 
-    void move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback=0);
+    void move(char inDestination, boost::function<void(CUnit*)> callback=0);
     void moveAndAttack(CPuppet* inTarget);
     void moveAndAttack(std::list<CUnit*> inBlockers);
 
-    CPuppet* getEnemy() const {
-      assert(mEnemy);
-      return mEnemy;
-    };
+    CPuppet* getEnemy() const;
+
+    void setAttackOrder(int inOrder);
+    int getAttackOrder() const;
 
     // called by CPuppet::attachUnit()
     void _setEnemy(CPuppet* inPuppet);
 
     void update(unsigned long);
 
-    bool isMoving() const {
-      return fIsMoving;
-    }
+    bool isMoving() const;
 
-    UNIT_POS getPosition() const {
-      return mPosition;
-    }
-    void setPosition(UNIT_POS inPos) {
-      mPosition = inPos;
-    }
+    char getPosition() const;
+    void setPosition(char inPos);
 
-    void setWaypoints(std::vector<Vector3>* inWp) {
-      mWaypoints = inWp;
-    }
+    void setWaypoints(std::vector<Ogre::Vector3>* inWp);
 
+    CUnit* getBlockTarget() const;
+    void setBlockTarget(CUnit* inTarget);
+
+    CEntity* getAttackTarget() const;
+    void setAttackTarget(CEntity* inTarget);
 
     virtual void setIsTrampling(bool inF);
     virtual void setIsUnblockable(bool inF);
@@ -86,20 +92,6 @@ namespace Pixy
     virtual void setHP(int inU);
     virtual void setBaseHP(int inU);
     virtual void setBaseAP(int inU);
-
-    /// @note entities are responsible for destroying the spell objects they own
-		spells_t const& getSpells();
-		virtual int nrSpells();
-		virtual CSpell* getSpell(int inUID);
-    /// @warn ownership of the Spell pointer is transferred to the entity
-    /// which means you can't invalidate throughout the lifetime of this entity
-		virtual void attachSpell(CSpell* inSpell);
-		virtual void detachSpell(int inUID, bool remove=true);
-
-    spells_t const& getBuffs() const;
-    virtual void attachBuff(CSpell*);
-    virtual void detachBuff(int inUID);
-    virtual bool hasBuff(int inUID);
 
     virtual bool attack(Pixy::CPuppet* inTarget, boost::function<void()> callback);
     virtual bool attack(Pixy::CUnit* inTarget, boost::function<void()> callback, bool block=false);
@@ -116,7 +108,7 @@ namespace Pixy
     virtual void rest();
     virtual void getUp();
 
-    virtual void updateFromEvent(const Event& evt);
+    virtual void deserialize(const Event& evt);
 
     bool isDying() const;
 
@@ -125,11 +117,14 @@ namespace Pixy
 
     static void setDefaultWalkSpeed(const float inSpeed);
     static float getDefaultWalkSpeed();
+    void setDescription(std::string inTxt);
+    std::string const& getDescription() const;
+
 
 	protected:
     friend class GfxEngine;
 
-    Renderable* mRenderable;
+    //~ Renderable* mRenderable;
     virtual void copyFrom(const CUnit& src);
 
     //~ virtual void _onMechanicChange(std::string mechanic, bool has_it);
@@ -167,7 +162,7 @@ namespace Pixy
     bool nextLocation(int inDestination);
 
     bool fIsMoving;
-    UNIT_POS  mPosition, mPDestination;
+    char  mPosition, mPDestination;
     std::vector<Vector3>* mWaypoints;
 
     //! used by moveUnit() and nextLocation() for tracking the Node's destination
@@ -192,9 +187,12 @@ namespace Pixy
 
     boost::asio::deadline_timer* mTimer;
 
-    spells_t mSpells;
-    spells_t mBuffs;
     bool fDying;
+
+    int mAttackOrder;
+    CUnit* mBlockTarget;
+    CEntity* mAttackTarget;
+    std::string mDescription;
 
     CPuppet* mEnemy;
 

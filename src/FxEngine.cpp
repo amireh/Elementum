@@ -227,7 +227,7 @@ namespace Pixy {
     assert(lEntity);
 
     // if it's a puppet and it died, play the blood spray effect
-    if (lEntity->getEntity()->getRank() == PUPPET && lEntity->getEntity()->isDead())
+    if (lEntity->getEntity()->isPuppet() && lEntity->getEntity()->isDead())
     {
       ParticleUniverse::ParticleSystem* lEffect =
         mEffects.find("Elementum/Fx/BloodSplat")->second;

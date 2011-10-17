@@ -8,6 +8,7 @@
  */
 
 #include "CSpell.h"
+#include "CEntity.h"
 //#if PIXY_PLATFORM == PIXY_PLATFORM_APPLE
 //#include "CEGUIBase/CEGUIBase.h"
 //#else
@@ -101,4 +102,17 @@ namespace Pixy
     std::string CSpell::getImageSet() { return mImageSet; }
     std::string CSpell::getImageName() { return mImageName; }
     CEGUI::Window* CSpell::getButton() { return mButton; }
+
+    void CSpell::setCaster(CSpell::owner_t* inCaster) {
+      mCaster = inCaster;
+    }
+    void CSpell::setTarget(CSpell::owner_t* inTarget) {
+      mTarget = inTarget;
+    };
+    CSpell::owner_t* CSpell::getCaster() const {
+      return dynamic_cast<CEntity*>(mCaster);
+    };
+    CSpell::owner_t* CSpell::getTarget() const {
+      return dynamic_cast<CEntity*>(mTarget);
+    };
 }

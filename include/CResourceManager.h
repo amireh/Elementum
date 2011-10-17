@@ -12,10 +12,10 @@
 
 #include "Pixy.h"
 #include "ResourceManager.h"
-#include "CUnit.h"
 #include "CPuppet.h"
 #include "CSpell.h"
-//#include "CDeck.h"
+#include "CUnit.h"
+#include "CDeck.h"
 
 using std::string;
 using std::vector;
@@ -25,46 +25,23 @@ namespace Pixy
 {
   //class CSpell;
   //class CUnit;
-  class CDeck;
+  //class CDeck;
 	class CResourceManager : public ResourceManager {
     public:
-      typedef std::list<CSpell*> spells_t;
-      typedef std::list<CUnit*> units_t;
+    typedef CSpell spell_t;
+    typedef CUnit unit_t;
+    typedef CPuppet puppet_t;
 
-      CResourceManager();
-      virtual ~CResourceManager();
+    typedef std::list<puppet_t*> puppets_t;
 
-      virtual CSpell* const getSpell(std::string inName);
-      virtual CSpell* const getSpell(std::string inName, Pixy::RACE inRace);
-      virtual CUnit* const getUnit(std::string inName);
-      virtual CUnit* const getUnit(std::string inName, Pixy::RACE inRace);
-      list<CPuppet*> puppetsFromStream(istringstream &stream);
-      list<CPuppet*>& getPuppets();
+    CResourceManager();
+    virtual ~CResourceManager();
 
-      void clearDatabase();
+    virtual spell_t* const getSpell(std::string const& inName, char inRace);
+    virtual unit_t* const getUnit(std::string const& inName, char inRace);
 
-      spells_t const& _getSpells(Pixy::RACE);
     protected:
 
-      virtual CSpell* getModelSpell(std::string inName);
-      virtual CUnit* getModelUnit(std::string inName);
-
-      void parsePuppetsSection(istringstream &stream, int section, int nrEntries);
-      void parsePuppetsStats(vector<string>& entries);
-      void parsePuppetsDecks(vector<string>& entries);
-      virtual void parseSpells(std::vector<std::string>& entries);
-      virtual void parseMinions(std::vector<std::string>& entries);
-      virtual void parseMinionSpells(std::vector<std::string>& entries);
-
-      void assignTalents(Puppet& inPuppet, string inTalents);
-      void assignDeck(Puppet& inPuppet, string inName, string inSpells, int inUseCount);
-
-      CPuppet* getPuppet(string inName, list<CPuppet*>& inPuppets);
-
-      spells_t mSpells[4];
-      units_t mUnits[4];
-
-      list<CPuppet*> mPuppets;
   };
 }
 

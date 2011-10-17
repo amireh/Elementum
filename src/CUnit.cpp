@@ -9,7 +9,7 @@
 
 #include "CUnit.h"
 #include "CPuppet.h"
-#include "Renderable.h"
+//~ #include "Renderable.h"
 #include "GfxEngine.h"
 #include "PixyUtility.h"
 #include "ogre/MovableTextOverlay.h"
@@ -24,16 +24,17 @@ namespace Pixy
 
   CUnit::CUnit()
   : fIsMoving(false),
-    mPosition(POS_READY),
+    mAttackOrder(0),
+    mBlockTarget(0),
+    mAttackTarget(0),
+    mPosition(CUnit::Position::Casting),
     mWaypoints(0),
     mMoveDistance(0),
     mWalkSpeed(mDefaultWalkSpeed),
     mMoveSpeed(0),
     mCallback(0),
-    mRenderable(0),
     mTimer(0),
     fDying(false),
-    fRequiresYawFix(false),
     mDestination(Vector3::ZERO),
     mEnemy(0),
     mRaySceneQuery(0)
@@ -60,16 +61,11 @@ namespace Pixy
   CUnit::~CUnit() {
 
     //~
+    mAttackTarget = 0;
+    mBlockTarget = 0;
 
     if (mTimer)
       delete mTimer;
-
-    if (mRenderable) {
-      GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
-      delete mRenderable;
-    }
-
-    mRenderable = 0;
 
     while (!mSpells.empty()) {
       delete mSpells.back();
@@ -99,8 +95,8 @@ namespace Pixy
     Unit::copyFrom(src);
 
     //this->mRenderable = new Renderable(*src.mRenderable);
-    //this->mRenderable->setOwner(this);
-    this->mRenderable = 0;
+    //this->setOwner(this);
+    //this->mRenderable = 0;
 
     mPosition = src.mPosition;
     fIsMoving = src.fIsMoving;
@@ -109,7 +105,10 @@ namespace Pixy
     mDestination = src.mDestination;
     mMoveDirection = src.mMoveDirection;
     fDying = false;
-    fRequiresYawFix = src.fRequiresYawFix;
+    mAttackOrder = src.mAttackOrder;
+    mBlockTarget = src.mBlockTarget;
+    mAttackTarget = src.mAttackTarget;
+    mDescription = src.mDescription;
 
     // Pixy::Entity::copyFrom() copies Spell* objects and we need
     // CSpell* here, so we clear the copied ones, and create new ones
@@ -143,101 +142,13 @@ namespace Pixy
     return mDefaultWalkSpeed;
   }
 
-	CUnit::spells_t const& CUnit::getSpells(){ return mSpells; };
-
-	void CUnit::attachSpell(CSpell* inSpell)
-	{
-		mSpells.push_back(inSpell);
-		//std::cout
-    //  <<"CUnit: Spell " << inSpell->getName()
-    //  << "#" << inSpell->getUID()
-    //  << " attached to hand.\n";
-
-    mSpells.back()->setCaster(mRenderable);
-	};
-
-	void CUnit::detachSpell(int inUID, bool remove)
-	{
-    CSpell* lSpell = 0;
-		spells_t::iterator it;
-		for(it = mSpells.begin(); it != mSpells.end(); ++it)
-			if ((*it)->getUID() == inUID)
-			{
-        lSpell = *it;
-				mSpells.erase(it);
-				break;
-			}
-
-    assert(lSpell);
-
-    //std::cout
-    //  << "CUnit: Spell " << lSpell->getName()
-    //  << "#" << lSpell->getUID()
-    //  << " detached from hand.\n";
-
-    if (remove)
-      delete lSpell;
-
-    lSpell = 0;
-	};
-
-	int CUnit::nrSpells() {
-		return mSpells.size();
-	}
-
-	CSpell* CUnit::getSpell(int inUID) {
-		spells_t::const_iterator lSpell;
-		for (lSpell = mSpells.begin(); lSpell != mSpells.end(); ++lSpell)
-			if ((*lSpell)->getUID() == inUID)
-				return *lSpell;
-
-    assert(false);
-    throw invalid_uid("couldn't find a spell with uid" + stringify(inUID));
-	}
-
-
-  CUnit::spells_t const& CUnit::getBuffs() const {
-    return mBuffs;
-  }
-  void CUnit::attachBuff(CSpell* inSpell)
-	{
-		mBuffs.push_back(inSpell);
-    inSpell->setTarget(mRenderable);
-		mLog->infoStream() << "buff " << inSpell->getName() << "#" << inSpell->getUID() << " attached to hand.\n";
-	};
-
-	void CUnit::detachBuff(int inUID)
-	{
-		CSpell* lSpell = 0;
-		spells_t::iterator it;
-		for(it = mBuffs.begin(); it != mBuffs.end(); ++it)
-			if ((*it)->getUID() == inUID)
-			{
-        lSpell = *it;
-				mBuffs.erase(it);
-				break;
-			}
-
-    assert(lSpell);
-    delete lSpell;
-	};
-
-  bool CUnit::hasBuff(int inUID) {
-		spells_t::const_iterator lSpell;
-		for (lSpell = mBuffs.begin(); lSpell != mBuffs.end(); ++lSpell)
-			if ((*lSpell)->getUID() == inUID)
-				return true;
-
-    return false;
-  }
-
   bool CUnit::live() {
     Unit::live();
 
     mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, mName + stringify(mUID));
     mLog->infoStream() << "created";
 
-    mRenderable = new Renderable(this);
+    //~ mRenderable = new Renderable(this);
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
     mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
     mRaySceneQuery->setSortByDistance(true);
@@ -262,10 +173,10 @@ namespace Pixy
     mLog->infoStream() << "dying [playing animation now]";
 
     Unit::die();
-    float length_sec = mRenderable->animateDie();
+    float length_sec = animateDie();
 
     Event evt(EventUID::EntityDying);
-    evt.Any = (void*)this->mRenderable;
+    evt.Any = (void*)this;
     EventManager::getSingleton().hook(evt);
 
     mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
@@ -281,7 +192,7 @@ namespace Pixy
     //EventManager::getSingleton().hook(evt);
     Combat::getSingleton().markForDeath(this);
 
-    //~ mRenderable->hide();
+    //~ hide();
     GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
     mSceneMgr->destroyQuery(mRaySceneQuery);
     mRaySceneQuery = 0;
@@ -294,16 +205,9 @@ namespace Pixy
 
   }
 
-
-
-  Renderable* CUnit::getRenderable() {
-    return mRenderable;
-
-  }
-
   bool CUnit::nextLocation(int inDestination)
   {
-    Ogre::SceneNode* mNode = mRenderable->getSceneNode();
+    Ogre::SceneNode* mNode = getSceneNode();
 
     if (mDestination == Vector3::ZERO) {
 
@@ -315,24 +219,24 @@ namespace Pixy
       //  << mNode->getPosition().x << "," << mNode->getPosition().y << "," << mNode->getPosition().z
       //  << "\n";
 
-      if (inDestination == POS_ATTACK) {
+      if (inDestination == CUnit::Position::Attacking) {
         assert(mEnemy);
 
-        Ogre::Real radius = mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z;
-        Ogre::Real scale = mEnemy->getRenderable()->getSceneNode()->getScale().z;
+        Ogre::Real radius = mEnemy->getSceneObject()->getBoundingBox().getSize().z;
+        Ogre::Real scale = mEnemy->getSceneNode()->getScale().z;
         int mod = (mDestination.z > mNode->getPosition().z) ? -1 : 1;
         mDestination.z =
-          mEnemy->getRenderable()->getSceneNode()->getPosition().z +
+          mEnemy->getSceneNode()->getPosition().z +
           (radius * /*scale*/2 * mod);
         //calculatePositionOffset();
         //std::cout << "\tPosition for attacking node: " << mDestination.z <<"\n";
-      } else if (inDestination == POS_OFFENCE) {
-        Ogre::Vector3 bbox = mBlockers.front()->getRenderable()->getSceneObject()->getBoundingBox().getSize();
-        Ogre::Real radius = mBlockers.front()->getRenderable()->getSceneObject()->getBoundingBox().getSize().z;
+      } else if (inDestination == CUnit::Position::Clearing) {
+        Ogre::Vector3 bbox = mBlockers.front()->getSceneObject()->getBoundingBox().getSize();
+        Ogre::Real radius = mBlockers.front()->getSceneObject()->getBoundingBox().getSize().z;
         int mod = (mDestination.z >= mNode->getPosition().z) ? -1 : 1;
         mDestination.z +=
-          //mBlockers.front()->getRenderable()->getSceneNode()->getPosition().z +
-          ((radius * mBlockers.front()->getRenderable()->getSceneNode()->getScale().z) /2 * mod);
+          //mBlockers.front()->getSceneNode()->getPosition().z +
+          ((radius * mBlockers.front()->getSceneNode()->getScale().z) /2 * mod);
 
         //std::cout << "My blocker's bbox: "
         //  << bbox.x << ","
@@ -361,7 +265,7 @@ namespace Pixy
 
   /*void CUnit::calculatePositionOffset(Vector3& inDestination) {
     // ------------------------------
-    Ogre::Ray entityRay(mRenderable->getSceneNode()->getPosition(), mMoveDirection);
+    Ogre::Ray entityRay(getSceneNode()->getPosition(), mMoveDirection);
     mRaySceneQuery->setRay(entityRay);
 
     // Execute query
@@ -379,11 +283,11 @@ namespace Pixy
         (itr->movable->getName().find(mEnemy->getName()) != std::string::npos)) {
         std::cout << "-- Distance to collision: "
           << itr->distance << ", enemy size is:"
-          << mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().x <<","
-          << mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().y <<","
-          << mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z << "\n";
+          << mEnemy->getSceneObject()->getBoundingBox().getSize().x <<","
+          << mEnemy->getSceneObject()->getBoundingBox().getSize().y <<","
+          << mEnemy->getSceneObject()->getBoundingBox().getSize().z << "\n";
 
-          if (itr->distance <= mEnemy->getRenderable()->getSceneObject()->getBoundingBox().getSize().z/4.0f)
+          if (itr->distance <= mEnemy->getSceneObject()->getBoundingBox().getSize().z/4.0f)
           {
             mMoveDistance = 0.0f;
             mMoveDirection = Vector3::ZERO;
@@ -396,7 +300,7 @@ namespace Pixy
     // ------------------------------
   }*/
 
-  void CUnit::move(UNIT_POS inDestination, boost::function<void(CUnit*)> callback) {
+  void CUnit::move(char inDestination, boost::function<void(CUnit*)> callback) {
     mCallback = callback;
 
     //std::cout << "Unit " << mUID << " moving to position: " << inDestination << " from " << mPosition << "\n";
@@ -405,24 +309,24 @@ namespace Pixy
     mDestination = Ogre::Vector3::ZERO;
 
     if (inDestination < mPosition) {
-      //~ mRenderable->trackEnemyUnit(this);
-      //~ mRenderable->getSceneNode()->setAutoTracking(false);
+      //~ trackEnemyUnit(this);
+      //~ getSceneNode()->setAutoTracking(false);
       //~ Ogre::Vector3 pos = mWaypoints->front();
       //~ pos.z *= 2;
-      //~ mRenderable->getSceneNode()->lookAt(pos, Ogre::Node::TS_WORLD);
+      //~ getSceneNode()->lookAt(pos, Ogre::Node::TS_WORLD);
       //~ std::cout << "Unit: I'm MOVING BACK, ROTATING\n";
-      //~ mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
+      //~ getSceneNode()->yaw(Ogre::Degree(180));
     }
     //~ else
-      //~ mRenderable->trackEnemyPuppet();
+      //~ trackEnemyPuppet();
     // start running if not already moving and the player wants to move
-    mRenderable->animateRun();
+    animateRun();
 
   }
 
   bool CUnit::doMove(unsigned long mTimeElapsed)
   {
-    Ogre::SceneNode* mNode = mRenderable->getSceneNode();
+    Ogre::SceneNode* mNode = getSceneNode();
 
     nextLocation(mPDestination);
 
@@ -465,32 +369,32 @@ namespace Pixy
 
       // if we came back from an attack and still waiting at the charging spot
       // turn around 180 degrees to face the enemy
-      if ((mPosition != POS_READY && mPDestination == POS_CHARGING))
+      if ((mPosition != CUnit::Position::Casting && mPDestination == CUnit::Position::Charging))
       {
-        //~ mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
-        //~ mRenderable->trackEnemyPuppet();
-        mRenderable->rotateToEnemy();
-      } else if (mPDestination == POS_READY)
+        //~ getSceneNode()->yaw(Ogre::Degree(180));
+        //~ trackEnemyPuppet();
+        rotateToEnemy();
+      } else if (mPDestination == CUnit::Position::Casting)
       {
-        mRenderable->rotateTo(mWaypoints->at(POS_CHARGING));
+        rotateTo(mWaypoints->at(CUnit::Position::Charging));
       }
 
 
 
       // ------------- a gentleman's hack ---------------
       //~ if (fRequiresYawFix) {
-        //~ if (mPosition == POS_READY && mPDestination == POS_CHARGING) {
-          //~ mRenderable->getSceneNode()->yaw(Ogre::Degree(180));
+        //~ if (mPosition == CUnit::Position::Casting && mPDestination == CUnit::Position::Charging) {
+          //~ getSceneNode()->yaw(Ogre::Degree(180));
         //~ }
       //~ } // yaw hack
 
 			// stop running if already moving and the player doesn't want to move
-      mRenderable->animateIdle();
+      animateIdle();
 
       mPosition = mPDestination;
       //std::cout << "Unit " << mUID << " arrived at destination: " << mPosition << "\n";
 
-      //~ this->mRenderable->resetOrientation();
+      //~ this->resetOrientation();
 
       // is there a callback?
       if (mCallback)
@@ -502,8 +406,10 @@ namespace Pixy
 
   void CUnit::reset() {
     Unit::reset();
+    mBlockTarget = 0;
+    mAttackTarget = 0;
 
-    if (mRenderable && mRenderable->getText())
+    if (getText())
       updateTextOverlay();
   }
 
@@ -553,12 +459,12 @@ namespace Pixy
     }
     // show stats (AP/HP)
     cap += stringify(mAP) + "/" + stringify(mHP);
-    mRenderable->getText()->setCaption(cap);
+    getText()->setCaption(cap);
   }
 
   bool CUnit::attack(Pixy::CPuppet* inTarget, boost::function<void()> callback) {
 
-    float length_sec = mRenderable->animateAttack();
+    float length_sec = animateAttack();
 
     //std::cout << "Animation is " << length_sec << " seconds long\n";
 
@@ -574,13 +480,13 @@ namespace Pixy
     Unit::attack(inTarget);
     dmg -= getAP();
 
-    inTarget->getRenderable()->animateHit();
+    inTarget->animateHit();
 
     // tell interested parties that the target has been attacked (for SCT etc)
     {
       Event evt(EventUID::UnitAttacked);
       evt.setProperty("Damage", dmg);
-      evt.Any = (void*)inTarget->getRenderable();
+      evt.Any = (void*)inTarget;
       EventManager::getSingleton().hook(evt);
     }
 
@@ -588,12 +494,11 @@ namespace Pixy
     if (hasLifetap() && dmg > 0) {
       Event evt(EventUID::Lifetap);
       evt.setProperty("Damage", dmg);
-      evt.Any = (void*)static_cast<CPuppet*>(this->mOwner)->getRenderable();
+      evt.Any = (void*)getOwner();
       EventManager::getSingleton().hook(evt);
     }
 
     // update HUDs
-    static_cast<CPuppet*>((CPuppet*)mOwner)->updateTextOverlay();
     this->updateTextOverlay();
     callback();
   }
@@ -604,7 +509,7 @@ namespace Pixy
       return inTarget->attack(this, callback, block);
 
 
-    float length_sec = mRenderable->animateAttack();
+    float length_sec = animateAttack();
 
     // @note
     // we're using a timer so we give the animation time to finish
@@ -624,13 +529,13 @@ namespace Pixy
     Unit::attack(inTarget, false);
     dmg -= getAP();
 
-    inTarget->getRenderable()->animateHit();
+    inTarget->animateHit();
 
     // inform other components so they can render particles or w/e
     {
       Event evt(EventUID::UnitAttacked);
       evt.setProperty("Damage", dmg);
-      evt.Any = (void*)inTarget->getRenderable();
+      evt.Any = (void*)inTarget;
       EventManager::getSingleton().hook(evt);
     }
 
@@ -659,8 +564,8 @@ namespace Pixy
       return;
     }
 
-    //this->mRenderable->trackEnemyPuppet();
-    this->move(POS_ATTACK,
+    //this->trackEnemyPuppet();
+    this->move(CUnit::Position::Attacking,
       boost::bind(static_cast<void (CUnit::*)(CPuppet*)>(&CUnit::attackAfterMoving), this, inTarget) );
   }
 
@@ -678,7 +583,7 @@ namespace Pixy
     //std::cout << "I attacked puppet, going back now\n";
 
     // move back and tell Combat that we're done to fetch the next attacker
-    this->move(POS_CHARGING, boost::bind(&CUnit::cleanupAfterMovingBack, this, inTarget) );
+    this->move(CUnit::Position::Charging, boost::bind(&CUnit::cleanupAfterMovingBack, this, inTarget) );
   }
 
   void CUnit::cleanupAfterMovingBack(CPuppet* inTarget) {
@@ -695,7 +600,7 @@ namespace Pixy
     mBlockers = inBlockers;
 
     this->reset();
-    this->move(POS_OFFENCE, boost::bind(&CUnit::doAttack, this));
+    this->move(CUnit::Position::Clearing, boost::bind(&CUnit::doAttack, this));
   }
 
   void CUnit::doAttack() {
@@ -706,12 +611,12 @@ namespace Pixy
      * for every blocker X in blockers do:
      *  - move(X,POS_DEFENSE)
      *  - attack(this,X)
-     *  - if X is not dead, move(X,POS_CHARGING)
+     *  - if X is not dead, move(X,CUnit::Position::Charging)
      *  - if this is dead, mark for removal and abort
      * if trample && currentAP > 0
-     *  - move(this,POS_ATTACK)
+     *  - move(this,CUnit::Position::Attacking)
      *  - attack(this,puppet)
-     * move(this,POS_CHARGING)
+     * move(this,CUnit::Position::Charging)
      * mark as done
      */
 
@@ -733,13 +638,13 @@ namespace Pixy
       if (fIsTrampling && mAP > 0) {
         assert(mEnemy);
 
-        return move(POS_ATTACK, boost::bind(static_cast<void (CUnit::*)(CPuppet*)>(&CUnit::moveAndAttack), this, mEnemy));
+        return move(CUnit::Position::Attacking, boost::bind(static_cast<void (CUnit::*)(CPuppet*)>(&CUnit::moveAndAttack), this, mEnemy));
 #if 0
-        move(POS_ATTACK, [&](CUnit*) -> void {
+        move(CUnit::Position::Attacking, [&](CUnit*) -> void {
           this->attack(static_cast<CPuppet*>((Entity*)inBlockers.front()->getOwner()),
           [&]() -> void {
             // now move back
-            move(POS_CHARGING, [&](CUnit*) -> void {
+            move(CUnit::Position::Charging, [&](CUnit*) -> void {
               // and mark us as done
               Combat::getSingleton().unitAttacked(this);
               Combat::getSingleton().doBattle();
@@ -748,8 +653,8 @@ namespace Pixy
         });
 #endif
       } else { // no trample, just move back and mark as done
-        move(POS_CHARGING);
-        //this->mRenderable->trackEnemyPuppet();
+        move(CUnit::Position::Charging);
+        //this->trackEnemyPuppet();
 
         Combat::getSingleton().unitAttacked(this);
         Combat::getSingleton().doBattle();
@@ -777,11 +682,11 @@ namespace Pixy
     }*/
 
     // make the two units face each other
-    blocker->getRenderable()->trackEnemyUnit(this);
-    this->getRenderable()->trackEnemyUnit(blocker);
+    blocker->trackEnemyUnit(this);
+    this->trackEnemyUnit(blocker);
 
     // move the blocker to its defence node and do the attacking
-    blocker->move(POS_DEFENCE,
+    blocker->move(CUnit::Position::Blocking,
       boost::bind(static_cast<void (CUnit::*)(CUnit*)>(&CUnit::attackAfterMoving), this, blocker));
   }
 
@@ -811,7 +716,7 @@ namespace Pixy
   }
   void CUnit::moveBackAfterBlocking(CUnit* blocker) {
     if (!(blocker->isDead() || blocker->isDying())) {
-      blocker->move(POS_CHARGING);
+      blocker->move(CUnit::Position::Charging);
       blocker->updateTextOverlay();
     }
 
@@ -823,10 +728,10 @@ namespace Pixy
 
   void CUnit::onVictory() {
 
-		//mRenderable->setBaseAnimation(Renderable::ANIM_DANCE, true);
-		//mRenderable->setTopAnimation(Renderable::ANIM_NONE);
+		//setBaseAnimation(Renderable::ANIM_DANCE, true);
+		//setTopAnimation(Renderable::ANIM_NONE);
 		//// disable hand animation because the dance controls hands
-		//mRenderable->mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
+		//mAnims[Renderable::ANIM_HANDS_RELAXED]->setEnabled(false);
 
     GfxEngine::getSingletonPtr()->stopUpdatingMe(this);
   }
@@ -837,7 +742,7 @@ namespace Pixy
 
     Unit::rest();
     updateTextOverlay();
-    mRenderable->animateRest();
+    animateRest();
   }
 
   void CUnit::getUp() {
@@ -846,17 +751,17 @@ namespace Pixy
 
     Unit::getUp();
 
-    float length_sec = mRenderable->animateGetUp();
-    mRenderable->animateIdle();
+    float length_sec = animateGetUp();
+    animateIdle();
     updateTextOverlay();
 
     /*mTimer->expires_from_now(boost::posix_time::milliseconds(length_sec * 1000));
-    mTimer->async_wait([&](boost::system::error_code e) -> void { this->mRenderable->animateIdle(); } );*/
+    mTimer->async_wait([&](boost::system::error_code e) -> void { this->animateIdle(); } );*/
 
   }
 
-  void CUnit::updateFromEvent(const Event& evt) {
-    Unit::updateFromEvent(evt);
+  void CUnit::deserialize(const Event& evt) {
+    Unit::deserialize(evt);
 
     updateTextOverlay();
   }
@@ -886,7 +791,7 @@ namespace Pixy
   }
 
   void CUnit::setHP(int inHP) {
-    if (!mRenderable)
+    if (isDead())
       return Unit::setHP(inHP);
 
     int lastHP = getHP();
@@ -896,14 +801,14 @@ namespace Pixy
     Event e(EventUID::EntityStatChanged);
     e.setProperty("Stat", "HP");
     e.setProperty("Value", incHP);
-    e.Any = (void*)this->mRenderable;
+    e.Any = (void*)this;
     EventManager::getSingleton().hook(e);
     updateTextOverlay();
   }
 
   void CUnit::setAP(int inAP)
   {
-    if (!mRenderable)
+    if (isDead())
       return Unit::setAP(inAP);
 
     int lastAP = getAP();
@@ -913,7 +818,7 @@ namespace Pixy
     Event e(EventUID::EntityStatChanged);
     e.setProperty("Stat", "AP");
     e.setProperty("Value", incAP);
-    e.Any = (void*)this->mRenderable;
+    e.Any = (void*)this;
     EventManager::getSingleton().hook(e);
     updateTextOverlay();
   }
@@ -922,4 +827,55 @@ namespace Pixy
     mEnemy = inPuppet;
   }
 
+  void CUnit::setAttackOrder(int inOrder) {
+    mAttackOrder = inOrder;
+  }
+
+  int CUnit::getAttackOrder() const {
+    return mAttackOrder;
+  }
+
+
+  CUnit* CUnit::getBlockTarget() const {
+    return mBlockTarget;
+  }
+  void CUnit::setBlockTarget(CUnit* inTarget) {
+    mBlockTarget = inTarget;
+  }
+
+  CEntity* CUnit::getAttackTarget() const {
+    return mAttackTarget;
+  }
+  void CUnit::setAttackTarget(CEntity* inTarget) {
+    mAttackTarget = inTarget;
+  }
+
+
+  void CUnit::setDescription(std::string inTxt) {
+    mDescription = inTxt;
+  }
+
+  std::string const& CUnit::getDescription() const {
+    return mDescription;
+  }
+
+  CPuppet* CUnit::getEnemy() const {
+    assert(mEnemy);
+    return mEnemy;
+  };
+
+  bool CUnit::isMoving() const {
+    return fIsMoving;
+  }
+
+  char CUnit::getPosition() const {
+    return mPosition;
+  }
+  void CUnit::setPosition(char inPos) {
+    mPosition = inPos;
+  }
+
+  void CUnit::setWaypoints(std::vector<Ogre::Vector3>* inWp) {
+    mWaypoints = inWp;
+  }
 } // end of namespace

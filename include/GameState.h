@@ -24,6 +24,11 @@ namespace Pixy
 	public:
 		~GameState(){ };
 
+    enum {
+      Intro,
+      Combat
+    };
+
 		virtual void enter( void )  = 0;
 		virtual void exit( void )   = 0;
 
@@ -45,14 +50,14 @@ namespace Pixy
 		void popState( void );
 		void requestShutdown( void );
 
-		virtual GAME_STATE getId() const;
+		virtual char getId() const;
 
     bool isCurrentState();
 	protected:
 		GameState(){ };
 		log4cpp::Category* mLog;
 
-    GAME_STATE mId;
+    char mId;
 	private:
 
 		GameState(const GameState&) { }

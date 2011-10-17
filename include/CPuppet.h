@@ -17,6 +17,7 @@
 #include "CSpell.h"
 #include <list>
 #include <vector>
+#include "Logger.h"
 
 using std::list;
 using std::vector;
@@ -24,45 +25,34 @@ namespace Pixy
 {
   //~ class CUnit;
   class CDeck;
-  class Renderable;
+  //~ class Renderable;
   /*! \class CPuppet CPuppet.h "src/CPuppet.h"
    *  \brief Represents Combat CPuppet GameObject
    */
-	class CPuppet : public Puppet
+	class CPuppet : public Puppet, public CEntity, public Logger
 	{
 	public:
-		typedef std::list<CSpell*> hand_t;
-    typedef std::list<CSpell*> spells_t;
-		typedef std::list<CUnit*> units_t;
-    typedef std::list<CDeck const*> decks_t;
+		//~ typedef std::list<CSpell*> hand_t;
+    //~ typedef std::list<CSpell*> spells_t;
+		//~ typedef std::list<CUnit*> units_t;
+    //~ typedef std::list<CDeck const*> decks_t;
 
     CPuppet();
     virtual ~CPuppet();
 
-    virtual Renderable* getRenderable();
+    //~ virtual Renderable* getRenderable();
 
     virtual bool live();
     virtual void die();
 
     //virtual CDeck* getDeck();
-		hand_t const& getHand();
-		virtual int nrSpellsInHand();
-    //~ virtual spells_t const& getSpells();
-    virtual CSpell* getSpell(int inUID);
-		virtual void attachSpell(CSpell* inSpell);
-		virtual void detachSpell(int inUID, bool remove=true);
 
-    spells_t const& getBuffs() const;
-    virtual void attachBuff(CSpell*);
-    virtual void detachBuff(int inUID);
-    virtual bool hasBuff(int inUID);
-
-		virtual void attachUnit(CUnit* inUnit);
-		virtual void detachUnit(int inUID, bool remove=true);
+		//~ virtual void attachUnit(CUnit* inUnit);
+		//~ virtual void detachUnit(int inUID, bool remove=true);
 		virtual CUnit* getUnit(int inUID);
-		units_t const& getUnits() const;
+		//~ units_t const& getUnits() const;
 
-    virtual void updateFromEvent(const Event& evt);
+    virtual void deserialize(const Event& evt);
 
     void updateTextOverlay();
 
@@ -71,12 +61,12 @@ namespace Pixy
     virtual void setHP(int inHP);
 
 	protected:
-    Renderable* mRenderable;
-    CDeck *mDeck;
-    decks_t   mDecks;
-		hand_t			mHand;
-    spells_t    mBuffs;
-		units_t     mUnits;
+    //~ Renderable* mRenderable;
+    //~ CDeck *mDeck;
+    //~ decks_t   mDecks;
+		//~ hand_t			mHand;
+    //~ spells_t    mBuffs;
+		//~ units_t     mUnits;
 
     CPuppet* mEnemy;
 	};

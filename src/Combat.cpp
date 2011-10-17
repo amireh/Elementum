@@ -20,7 +20,7 @@
 #include "FxEngine.h"
 #include "ScriptEngine.h"
 #include "CResourceManager.h"
-#include "Renderable.h"
+//~ #include "Renderable.h"
 
 namespace Pixy
 {
@@ -55,7 +55,7 @@ namespace Pixy
 
     //~ mWorker = new boost::thread(boost::bind(&boost::asio::io_service::run, &mIOService));
 
-    mId = STATE_COMBAT;
+    mId = GameState::Combat;
 
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Combat");
 
@@ -281,7 +281,7 @@ namespace Pixy
         }
         assert(found);
         mLog->debugStream() << "destroying unit " << (*unit) << " permanently";
-        static_cast<CPuppet*>((Entity*)(*unit)->getOwner())->detachUnit((*unit)->getUID());
+        (*unit)->getOwner()->toPuppet()->detachUnit((*unit)->getUID());
       }
 
       mDeathlist.clear();
@@ -348,12 +348,18 @@ namespace Pixy
          puppet != mPuppets.end();
          ++puppet)
     {
-      CPuppet::units_t::const_iterator unit;
+      try {
+        CUnit* lUnit = (*puppet)->getUnit(inUID);
+        return lUnit;
+      } catch (invalid_uid& e)
+      {
+      }
+      /*CPuppet::units_t::const_iterator unit;
       for (unit = (*puppet)->getUnits().begin();
            unit != (*puppet)->getUnits().end();
            ++unit)
         if ((*unit)->getUID() == inUID)
-          return *unit;
+          return *unit;*/
     }
 
     //assert(false);
@@ -515,8 +521,8 @@ namespace Pixy
     {
       mScriptEngine->passToLua(
         "Spells.onCastSpell", 3,
-        "Pixy::Renderable", (*buff)->getCaster(),
-        "Pixy::Renderable", (*buff)->getTarget(),
+        "Pixy::CEntity", (*buff)->getCaster(),
+        "Pixy::CEntity", (*buff)->getTarget(),
         "Pixy::CSpell", *buff);
     }
 
@@ -555,8 +561,8 @@ namespace Pixy
         mLog->debugStream() << "\t\tapplying active buff " << (*buff) << " on unit " << unit;
         mScriptEngine->passToLua(
         "Spells.onCastSpell", 3,
-        "Pixy::Renderable", (*buff)->getCaster(),
-        "Pixy::Renderable", (*buff)->getTarget(),
+        "Pixy::CEntity", (*buff)->getCaster(),
+        "Pixy::CEntity", (*buff)->getTarget(),
         "Pixy::CSpell", *buff);
       }
 
@@ -745,37 +751,30 @@ namespace Pixy
 
     mLog->debugStream() << "\tspell is: " << lSpell << " and its caster is: " << lCaster;
 
-    Entity* _lTarget = 0;
-    Renderable* lTarget = 0;
+    CEntity* lTarget = 0;
     if (inEvt.hasProperty("T")) {
       try {
         // is the target a puppet?
-        _lTarget = getPuppet(convertTo<int>(inEvt.getProperty("T")));
+        lTarget = getPuppet(convertTo<int>(inEvt.getProperty("T")));
         mLog->debugStream() << "target: " << _lTarget;
       } catch (invalid_uid& e) {
         try {
           // a unit?
-          _lTarget = getUnit(convertTo<int>(inEvt.getProperty("T")));
+          lTarget = getUnit(convertTo<int>(inEvt.getProperty("T")));
         } catch (invalid_uid& e) {
           // invalid UID
           mLog->errorStream() << "couldn't find spell target with id " << inEvt.getProperty("T");
           return true;
         }
       }
-
-      lTarget =
-        (_lTarget->getRank() == PUPPET)
-          ? getPuppet(_lTarget->getUID())->getRenderable()
-          : getUnit(_lTarget->getUID())->getRenderable();
-
       lSpell->setTarget(lTarget);
-    } else
-      lSpell->setTarget(lCaster->getRenderable());
+    } //else
+      //lSpell->setTarget(lCaster);
 
     mScriptEngine->passToLua(
       "Spells.onCastSpell", 3,
-      "Pixy::Renderable", lCaster->getRenderable(),
-      "Pixy::Renderable", lTarget,
+      "Pixy::CEntity", lCaster,
+      "Pixy::CEntity", lTarget,
       "Pixy::CSpell", lSpell);
     // ...
     //std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
@@ -860,7 +859,7 @@ namespace Pixy
   }
 
   bool Combat::onEntityDied(const Event& evt) {
-    markForDeath((CUnit*)static_cast<Renderable*>(evt.Any)->getEntity());
+    markForDeath(static_cast<CEntity*>(evt.Any));
     return true;
   }
   bool Combat::onStartBlockPhase(const Event& evt) {
