@@ -17,5 +17,5 @@
 	<Image Name="HorzScrollContainer" XPos="65" YPos="1" Width="1" Height="20" />
 	<Image Name="ScrollbarThumb" XPos="43" YPos="22" Width="20" Height="20" />
 	<Image Name="ShadowBrush" XPos="4" YPos="45" Width="24" Height="24" />
-	<Image Name="MouseArrow" XPos="69" YPos="7" Width="17" Height="25" />
+	<Image Name="MouseArrow" XPos="69" YPos="33" Width="18" Height="25" />
 </Imageset>

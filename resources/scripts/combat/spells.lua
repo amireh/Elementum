@@ -10,6 +10,7 @@ local Definitions = {}
 local HandlerInstances = {}
 SpellValidators = {}
 Spells = {}
+ValidationMsg = ""
 
 Spells.cleanup = function()
   --~ SpellValidators = {}

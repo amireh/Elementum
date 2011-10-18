@@ -30,7 +30,12 @@ SpellValidators["Bone Harvest"] = function(spell)
   end
   _tmp = nil
 
-  return nr_skeletons > 0
+  if nr_skeletons <= 0 then
+    UI.setValidationMsg("This spell requires you to have at least one Skeleton under your control.")
+    return false
+  end
+
+  return true
 end
 
 subscribe_spell("Bone Harvest", BoneHarvest)

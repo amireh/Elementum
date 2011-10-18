@@ -218,6 +218,65 @@ HandItem.onClicked = function(e)
   return true
 end
 
+function HandItem:Validate()
+  UI.setValidationMsg("")
+
+  if Active:getUID() ~= SelfPuppet:getUID() then return false end
+
+  --~ Pixy.Log("validating self.Spell requirements")
+  --~ Pixy.Log("\tcurrent self.Spell: " .. self.Spell:getName() .. "#" .. self.Spell:getUID())
+  -- validate that Selected exists and is a friendly target if the self.Spell requires a friendly target
+  if self.Spell:requiresTarget() and not self.Spell:requiresEnemyTarget()
+  and (not Selected or (Selected and Selected:getEntity():getOwner():getUID() ~= SelfPuppet:getUID()))
+  then
+    UI.setValidationMsg("This spell requires a friendly target.")
+    return false
+  end
+
+  -- validate that Selected exists and is an enemy target if the self.Spell requires an enemy target
+  if self.Spell:requiresEnemyTarget()
+  and (not Selected or (Selected and Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID()))
+  then
+    UI.setValidationMsg("This spell requires an enemy target.")
+    return false
+  end
+
+  --~ local caster = self.Spell:getCaster():getEntity()
+  local caster = SelfPuppet
+
+  --~ if (caster:getRank() == Pixy.PUPPET) then
+    if (caster:getWP() < self.Spell:getCostWP()) then
+      --~ Pixy.Log("-=-= caster doesn't have enough WP")
+      UI.setValidationMsg("You do not have enough Willpower to cast this spell.")
+      return false
+    end
+
+    if (caster:getChannels() < self.Spell:getCostChannels()+1) then
+      --~ Pixy.Log("-=-= caster doesn't have enough channels")
+      UI.setValidationMsg("You do not have enough Channels to cast this spell.")
+      return false
+    end
+  --~ end
+
+  if (caster:getHP() < self.Spell:getCostHP()) then
+    --~ Pixy.Log("-=-= caster doesn't have enough HP")
+    UI.setValidationMsg("You do not have enough Health to cast this spell.")
+    return false
+  end
+
+  if (inBlockPhase and self.Spell:getPhase() == Pixy.CASTING) then
+    --~ Pixy.Log("-=-= self.Spell isn't castable in this phase")
+    UI.setValidationMsg("This spell can not be used in blocking phase.")
+    return false
+  end
+
+  if SpellValidators[self.Spell:getName()] then
+    return SpellValidators[self.Spell:getName()](self.Spell)
+  else
+    return true
+  end
+end
+
 -- here is where we re-enable the HandItem after a spell reject, note this is called from Spells.onCastSpellRejected()
 Hand.onCastSpellRejected = function(uid)
   local item = HandItem.FindBySpellUID(uid)
@@ -369,57 +428,10 @@ Hand.CheckForDiscards = function(pad)
   return true
 end
 
-local prereqs_met = function(spell)
-  if Active:getUID() ~= SelfPuppet:getUID() then return false end
-
-  --~ Pixy.Log("validating spell requirements")
-  --~ Pixy.Log("\tcurrent spell: " .. spell:getName() .. "#" .. spell:getUID())
-  if ((spell:requiresTarget() or spell:requiresEnemyTarget()) and Selected == nil) then
-    --~ Pixy.Log("-=-= spell requires a target, none is selected")
-    return false
-  end
-  if (spell:requiresEnemyTarget()
-    and
-    Selected and Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID())
-  then
-    return false
-  end
-
-
-  local caster = spell:getCaster():getEntity()
-
-  if (caster:getRank() == Pixy.PUPPET) then
-    if (caster:getWP() < spell:getCostWP()) then
-      --~ Pixy.Log("-=-= caster doesn't have enough WP")
-      return false
-    end
-    if (caster:getChannels() < spell:getCostChannels()+1) then
-      --~ Pixy.Log("-=-= caster doesn't have enough channels")
-      return false
-    end
-  end
-
-  if (caster:getHP() < spell:getCostHP()) then
-    --~ Pixy.Log("-=-= caster doesn't have enough HP")
-    return false
-  end
-
-  if (inBlockPhase and spell:getPhase() == Pixy.CASTING) then
-    --~ Pixy.Log("-=-= spell isn't castable in this phase")
-    return false
-  end
-
-  if SpellValidators[spell:getName()] then
-    return SpellValidators[spell:getName()](spell)
-  else
-    return true
-  end
-end
-
 Hand.__DoUpdate = function()
   for item in list_iter(MyHand) do
     if not item.toBeDestroyed then
-      if prereqs_met(item.Spell) then
+      if item:Validate() then
         item.Window:enable()
       else
         item.Window:disable()

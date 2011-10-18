@@ -385,6 +385,10 @@ UI.onPlayerDroppedOut = function(e)
   return UI.showDialog("Your opponent has dropped out, click the button to rejoin the lobby.", UI.foobar)
 end
 
+UI.setValidationMsg = function(msg)
+  ValidationMsg = msg
+end
+
 require("combat/ui/helpers")
 require("combat/ui/tooltips")
 require("combat/ui/sct")

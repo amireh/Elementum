@@ -10,7 +10,7 @@ Pixy.UI = {
   Defaults = {
     Font = "DejaVuSans-10",
     MouseCursor = {
-      ImageSet = "WindowsLook",
+      ImageSet = "Combat-Images",
       Image = "MouseArrow"
     }
   }

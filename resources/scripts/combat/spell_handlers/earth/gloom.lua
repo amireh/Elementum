@@ -84,4 +84,19 @@ function Gloom:cleanup()
   end
 end
 
+-- Gloom can not stack!
+SpellValidators["Gloom"] = function(spell)
+  if Selected and Selected:getEntity():getRank() ~= Pixy.PUPPET then
+    UI.setValidationMsg("This spell can only be cast on enemy Puppet.")
+    return false
+  end
+
+  if Selected and Selected:getEntity():getOwner():hasBuffWithName("Gloom") then
+    UI.setValidationMsg("Target is already affected by Gloom.")
+    return false
+  end
+
+  return true
+end
+
 subscribe_spell("Gloom", Gloom)

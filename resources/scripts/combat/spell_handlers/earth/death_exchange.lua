@@ -10,4 +10,14 @@ function DeathExchange:cast()
 	return true
 end
 
+-- Death exchange can't be cast on puppets
+SpellValidators["Death Exchange"] = function(spell)
+  if Selected and Selected:getEntity():getRank() == Pixy.PUPPET then
+    UI.setValidationMsg("This spell can only be cast on friendly units.")
+    return false
+  end
+
+  return true
+end
+
 subscribe_spell("Death Exchange", DeathExchange)

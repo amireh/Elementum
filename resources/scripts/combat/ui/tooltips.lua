@@ -1,10 +1,23 @@
 UI.ShowTooltip = function(e)
 
   local win = CEGUI.toWindowEventArgs(e).window
+
+  local item = HandItem.FindByWindow(win)
+  if item then
+    item:Validate()
+  else
+    UI.setValidationMsg("")
+  end
+
   local lbl = UI.Labels["Tooltip"]
+  local validation_msg = ""
+  if ValidationMsg:len() > 0 then
+    print("assigning validation msg: " .. ValidationMsg)
+    validation_msg = "\n \n[colour='FFFF0000']" .. ValidationMsg
+  end
 
   UI.Labels["Tooltip"]:show()
-  UI.Labels["Tooltip"]:setText(win:getUserString("Tooltip"))
+  UI.Labels["Tooltip"]:setText(win:getUserString("Tooltip") .. validation_msg)
 
   UI.Animate(UI.Labels["Tooltip"], "ShowTooltip")
 

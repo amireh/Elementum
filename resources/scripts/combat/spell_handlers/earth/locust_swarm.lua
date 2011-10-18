@@ -2,6 +2,7 @@ local __DPT = 1 -- damage caused per turn
 
 local LocustSwarm = {}
 function LocustSwarm:cast()
+  self:logMe()
   -- attach the buff to the puppet
   self.Target:attachBuff(self.Spell)
   --~ SCT.ShowScrollingMessage(self.Spell:getName() .. " (" .. self.__TurnsLeft .. " turns)", false, self.TargetRnd)
@@ -19,6 +20,10 @@ function LocustSwarm:process()
   --end
 
   self:__tick()
+end
+
+SpellValidators["Locust Swarm"] = function(spell)
+  return Selected:getEntity():getRank() ~= Pixy.PUPPET
 end
 
 subscribe_spell("Locust Swarm", LocustSwarm)
