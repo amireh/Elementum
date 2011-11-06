@@ -27,6 +27,12 @@ Defaults = {
     Material = "RedTransparent"
   },
 
+  Fog = {
+    Enabled = true,
+    Colour = Ogre.ColourValue(0,0,0,1),
+    Distance = 0.0015
+  },
+
   PlayerPosition = Ogre.Vector3(0,0,-35),
   EnemyPosition = Ogre.Vector3(0,0,35),
   PuppetScale = Ogre.Vector3(5,5,5),

@@ -151,8 +151,9 @@ Gfx.SetupLights = function()
   --~ SceneMgr:setShadowTechnique(Ogre.SHADOWTYPE_STENCIL_ADDITIVE)
   --~ SceneMgr:setShadowColour(Ogre.ColourValue(255, 0, 0))
 
-  fadeColour = Ogre.ColourValue(0, 0, 0, 0.5)
-  SceneMgr:setFog(Ogre.FOG_EXP2, fadeColour, 0.0025)
+  if Defaults.Fog.Enabled then
+    SceneMgr:setFog(Ogre.FOG_EXP2, Defaults.Fog.Colour, Defaults.Fog.Distance)
+  end
 
   _mod = 0.5
   dcol = Ogre.ColourValue(_mod,_mod,_mod)
