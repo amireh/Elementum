@@ -10,7 +10,8 @@
 #include "NetworkManager.h"
 #include "GameManager.h"
 #include "Archiver.h"
-#include "CResourceManager.h"
+#include "ResourceParser.h"
+#include "EntityManager.h"
 #include <boost/filesystem.hpp>
 
 namespace Pixy {
@@ -208,10 +209,15 @@ namespace Pixy {
 
     string raw2str(raw.begin(), raw.end());
 
-    std::istringstream datastream(raw2str);
+    std::istringstream data(raw2str);
 
-    GameManager::getSingleton().getResMgr().clearDatabase();
-    GameManager::getSingleton().getResMgr().populate(datastream);
+    ResourceParser *lParser = new ResourceParser(
+      &GameManager::getSingleton().getEntityMgr(),
+      data);
+
+    lParser->syncGameDataFromDump();
+
+    data.clear();
 
     Event notice(EventUID::GameDataSynced);
     EventManager::getSingleton().hook(notice);

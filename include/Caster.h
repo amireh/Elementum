@@ -48,8 +48,8 @@ namespace Pixy
      * Furthermore, Casters will _destroy_ all BaseSpell objects they hold upon
      * their destruction.
      */
-		virtual void attachSpell(spell_t* inSpell);
-		virtual void attachBuff(spell_t* inSpell);
+		virtual void attachSpell(BaseSpell* inSpell);
+		virtual void attachBuff(BaseSpell* inSpell);
 
     /*!
      * @brief

@@ -50,7 +50,7 @@ namespace Pixy {
     GfxEngine::getSingletonPtr()->updateMe(this);
   }
 
-  void Mobile::stepMobile(unsigned long dt) {
+  void Mobile::step(unsigned long dt) {
     // keep moving
     if (!doMove(dt)) {
 

@@ -32,6 +32,11 @@ namespace Pixy
 
     Ogre::Entity* attachExtension(std::string const& inMesh, std::string const& inBone);
 
+    std::string const& getMesh() const;
+    std::string const& getMaterial() const;
+    void setMaterial(std::string const&);
+    void setMesh(std::string const&);
+
 		protected:
 
 		Ogre::SceneNode     *mSceneNode;
@@ -39,6 +44,9 @@ namespace Pixy
     Ogre::SceneManager  *mSceneMgr;
     typedef std::vector<Ogre::Entity*> extensions_t;
     extensions_t mExtensions;
+
+    std::string mMesh;
+    std::string mMaterial;
 
     static int gUID;
 

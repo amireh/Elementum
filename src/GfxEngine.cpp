@@ -10,8 +10,8 @@
 #include "GfxEngine.h"
 #include "GameManager.h"
 #include "EventManager.h"
-#include "CPuppet.h"
-#include "CUnit.h"
+#include "Puppet.h"
+#include "Unit.h"
 #include "Renderable.h"
 #include "Combat.h"
 #include "UIEngine.h"
@@ -221,8 +221,9 @@ namespace Pixy {
     if (!fSetup)
       setup();
 
-    mRenderables.clear();
-    mUpdatees.clear();
+    mAnimables.clear();
+    mMobiles.clear();
+    mMTOs.clear();
     mRTTs.clear();
     mPlayer = 0;
     mEnemy = 0;
@@ -237,8 +238,9 @@ namespace Pixy {
 
 		mLog->infoStream() << "preparing combat scene";
 
-    mRenderables.clear();
-    mUpdatees.clear();
+    mAnimables.clear();
+    mMobiles.clear();
+    mMTOs.clear();
     mRTTs.clear();
     mPlayer = 0;
     mEnemy = 0;
@@ -315,7 +317,7 @@ namespace Pixy {
 		return mViewport;
 	}
 
-  Renderable* GfxEngine::getSelected() {
+  Entity* GfxEngine::getSelected() {
     return mSelected;
   }
 
@@ -324,103 +326,72 @@ namespace Pixy {
 	};
 
 	void GfxEngine::updateIntro(unsigned long lTimeElapsed) {
-		//~ mCameraMan->update(lTimeElapsed);
-		// update our good tray manager
-    evt.timeSinceLastFrame = evt.timeSinceLastEvent = lTimeElapsed;
-    mTrayMgr->frameRenderingQueued(evt);
-
-		using namespace Ogre;
-
-    // clean up updatees marked for removal
-    updatees_t::iterator itr = mUpdatees.begin();
-    for (itr = mUpdatees.begin(); itr != mUpdatees.end(); ++itr)
-      if (itr->second)
-        itr->first->update(lTimeElapsed);
-
-
-    std::list<Renderable*>::const_iterator r;
-    for (r = mRenderables.begin(); r != mRenderables.end(); ++r) {
-      (*r)->updateAnimations(lTimeElapsed);
-      (*r)->updateBody(lTimeElapsed);
-    }
-
 	};
+
 	void GfxEngine::updateCombat(unsigned long lTimeElapsed) {
 		mCameraMan->update(lTimeElapsed);
-		// update our good tray manager
-    evt.timeSinceLastFrame = evt.timeSinceLastEvent = lTimeElapsed;
-    mTrayMgr->frameRenderingQueued(evt);
 
+    // update movable text overlays
 		using namespace Ogre;
 
-    // clean up updatees marked for removal
-    updatees_t::iterator itr = mUpdatees.begin();
-    /*while (!cleaned) {
-      if ((itr->second) == false) {
-        mUpdatees.erase(itr);
-        itr = mUpdatees.begin();
-      }
-
-      if (itr == mUpdatees.end())
-        cleaned = true;
-
-      ++itr;
-    }*/
-
-    for (itr = mUpdatees.begin(); itr != mUpdatees.end(); ++itr)
-      if (itr->second)
-        itr->first->update(lTimeElapsed);
-
-    RectLayoutManager m(0,0,
+    RectLayoutManager lRLM(0,0,
       mCamera->getViewport()->getActualWidth(),
       mCamera->getViewport()->getActualHeight());
-    m.setDepth(0);
+    lRLM.setDepth(0);
 
     int visible=0;
-    MovableTextOverlay *p=0;
-    std::list<Renderable*>::const_iterator r;
-    for (r = mRenderables.begin(); r != mRenderables.end(); ++r) {
-      (*r)->updateAnimations(lTimeElapsed);
-      (*r)->updateBody(lTimeElapsed);
+    MovableTextOverlay *m=0;
+    mtos_t::const_iterator lMTOIter;
+    for (lMTOIter = mMTOs.begin(); lMTOIter != mMTOs.end(); ++lMTOIter) {
+      m = *lMTOIter;
 
-      p = (*r)->getText();
-
-      if (p->isHidden())
+      if (m->isHidden())
         continue;
 
-      p->update(lTimeElapsed);
+      m->update(lTimeElapsed);
 
-      if (p->isOnScreen()) {
-      visible++;
+      if (m->isOnScreen()) {
+        ++visible;
 
-      RectLayoutManager::Rect r(	p->getPixelsLeft(),
-                p->getPixelsTop()+10,
-                p->getPixelsRight(),
-                p->getPixelsBottom()+10);
+        RectLayoutManager::Rect
+          lRect(m->getPixelsLeft(),
+                m->getPixelsTop()+10,
+                m->getPixelsRight(),
+                m->getPixelsBottom()+10);
 
-      RectLayoutManager::RectList::iterator it = m.addData(r);
-      if (it != m.getListEnd())
-      {
-      //~ p->setPixelsTop((*it).getTop());
-      p->enable(true);
-      }
-      else
-      p->enable(false);
-      }
-      else
-      p->enable(false);
+        RectLayoutManager::RectList::iterator lRectIter = lRLM.addData(lRect);
+        if (lRectIter != lRLM.getListEnd())
+          m->enable(true);
+        else
+          m->enable(false);
+      } else {
+        m->enable(false);
+      } // MTO is onScreen
     }
-
-
-		//mCaelumSystem->updateSubcomponents(lTimeElapsed);
-		/*mCaelumSystem->notifyCameraChanged(mCamera);
-		*/
 
 	};
 
 	void GfxEngine::update(unsigned long lTimeElapsed) {
 		processEvents();
 
+    // common steppable routines
+
+		// update our good tray manager
+    evt.timeSinceLastFrame = evt.timeSinceLastEvent = lTimeElapsed;
+    mTrayMgr->frameRenderingQueued(evt);
+
+    // step registered Animable and Mobile objects
+    animables_t::const_iterator lAnimable;
+    for (lAnimable = mAnimables.begin(); lAnimable != mAnimables.end(); ++lAnimable)
+      (*lAnimable)->step(lTimeElapsed);
+
+    mobiles_t::const_iterator lMobile;
+    for (lMobile = mMobiles.begin(); lMobile != mMobiles.end(); ++lMobile) {
+      if (lMobile->second) // if the Mobile object is moving and needs updates
+        lMobile->first->step(lTimeElapsed);
+    }
+
+    // state specific update routines
 		(this->*mUpdate)(lTimeElapsed);
 	}
 
@@ -542,112 +513,11 @@ namespace Pixy {
          pSphere->load();
   }
   void GfxEngine::setupSky() {
-
-    // skyz0rs
-    //mLog->noticeStream() << "Setting up sky";
-    //mSceneMgr->setSkyDome(true, "Elementum/Sky", 1, 1,5000,true);
-    //mSceneMgr->setSkyBox(true, "Elementum/Sky", 5000, true);
-
-    //~ createSphere("mySphereMesh", 1000, 64, 64);
-    //~ Ogre::Entity* sphereEntity = mSceneMgr->createEntity("mySphereEntity", "mySphereMesh");
-    //~ Ogre::SceneNode* sphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    //~ sphereEntity->setMaterialName("Elementum/Sky");
-    //~ sphereNode->attachObject(sphereEntity);
-
-    //~ sphereNode->roll(Ogre::Degree(180));
-#if 0 // __DISABLED__ not using Caelum
-
-    Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Caelum");
-
-    // Pick components to create in the demo.
-    // You can comment any of those and it should still work
-    // Trying to disable one of these can be useful in finding problems.
-    Caelum::CaelumSystem::CaelumComponent componentMask;
-    componentMask = static_cast<Caelum::CaelumSystem::CaelumComponent> (
-            //Caelum::CaelumSystem::CAELUM_COMPONENT_SUN |
-            Caelum::CaelumSystem::CAELUM_COMPONENT_MOON |
-            Caelum::CaelumSystem::CAELUM_COMPONENT_SKY_DOME |
-            //Caelum::CaelumSystem::CAELUM_COMPONENT_IMAGE_STARFIELD |
-            Caelum::CaelumSystem::CAELUM_COMPONENT_POINT_STARFIELD |
-            Caelum::CaelumSystem::CAELUM_COMPONENT_CLOUDS |
-            0);
-    //componentMask = CaelumSystem::CAELUM_COMPONENTS_DEFAULT;
-
-    // Initialise CaelumSystem.
-    mCaelumSystem = new Caelum::CaelumSystem (mRoot, mSceneMgr, componentMask);
-    mCaelumSystem->setSceneFogDensityMultiplier(0.001f); // or some other small value.
-    //mCaelumSystem->setManageSceneFog(true);
-    // Set time acceleration.
-    mCaelumSystem->getUniversalClock()->setTimeScale (512);
-
-    // Register caelum as a listener.
-    mRenderWindow->addListener(mCaelumSystem);
-    mRoot->addFrameListener(mCaelumSystem);
-
-    /*mCaelumSystem =
-    new CaelumSystem(mRoot, mSceneMgr, CaelumSystem::CAELUM_COMPONENTS_ALL);
-
-    mCaelumSystem->setManageAmbientLight(false);*/
-
-    //CaelumPlugin::getSingleton().loadCaelumSystemFromScript(mCaelumSystem, "Eclipse");
-
-    //mCaelumSystem->attachViewport(mViewport);
-#endif
-
   };
-
-  /*void GfxEngine::setupWater() {
-// Hydrax initialization code ---------------------------------------------
-		// ------------------------------------------------------------------------
-
-        // Create Hydrax object
-		mHydrax = new Hydrax::Hydrax(mSceneMgr, mCamera, mViewport);
-
-		// Create our projected grid module
-		Hydrax::Module::ProjectedGrid *mModule
-			= new Hydrax::Module::ProjectedGrid(// Hydrax parent pointer
-			                                    mHydrax,
-												// Noise module
-			                                    new Hydrax::Noise::Real(),
-												// Base plane
-			                                    Ogre::Plane(Ogre::Vector3(0,1,0), Ogre::Vector3(0,0,0)),
-												// Normal mode
-												Hydrax::MaterialManager::NM_VERTEX,
-												// Projected grid options
-										        Hydrax::Module::ProjectedGrid::Options());
-
-        // Add some waves
-        static_cast<Hydrax::Noise::Real*>(mModule->getNoise())->addWave(
-                                                Ogre::Vector2(1.f,0.f),
-                                                0.3f,
-                                                10.f);
-        static_cast<Hydrax::Noise::Real*>(mModule->getNoise())->addWave(
-                                                Ogre::Vector2(0.85f,0.15f),
-                                                0.15f,
-                                                8.f);
-        static_cast<Hydrax::Noise::Real*>(mModule->getNoise())->addWave(
-                                                Ogre::Vector2(0.95f,0.1f),
-                                                0.1f,
-                                                7.f);
-
-		// Set our module
-		mHydrax->setModule(static_cast<Hydrax::Module::Module*>(mModule));
-
-		// Load all parameters from config file
-		// Remarks: The config file must be in Hydrax resource group.
-		// All parameters can be set/updated directly by code(Like previous versions),
-		// but due to the high number of customizable parameters, since 0.4 version, Hydrax allows save/load config files.
-		mHydrax->loadCfg("HydraxDemo.hdx");
-
-    // Create water
-    mHydrax->create();
-  };*/
 
   void GfxEngine::setupCamera()
   {
 	};
-
-
 
   void GfxEngine::setupTerrain()
   {
@@ -676,6 +546,9 @@ namespace Pixy {
     //mUnitScale = Vector3(1.0f, 1.0f, 1.0f);
 
     // Set up the direction to make each faction face the other
+    const int ME = 0;
+    const int ENEMY = 1;
+
     mDirection[ME] = mPuppetPos[ENEMY];
     mDirection[ENEMY] = mPuppetPos[ME];
     /*Vector3 mDirectionShared =
@@ -820,13 +693,17 @@ namespace Pixy {
 
   };
 
-/* MOVING FUNCTIONS */
+  /* MOVING FUNCTIONS */
   void GfxEngine::createWaypoint(
     int inOwner,
     int inNode,
     std::string inOwnerName,
     std::string inOpponentName)
   {
+
+    const int ME = 0;
+    const int ENEMY = 1;
+
     // Create the walking list
     // every unit "node" has 5 spots to move to
     // 1) Passive position (default, starts at it)
@@ -911,19 +788,17 @@ namespace Pixy {
       return mNode;
   };
 
-  Ogre::SceneNode* GfxEngine::renderEntity(Renderable* inRenderable)
+  Ogre::SceneNode* GfxEngine::renderEntity(Entity* inEntity)
   {
-    Entity* inEntity = inRenderable->getEntity();
     mLog->debugStream() << "rendering entity " << inEntity->getName();
 
-    bool isPuppet = inEntity->getRank() == PUPPET;
     Ogre::SceneNode* mNode = 0;
-    Ogre::Entity* mEntity = 0;
+    Ogre::Entity* mOgreEntity = 0;
     int idNode = -1;
 
     String entityName = "", nodeName = "", ownerName = "";
-    ownerName = getNodeIdPrefix(static_cast<CPuppet*>(inEntity->getOwner()->getOwner()));
-    if (isPuppet)
+    ownerName = getNodeIdPrefix(static_cast<Puppet*>(inEntity->getOwner()));
+    if (inEntity->isPuppet())
     {
       entityName = ownerName + "_entity_puppet";
       nodeName = ownerName + "_node_puppet";
@@ -960,124 +835,95 @@ namespace Pixy {
       assert(false);
     }
 
-    mEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
-    mEntity->setMaterialName(inEntity->getMaterial());
-    mEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
-    mEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
-    mEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
-    mEntity->setUserAny(Ogre::Any(inRenderable));
+    mOgreEntity = mSceneMgr->createEntity(entityName, inEntity->getMesh());
+    mOgreEntity->setMaterialName(inEntity->getMaterial());
+    mOgreEntity->setQueryFlags(GfxEngine::ENTITY_MASK);
+    mOgreEntity->setVisibilityFlags(GfxEngine::ENTITY_MASK);
+    mOgreEntity->setRenderQueueGroup(Ogre::RENDER_QUEUE_8);
+    mOgreEntity->setUserAny(Ogre::Any(inEntity));
 
-    mNode->attachObject(mEntity);
-    mNode->setScale(inRenderable->getScale());
+    mNode->attachObject(mOgreEntity);
+    mNode->setScale(Ogre::Vector3(0,0,0));
 
-    MovableTextOverlay *p =
-      new MovableTextOverlay(mEntity->getName() + "_text"," Robot ", mEntity, attrs);
-    p->enable(false); // make it invisible for now
-    p->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
-    inRenderable->setText(p);
-    p = 0;
+    MovableTextOverlay *m =
+      new MovableTextOverlay(mOgreEntity->getName() + "_text"," UBER CYBOT ", mOgreEntity, attrs);
+    m->enable(false); // make it invisible for now
+    m->setUpdateFrequency(0.01f);// set update frequency to 0.01 seconds
+    inEntity->setText(m);
+    mMTOs.push_back(m);
+    m = 0;
 
-    inRenderable->attachSceneNode(mNode);
-    inRenderable->attachSceneObject(mEntity);
-
-    inRenderable->setup(mSceneMgr);
-
+    inEntity->attachSceneNode(mNode);
+    inEntity->attachSceneObject(mOgreEntity);
+    inEntity->setup(mSceneMgr);
 
     /* ugly 3-legged monkey hack: because I don't know what's happening,
      * some units scenenodes are getting translated to undefined positions
      * after units die and are re-attached, so here we force the node back
      * to its original position
      */
-    if (!isPuppet){
+    if (!inEntity->isPuppet()){
       assert(idNode >= 0);
       std::vector<Ogre::Vector3>* lWaypoints = &mWaypoints[inEntity->getOwner()->getUID() == mPlayer->getUID() ? 0 : 1][idNode];
 
-      static_cast<CUnit*>(inEntity)->setWaypoints(lWaypoints);
-      mNode->setPosition((*lWaypoints)[POS_READY]);
-
-      // update the MTO
-      static_cast<CUnit*>(inEntity)->updateTextOverlay();
-    } else
-    {
-      // update the MTO
-      static_cast<CPuppet*>(inEntity)->updateTextOverlay();
+      static_cast<Unit*>(inEntity)->setWaypoints(lWaypoints);
+      mNode->setPosition((*lWaypoints)[Unit::Position::Ready]);
     }
 
-    mRenderables.push_back(inRenderable);
+    // update the MTO
+    inEntity->updateTextOverlay();
+
+    mAnimables.push_back(inEntity);
 
     return mNode;
   };
 
 
-  bool GfxEngine::attachToScene(Renderable* inEntity)
+  bool GfxEngine::attachToScene(Entity* inEntity)
   {
-      //bool isPuppet = (inEntity->getRank() == 0) ? true : false;
+    assert(inEntity);
 
-      assert(inEntity->getEntity());
+    if (GameManager::getSingleton().getCurrentState()->getId() != GameState::State::Combat)
+    {
+      mAnimables.push_back(inEntity);
+    } else
+    {
+      // render the object
+      renderEntity(inEntity);
+    }
 
-      if (GameManager::getSingleton().getCurrentState()->getId() != STATE_COMBAT)
-      {
-        mRenderables.push_back(inEntity);
-        //~ MovableTextOverlay *p =
-          //~ new MovableTextOverlay(inEntity->getEntity()->getName() + "_text"," Robot ", inEntity->getSceneObject(), attrs);
-        //~ p->enable(false); // make it invisible for now
-        //~ p->hide(true);
-        //~ p->setUpdateFrequency(0.01);// set update frequency to 0.01 seconds
-        //~ inEntity->setText(p);
-        //~ p = 0;
-      } else
-        // render the object
-        renderEntity(inEntity);
-  /*
-      // create and attach interface stats overlay
-      if (!isPuppet)
-          inEntity->attachSceneOverlay( mInterface->createUnitOverlay(inEntity) );
-      else
-          inEntity->attachSceneOverlay( mInterface->createPuppetOverlay(inEntity) );
-  */
-  return true;
+    return true;
   };
 
-
-
-  void GfxEngine::detachFromScene(Renderable* inRenderable)
+  void GfxEngine::detachFromScene(Entity* inEntity)
   {
     dehighlight();
 
-    Entity* inEntity = inRenderable->getEntity();
+    Ogre::SceneNode* mTmpNode = inEntity->getSceneNode();
 
-    /*Ogre::String ownerName = stringify(inEntity->getUID());// == ID_HOST) ? "host" : "client";
-    Ogre::String nodeName = ownerName + "_node_";
-    Ogre::String entityName = ownerName + "_entity_" + Ogre::StringConverter::toString(inEntity->getUID());*/
-    Ogre::SceneNode* mTmpNode = NULL;
-
-    mTmpNode = inRenderable->getSceneNode();
-
-    // move the node back to its original spot
-    //~ if (inRenderable->getEntity()->getRank() != PUPPET
-      //~ && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
-      //~ mTmpNode->translate(static_cast<CUnit*>(inRenderable->getEntity())->mWaypoints->front());
-
-    mLog->debugStream() << "I'm detaching Entity '" << inEntity->getName() << "' from SceneNode : " + mTmpNode->getName();
-    mTmpNode->showBoundingBox(false);
+    mLog->debugStream() << "I'm detaching " << inEntity << " from SceneNode : " << mTmpNode->getName();
+    //~ mTmpNode->showBoundingBox(false);
     //~ mTmpNode->detachObject(inRenderable->getSceneObject());
     mTmpNode->detachAllObjects();
 
     // destroy entity
-    mSceneMgr->destroyEntity((Ogre::Entity*)inRenderable->getSceneObject());
+    mSceneMgr->destroyEntity((Ogre::Entity*)inEntity->getSceneObject());
 
-    mRenderables.remove(inRenderable);
+    // remove it from the Animables tracker
+    mAnimables.remove(inEntity);
 
-    inRenderable->attachSceneNode(NULL);
-    inRenderable->attachSceneObject(NULL);
+    inEntity->attachSceneNode(NULL);
+    inEntity->attachSceneObject(NULL);
 
-    if (inRenderable->getEntity()->getRank() != PUPPET)
-      mUpdatees.erase(static_cast<CUnit*>(inRenderable->getEntity()));
-      inEntity = 0;
+    // remove it from the Mobiles tracker if it's a Unit
+    if (inEntity->isUnit())
+      mMobiles.erase(static_cast<Mobile*>(static_cast<Unit*>(inEntity)));
+
+    mTmpNode = 0;
   }
 
-  void GfxEngine::changeOwnership(Pixy::CUnit* inUnit) {
-
+  void GfxEngine::changeOwnership(Pixy::Unit* inUnit) {
+    #if 0 // __DISABLED__
     Renderable* inRenderable = inUnit->getRenderable();
 
     std::string ownerName = getNodeIdPrefix(inUnit);
@@ -1123,32 +969,34 @@ namespace Pixy {
       mNode->attachObject(inRenderable->getSceneObject());
       mNode->setScale(inRenderable->getScale());
       inRenderable->attachSceneNode(mNode);
-      oldNode->setPosition((*inUnit->mWaypoints)[POS_READY]);
+      oldNode->setPosition((*inUnit->mWaypoints)[Unit::Position::Ready]);
 
       // move to the new ready position
       inUnit->setWaypoints(&mWaypoints[inUnit->getOwner()->getUID() == mPlayer->getUID() ? 0 : 1][idNode]);
-      inUnit->move(POS_READY);
+      inUnit->move(Unit::Position::Ready);
 
       //~ FxEngine::getSingleton().dehighlight();
 
     } else {
       throw std::runtime_error("gfxengine: could not change Unit's ownership! No empty SceneNodes available");
     }
+    #endif // __DISABLED__
   }
 
   void GfxEngine::setupWaypoints()
   {
+
     for (int i=0; i<10; i++)
     {
-      createWaypoint(ME, i, getNodeIdPrefix(mPlayer), getNodeIdPrefix(mEnemy));
-      createWaypoint(ENEMY, i, getNodeIdPrefix(mEnemy), getNodeIdPrefix(mPlayer));
+      createWaypoint(0, i, getNodeIdPrefix(mPlayer), getNodeIdPrefix(mEnemy));
+      createWaypoint(1, i, getNodeIdPrefix(mEnemy), getNodeIdPrefix(mPlayer));
     };
   };
 
 	bool GfxEngine::mouseMoved( const OIS::MouseEvent &e )
 	{
     // TODO: refactor this into two methods depending on states
-    if (GameManager::getSingleton().getCurrentState()->getId() != STATE_COMBAT)
+    if (GameManager::getSingleton().getCurrentState()->getId() != GameState::State::Combat)
       return true;
 
 		if (mCameraMan)
@@ -1185,13 +1033,12 @@ namespace Pixy {
 
     if (!result)
     {
-
       dehighlight();
       return true;
     }
 
     assert(resultObj);
-    highlight(Ogre::any_cast<Pixy::Renderable*>(resultObj->getUserAny()));
+    highlight(Ogre::any_cast<Pixy::Entity*>(resultObj->getUserAny()));
 
     return true;
 
@@ -1220,32 +1067,32 @@ namespace Pixy {
           mSelected->getSceneNode()->yaw(Ogre::Degree(15));
       break;
       case OIS::KC_G:
-        if (mSelected)
-          mSelected->rotateToEnemy();
+        //if (mSelected)
+        //  mSelected->rotateToEnemy();
         //tmp->roll(Ogre::Degree(5));
       break;
       case OIS::KC_H:
         //tmp->pitch(Ogre::Degree(5));
       break;
       case OIS::KC_E:
-        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
-          static_cast<CUnit*>(mSelected->getEntity())->move(POS_READY);
+        if (mSelected && mSelected->isUnit())
+          static_cast<Unit*>(mSelected)->move(Unit::Position::Ready);
         break;
       case OIS::KC_R:
-        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
-          static_cast<CUnit*>(mSelected->getEntity())->move(POS_CHARGING);
+        if (mSelected && mSelected->isUnit())
+          static_cast<Unit*>(mSelected)->move(Unit::Position::Charging);
         break;
       case OIS::KC_T:
-        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
-          static_cast<CUnit*>(mSelected->getEntity())->move(POS_DEFENCE);
+        if (mSelected && mSelected->isUnit())
+          static_cast<Unit*>(mSelected)->move(Unit::Position::Blocking);
         break;
       case OIS::KC_Y:
-        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
-          static_cast<CUnit*>(mSelected->getEntity())->move(POS_OFFENCE);
+        if (mSelected && mSelected->isUnit())
+          static_cast<Unit*>(mSelected)->move(Unit::Position::Attacking);
         break;
       case OIS::KC_U:
-        if (mSelected && mSelected->getEntity()->getRank() != PUPPET)
-          static_cast<CUnit*>(mSelected->getEntity())->move(POS_ATTACK);
+        if (mSelected && mSelected->isUnit())
+          static_cast<Unit*>(mSelected)->move(Unit::Position::Trampling);
         break;
       case OIS::KC_M:
         switchMousePickingMode();
@@ -1278,10 +1125,11 @@ namespace Pixy {
 			mCameraMan->injectKeyDown(e);
 	}
 
-	void GfxEngine::highlight(Renderable* inEntity) {
+	void GfxEngine::highlight(Entity* inEntity) {
 	  //~ dehighlight();
 
-    if (inEntity->getEntity()->isDead() && GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT) {
+    // todo: what the fuck is this?
+    if (inEntity->isDead() && GameManager::getSingleton().getCurrentState()->getId() == GameState::State::Combat) {
       std::cout << "will not select a dead entity!\n";
       return;
     }
@@ -1314,18 +1162,17 @@ namespace Pixy {
     return inBlockPhase ? onEntitySelectedBlock(inEvt) : onEntitySelectedAttack(inEvt);
   }
   bool GfxEngine::onEntitySelectedAttack(const Event& inEvt) {
-    Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
-    Pixy::Entity* lEntity = lRend->getEntity();
+    Entity* lEntity = static_cast<Entity*>(inEvt.Any);
 
     //~ std::cout << "selected a unit with UID: " << lEntity->getUID() << "\n";
      // double click on an entity
-    if (mSelected && mSelected->getEntity()->getUID() == lEntity->getUID()) {
+    if (mSelected && mSelected->getUID() == lEntity->getUID()) {
       //~ std::cout << "got a double click\n";
-      if (lEntity->getRank() != PUPPET) {
-        CUnit *lUnit = static_cast<CUnit*>(lEntity);
+      if (lEntity->isUnit()) {
+        Unit *lUnit = static_cast<Unit*>(lEntity);
 
         // make sure the unit is owned by the player not the opponent
-        if (lUnit->getOwner() != mPlayer || lUnit->isResting()) {
+        if (lUnit->getOwner()->getUID() != mPlayer->getUID() || lUnit->isResting()) {
           return true;
         }
 
@@ -1343,13 +1190,13 @@ namespace Pixy {
         }
 
         // if the unit is passive, make it charge
-        if (lUnit->getPosition() == POS_READY) {
+        if (lUnit->isReady()) {
           Event req(EventUID::Charge);
           req.setProperty("UID", lEntity->getUID());
           NetworkManager::getSingleton().send(req);
 
           // restless units can't not charge!
-        } else if (lUnit->getPosition() == POS_CHARGING) {
+        } else if (lUnit->isCharging()) {
           if (lUnit->isRestless()) {
             Event resp(EventUID::InvalidAction);
             resp.setProperty("Action", "Charge");
@@ -1370,19 +1217,18 @@ namespace Pixy {
       return true;
     }
 
-    mSelected = lRend;
+    mSelected = lEntity;
 
     //highlight(lRend);
 
     return true;
   }
   bool GfxEngine::onEntitySelectedBlock(const Event& inEvt) {
-    Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
-    Pixy::Entity* lEntity = lRend->getEntity();
+    Entity* lEntity = static_cast<Entity*>(inEvt.Any);
 
     // if it's a puppet, just de-select
-    if (lEntity->getRank() == PUPPET) {
-      mSelected = lRend;
+    if (lEntity->isPuppet()) {
+      mSelected = lEntity;
       Event resp(EventUID::InvalidAction);
       resp.setProperty("Action", "Block");
       resp.setProperty("Reason", "InvalidTarget");
@@ -1391,11 +1237,11 @@ namespace Pixy {
       return true;
     }
 
-    CUnit* lUnit = static_cast<CUnit*>(lEntity);
+    Unit* lUnit = static_cast<Unit*>(lEntity);
 
     // if an own unit is double-clicked and is blocking, cancel the block
-    if (mSelected && mSelected == lRend) {
-      if (lUnit->getOwner() == mPlayer && lUnit->getPosition() == POS_CHARGING) {
+    if (mSelected && mSelected->getUID() == lEntity->getUID()) {
+      if (lUnit->getOwner()->getUID() == mPlayer->getUID() && lUnit->isBlocking()) {
         Event req(EventUID::CancelBlock);
         req.setProperty("UID", lUnit->getUID());
         NetworkManager::getSingleton().send(req);
@@ -1406,16 +1252,16 @@ namespace Pixy {
     // only when an own unit is chosen and then a charging unit is chosen
     // will we trigger the block event
     if (mSelected &&
-        mSelected->getEntity()->getRank() != PUPPET &&
-        mSelected->getEntity()->getOwner() == mPlayer &&
-        lUnit->getOwner() != mPlayer &&
-        lUnit->getPosition() == POS_CHARGING
-        //~ && !static_cast<CUnit*>(mSelected->getEntity())->isResting()
+        mSelected->isUnit() &&
+        mSelected->getOwner()->getUID() == mPlayer->getUID() &&
+        lUnit->getOwner()->getUID() != mPlayer->getUID() &&
+        lUnit->isCharging()
+        //~ && !static_cast<Unit*>(mSelected->getEntity())->isResting()
         )
     {
       // reject if the blocker is resting
-      CUnit *unit = static_cast<CUnit*>(mSelected->getEntity());
-      if (unit->isResting()) {
+      Unit *lTarget = static_cast<Unit*>(mSelected);
+      if (lTarget->isResting()) {
         Event resp(EventUID::InvalidAction);
         resp.setProperty("Action", "Block");
         resp.setProperty("Reason", "BlockerResting");
@@ -1424,7 +1270,7 @@ namespace Pixy {
       }
 
       // reject if the attacker is unblockable
-      if (lUnit->isUnblockable()) {
+      if (lTarget->isUnblockable()) {
         Event resp(EventUID::InvalidAction);
         resp.setProperty("Action", "Block");
         resp.setProperty("Reason", "AttackerUnblockable");
@@ -1433,11 +1279,11 @@ namespace Pixy {
       }
 
       Event req(EventUID::Block);
-      req.setProperty("B", mSelected->getEntity()->getUID());
+      req.setProperty("B", lTarget->getUID());
       req.setProperty("A", lUnit->getUID());
       NetworkManager::getSingleton().send(req);
     } else
-      mSelected = lRend;
+      mSelected = lEntity;
 
     return true;
   }
@@ -1454,9 +1300,9 @@ namespace Pixy {
   bool GfxEngine::onCharge(const Event& inEvt) {
     mLog->infoStream() << "charging with a unit";
 
-    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
+    Unit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
 
-    lUnit->move(POS_CHARGING);
+    lUnit->move(Unit::Position::Charging);
 
     return true;
   }
@@ -1464,9 +1310,9 @@ namespace Pixy {
   bool GfxEngine::onCancelCharge(const Event& inEvt) {
     mLog->infoStream() << "no longer charging with a unit";
 
-    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
+    Unit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("UID")));
 
-    lUnit->move(POS_READY);
+    lUnit->move(Unit::Position::Ready);
 
     return true;
   }
@@ -1474,9 +1320,9 @@ namespace Pixy {
   bool GfxEngine::onBlock(const Event& inEvt) {
     mLog->infoStream() << "blocking with a unit";
 
-    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("B")));
+    Unit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("B")));
 
-    lUnit->move(POS_CHARGING);
+    lUnit->move(Unit::Position::Charging);
 
     return true;
   }
@@ -1484,14 +1330,14 @@ namespace Pixy {
   bool GfxEngine::onCancelBlock(const Event& inEvt) {
     mLog->infoStream() << "no longer blocking with a unit";
 
-    CUnit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("B")));
-    lUnit->move(POS_READY);
+    Unit* lUnit = Combat::getSingleton().getUnit(convertTo<int>(inEvt.getProperty("B")));
+    lUnit->move(Unit::Position::Ready);
 
     return true;
   }
 
   bool GfxEngine::onEndBlockPhase(const Event& inEvt) {
-    if (Combat::getSingleton().getActivePuppet() != mPlayer) {
+    if (Combat::getSingleton().getActivePuppet()->getUID() != mPlayer->getUID()) {
       inBlockPhase = false;
       mLog->debugStream() << "no longer in blocking phase";
     }
@@ -1500,36 +1346,37 @@ namespace Pixy {
   }
 
   bool GfxEngine::onMatchFinished(const Event& inEvt) {
+    /*
     int wuid = convertTo<int>(inEvt.getProperty("W"));
-    CPuppet* lWinner = 0;
+    Puppet* lWinner = 0;
     if (wuid == mPlayer->getUID())
       lWinner = mPlayer;
     else
       lWinner = mEnemy;
 
     mLog->infoStream() << "game is over! the winner is " << lWinner->getName();
-    for (CPuppet::units_t::const_iterator unit = lWinner->getUnits().begin();
+    for (Puppet::units_t::const_iterator unit = lWinner->getUnits().begin();
          unit != lWinner->getUnits().end();
          ++unit) {
       (*unit)->onVictory();
     }
     lWinner->onVictory();
-
+    */
     return true;
   }
 
   void GfxEngine::updateMe(Mobile* inUnit) {
-    if (mUpdatees.find(inUnit) != mUpdatees.end()) {
-      mUpdatees.find(inUnit)->second = true;
+    if (mMobiles.find(inUnit) != mMobiles.end()) {
+      mMobiles.find(inUnit)->second = true;
       return;
     }
 
-    mUpdatees.insert(std::make_pair(inUnit, true));
+    mMobiles.insert(std::make_pair(inUnit, true));
   }
 
   void GfxEngine::stopUpdatingMe(Mobile* inUnit) {
-    if (mUpdatees.find(inUnit) != mUpdatees.end())
-      mUpdatees.find(inUnit)->second = false;
+    if (mMobiles.find(inUnit) != mMobiles.end())
+      mMobiles.find(inUnit)->second = false;
   }
 
   OgreMax::OgreMaxScene* GfxEngine::loadScene(std::string inSceneName) {
@@ -1684,11 +1531,11 @@ namespace Pixy {
 
   }
 
-  std::string GfxEngine::getNodeIdPrefix(CPuppet* inEntity) {
+  std::string GfxEngine::getNodeIdPrefix(Puppet* inEntity) {
     return std::string(inEntity->getName() + "_" + stringify(inEntity->getUID()));
   }
-  std::string GfxEngine::getNodeIdPrefix(CUnit* inUnit) {
-    return getNodeIdPrefix(static_cast<CPuppet*>(inUnit->getOwner()));
+  std::string GfxEngine::getNodeIdPrefix(Unit* inUnit) {
+    return getNodeIdPrefix(static_cast<Puppet*>(inUnit->getOwner()));
   }
 
   void GfxEngine::switchMousePickingMode()
@@ -1718,6 +1565,7 @@ namespace Pixy {
 
   void GfxEngine::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
   {
+    // todo: don't reference a scenenode by its name in here.... create a hook for a callback
     mSceneMgr->getSceneNode("EntitySelectionNode")->setVisible(false);
     //~ mSceneMgr->getSceneNode("Scene")->setVisible(false);
     for (std::list<OgreRTT*>::iterator rtt = mRTTs.begin(); rtt != mRTTs.end(); ++rtt)

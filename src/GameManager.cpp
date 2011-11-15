@@ -23,7 +23,7 @@
 #include "ScriptEngine.h"
 #include "NetworkManager.h"
 #include "InputManager.h"
-#include "CResourceManager.h"
+#include "EntityManager.h"
 #include "ogre/OgreSdkTrays.h"
 #include "binreloc/binreloc.h"
 //#include "SfxEngine.h"
@@ -39,7 +39,7 @@ namespace Pixy
   mWork(mIOService),
   mWorker(0),
 	mRoot(0),
-  mResMgr(0),
+  mEntityMgr(0),
 	mInputMgr(0),
   mLog(0),
 	fShutdown(false),
@@ -178,7 +178,7 @@ namespace Pixy
     mInputMgr->addKeyListener( this, "GameManager" );
     mInputMgr->addMouseListener( this, "GameManager" );
 
-    mResMgr = new CResourceManager();
+    mEntityMgr = new EntityManager();
 
     NetworkManager::getSingletonPtr();
     EventManager::getSingletonPtr();
@@ -247,32 +247,33 @@ namespace Pixy
       delete NetworkManager::getSingletonPtr();
     }
 
-    if (mResMgr)
-      delete mResMgr;
+    if (mEntityMgr)
+      delete mEntityMgr;
+    mEntityMgr = 0;
 
 		if( mInputMgr )
-		    delete mInputMgr;
+      delete mInputMgr;
+    mInputMgr = 0;
 
 		if( mRoot )
-		    delete mRoot;
+      delete mRoot;
+    mRoot = 0;
 
 		if (mLog) {
       mLog->infoStream() << "++++++ Elementum cleaned up successfully ++++++";
 		  delete mLog;
-      mLog = 0;
 
       log4cpp::Category::shutdown();
     }
-
-		mRoot = NULL; mInputMgr = NULL;
+    mLog = 0;
 
     if (mWorker)
     {
       mIOService.stop();
       mWorker->join();
       delete mWorker;
-      mWorker = 0;
     }
+    mWorker = 0;
   }
 
 	Ogre::RenderWindow* GameManager::getRenderWindow() const {
@@ -671,7 +672,7 @@ namespace Pixy
 	  //~ mEvtMgr->hook(mEvtMgr->createEvt("SettingsChanged")); __DISABLED__
 	};
 
-  CResourceManager& GameManager::getResMgr() {
-    return *mResMgr;
+  EntityManager& GameManager::getEntityMgr() {
+    return *mEntityMgr;
   }
 } // end of namespace Pixy

@@ -7,7 +7,7 @@ SET(Elementum_SRCS
   ../include/Combat.h
   ../include/Connection.hpp
   ../include/Puppet.h
-  ../include/CResourceManager.h
+  ../include/EntityManager.h
   ../include/Spell.h
   ../include/Unit.h
   ../include/Engine.h
@@ -24,7 +24,10 @@ SET(Elementum_SRCS
   #~ ../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
+  Combat.cpp
+  GfxEngine.cpp
 
+  EntityManager.cpp
   Renderable.cpp
   Unit.cpp
   Animable.cpp
@@ -42,14 +45,11 @@ SET(Elementum_SRCS
   #CPuppetFactory.cpp
 
   #~ CDeck.cpp
-  CResourceManager.cpp
-  CUnit.cpp
+  #~ CUnit.cpp
   #CUnitFactory.cpp
-  Combat.cpp
   FxEngine.cpp
   GameManager.cpp
   GameState.cpp
-  GfxEngine.cpp
   InputManager.cpp
   Intro.cpp
   #Lobby.cpp

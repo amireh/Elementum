@@ -10,17 +10,18 @@
 #include "Combat.h"
 #include "GameManager.h"
 #include "Intro.h"
-#include "CPuppet.h"
-#include "CUnit.h"
-#include "CSpell.h"
+#include "Puppet.h"
+#include "Unit.h"
+#include "Spell.h"
 #include "EventManager.h"
 #include "NetworkManager.h"
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "FxEngine.h"
 #include "ScriptEngine.h"
-#include "CResourceManager.h"
+#include "EntityManager.h"
 #include "Renderable.h"
+#include "ResourceParser.h"
 
 namespace Pixy
 {
@@ -55,7 +56,7 @@ namespace Pixy
 
     //~ mWorker = new boost::thread(boost::bind(&boost::asio::io_service::run, &mIOService));
 
-    mId = STATE_COMBAT;
+    mId = GameState::State::Combat;
 
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Combat");
 
@@ -76,6 +77,8 @@ namespace Pixy
       mLog->errorStream() << "Could not connect to server, aborting";
       return GameManager::getSingleton().requestShutdown();
 		}
+
+    mEntityMgr = &GameManager::getSingleton().getEntityMgr();
 
 		mGfxEngine = GfxEngine::getSingletonPtr();
 		mGfxEngine->setup();
@@ -292,40 +295,40 @@ namespace Pixy
             break;
           }
         }
-        static_cast<CPuppet*>((Entity*)(*unit)->getOwner())->detachUnit((*unit)->getUID());
+        static_cast<Puppet*>((Entity*)(*unit)->getOwner())->detachUnit((*unit)->getUID());
       }
 
       mDeathlist.clear();
     }
 	}
 
-	void Combat::registerPuppet(CPuppet* inPuppet) {
+	void Combat::registerPuppet(Puppet* inPuppet) {
     mLog->infoStream() << "a new Puppet has joined the battle: " << inPuppet;
 
 		mPuppets.push_back(inPuppet);
-    mScriptEngine->passToLua("Puppets.onAddPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
+    mScriptEngine->passToLua("Puppets.onAddPuppet", 1, "Pixy::Puppet", (void*)inPuppet);
     if (inPuppet->getName() == mPuppetName)
       assignPuppet(inPuppet);
     else
-      mScriptEngine->passToLua("Puppets.onAssignEnemyPuppet", 1, "Pixy::CPuppet", (void*)inPuppet);
+      mScriptEngine->passToLua("Puppets.onAssignEnemyPuppet", 1, "Pixy::Puppet", (void*)inPuppet);
 	}
 
-  void Combat::assignPuppet(CPuppet* inPuppet) {
+  void Combat::assignPuppet(Puppet* inPuppet) {
     assert(inPuppet);
 
     mLog->infoStream() << "I'm playing with the puppet: " << inPuppet;
     mPuppet = inPuppet;
-    mScriptEngine->passToLua("Puppets.onAssignSelfPuppet", 1, "Pixy::CPuppet", (void*)mPuppet);
+    mScriptEngine->passToLua("Puppets.onAssignSelfPuppet", 1, "Pixy::Puppet", (void*)mPuppet);
   }
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ *
 	 *	Helpers
 	 * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
-  CPuppet* Combat::getPuppet() {
+  Puppet* Combat::getPuppet() {
     return mPuppet;
   }
-  CPuppet* Combat::getActivePuppet() {
+  Puppet* Combat::getActivePuppet() {
     return mActivePuppet;
   }
 
@@ -333,7 +336,7 @@ namespace Pixy
     return mPuppets;
   }
 
-  CPuppet* Combat::getPuppet(int inUID) {
+  Puppet* Combat::getPuppet(int inUID) {
     puppets_t::const_iterator itr;
     for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
       if ((*itr)->getUID() == inUID)
@@ -343,7 +346,7 @@ namespace Pixy
     throw invalid_uid("in Combat::getPuppet() : " + stringify(inUID));
   }
 
-  CPuppet* Combat::getEnemy(int inUID) {
+  Puppet* Combat::getEnemy(int inUID) {
     puppets_t::const_iterator itr;
     for (itr = mPuppets.begin(); itr != mPuppets.end(); ++itr)
       if ((*itr)->getUID() != inUID)
@@ -353,13 +356,13 @@ namespace Pixy
     throw invalid_uid("in Combat::getEnemy() : " + stringify(inUID));
   }
 
-  CUnit* Combat::getUnit(int inUID) {
+  Unit* Combat::getUnit(int inUID) {
     puppets_t::const_iterator puppet;
     for (puppet = mPuppets.begin();
          puppet != mPuppets.end();
          ++puppet)
     {
-      CPuppet::units_t::const_iterator unit;
+      Puppet::units_t::const_iterator unit;
       for (unit = (*puppet)->getUnits().begin();
            unit != (*puppet)->getUnits().end();
            ++unit)
@@ -468,17 +471,20 @@ namespace Pixy
     mLog->infoStream() << "match puppet data received:";
 
     mLog->infoStream() << "\tparsing puppet data";
-    std::istringstream datastream(inEvt.getProperty("Data"));
-    list<CPuppet*> lPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
-    datastream.clear();
+    std::istringstream data(inEvt.getProperty("Data"));
+    //~ list<Puppet*> lPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(datastream);
+
+    ResourceParser *lParser = new ResourceParser(mEntityMgr, data);
+    std::list<BasePuppet*> lPuppets = lParser->syncGamePuppetsFromDump();
+    data.clear();
 
     assert(lPuppets.size() > 1);
 
     mLog->infoStream() << "\tpuppets parsed, registering them";
-    for (list<CPuppet*>::iterator puppet = lPuppets.begin();
+    for (std::list<BasePuppet*>::iterator puppet = lPuppets.begin();
          puppet != lPuppets.end();
          ++puppet)
-      this->registerPuppet(*puppet);
+      this->registerPuppet(static_cast<Puppet*>(*puppet));
 
     // set up the scene
     mGfxEngine->setupCombat();
@@ -488,9 +494,9 @@ namespace Pixy
     for (puppets_t::iterator puppet_itr = mPuppets.begin();
          puppet_itr != mPuppets.end();
          ++puppet_itr) {
-      CPuppet* puppet = *puppet_itr;
+      Puppet* puppet = *puppet_itr;
       puppet->live();
-      mScriptEngine->passToLua("Puppets.onCreatePuppet", 1, "Pixy::CPuppet", (void*)puppet);
+      mScriptEngine->passToLua("Puppets.onCreatePuppet", 1, "Pixy::Puppet", (void*)puppet);
       //~ mGfxEngine->attachToScene(puppet->getRenderable());
     }
     mLog->infoStream() << "\tpuppet parsing was successful";
@@ -515,66 +521,66 @@ namespace Pixy
       << "\tactive puppet is: " << mActivePuppet
       << ", inactive puppet is: " << mWaitingPuppet;
 
-    mScriptEngine->passToLua("Puppets.onAssignActivePuppet", 1, "Pixy::CPuppet", (void*)mActivePuppet);
+    mScriptEngine->passToLua("Puppets.onAssignActivePuppet", 1, "Pixy::Puppet", (void*)mActivePuppet);
     mScriptEngine->passToLua("Turns.onNewTurn", 0);
 
     // apply active buffs
     mLog->debugStream() << "\tapplying buffs on puppet";
-    for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
+    for (Puppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
          buff != mActivePuppet->getBuffs().end();
          ++buff)
     {
       mScriptEngine->passToLua(
         "Spells.onProcessBuff", 3,
-        "Pixy::Renderable", (*buff)->getCaster(),
-        "Pixy::Renderable", (*buff)->getTarget(),
-        "Pixy::CSpell", *buff);
+        "Pixy::Entity", (*buff)->getCaster(),
+        "Pixy::Entity", (*buff)->getTarget(),
+        "Pixy::Spell", *buff);
     }
 
     // remove all expired puppet buffs
     {
       mLog->debugStream() << "\tdetermining expired buffs on puppet for removal";
-      std::vector<CSpell*> expired;
-      for (CPuppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
+      std::vector<Spell*> expired;
+      for (Puppet::spells_t::const_iterator buff = mActivePuppet->getBuffs().begin();
            buff != mActivePuppet->getBuffs().end();
            ++buff)
         if ((*buff)->hasExpired())
           expired.push_back(*buff);
 
       mLog->debugStream() << "\tremoving " << expired.size() << " expired buffs on puppet";
-      for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
+      for (std::vector<Spell*>::iterator expired_spell = expired.begin();
            expired_spell != expired.end();
            ++expired_spell)
         mActivePuppet->detachBuff((*expired_spell)->getUID());
     }
 
     mLog->debugStream() << "\tprocessing buffs on puppet units";
-    for (CPuppet::units_t::const_iterator unit_itr = mActivePuppet->getUnits().begin();
+    for (Puppet::units_t::const_iterator unit_itr = mActivePuppet->getUnits().begin();
          unit_itr != mActivePuppet->getUnits().end();
          ++unit_itr)
     {
-      CUnit* unit = *unit_itr;
+      Unit* unit = *unit_itr;
       unit->reset();
       unit->getUp();
 
       // apply active buffs
       mLog->debugStream() << "\t\tunit " << unit << " has " << unit->getBuffs().size() << " buffs";
-      for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
+      for (Unit::spells_t::const_iterator buff = unit->getBuffs().begin();
            buff != unit->getBuffs().end();
            ++buff)
       {
         mLog->debugStream() << "\t\tapplying active buff " << (*buff) << " on unit " << unit;
         mScriptEngine->passToLua(
         "Spells.onProcessBuff", 3,
-        "Pixy::Renderable", (*buff)->getCaster(),
-        "Pixy::Renderable", (*buff)->getTarget(),
-        "Pixy::CSpell", *buff);
+        "Pixy::Entity", (*buff)->getCaster(),
+        "Pixy::Entity", (*buff)->getTarget(),
+        "Pixy::Spell", *buff);
       }
 
       // remove all expired puppet buffs
       {
-        std::vector<CSpell*> expired;
-        for (CUnit::spells_t::const_iterator buff = unit->getBuffs().begin();
+        std::vector<Spell*> expired;
+        for (Unit::spells_t::const_iterator buff = unit->getBuffs().begin();
              buff != unit->getBuffs().end();
              ++buff)
         {
@@ -582,7 +588,7 @@ namespace Pixy
             expired.push_back(*buff);
         }
 
-        for (std::vector<CSpell*>::iterator expired_spell = expired.begin();
+        for (std::vector<Spell*>::iterator expired_spell = expired.begin();
              expired_spell != expired.end();
              ++expired_spell)
         {
@@ -635,14 +641,6 @@ namespace Pixy
 
     mLog->infoStream() << "parsing drawn spells";
 
-    CResourceManager& mResMgr = GameManager::getSingleton().getResMgr();
-
-    //BitStream lStream(inPkt->data, inPkt->length, false);
-    //lStream.IgnoreBytes(1); // skip the packet identifier
-
-    //RakString tmp;
-    //lStream.Read(tmp);
-
     istringstream lData(inEvt.getProperty("Data"));
     string lLine;
 
@@ -657,7 +655,7 @@ namespace Pixy
       vector<string> elements = Utility::split(lLine, ';');
 
       int lPuppetUID = convertTo<int>(elements[0].erase(0,1).c_str()); // strip out the leading $
-      CPuppet* lPuppet = getPuppet(lPuppetUID);
+      Puppet* lPuppet = getPuppet(lPuppetUID);
       assert(lPuppet); // _DEBUG_
 
       //int nrSpells = convertTo<int>(elements[1].c_str());
@@ -666,15 +664,23 @@ namespace Pixy
       int spellsParsed = 0;
       int index = 0;
       while (++spellsParsed <= nrDrawSpells) {
-        CSpell* lSpell = mResMgr.getSpell(elements[++index]);
-        lSpell->setUID(convertTo<int>(elements[++index]));
+        Spell* lSpell = 0;
+        try {
+          lSpell = mEntityMgr->getSpell(elements[++index]);
+        } catch (UnidentifiedResource& e)
+        {
+          // report bug
+          return true;
+        }
+
+        lSpell->_setUID(convertTo<int>(elements[++index]));
         lPuppet->attachSpell(lSpell);
 
         mLog->debugStream() << "attaching spell: " << lSpell << " to puppet " << lPuppet;
 
         // draw the spell button in the UI
         if (lPuppet == mPuppet) {
-          mScriptEngine->passToLua("Spells.onDrawSpell", 1, "Pixy::CSpell", (void*)lSpell);
+          mScriptEngine->passToLua("Spells.onDrawSpell", 1, "Pixy::Spell", (void*)lSpell);
         }
 
         lSpell = 0;
@@ -695,7 +701,7 @@ namespace Pixy
         vector<string> elements = Utility::split(lLine, ';');
 
         int lPuppetUID = convertTo<int>(elements[0].erase(0,1).c_str()); // strip out the leading $
-        CPuppet* lPuppet = getPuppet(lPuppetUID);
+        Puppet* lPuppet = getPuppet(lPuppetUID);
         assert(lPuppet); // _DEBUG_
 
         //int nrSpells = convertTo<int>(elements[1].c_str());
@@ -707,14 +713,21 @@ namespace Pixy
         int index = 0;
         while (++spellsParsed <= nrDropSpells)
         {
-          CSpell* lSpell = lPuppet->getSpell(convertTo<int>(elements[++index]));
+          Spell* lSpell = 0;
+          try {
+            lSpell = lPuppet->getSpell(convertTo<int>(elements[++index]));
+          } catch (invalid_uid& e)
+          {
+            // report bug
+            return true;
+          }
           mLog->debugStream() << "removing spell " << lSpell << " from puppet " << lPuppet;
 
           assert(lSpell); // _DEBUG_
 
           if (lPuppet == mPuppet)
           {
-            mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+            mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::Spell", (void*)lSpell);
           }
 
           lPuppet->detachSpell(lSpell->getUID());
@@ -740,63 +753,57 @@ namespace Pixy
     assert(inEvt.hasProperty("Spell") && inEvt.hasProperty("C"));
 
     // it's ok, let's find the spell, the caster, and the target
-    CPuppet* lCaster = getPuppet(convertTo<int>(inEvt.getProperty("C")));
-    CSpell* lSpell = lCaster->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
+    Puppet* lCaster = getPuppet(convertTo<int>(inEvt.getProperty("C")));
+    Spell* lSpell = lCaster->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
 
     /*for (puppets_t::iterator puppet = mPuppets.begin();
          puppet != mPuppets.end();
          ++puppet)
       try {
         lSpell = (*puppet)->getSpell(convertTo<int>(inEvt.getProperty("Spell")));
-        lCaster = static_cast<CPuppet*>(lSpell->getCaster()->getEntity());
+        lCaster = static_cast<Puppet*>(lSpell->getCaster()->getEntity());
         break;
       } catch (...) { lSpell = 0; }*/
 
-    assert(lSpell && lCaster && lSpell->getCaster()->getEntity()->getUID() == lCaster->getUID());
+    assert(lSpell && lCaster && lSpell->getCaster()->getUID() == lCaster->getUID());
 
     mLog->debugStream() << "\tspell is: " << lSpell << " and its caster is: " << lCaster;
 
-    Entity* _lTarget = 0;
-    Renderable* lTarget = 0;
+    Entity* lTarget = 0;
     if (inEvt.hasProperty("T")) {
       try {
         // is the target a puppet?
-        _lTarget = getPuppet(convertTo<int>(inEvt.getProperty("T")));
-        mLog->debugStream() << "target: " << _lTarget;
+        lTarget = getPuppet(convertTo<int>(inEvt.getProperty("T")));
+        mLog->debugStream() << "target: " << lTarget;
       } catch (invalid_uid& e) {
         try {
           // a unit?
-          _lTarget = getUnit(convertTo<int>(inEvt.getProperty("T")));
+          lTarget = getUnit(convertTo<int>(inEvt.getProperty("T")));
         } catch (invalid_uid& e) {
           // invalid UID
           mLog->errorStream() << "couldn't find spell target with id " << inEvt.getProperty("T");
+          // report bug
           return true;
         }
       }
-
-      lTarget =
-        (_lTarget->getRank() == PUPPET)
-          ? getPuppet(_lTarget->getUID())->getRenderable()
-          : getUnit(_lTarget->getUID())->getRenderable();
-
       lSpell->setTarget(lTarget);
     } else
-      lSpell->setTarget(lCaster->getRenderable());
+      lSpell->setTarget(lCaster);
 
-    if (lSpell->getTarget() != lCaster->getRenderable())
-      mLog->debugStream()<<"\t\tspell's target is " << lSpell->getTarget()->getEntity();
+    if (lSpell->getTarget() != lCaster)
+      mLog->debugStream()<<"\t\tspell's target is " << lSpell->getTarget();
 
     mScriptEngine->passToLua(
       "Spells.onCastSpell", 3,
-      "Pixy::Renderable", lCaster->getRenderable(),
-      "Pixy::Renderable", lTarget,
-      "Pixy::CSpell", lSpell);
+      "Pixy::Entity", lCaster,
+      "Pixy::Entity", lTarget,
+      "Pixy::Spell", lSpell);
     // ...
     //std::cout << "casted a spell! " << lSpell->getName() << "#" << lSpell->getUID() << "\n";
     // remove it from the UI
     if (lCaster == mPuppet) {
       mLog->debugStream() << "\tcasting of " << lSpell << " was successful, now removing the spell";
-      mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::CSpell", (void*)lSpell);
+      mScriptEngine->passToLua("Spells.onDropSpell", 1, "Pixy::Spell", (void*)lSpell);
     }
     //mUIEngine->dropSpell(_spell);
     // remove it from the puppet's hand if it's not a buff
@@ -810,28 +817,42 @@ namespace Pixy
     mLog->debugStream() << "creating a unit:";
     assert(evt.hasProperty("Name") && evt.hasProperty("OUID") && evt.hasProperty("UID"));
 
-    CPuppet* _owner = getPuppet(convertTo<int>(evt.getProperty("OUID")));
-    assert(_owner);
+    Puppet* lOwner = 0;
+    Unit* lUnit = 0;
+
+    try {
+      lOwner = getPuppet(convertTo<int>(evt.getProperty("OUID")));
+    } catch(invalid_uid& e)
+    {
+      // report bug
+      assert(false);
+      return true;
+    }
 
     //std::cout << "CreateUnit name: " << evt.getProperty("Name") << "\n";
-    CResourceManager& rmgr_ = GameManager::getSingleton().getResMgr();
-    CUnit* _unit = rmgr_.getUnit(evt.getProperty("Name"), _owner->getRace());
-    assert(_unit);
+    try {
+      lUnit = mEntityMgr->getUnit(evt.getProperty("Name"), lOwner->getRace());
+    } catch (invalid_uid& e)
+    {
+      // report bug
+      assert(false);
+      return true;
+    }
 
-    _unit->fromEvent(evt);
-    _owner->attachUnit(_unit);
+    lUnit->deserialize(evt);
+    lOwner->attachUnit(lUnit);
 
-    assert(_unit->getOwner());
+    assert(lUnit->getOwner());
 
-    mLog->debugStream() << "\tthe created unit is: " << _unit;
+    mLog->debugStream() << "\tthe created unit is: " << lUnit;
 
-    _unit->live();
+    lUnit->live();
     //~ mGfxEngine->attachToScene(_unit->getRenderable());
 
-    mScriptEngine->passToLua("Units.onCreateUnit", 1, "Pixy::CUnit", (void*)_unit);
+    mScriptEngine->passToLua("Units.onCreateUnit", 1, "Pixy::Unit", (void*)lUnit);
 
-    _unit = 0;
-    _owner = 0;
+    lUnit = 0;
+    lOwner = 0;
 
     mLog->debugStream() << "\tunit creation successful";
 
@@ -841,13 +862,13 @@ namespace Pixy
   bool Combat::onUpdatePuppet(const Event& evt) {
     assert(evt.hasProperty("UID"));
 
-    CPuppet* _puppet = getPuppet(convertTo<int>(evt.getProperty("UID")));
-    assert(_puppet);
+    Puppet* lPuppet = getPuppet(convertTo<int>(evt.getProperty("UID")));
+    assert(lPuppet); // todo: report bug if not found
 
     //std::cout << "Updating puppet named: " << _puppet->getName() << "\n";
 
-    _puppet->updateFromEvent(evt);
-    mScriptEngine->passToLua("Puppets.onUpdatePuppet", 1, "Pixy::CPuppet", (void*)_puppet);
+    lPuppet->deserialize(evt);
+    mScriptEngine->passToLua("Puppets.onUpdatePuppet", 1, "Pixy::Puppet", (void*)lPuppet);
 
     return true;
   }
@@ -855,14 +876,14 @@ namespace Pixy
   bool Combat::onUpdateUnit(const Event& evt) {
     assert(evt.hasProperty("UID"));
 
-    CUnit* _unit = getUnit(convertTo<int>(evt.getProperty("UID")));
-    assert(_unit);
+    Unit* lUnit = getUnit(convertTo<int>(evt.getProperty("UID")));
+    assert(lUnit);
 
     //std::cout << "Updating unit named: " << _unit->getName() << "#" << _unit->getUID() << "\n";
 
-    _unit->updateFromEvent(evt);
-    if (_unit->isDead())
-      markForDeath(_unit);
+    lUnit->deserialize(evt);
+    if (lUnit->isDead())
+      markForDeath(lUnit);
 
     return true;
   }
@@ -870,35 +891,42 @@ namespace Pixy
   bool Combat::onRemoveUnit(const Event& evt) {
     mLog->debugStream() << "Unit#" << evt.getProperty("UID") << " is marked for removal by server.";
     mRDeathlist.push_back(convertTo<int>(evt.getProperty("UID")));
+
+    // todo: assert that the unit exists
+
     return true;
   }
 
   bool Combat::onEntityDied(const Event& evt) {
-    markForDeath((CUnit*)static_cast<Renderable*>(evt.Any)->getEntity());
+    markForDeath(static_cast<Unit*>(evt.Any));
     return true;
   }
+
   bool Combat::onStartBlockPhase(const Event& evt) {
     if (mActivePuppet != mPuppet)
       inBlockPhase = true;
 
     // get up all the opponent units with summoning sickness
-    for (CPuppet::units_t::const_iterator unit = mWaitingPuppet->getUnits().begin();
+    for (Puppet::units_t::iterator unit = mWaitingPuppet->getUnits().begin();
          unit != mWaitingPuppet->getUnits().end();
          ++unit)
       if ((*unit)->hasSummoningSickness())
-        ((CUnit*)(*unit))->getUp();
+        (*unit)->getUp();
 
     return true;
   }
 
   bool Combat::onCharge(const Event& evt) {
-    CUnit *attacker = 0;
+    Unit *attacker = 0;
 
     assert(evt.hasProperty("UID"));
     try {
       attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
     } catch (invalid_uid& e) {
       mLog->errorStream()  << "invalid charge event parameters : " << e.what();
+      // report bug
+      assert(false);
+      return true;
     }
 
     // move the unit
@@ -913,13 +941,15 @@ namespace Pixy
   }
 
   bool Combat::onCancelCharge(const Event& evt) {
-    CUnit *attacker = 0;
+    Unit *attacker = 0;
 
     assert(evt.hasProperty("UID"));
     try {
       attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("UID")));
     } catch (invalid_uid& e) {
       mLog->errorStream() << "invalid charge event parameters : " << e.what();
+      // report bug
+      assert(false);
       return true;
     }
 
@@ -942,7 +972,7 @@ namespace Pixy
   }
 
   bool Combat::onBlock(const Event& evt) {
-    CUnit *attacker, *blocker = 0;
+    Unit *attacker, *blocker = 0;
 
     assert(evt.hasProperty("B") && evt.hasProperty("A"));
     try {
@@ -950,13 +980,16 @@ namespace Pixy
       blocker = mWaitingPuppet->getUnit(convertTo<int>(evt.getProperty("B")));
     } catch (invalid_uid& e) {
       mLog->errorStream()  << "invalid block event parameters : " << e.what();
+      // report bug
+      assert(false);
+      return true;
     }
 
     // does the attacker have any other units blocking?
     blockers_t::iterator blockers = mBlockers.find(attacker);
     if (blockers == mBlockers.end()) {
       // this is the first blocker
-      blockers = mBlockers.insert( std::make_pair(attacker, std::list<CUnit*>()) ).first;
+      blockers = mBlockers.insert( std::make_pair(attacker, std::list<Unit*>()) ).first;
     }
     blockers->second.push_back(blocker);
     blocker->setAttackOrder(blockers->second.size());
@@ -968,7 +1001,7 @@ namespace Pixy
   }
 
   bool Combat::onCancelBlock(const Event& evt) {
-    CUnit *blocker, *attacker = 0;
+    Unit *blocker, *attacker = 0;
 
     assert(evt.hasProperty("B") && evt.hasProperty("A"));
     try {
@@ -976,6 +1009,8 @@ namespace Pixy
       attacker = mActivePuppet->getUnit(convertTo<int>(evt.getProperty("A")));
     } catch (invalid_uid& e) {
       mLog->errorStream() << "invalid charge event parameters : " << e.what();
+      // report bug
+      assert(false);
       return true;
     }
 
@@ -996,7 +1031,7 @@ namespace Pixy
       mBlockers.erase(entry);
     } else {
       int i=0;
-      for (std::list<CUnit*>::iterator blocker = entry->second.begin();
+      for (std::list<Unit*>::iterator blocker = entry->second.begin();
            blocker != entry->second.end();
            ++blocker) {
         (*blocker)->setAttackOrder(++i);
@@ -1059,13 +1094,13 @@ namespace Pixy
       puppet != mPuppets.end();
       ++puppet)
       {
-        for (CPuppet::units_t::const_iterator unit = (*puppet)->getUnits().begin();
+        for (Puppet::units_t::const_iterator unit = (*puppet)->getUnits().begin();
         unit != (*puppet)->getUnits().end();
         ++unit)
         {
           bool isAttacker = (*unit)->getOwner()->getUID() == mActivePuppet->getUID();
-          if ((*unit)->getPosition() != POS_READY && !(*unit)->isDying())
-            (*unit)->move(POS_READY, boost::bind(
+          if (!(*unit)->isReady() && !(*unit)->isDying())
+            (*unit)->move(Unit::Position::Ready, boost::bind(
               (isAttacker ? &Combat::onMoveBackAndRest : &Combat::onMoveBack),
               this, *unit));
         }
@@ -1081,7 +1116,7 @@ namespace Pixy
           if (!(*unit)->isDead()) {
             (*unit)->move(POS_READY, boost::bind(&Combat::onMoveBack, this, *unit));
           } else {
-            //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
+            //static_cast<Puppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
             //mDeathlist.push_back(*unit);
             //~ markForDeath(*unit);
           }
@@ -1093,7 +1128,7 @@ namespace Pixy
         if (!(*unit)->isDead())
           (*unit)->move(POS_READY, boost::bind(&Combat::onMoveBackAndRest, this, *unit));
         else {
-          //static_cast<CPuppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
+          //static_cast<Puppet*>((Entity*)unit->getOwner())->detachUnit(unit->getUID());
           //mDeathlist.push_back(*unit);
           //~ markForDeath(*unit);
         }
@@ -1113,7 +1148,7 @@ namespace Pixy
 
 
     // go through every attacking unit:
-    CUnit* unit = mAttackers.front();
+    Unit* unit = mAttackers.front();
     //for (auto unit : mAttackers) {
       // if it's being blocked, go through every blocker
       // else, let it attack the puppet
@@ -1127,22 +1162,22 @@ namespace Pixy
 
   }
 
-  void Combat::onMoveBack(CUnit* inUnit) {
+  void Combat::onMoveBack(Unit* inUnit) {
     inUnit->setAttackOrder(0);
     inUnit->reset();
   }
-  void Combat::onMoveBackAndRest(CUnit* inUnit) {
+  void Combat::onMoveBackAndRest(Unit* inUnit) {
     onMoveBack(inUnit);
     inUnit->rest();
   }
 
-  void Combat::unitAttacked(CUnit* inUnit) {
+  void Combat::unitAttacked(Unit* inUnit) {
     mAttackers.remove(inUnit);
     mChargers.push_back(inUnit);
     mLog->infoStream() << "a unit " << inUnit << " is done attacking, " << mAttackers.size() << " left";
   }
 
-  void Combat::markForDeath(CUnit* inUnit) {
+  void Combat::markForDeath(Unit* inUnit) {
     // add the unit to the deathlist only if it's not there
     for (deathlist_t::iterator unit = mDeathlist.begin();
          unit != mDeathlist.end();

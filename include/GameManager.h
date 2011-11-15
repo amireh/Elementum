@@ -35,7 +35,7 @@ namespace Pixy
   typedef std::map<std::string, std::string> tPixySettings;
 
   //class InputManager;
-  class CResourceManager;
+  class EntityManager;
 	class GameState;
 	/*! \class GameManager
 	 *  \brief
@@ -107,7 +107,7 @@ namespace Pixy
 
 		bool shuttingDown();
 
-    CResourceManager& getResMgr();
+    EntityManager& getEntityMgr();
 
     Ogre::RenderWindow* getRenderWindow() const;
 
@@ -198,7 +198,7 @@ namespace Pixy
 		Ogre::Root			*mRoot;
 		Ogre::RenderWindow	*mRenderWindow;
 		InputManager		*mInputMgr;
-    CResourceManager *mResMgr;
+    EntityManager *mEntityMgr;
 
 		GameState* mCurrentState;
 		unsigned long lTimeLastFrame, lTimeCurrentFrame, lTimeSinceLastFrame;

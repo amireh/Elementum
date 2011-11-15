@@ -40,12 +40,13 @@ namespace Pixy
 		virtual void attachUnit(unit_t* inUnit);
 		virtual void detachUnit(int inUID, bool inRemove = true);
 		virtual unit_t* getUnit(int inUID);
-		virtual units_t const& getUnits();
+		virtual units_t& getUnits();
     virtual bool hasUnitWithName(std::string const&) const;
 
     virtual Entity* toEntity() const;
 
     virtual void deserialize(const Event&);
+    virtual void updateTextOverlay();
 
 	protected:
 

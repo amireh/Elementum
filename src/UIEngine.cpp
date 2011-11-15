@@ -38,7 +38,7 @@
 //#include "CEGUI/WindowRendererSets/Falagard/FalStaticText.h"
 #endif
 #include <Ogre.h>
-#include "CSpell.h"
+#include "Spell.h"
 //#include "Combat.h"
 
 
@@ -305,7 +305,7 @@ namespace Pixy {
 
   }
 
-  void UIEngine::refreshTooltipSize(CEGUI::Window* inWindow, CSpell* inSpell) {
+  void UIEngine::refreshTooltipSize(CEGUI::Window* inWindow, Spell* inSpell) {
 
     //std::cout << inWindow->getProperty("HorzExtent") << ", " << inWindow->getProperty("VertExtent") << "\n";
   }

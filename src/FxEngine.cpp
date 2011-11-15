@@ -12,9 +12,6 @@
 #include "GfxEngine.h"
 #include "GameManager.h"
 #include "Renderable.h"
-#include "Entity.h"
-#include "CPuppet.h"
-#include "CUnit.h"
 #include "GameState.h"
 #include "PixyUtility.h"
 
@@ -35,8 +32,7 @@ namespace Pixy {
   }
 
 	FxEngine::FxEngine()
-  : mHighlightEffect(0),
-    mSelected(0)
+  : mHighlightEffect(0)
   {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "FxEngine");
 		mLog->infoStream() << "firing up";
@@ -78,7 +74,7 @@ namespace Pixy {
 		mLog->infoStream() << "Setting up";
 
     //bind(EventUID::EntitySelected, boost::bind(&FxEngine::onEntitySelected, this, _1));
-    bind(EventUID::UnitAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
+    //~ bind(EventUID::UnitAttacked, boost::bind(&FxEngine::onEntityAttacked, this, _1));
     //~ if (GameManager::getSingleton().getCurrentState()->getId() == STATE_COMBAT)
     //~ {
       //~ bind(EventUID::EntityDying, boost::bind(&FxEngine::onEntityDying, this, _1));
@@ -182,47 +178,11 @@ namespace Pixy {
     return mEffect;
   }
 
-  void FxEngine::highlight(Renderable* inEntity) {
-    assert(mHighlightEffect);
-
-    mLog->infoStream() << "highlighting mob";
-    dehighlight();
-
-    mSelected = inEntity;
-    playEffect(mHighlightEffect, mSelected);
-  }
-  void FxEngine::dehighlight() {
-    assert(mHighlightEffect);
-
-    if (mHighlightEffect->isAttached())
-      mHighlightEffect->getParentSceneNode()->detachObject(mHighlightEffect);
-
-    mHighlightEffect->stop();
-
-    mSelected = 0;
-  }
-
-  bool FxEngine::onEntitySelected(const Event& inEvt) {
-    Pixy::Renderable* lRend = static_cast<Pixy::Renderable*>(inEvt.Any);
-    Pixy::Entity* lEntity = lRend->getEntity();
-
-    //mLog->infoStream() << "on entity selected";
-
-    // double click on an entity
-    if (mSelected && mSelected->getEntity()->getUID() == lEntity->getUID()) {
-      dehighlight();
-      return true;
-    }
-
-    highlight(lRend);
-
-    return true;
-  }
 
   bool FxEngine::onEntityAttacked(const Event& inEvt) {
     assert(inEvt.Any);
 
-    Renderable* lEntity = static_cast<Renderable*>(inEvt.Any);
+    /*Renderable* lEntity = static_cast<Renderable*>(inEvt.Any);
 
     assert(lEntity);
 
@@ -260,7 +220,7 @@ namespace Pixy {
         playEffect(lEffect, lEntity);
         played = true;
       }
-    }
+    }*/
 
     /*if (played)
       return true;
@@ -308,16 +268,6 @@ namespace Pixy {
         }
       break;
     }
-  }
-
-  //~ void FxEngine::onEntityDying(Renderable* inUnit) {
-  bool FxEngine::onEntityDying(const Event& evt) {
-    Renderable *inUnit = static_cast<Renderable*>(evt.Any);
-    assert(mEffects.find("Elementum/Fx/Desummon") != mEffects.end());
-
-    playEffect("Elementum/Fx/Desummon", inUnit->getSceneNode()->getPosition());
-
-    return true;
   }
 
   void FxEngine::unloadAllEffects() {

@@ -24,6 +24,11 @@ namespace Pixy
 	public:
 		~GameState(){ };
 
+    enum State {
+      Intro,
+      Combat
+    };
+
 		virtual void enter( void )  = 0;
 		virtual void exit( void )   = 0;
 

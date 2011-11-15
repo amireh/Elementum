@@ -37,10 +37,10 @@ namespace Pixy
     return mSpells;
   }
 
-  void Deck::_assignSpell(spell_t *const inSpell)
+  void Deck::_assignSpell(BaseSpell *const inSpell)
   {
     assert(inSpell != 0);
-    mSpells.push_back(inSpell);
+    mSpells.push_back(static_cast<Spell*>(inSpell));
 
     //std::cout << "\t" << mName << " - attached spell " << inSpell->getName() << "\n";
   }

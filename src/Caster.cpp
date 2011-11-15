@@ -70,9 +70,9 @@ namespace Pixy
     return mBuffs;
   }
 
-	void Caster::attachSpell(spell_t* inSpell)
+	void Caster::attachSpell(BaseSpell* inSpell)
 	{
-		mSpells.push_back(inSpell);
+		mSpells.push_back(static_cast<Spell*>(inSpell));
 		//std::cout
     //  <<"Caster: Spell " << inSpell->getName()
     //  << "#" << inSpell->getUID()
@@ -83,9 +83,9 @@ namespace Pixy
     //  << " is now owned by " << mOwner->getName() << "#" << mOwner->getUID() << "\n";
 	}
 
-	void Caster::attachBuff(spell_t* inSpell)
+	void Caster::attachBuff(BaseSpell* inSpell)
 	{
-		mBuffs.push_back(inSpell);
+		mBuffs.push_back(static_cast<Spell*>(inSpell));
 		//std::cout
     //  <<"Caster: Spell " << inSpell->getName()
     //  << "#" << inSpell->getUID()

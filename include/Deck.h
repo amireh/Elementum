@@ -51,7 +51,7 @@ namespace Pixy
      * unless _clear() was called manually in which case you must be responsible
      * for destroying the spell objects else there'll be leaks.
      **/
-    virtual void _assignSpell(spell_t *const inSpell);
+    virtual void _assignSpell(BaseSpell *const inSpell);
 
     /**
      * @brief

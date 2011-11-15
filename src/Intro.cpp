@@ -14,10 +14,11 @@
 #include "UIEngine.h"
 #include "GfxEngine.h"
 #include "ScriptEngine.h"
-#include "CResourceManager.h"
-#include "CPuppet.h"
-#include "CDeck.h"
-#include "CSpell.h"
+#include "ResourceParser.h"
+#include "EntityManager.h"
+#include "Puppet.h"
+#include "Deck.h"
+#include "Spell.h"
 //#include "Lobby.h"
 #include "FxEngine.h"
 #include "Combat.h"
@@ -37,7 +38,7 @@ namespace Pixy
     mLog = 0;
     mPuppet = 0;
     mPuppetName = "";
-    mId = STATE_INTRO;
+    mId = GameState::State::Intro;
 	}
 
 	Intro::~Intro() {
@@ -245,8 +246,21 @@ namespace Pixy
     }
     mPuppets.clear();
 
+    typedef std::list<BasePuppet*> l_puppets_t;
+
     std::istringstream in(e.getProperty("Data"));
-    mPuppets = GameManager::getSingleton().getResMgr().puppetsFromStream(in);
+    ResourceParser *lParser = new ResourceParser(&GameManager::getSingleton().getEntityMgr(), in);
+    l_puppets_t lPuppets = lParser->syncGamePuppetsFromDump();
+    delete lParser;
+    in.clear();
+
+    // we have to cast the objects in order to populate our own container because
+    // of return type covariance incompatibility with STL containers
+    for (l_puppets_t::iterator lPuppet = lPuppets.begin(); lPuppet != lPuppets.end(); ++lPuppet)
+    {
+      mPuppets.push_back(static_cast<Puppet*>(*lPuppet));
+    }
+    lPuppets.clear();
 
     mScriptEngine->_passPuppetListing();
     return true;
@@ -261,7 +275,10 @@ namespace Pixy
       delete mPuppet;
 
     std::istringstream in(e.getProperty("Data"));
-    mPuppet = GameManager::getSingleton().getResMgr().puppetsFromStream(in).front();
+    ResourceParser *lParser = new ResourceParser(&GameManager::getSingleton().getEntityMgr(), in);
+    mPuppet = static_cast<Puppet*>(lParser->syncGamePuppetsFromDump().front());
+    delete lParser;
+    in.clear();
 
     mScriptEngine->_passPuppet();
     return true;
@@ -271,6 +288,7 @@ namespace Pixy
 
   bool Intro::onJoinLobby(const Event& e)
   {
+    // to do: validation
     mPuppetName = e.getProperty("Puppet");
 
     //GameManager::getSingleton().changeState(Lobby::getSingletonPtr());
@@ -297,7 +315,7 @@ namespace Pixy
   {
     return mPuppets;
   }
-  CPuppet* Intro::getPuppet()
+  Puppet* Intro::getPuppet()
   {
     return mPuppet;
   }

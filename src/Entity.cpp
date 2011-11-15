@@ -106,13 +106,13 @@ namespace Pixy
     fIsDead = true;
   }
 
-	void Entity::attachSpell(spell_t* inSpell)
+	void Entity::attachSpell(BaseSpell* inSpell)
 	{
 		Caster::attachSpell(inSpell);
     mSpells.back()->setCaster(this);
 	}
 
-	void Entity::attachBuff(spell_t* inSpell)
+	void Entity::attachBuff(BaseSpell* inSpell)
 	{
     Caster::attachBuff(inSpell);
     mBuffs.back()->setTarget(this);

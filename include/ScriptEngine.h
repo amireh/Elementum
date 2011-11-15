@@ -27,7 +27,7 @@ extern "C" {
 //#include "luabind/luabind.hpp"
 namespace Pixy {
 
-  class CPuppet;
+  class Puppet;
 	/*! \class ScriptEngine
 	 *	\brief
 	 *	Manages the Lua module, loads Script resources, listens to and passes off
@@ -41,7 +41,7 @@ namespace Pixy {
 		static ScriptEngine& getSingleton();
 
 		virtual bool setup();
-		virtual bool setup(GAME_STATE inState);
+		virtual bool setup(int inState);
 		virtual void update(unsigned long lTimeElapsed);
 		virtual bool cleanup();
 
@@ -108,7 +108,7 @@ namespace Pixy {
 
     boost::asio::deadline_timer* mTimer;
 
-    //void assignSelfPuppet(CPuppet* inPuppet);
+    //void assignSelfPuppet(Puppet* inPuppet);
 	private:
 		static ScriptEngine* _myScriptEngine;
 		ScriptEngine();

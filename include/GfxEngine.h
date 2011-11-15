@@ -64,6 +64,7 @@ using OgreBites::SdkTrayManager;
 namespace Pixy {
 
   class Mobile;
+  class Animable;
   class Entity;
   class Unit;
   class Puppet;
@@ -284,8 +285,14 @@ namespace Pixy {
 
     std::list<std::string> mUIInputCapturingElements;
 
-    typedef std::map<Mobile*, bool> updatees_t;
-    updatees_t mUpdatees;
+    typedef std::map<Mobile*, bool> mobiles_t;
+    mobiles_t mMobiles;
+
+    typedef std::list<Animable*> animables_t;
+    animables_t mAnimables;
+
+    typedef std::list<MovableTextOverlay*> mtos_t;
+    mtos_t mMTOs;
 
 		/*!
 		 * \brief Creates an Ogre::Entity and renders it in an
@@ -314,8 +321,6 @@ namespace Pixy {
     void createWaypoint(int inOwner, int inNode, std::string, std::string);
 
     std::vector<Ogre::Vector3> mWaypoints[2][10];
-
-    std::list<Entity*> mRenderables;
 
     MovableTextOverlayAttributes* attrs;
 

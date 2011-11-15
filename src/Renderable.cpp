@@ -70,4 +70,20 @@ namespace Pixy
     return mSceneObject;
   }
 
+  std::string const& Renderable::getMesh() const
+  {
+    return mMesh;
+  }
+  std::string const& Renderable::getMaterial() const
+  {
+    return mMaterial;
+  }
+  void Renderable::setMaterial(std::string const& inMaterial)
+  {
+    mMaterial = inMaterial;
+  }
+  void Renderable::setMesh(std::string const& inMesh)
+  {
+    mMesh = inMesh;
+  }
 } // end of namespace

@@ -114,7 +114,7 @@ namespace Pixy
 
     throw invalid_uid("couldn't find a unit with uid" + stringify(inUID));
   }
-  Puppet::units_t const& Puppet::getUnits() {
+  Puppet::units_t& Puppet::getUnits() {
     return mUnits;
   }
 
@@ -133,4 +133,10 @@ namespace Pixy
     return false;
   }
 
+
+  void Puppet::updateTextOverlay() {
+    std::string cap = "";
+    cap += stringify(mHP);
+    getText()->setCaption(cap);
+  }
 } // end of Pixy namespace

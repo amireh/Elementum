@@ -13,18 +13,19 @@
 #include "PixyUtility.h"
 #include "tolua++.h"
 #include "GameManager.h"
-//#include "CPuppet.h"
+//#include "Puppet.h"
 #include "CEGUI/ScriptingModules/LuaScriptModule/CEGUILua.h"
 #include <CEGUI/CEGUISystem.h>
 #include <CEGUI/CEGUIExceptions.h>
 //#include "EntityEvent.h"
 //#include "Combat.h"
-#include "CSpell.h"
-#include "CResourceManager.h"
+#include "Spell.h"
+//#include "CResourceManager.h"
 #include "Intro.h"
 #include "Deck.h"
 #include <stdarg.h>
 #include <boost/bind.hpp>
+#include "EntityManager.h"
 
 TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 TOLUA_API int  tolua_EShared_open (lua_State* tolua_S);
@@ -98,13 +99,13 @@ namespace Pixy {
 		return true;
 	}
 
-  bool ScriptEngine::setup(GAME_STATE inState)
+  bool ScriptEngine::setup(int inState)
   {
     if (!fSetup)
       setup();
 
     bool lSuccess = true;
-    if (inState == STATE_COMBAT)
+    if (inState == GameState::State::Combat)
     {
       lSuccess = setupCombat();
       mUpdater = &ScriptEngine::updateCombat;
@@ -349,20 +350,20 @@ namespace Pixy {
   int ScriptEngine::_passGameData()
   {
     lua_newtable(mLUA); // spells master table
-    std::list<CSpell*> mSpells[4];
+    std::list<Spell*> mSpells[4];
 
-    std::list<CSpell*>::iterator spell;
+    std::list<Spell*>::iterator spell;
     int i=0;
     for (i=0; i < 4; ++i)
     {
-      mSpells[i] = GameManager::getSingleton().getResMgr()._getSpells((Pixy::RACE)i);
+      mSpells[i] = GameManager::getSingleton().getEntityMgr()._getSpells(i);
       int count = 1; // start from 1 for Lua compatibility
 
       lua_newtable(mLUA); // race spells table
       for (spell = mSpells[i].begin(); spell != mSpells[i].end(); ++spell)
       {
         lua_pushinteger(mLUA, count);
-        tolua_pushusertype(mLUA, (void*)(*spell), "Pixy::CSpell");
+        tolua_pushusertype(mLUA, (void*)(*spell), "Pixy::Spell");
         lua_settable(mLUA, -3);
 
         ++count;
@@ -390,7 +391,7 @@ namespace Pixy {
     for (puppet = mPuppets.begin(); puppet != mPuppets.end(); ++puppet)
     {
       lua_pushinteger(mLUA, count);
-      tolua_pushusertype(mLUA, (void*)(*puppet), "Pixy::CPuppet");
+      tolua_pushusertype(mLUA, (void*)(*puppet), "Pixy::Puppet");
       lua_settable(mLUA, -3);
 
       ++count;
@@ -406,9 +407,9 @@ namespace Pixy {
 
   int ScriptEngine::_passPuppet()
   {
-    CPuppet* mPuppet = Intro::getSingleton().getPuppet();
+    Puppet* mPuppet = Intro::getSingleton().getPuppet();
 
-    tolua_pushusertype(mLUA, (void*)mPuppet, "Pixy::CPuppet");
+    tolua_pushusertype(mLUA, (void*)mPuppet, "Pixy::Puppet");
     lua_setglobal(mLUA, "__PuppetTemp");
 
     Event e(EventUID::PuppetSynced);

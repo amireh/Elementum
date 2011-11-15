@@ -58,17 +58,12 @@ namespace Pixy {
 
     //~ void onEntityDying(Renderable* inUnit);
 
-    void highlight(Renderable*);
-    void dehighlight();
-
     void unloadAllEffects();
 
 	protected:
     friend class GfxEngine;
 
-    bool onEntitySelected(const Event& inEvt);
     bool onEntityAttacked(const Event& inEvt);
-    bool onEntityDying(const Event& evt);
 
 	private:
 
@@ -81,9 +76,6 @@ namespace Pixy {
     typedef deathlist_t portable_effects_t;
 
     effects_t mEffects;
-
-    Renderable* mSelected;
-
 
     portable_effects_t mPortableEffects;
     deathlist_t mDeathlist;

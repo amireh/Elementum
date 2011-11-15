@@ -547,4 +547,21 @@ namespace Pixy
   {
     mAttackOrder = inOrder;
   }
+
+  Unit* Unit::getBlockTarget() const
+  {
+    return mBlockTarget;
+  }
+  void Unit::setBlockTarget(Unit* const inTarget)
+  {
+    mBlockTarget = inTarget;
+  }
+  Entity* Unit::getAttackTarget() const
+  {
+    return mAttackTarget;
+  }
+  void Unit::setAttackTarget(Entity* const inTarget)
+  {
+    mAttackTarget = inTarget;
+  }
 } // end of Pixy namespace

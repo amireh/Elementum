@@ -16,6 +16,7 @@
 #include "EventManager.h"
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
+#include <list>
 
 namespace Pixy
 {
@@ -24,13 +25,14 @@ namespace Pixy
      *  PEWPEW
      */
 
-  class CSpell;
+  class Spell;
   class GfxEngine;
   class FxEngine;
   class UIEngine;
   class ScriptEngine;
   class EventManager;
   class NetworkManager;
+  class EntityManager;
   class Puppet;
   class Engine;
   class Unit;
@@ -96,7 +98,7 @@ namespace Pixy
     bool onConnected(const Event&);
     bool onGameDataSynced(const Event&);
     bool onLogin(const Event& inEvt);
-    bool onSynPuppets(const Event& inEvt); // __DEBUG__
+    bool onSyncPuppets(const Event& inEvt); // __DEBUG__
     //~ bool onSyncGameData(const Event&);
     //~ bool onJoinQueue(const Event& inEvt);
     bool onJoinLobby(const Event& inEvt);
@@ -135,6 +137,7 @@ namespace Pixy
 		ScriptEngine		*mScriptEngine;
 		EventManager		*mEvtMgr;
 		NetworkManager		*mNetMgr;
+    EntityManager *mEntityMgr;
 
 		static Combat		*mCombat;
 

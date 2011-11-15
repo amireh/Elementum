@@ -44,7 +44,7 @@ namespace Pixy
 
     void registerAnimationState(AnimID inId, std::string inState, bool doLoop = true);
 
-    void stepAnime(unsigned long deltaTime);
+    void step(unsigned long deltaTime);
 
     float animateLive();
     float animateDie();

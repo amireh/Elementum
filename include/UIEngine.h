@@ -22,7 +22,7 @@ namespace Pixy {
 
   struct Event;
   class EventManager;
-  class CSpell;
+  class Spell;
   class MyInput;
 	/*	\class UIEngine
 	 *	\brief
@@ -56,7 +56,7 @@ namespace Pixy {
     void refreshSize();
 
     void connectAnimation(CEGUI::Window*, std::string inAnim);
-    void refreshTooltipSize(CEGUI::Window* inWindow, CSpell* inSpell);
+    void refreshTooltipSize(CEGUI::Window* inWindow, Spell* inSpell);
 
 	protected:
 		const char* getDataPathPrefix() const;

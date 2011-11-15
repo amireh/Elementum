@@ -101,7 +101,7 @@ namespace Pixy {
 		}
 	}
 
-  void Animable::stepAnime(unsigned long dt) {
+  void Animable::step(unsigned long dt) {
     //~ return;
 
 		Ogre::Real baseAnimSpeed = 1;

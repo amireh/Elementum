@@ -11,6 +11,7 @@
 #define H_ElementumEntity_H
 
 #include "BaseEntity.h"
+#include "Spell.h"
 #include "Caster.h"
 #include "Animable.h"
 #include "Renderable.h"
@@ -36,8 +37,8 @@ namespace Pixy
     /**
      * Overridden from Pixy::Caster
      **/
-		virtual void attachSpell(spell_t* inSpell);
-		virtual void attachBuff(spell_t* inSpell);
+		virtual void attachSpell(BaseSpell* inSpell);
+		virtual void attachBuff(BaseSpell* inSpell);
 
 		virtual Caster* toCaster() const;
 

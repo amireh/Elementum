@@ -31,7 +31,7 @@ namespace Pixy
     public:
 
     enum Position {
-      Passive,
+      Ready,
       Charging,
       Attacking,
       Blocking,
@@ -66,6 +66,11 @@ namespace Pixy
 
     int getAttackOrder() const;
     void setAttackOrder(int);
+
+    Unit* getBlockTarget() const;
+    void setBlockTarget(Unit* const);
+    Entity* getAttackTarget() const;
+    void setAttackTarget(Entity* const);
 
     // called by Puppet::attachUnit()
     void _setEnemy(Puppet* inPuppet);

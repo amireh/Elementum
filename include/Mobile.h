@@ -32,7 +32,7 @@ namespace Pixy
 
     void move(int inWaypoint);
 
-    void stepMobile(unsigned long dt);
+    void step(unsigned long dt);
     bool isMoving() const;
 
     void setWaypoints(std::vector<Vector3>* inWp);
