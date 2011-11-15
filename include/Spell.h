@@ -7,11 +7,11 @@
  * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
  */
 
-#ifndef H_CSpell_H
-#define H_CSpell_H
+#ifndef H_Spell_H
+#define H_Spell_H
 
 #include "Pixy.h"
-#include "Spell.h"
+#include "BaseSpell.h"
 
 #include <string>
 
@@ -27,15 +27,14 @@ namespace Pixy
   *  Defines Spell GameObjects that are used by Puppet objects.
   */
   class Renderable;
-  class CSpell : public Spell
+  class Spell : public BaseSpell
   {
     public:
-    CSpell();
-    CSpell(const CSpell& src);
-    CSpell& operator=(const CSpell& rhs);
-    CSpell(const Spell& src);
+    Spell();
+    Spell(const Spell& src);
+    Spell& operator=(const Spell& rhs);
 
-    virtual ~CSpell();
+    virtual ~Spell();
 
     void setImageSet(std::string inName);
     void setImageName(std::string inName);
@@ -50,31 +49,15 @@ namespace Pixy
     std::string getTooltip() const;
     void updateTooltip();
 
-    void setCaster(Renderable* inCaster) {
-      mCaster = inCaster;
-    }
-    void setTarget(Renderable* inTarget) {
-      mTarget = inTarget;
-    };
-    Renderable* getCaster() const {
-      return mCaster;
-    };
-    Renderable* getTarget() const {
-      return mTarget;
-    };
-
     protected:
-    void copyFromSrc(const CSpell& src);
+    void copyFrom(const Spell& src);
     void generateTooltip();
 
     // interface info
     std::string   mImageSet;
     std::string   mImageName;
-    std::string mTooltip;
+    std::string   mTooltip;
     CEGUI::Window *mButton;
-
-    Renderable* mCaster;
-    Renderable* mTarget;
   };
 }
 

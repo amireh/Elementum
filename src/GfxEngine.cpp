@@ -1518,7 +1518,7 @@ namespace Pixy {
     return true;
   }
 
-  void GfxEngine::updateMe(CUnit* inUnit) {
+  void GfxEngine::updateMe(Mobile* inUnit) {
     if (mUpdatees.find(inUnit) != mUpdatees.end()) {
       mUpdatees.find(inUnit)->second = true;
       return;
@@ -1527,7 +1527,7 @@ namespace Pixy {
     mUpdatees.insert(std::make_pair(inUnit, true));
   }
 
-  void GfxEngine::stopUpdatingMe(CUnit* inUnit) {
+  void GfxEngine::stopUpdatingMe(Mobile* inUnit) {
     if (mUpdatees.find(inUnit) != mUpdatees.end())
       mUpdatees.find(inUnit)->second = false;
   }

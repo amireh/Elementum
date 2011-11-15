@@ -2,14 +2,14 @@
 SET(Elementum_SRCS
   ${Elementum_SRCS}
 
-  ../include/CDeck.h
-  ../include/CEntity.h
+  ../include/Deck.h
+  ../include/Entity.h
   ../include/Combat.h
   ../include/Connection.hpp
-  ../include/CPuppet.h
+  ../include/Puppet.h
   ../include/CResourceManager.h
-  ../include/CSpell.h
-  ../include/CUnit.h
+  ../include/Spell.h
+  ../include/Unit.h
   ../include/Engine.h
   ../include/FxEngine.h
   ../include/GameManager.h
@@ -21,17 +21,27 @@ SET(Elementum_SRCS
   #../include/Lobby.h
   ../include/NetworkManager.h
   ../include/PhyxEngine.h
-  ../include/Renderable.h
+  #~ ../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
 
+  Renderable.cpp
+  Unit.cpp
+  Animable.cpp
+  Mobile.cpp
+  Caster.cpp
+  Spell.cpp
+  Deck.cpp
+  Puppet.cpp
+  Entity.cpp
+
   Connection.cpp
 
-  Renderable.cpp
-  CPuppet.cpp
+  #~ Renderable.cpp
+  #~ CPuppet.cpp
   #CPuppetFactory.cpp
-  CSpell.cpp
-  CDeck.cpp
+
+  #~ CDeck.cpp
   CResourceManager.cpp
   CUnit.cpp
   #CUnitFactory.cpp
@@ -62,7 +72,7 @@ SET(PROJECT_LIBS
   ${LOG4CPP_LIBRARIES}
   ${LUA_LIBRARIES}
   ${ESHARED_LIBRARIES}
-  
+
   ${ParticleUniverse_LIBRARIES}
 
   #${OIS_LIBRARIES}
@@ -85,7 +95,7 @@ if (APPLE)
 
   LINK_DIRECTORIES(/opt/local/lib /usr/local/lib)
   LINK_LIBRARIES(${PROJECT_FRAMEWORKS} ${Boost_LIBRARIES} ${OIS_LIBRARIES})
-  
+
 elseif(UNIX)
   LIST(APPEND PROJECT_LIBS
     ${Boost_LIBRARIES}

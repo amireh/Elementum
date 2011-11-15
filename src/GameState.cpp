@@ -20,7 +20,7 @@
 namespace Pixy
 {
 
-  GAME_STATE GameState::getId() const {
+  char GameState::getId() const {
     return mId;
   }
 

@@ -31,12 +31,12 @@ namespace Pixy
   class ScriptEngine;
   class EventManager;
   class NetworkManager;
-  class CPuppet;
+  class Puppet;
   class Engine;
-  class CUnit;
+  class Unit;
 	class Combat : public GameState, public EventListener {
 	public:
-    typedef std::list<CPuppet*> puppets_t;
+    typedef std::list<Puppet*> puppets_t;
 
 		~Combat( void ){ };
 
@@ -57,23 +57,23 @@ namespace Pixy
 		static Combat* getSingletonPtr( void );
 		static Combat& getSingleton();
 
-		void registerPuppet(CPuppet* inPuppet);
+		void registerPuppet(Puppet* inPuppet);
 
-    void assignPuppet(CPuppet* inPuppet);
+    void assignPuppet(Puppet* inPuppet);
 
     puppets_t const& getPuppets();
-    CPuppet* getPuppet();
-    CPuppet* getEnemy(int inUID);
-    CPuppet* getPuppet(int inUID);
-    CPuppet* getActivePuppet();
+    Puppet* getPuppet();
+    Puppet* getEnemy(int inUID);
+    Puppet* getPuppet(int inUID);
+    Puppet* getActivePuppet();
 
-    CUnit* getUnit(int inUID);
+    Unit* getUnit(int inUID);
 
     void doBattle();
 
-    void unitAttacked(CUnit*);
+    void unitAttacked(Unit*);
 
-    void markForDeath(CUnit*);
+    void markForDeath(Unit*);
 
     //~ boost::asio::io_service& getIOService();
     boost::asio::strand& getStrand();
@@ -96,7 +96,7 @@ namespace Pixy
     bool onConnected(const Event&);
     bool onGameDataSynced(const Event&);
     bool onLogin(const Event& inEvt);
-    bool onSyncPuppets(const Event& inEvt); // __DEBUG__
+    bool onSynPuppets(const Event& inEvt); // __DEBUG__
     //~ bool onSyncGameData(const Event&);
     //~ bool onJoinQueue(const Event& inEvt);
     bool onJoinLobby(const Event& inEvt);
@@ -139,24 +139,24 @@ namespace Pixy
 		static Combat		*mCombat;
 
 		puppets_t		mPuppets;
-    CPuppet* mPuppet, *mActivePuppet, *mWaitingPuppet;
+    Puppet* mPuppet, *mActivePuppet, *mWaitingPuppet;
     std::string mPuppetName;
 
-    typedef std::list<CUnit*> attackers_t;
+    typedef std::list<Unit*> attackers_t;
     attackers_t mAttackers;
     attackers_t mChargers;
 
     // key is the attacker, value is the list of blockers in order
-    typedef std::map<CUnit*, attackers_t > blockers_t;
+    typedef std::map<Unit*, attackers_t > blockers_t;
     blockers_t mBlockers;
 
     /* mDeathlist contains a list of units to be immediately removed from play,
      * as in their objects destroyed. Note that this does not particularly
      * happen when the Unit _displays_ that it dies.
      *
-     * See CUnit::die() for more info.
+     * See Unit::die() for more info.
      */
-    typedef std::vector<CUnit*> deathlist_t;
+    typedef std::vector<Unit*> deathlist_t;
     deathlist_t mDeathlist;
 
     /* "Remote" deathlist is a list populated by commands sent from the
@@ -182,8 +182,8 @@ namespace Pixy
     //~ boost::asio::io_service::work mWork;
     //~ boost::thread* mWorker;
 
-    void onMoveBack(CUnit* inUnit);
-    void onMoveBackAndRest(CUnit* inUnit);
+    void onMoveBack(Unit* inUnit);
+    void onMoveBackAndRest(Unit* inUnit);
 
 	};
 } // end of namespace

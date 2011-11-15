@@ -63,9 +63,10 @@ using OgreBites::SdkCameraMan;
 using OgreBites::SdkTrayManager;
 namespace Pixy {
 
-  class CUnit;
-  class CPuppet;
-  class Renderable;
+  class Mobile;
+  class Entity;
+  class Unit;
+  class Puppet;
   class EventManager;
   class MousePicker;
   class GenericMousePicker;
@@ -130,7 +131,7 @@ namespace Pixy {
 		 * to the given Ogre::Entity for later retrieval, thus,
 		 * linking the GameObject with SceneObject.
 		 */
-		bool attachToScene(Renderable* inEntity);
+		bool attachToScene(Entity* inEntity);
 
 		//! Detaches a Pixy::Entity from an SceneNode and removes it from Scene
 		/*!
@@ -139,7 +140,7 @@ namespace Pixy {
 		 * stops rendering it. Also detaches Pixy::Entity
 		 * from the Ogre::Entity.
 		 */
-		void detachFromScene(Renderable* inEntity);
+		void detachFromScene(Entity* inEntity);
 
     void setupMovableTextOverlays();
 
@@ -222,12 +223,12 @@ namespace Pixy {
 		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
-		Renderable* getSelected();
+		Entity* getSelected();
 
-    void updateMe(CUnit*);
-    void stopUpdatingMe(CUnit*);
+    void updateMe(Mobile*);
+    void stopUpdatingMe(Mobile*);
 
-    void changeOwnership(Pixy::CUnit*);
+    void changeOwnership(Pixy::Unit*);
 
     OgreMax::OgreMaxScene* loadScene(std::string inOgreMaxScene);
     void unloadScene(OgreMax::OgreMaxScene* inScene);
@@ -274,16 +275,16 @@ namespace Pixy {
 
     Ogre::FrameEvent evt;
 
-    CPuppet *mPlayer, *mEnemy;
+    Puppet *mPlayer, *mEnemy;
 
-		Renderable* mSelected; // selected entity
+		Entity* mSelected; // selected entity
 
     //! used for setting Objects' direction in Scene
 		Vector3 mDirection[2];
 
     std::list<std::string> mUIInputCapturingElements;
 
-    typedef std::map<CUnit*, bool> updatees_t;
+    typedef std::map<Mobile*, bool> updatees_t;
     updatees_t mUpdatees;
 
 		/*!
@@ -291,7 +292,7 @@ namespace Pixy {
 		 * appropriate SceneNode. Must not be called directly;
 		 * only reachable via attachToScene()
 		 */
-		SceneNode* renderEntity(Renderable* inEntity);
+		SceneNode* renderEntity(Entity* inEntity);
 
 		/*!
 		 * \brief Creates a SceneNode with the given attributes
@@ -314,7 +315,7 @@ namespace Pixy {
 
     std::vector<Ogre::Vector3> mWaypoints[2][10];
 
-    std::list<Renderable*> mRenderables;
+    std::list<Entity*> mRenderables;
 
     MovableTextOverlayAttributes* attrs;
 
@@ -330,15 +331,15 @@ namespace Pixy {
     bool onEndBlockPhase(const Event&);
     bool onMatchFinished(const Event&);
 
-	  void highlight(Renderable* inEntity);
+	  void highlight(Entity* inEntity);
 	  void dehighlight();
 
     bool inBlockPhase;
 
     OgreMax::OgreMaxScene* mScene;
 
-    std::string getNodeIdPrefix(CPuppet*);
-    std::string getNodeIdPrefix(CUnit*);
+    std::string getNodeIdPrefix(Puppet*);
+    std::string getNodeIdPrefix(Unit*);
 
     GenericMousePicker *mGenericPicker;
     PolyMousePicker *mPolyPicker;
