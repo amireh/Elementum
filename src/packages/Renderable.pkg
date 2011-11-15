@@ -1,59 +1,36 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
 $#include "Renderable.h"
 
-class Renderable
+namespace Pixy
 {
-  public:
-  enum AnimID
-  {
-    ANIM_NONE=0,
-    ANIM_LIVE,
-    ANIM_IDLE,
-    ANIM_WALK,
-    ANIM_RUN,
-    ANIM_ATTACK,
-    ANIM_HIT,
-    ANIM_REST,
-    ANIM_GETUP,
-    ANIM_DIE
-  };
+	class Renderable
+	{
+    public:
 
-  Renderable(Pixy::Entity* inOwner);
-  virtual ~Renderable();
+		Renderable();
+		Renderable(const Renderable& src);
+		virtual ~Renderable();
 
-  Pixy::Entity* getEntity();
+		void attachSceneNode(Ogre::SceneNode* inNode);
+		Ogre::SceneNode* getSceneNode() const;
 
-  virtual void attachSceneNode(Ogre::SceneNode* inNode);
-  virtual Ogre::SceneNode* getSceneNode();
-  virtual void attachSceneObject(Ogre::Entity* inObject);
-  virtual Ogre::Entity* getSceneObject();
+		void attachSceneObject(Ogre::Entity* inObject);
+		Ogre::Entity* getSceneObject() const;
 
-  void registerAnimationState(AnimID inId, std::string inState, bool doLoop = true);
+    Ogre::Entity* attachExtension(std::string const& inMesh, std::string const& inBone);
 
-  void setScale(float inScale);
+    std::string const& getMesh() const;
+    std::string const& getMaterial() const;
+    void setMaterial(std::string const&);
+    void setMesh(std::string const&);
 
-  static void setAnimFadeSpeed(float inSpeed);
-  static float getAnimFadeSpeed();
-
-  static void setRotationFactor(float inFactor);
-
-  float animateLive();
-  float animateDie();
-  float animateIdle();
-  float animateWalk();
-  float animateRun();
-  float animateAttack();
-  float animateHit();
-  float animateRest();
-  float animateGetUp();
-
-  float _animate(AnimID inId);
-
-  void setup(Ogre::SceneManager*);
-
-  Ogre::Entity* attachExtension(std::string inMesh, std::string inBone);
-  //void setOrientation(Ogre::Quaternion inQuat);
-  //void resetOrientation();
-
-    void hide();
-    void show();
-};
+	}; // end of Renderable class
+} // end of Pixy namespace

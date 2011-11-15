@@ -1,6 +1,6 @@
 $#include "ogre/OgreRTT.h"
 $#include "Ogre.h"
-
+namespace Pixy {
   class OgreRTT : public Ogre::RenderTargetListener
   {
     public:
@@ -18,3 +18,4 @@ $#include "Ogre.h"
     void hide();
     void show();
   };
+}

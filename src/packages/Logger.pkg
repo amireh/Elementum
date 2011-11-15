@@ -1,2 +1,4 @@
 $#include "ScriptEngine.h"
-static void ScriptEngine::luaLog @ Log(std::string inMsg);
+namespace Pixy {
+  static void ScriptEngine::luaLog @ Log(std::string inMsg);
+}

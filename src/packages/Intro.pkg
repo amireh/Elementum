@@ -1,6 +1,6 @@
 $#include "Intro.h"
-
-class Intro : public GameState
+namespace Pixy {
+class Intro : public Pixy::GameState
 {
 	static Intro& getSingleton( void );
   static Intro* getSingletonPtr( void );
@@ -8,3 +8,4 @@ class Intro : public GameState
   std::string& getPuppetName() const;
   void setPuppetName(std::string inName);
 };
+}

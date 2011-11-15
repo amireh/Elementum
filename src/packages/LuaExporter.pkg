@@ -1,10 +1,10 @@
 $#include "LuaExporter.h"
-$#include "CPuppet.h"
-$#include "CUnit.h"
-$#include "CSpell.h"
-
-class LuaExporter : public BaseLuaExporter {
-  TOLUA_TEMPLATE_BIND(T, CUnitVec, CSpellVec, CPuppetVec, CUnitList, CSpellList, CPuppetList)
+$#include "Puppet.h"
+$#include "Unit.h"
+$#include "Spell.h"
+namespace Pixy {
+class LuaExporter : public Pixy::BaseLuaExporter {
+  TOLUA_TEMPLATE_BIND(T, UnitVec, SpellVec, PuppetVec, UnitList, SpellList, PuppetList)
 
   LuaExporter();
   virtual ~LuaExporter();
@@ -12,10 +12,11 @@ class LuaExporter : public BaseLuaExporter {
   void __export @ export(T const& container, const char* data_type, const char* out_table);
 };
 
-$renaming LuaExporter<CUnitVec> @ CUnitVecExporter
-$renaming LuaExporter<CSpellVec> @ CSpellVecExporter
-$renaming LuaExporter<CPuppetVec> @ CPuppetVecExporter
-$renaming LuaExporter<CUnitList> @ CUnitListExporter
-$renaming LuaExporter<CSpellList> @ CSpellListExporter
-$renaming LuaExporter<CPuppetList> @ CPuppetListExporter
+$renaming LuaExporter<UnitVec> @ UnitVecExporter
+$renaming LuaExporter<SpellVec> @ SpellVecExporter
+$renaming LuaExporter<PuppetVec> @ PuppetVecExporter
+$renaming LuaExporter<UnitList> @ UnitListExporter
+$renaming LuaExporter<SpellList> @ SpellListExporter
+$renaming LuaExporter<PuppetList> @ PuppetListExporter
 
+}

@@ -1,11 +1,12 @@
 $#include "GameManager.h"
-
+namespace Pixy {
 class GameManager
 {
 
-void changeState(GameState *inState);
+void changeState(Pixy::GameState *inState);
 static GameManager& getSingleton();
 void requestShutdown();
 
 };
 
+}

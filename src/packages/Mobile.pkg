@@ -1,0 +1,43 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
+$#include "Mobile.h"
+
+namespace Pixy
+{
+  class Unit;
+  class Renderable;
+	class Mobile
+	{
+    public:
+
+		Mobile();
+		Mobile(const Mobile& src);
+		virtual ~Mobile();
+
+    void move(int inWaypoint);
+
+    void step(unsigned long dt);
+    bool isMoving() const;
+
+    void setWaypoints(std::vector<Vector3>* inWp);
+
+    void setWalkSpeed(const float inSpeed);
+    float getWalkSpeed() const;
+
+    static void setDefaultWalkSpeed(const float inSpeed);
+    static float getDefaultWalkSpeed();
+
+    void rotateToEnemy();
+    void rotateTo(const Ogre::Vector3& inDest);
+
+    static void setRotationFactor(float inFactor);
+
+	}; // end of Mobile class
+} // end of Pixy namespace

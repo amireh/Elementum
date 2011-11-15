@@ -19,7 +19,7 @@ using Ogre::Real;
 using Ogre::Vector3;
 namespace Pixy
 {
-  class Unit;
+  //~ class Unit;
   class Renderable;
 	class Mobile
 	{
@@ -65,7 +65,7 @@ namespace Pixy
      * @brief
      * Hooks a callback method that will be invoked when this entity is done moving
      **/
-    void hookOnDoneMoving(boost::function<void(Unit*)>);
+    void hookOnDoneMoving(boost::function<void(Mobile*)>);
 
     void copyFrom(const Mobile& src);
 

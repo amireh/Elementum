@@ -1,6 +1,7 @@
 $#include "ScriptEngine.h"
 $#include <lua.h>
 
+namespace Pixy {
 class ScriptEngine : public Pixy::Engine, public Pixy::EventListener {
   static ScriptEngine* getSingletonPtr();
   std::string getScriptPathPrefix() const;
@@ -9,3 +10,4 @@ class ScriptEngine : public Pixy::Engine, public Pixy::EventListener {
   void callMeAfter(int inSeconds, std::string inFunc);
   int _passGameData();
 };
+}

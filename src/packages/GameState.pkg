@@ -1,8 +1,17 @@
 $#include "GameState.h"
 
+namespace Pixy {
+
 class GameState {
 
-	void changeState( GameState *state );
+  enum State {
+    Intro,
+    Combat
+  };
+
+	void changeState( Pixy::GameState *state );
 	void requestShutdown( void );
   bool isCurrentState();
 };
+
+}

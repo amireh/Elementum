@@ -29,7 +29,7 @@ namespace Pixy
     Entity& operator=(const Entity& rhs);
     virtual ~Entity();
 
-    void setup(Ogre::SceneManager*);
+    virtual void setup(Ogre::SceneManager*);
 
     virtual bool live();
 		virtual void die();

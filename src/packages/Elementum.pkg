@@ -3,56 +3,29 @@ $#include "pixy/required.h"
 $#include "Pixy.h"
 
 // start the Pixy namespace and include everything inside that
-namespace Pixy
-{
-
-  enum RACE
-  {
-    EARTH,
-    AIR,
-    WATER,
-    FIRE
-  };
-  enum RANK {
-    INVALID_RANK,
-    UNIT_T1,
-    UNIT_T2,
-    UNIT_T3,
-    UNIT_T4,
-    UNIT_T5,
-    PUPPET
-  };
-
-	enum UNIT_POS
-	{
-		POS_READY,
-		POS_CHARGING,
-		POS_DEFENCE,
-		POS_OFFENCE,
-		POS_ATTACK
-	};
-
-  $pfile "Renderable.pkg"
-  $pfile "CPuppet.pkg"
-  $pfile "CSpell.pkg"
-  $pfile "CDeck.pkg"
-  $pfile "CUnit.pkg"
+  $pfile "Animable.pkg"
+  $pfile "Caster.pkg"
+  $pfile "Combat.pkg"
+  $pfile "Deck.pkg"
+  $pfile "Engine.pkg"
+  $pfile "Entity.pkg"
   $pfile "FxEngine.pkg"
   $pfile "GameManager.pkg"
-  $pfile "InputManager.pkg"
   $pfile "GameState.pkg"
-  $pfile "Intro.pkg"
-  //$pfile "Lobby.pkg"
-  $pfile "Combat.pkg"
-  $pfile "UIEngine.pkg"
   $pfile "GfxEngine.pkg"
+  $pfile "InputManager.pkg"
+  $pfile "Intro.pkg"
   $pfile "Logger.pkg"
-  $pfile "NetworkManager.pkg"
-  $pfile "ScriptEngine.pkg"
   $pfile "LuaExporter.pkg"
+  $pfile "Mobile.pkg"
+  $pfile "NetworkManager.pkg"
   $pfile "OgreRTT.pkg"
-
-}
+  $pfile "Puppet.pkg"
+  $pfile "Renderable.pkg"
+  $pfile "ScriptEngine.pkg"
+  $pfile "Spell.pkg"
+  $pfile "UIEngine.pkg"
+  $pfile "Unit.pkg"
 
 $pfile "Ogre.pkg"
 $pfile "OgreBillboards.pkg"

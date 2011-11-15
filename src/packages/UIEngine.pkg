@@ -1,5 +1,6 @@
 $#include "UIEngine.h"
 
+namespace Pixy {
 class UIEngine : public Pixy::Engine, public Pixy::EventListener {
 
 ~UIEngine();
@@ -11,5 +12,6 @@ bool cleanup();
 
 void setMargin(CEGUI::Window*, CEGUI::UBox);
 void connectAnimation(CEGUI::Window*, std::string);
-void refreshTooltipSize(CEGUI::Window* inWindow, CSpell* inSpell);
+void refreshTooltipSize(CEGUI::Window* inWindow, Pixy::Spell* inSpell);
 };
+}

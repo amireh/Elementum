@@ -31,7 +31,7 @@ namespace Ogre {
 namespace Pixy {
 
   struct Event;
-  class Renderable;
+  class Entity;
   class GfxEngine;
 	class FxEngine : public ParticleUniverse::ParticleSystemListener, public Engine, public EventListener {
 
@@ -45,8 +45,8 @@ namespace Pixy {
 		virtual bool cleanup();
 
     ParticleUniverse::ParticleSystem* loadEffect(std::string inName);
-    ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, Renderable* inEntity, bool newInstance = false);
-    ParticleUniverse::ParticleSystem* playEffect(ParticleUniverse::ParticleSystem*, Renderable* inEntity);
+    ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, Entity* inEntity, bool newInstance = false);
+    ParticleUniverse::ParticleSystem* playEffect(ParticleUniverse::ParticleSystem*, Entity* inEntity);
     ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, const Ogre::Vector3 pos, bool newInstance = false);
 
     //~ void registerHighlightEffect(std::string inName);

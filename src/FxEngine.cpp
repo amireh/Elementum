@@ -11,7 +11,7 @@
 #include "ParticleUniverseSystemManager.h"
 #include "GfxEngine.h"
 #include "GameManager.h"
-#include "Renderable.h"
+#include "Entity.h"
 #include "GameState.h"
 #include "PixyUtility.h"
 
@@ -124,7 +124,7 @@ namespace Pixy {
     mHighlightEffect = mEffects.find(inName)->second;
   }*/
 
-  ParticleUniverse::ParticleSystem* FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Renderable* inEntity) {
+  ParticleUniverse::ParticleSystem* FxEngine::playEffect(ParticleUniverse::ParticleSystem* inEffect, Entity* inEntity) {
 
     if (inEffect->isAttached()) {
       //inEffect->stop();
@@ -139,7 +139,7 @@ namespace Pixy {
     return inEffect;
 	};
 
-  ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Renderable* inEntity, bool newInstance) {
+  ParticleUniverse::ParticleSystem* FxEngine::playEffect(std::string inEffect, Entity* inEntity, bool newInstance) {
     if (newInstance)
     {
       ParticleUniverse::ParticleSystem* effect

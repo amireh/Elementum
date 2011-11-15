@@ -77,8 +77,8 @@ namespace Pixy
 
     virtual void setAP(int inU);
     virtual void setHP(int inU);
-    virtual void setBaseHP(int inU);
-    virtual void setBaseAP(int inU);
+    //virtual void setBaseHP(int inU);
+    //virtual void setBaseAP(int inU);
 
     virtual bool attack(Pixy::Puppet* inTarget, boost::function<void()> callback);
     virtual bool attack(Pixy::Unit* inTarget, boost::function<void()> callback, bool block=false);
@@ -92,6 +92,8 @@ namespace Pixy
     virtual void getUp();
 
     bool isDying() const;
+
+    virtual void setup(Ogre::SceneManager*);
 
     protected:
 

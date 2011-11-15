@@ -1,0 +1,46 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
+$#include "Puppet.h"
+namespace Pixy
+{
+
+	class Puppet : public Pixy::Entity, public Pixy::BasePuppet
+	{
+  public:
+    typedef Pixy::Unit unit_t;
+    typedef Pixy::Deck deck_t;
+    typedef std::list<Pixy::Puppet::deck_t*> decks_t;
+    typedef std::list<Pixy::Puppet::unit_t*> units_t;
+
+		Puppet();
+		virtual ~Puppet();
+
+    virtual void attachDeck(Pixy::BaseDeck* inDeck);
+    virtual void detachDeck(std::string const& inName);
+		virtual void _setDeck(Pixy::BaseDeck* inDeck);
+		virtual Pixy::Puppet::deck_t* getDeck();
+    virtual Pixy::Puppet::decks_t const& getDecks() const;
+    virtual bool hasDeck(std::string const& inName) const;
+    virtual int nrDecks() const;
+
+		virtual void attachUnit(Pixy::Puppet::unit_t* inUnit);
+		virtual void detachUnit(int inUID, bool inRemove = true);
+		virtual Pixy::Puppet::unit_t* getUnit(int inUID);
+		virtual Pixy::Puppet::units_t& getUnits();
+    virtual bool hasUnitWithName(std::string const&) const;
+
+    virtual Pixy::Entity* toEntity() const;
+
+    //~ virtual void deserialize(const Event&);
+    virtual void updateTextOverlay();
+
+	};
+
+} // end of namespace

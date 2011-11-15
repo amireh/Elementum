@@ -1,0 +1,52 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
+$#include "Entity.h"
+
+namespace Pixy
+{
+  class Unit;
+  class Entity : public Pixy::BaseEntity, public Pixy::Caster, public Pixy::Animable, public Pixy::Renderable
+  {
+    public:
+
+    Entity();
+    Entity(const Entity& src);
+    virtual ~Entity();
+
+    void setup(Ogre::SceneManager*);
+
+    virtual bool live();
+		virtual void die();
+
+    /**
+     * Overridden from Pixy::Caster
+     **/
+		virtual void attachSpell(Pixy::BaseSpell* inSpell);
+		virtual void attachBuff(Pixy::BaseSpell* inSpell);
+
+		virtual Pixy::Caster* toCaster() const;
+
+    /**
+     * Overridden from Pixy::BaseEntity
+     **/
+    virtual void deserialize(const Pixy::Event& evt);
+
+    MovableTextOverlay* getText() const;
+    void setText(MovableTextOverlay* inT);
+    virtual void updateTextOverlay()=0;
+
+    void hide();
+    void show();
+
+    //~ void trackEnemyPuppet();
+    void trackEnemyUnit(Pixy::Unit* inUnit);
+
+  }; // end of class Entity
+} // end of Pixy namespace

@@ -83,10 +83,15 @@ namespace Pixy
     return inStream;
   }
 
+  void Entity::setup(Ogre::SceneManager* inSceneMgr)
+  {
+    mSceneMgr = inSceneMgr;
+    assert(mSceneNode && mSceneObject);
+    Animable::setup(this);
+  }
+
   bool Entity::live()
   {
-    BaseEntity::live();
-
     fIsDead = false;
 
     mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
@@ -98,8 +103,6 @@ namespace Pixy
 
   void Entity::die()
   {
-    BaseEntity::die();
-
     hide();
     GfxEngine::getSingletonPtr()->detachFromScene(this);
 

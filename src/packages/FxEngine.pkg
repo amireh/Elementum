@@ -1,20 +1,42 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
 $#include "FxEngine.h"
 
-class FxEngine : public Pixy::Engine, public Pixy::EventListener {
+namespace Ogre {
+  class Vector3;
+  class SceneManager;
+  class SceneNode;
+}
 
-public:
-virtual ~FxEngine();
-static FxEngine* getSingletonPtr();
-static FxEngine& getSingleton();
+namespace Pixy {
 
-ParticleUniverse::ParticleSystem* loadEffect(std::string name);
-//void registerHighlightEffect(std::string inName);
-ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, Renderable* inEntity, bool newInstance = false);
-ParticleUniverse::ParticleSystem* playEffect(ParticleUniverse::ParticleSystem*, Renderable* inEntity);
-ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, const Ogre::Vector3 pos, bool newInstance = false);
+  struct Event;
+  class Entity;
+  class GfxEngine;
+	class FxEngine : public ParticleUniverse::ParticleSystemListener, public Pixy::Engine, public Pixy::EventListener {
 
-void highlight(Renderable*);
-void dehighlight();
+	public:
+		virtual ~FxEngine();
+		static FxEngine& getSingleton();
+    static FxEngine* getSingletonPtr();
 
-void unloadAllEffects();
-};
+		virtual bool setup();
+		virtual void update(unsigned long lTimeElapsed);
+		virtual bool cleanup();
+
+    ParticleUniverse::ParticleSystem* loadEffect(std::string inName);
+    ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, Pixy::Entity* inEntity, bool newInstance = false);
+    ParticleUniverse::ParticleSystem* playEffect(ParticleUniverse::ParticleSystem*, Pixy::Entity* inEntity);
+    ParticleUniverse::ParticleSystem* playEffect(std::string inEffect, const Ogre::Vector3 pos, bool newInstance = false);
+
+    void unloadAllEffects();
+
+	};
+}

@@ -1,80 +1,179 @@
+/*
+ * Copyright (C) Shroom Studios, Inc - All Rights Reserved
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by Ahmad Amireh <ahmad@shroom-studios.com>, September 2011
+ */
+
 $#include "GfxEngine.h"
+$#include <Ogre.h>
 
-class GfxEngine : public Pixy::Engine, public Pixy::EventListener {
+// forward declarations
+/*namespace Ogre {
+  class Root;
+  class Camera;
+  class SceneManager;
+  class Viewport;
+  class RenderWindow;
+  class OverlayManager;
+  class Overlay;
+  class Vector3;
+  class Real;
+  class SceneNode;
+  class String;
+}*/
 
-public:
+/*
+namespace Hydrax {
+  class Hydrax;
+}
+namespace Caelum {
+  class CaelumSystem;
+}
+*/
+/*class DotSceneLoader;
 
-enum QueryFlags {
-  ENTITY_MASK = 1<<0,
-  TERRAIN_MASK = 1<<1
-};
 
-Ogre::Vector3 mPuppetPos[2];
-Ogre::Vector3 mPuppetScale, mUnitScale;
-Ogre::ColourValue mMTOFontColor;
-Ogre::String mMTOFontName;
-int mMTOFontSize;
-Ogre::String mMTOMaterialName;
+namespace OgreMax {
+  class OgreMaxScene;
+}
+namespace OgreBites {
+  class SdkCameraMan;
+  class SdkTrayManager;
+}
 
-Ogre::Vector3 mUnitMargin;
-Ogre::Vector3 mPuppetMargin;
-Ogre::Vector3 mCameraYawPitchDist;
+class HDRCompositor;
 
-int mPackSpacing;
+class MovableTextOverlay;
+class MovableTextOverlayAttributes;
 
-virtual ~GfxEngine();
-static GfxEngine* getSingletonPtr();
-//void setCamera(const Ogre::String& inCameraName);
+using Ogre::Vector3;
+using Ogre::Real;
+using Ogre::SceneNode;
+using Ogre::String;
+using OgreBites::SdkCameraMan;
+using OgreBites::SdkTrayManager;*/
+namespace Pixy {
 
-void disableMouseCaptureOverUIElement(std::string& inElementName);
-void enableMouseCaptureOverUIElement(std::string& inElementName);
+  /*class Mobile;
+  class Animable;
+  class Entity;
+  class Unit;
+  class Puppet;
+  class EventManager;
+  class MousePicker;
+  class GenericMousePicker;
+  class PolyMousePicker;*/
+  //~ class OgreRTT;
+	/*! \class GfxEngine
+	 *	\brief
+	 *	Handles all graphics related features of the game, acts as the immediate
+	 *	wrapper over OGRE3D. The game scene is entirely managed by and through
+	 *	this Engine.
+	 */
+	class GfxEngine : public Pixy::Engine, public Pixy::EventListener, public Pixy::InputListener, public Ogre::RenderTargetListener {
 
-void setupMovableTextOverlays();
+	public:
 
-bool attachToScene(Pixy::Renderable* inEntity);
-void detachFromScene(Pixy::Renderable* inEntity);
-Renderable* getSelected();
+    enum QueryFlags {
+      TERRAIN_MASK = 1<<0,
+      ENTITY_MASK = 1<<1
+    };
 
-//bool moveUnit(Pixy::Unit* inUnit, int inDestination);
+    enum MousePickingMode {
+      GENERIC,
+      POLY
+    };
 
-Ogre::Camera* getCamera();
-OgreBites::SdkCameraMan* getCameraMan();
-Ogre::Root* getRoot();
-Ogre::SceneManager* getSceneMgr();
-Ogre::Viewport* getViewport();
-Ogre::RenderWindow* getWindow();
+		static GfxEngine* getSingletonPtr();
 
-void setupSceneManager();
+    Ogre::ColourValue mMTOFontColor;
+    Ogre::String mMTOFontName;
+    int mMTOFontSize;
+    Ogre::String mMTOMaterialName;
+		//! used for setting Puppetes' starting positions in Scene
+		Ogre::Vector3 mPuppetPos[2];
+		Ogre::Vector3 mPuppetScale, mUnitScale;
 
-void setupViewports();
+    Ogre::Vector3 mUnitMargin;
+    Ogre::Vector3 mPuppetMargin;
+    int mPackSpacing;
 
-void setupCamera();
+    Ogre::Vector3 mCameraYawPitchDist;
 
-void setupTerrain();
+    void disableMouseCaptureOverUIElement(std::string const& inElementName);
+    void enableMouseCaptureOverUIElement(std::string const& inElementName);
 
-void setupLights();
+		void setCamera(const Ogre::String& inCameraName);
 
-void setupNodes();
+    void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
 
-void setupWaypoints();
+    void switchMousePickingMode();
+    int getMousePickingMode() const;
 
-void changeOwnership(Pixy::CUnit* inUnit);
+		//! Attaches a Pixy::Entity to an SceneNode and renders it
+		/*!
+		 * Called upon by CombatManager::createUnit();
+		 * Determines the appropriate empty SceneNode in which to render
+		 * the given inEntity. Moreover, "attaches" Pixy::Entity
+		 * to the given Ogre::Entity for later retrieval, thus,
+		 * linking the GameObject with SceneObject.
+		 */
+		bool attachToScene(Pixy::Entity* inEntity);
 
-OgreMax::OgreMaxScene* loadScene(std::string inOgreMaxScene);
-void unloadScene(OgreMax::OgreMaxScene* inScene);
+		//! Detaches a Pixy::Entity from an SceneNode and removes it from Scene
+		/*!
+		 * Called upon by CombatManager::destroyUnit();
+		 * Detaches the Ogre::Entity from SceneNode;
+		 * stops rendering it. Also detaches Pixy::Entity
+		 * from the Ogre::Entity.
+		 */
+		void detachFromScene(Pixy::Entity* inEntity);
 
-void enableCompositorEffect(std::string inEffect);
+    void setupMovableTextOverlays();
 
-void loadDotScene(std::string inFile, std::string inName);
+		OgreBites::SdkCameraMan* getCameraMan();
+		Ogre::Camera* getCamera();
+		Ogre::Root* getRoot();
+		Ogre::SceneManager* getSceneMgr();
+    Ogre::RenderWindow *getWindow();
+		Ogre::Viewport* getViewport();
 
-void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
-Ogre::Vector2 getScreenCoords(Ogre::MovableObject* inObject);
+		bool setupIntro();
+		bool setupCombat();
 
-void setYawPitchDist(Ogre::Vector3 inVec);
-void trackNode(Ogre::SceneNode* inNode);
+		void keyPressed( const OIS::KeyEvent &e );
+		void keyReleased( const OIS::KeyEvent &e );
 
-void _setUserAny(Ogre::MovableObject* inObj, void* any);
+		bool mouseMoved( const OIS::MouseEvent &e );
+		bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
+		bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
-void attachRTT(OgreRTT*);
-void detachRTT(OgreRTT*);
-};
+		Pixy::Entity* getSelected();
+
+    void updateMe(Pixy::Mobile*);
+    void stopUpdatingMe(Pixy::Mobile*);
+
+    void changeOwnership(Pixy::Unit*);
+
+    OgreMax::OgreMaxScene* loadScene(std::string inOgreMaxScene);
+    void unloadScene(OgreMax::OgreMaxScene* inScene);
+
+    void enableCompositorEffect(std::string inEffect);
+
+    void loadDotScene(std::string inScene, std::string inName);
+
+    Ogre::Vector2 getScreenCoords(Ogre::MovableObject* inObject);
+
+    void setYawPitchDist(Ogre::Vector3 inVec);
+    void trackNode(Ogre::SceneNode* inNode);
+
+    void _setUserAny(Ogre::MovableObject*, void*);
+
+    void attachRTT(Pixy::OgreRTT*);
+    void detachRTT(Pixy::OgreRTT*);
+
+	};
+}

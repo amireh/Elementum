@@ -26,6 +26,20 @@ namespace Pixy {
     mRenderable = 0;
   }
 
+  Animable::Animable(const Animable& src)
+  {
+    mRenderable = src.mRenderable;
+  }
+
+  Animable& Animable::operator=(const Animable& rhs)
+  {
+    if (&rhs == this)
+      return *this;
+
+    mRenderable = rhs.mRenderable;
+    return *this;
+  }
+
   void Animable::setup(Renderable* inRnd)
   {
     mRenderable = inRnd;

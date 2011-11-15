@@ -37,6 +37,29 @@ namespace Pixy
     mSceneMgr = 0;
 	}
 
+  Renderable::Renderable(const Renderable& src)
+  {
+    copyFrom(src);
+  }
+
+  Renderable& Renderable::operator=(const Renderable& rhs)
+  {
+    if (&rhs != this)
+      copyFrom(rhs);
+
+    return *this;
+  }
+
+  void Renderable::copyFrom(const Renderable& src)
+  {
+    mSceneNode = src.mSceneNode;
+    mSceneObject = src.mSceneObject;
+    mSceneMgr = src.mSceneMgr;
+    mExtensions = src.mExtensions;
+    mMesh = src.mMesh;
+    mMaterial = src.mMaterial;
+  }
+
 	void Renderable::attachSceneNode(Ogre::SceneNode* inNode)
   {
     mSceneNode = inNode;

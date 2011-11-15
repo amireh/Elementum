@@ -25,6 +25,19 @@ namespace Pixy {
     mRenderable = 0;
   }
 
+  Mobile::Mobile(const Mobile& src)
+  {
+    copyFrom(src);
+  }
+
+  Mobile& Mobile::operator=(const Mobile& rhs)
+  {
+    if (&rhs != this)
+      copyFrom(rhs);
+
+    return *this;
+  }
+
   void Mobile::copyFrom(const Mobile& src)
   {
     fIsMoving = src.fIsMoving;
@@ -284,5 +297,10 @@ namespace Pixy {
     mOrientDest = (src.getRotationTo(inDest - mSceneNode->getPosition())) * mOrientSrc;
     mRotProgress = 0;
     fRotating = true;
+  }
+
+  void Mobile::hookOnDoneMoving(boost::function<void(Mobile*)> inCallback)
+  {
+    mCallback = inCallback;
   }
 }

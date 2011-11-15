@@ -45,7 +45,7 @@ namespace Pixy
 
     virtual Entity* toEntity() const;
 
-    virtual void deserialize(const Event&);
+    //~ virtual void deserialize(const Event&);
     virtual void updateTextOverlay();
 
 	protected:

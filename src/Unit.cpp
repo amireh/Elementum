@@ -89,7 +89,11 @@ namespace Pixy
     return static_cast<Entity*>((Unit*)this);
   }
 
-
+  void Unit::setup(Ogre::SceneManager* inSceneMgr)
+  {
+    Entity::setup(inSceneMgr);
+    Mobile::setup(this);
+  }
 
   bool Unit::live() {
     Entity::live();

@@ -13,12 +13,12 @@
 #include "BaseLuaExporter.h"
 #include "ScriptEngine.h"
 
-typedef std::vector<Pixy::CUnit*> CUnitVec;
-typedef std::vector<Pixy::CSpell*> CSpellVec;
-typedef std::vector<Pixy::CPuppet*> CPuppetVec;
-typedef std::list<Pixy::CUnit*> CUnitList;
-typedef std::list<Pixy::CSpell*> CSpellList;
-typedef std::list<Pixy::CPuppet*> CPuppetList;
+typedef std::vector<Pixy::Unit*> UnitVec;
+typedef std::vector<Pixy::Spell*> SpellVec;
+typedef std::vector<Pixy::Puppet*> PuppetVec;
+typedef std::list<Pixy::Unit*> UnitList;
+typedef std::list<Pixy::Spell*> SpellList;
+typedef std::list<Pixy::Puppet*> PuppetList;
 
 namespace Pixy {
 

@@ -39,6 +39,8 @@ namespace Pixy
 
 		protected:
 
+    void copyFrom(const Renderable& src);
+
 		Ogre::SceneNode     *mSceneNode;
 		Ogre::Entity        *mSceneObject;
     Ogre::SceneManager  *mSceneMgr;
