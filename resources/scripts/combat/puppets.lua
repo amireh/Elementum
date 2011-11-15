@@ -43,15 +43,15 @@ end
 Puppets.attackWithAll = function()
   if Active:getUID() ~= SelfPuppet:getUID() then return true end
 
-  local exporter = Pixy.CUnitListExporter()
-  exporter:export(SelfPuppet:getUnits(), "Pixy::CUnit", "__TempUnits")
+  local exporter = Pixy.UnitListExporter()
+  exporter:export(SelfPuppet:getUnits(), "Pixy::Unit", "__TempUnits")
   local e = Pixy.Event(Pixy.EventUID.Charge)
   for unit in list_iter(__TempUnits) do
     print("checking if unit " .. unit:getName() .. " is viable for charging")
     if unit:getAP() > 0
       and (not unit:isResting())
       and (not unit:isMoving())
-      and (unit:getPosition() == Pixy.POS_READY)
+      and (unit:isReady())
     then
       e:setProperty("UID", unit:getUID())
       NetMgr:send(e)

@@ -186,6 +186,7 @@ namespace Pixy {
 
   void EntityManager::clear()
   {
+    mLog->infoStream() << "\tdestroying " << mPuppets.size() << " puppets";
     while (!mPuppets.empty())
     {
       delete mPuppets.back();
@@ -193,6 +194,7 @@ namespace Pixy {
     }
 
     for (int i; i < 4; ++i) {
+      mLog->infoStream() << "\tdestroying " << mSpells[i].size() << " spells of race " << i;
       while (!mSpells[i].empty()) {
         // delete only the spells that aren't minion abilities
         //~ if (mSpells[i].back()->getCaster() == 0)
@@ -201,11 +203,13 @@ namespace Pixy {
         mSpells[i].pop_back();
       }
 
+      mLog->infoStream() << "\tdestroying " << mUnits[i].size() << " units of race " << i;
       while (!mUnits[i].empty()) {
         delete mUnits[i].back();
         mUnits[i].pop_back();
       }
 
+      mLog->infoStream() << "\tdestroying " << mTalents[i].size() << " talents of race " << i;
       while (!mTalents[i].empty()) {
         delete mTalents[i].back();
         mTalents[i].pop_back();

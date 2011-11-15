@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Tue Nov 15 22:30:14 2011.
+** Generated automatically by tolua++-1.0.92 on Tue Nov 15 22:56:26 2011.
 */
 
 #ifndef __cplusplus
@@ -357,85 +357,87 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"OgreBites::SdkCameraMan");
  tolua_usertype(tolua_S,"Ogre::Resource");
  tolua_usertype(tolua_S,"Pixy::Caster");
- tolua_usertype(tolua_S,"Ogre::Root");
- tolua_usertype(tolua_S,"OIS::Keyboard");
- tolua_usertype(tolua_S,"Pixy::EventListener");
  tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystem");
  tolua_usertype(tolua_S,"ParticleUniverse::ParticleTechnique");
- tolua_usertype(tolua_S,"Pixy::BaseUnit");
+ tolua_usertype(tolua_S,"Ogre::Root");
+ tolua_usertype(tolua_S,"OIS::Keyboard");
+ tolua_usertype(tolua_S,"Pixy::EventManager");
  tolua_usertype(tolua_S,"ParticleUniverse::Particle");
- tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"CEGUI::ListboxTextItem");
+ tolua_usertype(tolua_S,"Pixy::BaseUnit");
  tolua_usertype(tolua_S,"CEGUI::FormattedListboxTextItem");
+ tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"OIS::KeyEvent");
- tolua_usertype(tolua_S,"Pixy::Mobile");
+ tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Ogre::Any");
+ tolua_usertype(tolua_S,"Ogre::Billboard");
+ tolua_usertype(tolua_S,"Pixy::BaseLuaExporter");
  tolua_usertype(tolua_S,"Pixy::InputListener");
  tolua_usertype(tolua_S,"Ogre::MovableObject");
- tolua_usertype(tolua_S,"Ogre::Billboard");
+ tolua_usertype(tolua_S,"Ogre::CompositorManager");
  tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystemListener");
  tolua_usertype(tolua_S,"Ogre::Vector2");
  tolua_usertype(tolua_S,"Pixy::BaseSpell");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<UnitList>");
- tolua_usertype(tolua_S,"Ogre::Node");
+ tolua_usertype(tolua_S,"Ogre::StaticGeometry");
  tolua_usertype(tolua_S,"Pixy::BasePuppet");
  tolua_usertype(tolua_S,"Pixy::FxEngine");
- tolua_usertype(tolua_S,"Ogre::CompositorManager");
- tolua_usertype(tolua_S,"Ogre::RibbonTrail");
- tolua_usertype(tolua_S,"std::vector<Vector3>");
+ tolua_usertype(tolua_S,"Ogre::SceneManager");
+ tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
+ tolua_usertype(tolua_S,"Pixy::OgreRTT");
  tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<SpellList>");
- tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
- tolua_usertype(tolua_S,"Pixy::ScriptEngine");
  tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
- tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
  tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
  tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
+ tolua_usertype(tolua_S,"Ogre::RibbonTrail");
  tolua_usertype(tolua_S,"Ogre::Viewport");
+ tolua_usertype(tolua_S,"Ogre::RenderTarget::FrameStats");
  tolua_usertype(tolua_S,"Ogre::MeshPtr");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<UnitVec>");
- tolua_usertype(tolua_S,"Ogre::RenderTarget::FrameStats");
- tolua_usertype(tolua_S,"Ogre::CompositorLogic");
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
- tolua_usertype(tolua_S,"Ogre::StaticGeometry");
+ tolua_usertype(tolua_S,"Ogre::CompositorLogic");
+ tolua_usertype(tolua_S,"Ogre::Camera");
+ tolua_usertype(tolua_S,"Ogre::Angle");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
  tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Combat");
- tolua_usertype(tolua_S,"Ogre::Camera");
+ tolua_usertype(tolua_S,"Ogre::Entity");
  tolua_usertype(tolua_S,"Pixy::Unit");
- tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"MovableTextOverlay");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<SpellVec>");
  tolua_usertype(tolua_S,"Pixy::Animable");
- tolua_usertype(tolua_S,"Pixy::Deck");
- tolua_usertype(tolua_S,"Ogre::Entity");
+ tolua_usertype(tolua_S,"Ogre::Node");
+ tolua_usertype(tolua_S,"std::vector<Vector3>");
  tolua_usertype(tolua_S,"Ogre::BillboardSet");
  tolua_usertype(tolua_S,"Ogre::Plane");
  tolua_usertype(tolua_S,"Pixy::BaseCaster");
  tolua_usertype(tolua_S,"Pixy::Intro");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<PuppetVec>");
  tolua_usertype(tolua_S,"Ogre::CompositorInstance");
- tolua_usertype(tolua_S,"Ogre::Angle");
+ tolua_usertype(tolua_S,"Pixy::Deck");
  tolua_usertype(tolua_S,"std::list<Pixy::Puppet::unit_t*>");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"boost::asio::strand");
  tolua_usertype(tolua_S,"Ogre::Quaternion");
  tolua_usertype(tolua_S,"Ogre::ResourceManager");
- tolua_usertype(tolua_S,"Ogre::SceneManager");
- tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Pixy::OgreRTT");
+ tolua_usertype(tolua_S,"Ogre::SceneNode");
+ tolua_usertype(tolua_S,"Pixy::Mobile");
+ tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"std::type_info");
- tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
+ tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
  tolua_usertype(tolua_S,"OIS::MouseEvent");
- tolua_usertype(tolua_S,"Pixy::BaseLuaExporter");
- tolua_usertype(tolua_S,"Pixy::EventManager");
+ tolua_usertype(tolua_S,"Pixy::BaseDeck");
+ tolua_usertype(tolua_S,"Pixy::EventListener");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<PuppetList>");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
- tolua_usertype(tolua_S,"MovableTextOverlay");
- tolua_usertype(tolua_S,"Pixy::Renderable");
- tolua_usertype(tolua_S,"Pixy::BaseDeck");
+ tolua_usertype(tolua_S,"std::vector<Pixy::Deck::spell_t const*>");
+ tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
+ tolua_usertype(tolua_S,"std::list<Pixy::Caster::spell_t*>");
  tolua_usertype(tolua_S,"Pixy::BaseEntity");
  tolua_usertype(tolua_S,"Pixy::EntityManager");
 }
@@ -1821,8 +1823,8 @@ static int tolua_Elementum_Pixy_Caster_getSpells00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpells'", NULL);
 #endif
   {
-   Pixy::Caster::spells_t const& tolua_ret = (Pixy::Caster::spells_t const&)  self->getSpells();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
+    std::list<Pixy::Caster::spell_t*>& tolua_ret = (  std::list<Pixy::Caster::spell_t*>&)  self->getSpells();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"std::list<Pixy::Caster::spell_t*>");
   }
  }
  return 1;
@@ -1853,8 +1855,8 @@ static int tolua_Elementum_Pixy_Caster_getBuffs00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBuffs'", NULL);
 #endif
   {
-   Pixy::Caster::spells_t const& tolua_ret = (Pixy::Caster::spells_t const&)  self->getBuffs();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
+    std::list<Pixy::Caster::spell_t*>& tolua_ret = (  std::list<Pixy::Caster::spell_t*>&)  self->getBuffs();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"std::list<Pixy::Caster::spell_t*>");
   }
  }
  return 1;
@@ -1972,7 +1974,7 @@ static int tolua_Elementum_Pixy_Caster_hasBuffWithName00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::Caster",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -1980,12 +1982,12 @@ static int tolua_Elementum_Pixy_Caster_hasBuffWithName00(lua_State* tolua_S)
 #endif
  {
   Pixy::Caster* self = (Pixy::Caster*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* tolua_var_1 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string tolua_var_1 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuffWithName'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->hasBuffWithName(*tolua_var_1);
+   bool tolua_ret = (bool)  self->hasBuffWithName(tolua_var_1);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
@@ -2781,7 +2783,7 @@ static int tolua_Elementum_Pixy_GfxEngine_disableMouseCaptureOverUIElement00(lua
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::GfxEngine",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2789,12 +2791,12 @@ static int tolua_Elementum_Pixy_GfxEngine_disableMouseCaptureOverUIElement00(lua
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* inElementName = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string inElementName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'disableMouseCaptureOverUIElement'", NULL);
 #endif
   {
-   self->disableMouseCaptureOverUIElement(*inElementName);
+   self->disableMouseCaptureOverUIElement(inElementName);
   }
  }
  return 0;
@@ -2814,7 +2816,7 @@ static int tolua_Elementum_Pixy_GfxEngine_enableMouseCaptureOverUIElement00(lua_
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::GfxEngine",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2822,12 +2824,12 @@ static int tolua_Elementum_Pixy_GfxEngine_enableMouseCaptureOverUIElement00(lua_
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* inElementName = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string inElementName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'enableMouseCaptureOverUIElement'", NULL);
 #endif
   {
-   self->enableMouseCaptureOverUIElement(*inElementName);
+   self->enableMouseCaptureOverUIElement(inElementName);
   }
  }
  return 0;
@@ -2855,7 +2857,7 @@ static int tolua_Elementum_Pixy_GfxEngine_setCamera00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::String inCameraName = ((const Ogre::String)  tolua_tocppstring(tolua_S,2,0));
+  Ogre::String inCameraName = ((Ogre::String)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCamera'", NULL);
 #endif
@@ -7456,8 +7458,8 @@ static int tolua_Elementum_Pixy_Deck_getSpells00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpells'", NULL);
 #endif
   {
-   Pixy::Deck::spells_t const& tolua_ret = (Pixy::Deck::spells_t const&)  self->getSpells();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
+    std::vector<Pixy::Deck::spell_t const*>& tolua_ret = (  std::vector<Pixy::Deck::spell_t const*>&)  self->getSpells();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"std::vector<Pixy::Deck::spell_t const*>");
   }
  }
  return 1;

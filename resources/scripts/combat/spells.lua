@@ -67,7 +67,7 @@ Spells.reqCastSpell = function(lSpell)
       UI.ShowError("You need to select a target")
       return true
     end
-    evt:setProperty("T", target:getEntity():getUID())
+    evt:setProperty("T", target:getUID())
   end
   NetMgr:send(evt)
 
@@ -94,7 +94,7 @@ Spells.onProcessBuff = function(inCasterRnd, inTargetRnd, inSpell)
   if instance:isDone() then instance:destroy() end
 end
 
-Spells.onCastSpell = function(inCasterRnd, inTargetRnd, inSpell)
+Spells.onCastSpell = function(inCaster, inTarget, inSpell)
   -- 1. if there is no registered handler for this spell, error out
   local definition = Definitions[inSpell:getName()]
   if not definition then
@@ -102,7 +102,7 @@ Spells.onCastSpell = function(inCasterRnd, inTargetRnd, inSpell)
   end
 
   -- 2. create a new instance of the SpellHandler for this type of spell
-  local instance = SpellHandler:new(inSpell, inCasterRnd, inTargetRnd, definition)
+  local instance = SpellHandler:new(inSpell, inCaster, inTarget, definition)
   instance:bootstrap()
 
   -- 3. track it

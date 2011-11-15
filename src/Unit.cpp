@@ -18,18 +18,26 @@ namespace Pixy
 {
   Unit::Unit()
   : mTimer(0),
-    fDying(false),
-    mEnemy(0)
+    mEnemy(0),
+    mAttackTarget(0),
+    mBlockTarget(0),
+    mLog(0),
+    fDying(false)
   {
-    mLog = 0;
     setRank(Rank::Unit);
   };
 
 
   Unit::~Unit()
   {
+    mBlockers.clear();
+    mEnemy = 0;
+    mBlockTarget = 0;
+    mAttackTarget = 0;
+
     if (mTimer)
       delete mTimer;
+    mTimer = 0;
 
     if (mLog)
     {

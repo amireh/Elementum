@@ -54,10 +54,10 @@ namespace Pixy
     void hide();
     void show();
 
-    void trackEnemyPuppet();
+    //void trackEnemyPuppet();
     void trackEnemyUnit(Unit* inUnit);
 
-    void stepBody(unsigned long dt);
+    //void stepBody(unsigned long dt);
 
     protected:
 
@@ -67,12 +67,12 @@ namespace Pixy
     private:
 
 		//~ Ogre::SceneNode     *mSceneNode;
-    Ogre::Vector3       mScale;
+    //Ogre::Vector3       mScale;
 		//~ Ogre::Entity        *mSceneObject;
     MovableTextOverlay  *mText;
     //~ Ogre::SceneManager  *mSceneMgr;
-    typedef std::vector<Ogre::Entity*> extensions_t;
-    extensions_t mExtensions;
+    //typedef std::vector<Ogre::Entity*> extensions_t;
+    //extensions_t mExtensions;
 
   }; // end of class Entity
 } // end of Pixy namespace

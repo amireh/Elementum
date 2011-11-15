@@ -103,10 +103,10 @@ namespace Pixy {
 
     Ogre::Vector3 mCameraYawPitchDist;
 
-    void disableMouseCaptureOverUIElement(std::string const& inElementName);
-    void enableMouseCaptureOverUIElement(std::string const& inElementName);
+    void disableMouseCaptureOverUIElement(std::string inElementName);
+    void enableMouseCaptureOverUIElement(std::string inElementName);
 
-		void setCamera(const Ogre::String& inCameraName);
+		void setCamera(Ogre::String inCameraName);
 
     void createSphere(const std::string& strName, const float r, const int nRings = 16, const int nSegments = 16);
 

@@ -24,7 +24,7 @@ namespace Pixy
 	public:
     typedef Pixy::Spell spell_t;
     typedef Pixy::Caster caster_t;
-    typedef std::vector<spell_t const*> spells_t;
+    typedef std::vector<Pixy::Deck::spell_t const*> spells_t;
 
 		Deck(Pixy::Deck::caster_t const*);
 		virtual ~Deck();
@@ -33,7 +33,7 @@ namespace Pixy
      * @brief
      * Returns the spell pool this Deck contains.
      **/
-    virtual Pixy::Deck::spells_t const& getSpells() const;
+    virtual Pixy::Deck::spells_t& getSpells() const;
 
     /**
      * @brief

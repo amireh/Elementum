@@ -20,33 +20,18 @@ namespace Pixy
 {
 
   Entity::Entity()
+  : mText(0)
   {
-    mSceneNode = 0;
-    mSceneObject = 0;
-    mText = 0;
-    mSceneMgr = 0;
-    //mScale = Ogre::Vector3(1,1,1);
   }
 
   Entity::~Entity()
   {
-
-    for (extensions_t::iterator ext = mExtensions.begin(); ext != mExtensions.end(); ++ext)
-    {
-      mSceneMgr->destroyEntity((*ext)->getName());
-    }
-    mExtensions.clear();
-
-    if (mText)
-      delete mText;
-
-    if (mSceneNode) {
-      mSceneNode->setVisible(true);
+    if (mSceneNode && mSceneObject) {
       GfxEngine::getSingletonPtr()->detachFromScene(this);
     }
 
-		mSceneNode = 0;
-    mSceneObject = 0;
+    if (mText)
+      delete mText;
 
     mText = 0;
   }
@@ -72,6 +57,8 @@ namespace Pixy
   {
     BaseEntity::copyFrom(src);
     Caster::copyFrom(src);
+
+    mText = src.mText;
   }
 
   std::ostream& Entity::toStream(std::ostream& inStream)

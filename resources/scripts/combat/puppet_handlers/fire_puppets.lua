@@ -2,8 +2,8 @@ local create_puppet = function(puppet)
   puppet:setMesh("DarkKnight.mesh")
   puppet:setMaterial("Elementum/DarkKnight/Fire")
 
-  rnd = puppet:getRenderable()
-  rnd:setScale(5)
+  rnd = puppet
+  rnd:getSceneNode():setScale(5)
   GfxEngine:attachToScene(rnd)
   local sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
   sword:setMaterialName("Elementum/DarkKnight/Fire/Sword")
@@ -29,4 +29,4 @@ local create_puppet = function(puppet)
   rnd:animateIdle()
 end
 
-subscribe_puppet(Pixy.FIRE, create_puppet)
+subscribe_puppet(Pixy.Race.Fire, create_puppet)

@@ -5,7 +5,9 @@ namespace Pixy {
   float Animable::mAnimeFadeSpeed = 7.5f;
 
   Animable::Animable()
-  : mRenderable(0)
+  : mRenderable(0),
+    mCurrentAnim(0),
+    mLoopAnim(0)
   {
   }
 
@@ -22,12 +24,18 @@ namespace Pixy {
 
       itr->second.clear();
     }
+    mAnims.clear();
+    mAnimQueue.clear();
 
     mRenderable = 0;
+    mCurrentAnim = 0;
+    mLoopAnim = 0;
   }
 
   Animable::Animable(const Animable& src)
   {
+    mLoopAnim = 0;
+    mCurrentAnim = 0;
     mRenderable = src.mRenderable;
   }
 
@@ -36,6 +44,8 @@ namespace Pixy {
     if (&rhs == this)
       return *this;
 
+    mLoopAnim = 0;
+    mCurrentAnim = 0;
     mRenderable = rhs.mRenderable;
     return *this;
   }

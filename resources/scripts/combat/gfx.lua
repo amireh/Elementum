@@ -50,9 +50,9 @@ Gfx.PrepareScene = function()
   GfxEngine.mPuppetMargin.z = Defaults.PuppetMarginZ
   GfxEngine.mPackSpacing = Defaults.PackSpacing
 
-  Pixy.CUnit:setDefaultWalkSpeed(Defaults.UnitWalkSpeed)
-  Pixy.Renderable:setRotationFactor(Defaults.UnitRotSpeed)
-  Pixy.Renderable:setAnimFadeSpeed(Defaults.AnimFadeSpeed)
+  Pixy.Mobile:setDefaultWalkSpeed(Defaults.UnitWalkSpeed)
+  Pixy.Mobile:setRotationFactor(Defaults.UnitRotSpeed)
+  Pixy.Animable:setAnimFadeSpeed(Defaults.AnimFadeSpeed)
 
   -- Viewport
   Viewport:setBackgroundColour(Ogre.ColourValue(0,0,0))
@@ -311,10 +311,10 @@ Gfx.cleanup = function()
 end
 
 -- RTT Portraits
-Gfx.ShowPortrait = function(rnd, is_friendly)
+Gfx.ShowPortrait = function(target, is_friendly)
 
   -- Puppet sizes are much bigger than units, so we position the camera accordingly on Y/Z axes
-  local is_puppet = rnd:getEntity() == SelfPuppet or rnd:getEntity() == EnemyPuppet
+  local is_puppet = target == SelfPuppet or target == EnemyPuppet
   local zpad, ypad = nil
   if is_puppet then
     ypad = function(pos, size) return pos.y + size.y * 0.75 end
@@ -326,8 +326,8 @@ Gfx.ShowPortrait = function(rnd, is_friendly)
 
   -- we will use both the node's position and the entity's AABB to calculate
   -- the camera's position
-  local pos = rnd:getSceneNode():getPosition()
-  local size = rnd:getSceneObject():getWorldBoundingBox(true):getSize()
+  local pos = target:getSceneNode():getPosition()
+  local size = target:getSceneObject():getWorldBoundingBox(true):getSize()
   -- DEBUG
   do
     --print("\tSelected Size: " .. size.x .. "," .. size.y .. "," .. size.z)
@@ -346,11 +346,11 @@ end
 Gfx.ShowSelection = function(rnd, is_friendly)
   Gfx.HideSelection()
 
-  print("Selecting entity " .. rnd:getEntity():getName())
+  print("Selecting entity " .. rnd:getName())
 
   --~ entity:getSceneNode():attachObject(BBNode)
   rnd:getSceneNode():addChild(BBNode)
-  if (rnd:getEntity():getRank() == Pixy.PUPPET) then
+  if rnd:isPuppet() then
     BBSet:setDefaultDimensions(PuppetDim.Width, PuppetDim.Height)
   else
     BBSet:setDefaultDimensions(
@@ -381,11 +381,11 @@ Gfx.Highlight = function(rnd)
   Selected = rnd
 
   -- is the entity owned by the player or the enemy?
-  SelectedIsFriendly = Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID()
+  SelectedIsFriendly = Selected:getOwner():getUID() == SelfPuppet:getUID()
 
   Gfx.ShowSelection(Selected, SelectedIsFriendly)
   Gfx.ShowPortrait(Selected, SelectedIsFriendly)
-  UI.Highlight(Selected:getEntity(), SelectedIsFriendly)
+  UI.Highlight(Selected, SelectedIsFriendly)
   Buffs.Show(Selected, SelectedIsFriendly)
 
   return true
@@ -398,12 +398,12 @@ Gfx.Dehighlight = function()
   if not Selected then return true end
   --if (Selected) then
     Gfx.HideSelection(Selected)
-    Gfx.ShowPortrait(Selected:getEntity():getOwner():getRenderable(), SelectedIsFriendly)
-    UI.Highlight(Selected:getEntity():getOwner(), SelectedIsFriendly)
+    Gfx.ShowPortrait(Selected:getOwner(), SelectedIsFriendly)
+    UI.Highlight(Selected:getOwner(), SelectedIsFriendly)
     if SelectedIsFriendly then
-      Buffs.Show(SelfPuppet:getRenderable(), true)
+      Buffs.Show(SelfPuppet, true)
     else
-      Buffs.Show(EnemyPuppet:getRenderable(), false)
+      Buffs.Show(EnemyPuppet, false)
     end
 
   --end
@@ -416,7 +416,7 @@ end
 
 Gfx.onEntitySelected = function(inEvt)
   local rnd = inEvt.Any
-  rnd = tolua.cast(rnd, "Pixy::Renderable")
+  rnd = tolua.cast(rnd, "Pixy::Entity")
 
   return Gfx.Highlight(rnd)
 end

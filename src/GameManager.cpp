@@ -568,7 +568,7 @@ namespace Pixy
 	void GameManager::initLogger() {
     using boost::filesystem::path;
 
-		std::string lLogPath = (path(mLogPath) / "Pixy.log").make_preferred().string();
+		std::string lLogPath = (path(mLogPath) / "Elementum.log").make_preferred().string();
 		std::cout << "| Initting log4cpp logger @ " << lLogPath << "!\n";
 
 		log4cpp::Appender* lApp = new

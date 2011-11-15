@@ -227,7 +227,7 @@ function HandItem:Validate()
   --~ Pixy.Log("\tcurrent self.Spell: " .. self.Spell:getName() .. "#" .. self.Spell:getUID())
   -- validate that Selected exists and is a friendly target if the self.Spell requires a friendly target
   if self.Spell:requiresTarget() and not self.Spell:requiresEnemyTarget()
-  and (not Selected or (Selected and Selected:getEntity():getOwner():getUID() ~= SelfPuppet:getUID()))
+  and (not Selected or (Selected and Selected:getOwner():getUID() ~= SelfPuppet:getUID()))
   then
     UI.setValidationMsg("This spell requires a friendly target.")
     return false
@@ -235,7 +235,7 @@ function HandItem:Validate()
 
   -- validate that Selected exists and is an enemy target if the self.Spell requires an enemy target
   if self.Spell:requiresEnemyTarget()
-  and (not Selected or (Selected and Selected:getEntity():getOwner():getUID() == SelfPuppet:getUID()))
+  and (not Selected or (Selected and Selected:getOwner():getUID() == SelfPuppet:getUID()))
   then
     UI.setValidationMsg("This spell requires an enemy target.")
     return false
@@ -264,7 +264,7 @@ function HandItem:Validate()
     return false
   end
 
-  if (inBlockPhase and self.Spell:getPhase() == Pixy.CASTING) then
+  if (inBlockPhase and self.Spell:getPhase() == Pixy.Spell.Phase.Casting) then
     --~ Pixy.Log("-=-= self.Spell isn't castable in this phase")
     UI.setValidationMsg("This spell can not be used in blocking phase.")
     return false
@@ -448,8 +448,8 @@ Hand.Update = function(e)
 end
 
 Hand.UpdateTooltips = function()
-  local exporter = Pixy.CSpellListExporter()
-  exporter:export(SelfPuppet:getHand(), "Pixy::CSpell", "Temp")
+  local exporter = Pixy.SpellListExporter()
+  exporter:export(SelfPuppet:getSpells(), "Pixy::Spell", "Temp")
   for spell in list_iter(Temp) do
     spell:updateTooltip();
     HandItem.FindBySpell(spell).Window:setUserString("Tooltip", spell:getTooltip())

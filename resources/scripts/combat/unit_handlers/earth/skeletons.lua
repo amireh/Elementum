@@ -7,17 +7,15 @@ Skeletons = {
 Skeletons.Create = function(unit, mesh, model_name, scale)
   unit:setMesh(mesh)
   unit:setMaterial(Skeletons.MaterialPrefix .. "/" .. model_name)
+  unit:getSceneNode():setScale(scale)
 
-  rnd = unit:getRenderable()
-  rnd:setScale(scale)
+  GfxEngine:attachToScene(unit)
 
-  GfxEngine:attachToScene(rnd)
+  Skeletons.RegisterAnimations(unit)
 
-  Skeletons.RegisterAnimations(rnd)
-
-  rnd:animateIdle()
-  rnd:animateGetUp()
-  rnd:animateAttack()
+  unit:animateIdle()
+  unit:animateGetUp()
+  unit:animateAttack()
 
   return true
 end
@@ -38,16 +36,15 @@ Skeletons.CreateSoldier = function(unit)
   --~ rnd:animateIdle()
 
   Skeletons.Create(unit, "skeleton_peasant01.mesh", "Soldier", 11)
-  local rnd = unit:getRenderable()
   --~ rnd:getSceneNode():setScale(20)
-  local scythe = rnd:attachExtension("scythe.mesh", "Bip01 R Hand")
+  local scythe = unit:attachExtension("scythe.mesh", "Bip01 R Hand")
   scythe:setMaterialName("sk_mat#07")
 
   return true
 end
 
 local grant_lifetap = function(unit)
-  if unit:getOwner():getRace() == Pixy.EARTH
+  if unit:getOwner():getRace() == Pixy.Race.Earth
     and unit:getOwner():hasUnitWithName("Skeleton Warlord")
     and not unit:hasLifetap() then
     unit:setHasLifetap(true)
@@ -58,8 +55,8 @@ Skeletons.CreateWarlord = function(inUnit)
   Skeletons.Create(inUnit, "SkeletonWarrior.mesh", "Warlord", 9)
 
   -- Warlord grants Lifetap to all ally skeletons
-  local exporter = Pixy.CUnitListExporter()
-  exporter:export(inUnit:getOwner():getUnits(), "Pixy::CUnit", "Temp")
+  local exporter = Pixy.UnitListExporter()
+  exporter:export(inUnit:getOwner():getUnits(), "Pixy::Unit", "Temp")
   for unit in list_iter(Temp) do
     print("Lua: granting Lifetap to " .. unit:getName())
     unit:setHasLifetap(true)

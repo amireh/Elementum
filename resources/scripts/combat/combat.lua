@@ -37,12 +37,12 @@ end
 Combat.onGameStarted = function()
 	Pixy.Log("Game has started! Pwning time")
 
-  GfxEngine:getCameraMan():setTarget(SelfPuppet:getRenderable():getSceneNode())
+  GfxEngine:getCameraMan():setTarget(SelfPuppet:getSceneNode())
   GfxEngine:setYawPitchDist( Ogre.Vector3(180, 30, 140) )
 
-  Gfx.ShowPortrait(SelfPuppet:getRenderable(), true)
+  Gfx.ShowPortrait(SelfPuppet, true)
   UI.Highlight(SelfPuppet, true)
-  Gfx.ShowPortrait(EnemyPuppet:getRenderable(), false)
+  Gfx.ShowPortrait(EnemyPuppet, false)
   UI.Highlight(EnemyPuppet, false)
 
   --~ GfxEngine:enableCompositorEffect("HDR")

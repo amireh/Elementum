@@ -20,7 +20,7 @@ Units.onCreateUnit = function(inUnit)
   else
     local result = handler(inUnit)
     if result then
-      FxEngine:playEffect(SummoningEffects[raceToString(inUnit:getRace())], inUnit:getRenderable(), true)
+      FxEngine:playEffect(SummoningEffects[raceToString(inUnit:getRace())], inUnit, true)
 
       -- now call the Generic handlers (Renderable is created)
       for generic_handler in list_iter(Handlers.Generic.Alive) do
@@ -34,8 +34,8 @@ Units.onCreateUnit = function(inUnit)
 end
 
 Units.onEntityDying = function(e)
-  local rnd = tolua.cast(e.Any, "Pixy::Renderable")
-  FxEngine:playEffect(SummoningEffects[raceToString(rnd:getEntity():getRace())], rnd:getSceneNode():getPosition(), true)
+  local rnd = tolua.cast(e.Any, "Pixy::Entity")
+  FxEngine:playEffect(SummoningEffects[raceToString(rnd:getRace())], rnd:getSceneNode():getPosition(), true)
 end
 
 function subscribe_unit(inUnitName, inMethod)

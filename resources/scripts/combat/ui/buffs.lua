@@ -27,19 +27,19 @@ end
 Buffs.Show = function(rnd, is_friendly)
   --Buffs.Hide()
 
-  print("Showing buffs for " .. rnd:getEntity():getName() .. rnd:getEntity():getUID())
-  local entity = rnd:getEntity()
-  if entity:getRank() == Pixy.PUPPET then
-    entity = tolua.cast(entity, "Pixy::CPuppet")
+  print("Showing buffs for " .. rnd:getName() .. rnd:getUID())
+  local entity = rnd
+  if entity:isPuppet() then
+    entity = tolua.cast(entity, "Pixy::Puppet")
   else
-    entity = tolua.cast(entity, "Pixy::CUnit")
+    entity = tolua.cast(entity, "Pixy::Unit")
   end
-  local exporter = Pixy.CSpellListExporter()
-  exporter:export(entity:getBuffs(), "Pixy::CSpell", "Temp")
+  local exporter = Pixy.SpellListExporter()
+  exporter:export(entity:getBuffs(), "Pixy::Spell", "Temp")
   local buffs = Temp
   Temp = nil
 
-  print("\tFound " .. table.getn(buffs) .. " buffs on unit " .. rnd:getEntity():getName())
+  print("\tFound " .. table.getn(buffs) .. " buffs on unit " .. rnd:getName())
 
   -- clear the current buff panel
   local selector = ""; if is_friendly then selector = "Player" else selector = "Enemy" end

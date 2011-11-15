@@ -10,7 +10,10 @@ namespace Pixy {
 
   Mobile::Mobile()
   : mRenderable(0),
+    mSceneMgr(0),
+    mRaySceneQuery(0),
     fRotating(false),
+    mWaypoints(0),
     mMoveDirection(Ogre::Vector3::ZERO)
   {
   }
@@ -19,10 +22,12 @@ namespace Pixy {
   {
     if (mRaySceneQuery) {
       GfxEngine::getSingletonPtr()->getSceneMgr()->destroyQuery(mRaySceneQuery);
-      mRaySceneQuery = 0;
     }
 
+    mWaypoints = 0;
+    mRaySceneQuery = 0;
     mRenderable = 0;
+    mSceneMgr = 0;
   }
 
   Mobile::Mobile(const Mobile& src)

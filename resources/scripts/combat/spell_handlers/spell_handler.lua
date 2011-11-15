@@ -2,19 +2,16 @@
 local __Magic = 120
 
 SpellHandler = {}
-function SpellHandler:new(inSpell, inCasterRnd, inTargetRnd, inDefinition)
+function SpellHandler:new(inSpell, inCaster, inTarget, inDefinition)
   assert(inDefinition)
 
   local o = inDefinition
   o.Spell = inSpell
-  o.Caster = inCasterRnd:getEntity()
-  o.CasterRnd = inCasterRnd
+  o.Caster = inCaster
   if o.Spell:requiresTarget() then
-    o.Target = inTargetRnd:getEntity()
-    o.TargetRnd = inTargetRnd
+    o.Target = inTarget
   else
     o.Target = o.Caster
-    o.TargetRnd = o.CasterRnd
   end
   o.__TurnsLeft = o.Spell:getDuration()
   o.Spell:setExpired(false)
@@ -38,8 +35,6 @@ function SpellHandler:destroy()
   self.Spell = nil
   self.Caster = nil
   self.Target = nil
-  self.CasterRnd = nil
-  self.TargetRnd = nil
 
   self = nil
 
@@ -101,7 +96,7 @@ function SpellHandler:logSCT()
     else
       msg = msg .. " (" .. self.__TurnsLeft .. " turns)"
     end
-    SCT.ShowScrollingMessage(msg, self.IsPositive, self.TargetRnd)
+    SCT.ShowScrollingMessage(msg, self.IsPositive, self.Target)
   else
     error("attempting to SCT log a non-buff spell!")
   end

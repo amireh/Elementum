@@ -268,7 +268,7 @@ UI.onInvalidAction = function(e)
 end
 
 UI.onStatChange = function(e)
-  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  rnd = tolua.cast(e.Any, "Pixy::Entity")
   if (e:getProperty("Stat") == "HP") then
     local amount = tonumber(e:getProperty("Value"))
     if amount > 0 then _mod = "+" else _mod = "" end
@@ -280,19 +280,18 @@ end
 
 UI.onMechanicChanged = function(e)
   Pixy.Log("Unit Mechanic has changed")
-  local unit = tolua.cast(e.Any, "Pixy::CUnit")
-  local rnd = unit:getRenderable()
+  local unit = tolua.cast(e.Any, "Pixy::Unit")
 
   local has_it = e:getProperty("HasIt") == "Yes"
   local _mod = ""
   if has_it then _mod = "+" else _mod = "-" end
-  SCT.ShowScrollingMessage(_mod .. " " .. e:getProperty("M"), has_it, rnd)
+  SCT.ShowScrollingMessage(_mod .. " " .. e:getProperty("M"), has_it, unit)
 
   return true;
 end
 
 UI.onEntityAttacked = function(e)
-  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  rnd = tolua.cast(e.Any, "Pixy::Entity")
   local damage = tonumber(e:getProperty("Damage"))
   if damage > 0 then
     SCT.ShowScrollingMessage("-" .. damage .. " health", false --[[ negative scrolling message ]], rnd)
@@ -300,7 +299,7 @@ UI.onEntityAttacked = function(e)
 end
 
 UI.onLifetap = function(e)
-  rnd = tolua.cast(e.Any, "Pixy::Renderable")
+  rnd = tolua.cast(e.Any, "Pixy::Entity")
   local damage = tonumber(e:getProperty("Damage"))
   if damage > 0 then
     SCT.ShowScrollingMessage("+" .. damage .. " health (LIFETAP)", true --[[ good scrolling message ]], rnd)
@@ -336,7 +335,7 @@ UI.onSelectPlayer = function(e)
   -- if we don't have any selection or the selection isn't a friendly target,
   -- override it
   if not Selected or not SelectedIsFriendly then
-    Combat.Highlight(SelfPuppet:getRenderable())
+    Combat.Highlight(SelfPuppet)
   end
 end
 
@@ -344,7 +343,7 @@ UI.onSelectEnemy = function(e)
   -- if we don't have any selection or the selection isn't a friendly target,
   -- override it
   if not Selected or SelectedIsFriendly then
-    Combat.Highlight(EnemyPuppet:getRenderable())
+    Combat.Highlight(EnemyPuppet)
   end
 end
 

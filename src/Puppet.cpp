@@ -15,6 +15,7 @@ namespace Pixy
 {
 
   Puppet::Puppet()
+  : mDeck(0)
   {
     setRank(Rank::Puppet);
     _setOwner(this);
@@ -26,11 +27,13 @@ namespace Pixy
     {
       this->detachUnit(mUnits.front()->getUID(), true);
     }
+    mUnits.clear();
 
     while (!mDecks.empty())
     {
       this->detachDeck(mDecks.front()->getName());
     }
+    mDecks.clear();
 
     mDeck = 0;
 

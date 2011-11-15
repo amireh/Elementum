@@ -20,7 +20,9 @@ namespace Pixy
 	Renderable::Renderable()
   : mSceneNode(0),
     mSceneObject(0),
-    mSceneMgr(GfxEngine::getSingletonPtr()->getSceneMgr())
+    mSceneMgr(GfxEngine::getSingletonPtr()->getSceneMgr()),
+    mMesh("Undefined"),
+    mMaterial("Undefined")
 	{
 	}
 

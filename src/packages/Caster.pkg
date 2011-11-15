@@ -66,15 +66,15 @@ namespace Pixy
     virtual Pixy::Caster::spell_t* getBuff(int inUID);
 
     //! @brief Returns the current BaseSpell objects the Caster has
-		Pixy::Caster::spells_t const& getSpells();
-		Pixy::Caster::spells_t const& getBuffs();
+		Pixy::Caster::spells_t& getSpells();
+		Pixy::Caster::spells_t& getBuffs();
 
     //! @brief Convenience method for returning the number of Spells this Caster has
 		virtual int nrSpells();
 		virtual int nrBuffs();
 
     virtual bool hasBuff(int inUID);
-    virtual bool hasBuffWithName(std::string const&);
+    virtual bool hasBuffWithName(std::string);
 
 	}; // end of Caster class
 } // end of Pixy namespace

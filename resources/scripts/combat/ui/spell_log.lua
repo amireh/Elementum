@@ -1,6 +1,6 @@
 UI.LogSpellCast = function(inSpell)
 
-  local self_cast = inSpell:getCaster():getEntity():getOwner():getUID() == SelfPuppet:getUID()
+  local self_cast = inSpell:getCaster():getOwner():getUID() == SelfPuppet:getUID()
 
   -- only log enemy casts
   if self_cast then return true end
