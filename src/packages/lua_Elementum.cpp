@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Elementum
-** Generated automatically by tolua++-1.0.92 on Tue Nov 15 22:56:26 2011.
+** Generated automatically by tolua++-1.0.92 on Wed Nov 16 18:41:27 2011.
 */
 
 #ifndef __cplusplus
@@ -20,6 +20,10 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "Combat.h"
 #include "Deck.h"
 #include "Entity.h"
+#include "BaseEntity.h"
+#include "Animable.h"
+#include "Renderable.h"
+#include "Caster.h"
 #include "FxEngine.h"
 #include "GameManager.h"
 #include "GameState.h"
@@ -29,14 +33,12 @@ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
 #include "Intro.h"
 #include "ScriptEngine.h"
 #include "LuaExporter.h"
-#include "Puppet.h"
-#include "Unit.h"
-#include "Spell.h"
 #include "Mobile.h"
 #include "NetworkManager.h"
 #include "ogre/OgreRTT.h"
 #include "Ogre.h"
 #include "Puppet.h"
+#include "Entity.h"
 #include "Renderable.h"
 #include "ScriptEngine.h"
 #include <lua.h>
@@ -73,6 +75,13 @@ static int tolua_collect_Pixy__Spell (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_Pixy__LuaExporter_DeckList_ (lua_State* tolua_S)
+{
+ Pixy::LuaExporter<DeckList>* self = (Pixy::LuaExporter<DeckList>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_Ogre__uint16 (lua_State* tolua_S)
 {
  Ogre::uint16* self = (Ogre::uint16*) tolua_tousertype(tolua_S,1,0);
@@ -90,6 +99,13 @@ static int tolua_collect_Ogre__Radian (lua_State* tolua_S)
 static int tolua_collect_Pixy__LuaExporter_SpellList_ (lua_State* tolua_S)
 {
  Pixy::LuaExporter<SpellList>* self = (Pixy::LuaExporter<SpellList>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Pixy__LuaExporter_DeckVec_ (lua_State* tolua_S)
+{
+ Pixy::LuaExporter<DeckVec>* self = (Pixy::LuaExporter<DeckVec>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -269,9 +285,9 @@ static int tolua_collect_Pixy__Puppet (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Pixy__FxEngine (lua_State* tolua_S)
+static int tolua_collect_Ogre__Camera (lua_State* tolua_S)
 {
- Pixy::FxEngine* self = (Pixy::FxEngine*) tolua_tousertype(tolua_S,1,0);
+ Ogre::Camera* self = (Ogre::Camera*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -290,16 +306,9 @@ static int tolua_collect_Ogre__Vector3 (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_Ogre__Camera (lua_State* tolua_S)
+static int tolua_collect_Pixy__FxEngine (lua_State* tolua_S)
 {
- Ogre::Camera* self = (Ogre::Camera*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_Pixy__Deck (lua_State* tolua_S)
-{
- Pixy::Deck* self = (Pixy::Deck*) tolua_tousertype(tolua_S,1,0);
+ Pixy::FxEngine* self = (Pixy::FxEngine*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -307,6 +316,13 @@ static int tolua_collect_Pixy__Deck (lua_State* tolua_S)
 static int tolua_collect_Ogre__Quaternion (lua_State* tolua_S)
 {
  Ogre::Quaternion* self = (Ogre::Quaternion*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_Pixy__Deck (lua_State* tolua_S)
+{
+ Pixy::Deck* self = (Pixy::Deck*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -345,6 +361,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::Radian");
  tolua_usertype(tolua_S,"Ogre::RenderWindow");
  tolua_usertype(tolua_S,"Pixy::GameManager");
+ tolua_usertype(tolua_S,"Pixy::Talent");
  tolua_usertype(tolua_S,"const");
  tolua_usertype(tolua_S,"Ogre::Degree");
  tolua_usertype(tolua_S,"Pixy::GameState");
@@ -356,6 +373,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CEGUI::UBox");
  tolua_usertype(tolua_S,"OgreBites::SdkCameraMan");
  tolua_usertype(tolua_S,"Ogre::Resource");
+ tolua_usertype(tolua_S,"Pixy::BasePuppet::talents_t");
  tolua_usertype(tolua_S,"Pixy::Caster");
  tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystem");
  tolua_usertype(tolua_S,"ParticleUniverse::ParticleTechnique");
@@ -364,32 +382,32 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Pixy::EventManager");
  tolua_usertype(tolua_S,"ParticleUniverse::Particle");
  tolua_usertype(tolua_S,"CEGUI::ListboxTextItem");
- tolua_usertype(tolua_S,"Pixy::BaseUnit");
  tolua_usertype(tolua_S,"CEGUI::FormattedListboxTextItem");
- tolua_usertype(tolua_S,"Pixy::Puppet");
  tolua_usertype(tolua_S,"OIS::KeyEvent");
- tolua_usertype(tolua_S,"Pixy::ScriptEngine");
+ tolua_usertype(tolua_S,"Pixy::Puppet");
+ tolua_usertype(tolua_S,"Pixy::Intro");
  tolua_usertype(tolua_S,"Ogre::Any");
  tolua_usertype(tolua_S,"Ogre::Billboard");
- tolua_usertype(tolua_S,"Pixy::BaseLuaExporter");
- tolua_usertype(tolua_S,"Pixy::InputListener");
- tolua_usertype(tolua_S,"Ogre::MovableObject");
+ tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Ogre::CompositorManager");
+ tolua_usertype(tolua_S,"std::list<Pixy::Caster::spell_t*>");
+ tolua_usertype(tolua_S,"Ogre::MovableObject");
+ tolua_usertype(tolua_S,"Ogre::StaticGeometry");
  tolua_usertype(tolua_S,"ParticleUniverse::ParticleSystemListener");
  tolua_usertype(tolua_S,"Ogre::Vector2");
  tolua_usertype(tolua_S,"Pixy::BaseSpell");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<UnitList>");
- tolua_usertype(tolua_S,"Ogre::StaticGeometry");
- tolua_usertype(tolua_S,"Pixy::BasePuppet");
- tolua_usertype(tolua_S,"Pixy::FxEngine");
  tolua_usertype(tolua_S,"Ogre::SceneManager");
- tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
+ tolua_usertype(tolua_S,"Pixy::Deck");
+ tolua_usertype(tolua_S,"Pixy::FxEngine");
  tolua_usertype(tolua_S,"Pixy::OgreRTT");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<DeckList>");
+ tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
  tolua_usertype(tolua_S,"Pixy::Event");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<SpellList>");
- tolua_usertype(tolua_S,"Ogre::ManualResourceLoader");
  tolua_usertype(tolua_S,"Ogre::ResourceGroupManager");
  tolua_usertype(tolua_S,"Ogre::MeshManager");
+ tolua_usertype(tolua_S,"Pixy::LuaExporter<DeckVec>");
  tolua_usertype(tolua_S,"Ogre::AxisAlignedBox");
  tolua_usertype(tolua_S,"Ogre::RibbonTrail");
  tolua_usertype(tolua_S,"Ogre::Viewport");
@@ -399,13 +417,13 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::InstancedGeometry");
  tolua_usertype(tolua_S,"Ogre::CompositorLogic");
  tolua_usertype(tolua_S,"Ogre::Camera");
- tolua_usertype(tolua_S,"Ogre::Angle");
+ tolua_usertype(tolua_S,"Pixy::BaseDeck");
  tolua_usertype(tolua_S,"Pixy::UIEngine");
  tolua_usertype(tolua_S,"Pixy::Entity");
  tolua_usertype(tolua_S,"Pixy::Combat");
  tolua_usertype(tolua_S,"Ogre::Entity");
  tolua_usertype(tolua_S,"Pixy::Unit");
- tolua_usertype(tolua_S,"MovableTextOverlay");
+ tolua_usertype(tolua_S,"Pixy::Engine");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<SpellVec>");
  tolua_usertype(tolua_S,"Pixy::Animable");
  tolua_usertype(tolua_S,"Ogre::Node");
@@ -413,31 +431,31 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Ogre::BillboardSet");
  tolua_usertype(tolua_S,"Ogre::Plane");
  tolua_usertype(tolua_S,"Pixy::BaseCaster");
- tolua_usertype(tolua_S,"Pixy::Intro");
+ tolua_usertype(tolua_S,"::CEGUI::Window");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<PuppetVec>");
  tolua_usertype(tolua_S,"Ogre::CompositorInstance");
- tolua_usertype(tolua_S,"Pixy::Deck");
- tolua_usertype(tolua_S,"std::list<Pixy::Puppet::unit_t*>");
+ tolua_usertype(tolua_S,"Ogre::Angle");
+ tolua_usertype(tolua_S,"Ogre::SharedPtr<Ogre::Resource>");
  tolua_usertype(tolua_S,"Ogre::Light");
  tolua_usertype(tolua_S,"boost::asio::strand");
  tolua_usertype(tolua_S,"Ogre::Quaternion");
  tolua_usertype(tolua_S,"Ogre::ResourceManager");
- tolua_usertype(tolua_S,"CEGUI::Window");
- tolua_usertype(tolua_S,"Ogre::SceneNode");
  tolua_usertype(tolua_S,"Pixy::Mobile");
- tolua_usertype(tolua_S,"Pixy::Engine");
+ tolua_usertype(tolua_S,"CEGUI::Window");
+ tolua_usertype(tolua_S,"Pixy::ScriptEngine");
+ tolua_usertype(tolua_S,"Pixy::BaseLuaExporter");
  tolua_usertype(tolua_S,"std::type_info");
- tolua_usertype(tolua_S,"Pixy::Renderable");
+ tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
  tolua_usertype(tolua_S,"Ogre::ColourValue");
  tolua_usertype(tolua_S,"OIS::MouseEvent");
- tolua_usertype(tolua_S,"Pixy::BaseDeck");
- tolua_usertype(tolua_S,"Pixy::EventListener");
+ tolua_usertype(tolua_S,"MovableTextOverlay");
+ tolua_usertype(tolua_S,"Pixy::Renderable");
  tolua_usertype(tolua_S,"Pixy::LuaExporter<PuppetList>");
  tolua_usertype(tolua_S,"Ogre::Vector3");
  tolua_usertype(tolua_S,"Pixy::GfxEngine");
  tolua_usertype(tolua_S,"std::vector<Pixy::Deck::spell_t const*>");
- tolua_usertype(tolua_S,"Ogre::RenderTargetListener");
- tolua_usertype(tolua_S,"std::list<Pixy::Caster::spell_t*>");
+ tolua_usertype(tolua_S,"Pixy::EventListener");
+ tolua_usertype(tolua_S,"Pixy::InputListener");
  tolua_usertype(tolua_S,"Pixy::BaseEntity");
  tolua_usertype(tolua_S,"Pixy::EntityManager");
 }
@@ -825,12 +843,12 @@ static int tolua_Elementum_Pixy_Renderable_setMaterial00(lua_State* tolua_S)
 #endif
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* tolua_var_16 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string const* tolua_var_23 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterial'", NULL);
 #endif
   {
-   self->setMaterial(*tolua_var_16);
+   self->setMaterial(*tolua_var_23);
   }
  }
  return 0;
@@ -858,12 +876,12 @@ static int tolua_Elementum_Pixy_Renderable_setMesh00(lua_State* tolua_S)
 #endif
  {
   Pixy::Renderable* self = (Pixy::Renderable*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* tolua_var_17 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string const* tolua_var_24 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMesh'", NULL);
 #endif
   {
-   self->setMesh(*tolua_var_17);
+   self->setMesh(*tolua_var_24);
   }
  }
  return 0;
@@ -2211,7 +2229,7 @@ static int tolua_Elementum_Pixy_Spell_setButton00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::Spell",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CEGUI::Window",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"::CEGUI::Window",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2219,12 +2237,12 @@ static int tolua_Elementum_Pixy_Spell_setButton00(lua_State* tolua_S)
 #endif
  {
   Pixy::Spell* self = (Pixy::Spell*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_18 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+ ::CEGUI::Window* tolua_var_25 = ((::CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setButton'", NULL);
 #endif
   {
-   self->setButton(tolua_var_18);
+   self->setButton(tolua_var_25);
   }
  }
  return 0;
@@ -2319,8 +2337,8 @@ static int tolua_Elementum_Pixy_Spell_getButton00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getButton'", NULL);
 #endif
   {
-   CEGUI::Window* tolua_ret = (CEGUI::Window*)  self->getButton();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CEGUI::Window");
+  ::CEGUI::Window* tolua_ret = (::CEGUI::Window*)  self->getButton();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"::CEGUI::Window");
   }
  }
  return 1;
@@ -3551,12 +3569,12 @@ static int tolua_Elementum_Pixy_GfxEngine_updateMe00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Mobile* tolua_var_7 = ((Pixy::Mobile*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Mobile* tolua_var_13 = ((Pixy::Mobile*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateMe'", NULL);
 #endif
   {
-   self->updateMe(tolua_var_7);
+   self->updateMe(tolua_var_13);
   }
  }
  return 0;
@@ -3584,12 +3602,12 @@ static int tolua_Elementum_Pixy_GfxEngine_stopUpdatingMe00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Mobile* tolua_var_8 = ((Pixy::Mobile*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Mobile* tolua_var_14 = ((Pixy::Mobile*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stopUpdatingMe'", NULL);
 #endif
   {
-   self->stopUpdatingMe(tolua_var_8);
+   self->stopUpdatingMe(tolua_var_14);
   }
  }
  return 0;
@@ -3617,12 +3635,12 @@ static int tolua_Elementum_Pixy_GfxEngine_changeOwnership00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Unit* tolua_var_9 = ((Pixy::Unit*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Unit* tolua_var_15 = ((Pixy::Unit*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeOwnership'", NULL);
 #endif
   {
-   self->changeOwnership(tolua_var_9);
+   self->changeOwnership(tolua_var_15);
   }
  }
  return 0;
@@ -3896,13 +3914,13 @@ static int tolua_Elementum_Pixy_GfxEngine__setUserAny00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::MovableObject* tolua_var_10 = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
-  void* tolua_var_11 = ((void*)  tolua_touserdata(tolua_S,3,0));
+  Ogre::MovableObject* tolua_var_16 = ((Ogre::MovableObject*)  tolua_tousertype(tolua_S,2,0));
+  void* tolua_var_17 = ((void*)  tolua_touserdata(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function '_setUserAny'", NULL);
 #endif
   {
-   self->_setUserAny(tolua_var_10,tolua_var_11);
+   self->_setUserAny(tolua_var_16,tolua_var_17);
   }
  }
  return 0;
@@ -3930,12 +3948,12 @@ static int tolua_Elementum_Pixy_GfxEngine_attachRTT00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::OgreRTT* tolua_var_12 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::OgreRTT* tolua_var_18 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachRTT'", NULL);
 #endif
   {
-   self->attachRTT(tolua_var_12);
+   self->attachRTT(tolua_var_18);
   }
  }
  return 0;
@@ -3963,12 +3981,12 @@ static int tolua_Elementum_Pixy_GfxEngine_detachRTT00(lua_State* tolua_S)
 #endif
  {
   Pixy::GfxEngine* self = (Pixy::GfxEngine*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::OgreRTT* tolua_var_13 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::OgreRTT* tolua_var_19 = ((Pixy::OgreRTT*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachRTT'", NULL);
 #endif
   {
-   self->detachRTT(tolua_var_13);
+   self->detachRTT(tolua_var_19);
   }
  }
  return 0;
@@ -4300,13 +4318,13 @@ static int tolua_Elementum_Pixy_FxEngine_playEffect01(lua_State* tolua_S)
  else
  {
   Pixy::FxEngine* self = (Pixy::FxEngine*)  tolua_tousertype(tolua_S,1,0);
-  ParticleUniverse::ParticleSystem* tolua_var_6 = ((ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,2,0));
+  ParticleUniverse::ParticleSystem* tolua_var_12 = ((ParticleUniverse::ParticleSystem*)  tolua_tousertype(tolua_S,2,0));
   Pixy::Entity* inEntity = ((Pixy::Entity*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
 #endif
   {
-   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(tolua_var_6,inEntity);
+   ParticleUniverse::ParticleSystem* tolua_ret = (ParticleUniverse::ParticleSystem*)  self->playEffect(tolua_var_12,inEntity);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"ParticleUniverse::ParticleSystem");
   }
  }
@@ -4585,13 +4603,13 @@ static int tolua_Elementum_Pixy_UIEngine_setMargin00(lua_State* tolua_S)
 #endif
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_19 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-  CEGUI::UBox tolua_var_20 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
+  CEGUI::Window* tolua_var_26 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  CEGUI::UBox tolua_var_27 = *((CEGUI::UBox*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMargin'", NULL);
 #endif
   {
-   self->setMargin(tolua_var_19,tolua_var_20);
+   self->setMargin(tolua_var_26,tolua_var_27);
   }
  }
  return 0;
@@ -4620,13 +4638,13 @@ static int tolua_Elementum_Pixy_UIEngine_connectAnimation00(lua_State* tolua_S)
 #endif
  {
   Pixy::UIEngine* self = (Pixy::UIEngine*)  tolua_tousertype(tolua_S,1,0);
-  CEGUI::Window* tolua_var_21 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
-  std::string tolua_var_22 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+  CEGUI::Window* tolua_var_28 = ((CEGUI::Window*)  tolua_tousertype(tolua_S,2,0));
+  std::string tolua_var_29 = ((std::string)  tolua_tocppstring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'connectAnimation'", NULL);
 #endif
   {
-   self->connectAnimation(tolua_var_21,tolua_var_22);
+   self->connectAnimation(tolua_var_28,tolua_var_29);
   }
  }
  return 0;
@@ -4849,6 +4867,37 @@ static int tolua_Elementum_Pixy_ScriptEngine__passGameData00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: _reportAccepted of class  Pixy::ScriptEngine */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_ScriptEngine_reportAccepted00
+static int tolua_Elementum_Pixy_ScriptEngine_reportAccepted00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::ScriptEngine",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::ScriptEngine* self = (Pixy::ScriptEngine*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_reportAccepted'", NULL);
+#endif
+  {
+   self->_reportAccepted();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reportAccepted'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: __Pixy of class  Pixy::ScriptEngine */
 #ifndef TOLUA_DISABLE_tolua_get_Pixy__ScriptEngine___Pixy__EventListener__
 static int tolua_get_Pixy__ScriptEngine___Pixy__EventListener__(lua_State* tolua_S)
@@ -4974,12 +5023,12 @@ static int tolua_Elementum_Pixy_NetworkManager_send00(lua_State* tolua_S)
 #endif
  {
   Pixy::NetworkManager* self = (Pixy::NetworkManager*)  tolua_tousertype(tolua_S,1,0);
-  const Pixy::Event* tolua_var_14 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+  const Pixy::Event* tolua_var_20 = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'send'", NULL);
 #endif
   {
-   self->send(*tolua_var_14);
+   self->send(*tolua_var_20);
   }
  }
  return 0;
@@ -5150,7 +5199,7 @@ static int tolua_Elementum_Pixy_Puppet_detachDeck00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -5158,12 +5207,12 @@ static int tolua_Elementum_Pixy_Puppet_detachDeck00(lua_State* tolua_S)
 #endif
  {
   Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* inName = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachDeck'", NULL);
 #endif
   {
-   self->detachDeck(*inName);
+   self->detachDeck(inName);
   }
  }
  return 0;
@@ -5227,7 +5276,7 @@ static int tolua_Elementum_Pixy_Puppet_getDeck00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDeck'", NULL);
 #endif
   {
-    Pixy::Deck* tolua_ret = (  Pixy::Deck*)  self->getDeck();
+   Pixy::Deck* tolua_ret = (Pixy::Deck*)  self->getDeck();
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Deck");
   }
  }
@@ -5259,7 +5308,7 @@ static int tolua_Elementum_Pixy_Puppet_getDecks00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDecks'", NULL);
 #endif
   {
-   Pixy::Puppet::decks_t const& tolua_ret = (Pixy::Puppet::decks_t const&)  self->getDecks();
+   DeckList const& tolua_ret = (DeckList const&)  self->getDecks();
     tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
   }
  }
@@ -5280,7 +5329,7 @@ static int tolua_Elementum_Pixy_Puppet_hasDeck00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -5288,12 +5337,12 @@ static int tolua_Elementum_Pixy_Puppet_hasDeck00(lua_State* tolua_S)
 #endif
  {
   const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* inName = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasDeck'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->hasDeck(*inName);
+   bool tolua_ret = (bool)  self->hasDeck(inName);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
@@ -5354,7 +5403,7 @@ static int tolua_Elementum_Pixy_Puppet_attachUnit00(lua_State* tolua_S)
 #endif
  {
   Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
-   Pixy::Unit* inUnit = ((  Pixy::Unit*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Unit* inUnit = ((Pixy::Unit*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachUnit'", NULL);
 #endif
@@ -5427,7 +5476,7 @@ static int tolua_Elementum_Pixy_Puppet_getUnit00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUnit'", NULL);
 #endif
   {
-    Pixy::Unit* tolua_ret = (  Pixy::Unit*)  self->getUnit(inUID);
+   Pixy::Unit* tolua_ret = (Pixy::Unit*)  self->getUnit(inUID);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Unit");
   }
  }
@@ -5459,8 +5508,8 @@ static int tolua_Elementum_Pixy_Puppet_getUnits00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUnits'", NULL);
 #endif
   {
-    std::list<Pixy::Puppet::unit_t*>& tolua_ret = (  std::list<Pixy::Puppet::unit_t*>&)  self->getUnits();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"std::list<Pixy::Puppet::unit_t*>");
+   UnitList const& tolua_ret = (UnitList const&)  self->getUnits();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
   }
  }
  return 1;
@@ -5480,7 +5529,7 @@ static int tolua_Elementum_Pixy_Puppet_hasUnitWithName00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -5488,12 +5537,12 @@ static int tolua_Elementum_Pixy_Puppet_hasUnitWithName00(lua_State* tolua_S)
 #endif
  {
   const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
-  std::string const* tolua_var_15 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+  std::string tolua_var_21 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasUnitWithName'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->hasUnitWithName(*tolua_var_15);
+   bool tolua_ret = (bool)  self->hasUnitWithName(tolua_var_21);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
@@ -5569,20 +5618,655 @@ static int tolua_Elementum_Pixy_Puppet_updateTextOverlay00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __Pixy of class  Pixy::Puppet */
-#ifndef TOLUA_DISABLE_tolua_get_Pixy__Puppet___Pixy__BasePuppet__
-static int tolua_get_Pixy__Puppet___Pixy__BasePuppet__(lua_State* tolua_S)
+/* method: setExperience of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setExperience00
+static int tolua_Elementum_Pixy_Puppet_setExperience00(lua_State* tolua_S)
 {
-  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
 #endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::BasePuppet*>(self), "Pixy::BasePuppet");
-#else
-   tolua_pushusertype(tolua_S,(void*)((Pixy::BasePuppet*)self), "Pixy::BasePuppet");
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  long inExperience = ((long)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setExperience'", NULL);
 #endif
+  {
+   self->setExperience(inExperience);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setExperience'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setLevel of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setLevel00
+static int tolua_Elementum_Pixy_Puppet_setLevel00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int inLevel = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLevel'", NULL);
+#endif
+  {
+   self->setLevel(inLevel);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setLevel'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setIntelligence of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setIntelligence00
+static int tolua_Elementum_Pixy_Puppet_setIntelligence00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int inInt = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIntelligence'", NULL);
+#endif
+  {
+   self->setIntelligence(inInt);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIntelligence'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setVitality of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setVitality00
+static int tolua_Elementum_Pixy_Puppet_setVitality00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int inVt = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVitality'", NULL);
+#endif
+  {
+   self->setVitality(inVt);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setVitality'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setWP of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setWP00
+static int tolua_Elementum_Pixy_Puppet_setWP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int inWP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWP'", NULL);
+#endif
+  {
+   self->setWP(inWP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setWP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setChannels of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setChannels00
+static int tolua_Elementum_Pixy_Puppet_setChannels00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int tolua_var_22 = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setChannels'", NULL);
+#endif
+  {
+   self->setChannels(tolua_var_22);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setChannels'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setWins of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setWins00
+static int tolua_Elementum_Pixy_Puppet_setWins00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int inWins = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWins'", NULL);
+#endif
+  {
+   self->setWins(inWins);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setWins'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setLosses of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_setLosses00
+static int tolua_Elementum_Pixy_Puppet_setLosses00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  int inLosses = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLosses'", NULL);
+#endif
+  {
+   self->setLosses(inLosses);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setLosses'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getExperience of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getExperience00
+static int tolua_Elementum_Pixy_Puppet_getExperience00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getExperience'", NULL);
+#endif
+  {
+   long tolua_ret = (long)  self->getExperience();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
  return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getExperience'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLevel of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getLevel00
+static int tolua_Elementum_Pixy_Puppet_getLevel00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLevel'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getLevel();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLevel'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getIntelligence of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getIntelligence00
+static int tolua_Elementum_Pixy_Puppet_getIntelligence00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getIntelligence'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getIntelligence();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getIntelligence'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getVitality of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getVitality00
+static int tolua_Elementum_Pixy_Puppet_getVitality00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getVitality'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getVitality();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getVitality'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWP of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getWP00
+static int tolua_Elementum_Pixy_Puppet_getWP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWP'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getWP();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getWP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getChannels of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getChannels00
+static int tolua_Elementum_Pixy_Puppet_getChannels00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getChannels'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getChannels();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getChannels'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWins of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getWins00
+static int tolua_Elementum_Pixy_Puppet_getWins00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWins'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getWins();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getWins'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLosses of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getLosses00
+static int tolua_Elementum_Pixy_Puppet_getLosses00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLosses'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getLosses();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLosses'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachTalent of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_attachTalent00
+static int tolua_Elementum_Pixy_Puppet_attachTalent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::Talent",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::Talent* inTalent = ((Pixy::Talent*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachTalent'", NULL);
+#endif
+  {
+   self->attachTalent(inTalent);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'attachTalent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: detachTalent of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_detachTalent00
+static int tolua_Elementum_Pixy_Puppet_detachTalent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Puppet",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Puppet* self = (Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachTalent'", NULL);
+#endif
+  {
+   self->detachTalent(inName);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'detachTalent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTalents of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_getTalents00
+static int tolua_Elementum_Pixy_Puppet_getTalents00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTalents'", NULL);
+#endif
+  {
+   Pixy::BasePuppet::talents_t& tolua_ret = (Pixy::BasePuppet::talents_t&)  self->getTalents();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Pixy::BasePuppet::talents_t");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTalents'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasTalent of class  Pixy::Puppet */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Puppet_hasTalent00
+static int tolua_Elementum_Pixy_Puppet_hasTalent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Puppet",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Puppet* self = (const Pixy::Puppet*)  tolua_tousertype(tolua_S,1,0);
+  std::string inName = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasTalent'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasTalent(inName);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasTalent'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -5851,72 +6535,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: serialize of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_serialize00
-static int tolua_Elementum_Pixy_Unit_serialize00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Pixy::Event",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Event* inEvt = ((Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'serialize'", NULL);
-#endif
-  {
-   self->serialize(*inEvt);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'serialize'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: deserialize of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_deserialize00
-static int tolua_Elementum_Pixy_Unit_deserialize00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Pixy::Event",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
-  const Pixy::Event* inEvt = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'deserialize'", NULL);
-#endif
-  {
-   self->deserialize(*inEvt);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'deserialize'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: toEntity of class  Pixy::Unit */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_toEntity00
 static int tolua_Elementum_Pixy_Unit_toEntity00(lua_State* tolua_S)
@@ -6029,12 +6647,12 @@ static int tolua_Elementum_Pixy_Unit_setAttackOrder00(lua_State* tolua_S)
 #endif
  {
   Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
-  int tolua_var_23 = ((int)  tolua_tonumber(tolua_S,2,0));
+  int tolua_var_30 = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAttackOrder'", NULL);
 #endif
   {
-   self->setAttackOrder(tolua_var_23);
+   self->setAttackOrder(tolua_var_30);
   }
  }
  return 0;
@@ -6094,12 +6712,12 @@ static int tolua_Elementum_Pixy_Unit_setBlockTarget00(lua_State* tolua_S)
 #endif
  {
   Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Unit* tolua_var_24 = ((Pixy::Unit*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Unit* tolua_var_31 = ((Pixy::Unit*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBlockTarget'", NULL);
 #endif
   {
-   self->setBlockTarget(tolua_var_24);
+   self->setBlockTarget(tolua_var_31);
   }
  }
  return 0;
@@ -6159,12 +6777,12 @@ static int tolua_Elementum_Pixy_Unit_setAttackTarget00(lua_State* tolua_S)
 #endif
  {
   Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
-  Pixy::Entity* tolua_var_25 = ((Pixy::Entity*)  tolua_tousertype(tolua_S,2,0));
+  Pixy::Entity* tolua_var_32 = ((Pixy::Entity*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAttackTarget'", NULL);
 #endif
   {
-   self->setAttackTarget(tolua_var_25);
+   self->setAttackTarget(tolua_var_32);
   }
  }
  return 0;
@@ -6204,39 +6822,6 @@ static int tolua_Elementum_Pixy_Unit__setEnemy00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function '_setEnemy'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setAP of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setAP00
-static int tolua_Elementum_Pixy_Unit_setAP00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
-  int inU = ((int)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAP'", NULL);
-#endif
-  {
-   self->setAP(inU);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setAP'.",&tolua_err);
  return 0;
 #endif
 }
@@ -6306,32 +6891,65 @@ static int tolua_Elementum_Pixy_Unit_updateTextOverlay00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: reset of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_reset00
-static int tolua_Elementum_Pixy_Unit_reset00(lua_State* tolua_S)
+/* method: isDying of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isDying00
+static int tolua_Elementum_Pixy_Unit_isDying00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reset'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDying'", NULL);
 #endif
   {
-   self->reset();
+   bool tolua_ret = (bool)  self->isDying();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'reset'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'isDying'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getOwner of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_getOwner00
+static int tolua_Elementum_Pixy_Unit_getOwner00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwner'", NULL);
+#endif
+  {
+   Pixy::Puppet* tolua_ret = (Pixy::Puppet*)  self->getOwner();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Puppet");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOwner'.",&tolua_err);
  return 0;
 #endif
 }
@@ -6399,9 +7017,40 @@ static int tolua_Elementum_Pixy_Unit_getUp00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: isDying of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isDying00
-static int tolua_Elementum_Pixy_Unit_isDying00(lua_State* tolua_S)
+/* method: reset of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_reset00
+static int tolua_Elementum_Pixy_Unit_reset00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reset'", NULL);
+#endif
+  {
+   self->reset();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reset'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasSummoningSickness of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_hasSummoningSickness00
+static int tolua_Elementum_Pixy_Unit_hasSummoningSickness00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -6415,53 +7064,990 @@ static int tolua_Elementum_Pixy_Unit_isDying00(lua_State* tolua_S)
  {
   const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDying'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasSummoningSickness'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->isDying();
+   bool tolua_ret = (bool)  self->hasSummoningSickness();
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'isDying'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'hasSummoningSickness'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __Pixy of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_get_Pixy__Unit___Pixy__BaseUnit__
-static int tolua_get_Pixy__Unit___Pixy__BaseUnit__(lua_State* tolua_S)
+/* method: canAttack of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_canAttack00
+static int tolua_Elementum_Pixy_Unit_canAttack00(lua_State* tolua_S)
 {
-  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
 #endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::BaseUnit*>(self), "Pixy::BaseUnit");
-#else
-   tolua_pushusertype(tolua_S,(void*)((Pixy::BaseUnit*)self), "Pixy::BaseUnit");
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'canAttack'", NULL);
 #endif
+  {
+   bool tolua_ret = (bool)  self->canAttack();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
  return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'canAttack'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __Pixy of class  Pixy::Unit */
-#ifndef TOLUA_DISABLE_tolua_get_Pixy__Unit___Pixy__Mobile__
-static int tolua_get_Pixy__Unit___Pixy__Mobile__(lua_State* tolua_S)
+/* method: isResting of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isResting00
+static int tolua_Elementum_Pixy_Unit_isResting00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isResting'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isResting();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isResting'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isCharging of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isCharging00
+static int tolua_Elementum_Pixy_Unit_isCharging00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isCharging'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isCharging();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isCharging'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isAttacking of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isAttacking00
+static int tolua_Elementum_Pixy_Unit_isAttacking00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isAttacking'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isAttacking();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isAttacking'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isBlocking of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isBlocking00
+static int tolua_Elementum_Pixy_Unit_isBlocking00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isBlocking'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isBlocking();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isBlocking'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isReady of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isReady00
+static int tolua_Elementum_Pixy_Unit_isReady00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isReady'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isReady();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isReady'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isFlying of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isFlying00
+static int tolua_Elementum_Pixy_Unit_isFlying00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isFlying'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isFlying();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isFlying'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isTrampling of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isTrampling00
+static int tolua_Elementum_Pixy_Unit_isTrampling00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTrampling'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isTrampling();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isTrampling'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isUnblockable of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isUnblockable00
+static int tolua_Elementum_Pixy_Unit_isUnblockable00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isUnblockable'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isUnblockable();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isUnblockable'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isRestless of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isRestless00
+static int tolua_Elementum_Pixy_Unit_isRestless00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isRestless'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isRestless();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isRestless'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasFirstStrike of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_hasFirstStrike00
+static int tolua_Elementum_Pixy_Unit_hasFirstStrike00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasFirstStrike'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasFirstStrike();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasFirstStrike'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasLifetap of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_hasLifetap00
+static int tolua_Elementum_Pixy_Unit_hasLifetap00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasLifetap'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasLifetap();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasLifetap'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setIsFlying of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setIsFlying00
+static int tolua_Elementum_Pixy_Unit_setIsFlying00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  bool tolua_var_33 = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsFlying'", NULL);
+#endif
+  {
+   self->setIsFlying(tolua_var_33);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIsFlying'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setIsTrampling of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setIsTrampling00
+static int tolua_Elementum_Pixy_Unit_setIsTrampling00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  bool tolua_var_34 = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsTrampling'", NULL);
+#endif
+  {
+   self->setIsTrampling(tolua_var_34);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIsTrampling'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setIsUnblockable of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setIsUnblockable00
+static int tolua_Elementum_Pixy_Unit_setIsUnblockable00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  bool tolua_var_35 = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsUnblockable'", NULL);
+#endif
+  {
+   self->setIsUnblockable(tolua_var_35);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIsUnblockable'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setIsRestless of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setIsRestless00
+static int tolua_Elementum_Pixy_Unit_setIsRestless00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  bool tolua_var_36 = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsRestless'", NULL);
+#endif
+  {
+   self->setIsRestless(tolua_var_36);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIsRestless'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setHasFirstStrike of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setHasFirstStrike00
+static int tolua_Elementum_Pixy_Unit_setHasFirstStrike00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  bool tolua_var_37 = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHasFirstStrike'", NULL);
+#endif
+  {
+   self->setHasFirstStrike(tolua_var_37);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHasFirstStrike'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setHasLifetap of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setHasLifetap00
+static int tolua_Elementum_Pixy_Unit_setHasLifetap00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  bool tolua_var_38 = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHasLifetap'", NULL);
+#endif
+  {
+   self->setHasLifetap(tolua_var_38);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHasLifetap'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAP of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setAP00
+static int tolua_Elementum_Pixy_Unit_setAP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  int inAP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAP'", NULL);
+#endif
+  {
+   self->setAP(inAP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAP of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_getAP00
+static int tolua_Elementum_Pixy_Unit_getAP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAP'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getAP();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBaseHP of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setBaseHP00
+static int tolua_Elementum_Pixy_Unit_setBaseHP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  int inHP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBaseHP'", NULL);
+#endif
+  {
+   self->setBaseHP(inHP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBaseHP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBaseHP of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_getBaseHP00
+static int tolua_Elementum_Pixy_Unit_getBaseHP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBaseHP'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getBaseHP();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBaseHP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBaseAP of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setBaseAP00
+static int tolua_Elementum_Pixy_Unit_setBaseAP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  int inAP = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBaseAP'", NULL);
+#endif
+  {
+   self->setBaseAP(inAP);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBaseAP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBaseAP of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_getBaseAP00
+static int tolua_Elementum_Pixy_Unit_getBaseAP00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBaseAP'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getBaseAP();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBaseAP'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setWalkSpeed of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_setWalkSpeed00
+static int tolua_Elementum_Pixy_Unit_setWalkSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  const float inSpeed = ((const float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWalkSpeed'", NULL);
+#endif
+  {
+   self->setWalkSpeed(inSpeed);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWalkSpeed of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_getWalkSpeed00
+static int tolua_Elementum_Pixy_Unit_getWalkSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWalkSpeed'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getWalkSpeed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getWalkSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: rotateToEnemy of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_rotateToEnemy00
+static int tolua_Elementum_Pixy_Unit_rotateToEnemy00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
   Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotateToEnemy'", NULL);
 #endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::Mobile*>(self), "Pixy::Mobile");
-#else
-   tolua_pushusertype(tolua_S,(void*)((Pixy::Mobile*)self), "Pixy::Mobile");
+  {
+   self->rotateToEnemy();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'rotateToEnemy'.",&tolua_err);
+ return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: rotateTo of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_rotateTo00
+static int tolua_Elementum_Pixy_Unit_rotateTo00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Ogre::Vector3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  const Ogre::Vector3* inDest = ((const Ogre::Vector3*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'rotateTo'", NULL);
+#endif
+  {
+   self->rotateTo(*inDest);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'rotateTo'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: move of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_move00
+static int tolua_Elementum_Pixy_Unit_move00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Unit* self = (Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+  int inWaypoint = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'move'", NULL);
+#endif
+  {
+   self->move(inWaypoint);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'move'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isMoving of class  Pixy::Unit */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Unit_isMoving00
+static int tolua_Elementum_Pixy_Unit_isMoving00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Unit",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Unit* self = (const Pixy::Unit*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isMoving'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isMoving();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
  return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isMoving'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -7758,39 +9344,6 @@ static int tolua_Elementum_Pixy_Entity_toCaster00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: deserialize of class  Pixy::Entity */
-#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_deserialize00
-static int tolua_Elementum_Pixy_Entity_deserialize00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Pixy::Event",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
-  const Pixy::Event* evt = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'deserialize'", NULL);
-#endif
-  {
-   self->deserialize(*evt);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'deserialize'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: getText of class  Pixy::Entity */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getText00
 static int tolua_Elementum_Pixy_Entity_getText00(lua_State* tolua_S)
@@ -7982,54 +9535,1627 @@ static int tolua_Elementum_Pixy_Entity_trackEnemyUnit00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __Pixy of class  Pixy::Entity */
-#ifndef TOLUA_DISABLE_tolua_get_Pixy__Entity___Pixy__Caster__
-static int tolua_get_Pixy__Entity___Pixy__Caster__(lua_State* tolua_S)
+/* method: setHP of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_setHP00
+static int tolua_Elementum_Pixy_Entity_setHP00(lua_State* tolua_S)
 {
-  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
 #endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::Caster*>(self), "Pixy::Caster");
-#else
-   tolua_pushusertype(tolua_S,(void*)((Pixy::Caster*)self), "Pixy::Caster");
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int tolua_var_6 = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHP'", NULL);
 #endif
- return 1;
+  {
+   self->setHP(tolua_var_6);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHP'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __Pixy of class  Pixy::Entity */
-#ifndef TOLUA_DISABLE_tolua_get_Pixy__Entity___Pixy__Animable__
-static int tolua_get_Pixy__Entity___Pixy__Animable__(lua_State* tolua_S)
+/* method: getHP of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getHP00
+static int tolua_Elementum_Pixy_Entity_getHP00(lua_State* tolua_S)
 {
-  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
 #endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::Animable*>(self), "Pixy::Animable");
-#else
-   tolua_pushusertype(tolua_S,(void*)((Pixy::Animable*)self), "Pixy::Animable");
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHP'", NULL);
 #endif
+  {
+   int tolua_ret = (int)  self->getHP();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
  return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getHP'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: __Pixy of class  Pixy::Entity */
-#ifndef TOLUA_DISABLE_tolua_get_Pixy__Entity___Pixy__Renderable__
-static int tolua_get_Pixy__Entity___Pixy__Renderable__(lua_State* tolua_S)
+/* method: _setRace of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity__setRace00
+static int tolua_Elementum_Pixy_Entity__setRace00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int inRace = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_setRace'", NULL);
+#endif
+  {
+   self->_setRace(inRace);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_setRace'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getRace of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getRace00
+static int tolua_Elementum_Pixy_Entity_getRace00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRace'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getRace();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getRace'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _setOwner of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity__setOwner00
+static int tolua_Elementum_Pixy_Entity__setOwner00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::Entity* inOwner = ((Pixy::Entity*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_setOwner'", NULL);
+#endif
+  {
+   self->_setOwner(inOwner);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_setOwner'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getOwner of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getOwner00
+static int tolua_Elementum_Pixy_Entity_getOwner00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOwner'", NULL);
+#endif
+  {
+   Pixy::Entity* tolua_ret = (Pixy::Entity*)  self->getOwner();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Entity");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOwner'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDead of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_isDead00
+static int tolua_Elementum_Pixy_Entity_isDead00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDead'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDead();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDead'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isPuppet of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_isPuppet00
+static int tolua_Elementum_Pixy_Entity_isPuppet00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPuppet'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isPuppet();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isPuppet'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isUnit of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_isUnit00
+static int tolua_Elementum_Pixy_Entity_isUnit00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isUnit'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isUnit();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isUnit'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: serialize of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_serialize00
+static int tolua_Elementum_Pixy_Entity_serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Pixy::Event",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::Event* inEvt = ((Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'serialize'", NULL);
+#endif
+  {
+   self->serialize(*inEvt);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: deserialize of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_deserialize00
+static int tolua_Elementum_Pixy_Entity_deserialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Pixy::Event",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  const Pixy::Event* inEvt = ((const Pixy::Event*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'deserialize'", NULL);
+#endif
+  {
+   self->deserialize(*inEvt);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'deserialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _setUID of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity__setUID00
+static int tolua_Elementum_Pixy_Entity__setUID00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int tolua_var_7 = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_setUID'", NULL);
+#endif
+  {
+   self->_setUID(tolua_var_7);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_setUID'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getUID of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getUID00
+static int tolua_Elementum_Pixy_Entity_getUID00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUID'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getUID();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getUID'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _setName of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity__setName00
+static int tolua_Elementum_Pixy_Entity__setName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  std::string const* tolua_var_8 = ((std::string const*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_setName'", NULL);
+#endif
+  {
+   self->_setName(*tolua_var_8);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_setName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getName of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getName00
+static int tolua_Elementum_Pixy_Entity_getName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getName'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getName();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachSpell of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_attachSpell01
+static int tolua_Elementum_Pixy_Entity_attachSpell01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::BaseSpell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::BaseSpell* inSpell = ((Pixy::BaseSpell*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSpell'", NULL);
+#endif
+  {
+   self->attachSpell(inSpell);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_Pixy_Entity_attachSpell00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachBuff of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_attachBuff01
+static int tolua_Elementum_Pixy_Entity_attachBuff01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Pixy::BaseSpell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::BaseSpell* inSpell = ((Pixy::BaseSpell*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachBuff'", NULL);
+#endif
+  {
+   self->attachBuff(inSpell);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Elementum_Pixy_Entity_attachBuff00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: detachSpell of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_detachSpell00
+static int tolua_Elementum_Pixy_Entity_detachSpell00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+  bool remove = ((bool)  tolua_toboolean(tolua_S,3,true));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachSpell'", NULL);
+#endif
+  {
+   self->detachSpell(inUID,remove);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'detachSpell'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: detachBuff of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_detachBuff00
+static int tolua_Elementum_Pixy_Entity_detachBuff00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+  bool remove = ((bool)  tolua_toboolean(tolua_S,3,true));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detachBuff'", NULL);
+#endif
+  {
+   self->detachBuff(inUID,remove);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'detachBuff'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSpell of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getSpell00
+static int tolua_Elementum_Pixy_Entity_getSpell00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpell'", NULL);
+#endif
+  {
+    Pixy::Spell* tolua_ret = (  Pixy::Spell*)  self->getSpell(inUID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Spell");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSpell'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBuff of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getBuff00
+static int tolua_Elementum_Pixy_Entity_getBuff00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBuff'", NULL);
+#endif
+  {
+    Pixy::Spell* tolua_ret = (  Pixy::Spell*)  self->getBuff(inUID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::Spell");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBuff'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSpells of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getSpells00
+static int tolua_Elementum_Pixy_Entity_getSpells00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
   Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__Pixy'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSpells'", NULL);
 #endif
-#ifdef __cplusplus
-   tolua_pushusertype(tolua_S,(void*)static_cast<Pixy::Renderable*>(self), "Pixy::Renderable");
-#else
-   tolua_pushusertype(tolua_S,(void*)((Pixy::Renderable*)self), "Pixy::Renderable");
-#endif
+  {
+   SpellList const& tolua_ret = (SpellList const&)  self->getSpells();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
+  }
+ }
  return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSpells'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBuffs of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getBuffs00
+static int tolua_Elementum_Pixy_Entity_getBuffs00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBuffs'", NULL);
+#endif
+  {
+   SpellList const& tolua_ret = (SpellList const&)  self->getBuffs();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBuffs'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: nrSpells of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_nrSpells00
+static int tolua_Elementum_Pixy_Entity_nrSpells00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'nrSpells'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->nrSpells();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'nrSpells'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: nrBuffs of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_nrBuffs00
+static int tolua_Elementum_Pixy_Entity_nrBuffs00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'nrBuffs'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->nrBuffs();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'nrBuffs'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasBuff of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_hasBuff00
+static int tolua_Elementum_Pixy_Entity_hasBuff00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  int inUID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuff'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasBuff(inUID);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasBuff'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasBuffWithName of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_hasBuffWithName00
+static int tolua_Elementum_Pixy_Entity_hasBuffWithName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  std::string tolua_var_9 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasBuffWithName'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasBuffWithName(tolua_var_9);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasBuffWithName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: registerAnimationState of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_registerAnimationState00
+static int tolua_Elementum_Pixy_Entity_registerAnimationState00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::Animable::AnimID inId = ((Pixy::Animable::AnimID) (int)  tolua_tonumber(tolua_S,2,0));
+  std::string inState = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+  bool doLoop = ((bool)  tolua_toboolean(tolua_S,4,true));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerAnimationState'", NULL);
+#endif
+  {
+   self->registerAnimationState(inId,inState,doLoop);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'registerAnimationState'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: step of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_step00
+static int tolua_Elementum_Pixy_Entity_step00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  unsigned long deltaTime = ((unsigned long)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'step'", NULL);
+#endif
+  {
+   self->step(deltaTime);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'step'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateLive of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateLive00
+static int tolua_Elementum_Pixy_Entity_animateLive00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateLive'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateLive();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateLive'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateDie of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateDie00
+static int tolua_Elementum_Pixy_Entity_animateDie00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateDie'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateDie();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateDie'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateIdle of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateIdle00
+static int tolua_Elementum_Pixy_Entity_animateIdle00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateIdle'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateIdle();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateIdle'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateWalk of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateWalk00
+static int tolua_Elementum_Pixy_Entity_animateWalk00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateWalk'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateWalk();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateWalk'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateRun of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateRun00
+static int tolua_Elementum_Pixy_Entity_animateRun00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateRun'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateRun();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateRun'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateAttack of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateAttack00
+static int tolua_Elementum_Pixy_Entity_animateAttack00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateAttack'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateAttack();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateAttack'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateHit of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateHit00
+static int tolua_Elementum_Pixy_Entity_animateHit00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateHit'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateHit();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateHit'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateRest of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateRest00
+static int tolua_Elementum_Pixy_Entity_animateRest00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateRest'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateRest();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateRest'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: animateGetUp of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_animateGetUp00
+static int tolua_Elementum_Pixy_Entity_animateGetUp00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animateGetUp'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->animateGetUp();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'animateGetUp'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _animate of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity__animate00
+static int tolua_Elementum_Pixy_Entity__animate00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Pixy::Animable::AnimID inId = ((Pixy::Animable::AnimID) (int)  tolua_tonumber(tolua_S,2,0));
+  bool override = ((bool)  tolua_toboolean(tolua_S,3,false));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_animate'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->_animate(inId,override);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_animate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAnimFadeSpeed of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_setAnimFadeSpeed00
+static int tolua_Elementum_Pixy_Entity_setAnimFadeSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float inSpeed = ((float)  tolua_tonumber(tolua_S,2,0));
+  {
+   Pixy::Entity::setAnimFadeSpeed(inSpeed);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAnimFadeSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAnimFadeSpeed of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getAnimFadeSpeed00
+static int tolua_Elementum_Pixy_Entity_getAnimFadeSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   float tolua_ret = (float)  Pixy::Entity::getAnimFadeSpeed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAnimFadeSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachSceneNode of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_attachSceneNode00
+static int tolua_Elementum_Pixy_Entity_attachSceneNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::SceneNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::SceneNode* inNode = ((Ogre::SceneNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneNode'", NULL);
+#endif
+  {
+   self->attachSceneNode(inNode);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'attachSceneNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSceneNode of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getSceneNode00
+static int tolua_Elementum_Pixy_Entity_getSceneNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneNode'", NULL);
+#endif
+  {
+   Ogre::SceneNode* tolua_ret = (Ogre::SceneNode*)  self->getSceneNode();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::SceneNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSceneNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachSceneObject of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_attachSceneObject00
+static int tolua_Elementum_Pixy_Entity_attachSceneObject00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Ogre::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  Ogre::Entity* inObject = ((Ogre::Entity*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachSceneObject'", NULL);
+#endif
+  {
+   self->attachSceneObject(inObject);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'attachSceneObject'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSceneObject of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getSceneObject00
+static int tolua_Elementum_Pixy_Entity_getSceneObject00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneObject'", NULL);
+#endif
+  {
+   Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->getSceneObject();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Entity");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSceneObject'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attachExtension of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_attachExtension00
+static int tolua_Elementum_Pixy_Entity_attachExtension00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  std::string inMesh = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+  std::string inBone = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attachExtension'", NULL);
+#endif
+  {
+   Ogre::Entity* tolua_ret = (Ogre::Entity*)  self->attachExtension(inMesh,inBone);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Ogre::Entity");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'attachExtension'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMesh of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getMesh00
+static int tolua_Elementum_Pixy_Entity_getMesh00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMesh'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getMesh();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMesh'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMaterial of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_getMaterial00
+static int tolua_Elementum_Pixy_Entity_getMaterial00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Pixy::Entity",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Pixy::Entity* self = (const Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMaterial'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getMaterial();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMaterial'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setMaterial of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_setMaterial00
+static int tolua_Elementum_Pixy_Entity_setMaterial00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  std::string tolua_var_10 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMaterial'", NULL);
+#endif
+  {
+   self->setMaterial(tolua_var_10);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setMaterial'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setMesh of class  Pixy::Entity */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_Entity_setMesh00
+static int tolua_Elementum_Pixy_Entity_setMesh00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::Entity",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::Entity* self = (Pixy::Entity*)  tolua_tousertype(tolua_S,1,0);
+  std::string tolua_var_11 = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMesh'", NULL);
+#endif
+  {
+   self->setMesh(tolua_var_11);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setMesh'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -8464,12 +11590,12 @@ static int tolua_Elementum_Ogre_SceneManager_destroyCamera00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::Camera* tolua_var_29 = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
+  Ogre::Camera* tolua_var_42 = ((Ogre::Camera*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyCamera'", NULL);
 #endif
   {
-   self->destroyCamera(tolua_var_29);
+   self->destroyCamera(tolua_var_42);
   }
  }
  return 0;
@@ -8657,12 +11783,12 @@ static int tolua_Elementum_Ogre_SceneManager_destroyLight01(lua_State* tolua_S)
  else
  {
   Ogre::SceneManager* self = (Ogre::SceneManager*)  tolua_tousertype(tolua_S,1,0);
-  Ogre::Light* tolua_var_30 = ((Ogre::Light*)  tolua_tousertype(tolua_S,2,0));
+  Ogre::Light* tolua_var_43 = ((Ogre::Light*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'destroyLight'", NULL);
 #endif
   {
-   self->destroyLight(tolua_var_30);
+   self->destroyLight(tolua_var_43);
   }
  }
  return 0;
@@ -11025,12 +14151,12 @@ static int tolua_Elementum_Ogre_SceneNode_yaw00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_26 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_39 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'yaw'", NULL);
 #endif
   {
-   self->yaw(tolua_var_26);
+   self->yaw(tolua_var_39);
   }
  }
  return 0;
@@ -11058,12 +14184,12 @@ static int tolua_Elementum_Ogre_SceneNode_pitch00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_27 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_40 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pitch'", NULL);
 #endif
   {
-   self->pitch(tolua_var_27);
+   self->pitch(tolua_var_40);
   }
  }
  return 0;
@@ -11091,12 +14217,12 @@ static int tolua_Elementum_Ogre_SceneNode_roll00(lua_State* tolua_S)
 #endif
  {
   Ogre::SceneNode* self = (Ogre::SceneNode*)  tolua_tousertype(tolua_S,1,0);
-  const Ogre::Degree tolua_var_28 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
+  const Ogre::Degree tolua_var_41 = *((const Ogre::Degree*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'roll'", NULL);
 #endif
   {
-   self->roll(tolua_var_28);
+   self->roll(tolua_var_41);
   }
  }
  return 0;
@@ -13072,6 +16198,129 @@ static int tolua_Elementum_Pixy_PuppetVecExporter_export00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: new of class  Pixy::LuaExporter<DeckVec> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckVec__new00
+static int tolua_Elementum_Pixy_LuaExporter_DeckVec__new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<DeckVec>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::LuaExporter<DeckVec>* tolua_ret = (Pixy::LuaExporter<DeckVec>*)  Mtolua_new((Pixy::LuaExporter<DeckVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<DeckVec>");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  Pixy::LuaExporter<DeckVec> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckVec__new00_local
+static int tolua_Elementum_Pixy_LuaExporter_DeckVec__new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<DeckVec>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::LuaExporter<DeckVec>* tolua_ret = (Pixy::LuaExporter<DeckVec>*)  Mtolua_new((Pixy::LuaExporter<DeckVec>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<DeckVec>");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Pixy::LuaExporter<DeckVec> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckVec__delete00
+static int tolua_Elementum_Pixy_LuaExporter_DeckVec__delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<DeckVec>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::LuaExporter<DeckVec>* self = (Pixy::LuaExporter<DeckVec>*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __export of class  Pixy::LuaExporter<DeckVec> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckVec__export00
+static int tolua_Elementum_Pixy_LuaExporter_DeckVec__export00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<DeckVec>",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::LuaExporter<DeckVec>* self = (Pixy::LuaExporter<DeckVec>*)  tolua_tousertype(tolua_S,1,0);
+  DeckVec const* container = ((DeckVec const*)  tolua_tousertype(tolua_S,2,0));
+  const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
+  const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__export'", NULL);
+#endif
+  {
+   self->__export(*container,data_type,out_table);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'export'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  Pixy::LuaExporter<UnitList> */
 #ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_UnitListExporter_new00
 static int tolua_Elementum_Pixy_UnitListExporter_new00(lua_State* tolua_S)
@@ -13423,6 +16672,129 @@ static int tolua_Elementum_Pixy_PuppetListExporter_export00(lua_State* tolua_S)
  {
   Pixy::LuaExporter<PuppetList>* self = (Pixy::LuaExporter<PuppetList>*)  tolua_tousertype(tolua_S,1,0);
   PuppetList const* container = ((PuppetList const*)  tolua_tousertype(tolua_S,2,0));
+  const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
+  const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__export'", NULL);
+#endif
+  {
+   self->__export(*container,data_type,out_table);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'export'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  Pixy::LuaExporter<DeckList> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckList__new00
+static int tolua_Elementum_Pixy_LuaExporter_DeckList__new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<DeckList>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::LuaExporter<DeckList>* tolua_ret = (Pixy::LuaExporter<DeckList>*)  Mtolua_new((Pixy::LuaExporter<DeckList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<DeckList>");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  Pixy::LuaExporter<DeckList> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckList__new00_local
+static int tolua_Elementum_Pixy_LuaExporter_DeckList__new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Pixy::LuaExporter<DeckList>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   Pixy::LuaExporter<DeckList>* tolua_ret = (Pixy::LuaExporter<DeckList>*)  Mtolua_new((Pixy::LuaExporter<DeckList>)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Pixy::LuaExporter<DeckList>");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Pixy::LuaExporter<DeckList> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckList__delete00
+static int tolua_Elementum_Pixy_LuaExporter_DeckList__delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<DeckList>",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::LuaExporter<DeckList>* self = (Pixy::LuaExporter<DeckList>*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __export of class  Pixy::LuaExporter<DeckList> */
+#ifndef TOLUA_DISABLE_tolua_Elementum_Pixy_LuaExporter_DeckList__export00
+static int tolua_Elementum_Pixy_LuaExporter_DeckList__export00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Pixy::LuaExporter<DeckList>",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const",0,&tolua_err)) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Pixy::LuaExporter<DeckList>* self = (Pixy::LuaExporter<DeckList>*)  tolua_tousertype(tolua_S,1,0);
+  DeckList const* container = ((DeckList const*)  tolua_tousertype(tolua_S,2,0));
   const char* data_type = ((const char*)  tolua_tostring(tolua_S,3,0));
   const char* out_table = ((const char*)  tolua_tostring(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
@@ -27958,6 +31330,7 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getModulePathPrefix",tolua_Elementum_Pixy_ScriptEngine_getModulePathPrefix00);
     tolua_function(tolua_S,"callMeAfter",tolua_Elementum_Pixy_ScriptEngine_callMeAfter00);
     tolua_function(tolua_S,"_passGameData",tolua_Elementum_Pixy_ScriptEngine__passGameData00);
+    tolua_function(tolua_S,"reportAccepted",tolua_Elementum_Pixy_ScriptEngine_reportAccepted00);
     tolua_variable(tolua_S,"__Pixy__EventListener__",tolua_get_Pixy__ScriptEngine___Pixy__EventListener__,NULL);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"EventManager","Pixy::EventManager","",NULL);
@@ -27998,7 +31371,26 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"hasUnitWithName",tolua_Elementum_Pixy_Puppet_hasUnitWithName00);
     tolua_function(tolua_S,"toEntity",tolua_Elementum_Pixy_Puppet_toEntity00);
     tolua_function(tolua_S,"updateTextOverlay",tolua_Elementum_Pixy_Puppet_updateTextOverlay00);
-    tolua_variable(tolua_S,"__Pixy__BasePuppet__",tolua_get_Pixy__Puppet___Pixy__BasePuppet__,NULL);
+    tolua_function(tolua_S,"setExperience",tolua_Elementum_Pixy_Puppet_setExperience00);
+    tolua_function(tolua_S,"setLevel",tolua_Elementum_Pixy_Puppet_setLevel00);
+    tolua_function(tolua_S,"setIntelligence",tolua_Elementum_Pixy_Puppet_setIntelligence00);
+    tolua_function(tolua_S,"setVitality",tolua_Elementum_Pixy_Puppet_setVitality00);
+    tolua_function(tolua_S,"setWP",tolua_Elementum_Pixy_Puppet_setWP00);
+    tolua_function(tolua_S,"setChannels",tolua_Elementum_Pixy_Puppet_setChannels00);
+    tolua_function(tolua_S,"setWins",tolua_Elementum_Pixy_Puppet_setWins00);
+    tolua_function(tolua_S,"setLosses",tolua_Elementum_Pixy_Puppet_setLosses00);
+    tolua_function(tolua_S,"getExperience",tolua_Elementum_Pixy_Puppet_getExperience00);
+    tolua_function(tolua_S,"getLevel",tolua_Elementum_Pixy_Puppet_getLevel00);
+    tolua_function(tolua_S,"getIntelligence",tolua_Elementum_Pixy_Puppet_getIntelligence00);
+    tolua_function(tolua_S,"getVitality",tolua_Elementum_Pixy_Puppet_getVitality00);
+    tolua_function(tolua_S,"getWP",tolua_Elementum_Pixy_Puppet_getWP00);
+    tolua_function(tolua_S,"getChannels",tolua_Elementum_Pixy_Puppet_getChannels00);
+    tolua_function(tolua_S,"getWins",tolua_Elementum_Pixy_Puppet_getWins00);
+    tolua_function(tolua_S,"getLosses",tolua_Elementum_Pixy_Puppet_getLosses00);
+    tolua_function(tolua_S,"attachTalent",tolua_Elementum_Pixy_Puppet_attachTalent00);
+    tolua_function(tolua_S,"detachTalent",tolua_Elementum_Pixy_Puppet_detachTalent00);
+    tolua_function(tolua_S,"getTalents",tolua_Elementum_Pixy_Puppet_getTalents00);
+    tolua_function(tolua_S,"hasTalent",tolua_Elementum_Pixy_Puppet_hasTalent00);
    tolua_endmodule(tolua_S);
    tolua_cclass(tolua_S,"Engine","Pixy::Engine","",NULL);
    tolua_beginmodule(tolua_S,"Engine");
@@ -28025,8 +31417,6 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"die",tolua_Elementum_Pixy_Unit_die00);
     tolua_function(tolua_S,"attack",tolua_Elementum_Pixy_Unit_attack00);
     tolua_function(tolua_S,"attack",tolua_Elementum_Pixy_Unit_attack01);
-    tolua_function(tolua_S,"serialize",tolua_Elementum_Pixy_Unit_serialize00);
-    tolua_function(tolua_S,"deserialize",tolua_Elementum_Pixy_Unit_deserialize00);
     tolua_function(tolua_S,"toEntity",tolua_Elementum_Pixy_Unit_toEntity00);
     tolua_function(tolua_S,"getEnemy",tolua_Elementum_Pixy_Unit_getEnemy00);
     tolua_function(tolua_S,"getAttackOrder",tolua_Elementum_Pixy_Unit_getAttackOrder00);
@@ -28036,15 +31426,44 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getAttackTarget",tolua_Elementum_Pixy_Unit_getAttackTarget00);
     tolua_function(tolua_S,"setAttackTarget",tolua_Elementum_Pixy_Unit_setAttackTarget00);
     tolua_function(tolua_S,"_setEnemy",tolua_Elementum_Pixy_Unit__setEnemy00);
-    tolua_function(tolua_S,"setAP",tolua_Elementum_Pixy_Unit_setAP00);
     tolua_function(tolua_S,"setHP",tolua_Elementum_Pixy_Unit_setHP00);
     tolua_function(tolua_S,"updateTextOverlay",tolua_Elementum_Pixy_Unit_updateTextOverlay00);
-    tolua_function(tolua_S,"reset",tolua_Elementum_Pixy_Unit_reset00);
+    tolua_function(tolua_S,"isDying",tolua_Elementum_Pixy_Unit_isDying00);
+    tolua_function(tolua_S,"getOwner",tolua_Elementum_Pixy_Unit_getOwner00);
     tolua_function(tolua_S,"rest",tolua_Elementum_Pixy_Unit_rest00);
     tolua_function(tolua_S,"getUp",tolua_Elementum_Pixy_Unit_getUp00);
-    tolua_function(tolua_S,"isDying",tolua_Elementum_Pixy_Unit_isDying00);
-    tolua_variable(tolua_S,"__Pixy__BaseUnit__",tolua_get_Pixy__Unit___Pixy__BaseUnit__,NULL);
-    tolua_variable(tolua_S,"__Pixy__Mobile__",tolua_get_Pixy__Unit___Pixy__Mobile__,NULL);
+    tolua_function(tolua_S,"reset",tolua_Elementum_Pixy_Unit_reset00);
+    tolua_function(tolua_S,"hasSummoningSickness",tolua_Elementum_Pixy_Unit_hasSummoningSickness00);
+    tolua_function(tolua_S,"canAttack",tolua_Elementum_Pixy_Unit_canAttack00);
+    tolua_function(tolua_S,"isResting",tolua_Elementum_Pixy_Unit_isResting00);
+    tolua_function(tolua_S,"isCharging",tolua_Elementum_Pixy_Unit_isCharging00);
+    tolua_function(tolua_S,"isAttacking",tolua_Elementum_Pixy_Unit_isAttacking00);
+    tolua_function(tolua_S,"isBlocking",tolua_Elementum_Pixy_Unit_isBlocking00);
+    tolua_function(tolua_S,"isReady",tolua_Elementum_Pixy_Unit_isReady00);
+    tolua_function(tolua_S,"isFlying",tolua_Elementum_Pixy_Unit_isFlying00);
+    tolua_function(tolua_S,"isTrampling",tolua_Elementum_Pixy_Unit_isTrampling00);
+    tolua_function(tolua_S,"isUnblockable",tolua_Elementum_Pixy_Unit_isUnblockable00);
+    tolua_function(tolua_S,"isRestless",tolua_Elementum_Pixy_Unit_isRestless00);
+    tolua_function(tolua_S,"hasFirstStrike",tolua_Elementum_Pixy_Unit_hasFirstStrike00);
+    tolua_function(tolua_S,"hasLifetap",tolua_Elementum_Pixy_Unit_hasLifetap00);
+    tolua_function(tolua_S,"setIsFlying",tolua_Elementum_Pixy_Unit_setIsFlying00);
+    tolua_function(tolua_S,"setIsTrampling",tolua_Elementum_Pixy_Unit_setIsTrampling00);
+    tolua_function(tolua_S,"setIsUnblockable",tolua_Elementum_Pixy_Unit_setIsUnblockable00);
+    tolua_function(tolua_S,"setIsRestless",tolua_Elementum_Pixy_Unit_setIsRestless00);
+    tolua_function(tolua_S,"setHasFirstStrike",tolua_Elementum_Pixy_Unit_setHasFirstStrike00);
+    tolua_function(tolua_S,"setHasLifetap",tolua_Elementum_Pixy_Unit_setHasLifetap00);
+    tolua_function(tolua_S,"setAP",tolua_Elementum_Pixy_Unit_setAP00);
+    tolua_function(tolua_S,"getAP",tolua_Elementum_Pixy_Unit_getAP00);
+    tolua_function(tolua_S,"setBaseHP",tolua_Elementum_Pixy_Unit_setBaseHP00);
+    tolua_function(tolua_S,"getBaseHP",tolua_Elementum_Pixy_Unit_getBaseHP00);
+    tolua_function(tolua_S,"setBaseAP",tolua_Elementum_Pixy_Unit_setBaseAP00);
+    tolua_function(tolua_S,"getBaseAP",tolua_Elementum_Pixy_Unit_getBaseAP00);
+    tolua_function(tolua_S,"setWalkSpeed",tolua_Elementum_Pixy_Unit_setWalkSpeed00);
+    tolua_function(tolua_S,"getWalkSpeed",tolua_Elementum_Pixy_Unit_getWalkSpeed00);
+    tolua_function(tolua_S,"rotateToEnemy",tolua_Elementum_Pixy_Unit_rotateToEnemy00);
+    tolua_function(tolua_S,"rotateTo",tolua_Elementum_Pixy_Unit_rotateTo00);
+    tolua_function(tolua_S,"move",tolua_Elementum_Pixy_Unit_move00);
+    tolua_function(tolua_S,"isMoving",tolua_Elementum_Pixy_Unit_isMoving00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
    tolua_cclass(tolua_S,"Combat","Pixy::Combat","Pixy::GameState",tolua_collect_Pixy__Combat);
@@ -28117,16 +31536,62 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"attachSpell",tolua_Elementum_Pixy_Entity_attachSpell00);
     tolua_function(tolua_S,"attachBuff",tolua_Elementum_Pixy_Entity_attachBuff00);
     tolua_function(tolua_S,"toCaster",tolua_Elementum_Pixy_Entity_toCaster00);
-    tolua_function(tolua_S,"deserialize",tolua_Elementum_Pixy_Entity_deserialize00);
     tolua_function(tolua_S,"getText",tolua_Elementum_Pixy_Entity_getText00);
     tolua_function(tolua_S,"setText",tolua_Elementum_Pixy_Entity_setText00);
     tolua_function(tolua_S,"updateTextOverlay",tolua_Elementum_Pixy_Entity_updateTextOverlay00);
     tolua_function(tolua_S,"hide",tolua_Elementum_Pixy_Entity_hide00);
     tolua_function(tolua_S,"show",tolua_Elementum_Pixy_Entity_show00);
     tolua_function(tolua_S,"trackEnemyUnit",tolua_Elementum_Pixy_Entity_trackEnemyUnit00);
-    tolua_variable(tolua_S,"__Pixy__Caster__",tolua_get_Pixy__Entity___Pixy__Caster__,NULL);
-    tolua_variable(tolua_S,"__Pixy__Animable__",tolua_get_Pixy__Entity___Pixy__Animable__,NULL);
-    tolua_variable(tolua_S,"__Pixy__Renderable__",tolua_get_Pixy__Entity___Pixy__Renderable__,NULL);
+    tolua_function(tolua_S,"setHP",tolua_Elementum_Pixy_Entity_setHP00);
+    tolua_function(tolua_S,"getHP",tolua_Elementum_Pixy_Entity_getHP00);
+    tolua_function(tolua_S,"_setRace",tolua_Elementum_Pixy_Entity__setRace00);
+    tolua_function(tolua_S,"getRace",tolua_Elementum_Pixy_Entity_getRace00);
+    tolua_function(tolua_S,"_setOwner",tolua_Elementum_Pixy_Entity__setOwner00);
+    tolua_function(tolua_S,"getOwner",tolua_Elementum_Pixy_Entity_getOwner00);
+    tolua_function(tolua_S,"isDead",tolua_Elementum_Pixy_Entity_isDead00);
+    tolua_function(tolua_S,"isPuppet",tolua_Elementum_Pixy_Entity_isPuppet00);
+    tolua_function(tolua_S,"isUnit",tolua_Elementum_Pixy_Entity_isUnit00);
+    tolua_function(tolua_S,"serialize",tolua_Elementum_Pixy_Entity_serialize00);
+    tolua_function(tolua_S,"deserialize",tolua_Elementum_Pixy_Entity_deserialize00);
+    tolua_function(tolua_S,"_setUID",tolua_Elementum_Pixy_Entity__setUID00);
+    tolua_function(tolua_S,"getUID",tolua_Elementum_Pixy_Entity_getUID00);
+    tolua_function(tolua_S,"_setName",tolua_Elementum_Pixy_Entity__setName00);
+    tolua_function(tolua_S,"getName",tolua_Elementum_Pixy_Entity_getName00);
+    tolua_function(tolua_S,"attachSpell",tolua_Elementum_Pixy_Entity_attachSpell01);
+    tolua_function(tolua_S,"attachBuff",tolua_Elementum_Pixy_Entity_attachBuff01);
+    tolua_function(tolua_S,"detachSpell",tolua_Elementum_Pixy_Entity_detachSpell00);
+    tolua_function(tolua_S,"detachBuff",tolua_Elementum_Pixy_Entity_detachBuff00);
+    tolua_function(tolua_S,"getSpell",tolua_Elementum_Pixy_Entity_getSpell00);
+    tolua_function(tolua_S,"getBuff",tolua_Elementum_Pixy_Entity_getBuff00);
+    tolua_function(tolua_S,"getSpells",tolua_Elementum_Pixy_Entity_getSpells00);
+    tolua_function(tolua_S,"getBuffs",tolua_Elementum_Pixy_Entity_getBuffs00);
+    tolua_function(tolua_S,"nrSpells",tolua_Elementum_Pixy_Entity_nrSpells00);
+    tolua_function(tolua_S,"nrBuffs",tolua_Elementum_Pixy_Entity_nrBuffs00);
+    tolua_function(tolua_S,"hasBuff",tolua_Elementum_Pixy_Entity_hasBuff00);
+    tolua_function(tolua_S,"hasBuffWithName",tolua_Elementum_Pixy_Entity_hasBuffWithName00);
+    tolua_function(tolua_S,"registerAnimationState",tolua_Elementum_Pixy_Entity_registerAnimationState00);
+    tolua_function(tolua_S,"step",tolua_Elementum_Pixy_Entity_step00);
+    tolua_function(tolua_S,"animateLive",tolua_Elementum_Pixy_Entity_animateLive00);
+    tolua_function(tolua_S,"animateDie",tolua_Elementum_Pixy_Entity_animateDie00);
+    tolua_function(tolua_S,"animateIdle",tolua_Elementum_Pixy_Entity_animateIdle00);
+    tolua_function(tolua_S,"animateWalk",tolua_Elementum_Pixy_Entity_animateWalk00);
+    tolua_function(tolua_S,"animateRun",tolua_Elementum_Pixy_Entity_animateRun00);
+    tolua_function(tolua_S,"animateAttack",tolua_Elementum_Pixy_Entity_animateAttack00);
+    tolua_function(tolua_S,"animateHit",tolua_Elementum_Pixy_Entity_animateHit00);
+    tolua_function(tolua_S,"animateRest",tolua_Elementum_Pixy_Entity_animateRest00);
+    tolua_function(tolua_S,"animateGetUp",tolua_Elementum_Pixy_Entity_animateGetUp00);
+    tolua_function(tolua_S,"_animate",tolua_Elementum_Pixy_Entity__animate00);
+    tolua_function(tolua_S,"setAnimFadeSpeed",tolua_Elementum_Pixy_Entity_setAnimFadeSpeed00);
+    tolua_function(tolua_S,"getAnimFadeSpeed",tolua_Elementum_Pixy_Entity_getAnimFadeSpeed00);
+    tolua_function(tolua_S,"attachSceneNode",tolua_Elementum_Pixy_Entity_attachSceneNode00);
+    tolua_function(tolua_S,"getSceneNode",tolua_Elementum_Pixy_Entity_getSceneNode00);
+    tolua_function(tolua_S,"attachSceneObject",tolua_Elementum_Pixy_Entity_attachSceneObject00);
+    tolua_function(tolua_S,"getSceneObject",tolua_Elementum_Pixy_Entity_getSceneObject00);
+    tolua_function(tolua_S,"attachExtension",tolua_Elementum_Pixy_Entity_attachExtension00);
+    tolua_function(tolua_S,"getMesh",tolua_Elementum_Pixy_Entity_getMesh00);
+    tolua_function(tolua_S,"getMaterial",tolua_Elementum_Pixy_Entity_getMaterial00);
+    tolua_function(tolua_S,"setMaterial",tolua_Elementum_Pixy_Entity_setMaterial00);
+    tolua_function(tolua_S,"setMesh",tolua_Elementum_Pixy_Entity_setMesh00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Ogre",0);
@@ -28373,6 +31838,18 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_PuppetVecExporter_export00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
+   tolua_cclass(tolua_S,"LuaExporter_DeckVec_","Pixy::LuaExporter<DeckVec>","Pixy::BaseLuaExporter",tolua_collect_Pixy__LuaExporter_DeckVec_);
+   #else
+   tolua_cclass(tolua_S,"LuaExporter_DeckVec_","Pixy::LuaExporter<DeckVec>","Pixy::BaseLuaExporter",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"LuaExporter_DeckVec_");
+    tolua_function(tolua_S,"new",tolua_Elementum_Pixy_LuaExporter_DeckVec__new00);
+    tolua_function(tolua_S,"new_local",tolua_Elementum_Pixy_LuaExporter_DeckVec__new00_local);
+    tolua_function(tolua_S,".call",tolua_Elementum_Pixy_LuaExporter_DeckVec__new00_local);
+    tolua_function(tolua_S,"delete",tolua_Elementum_Pixy_LuaExporter_DeckVec__delete00);
+    tolua_function(tolua_S,"export",tolua_Elementum_Pixy_LuaExporter_DeckVec__export00);
+   tolua_endmodule(tolua_S);
+   #ifdef __cplusplus
    tolua_cclass(tolua_S,"UnitListExporter","Pixy::LuaExporter<UnitList>","Pixy::BaseLuaExporter",tolua_collect_Pixy__LuaExporter_UnitList_);
    #else
    tolua_cclass(tolua_S,"UnitListExporter","Pixy::LuaExporter<UnitList>","Pixy::BaseLuaExporter",NULL);
@@ -28407,6 +31884,18 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
     tolua_function(tolua_S,".call",tolua_Elementum_Pixy_PuppetListExporter_new00_local);
     tolua_function(tolua_S,"delete",tolua_Elementum_Pixy_PuppetListExporter_delete00);
     tolua_function(tolua_S,"export",tolua_Elementum_Pixy_PuppetListExporter_export00);
+   tolua_endmodule(tolua_S);
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"LuaExporter_DeckList_","Pixy::LuaExporter<DeckList>","Pixy::BaseLuaExporter",tolua_collect_Pixy__LuaExporter_DeckList_);
+   #else
+   tolua_cclass(tolua_S,"LuaExporter_DeckList_","Pixy::LuaExporter<DeckList>","Pixy::BaseLuaExporter",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"LuaExporter_DeckList_");
+    tolua_function(tolua_S,"new",tolua_Elementum_Pixy_LuaExporter_DeckList__new00);
+    tolua_function(tolua_S,"new_local",tolua_Elementum_Pixy_LuaExporter_DeckList__new00_local);
+    tolua_function(tolua_S,".call",tolua_Elementum_Pixy_LuaExporter_DeckList__new00_local);
+    tolua_function(tolua_S,"delete",tolua_Elementum_Pixy_LuaExporter_DeckList__delete00);
+    tolua_function(tolua_S,"export",tolua_Elementum_Pixy_LuaExporter_DeckList__export00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Pixy",0);
@@ -28469,12 +31958,6 @@ TOLUA_API int tolua_Elementum_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Pixy",0);
   tolua_beginmodule(tolua_S,"Pixy");
-  tolua_endmodule(tolua_S);
-  tolua_module(tolua_S,"CEGUI",0);
-  tolua_beginmodule(tolua_S,"CEGUI");
-   tolua_cclass(tolua_S,"Window","CEGUI::Window","",NULL);
-   tolua_beginmodule(tolua_S,"Window");
-   tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"Pixy",0);
   tolua_beginmodule(tolua_S,"Pixy");

@@ -84,6 +84,8 @@ namespace Pixy {
      */
     int _passPuppet();
 
+    void _reportAccepted();
+
 	protected:
 
     bool onMatchFinished(const Event& inEvt);
@@ -94,7 +96,7 @@ namespace Pixy {
     //bool evtAssignPuppets(Event* inEvt);
     //bool evtJoinQueue(Event* inEvt);
 
-		lua_State* mLUA;
+		lua_State* mLuaState;
 		CEGUI::LuaScriptModule* mCEGUILua;
 		log4cpp::Category *mLuaLog;
 		void loadResources();
@@ -105,6 +107,18 @@ namespace Pixy {
 		void updateNothing(unsigned long lTimeElapsed);
 		void updateIntro(unsigned long lTimeElapsed);
 		void updateCombat(unsigned long lTimeElapsed);
+
+    /**
+     * retrieves the error message from the lua stack
+     **/
+    void reportError();
+
+    // if this flag is set to true, then reportError() will do nothing until
+    // the user accepts the error report (this is used to prevent flooding)
+    // the flag is turned off by Lua calling ScriptEngine::reportAccepted()
+    bool fReportIsShown;
+
+    bool fCorruptState;
 
     boost::asio::deadline_timer* mTimer;
 

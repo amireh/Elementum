@@ -62,7 +62,8 @@ SET(Elementum_SRCS
 
   main.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_Elementum.cpp
+  #${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_Elementum.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/swig/wrappers/Elementum_wrap.cxx
 
   #${CMAKE_CURRENT_SOURCE_DIR}/UI/Tooltip.cpp
 )

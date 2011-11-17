@@ -72,7 +72,7 @@ namespace Pixy {
 
   EntityManager::spell_t* const EntityManager::getSpell(std::string const& inName) {
     spell_t* lSpell = 0;
-    for (int i; i < 4; ++i) {
+    for (int i=0; i < 4; ++i) {
       lSpell = getSpell(inName, i);
       if (lSpell)
         return lSpell;
@@ -95,7 +95,7 @@ namespace Pixy {
 
   EntityManager::unit_t* const  EntityManager::getUnit(std::string const& inName) {
     unit_t* lUnit = 0;
-    for (int i; i < 4; ++i) {
+    for (int i=0; i < 4; ++i) {
       lUnit = getUnit(inName, i);
       if (lUnit)
         return lUnit;
@@ -144,7 +144,7 @@ namespace Pixy {
   EntityManager::spell_t const* const EntityManager::getModelSpell(std::string const& inName) {
     spells_t::const_iterator itr;
 
-    for (int i; i < 4; ++i)
+    for (int i=0; i < 4; ++i)
       for (itr = mSpells[i].begin(); itr != mSpells[i].end(); ++itr)
         if ((*itr)->getName() == inName)
           return (*itr);
@@ -156,7 +156,7 @@ namespace Pixy {
   EntityManager::unit_t const* const EntityManager::getModelUnit(std::string const& inName) {
     units_t::const_iterator itr;
 
-    for (int i; i < 4; ++i)
+    for (int i=0; i < 4; ++i)
       for (itr = mUnits[i].begin(); itr != mUnits[i].end(); ++itr)
         if ((*itr)->getName() == inName)
           return (*itr);
@@ -187,13 +187,14 @@ namespace Pixy {
   void EntityManager::clear()
   {
     mLog->infoStream() << "\tdestroying " << mPuppets.size() << " puppets";
-    while (!mPuppets.empty())
+    /*while (!mPuppets.empty())
     {
       delete mPuppets.back();
       mPuppets.pop_back();
-    }
+    }*/
+    mPuppets.clear();
 
-    for (int i; i < 4; ++i) {
+    for (int i=0; i < 4; ++i) {
       mLog->infoStream() << "\tdestroying " << mSpells[i].size() << " spells of race " << i;
       while (!mSpells[i].empty()) {
         // delete only the spells that aren't minion abilities

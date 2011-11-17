@@ -2,13 +2,13 @@ local HarlequinCurse = {}
 function HarlequinCurse:cast()
   self:logMe()
 
-  SCT.ShowScrollingMessage("dead (Harlequin Curse)", false, self.TargetRnd)
+  SCT.ShowScrollingMessage("dead (Harlequin Curse)", false, self.Target)
   self.Target:die()
-  if Selected == self.TargetRnd then
+  if Selected == self.Target then
     Gfx.Dehighlight()
   end
 
-  FxEngine:playEffect("KissOfDeath", self.CasterRnd)
+  FxEngine:playEffect("KissOfDeath", self.Caster)
 
 	return true
 end

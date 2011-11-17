@@ -310,4 +310,19 @@ namespace Pixy {
     //std::cout << inWindow->getProperty("HorzExtent") << ", " << inWindow->getProperty("VertExtent") << "\n";
   }
 
+  void UIEngine::reportLuaError(std::string const& inMsg)
+  {
+    std::string lWindowName = "Elementum/LuaErrorBox";
+    CEGUI::WindowManager *lWindowMgr = CEGUI::WindowManager::getSingletonPtr();
+    if (!lWindowMgr->isWindowPresent(lWindowName))
+    {
+      mLog->errorStream() << "Could not find LuaErrorBox window, unable to report message: " << inMsg;
+      return;
+    }
+
+    CEGUI::Window* lErrorBox = lWindowMgr->getWindow("Elementum/LuaErrorBox");
+    lErrorBox->show();
+    lErrorBox->getChildAtIdx(0)->setText(inMsg);
+  }
+
 }

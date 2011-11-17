@@ -26,9 +26,6 @@ namespace Pixy
 
   Entity::~Entity()
   {
-    if (mSceneNode && mSceneObject) {
-      GfxEngine::getSingletonPtr()->detachFromScene(this);
-    }
 
     if (mText)
       delete mText;
@@ -61,11 +58,11 @@ namespace Pixy
     mText = src.mText;
   }
 
-  std::ostream& Entity::toStream(std::ostream& inStream)
+  std::ostream& Entity::toStream(std::ostream& inStream) const
   {
     inStream
       //~ << this->getName() << "[" << this->getUID() << "," << this->getOwner()->getUID() << "]";
-      << mName << "[" << mUID << "," << mOwner->getUID() << "]";
+      << "\"" << mName << "[" << mUID << "," << mOwner->getUID() << "]" << "\"";
 
     return inStream;
   }
@@ -75,23 +72,23 @@ namespace Pixy
     mSceneMgr = inSceneMgr;
     assert(mSceneNode && mSceneObject);
     Animable::setup(this);
+    show();
   }
 
   bool Entity::live()
   {
     fIsDead = false;
 
-    mSceneMgr = GfxEngine::getSingletonPtr()->getSceneMgr();
-    GfxEngine::getSingletonPtr()->attachToScene(this);
-    Animable::setup(this);
-
-    show();
+    //GfxEngine::getSingletonPtr()->attachToScene(this);
   }
 
   void Entity::die()
   {
-    hide();
-    GfxEngine::getSingletonPtr()->detachFromScene(this);
+    if (mSceneNode && mSceneObject)
+    {
+      hide();
+      GfxEngine::getSingletonPtr()->detachFromScene(this);
+    }
 
     fIsDead = true;
   }
@@ -124,6 +121,9 @@ namespace Pixy
   void Entity::setText(MovableTextOverlay* inT) { mText = inT; }
 
   void Entity::hide() {
+    if (!mSceneNode || !mText)
+      return;
+
     mSceneNode->setVisible(false);
     if (mText)
     {
@@ -134,6 +134,9 @@ namespace Pixy
   }
 
   void Entity::show() {
+    if (!mSceneNode || !mText)
+      return;
+
     mSceneNode->setVisible(true);
     if (mText)
     {
@@ -160,4 +163,10 @@ namespace Pixy
   }
   */
 
+  void Entity::setHP(int inHP)
+  {
+    BaseEntity::setHP(inHP);
+    updateTextOverlay();
+
+  }
 } // end of Pixy namespace

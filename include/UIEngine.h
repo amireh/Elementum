@@ -58,6 +58,8 @@ namespace Pixy {
     void connectAnimation(CEGUI::Window*, std::string inAnim);
     void refreshTooltipSize(CEGUI::Window* inWindow, Spell* inSpell);
 
+    void reportLuaError(std::string const& inMsg);
+
 	protected:
 		const char* getDataPathPrefix() const;
 
@@ -65,6 +67,8 @@ namespace Pixy {
 
 		CEGUI::OgreRenderer		*mOgreRenderer;
 		CEGUI::System			*mUISystem;
+
+		//~ CEGUI::Window			*mErrorReporter;
 		EventManager			*mEvtMgr;
     MyInput *mMyInput;
 

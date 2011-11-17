@@ -56,20 +56,22 @@ namespace Pixy
 
     //void trackEnemyPuppet();
     void trackEnemyUnit(Unit* inUnit);
+    virtual void setHP(int);
 
     //void stepBody(unsigned long dt);
 
     protected:
 
     void copyFrom(const Entity& src);
-    virtual std::ostream& toStream(std::ostream& inStream);
+    virtual std::ostream& toStream(std::ostream& inStream) const;
+
+    MovableTextOverlay  *mText;
 
     private:
 
 		//~ Ogre::SceneNode     *mSceneNode;
     //Ogre::Vector3       mScale;
 		//~ Ogre::Entity        *mSceneObject;
-    MovableTextOverlay  *mText;
     //~ Ogre::SceneManager  *mSceneMgr;
     //typedef std::vector<Ogre::Entity*> extensions_t;
     //extensions_t mExtensions;

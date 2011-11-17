@@ -32,7 +32,7 @@ Water is definitely every gay gentleman's choice.",
 
 local updateRaceText = function()
   if (SelectedRnd == nil) then return false end
-  local race = SelectedRnd:getEntity():getRace()
+  local race = SelectedRnd:getRace()
 
   -- display the race description
   RaceText:setText(Races[raceToString(race)])
@@ -88,32 +88,32 @@ function Profiles.NewProfile:attach()
   MainMenu.hideGremlins()
   do
     -- set the scale of all knights
-    Profiles.Knights.Earth:getRenderable():getSceneNode():setScale(scale)
-    Profiles.Knights.Air:getRenderable():getSceneNode():setScale(scale)
-    Profiles.Knights.Fire:getRenderable():getSceneNode():setScale(scale)
-    Profiles.Knights.Water:getRenderable():getSceneNode():setScale(scale)
+    Profiles.Knights.Earth:getSceneNode():setScale(scale)
+    Profiles.Knights.Air:getSceneNode():setScale(scale)
+    Profiles.Knights.Fire:getSceneNode():setScale(scale)
+    Profiles.Knights.Water:getSceneNode():setScale(scale)
   end
 
   do
     -- set the position of all knights
     local pos =
-    Profiles.Knights.Earth:getRenderable():getSceneNode():setPosition(Ogre.Vector3(-14 * ar,0,3 * ar))
-    Profiles.Knights.Water:getRenderable():getSceneNode():setPosition(Ogre.Vector3(-8 * ar,0,-20))
-    Profiles.Knights.Air:getRenderable():getSceneNode():setPosition(Ogre.Vector3(0,0,-20))
-    Profiles.Knights.Fire:getRenderable():getSceneNode():setPosition(Ogre.Vector3(4 * ar,0,3 * ar))
+    Profiles.Knights.Earth:getSceneNode():setPosition(Ogre.Vector3(-14 * ar,0,3 * ar))
+    Profiles.Knights.Water:getSceneNode():setPosition(Ogre.Vector3(-8 * ar,0,-20))
+    Profiles.Knights.Air:getSceneNode():setPosition(Ogre.Vector3(0,0,-20))
+    Profiles.Knights.Fire:getSceneNode():setPosition(Ogre.Vector3(4 * ar,0,3 * ar))
   end
 
   do
     -- rotate the ones on the edges to give them a look of standing in a semi-circle
-    Profiles.Knights.Fire:getRenderable():getSceneNode():lookAt(Ogre.Vector3(9 * ar, 0, -10), Ogre.Node.TS_WORLD)
-    Profiles.Knights.Earth:getRenderable():getSceneNode():lookAt(Ogre.Vector3(-26 * ar, 0, -10), Ogre.Node.TS_WORLD)
-    Profiles.Knights.Air:getRenderable():getSceneNode():lookAt(Ogre.Vector3(0, 0, -100), Ogre.Node.TS_WORLD)
-    Profiles.Knights.Water:getRenderable():getSceneNode():lookAt(Ogre.Vector3(0, 0, -100), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Fire:getSceneNode():lookAt(Ogre.Vector3(9 * ar, 0, -10), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Earth:getSceneNode():lookAt(Ogre.Vector3(-26 * ar, 0, -10), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Air:getSceneNode():lookAt(Ogre.Vector3(0, 0, -100), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Water:getSceneNode():lookAt(Ogre.Vector3(0, 0, -100), Ogre.Node.TS_WORLD)
   end
 
   do
     -- set up the camera
-    --~ GfxEngine:trackNode(fire_knight:getRenderable():getSceneNode())
+    --~ GfxEngine:trackNode(fire_knight:getSceneNode())
     --~ GfxEngine:trackNode(nil)
     --~ GfxEngine:setYawPitchDist(Ogre.Vector3(-30, 0, 0))
     GfxEngine:getCameraMan():setStyle(OgreBites.CS_FREELOOK)
@@ -163,7 +163,7 @@ Profiles.NewProfile.CreatePuppet = function()
 
   local e = Pixy.Event(Pixy.EventUID.CreatePuppet)
   e:setProperty("Name", name)
-  e:setProperty("Race", raceToString(SelectedRnd:getEntity():getRace()))
+  e:setProperty("Race", raceToString(SelectedRnd:getRace()))
   NetMgr:send(e)
 
   UISheet.showDialog("Creating character...")

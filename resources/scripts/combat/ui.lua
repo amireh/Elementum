@@ -388,6 +388,11 @@ UI.setValidationMsg = function(msg)
   ValidationMsg = msg
 end
 
+UI.reportLuaError = function(msg)
+  print("Lua error! " .. msg)
+  ScriptEngine:reportAccepted()
+end
+
 require("combat/ui/helpers")
 require("combat/ui/tooltips")
 require("combat/ui/sct")
@@ -396,3 +401,5 @@ require("combat/ui/buffs")
 require("combat/ui/spell_log")
 require("combat/ui/animator")
 require("combat/ui/chat")
+
+

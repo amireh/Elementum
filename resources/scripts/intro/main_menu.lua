@@ -8,14 +8,14 @@ local Form = {}
 local idx = 0
 local createGremlin = function(mesh, material)
 
-  local unit = Pixy.CUnit:new()
+  local unit = Pixy.Unit:new()
   --~ unit:setRank(Pixy.PUPPET)
   unit:setName("IntroGremlin" .. idx)
   unit:live()
   unit:setMesh(mesh)
   unit:setMaterial("Elementum/Gremlin/" .. material)
 
-  rnd = unit:getRenderable()
+  rnd = unit
 
   local node = SceneMgr:createSceneNode("gremlin_node" .. idx)
   SceneMgr:getRootSceneNode():addChild(node)
@@ -43,24 +43,24 @@ local createGremlin = function(mesh, material)
   GfxEngine:attachToScene(rnd)
 
   if material ~= "Master" then
-    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
-    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
+    rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_1")
+    rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_2")
   else
     -- the master gremlin yawns, the others dont
-    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
+    rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_3")
   end
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_WALK,   "Walk_1")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN,    "Run_1")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN,    "Run_2")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,    "Death_1", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,    "Death_2", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_1", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_2", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_3", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,   "Idle_Sitting")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,    "Idle_Sleeping")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jump", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jumping_Happy", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_WALK,   "Walk_1")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_RUN,    "Run_1")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_RUN,    "Run_2")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_DIE,    "Death_1", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_DIE,    "Death_2", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_1", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_2", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_3", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_REST,   "Idle_Sitting")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_REST,    "Idle_Sleeping")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "Jump", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "Jumping_Happy", false)
 
   rnd:animateIdle()
 
@@ -150,18 +150,18 @@ function MainMenu:attach()
     Gremlin = createGremlin("Gremlin2.mesh", "Engineer")
 
     Gremlin2 = createGremlin("Gremlin1.mesh", "Brawler")
-    Gremlin2:getRenderable():getSceneNode():setPosition(Ogre.Vector3(10, 0, 0))
-    Gremlin2:getRenderable():getSceneNode():setScale(Ogre.Vector3(15))
-    Gremlin2:getRenderable():getSceneNode():yaw(Ogre.Degree(-75))
-    Gremlin2:getRenderable():animateRest()
+    Gremlin2:getSceneNode():setPosition(Ogre.Vector3(10, 0, 0))
+    Gremlin2:getSceneNode():setScale(Ogre.Vector3(15))
+    Gremlin2:getSceneNode():yaw(Ogre.Degree(-75))
+    Gremlin2:animateRest()
 
     Gremlin3 = createGremlin("Gremlin3.mesh", "Master")
-    Gremlin3:getRenderable():getSceneNode():setPosition(Ogre.Vector3(-10, 0, 0))
-    Gremlin3:getRenderable():getSceneNode():setScale(Ogre.Vector3(10))
-    Gremlin3:getRenderable():getSceneNode():yaw(Ogre.Degree(75))
+    Gremlin3:getSceneNode():setPosition(Ogre.Vector3(-10, 0, 0))
+    Gremlin3:getSceneNode():setScale(Ogre.Vector3(10))
+    Gremlin3:getSceneNode():yaw(Ogre.Degree(75))
 
     GfxEngine:getCameraMan():setStyle(OgreBites.CS_ORBIT)
-    GfxEngine:getCameraMan():setTarget(Gremlin:getRenderable():getSceneNode())
+    GfxEngine:getCameraMan():setTarget(Gremlin:getSceneNode())
     GfxEngine:setYawPitchDist(Ogre.Vector3(0, 20, 40))
   end
 
@@ -182,7 +182,7 @@ function MainMenu:detach()
   --~ MainMenu.Layout:hide()
 
   --~ if Gremlin then Gremlin:die() end
-  if Gremlin then Gremlin:getRenderable():hide() end
+  if Gremlin then Gremlin:hide() end
 end
 
 MainMenu.Quit = function(e)
@@ -265,8 +265,8 @@ end
 
 
 MainMenu.onEntityDied = function(e)
-  local entity = tolua.cast(e.Any, "Pixy::CUnit")
-  local rnd = entity:getRenderable()
+  local entity = tolua.cast(e.Any, "Pixy::Unit")
+  local rnd = entity
   rnd:hide()
   --~ FxEngine:playEffect("Elementum/Fx/Desummon", rnd:getSceneNode():getPosition())
 
@@ -279,15 +279,15 @@ end
 
 MainMenu.showGremlins = function()
   if Gremlin and not Gremlin:isDead() then
-    Gremlin:getRenderable():show()
+    Gremlin:show()
   end
-  if Gremlin2 then Gremlin2:getRenderable():show() end
-  if Gremlin3 then Gremlin3:getRenderable():show() end
+  if Gremlin2 then Gremlin2:show() end
+  if Gremlin3 then Gremlin3:show() end
 end
 MainMenu.hideGremlins = function()
   if Gremlin and not Gremlin:isDead() then
-    Gremlin:getRenderable():hide()
+    Gremlin:hide()
   end
-  if Gremlin2 then Gremlin2:getRenderable():hide() end
-  if Gremlin3 then Gremlin3:getRenderable():hide() end
+  if Gremlin2 then Gremlin2:hide() end
+  if Gremlin3 then Gremlin3:hide() end
 end

@@ -26,10 +26,17 @@
 #include <stdarg.h>
 #include <boost/bind.hpp>
 #include "EntityManager.h"
+#include "UIEngine.h"
 
-TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
-TOLUA_API int  tolua_EShared_open (lua_State* tolua_S);
-TOLUA_API int  tolua_Event_open (lua_State* tolua_S);
+//~ TOLUA_API int  tolua_Elementum_open (lua_State* tolua_S);
+//~ TOLUA_API int  tolua_EShared_open (lua_State* tolua_S);
+//~ TOLUA_API int  tolua_Event_open (lua_State* tolua_S);
+extern "C" {
+  int luaopen_Pixy(lua_State* L);
+  int luaopen_Pixy_EventFeedback(lua_State* L);
+  int luaopen_Pixy_EventUID(lua_State* L);
+  int luaopen_Pixy_Race(lua_State* L);
+}
 namespace Pixy {
 	ScriptEngine* ScriptEngine::_myScriptEngine = NULL;
 
@@ -48,9 +55,11 @@ namespace Pixy {
 		mLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "ScriptEngine");
 		mLuaLog = new log4cpp::FixedContextCategory(PIXY_LOG_CATEGORY, "Lua");
     mUpdater = &ScriptEngine::updateNothing;
-    mLUA = 0;
+    mLuaState = 0;
     mCEGUILua = 0;
     mTimer = 0;
+    fReportIsShown = false;
+    fCorruptState = false;
 		fSetup = false;
 
     mCEGUILua = &CEGUI::LuaScriptModule::create();
@@ -63,7 +72,7 @@ namespace Pixy {
     {
       mLog->infoStream() << "shutting down.";
 		//if (fSetup) {
-			//mLUA = NULL; mCEGUILua = NULL;
+			//mLuaState = NULL; mCEGUILua = NULL;
 			//fSetup = false;
 			delete mLog;
 			delete mLuaLog;
@@ -82,10 +91,14 @@ namespace Pixy {
 
 		CEGUI::System::getSingleton().setScriptingModule(mCEGUILua);
 
-		mLUA = mCEGUILua->getLuaState();
-    tolua_EShared_open(mLUA);
-    tolua_Elementum_open(mLUA);
-    tolua_Event_open(mLUA);
+		mLuaState = mCEGUILua->getLuaState();
+    //~ tolua_EShared_open(mLuaState);
+    //~ tolua_Elementum_open(mLuaState);
+    //~ tolua_Event_open(mLuaState);
+    luaopen_Pixy(mLuaState);
+    luaopen_Pixy_EventUID(mLuaState);
+    luaopen_Pixy_EventFeedback(mLuaState);
+    luaopen_Pixy_Race(mLuaState);
 
     //~ bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
@@ -95,6 +108,7 @@ namespace Pixy {
     mTimer = new boost::asio::deadline_timer(GameManager::getSingleton().getIOService());
 
 		//Combat::getSingletonPtr()->updateMe(getSingletonPtr());
+    fReportIsShown = false;
 		fSetup = true;
 		return true;
 	}
@@ -129,7 +143,7 @@ namespace Pixy {
     CEGUI::LuaScriptModule::destroy(*mCEGUILua);
 
 		mCEGUILua = 0;
-		mLUA = 0;
+		mLuaState = 0;
 
     delete mTimer;
     mTimer = 0;
@@ -158,11 +172,11 @@ namespace Pixy {
 		//loadResources();
 
 		// init lua state
-		//mLUA = lua_open();
+		//mLuaState = lua_open();
 
-		//luaL_openlibs(mLUA);
+		//luaL_openlibs(mLuaState);
 
-		//luabind::open(mLUA);
+		//luabind::open(mLuaState);
 
 		// -------------------
 		// BINDERS
@@ -174,7 +188,7 @@ namespace Pixy {
 		/*
 		 char _filePath[PATH_MAX];
 		 sprintf(_filePath,  "%s/%s/MainMenu.lua", PROJECT_ROOT, PROJECT_SCRIPTS );
-		 luaL_dofile(mLUA, _filePath);
+		 luaL_dofile(mLuaState, _filePath);
 		 */
 
 		//CEGUI::System::getSingleton().executeScriptFile("MainMenu.lua");
@@ -198,30 +212,35 @@ namespace Pixy {
 
 	void ScriptEngine::updateIntro(unsigned long lTimeElapsed) {
 
-		// update Lua
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
-    lua_pushinteger(mLUA,lTimeElapsed);
-		if(lua_isfunction(mLUA, 1))
+		lua_getfield(mLuaState, LUA_GLOBALSINDEX, "update");
+    lua_pushinteger(mLuaState,lTimeElapsed);
+		if(lua_isfunction(mLuaState, 1))
 		{
-			try {
-				lua_call(mLUA, 1, 0);
-			} catch (...) { // do nothing
-			}
+      int ec = lua_pcall(mLuaState, 1, 0, 0);
+      if (ec != 0)
+      {
+        // there was a lua error, dump the state and shut down the instance
+        reportError();
+        return;
+      }
+
 		} else
 			mLog->errorStream() << "could not find Lua updater!";
-
 	}
 
 	void ScriptEngine::updateCombat(unsigned long lTimeElapsed) {
-
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "update");
-    lua_pushinteger(mLUA,lTimeElapsed);
-		if(lua_isfunction(mLUA, 1))
+		lua_getfield(mLuaState, LUA_GLOBALSINDEX, "update");
+    lua_pushinteger(mLuaState,lTimeElapsed);
+		if(lua_isfunction(mLuaState, 1))
 		{
-			try {
-				lua_call(mLUA, 1, 0);
-			} catch (...) { // do nothing
-			}
+      int ec = lua_pcall(mLuaState, 1, 0, 0);
+      if (ec != 0)
+      {
+        // there was a lua error, dump the state and shut down the instance
+        reportError();
+        return;
+      }
+
 		} else
 			mLog->errorStream() << "could not find Lua updater!";
 	}
@@ -231,7 +250,7 @@ namespace Pixy {
 	}
 
 	lua_State* ScriptEngine::getLuaState() {
-		return mLUA;
+		return mLuaState;
 	}
 
 	log4cpp::Category* ScriptEngine::getLuaLog() { return mLuaLog; }
@@ -253,89 +272,123 @@ namespace Pixy {
 
 	bool ScriptEngine::passToLua(const Event& inEvt) {
 
-		//~ mLog->debugStream() << "dispatching evt to lua";
-
-		//mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
-
-		/*
-		if (inEvt->getMsgId() == ID_ENTITY_EVENT) {
-			mLog->infoStream() << "got an entity event to pass to lua!";
-		}
-		 */
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "processEvt");
-		if(!lua_isfunction(mLUA, 1))
+		lua_getfield(mLuaState, LUA_GLOBALSINDEX, "processEvt");
+		if(!lua_isfunction(mLuaState, 1))
 		{
-			mLog->errorStream() << "could not find Lua event processor!"
-        << " event: " << Event::_uid_to_string(inEvt.UID) << "#" << (int)inEvt.UID;
-			lua_pop(mLUA,1);
-			return true;
+			mLog->errorStream() << "could not find Lua event processor!";
+      reportError();
+      return false;
+			//lua_pop(mLuaState,1);
+			//return true;
 		}
 
-		tolua_pushusertype(mLUA,(void*)&inEvt,"Pixy::Event");
-		try {
-			lua_call(mLUA, 1, 1);
-		} catch (CEGUI::ScriptException& e) {
-			mLog->errorStream() << "Lua Handler: " << e.what();
-		} catch (std::exception& e) {
-			mLog->errorStream() << "Lua Handler: " << e.what();
-		}
+		tolua_pushusertype(mLuaState,(void*)&inEvt,"Pixy::Event");
 
-		/*
-		mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
-		if (lua_isboolean(mLUA, lua_gettop(mLUA)))
-			mLog->infoStream() << "Lua returned a boolean";
-		else
-			mLog->errorStream() << "Lua did NOT return a boolean";
-		*/
+    int ec = lua_pcall(mLuaState, 1, 1, 0);
+    if (ec != 0)
+    {
+      reportError();
+      return false;
+    }
 
-		int result = lua_toboolean(mLUA, lua_gettop(mLUA));
-
-		lua_remove(mLUA, lua_gettop(mLUA));
-
-		/*
-		mLog->debugStream() << "Lua stack is " << lua_gettop(mLUA) << " big";
-
-		if (result)
-			mLog->infoStream() << "Lua is done";
-		else
-			mLog->infoStream() << "Lua is not done, redispatching";
-		*/
+		bool result = lua_toboolean(mLuaState, lua_gettop(mLuaState));
+		lua_remove(mLuaState, lua_gettop(mLuaState));
 
 		return result;
 	}
 
   bool ScriptEngine::passToLua(const char* inFunc, int argc, ...) {
+    if (fCorruptState)
+    {
+      mLog->warnStream() << "Lua state is corrupt, bailing out on method call " << inFunc;
+      return false;
+    }
+
     va_list argp;
     va_start(argp, argc);
 
-		lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitrary");
-		if(!lua_isfunction(mLUA, 1))
+		lua_getfield(mLuaState, LUA_GLOBALSINDEX, "arbitrary");
+		if(!lua_isfunction(mLuaState, 1))
 		{
-			mLog->errorStream() << "could not find Lua arbitrary functor!";
-			lua_pop(mLUA,1);
-			return true;
+			mLog->errorStream() << "could not find Lua arbitrary functor " << inFunc << "!";
+      reportError();
+      return false;
+			//lua_pop(mLuaState,1);
+			//return true;
 		}
 
-    lua_pushfstring(mLUA, inFunc);
-    //lua_pushinteger(mLUA, argc);
+    lua_pushfstring(mLuaState, inFunc);
     for (int i=0; i < argc; ++i) {
       const char* argtype = (const char*)va_arg(argp, const char*);
       void* argv = (void*)va_arg(argp, void*);
-      //std::cout << static_cast<Puppet*>(argv)->getName() << "\n";
-      //lua_pushlightuserdata(mLUA, argv);
-      tolua_pushusertype(mLUA,argv,argtype);
+      tolua_pushusertype(mLuaState,argv,argtype);
     }
 
-		try {
-			lua_call(mLUA, argc+1, 0);
-		} catch (CEGUI::ScriptException& e) {
-			mLog->errorStream() << "Lua Handler: " << e.what();
-		} catch (std::exception& e) {
-			mLog->errorStream() << "Lua Handler: " << e.what();
-		}
+    int ec = lua_pcall(mLuaState, argc+1, 1, 0);
+    if (ec != 0)
+    {
+      // there was a lua error, dump the state and shut down the instance
+      reportError();
+      return false;
+    }
+
+		bool result = lua_toboolean(mLuaState, lua_gettop(mLuaState));
+		lua_remove(mLuaState, lua_gettop(mLuaState));
 
     va_end(argp);
+    //~ return result;
     return true;
+  }
+
+  void ScriptEngine::reportError()
+  {
+    // pop the error msg from the stack
+    std::string lError = lua_tostring(mLuaState, lua_gettop(mLuaState));
+
+    fCorruptState = true;
+
+    // unbind any lua callers
+    unbind(EventUID::Unassigned);
+    mUpdater = &ScriptEngine::updateNothing;
+
+    UIEngine::getSingletonPtr()->reportLuaError(lError);
+    assert(false);
+    return;
+
+    // don't flood error reports, show only one at a time
+    if (fReportIsShown)
+      return;
+
+    // now we attempt to report the error, in the case where we can't get to the
+    // reporter function or call it successfully, the client has encountered
+    // a fatal error and can not be recovered, thus we throw lua_runtime_error()
+
+		lua_getfield(mLuaState, LUA_GLOBALSINDEX, "arbitrary");
+		if(!lua_isfunction(mLuaState, 1))
+		{
+			mLog->errorStream() << "Fatal - could not call Lua error reporter, shutdown is inevitable";
+      throw lua_runtime_error(lError);
+		}
+
+		lua_pushfstring(mLuaState,"UI.reportLuaError");
+		lua_pushfstring(mLuaState,lError.c_str());
+
+    int ec = lua_pcall(mLuaState, 1, 0, 0);
+    if (ec != 0)
+    {
+			mLog->errorStream() << "Fatal - failed to report Lua error, shutdown is inevitable";
+      throw lua_runtime_error(lError);
+    }
+
+    fReportIsShown = true;
+
+    // throw lua_runtime_error(lua_tostring(mLuaState, lua_gettop(mLuaState)));
+    // assert(false);
+  }
+
+  void ScriptEngine::_reportAccepted()
+  {
+    fReportIsShown = false;
   }
 
   bool ScriptEngine::onGameDataSynced(const Event& inEvt)
@@ -349,7 +402,7 @@ namespace Pixy {
 
   int ScriptEngine::_passGameData()
   {
-    lua_newtable(mLUA); // spells master table
+    lua_newtable(mLuaState); // spells master table
     std::list<Spell*> mSpells[4];
 
     std::list<Spell*>::iterator spell;
@@ -359,22 +412,22 @@ namespace Pixy {
       mSpells[i] = GameManager::getSingleton().getEntityMgr()._getSpells(i);
       int count = 1; // start from 1 for Lua compatibility
 
-      lua_newtable(mLUA); // race spells table
+      lua_newtable(mLuaState); // race spells table
       for (spell = mSpells[i].begin(); spell != mSpells[i].end(); ++spell)
       {
-        lua_pushinteger(mLUA, count);
-        tolua_pushusertype(mLUA, (void*)(*spell), "Pixy::Spell");
-        lua_settable(mLUA, -3);
+        lua_pushinteger(mLuaState, count);
+        tolua_pushusertype(mLuaState, (void*)(*spell), "Pixy::Spell");
+        lua_settable(mLuaState, -3);
 
         ++count;
       }
 
-      lua_pushinteger(mLUA, i);
-      lua_insert(mLUA, -2); // swap race spells table with the index
-      lua_settable(mLUA, -3); // assign the new spells table
+      lua_pushinteger(mLuaState, i);
+      lua_insert(mLuaState, -2); // swap race spells table with the index
+      lua_settable(mLuaState, -3); // assign the new spells table
     }
 
-    lua_setglobal(mLUA, "__SpellsTemp"); /* set bottom table as global variable t */
+    lua_setglobal(mLuaState, "__SpellsTemp"); /* set bottom table as global variable t */
 
     return 0;
   }
@@ -383,21 +436,21 @@ namespace Pixy {
   {
     mLog->debugStream() << "Exporting puppet listing to Lua";
 
-    lua_newtable(mLUA); // spells master table
+    lua_newtable(mLuaState); // spells master table
     Intro::puppets_t mPuppets = Intro::getSingleton().getPuppets();
 
     Intro::puppets_t::iterator puppet;
     int count = 1;
     for (puppet = mPuppets.begin(); puppet != mPuppets.end(); ++puppet)
     {
-      lua_pushinteger(mLUA, count);
-      tolua_pushusertype(mLUA, (void*)(*puppet), "Pixy::Puppet");
-      lua_settable(mLUA, -3);
+      lua_pushinteger(mLuaState, count);
+      tolua_pushusertype(mLuaState, (void*)(*puppet), "Pixy::Puppet");
+      lua_settable(mLuaState, -3);
 
       ++count;
     }
 
-    lua_setglobal(mLUA, "__PuppetsTemp");
+    lua_setglobal(mLuaState, "__PuppetsTemp");
 
     Event e(EventUID::PuppetListSynced);
     EventManager::getSingleton().hook(e);
@@ -409,8 +462,8 @@ namespace Pixy {
   {
     Puppet* mPuppet = Intro::getSingleton().getPuppet();
 
-    tolua_pushusertype(mLUA, (void*)mPuppet, "Pixy::Puppet");
-    lua_setglobal(mLUA, "__PuppetTemp");
+    tolua_pushusertype(mLuaState, (void*)mPuppet, "Pixy::Puppet");
+    lua_setglobal(mLuaState, "__PuppetTemp");
 
     Event e(EventUID::PuppetSynced);
     EventManager::getSingleton().hook(e);
@@ -418,7 +471,7 @@ namespace Pixy {
     // export decks
     {
 
-      lua_newtable(mLUA); // decks table
+      lua_newtable(mLuaState); // decks table
       const Puppet::decks_t& mDecks = mPuppet->getDecks();
 
       mLog->debugStream() << "exporting decks # " << mDecks.size();
@@ -428,14 +481,14 @@ namespace Pixy {
       for (deck = mDecks.begin(); deck != mDecks.end(); ++deck)
       {
         mLog->debugStream() << "exporting deck " << (*deck)->getName();
-        lua_pushinteger(mLUA, count);
-        tolua_pushusertype(mLUA, (void*)(*deck), "Pixy::Deck");
-        lua_settable(mLUA, -3);
+        lua_pushinteger(mLuaState, count);
+        tolua_pushusertype(mLuaState, (void*)(*deck), "Pixy::Deck");
+        lua_settable(mLuaState, -3);
 
         ++count;
       }
 
-      lua_setglobal(mLUA, "__PuppetDecksTemp");
+      lua_setglobal(mLuaState, "__PuppetDecksTemp");
     }
 
     {
@@ -445,16 +498,6 @@ namespace Pixy {
 
     return true;
   }
-
-  /*bool ScriptEngine::onMatchFinished(const Event& inEvt) {
-    lua_getfield(mLUA, LUA_GLOBALSINDEX, "arbitrary");
-    lua_pushfstring(mLUA, "Combat.onMatchFinished");
-    lua_pushinteger(mLUA, convertTo<int>(inEvt.getProperty("W")));
-    lua_call(mLUA, 2, 0);
-
-    return true;
-  }*/
-
 
 	bool ScriptEngine::mouseMoved( const OIS::MouseEvent &e )
 	{

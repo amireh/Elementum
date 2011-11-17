@@ -7,9 +7,9 @@ Skeletons = {
 Skeletons.Create = function(unit, mesh, model_name, scale)
   unit:setMesh(mesh)
   unit:setMaterial(Skeletons.MaterialPrefix .. "/" .. model_name)
-  unit:getSceneNode():setScale(scale)
 
   GfxEngine:attachToScene(unit)
+  unit:getSceneNode():setScale(Ogre.Vector3(scale, scale, scale))
 
   Skeletons.RegisterAnimations(unit)
 
@@ -24,7 +24,7 @@ Skeletons.CreateSoldier = function(unit)
   --~ GfxEngine:loadScene("SkeletonPeasant.scene")
   --~ local SceneMgr = GfxEngine:getSceneMgr()
 --~
-  --~ rnd = unit:getRenderable()
+  --~ rnd = unit
   --~ rnd:attachSceneNode(SceneMgr:getSceneNode("skeleton_peasant01"))
   --~ rnd:attachSceneObject(tolua.cast(rnd:getSceneNode():getAttachedObject("skeleton_peasant01"), "Ogre::Entity"))
   --~ rnd:getSceneNode():setScale(Ogre.Vector3(10))
@@ -35,10 +35,29 @@ Skeletons.CreateSoldier = function(unit)
 --~
   --~ rnd:animateIdle()
 
+  if false then
   Skeletons.Create(unit, "skeleton_peasant01.mesh", "Soldier", 11)
   --~ rnd:getSceneNode():setScale(20)
   local scythe = unit:attachExtension("scythe.mesh", "Bip01 R Hand")
   scythe:setMaterialName("sk_mat#07")
+  end
+
+  do
+    unit:setMesh("mech2.mesh")
+    unit:setMaterial("Elementum/Mech1")
+
+    GfxEngine:attachToScene(unit)
+    unit:getSceneNode():setScale(Ogre.Vector3(3,3,3))
+
+    local gun1 = unit:attachExtension("gun1.mesh", "Bip01 R Finger0")
+    gun1:setMaterialName("Elementum/Mech/Gun1")
+
+    local gun2 = unit:attachExtension("gun2.mesh", "Bip01 L Finger0")
+    gun2:setMaterialName("Elementum/Mech/Gun1")
+
+    unit:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "idle2")
+    unit:animateIdle()
+  end
 
   return true
 end
@@ -69,25 +88,25 @@ Skeletons.CreateWarlord = function(inUnit)
 end
 
 Skeletons.RegisterAnimations = function(renderable)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_WALK,    "Walk_1")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_WALK,    "Walk_2")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_RUN,     "Run_1")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_RUN,     "Run_2")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,     "Death_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,     "Death_2", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK,  "Attack_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK,  "Attack_2", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK,  "Attack_3", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_REST,    "Rest")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jump", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_1")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_2")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_3")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_WALK,    "Walk_1")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_WALK,    "Walk_2")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_RUN,     "Run_1")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_RUN,     "Run_2")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,     "Death_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,     "Death_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK,  "Attack_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK,  "Attack_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK,  "Attack_3", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_REST,    "Rest")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "Jump", false)
 
   -- undefined
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_LIVE,   "Idle_1")
-  --~ renderable:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Hit_1", false)
-  --~ renderable:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Hit_2", false)
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_LIVE,   "Idle_1")
+  --~ renderable:registerAnimationState(Pixy.Animable.ANIM_HIT,    "Hit_1", false)
+  --~ renderable:registerAnimationState(Pixy.Animable.ANIM_HIT,    "Hit_2", false)
 end
 
 subscribe_unit("Skeleton Soldier",

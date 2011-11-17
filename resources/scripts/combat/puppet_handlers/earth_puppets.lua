@@ -2,9 +2,11 @@ local create_earth_puppet = function(puppet)
   puppet:setMesh("DarkKnight.mesh")
   puppet:setMaterial("Elementum/DarkKnight/Earth")
 
+  Pixy.Log("Assigned puppet mesh: " .. puppet:getMesh())
+
   rnd = puppet
-  rnd:getSceneNode():setScale(5)
   GfxEngine:attachToScene(rnd)
+  rnd:getSceneNode():setScale(Ogre.Vector3(5,5,5))
   rnd:getSceneObject():setCastShadows(true)
   --rnd:attachExtension("SkeletonPeasantAxe.mesh", "Bone01")
   local sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
@@ -20,14 +22,14 @@ local create_earth_puppet = function(puppet)
   rnd:registerAnimationState(Pixy.Animable.ANIM_HIT, "Hit_3", false)
 
   -- undefined
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_REST, "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP, "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_LIVE, "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_LIVE, "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_2")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_WALK, "Walk")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN, "Run")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_REST, "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP, "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_LIVE, "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_LIVE, "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_2")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_WALK, "Walk")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_RUN, "Run")
 
   rnd:animateIdle()
 end

@@ -150,3 +150,26 @@ material Elementum/Bargor/Maimer : CelShadingTemplate
 {
   set_texture_alias Skin troll-19.jpg
 }
+
+
+material Elementum/Mech1 : CelShadingTemplate
+{
+  set_texture_alias Skin mech-1-01.jpg
+}
+material Elementum/Mech2 : CelShadingTemplate
+{
+  set_texture_alias Skin mech-1-01.jpg
+}
+material Elementum/Mech3 : CelShadingTemplate
+{
+  set_texture_alias Skin mech-1-01.jpg
+}
+material Elementum/Mech4 : CelShadingTemplate
+{
+  set_texture_alias Skin mech-1-01.jpg
+}
+
+material Elementum/Mech/Gun1 : CelShadingTemplate
+{
+  set_texture_alias Skin mech-1-05.jpg
+}

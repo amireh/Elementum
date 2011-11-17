@@ -275,6 +275,8 @@ namespace Pixy {
 		//Combat::getSingleton().updateGfx();
 		mUpdate = &GfxEngine::updateCombat;
 
+    mLog->infoStream() << "combat scene is prepared";
+
 		return true;
 	}
 
@@ -1173,15 +1175,22 @@ namespace Pixy {
 
         // make sure the unit is owned by the player not the opponent
         if (lUnit->getOwner()->getUID() != mPlayer->getUID() || lUnit->isResting()) {
+          mLog->debugStream()
+            << "invalid attempt to charge; owner is not the player!"
+            << "Owner: " << lUnit->getOwner() << " vs unit " << lUnit;
           return true;
         }
 
         // if the unit is moving to anywhere, don't do anything
-        if (lUnit->isMoving())
+        if (lUnit->isMoving()) {
+          mLog->debugStream() << "invalid attempt to charge; unit is already moving!";
           return true;
+        }
 
         // if the unit has 0 AP, don't do anything
         if (lUnit->getBaseAP() == 0) {
+          mLog->debugStream() << "invalid attempt to charge; unit has no AP!";
+
           Event resp(EventUID::InvalidAction);
           resp.setProperty("Action", "Charge");
           resp.setProperty("Reason", "AttackerHasNoAP");
@@ -1198,6 +1207,8 @@ namespace Pixy {
           // restless units can't not charge!
         } else if (lUnit->isCharging()) {
           if (lUnit->isRestless()) {
+            mLog->debugStream() << "invalid attempt to charge; unit is restless!";
+
             Event resp(EventUID::InvalidAction);
             resp.setProperty("Action", "Charge");
             resp.setProperty("Reason", "AttackerRestless");

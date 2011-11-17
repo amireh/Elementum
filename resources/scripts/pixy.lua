@@ -1,8 +1,10 @@
+for k in pairs(Pixy) do print(k) end
+
 -- resolve script paths
 do
-  ScriptPrefix = Pixy.ScriptEngine:getSingletonPtr():getScriptPathPrefix()
+  ScriptPrefix = Pixy.ScriptEngine_getSingletonPtr():getScriptPathPrefix()
   package.path = ScriptPrefix .. "/?.lua;" .. package.path
-  ModulePrefix = Pixy.ScriptEngine:getSingletonPtr():getModulePathPrefix()
+  ModulePrefix = Pixy.ScriptEngine_getSingletonPtr():getModulePathPrefix()
   package.cpath = ModulePrefix .. "/?.so;" .. package.cpath
 
   print("Scripts path: " .. ScriptPrefix .. "\nModule path: " .. ModulePrefix)
@@ -57,6 +59,13 @@ local isSetup = false
 Pixy.onEnter = function()
   if isSetup then return true end
 
+  print(Pixy.Race.Fire)
+  if Pixy then
+    print("SWIG Exporter is working!!")
+  else
+    print("SWIG Exporter isn't working")
+  end
+
   Pixy.registerGlobals()
   require "shared/aliases"
 
@@ -66,6 +75,8 @@ Pixy.onEnter = function()
   Fx.setup()
 
   CombatState:setIsDebugging(true)
+
+
 
   isSetup = true
   return true

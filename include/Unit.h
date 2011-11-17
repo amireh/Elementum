@@ -59,6 +59,8 @@ namespace Pixy
     void moveAndAttack(Puppet* inTarget);
     void moveAndAttack(std::list<Unit*> inBlockers);
 
+    virtual Puppet* getOwner() const;
+
     Puppet* getEnemy() const {
       assert(mEnemy);
       return mEnemy;
@@ -96,6 +98,8 @@ namespace Pixy
     virtual void setup(Ogre::SceneManager*);
 
     protected:
+
+    virtual void transmitMechanicChange(std::string mechanic, bool has_it);
 
     void copyFrom(const Unit& src);
     void dieAfterAnimating();

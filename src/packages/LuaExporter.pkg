@@ -1,10 +1,8 @@
 $#include "LuaExporter.h"
-$#include "Puppet.h"
-$#include "Unit.h"
-$#include "Spell.h"
+
 namespace Pixy {
 class LuaExporter : public Pixy::BaseLuaExporter {
-  TOLUA_TEMPLATE_BIND(T, UnitVec, SpellVec, PuppetVec, UnitList, SpellList, PuppetList)
+  TOLUA_TEMPLATE_BIND(T, UnitVec, SpellVec, PuppetVec, DeckVec, UnitList, SpellList, PuppetList, DeckList)
 
   LuaExporter();
   virtual ~LuaExporter();

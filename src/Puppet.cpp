@@ -138,8 +138,23 @@ namespace Pixy
 
 
   void Puppet::updateTextOverlay() {
+    if (!mText)
+      return;
+
     std::string cap = "";
     cap += stringify(mHP);
     getText()->setCaption(cap);
+  }
+
+  void Puppet::deserialize(const Event& evt)
+  {
+    Entity::deserialize(evt);
+    BasePuppet::deserialize(evt);
+  }
+
+  bool Puppet::live()
+  {
+    Entity::live();
+    setHP(getVitality() * 3);
   }
 } // end of Pixy namespace

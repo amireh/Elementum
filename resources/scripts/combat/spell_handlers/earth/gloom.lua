@@ -7,7 +7,7 @@ local increase_cost = function(spell)
   spell:setCostWP(spell:getCostWP() + __Cost)
   Pixy.Log("increasing cost of spell "
     .. spell:getName() .. "#" .. spell:getUID()
-    .. " for caster " .. spell:getCaster():getEntity():getName()
+    .. " for caster " .. spell:getCaster():getName()
     .. ", now WP=" .. spell:getCostWP())
 
   return true
@@ -19,7 +19,7 @@ local revert_cost = function(spell)
 
   Pixy.Log("restoring cost of spell "
     .. spell:getName() .. "#" .. spell:getUID()
-    .. " for caster " .. spell:getCaster():getEntity():getName()
+    .. " for caster " .. spell:getCaster():getName()
     .. ", now WP=" .. spell:getCostWP())
 
   return true
@@ -31,7 +31,7 @@ function Gloom:bootstrap()
   -- gloom is applied on the Puppet's enemy Puppet
   assert(self.Caster)
   self.Target = CombatState:getEnemy(self.Caster:getUID())
-  self.TargetRnd = self.Target:getRenderable()
+  self.Target = self.Target
 
   -- the particle system has to be turned off when the buff expires
   self.__Effect = nil
@@ -46,14 +46,14 @@ function Gloom:cast()
   -- attach the buff to the puppet
   self.Target:attachBuff(self.Spell)
 
-  SCT.ShowScrollingMessage(self.Spell:getName() .. " (" .. self.__TurnsLeft .. " turns)", false, self.TargetRnd)
-  self.__Effect = FxEngine:playEffect("Gloom", self.TargetRnd)
+  SCT.ShowScrollingMessage(self.Spell:getName() .. " (" .. self.__TurnsLeft .. " turns)", false, self.Target)
+  self.__Effect = FxEngine:playEffect("Gloom", self.Target)
 
   -- if it's our puppet that is the target, then we need to update all the tooltips
   -- to reflect the new cost
   if self.__IsSelfCast then
-    local exporter = Pixy.CSpellListExporter()
-    exporter:export(self.Target:getHand(), "Pixy::CSpell", "__TempSpells")
+    local exporter = Pixy.SpellListExporter()
+    exporter:export(self.Target:getHand(), "Pixy::Spell", "__TempSpells")
     for spell in list_iter(__TempSpells) do
       increase_cost(spell)
     end
@@ -74,8 +74,8 @@ function Gloom:cleanup()
 
   -- revert tooltip changes
   if self.__IsSelfCast then
-    local exporter = Pixy.CSpellListExporter()
-    exporter:export(self.Target:getHand(), "Pixy::CSpell", "__TempSpells")
+    local exporter = Pixy.SpellListExporter()
+    exporter:export(self.Target:getHand(), "Pixy::Spell", "__TempSpells")
     for spell in list_iter(__TempSpells) do
       revert_cost(spell)
     end
@@ -86,12 +86,12 @@ end
 
 -- Gloom can not stack!
 SpellValidators["Gloom"] = function(spell)
-  if Selected and Selected:getEntity():getRank() ~= Pixy.PUPPET then
+  if Selected and Selected:isPuppet() then
     UI.setValidationMsg("This spell can only be cast on enemy Puppet.")
     return false
   end
 
-  if Selected and Selected:getEntity():getOwner():hasBuffWithName("Gloom") then
+  if Selected and Selected:getOwner():hasBuffWithName("Gloom") then
     UI.setValidationMsg("Target is already affected by Gloom.")
     return false
   end

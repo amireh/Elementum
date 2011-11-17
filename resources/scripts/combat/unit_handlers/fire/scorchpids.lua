@@ -9,7 +9,7 @@ Scorchpids.Create = function(unit, model_name)
   unit:setMesh(Scorchpids.Mesh)
   unit:setMaterial(Scorchpids.MaterialPrefix .. "/" .. model_name)
 
-  rnd = unit:getRenderable()
+  rnd = unit
   rnd:setScale(3)
 
   GfxEngine:attachToScene(rnd)
@@ -22,23 +22,23 @@ Scorchpids.Create = function(unit, model_name)
 end
 
 Scorchpids.RegisterAnimations = function(renderable)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_WALK,    "Walk")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_RUN,     "Walk")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_2", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_3", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_2", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_3", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Hit_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Hit_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_1")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_2")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_WALK,    "Walk")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_RUN,     "Walk")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,  "Death_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,  "Death_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,  "Death_3", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_3", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_HIT,    "Hit_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_HIT,    "Hit_2", false)
 
   -- undefined
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_LIVE,   "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,    "")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "", false)
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_LIVE,   "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_REST,    "")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "", false)
 end
 
 subscribe_unit("Scorchpid Drone", function(inUnit) Scorchpids.Create(inUnit, "Drone") end)

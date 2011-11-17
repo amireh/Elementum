@@ -14,7 +14,9 @@ namespace Pixy {
     mRaySceneQuery(0),
     fRotating(false),
     mWaypoints(0),
-    mMoveDirection(Ogre::Vector3::ZERO)
+    mWalkSpeed(0.15f),
+    mMoveDirection(Ogre::Vector3::ZERO),
+    mDestination(Ogre::Vector3::ZERO)
   {
   }
 
@@ -126,12 +128,12 @@ namespace Pixy {
     if (mDestination == Vector3::ZERO) {
 
       mDestination = mWaypoints->at(inDestination);  // get walkpoint to our required destination
-      //std::cout
-      //  << "\tMoving to : "
-      //  << mDestination.x << "," << mDestination.y << "," << mDestination.z
-      //  << " from "
-      //  << mNode->getPosition().x << "," << mNode->getPosition().y << "," << mNode->getPosition().z
-      //  << "\n";
+      std::cout
+        << "\tMoving to : "
+        << mDestination.x << "," << mDestination.y << "," << mDestination.z
+        << " from "
+        << mSceneNode->getPosition().x << "," << mSceneNode->getPosition().y << "," << mSceneNode->getPosition().z
+        << "\n";
 
       #if 0 // __DISABLED__
       if (inDestination == Unit::State::Attacking) {

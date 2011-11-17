@@ -9,7 +9,7 @@ Bargors.Create = function(unit, model_name)
   unit:setMesh(Bargors.Mesh)
   unit:setMaterial(Bargors.MaterialPrefix .. "/" .. model_name)
 
-  rnd = unit:getRenderable()
+  rnd = unit
   rnd:setScale(3.5)
 
   GfxEngine:attachToScene(rnd)
@@ -22,19 +22,19 @@ Bargors.Create = function(unit, model_name)
 end
 
 Bargors.RegisterAnimations = function(renderable)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_WALK,    "Walk")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_RUN,     "Run")
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_DIE,  "Death_2", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_1", false)
-  renderable:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_WALK,    "Walk")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_RUN,     "Run")
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,  "Death_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_DIE,  "Death_2", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_1", false)
+  renderable:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_2", false)
 
   -- undefined
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_LIVE,   "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,    "")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "", false)
-  --~ renderable:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Hit_1", false)
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_LIVE,   "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_REST,    "")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "", false)
+  --~ renderable:registerAnimationState(Pixy.Animable.ANIM_HIT,    "Hit_1", false)
 end
 
 subscribe_unit("Bargor Stomper", function(inUnit) Bargors.Create(inUnit, "Stomper") end)

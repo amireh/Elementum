@@ -50,10 +50,10 @@ local doSelect = function(puppet)
 
   Profiles.HideKnights()
   local knight = Profiles.Knights[raceToString(puppet:getRace())]
-  showKnight(knight:getRenderable())
-  --~ GfxEngine:getCameraMan():setTarget(knight:getRenderable():getSceneNode())
+  showKnight(knight)
+  --~ GfxEngine:getCameraMan():setTarget(knight:getSceneNode())
   --~ GfxEngine:getCameraMan():setYawPitchDist(Ogre.Radian(0), Ogre.Radian(0), -40)
-  local node = knight:getRenderable():getSceneNode()
+  local node = knight:getSceneNode()
   node:setPosition(Ogre.Vector3(0,0,0))
   node:lookAt(Ogre.Vector3(0,0,-1), Ogre.Node.TS_WORLD)
   node:setScale(scale)
@@ -115,10 +115,10 @@ function Profiles.Listing:attach()
 
   do
     -- rotate the ones on the edges to give them a look of standing in a semi-circle
-    Profiles.Knights.Earth:getRenderable():getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
-    Profiles.Knights.Air:getRenderable():getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
-    Profiles.Knights.Fire:getRenderable():getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
-    Profiles.Knights.Water:getRenderable():getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Earth:getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Air:getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Fire:getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
+    Profiles.Knights.Water:getSceneNode():lookAt(Ogre.Vector3(0,0, -1), Ogre.Node.TS_WORLD)
   end
 
   populate()

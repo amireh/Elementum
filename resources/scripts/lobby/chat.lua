@@ -570,7 +570,7 @@ Chat.onPuppetSynced = function(e)
   __PuppetTemp = nil
 
   CEWindowMgr:getWindow("Elementum/Chat/Labels/Portrait"):setText(Intro.Puppet:getName())
-  SelectedRnd = Profiles.Knights[raceToString(Intro.Puppet:getRace())]:getRenderable()
+  SelectedRnd = Profiles.Knights[raceToString(Intro.Puppet:getRace())]
   Fx.highlight(SelectedRnd)
 
   Decks.onPuppetSynced(Intro.Puppet)

@@ -241,7 +241,7 @@ function HandItem:Validate()
     return false
   end
 
-  --~ local caster = self.Spell:getCaster():getEntity()
+  --~ local caster = self.Spell:getCaster()
   local caster = SelfPuppet
 
   --~ if (caster:getRank() == Pixy.PUPPET) then

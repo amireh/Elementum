@@ -36,7 +36,7 @@ UI.Helpers.DrawSpellButton = function(inSpell, inContainer, inDim, inSuffix, isA
 	lButton["Window"] = CEWindowMgr:createWindow("Combat/ImageButton", lButton["Name"])
   --list_item:addChildWindow(lButton["Window"])
 
-	-- attach the button to the Pixy::CSpell object
+	-- attach the button to the Pixy::Spell object
 	--~ inSpell:setButton(lButton["Window"])
   inSpell:setImageSet("Spells_" .. raceToString(inSpell:getRace()))
   -- sanitize spell name to match image set name

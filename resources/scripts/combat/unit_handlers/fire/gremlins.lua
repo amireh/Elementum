@@ -8,11 +8,11 @@ Gremlins.Create = function(unit, mesh, material, scale)
   unit:setMesh(mesh)
   unit:setMaterial(Gremlins.MaterialPrefix .. "/" .. material)
 
-  rnd = unit:getRenderable()
+  rnd = unit
   if not scale then scale = 20 end
-  rnd:setScale(scale)
 
   GfxEngine:attachToScene(rnd)
+  rnd:getSceneNode():setScale(Ogre.Vector3(scale, scale, scale))
 
   Gremlins.RegisterAnimations(rnd)
 
@@ -29,25 +29,25 @@ end
 Gremlins.RegisterAnimations = function(renderable)
   --rnd:getSceneNode():yaw(Ogre.Degree:new(180))
 
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_1")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_2")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE,   "Idle_3")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_WALK,   "Walk_1")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN,    "Run_1")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_RUN,    "Run_2")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,    "Death_1", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE,    "Death_2", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_1", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_2", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_ATTACK, "Attack_3", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,   "Idle_Sitting")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_REST,    "Idle_Sleeping")
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jump", false)
-  rnd:registerAnimationState(Pixy.Renderable.ANIM_GETUP,   "Jumping_Happy", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_1")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_2")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE,   "Idle_3")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_WALK,   "Walk_1")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_RUN,    "Run_1")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_RUN,    "Run_2")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_DIE,    "Death_1", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_DIE,    "Death_2", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_1", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_2", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_ATTACK, "Attack_3", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_REST,   "Idle_Sitting")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_REST,    "Idle_Sleeping")
+  rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "Jump", false)
+  rnd:registerAnimationState(Pixy.Animable.ANIM_GETUP,   "Jumping_Happy", false)
 
   -- undefined
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_LIVE,   "Idle_1")
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_HIT,    "Scared", false)
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_LIVE,   "Idle_1")
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_HIT,    "Scared", false)
 end
 
 subscribe_unit("Mechanical Gremlin",

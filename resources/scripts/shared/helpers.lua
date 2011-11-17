@@ -49,19 +49,19 @@ end
 
 -- converts Pixy.RACE to a string
 function raceToString(inRace)
-	if (inRace == Pixy.EARTH) then return 'Earth'
-	elseif (inRace == Pixy.AIR) then return 'Air'
-	elseif (inRace == Pixy.FIRE) then return 'Fire'
-	elseif (inRace == Pixy.WATER) then return 'Water'
+	if (inRace == Pixy.Race.Earth) then return 'Earth'
+	elseif (inRace == Pixy.Race.Air) then return 'Air'
+	elseif (inRace == Pixy.Race.Fire) then return 'Fire'
+	elseif (inRace == Pixy.Race.Water) then return 'Water'
 	end
 end
 
 -- converts a string to Pixy.RACE
 function raceFromString(inRace)
-	if (inRace == 'Earth') then return Pixy.EARTH
-	elseif (inRace == 'Air') then return Pixy.AIR
-	elseif (inRace == 'Fire') then return Pixy.FIRE
-	elseif (inRace == 'Water') then return Pixy.WATER
+	if (inRace == 'Earth') then return Pixy.Race.Earth
+	elseif (inRace == 'Air') then return Pixy.Race.Air
+	elseif (inRace == 'Fire') then return Pixy.Race.Fire
+	elseif (inRace == 'Water') then return Pixy.Race.Water
 	end
 end
 

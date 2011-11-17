@@ -94,7 +94,11 @@ namespace Pixy
 
 		// start the interface chain
 		mScriptEngine->runScript("combat/entry_point.lua");
-    mScriptEngine->passToLua("Combat.onEnter", 0);
+    if (!mScriptEngine->passToLua("Combat.onEnter", 0))
+    {
+      mLog->errorStream() << "Lua state entrance routine has failed, bailing out";
+      return;
+    }
 
 		mLog->infoStream() << "i'm up!";
     mPuppet = 0;
@@ -148,10 +152,11 @@ namespace Pixy
       mScriptEngine->passToLua("Combat.onExit", 0);
 
     mLog->debugStream() << "\tdestroying " << mPuppets.size() << " puppets";
-		puppets_t::iterator lPuppet;
-		for (lPuppet = mPuppets.begin(); lPuppet != mPuppets.end(); ++lPuppet) {
-			delete (*lPuppet);
-		}
+		while (!mPuppets.empty())
+    {
+      delete mPuppets.back();
+      mPuppets.pop_back();
+    }
 		mPuppets.clear();
 		mDeathlist.clear();
     mChargers.clear();
@@ -306,7 +311,12 @@ namespace Pixy
     mLog->infoStream() << "a new Puppet has joined the battle: " << inPuppet;
 
 		mPuppets.push_back(inPuppet);
-    mScriptEngine->passToLua("Puppets.onAddPuppet", 1, "Pixy::Puppet", (void*)inPuppet);
+    if (!mScriptEngine->passToLua("Puppets.onAddPuppet", 1, "Pixy::Puppet", (void*)inPuppet))
+    {
+      mLog->errorStream() << "unable to register puppet in Lua, aborting";
+      throw lua_runtime_error("unable to register puppet in Lua, aborting");
+    }
+
     if (inPuppet->getName() == mPuppetName)
       assignPuppet(inPuppet);
     else
@@ -934,8 +944,8 @@ namespace Pixy
 
     mAttackers.push_back(attacker);
     attacker->setAttackOrder(mAttackers.size());
-
     attacker->updateTextOverlay();
+    attacker->_setState(Unit::State::Charging);
 
     return true;
   }
@@ -959,6 +969,7 @@ namespace Pixy
     // recalculate attack orders and display them
     attacker->setAttackOrder(0);
     attacker->updateTextOverlay();
+    attacker->_setState(Unit::State::Ready);
 
     int i=0;
     for (attackers_t::iterator unit = mAttackers.begin();
@@ -994,6 +1005,7 @@ namespace Pixy
     blockers->second.push_back(blocker);
     blocker->setAttackOrder(blockers->second.size());
     blocker->setBlockTarget(attacker);
+    blocker->_setState(Unit::State::Blocking);
 
     blocker->updateTextOverlay();
 
@@ -1042,6 +1054,7 @@ namespace Pixy
     // reset the blocker
     blocker->setAttackOrder(0);
     blocker->setBlockTarget(0);
+    blocker->_setState(Unit::State::Ready);
     blocker->updateTextOverlay();
 
     return true;
@@ -1149,6 +1162,7 @@ namespace Pixy
 
     // go through every attacking unit:
     Unit* unit = mAttackers.front();
+    unit->_setState(Unit::State::Attacking);
     //for (auto unit : mAttackers) {
       // if it's being blocked, go through every blocker
       // else, let it attack the puppet

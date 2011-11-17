@@ -1,7 +1,7 @@
 local turns_left = 0
 local apply_buff = function(inCaster, inTarget, inSpell)
-  local target = inTarget:getEntity()
-  local caster = inCaster:getEntity()
+  local target = inTarget
+  local caster = inCaster
 
   Pixy.Log("Applying Fartigue on " .. target:getName() .. "#" .. target:getUID() .. " by " .. caster:getName() .. "!")
 
@@ -19,12 +19,12 @@ local apply_buff = function(inCaster, inTarget, inSpell)
 end
 
 local process_buff = function(inCaster, inTarget, inSpell)
-  local target = inTarget:getEntity()
-  local caster = inCaster:getEntity()
-  if (target:getRank() == Pixy.PUPPET) then
-    target = tolua.cast(target, "Pixy::CPuppet")
+  local target = inTarget
+  local caster = inCaster
+  if (target:isPuppet()) then
+    target = tolua.cast(target, "Pixy::Puppet")
   else
-    target = tolua.cast(target, "Pixy::CUnit")
+    target = tolua.cast(target, "Pixy::Unit")
   end
 
   Pixy.Log("Processing Fartigue on " .. target:getName() .. "#" .. target:getUID() .. "!")
@@ -47,7 +47,7 @@ end
 
 local process = function(inCaster, inTarget, inSpell)
 
-  if (inTarget:getEntity():hasBuff(inSpell:getUID())) then
+  if (inTarget:hasBuff(inSpell:getUID())) then
     return process_buff(inCaster, inTarget, inSpell)
   else
     return apply_buff(inCaster, inTarget, inSpell)

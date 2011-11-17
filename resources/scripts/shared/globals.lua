@@ -65,12 +65,12 @@ Pixy.registerGlobals = function()
   if registered then return true end
 
 	Pixy.Log( "*************************************************")
-	Pixy.Log( "* Launching Pixy Lua module!                    *")
+	Pixy.Log( "* Launching Pixy.Lua module!                    *")
 
 	-- registers CEGUI singletons as globals for use by the UI sheets
 
 	CELogger = CEGUI.Logger:getSingleton()
-	CELogger:logEvent( ">>> Pixy LUA scripts engaging" )
+	CELogger:logEvent( ">>> Pixy.LUA scripts engaging" )
 	--CELogger:setLoggingLevel( CEGUI.Informative )
 
 	-- get a local reference to the singletons we use (not required)
@@ -81,22 +81,21 @@ Pixy.registerGlobals = function()
 	CEImagesetMgr = CEGUI.ImagesetManager:getSingleton()
   CEAnimMgr = CEGUI.AnimationManager:getSingleton()
 
-	GameMgr = Pixy.GameManager:getSingleton()
-	EvtMgr = Pixy.EventManager:getSingletonPtr()
-  NetMgr = Pixy.NetworkManager:getSingleton()
-  InputMgr = Pixy.InputManager:getSingletonPtr()
+	GameMgr = Pixy.GameManager_getSingleton()
+	EvtMgr = Pixy.EventManager_getSingletonPtr()
+  NetMgr = Pixy.NetworkManager_getSingleton()
+  InputMgr = Pixy.InputManager_getSingletonPtr()
 
-  IntroState = Pixy.Intro:getSingletonPtr()
-  --~ LobbyState = Pixy.Lobby:getSingletonPtr()
-  CombatState = Pixy.Combat:getSingletonPtr()
+  CombatState = Pixy.Combat_getSingletonPtr()
+  IntroState = Pixy.Intro_getSingletonPtr()
 
-  GfxEngine = Pixy.GfxEngine:getSingletonPtr()
-  FxEngine = Pixy.FxEngine:getSingleton()
-  UIEngine = Pixy.UIEngine:getSingletonPtr()
-  ScriptEngine = Pixy.ScriptEngine:getSingletonPtr()
+  GfxEngine = Pixy.GfxEngine_getSingletonPtr()
+  FxEngine = Pixy.FxEngine_getSingleton()
+  UIEngine = Pixy.UIEngine_getSingletonPtr()
+  ScriptEngine = Pixy.ScriptEngine_getSingletonPtr()
 
   SceneMgr = GfxEngine:getSceneMgr()
-  CompositorMgr = Ogre.CompositorManager:getSingletonPtr()
+  --CompositorMgr = Ogre.CompositorManager_getSingletonPtr()
   Viewport = GfxEngine:getViewport()
   Window = GfxEngine:getWindow()
   Camera = GfxEngine:getCamera()

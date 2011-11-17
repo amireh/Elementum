@@ -8,10 +8,11 @@
  */
 
 $#include "Puppet.h"
+$#include "Entity.h"
+
 namespace Pixy
 {
-
-	class Puppet : public Pixy::Entity, public Pixy::BasePuppet
+	class Puppet : public Entity//, public Pixy::BasePuppet
 	{
   public:
     typedef Pixy::Unit unit_t;
@@ -23,23 +24,64 @@ namespace Pixy
 		virtual ~Puppet();
 
     virtual void attachDeck(Pixy::BaseDeck* inDeck);
-    virtual void detachDeck(std::string const& inName);
+    virtual void detachDeck(std::string inName);
 		virtual void _setDeck(Pixy::BaseDeck* inDeck);
-		virtual Pixy::Puppet::deck_t* getDeck();
-    virtual Pixy::Puppet::decks_t const& getDecks() const;
-    virtual bool hasDeck(std::string const& inName) const;
+		virtual Pixy::Deck* getDeck();
+    virtual DeckList const& getDecks() const;
+    virtual bool hasDeck(std::string inName) const;
     virtual int nrDecks() const;
 
-		virtual void attachUnit(Pixy::Puppet::unit_t* inUnit);
+		virtual void attachUnit(Pixy::Unit* inUnit);
 		virtual void detachUnit(int inUID, bool inRemove = true);
-		virtual Pixy::Puppet::unit_t* getUnit(int inUID);
-		virtual Pixy::Puppet::units_t& getUnits();
-    virtual bool hasUnitWithName(std::string const&) const;
+		virtual Pixy::Unit* getUnit(int inUID);
+		virtual UnitList const& getUnits();
+    virtual bool hasUnitWithName(std::string) const;
 
     virtual Pixy::Entity* toEntity() const;
 
     //~ virtual void deserialize(const Event&);
     virtual void updateTextOverlay();
+
+    // --- BasePuppet ---
+		//! Sets BasePuppet's experience
+		void setExperience(long inExperience);
+		//! Sets BasePuppet's level based on his Experience
+		void setLevel(int inLevel);
+		//! Sets BasePuppet's Intelligence, which improves the effectiveness of Spells
+		void setIntelligence(int inInt);
+		//! Sets BasePuppet's Vitality, which defines Health
+		void setVitality(int inVt);
+		//! Sets BasePuppet's Willpower, which is used for casting spells
+		void setWP(int inWP);
+		void setChannels(int);
+		void setWins(int inWins);
+		void setLosses(int inLosses);
+
+		//! Retrieves BasePuppet's experience
+		long getExperience() const;
+		//! Retrieves BasePuppet's level
+		int getLevel() const;
+		//! Retrieves BasePuppet's strength
+		//~ int getStrength();
+		//! Retrieves BasePuppet's intelligence
+		int getIntelligence() const;
+		//! Retrieves BasePuppet's vitality
+		int getVitality() const;
+		//! Retrieves BasePuppet's Willpower
+		int getWP() const;
+		int getChannels() const;
+		int getWins() const;
+		int getLosses() const;
+
+    /*!
+     * @brief
+     * Puppets do not own the Talent objects, but merely reference them. When
+     * a Puppet object is destroyed, it does NOT destroy the attached talents.
+     **/
+    virtual void attachTalent(Pixy::Talent* inTalent);
+    virtual void detachTalent(std::string inName);
+    virtual Pixy::BasePuppet::talents_t& getTalents() const;
+    virtual bool hasTalent(std::string inName) const;
 
 	};
 

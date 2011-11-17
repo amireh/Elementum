@@ -9,10 +9,6 @@
 
 $#include "Spell.h"
 
-namespace CEGUI {
-  class Window;
-}
-
 //~ using std::string;
 namespace Pixy
 {
@@ -31,14 +27,16 @@ namespace Pixy
     void setImageSet(std::string inName);
     void setImageName(std::string inName);
     //void setButton(Rocket::Core::Element*inButton);
-    void setButton(CEGUI::Window*);
+    void setButton(::CEGUI::Window*);
 
     string  getImageSet();
     string  getImageName();
     //Rocket::Core::Element*  getButton();
-    CEGUI::Window* getButton();
+    ::CEGUI::Window* getButton();
 
     std::string getTooltip() const;
     void updateTooltip();
+
+
   };
 }

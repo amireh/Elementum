@@ -6,13 +6,13 @@ function Nourish:cast()
   -- attach the buff to the puppet
   inCaster:attachBuff(inSpell)
 
-  FxEngine:playEffect("GladeBlessing", self.CasterRnd)
+  FxEngine:playEffect("GladeBlessing", self.Caster)
 end
 
 function Nourish:process()
   self.Caster:setHP(self.Caster:getHP() + __HPT)
-  FxEngine:playEffect("GladeBlessing", self.CasterRnd)
-  SCT.ShowScrollingMessage("+" .. __HPT .. " health (Nourish)", true, self.CasterRnd)
+  FxEngine:playEffect("GladeBlessing", self.Caster)
+  SCT.ShowScrollingMessage("+" .. __HPT .. " health (Nourish)", true, self.Caster)
 
   self:__tick()
 end

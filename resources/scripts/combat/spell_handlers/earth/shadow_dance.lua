@@ -5,7 +5,7 @@ local increase_ap = function(unit, override)
   print("\tgranting the AP by shadow dance on " .. unit:getName())
   if override or unit:getOwner():hasBuffWithName("Shadow Dance") then
     unit:setBaseAP(unit:getBaseAP() + __Dmg)
-    SCT.ShowScrollingMessage("+" .. __Dmg .. " AP (Shadow dance)", true, unit:getRenderable())
+    SCT.ShowScrollingMessage("+" .. __Dmg .. " AP (Shadow dance)", true, unit)
   end
 
   return true
@@ -15,7 +15,7 @@ local revert_ap = function(unit, caster)
   print("\treverting the AP granted by shadow dance on " .. unit:getName())
   if override or unit:getOwner():hasBuffWithName("Shadow Dance") then
     unit:setBaseAP(unit:getBaseAP() - __Dmg)
-    SCT.ShowScrollingMessage("-" .. __Dmg .. " AP (Shadow dance)", false, unit:getRenderable())
+    SCT.ShowScrollingMessage("-" .. __Dmg .. " AP (Shadow dance)", false, unit)
   end
 
   return true
@@ -30,11 +30,11 @@ function ShadowDance:cast()
 
   -- attach the buff to the puppet
   self.Caster:attachBuff(self.Spell)
-  self.__Effect = FxEngine:playEffect("Gloom", self.CasterRnd)
+  self.__Effect = FxEngine:playEffect("Gloom", self.Caster)
 
   -- update the AP of all the units
-  local exporter = Pixy.CUnitListExporter()
-  exporter:export(self.Caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+  local exporter = Pixy.UnitListExporter()
+  exporter:export(self.Caster:getUnits(), "Pixy::Unit", "__TempUnits")
   for unit in list_iter(__TempUnits) do
     increase_ap(unit, true --[[override checks for performance]])
   end
@@ -53,14 +53,14 @@ function ShadowDance:cleanup()
   self.__Effect:stop()
 
   -- revert the AP of all the units
-  local exporter = Pixy.CUnitListExporter()
-  exporter:export(self.Caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+  local exporter = Pixy.UnitListExporter()
+  exporter:export(self.Caster:getUnits(), "Pixy::Unit", "__TempUnits")
   for unit in list_iter(__TempUnits) do
     revert_ap(unit, true --[[override checks for performance]])
   end
   __TempUnits = nil
 
-  SCT.ShowScrollingMessage("-" .. self.Spell:getName(), false, self.CasterRnd)
+  SCT.ShowScrollingMessage("-" .. self.Spell:getName(), false, self.Caster)
 
   unsubscribe_generic_unit_handler("Alive", increase_ap)
 end

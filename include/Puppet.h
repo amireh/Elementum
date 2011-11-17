@@ -29,6 +29,8 @@ namespace Pixy
 		Puppet();
 		virtual ~Puppet();
 
+    virtual bool live();
+
     virtual void attachDeck(BaseDeck* inDeck);
     virtual void detachDeck(std::string const& inName);
 		virtual void _setDeck(BaseDeck* inDeck);
@@ -45,7 +47,7 @@ namespace Pixy
 
     virtual Entity* toEntity() const;
 
-    //~ virtual void deserialize(const Event&);
+    virtual void deserialize(const Event&);
     virtual void updateTextOverlay();
 
 	protected:

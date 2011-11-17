@@ -1,10 +1,10 @@
 local BoneHarvest = {}
 function BoneHarvest:cast()
 	Pixy.Log("I'm casting Bone Harvest!")
-  FxEngine:playEffect("BoneHarvest", self.CasterRnd)
+  FxEngine:playEffect("BoneHarvest", self.Caster)
 
-  local exporter = Pixy.CUnitListExporter()
-  exporter:export(self.Caster:getUnits(), "Pixy::CUnit", "__TempUnits")
+  local exporter = Pixy.UnitListExporter()
+  exporter:export(self.Caster:getUnits(), "Pixy::Unit", "__TempUnits")
 
   local nr_skeletons = 0
   for unit in list_iter(__TempUnits) do
@@ -13,14 +13,15 @@ function BoneHarvest:cast()
     end
   end
   __TempUnits = nil
-  SCT.ShowScrollingMessage("+" .. nr_skeletons .. " health (Bone Harvest)", true, self.CasterRnd)
+  SCT.ShowScrollingMessage("+" .. nr_skeletons .. " health (Bone Harvest)", true, self.Caster)
 
   return true
 end
 
 SpellValidators["Bone Harvest"] = function(spell)
-  local exporter = Pixy.CUnitListExporter()
-  exporter:export(spell:getCaster():getEntity():getUnits(), "Pixy::CUnit", "_tmp")
+  local exporter = Pixy.UnitListExporter()
+  local puppet = tolua.cast(spell:getCaster(), "Pixy::Puppet")
+  exporter:export(puppet:getUnits(), "Pixy::Unit", "_tmp")
 
   local nr_skeletons = 0
   for unit in list_iter(_tmp) do

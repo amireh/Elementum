@@ -83,7 +83,7 @@ Spells.__destroyInstance = function(inUID)
   return true
 end
 
-Spells.onProcessBuff = function(inCasterRnd, inTargetRnd, inSpell)
+Spells.onProcessBuff = function(inCaster, inTarget, inSpell)
   local instance = HandlerInstances[inSpell:getUID()]
   if not instance then
     return error("Could not find the spell handler instance for " .. inSpell:getName() .. "#" .. inSpell:getUID())
@@ -135,9 +135,9 @@ Spells.onCastSpell = function(inCaster, inTarget, inSpell)
     return false
   end
 
-  local _msg = inCaster:getEntity():getName() .. "#" .. inCaster:getEntity():getUID()
+  local _msg = inCaster:getName() .. "#" .. inCaster:getUID()
   if inTarget and inTarget ~= inCaster then
-    _msg = _msg .. " against " .. inTarget:getEntity():getName() .. "#" .. inTarget:getEntity():getUID()
+    _msg = _msg .. " against " .. inTarget:getName() .. "#" .. inTarget:getUID()
   end
   Pixy.Log("Casting spell " .. inSpell:getName() .. " by " .. _msg)
 
@@ -156,12 +156,12 @@ Spells.onCastSpell = function(inCaster, inTarget, inSpell)
     if Selected and inTarget and inTarget == Selected then
       show_buffs = true
       target_rnd = Selected
-    elseif not Selected and inCaster:getEntity():getRank() == Pixy.PUPPET then
+    elseif not Selected and inCaster:getRank() == Pixy.PUPPET then
       show_buffs = true
       target_rnd = inCaster
     end
     if show_buffs then
-      local target_is_friendly = target_rnd:getEntity():getOwner():getUID() == SelfPuppet:getUID()
+      local target_is_friendly = target_rnd:getOwner():getUID() == SelfPuppet:getUID()
       Buffs.Show(target_rnd, target_is_friendly)
     end
   end

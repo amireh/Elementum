@@ -70,8 +70,8 @@ namespace Pixy
   void Renderable::attachSceneObject(Ogre::Entity* inObject)
   {
     mSceneObject = inObject;
-    if (mSceneObject)
-      mSceneObject->setUserAny(Ogre::Any(this));
+    //if (mSceneObject)
+    //  mSceneObject->setUserAny(Ogre::Any(this));
   }
 
   Ogre::Entity* Renderable::attachExtension(std::string const& inMesh, std::string const& inBone)

@@ -12,13 +12,18 @@
 
 #include "BaseLuaExporter.h"
 #include "ScriptEngine.h"
+#include "Spell.h"
+#include "Puppet.h"
+#include "Unit.h"
 
 typedef std::vector<Pixy::Unit*> UnitVec;
 typedef std::vector<Pixy::Spell*> SpellVec;
 typedef std::vector<Pixy::Puppet*> PuppetVec;
+typedef std::vector<Pixy::Deck*> DeckVec;
 typedef std::list<Pixy::Unit*> UnitList;
 typedef std::list<Pixy::Spell*> SpellList;
 typedef std::list<Pixy::Puppet*> PuppetList;
+typedef std::list<Pixy::Deck*> DeckList;
 
 namespace Pixy {
 

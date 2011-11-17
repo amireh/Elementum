@@ -9,5 +9,6 @@ class ScriptEngine : public Pixy::Engine, public Pixy::EventListener {
 
   void callMeAfter(int inSeconds, std::string inFunc);
   int _passGameData();
+  void _reportAccepted @ reportAccepted();
 };
 }

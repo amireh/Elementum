@@ -21,6 +21,7 @@ namespace Pixy
     mEnemy(0),
     mAttackTarget(0),
     mBlockTarget(0),
+    mAttackOrder(0),
     mLog(0),
     fDying(false)
   {
@@ -68,6 +69,9 @@ namespace Pixy
     Mobile::copyFrom(src);
 
     fDying = false;
+    mBlockTarget = 0;
+    mAttackTarget = 0;
+    mAttackOrder = 0;
 
     mTimer = 0;
   }
@@ -195,6 +199,9 @@ namespace Pixy
   }
 
   void Unit::updateTextOverlay() {
+    if (!mText)
+      return;
+
     std::string cap = "";
     if (hasSummoningSickness()) {
       cap += "[S] ";
@@ -576,4 +583,22 @@ namespace Pixy
   {
     mAttackTarget = inTarget;
   }
+
+  Puppet* Unit::getOwner() const
+  {
+    return static_cast<Puppet*>(mOwner);
+  }
+
+  void Unit::transmitMechanicChange(std::string mechanic, bool has_it)
+  {
+    if (isDead()) return;
+
+    Event e(EventUID::UnitMechanicChanged);
+    e.setProperty("M", mechanic);
+    e.setProperty("HasIt", has_it ? "Yes" : "No");
+    e.Any = (void*)this;
+
+    EventManager::getSingleton().hook(e);
+  }
+
 } // end of Pixy namespace

@@ -19,7 +19,7 @@ namespace Pixy
   */
   struct Event;
   class Puppet;
-  class Unit : public Pixy::Entity, public Pixy::BaseUnit, public Pixy::Mobile
+  class Unit : public Entity, public Pixy::BaseUnit, public Pixy::Mobile
   {
     public:
 
@@ -42,9 +42,6 @@ namespace Pixy
     virtual bool attack(Pixy::Puppet* inTarget);
     virtual bool attack(Pixy::Unit* inTarget, bool doBlock = false);
 
-    virtual void serialize(Event& inEvt);
-    virtual void deserialize(const Event& inEvt);
-
     virtual Entity* toEntity() const;
 
     //void move(int inDestination, boost::function<void(Pixy::Mobile*)> callback=0);
@@ -64,7 +61,6 @@ namespace Pixy
     // called by Puppet::attachUnit()
     void _setEnemy(Pixy::Puppet* inPuppet);
 
-    virtual void setAP(int inU);
     virtual void setHP(int inU);
     //~ virtual void setBaseHP(int inU);
     //~ virtual void setBaseAP(int inU);
@@ -73,11 +69,128 @@ namespace Pixy
     //~ virtual bool attack(Pixy::Unit* inTarget, bool block=false);
 
     virtual void updateTextOverlay();
-    virtual void reset();
+
+    bool isDying() const;
+
+    virtual Puppet* getOwner() const;
+
+    // --- BaseUnit ---
     virtual void rest();
     virtual void getUp();
 
-    bool isDying() const;
+    virtual void reset();
+
+    /*!
+     * @brief
+     * All units are "sick" for 1 turn after summoning which is equivalent
+     * to being resting.
+     **/
+    bool hasSummoningSickness() const;
+
+    /*!
+     * @brief
+     * Returns whether this Unit has any AP to spend and whether it's resting.
+     **/
+    bool canAttack() const;
+
+    // state getters
+    bool isResting() const;
+    bool isCharging() const;
+    bool isAttacking() const;
+    bool isBlocking() const;
+    bool isReady() const;
+
+    // mechanic getters
+    bool isFlying() const;
+    bool isTrampling() const;
+    bool isUnblockable() const;
+    bool isRestless() const;
+    bool hasFirstStrike() const;
+    bool hasLifetap() const;
+
+    // mechanic setters
+    /**
+     * @note
+     * all mechanic setters will trigger an Event "UnitMechanicChanged"
+     * if the value has changed, which has the following properties:
+     *  "M" => string containing the name of the mechanic, ie "Lifetap"
+     *  "HasIt" => string containing "Yes" or "No"
+     * and the Event.Any field pointing to the Unit object.
+     **/
+
+    /*!
+     * @brief
+     * Flying units can only be blocked by other flying units.
+     **/
+    void setIsFlying(bool);
+    /**
+     * Trampling units don't stop attacking until their AP is spent or they're
+     * dead (as in, they won't go back if being blocked).
+     **/
+    void setIsTrampling(bool);
+    /**
+     * Unblockable units can not be blocked..
+     **/
+    void setIsUnblockable(bool);
+    /**
+     * Restless units are "frenzied"; they charge at the start of every turn
+     * and they do not rest except for summoning sickness during their summoning.
+     **/
+    void setIsRestless(bool);
+    /**
+     * Units with the first strike ability will hit their target first unless
+     * the target is an attacker which also has First Strike.
+     **/
+    void setHasFirstStrike(bool);
+    /**
+     * Lifetapping units will transfer health to their owner Puppet equal
+     * to the amount of damage effectively spent against the enemy Puppet.
+     **/
+    void setHasLifetap(bool);
+
+    /**
+     * Sets the effective amount of attack power the Unit is able to spend during
+     * this turn.
+     **/
+    virtual void setAP(int inAP);
+    virtual int getAP() const;
+
+    /**
+     * @brief
+     * Since Units reset their AP and HP at the start of every turn, we need
+     * to track their "original" AP and HP fields, which is done here.
+     *
+     * When a Unit attacks or is hit, the damage is spent from/to the AP/HP field,
+     * however the BaseHP/AP fields should only change when:
+     *  1) the Unit is created (initial setting)
+     *  2) the Unit is modified by a spell
+     *
+     * @note
+     * Setting the Base HP will also set the HP field.
+     **/
+    virtual void setBaseHP(int inHP);
+    virtual int getBaseHP() const;
+
+    /**
+     * Sets the Unit's base attack power. See above for some clarity about those
+     * two fields.
+     *
+     * @note
+     * Setting the Base AP will also set the AP field.
+     **/
+    virtual void setBaseAP(int inAP);
+    virtual int getBaseAP() const;
+
+    // --- Mobile ---
+    void setWalkSpeed(const float inSpeed);
+    float getWalkSpeed() const;
+
+    void rotateToEnemy();
+    void rotateTo(const Ogre::Vector3& inDest);
+
+    void move(int inWaypoint);
+    bool isMoving() const;
+
 
   }; // end of class Unit
 } // end of Pixy namespace

@@ -12,7 +12,7 @@ local UID = 100
 Profiles.CreateKnight = function(name, material, scale, pos)
   UID = UID+1
 
-  local unit = Pixy.CUnit:new()
+  local unit = Pixy.Unit:new()
   unit:setRank(Pixy.PUPPET)
   unit:setName(name)
   unit:setUID(UID)
@@ -20,7 +20,7 @@ Profiles.CreateKnight = function(name, material, scale, pos)
   unit:setMesh("DarkKnight.mesh")
   unit:setMaterial("Elementum/DarkKnight/" .. material)
 
-  rnd = unit:getRenderable()
+  rnd = unit
 
   local node = SceneMgr:createSceneNode("knight_node_" .. material)
   SceneMgr:getRootSceneNode():addChild(node)
@@ -41,18 +41,18 @@ Profiles.CreateKnight = function(name, material, scale, pos)
   if (material ~= "Water" and material ~= "Air") then
     sword = rnd:attachExtension("DarkKnightSword.mesh", "Bone01")
     sword:setMaterialName("Elementum/DarkKnight/" .. material .. "/Sword")
-    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
+    rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE, "Idle_1")
   end
   if (material == "Water") then
-    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_2")
+    rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE, "Idle_2")
 
   end
   if (material == "Air") then
-    rnd:registerAnimationState(Pixy.Renderable.ANIM_IDLE, "Idle_1")
+    rnd:registerAnimationState(Pixy.Animable.ANIM_IDLE, "Idle_1")
   end
 
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_1", false)
-  --~ rnd:registerAnimationState(Pixy.Renderable.ANIM_DIE, "Death_2", false)
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_DIE, "Death_1", false)
+  --~ rnd:registerAnimationState(Pixy.Animable.ANIM_DIE, "Death_2", false)
   rnd:animateIdle()
 
   --~ table.insert(Units, unit)
@@ -62,17 +62,17 @@ Profiles.CreateKnight = function(name, material, scale, pos)
 end
 
 Profiles.HideKnights = function()
-  Profiles.Knights.Earth:getRenderable():hide()
-  Profiles.Knights.Air:getRenderable():hide()
-  Profiles.Knights.Fire:getRenderable():hide()
-  Profiles.Knights.Water:getRenderable():hide()
+  Profiles.Knights.Earth:hide()
+  Profiles.Knights.Air:hide()
+  Profiles.Knights.Fire:hide()
+  Profiles.Knights.Water:hide()
 end
 
 Profiles.ShowKnights = function()
-  Profiles.Knights.Earth:getRenderable():show()
-  Profiles.Knights.Air:getRenderable():show()
-  Profiles.Knights.Fire:getRenderable():show()
-  Profiles.Knights.Water:getRenderable():show()
+  Profiles.Knights.Earth:show()
+  Profiles.Knights.Air:show()
+  Profiles.Knights.Fire:show()
+  Profiles.Knights.Water:show()
 end
 
 Profiles.CalcScale = function(sf)
@@ -153,10 +153,10 @@ Profiles.cleanup = function()
   Profiles.Listing:detach()
 
   nodes = {
-    Profiles.Knights.Earth:getRenderable():getSceneNode():getName(),
-    Profiles.Knights.Air:getRenderable():getSceneNode():getName(),
-    Profiles.Knights.Fire:getRenderable():getSceneNode():getName(),
-    Profiles.Knights.Water:getRenderable():getSceneNode():getName(),
+    Profiles.Knights.Earth:getSceneNode():getName(),
+    Profiles.Knights.Air:getSceneNode():getName(),
+    Profiles.Knights.Fire:getSceneNode():getName(),
+    Profiles.Knights.Water:getSceneNode():getName(),
   }
 
   Profiles.Knights.Earth:delete()
