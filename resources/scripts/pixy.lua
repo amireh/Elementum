@@ -1,5 +1,3 @@
-for k in pairs(Pixy) do print(k) end
-
 -- resolve script paths
 do
   ScriptPrefix = Pixy.ScriptEngine_getSingletonPtr():getScriptPathPrefix()
@@ -59,6 +57,10 @@ local isSetup = false
 Pixy.onEnter = function()
   if isSetup then return true end
 
+  print("-- in Pixy.onEnter --")
+  local i = 0
+  for k in pairs(Pixy) do print("# " .. i .. " => " .. k); i = i + 1 end
+
   print(Pixy.Race.Fire)
   if Pixy then
     print("SWIG Exporter is working!!")
@@ -76,7 +78,15 @@ Pixy.onEnter = function()
 
   CombatState:setIsDebugging(true)
 
-
+  local exporter = Pixy.SpellListExporter()
+  local unit = Pixy.Unit()
+  exporter:export(unit:getSpells(), "Pixy::Spell", "__Temp")
+  for i in list_iter(__Temp) do
+    print("I got a spell")
+  end
+  __Temp = nil
+  unit = nil
+  collectgarbage()
 
   isSetup = true
   return true

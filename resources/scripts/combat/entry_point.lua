@@ -1,8 +1,8 @@
 -- resolve script paths
 do
-  ScriptPrefix = Pixy.ScriptEngine:getSingletonPtr():getScriptPathPrefix()
+  ScriptPrefix = Pixy.ScriptEngine_getSingletonPtr():getScriptPathPrefix()
   package.path = ScriptPrefix .. "/?.lua;" .. package.path
-  ModulePrefix = Pixy.ScriptEngine:getSingletonPtr():getModulePathPrefix()
+  ModulePrefix = Pixy.ScriptEngine_getSingletonPtr():getModulePathPrefix()
   package.cpath = ModulePrefix .. "/?.so;" .. package.path
 
   print("Scripts path: " .. ScriptPrefix .. "\nModule path: " .. ModulePrefix)

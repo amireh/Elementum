@@ -33,6 +33,9 @@ namespace Pixy
     Puppet* getActivePuppet();
     Unit* getUnit(int inUID);
 
+    %rename(setIsDebugging) __setIsDebugging;
+    %rename(isDebugging) __isDebugging;
+
     void __setIsDebugging(bool setting);
     bool __isDebugging() const;
 	};

@@ -122,6 +122,8 @@ namespace Pixy {
 
     boost::asio::deadline_timer* mTimer;
 
+    void pushUserData(void* inData, std::string inFullyQualifiedCppType);
+
     //void assignSelfPuppet(Puppet* inPuppet);
 	private:
 		static ScriptEngine* _myScriptEngine;

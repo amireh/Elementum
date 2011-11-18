@@ -26,7 +26,7 @@ Gfx.PrepareScene = function()
   Camera:setFarClipDistance( 10000 )
 
   CameraMan:setTarget(nil)
-  CameraMan:setStyle(OgreBites.CS_ORBIT)
+  CameraMan:setStyle(Ogre.CS_ORBIT)
   GfxEngine:setYawPitchDist( Defaults.CameraYawPitchDist )
 
   -- Movable Text Overlay attributes
@@ -41,8 +41,8 @@ Gfx.PrepareScene = function()
   GfxEngine.mPuppetPos[1] = Ogre.Vector3(0,0, Defaults.PuppetMarginZ)
   GfxEngine.mPuppetScale = Defaults.PuppetScale
   GfxEngine.mUnitScale = Defaults.UnitScale
-  Pos.Me = GfxEngine.mPuppetPos[0]
-  Pos.Enemy = GfxEngine.mPuppetPos[1]
+  Pos.Me = Ogre.Vector3(0,0, -Defaults.PuppetMarginZ)
+  Pos.Enemy = Ogre.Vector3(0,0, Defaults.PuppetMarginZ)
 
   GfxEngine.mUnitMargin.x = Defaults.UnitMarginX
   GfxEngine.mUnitMargin.z = Defaults.UnitMarginZ
@@ -50,9 +50,9 @@ Gfx.PrepareScene = function()
   GfxEngine.mPuppetMargin.z = Defaults.PuppetMarginZ
   GfxEngine.mPackSpacing = Defaults.PackSpacing
 
-  Pixy.Mobile:setDefaultWalkSpeed(Defaults.UnitWalkSpeed)
-  Pixy.Mobile:setRotationFactor(Defaults.UnitRotSpeed)
-  Pixy.Animable:setAnimFadeSpeed(Defaults.AnimFadeSpeed)
+  Pixy.Mobile_setDefaultWalkSpeed(Defaults.UnitWalkSpeed)
+  Pixy.Mobile_setRotationFactor(Defaults.UnitRotSpeed)
+  Pixy.Animable_setAnimFadeSpeed(Defaults.AnimFadeSpeed)
 
   -- Viewport
   Viewport:setBackgroundColour(Ogre.ColourValue(0,0,0))
@@ -83,13 +83,14 @@ Gfx.PrepareScene = function()
       print("Scene has " .. nr_nodes .. " child nodes")
       while idx < nr_nodes do
         -- get this node's entities
-        local node = root_node:getChildAt(idx)
-        node = tolua.cast(node, "Ogre::SceneNode")
+        local node = SceneMgr:getSceneNode(root_node:getChild(idx):getName())
+        --~ node = tolua.cast(node, "Ogre::SceneNode")
+        print(node:getName())
         local nr_entities = node:numAttachedObjects()
         local _idx = 0
         --print("\tNode " .. node:getName() .. " has " .. nr_entities .. " attached objects")
         while _idx < nr_entities do
-          node:getAttachedObjectAt(_idx):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
+          node:getAttachedObject(_idx):setRenderQueueGroup(Ogre.RENDER_QUEUE_BACKGROUND)
           _idx = _idx + 1
         end
         idx = idx + 1
@@ -130,13 +131,13 @@ Gfx.PrepareScene = function()
     RTT.Enemy.Camera:setFarClipDistance( 100 )
 
     -- create the RTT texture (Player's)
-    RTT.Player.Texture = Pixy.OgreRTT:new()
+    RTT.Player.Texture = Pixy.OgreRTT()
     RTT.Player.Texture:setup(SceneMgr, GfxEngine:getWindow(), RTT.Player.Camera)
     RTT.Player.Texture:setCorners(-0.985, -0.40, -0.73, -0.785)
     RTT.Player.Texture:enable()
 
     -- create the RTT texture (Enemy's)
-    RTT.Enemy.Texture = Pixy.OgreRTT:new()
+    RTT.Enemy.Texture = Pixy.OgreRTT()
     RTT.Enemy.Texture:setup(SceneMgr, GfxEngine:getWindow(), RTT.Enemy.Camera)
     RTT.Enemy.Texture:setCorners(0.73, -0.40, 0.985, -0.785)
     RTT.Enemy.Texture:enable()
@@ -177,7 +178,7 @@ Gfx.SetupLights = function()
   dcol = Ogre.ColourValue(0.9,0.7,0)
   scol = Ogre.ColourValue(0.9,0.7,0)
   light = SceneMgr:createLight()
-  light:setType(Ogre.Light.LT_SPOTLIGHT)
+  light:setType(Ogre.Light_LT_SPOTLIGHT)
   light:setPosition(pos)
   light:setDiffuseColour(dcol)
   light:setSpecularColour(scol)
@@ -193,23 +194,23 @@ Gfx.SetupLights = function()
     scol = Ogre.ColourValue(0,0,0)
     pos = Ogre.Vector3(0, 10, Pos.Me.z - 30)
     light = SceneMgr:createLight()
-    light:setType(Ogre.Light.LT_POINT)
+    light:setType(Ogre.Light_LT_POINT)
     light:setPosition(pos)
     light:setDiffuseColour(dcol)
     light:setSpecularColour(scol)
     light:setCastShadows(true)
-    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
+    light:setVisibilityFlags(Pixy.GfxEngine_ENTITY_MASK)
 
     -- Enemy's army light
     pos = Ogre.Vector3(0, 10, Pos.Enemy.z + 30)
     light = SceneMgr:createLight()
-    light:setType(Ogre.Light.LT_POINT)
+    light:setType(Ogre.Light_LT_POINT)
     light:setPosition(pos)
     light:setDiffuseColour(dcol)
     light:setSpecularColour(scol)
     --~ light:setPowerScale(1000)
     light:setCastShadows(true)
-    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
+    light:setVisibilityFlags(Pixy.GfxEngine_ENTITY_MASK)
   end
 
   -- Side lights
@@ -219,23 +220,23 @@ Gfx.SetupLights = function()
     scol = Ogre.ColourValue(0,0,0)
     pos = Ogre.Vector3(30, 10, 0)
     light = SceneMgr:createLight()
-    light:setType(Ogre.Light.LT_POINT)
+    light:setType(Ogre.Light_LT_POINT)
     light:setPosition(pos)
     light:setDiffuseColour(dcol)
     light:setSpecularColour(scol)
     light:setCastShadows(true)
-    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
+    light:setVisibilityFlags(Pixy.GfxEngine_ENTITY_MASK)
 
     -- Enemy's army light
     pos = Ogre.Vector3(-30, 10, 0)
     light = SceneMgr:createLight()
-    light:setType(Ogre.Light.LT_POINT)
+    light:setType(Ogre.Light_LT_POINT)
     light:setPosition(pos)
     light:setDiffuseColour(dcol)
     light:setSpecularColour(scol)
     --~ light:setPowerScale(1000)
     light:setCastShadows(true)
-    light:setVisibilityFlags(Pixy.GfxEngine.ENTITY_MASK)
+    light:setVisibilityFlags(Pixy.GfxEngine_ENTITY_MASK)
   end
 
   --~ dcol = Ogre.ColourValue(1.0,0.5,0.5)
@@ -292,8 +293,8 @@ Gfx.cleanup = function()
   do
     --~ GfxEngine:detachRTT(RTT.Player.Texture)
     --~ GfxEngine:detachRTT(RTT.Enemy.Texture)
-    RTT.Player.Texture:delete()
-    RTT.Enemy.Texture:delete()
+    --RTT.Player.Texture:delete()
+    --RTT.Enemy.Texture:delete()
     SceneMgr:destroyCamera(RTT.Player.Camera)
     SceneMgr:destroyCamera(RTT.Enemy.Camera)
 
@@ -301,6 +302,8 @@ Gfx.cleanup = function()
     RTT.Enemy.Texture = nil
     RTT.Player.Camera = nil
     RTT.Enemy.Camera = nil
+
+    collectgarbage()
 
   end
 

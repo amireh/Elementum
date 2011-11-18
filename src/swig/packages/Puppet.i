@@ -10,15 +10,15 @@
 %module Pixy
 %{
   #include "Puppet.h"
-  #include "BasePuppet.h"
-  #include "Entity.h"
 %}
 
+%import(module="Pixy") "Entity.i"
 %import(module="Pixy") "BasePuppet.i"
 
 namespace Pixy
 {
-
+  class Unit;
+  class Deck;
 	class Puppet : public Entity, public BasePuppet
 	{
   public:

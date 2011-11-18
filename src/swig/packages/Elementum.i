@@ -5,7 +5,6 @@
 %include "std_string.i"
 
 %include "Pixy.i"
-//%include "EventUID.i"
 
 // GameStates
 %include "GameState.i"
@@ -15,8 +14,8 @@
 // Entities
 %include "Animable.i"
 %include "Mobile.i"
-%include "Caster.i"
 %include "Renderable.i"
+%include "Caster.i"
 %include "Deck.i"
 %include "Entity.i"
 %include "Puppet.i"
@@ -34,6 +33,14 @@
 %include "UIEngine.i"
 %include "ScriptEngine.i"
 
+// Misc
+%include "OgreRTT.i"
+%include "LuaExporter.i"
+
 %luacode {
+  print "--"
   print "Elementum SWIG module loaded ok"
+  print "dumping Pixy table"
+  for k in pairs(Pixy) do print("# " .. k) end
+  print "--"
 }

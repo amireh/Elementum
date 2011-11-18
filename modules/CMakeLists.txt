@@ -5,9 +5,7 @@ SET(Elementum_Modules_INCLUDE_DIRS
   #include/dotscene
   include/tinyxml
   include/tinyxmlresource
-  include/OgreMax
-
-  include/pixy)
+  include/OgreMax)
 
 INCLUDE_DIRECTORIES(${Elementum_Modules_INCLUDE_DIRS})
 
@@ -37,8 +35,6 @@ SET(Elementum_Modules_SRCS
   src/OgreMax/OgreMaxUtilities.cpp
   src/OgreMax/ProgressCalculator.cpp
   src/OgreMax/Version.cpp
-
-  src/pixy/required.cpp
 )
 
 if(APPLE)

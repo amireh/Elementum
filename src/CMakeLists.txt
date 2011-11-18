@@ -24,6 +24,7 @@ SET(Elementum_SRCS
   #~ ../include/Renderable.h
   ../include/ScriptEngine.h
   ../include/UIEngine.h
+
   Combat.cpp
   GfxEngine.cpp
 
@@ -64,9 +65,17 @@ SET(Elementum_SRCS
 
   #${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_Elementum.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/swig/wrappers/Elementum_wrap.cxx
+  ${CMAKE_CURRENT_SOURCE_DIR}/swig/wrappers/Ogre_wrap.cxx
+  ${CMAKE_CURRENT_SOURCE_DIR}/swig/wrappers/OIS_wrap.cxx
+  ${CMAKE_CURRENT_SOURCE_DIR}/swig/wrappers/ParticleUniverse_wrap.cxx
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/tolua++/wrappers/Elementum_wrap.cxx
 
   #${CMAKE_CURRENT_SOURCE_DIR}/UI/Tooltip.cpp
 )
+
+# to find the SWIG runtime header file
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/swig/wrappers)
 
 SET(PROJECT_LIBS
   #${Boost_LIBRARIES}
@@ -118,9 +127,9 @@ endif()
 
 # generate lua bindings
 ADD_CUSTOM_COMMAND(
-  OUTPUT packages/lua_Elementum.cpp
+  OUTPUT tolua++/wrappers/Elementum_wrap.cpp
   #TARGET ${PROJECT_NAME} PRE_BUILD
-  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/packages/parser.sh ${CMAKE_CURRENT_SOURCE_DIR}/packages
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tolua++/generate_wrappers.sh ${CMAKE_CURRENT_SOURCE_DIR}/tolua++
   "Generating lua bindings"
 )
 #LIST(APPEND Elementum_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_Elementum.cpp)
@@ -142,11 +151,11 @@ ENDIF()
 
 ADD_EXECUTABLE(Elementum MACOSX_BUNDLE WIN32 ${Elementum_SRCS})
 
-SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_Elementum.cpp PROPERTIES GENERATED 1)
+SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/tolua++/wrappers/Elementum_wrap.cxx PROPERTIES GENERATED 1)
 TARGET_LINK_LIBRARIES(Elementum ${PROJECT_LIBS} Elementum_Modules)
 
-ADD_CUSTOM_TARGET(ElementumLua DEPENDS packages/lua_Elementum.cpp)
-IF(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/packages/lua_Elementum.cpp")
+ADD_CUSTOM_TARGET(ElementumLua DEPENDS tolua++/wrappers/Elementum_wrap.cxx)
+IF(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tolua++/wrappers/Elementum_wrap.cxx ")
   MESSAGE(STATUS "Lua bindings is not yet generated, forcing generation. Generate manually using make ElementumLua")
   ADD_DEPENDENCIES(Elementum ElementumLua)
 ENDIF()

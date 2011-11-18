@@ -12,6 +12,19 @@
   #include "UIEngine.h"
 %}
 
+namespace CEGUI {
+  %nodefaultctor Window;
+  %nodefaultdtor Window;
+  class Window {
+  };
+
+  %nodefaultctor UBox;
+  %nodefaultdtor UBox;
+  class UBox {
+
+  };
+}
+
 namespace Pixy {
 
   %nodefaultctor UIEngine;

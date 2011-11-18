@@ -12,7 +12,9 @@
   #include "Unit.h"
 %}
 
+%import(module="Pixy") "Entity.i"
 %import(module="Pixy") "BaseUnit.i"
+%import(module="Pixy") "Mobile.i"
 
 namespace Pixy
 {

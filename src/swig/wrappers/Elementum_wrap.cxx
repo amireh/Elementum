@@ -1508,78 +1508,94 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 
 #define SWIGTYPE_p_CEGUI__UBox swig_types[0]
 #define SWIGTYPE_p_CEGUI__Window swig_types[1]
-#define SWIGTYPE_p_MovableTextOverlay swig_types[2]
-#define SWIGTYPE_p_OIS__Keyboard swig_types[3]
-#define SWIGTYPE_p_OIS__Mouse swig_types[4]
-#define SWIGTYPE_p_OgreBites__SdkCameraMan swig_types[5]
-#define SWIGTYPE_p_OgreMax__OgreMaxScene swig_types[6]
-#define SWIGTYPE_p_Ogre__Camera swig_types[7]
-#define SWIGTYPE_p_Ogre__ColourValue swig_types[8]
-#define SWIGTYPE_p_Ogre__Entity swig_types[9]
-#define SWIGTYPE_p_Ogre__MovableObject swig_types[10]
-#define SWIGTYPE_p_Ogre__RenderWindow swig_types[11]
-#define SWIGTYPE_p_Ogre__Root swig_types[12]
-#define SWIGTYPE_p_Ogre__SceneManager swig_types[13]
-#define SWIGTYPE_p_Ogre__SceneNode swig_types[14]
-#define SWIGTYPE_p_Ogre__String swig_types[15]
-#define SWIGTYPE_p_Ogre__Vector2 swig_types[16]
-#define SWIGTYPE_p_Ogre__Vector3 swig_types[17]
-#define SWIGTYPE_p_Ogre__Viewport swig_types[18]
-#define SWIGTYPE_p_ParticleUniverse__ParticleSystem swig_types[19]
-#define SWIGTYPE_p_Pixy__Animable swig_types[20]
-#define SWIGTYPE_p_Pixy__BaseCaster swig_types[21]
-#define SWIGTYPE_p_Pixy__BaseDeck swig_types[22]
-#define SWIGTYPE_p_Pixy__BaseEntity swig_types[23]
-#define SWIGTYPE_p_Pixy__BasePuppet swig_types[24]
-#define SWIGTYPE_p_Pixy__BaseSpell swig_types[25]
-#define SWIGTYPE_p_Pixy__BaseUnit swig_types[26]
-#define SWIGTYPE_p_Pixy__Caster swig_types[27]
-#define SWIGTYPE_p_Pixy__Combat swig_types[28]
-#define SWIGTYPE_p_Pixy__Deck swig_types[29]
-#define SWIGTYPE_p_Pixy__Entity swig_types[30]
-#define SWIGTYPE_p_Pixy__Event swig_types[31]
-#define SWIGTYPE_p_Pixy__EventManager swig_types[32]
-#define SWIGTYPE_p_Pixy__FxEngine swig_types[33]
-#define SWIGTYPE_p_Pixy__GameManager swig_types[34]
-#define SWIGTYPE_p_Pixy__GameState swig_types[35]
-#define SWIGTYPE_p_Pixy__GfxEngine swig_types[36]
-#define SWIGTYPE_p_Pixy__Identifiable swig_types[37]
-#define SWIGTYPE_p_Pixy__InputManager swig_types[38]
-#define SWIGTYPE_p_Pixy__Intro swig_types[39]
-#define SWIGTYPE_p_Pixy__Loggable swig_types[40]
-#define SWIGTYPE_p_Pixy__Mobile swig_types[41]
-#define SWIGTYPE_p_Pixy__NetworkManager swig_types[42]
-#define SWIGTYPE_p_Pixy__OgreRTT swig_types[43]
-#define SWIGTYPE_p_Pixy__Puppet swig_types[44]
-#define SWIGTYPE_p_Pixy__Renderable swig_types[45]
-#define SWIGTYPE_p_Pixy__ScriptEngine swig_types[46]
-#define SWIGTYPE_p_Pixy__Spell swig_types[47]
-#define SWIGTYPE_p_Pixy__UIEngine swig_types[48]
-#define SWIGTYPE_p_Pixy__Unit swig_types[49]
-#define SWIGTYPE_p_Talent swig_types[50]
-#define SWIGTYPE_p_caster_t swig_types[51]
-#define SWIGTYPE_p_deck_t swig_types[52]
-#define SWIGTYPE_p_decks_t swig_types[53]
-#define SWIGTYPE_p_owner_t swig_types[54]
-#define SWIGTYPE_p_property_t swig_types[55]
-#define SWIGTYPE_p_puppets_t swig_types[56]
-#define SWIGTYPE_p_spell_t swig_types[57]
-#define SWIGTYPE_p_spells_t swig_types[58]
-#define SWIGTYPE_p_std__listT_Pixy__Deck_p_t swig_types[59]
-#define SWIGTYPE_p_std__listT_Pixy__Puppet_p_t swig_types[60]
-#define SWIGTYPE_p_std__listT_Pixy__Spell_p_t swig_types[61]
-#define SWIGTYPE_p_std__listT_Pixy__Unit_p_t swig_types[62]
-#define SWIGTYPE_p_std__listT_Talent_const_p_t swig_types[63]
-#define SWIGTYPE_p_std__ostream swig_types[64]
-#define SWIGTYPE_p_std__string swig_types[65]
-#define SWIGTYPE_p_std__vectorT_Pixy__Spell_const_p_t swig_types[66]
-#define SWIGTYPE_p_talent_t swig_types[67]
-#define SWIGTYPE_p_talents_t swig_types[68]
-#define SWIGTYPE_p_unit_t swig_types[69]
-#define SWIGTYPE_p_units_t swig_types[70]
-#define SWIGTYPE_p_void swig_types[71]
-static swig_type_info *swig_types[73];
-static swig_module_info swig_module = {swig_types, 72, 0, 0, 0, 0};
+#define SWIGTYPE_p_CornerEnum swig_types[2]
+#define SWIGTYPE_p_MovableTextOverlay swig_types[3]
+#define SWIGTYPE_p_OIS__Keyboard swig_types[4]
+#define SWIGTYPE_p_OIS__Mouse swig_types[5]
+#define SWIGTYPE_p_OgreBites__SdkCameraMan swig_types[6]
+#define SWIGTYPE_p_OgreMax__OgreMaxScene swig_types[7]
+#define SWIGTYPE_p_Ogre__BillboardSet swig_types[8]
+#define SWIGTYPE_p_Ogre__Camera swig_types[9]
+#define SWIGTYPE_p_Ogre__ColourValue swig_types[10]
+#define SWIGTYPE_p_Ogre__Entity swig_types[11]
+#define SWIGTYPE_p_Ogre__Light swig_types[12]
+#define SWIGTYPE_p_Ogre__MovableObject swig_types[13]
+#define SWIGTYPE_p_Ogre__RenderWindow swig_types[14]
+#define SWIGTYPE_p_Ogre__Root swig_types[15]
+#define SWIGTYPE_p_Ogre__SceneManager swig_types[16]
+#define SWIGTYPE_p_Ogre__SceneNode swig_types[17]
+#define SWIGTYPE_p_Ogre__SharedPtrT_Ogre__Resource_t swig_types[18]
+#define SWIGTYPE_p_Ogre__Vector2 swig_types[19]
+#define SWIGTYPE_p_Ogre__Vector3 swig_types[20]
+#define SWIGTYPE_p_Ogre__Viewport swig_types[21]
+#define SWIGTYPE_p_ParticleUniverse__ParticleSystem swig_types[22]
+#define SWIGTYPE_p_Pixy__Animable swig_types[23]
+#define SWIGTYPE_p_Pixy__BaseCaster swig_types[24]
+#define SWIGTYPE_p_Pixy__BaseDeck swig_types[25]
+#define SWIGTYPE_p_Pixy__BaseEntity swig_types[26]
+#define SWIGTYPE_p_Pixy__BasePuppet swig_types[27]
+#define SWIGTYPE_p_Pixy__BaseSpell swig_types[28]
+#define SWIGTYPE_p_Pixy__BaseUnit swig_types[29]
+#define SWIGTYPE_p_Pixy__Caster swig_types[30]
+#define SWIGTYPE_p_Pixy__Combat swig_types[31]
+#define SWIGTYPE_p_Pixy__Deck swig_types[32]
+#define SWIGTYPE_p_Pixy__Entity swig_types[33]
+#define SWIGTYPE_p_Pixy__Event swig_types[34]
+#define SWIGTYPE_p_Pixy__EventManager swig_types[35]
+#define SWIGTYPE_p_Pixy__FxEngine swig_types[36]
+#define SWIGTYPE_p_Pixy__GameManager swig_types[37]
+#define SWIGTYPE_p_Pixy__GameState swig_types[38]
+#define SWIGTYPE_p_Pixy__GfxEngine swig_types[39]
+#define SWIGTYPE_p_Pixy__Identifiable swig_types[40]
+#define SWIGTYPE_p_Pixy__InputManager swig_types[41]
+#define SWIGTYPE_p_Pixy__Intro swig_types[42]
+#define SWIGTYPE_p_Pixy__Loggable swig_types[43]
+#define SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t swig_types[44]
+#define SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t swig_types[45]
+#define SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t swig_types[46]
+#define SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t swig_types[47]
+#define SWIGTYPE_p_Pixy__Mobile swig_types[48]
+#define SWIGTYPE_p_Pixy__NetworkManager swig_types[49]
+#define SWIGTYPE_p_Pixy__OgreRTT swig_types[50]
+#define SWIGTYPE_p_Pixy__Puppet swig_types[51]
+#define SWIGTYPE_p_Pixy__Renderable swig_types[52]
+#define SWIGTYPE_p_Pixy__ScriptEngine swig_types[53]
+#define SWIGTYPE_p_Pixy__Spell swig_types[54]
+#define SWIGTYPE_p_Pixy__Talent swig_types[55]
+#define SWIGTYPE_p_Pixy__UIEngine swig_types[56]
+#define SWIGTYPE_p_Pixy__Unit swig_types[57]
+#define SWIGTYPE_p_caster_t swig_types[58]
+#define SWIGTYPE_p_deck_t swig_types[59]
+#define SWIGTYPE_p_decks_t swig_types[60]
+#define SWIGTYPE_p_float swig_types[61]
+#define SWIGTYPE_p_int swig_types[62]
+#define SWIGTYPE_p_mapT_std__string_std__string_t swig_types[63]
+#define SWIGTYPE_p_owner_t swig_types[64]
+#define SWIGTYPE_p_property_t swig_types[65]
+#define SWIGTYPE_p_puppets_t swig_types[66]
+#define SWIGTYPE_p_spell_t swig_types[67]
+#define SWIGTYPE_p_spells_t swig_types[68]
+#define SWIGTYPE_p_std__listT_Pixy__Deck_p_t swig_types[69]
+#define SWIGTYPE_p_std__listT_Pixy__Puppet_p_t swig_types[70]
+#define SWIGTYPE_p_std__listT_Pixy__Spell_p_t swig_types[71]
+#define SWIGTYPE_p_std__listT_Pixy__Talent_const_p_t swig_types[72]
+#define SWIGTYPE_p_std__listT_Pixy__Unit_p_t swig_types[73]
+#define SWIGTYPE_p_std__ostream swig_types[74]
+#define SWIGTYPE_p_std__string swig_types[75]
+#define SWIGTYPE_p_std__vectorT_Pixy__Spell_const_p_t swig_types[76]
+#define SWIGTYPE_p_talent_t swig_types[77]
+#define SWIGTYPE_p_talents_t swig_types[78]
+#define SWIGTYPE_p_uint32 swig_types[79]
+#define SWIGTYPE_p_unit_t swig_types[80]
+#define SWIGTYPE_p_units_t swig_types[81]
+#define SWIGTYPE_p_unsigned_char swig_types[82]
+#define SWIGTYPE_p_unsigned_int swig_types[83]
+#define SWIGTYPE_p_unsigned_long swig_types[84]
+#define SWIGTYPE_p_unsigned_short swig_types[85]
+#define SWIGTYPE_p_vectorT_Ogre__PixelFormat_t__type swig_types[86]
+#define SWIGTYPE_p_void swig_types[87]
+static swig_type_info *swig_types[89];
+static swig_module_info swig_module = {swig_types, 88, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1617,8 +1633,6 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
   #include <exception>
   #include <map>
   #include <iostream>
-  #include <boost/crc.hpp>
-  #include <boost/asio.hpp>
 
 
   #include "EventManager.h"
@@ -1642,7 +1656,6 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 
 
   #include "BasePuppet.h"
-  #include "Talent.h"
   #include <list>
   #include <vector>
 
@@ -1653,6 +1666,9 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 
 
   #include "BaseUnit.h"
+
+
+  #include "BaseLuaExporter.h"
 
 
   #include "GameState.h"
@@ -1673,13 +1689,13 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
   #include "Mobile.h"
 
 
+  #include "Renderable.h"
+
+
   #include "Caster.h"
   #include "BaseCaster.h"
   #include "Spell.h"
   #include <list>
-
-
-  #include "Renderable.h"
 
 
   #include "Deck.h"
@@ -1690,8 +1706,6 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 
 
   #include "Puppet.h"
-  #include "BasePuppet.h"
-  #include "Entity.h"
 
 
   #include "Spell.h"
@@ -1720,6 +1734,16 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 
 
   #include "ScriptEngine.h"
+
+
+  #include "ogre/OgreRTT.h"
+
+
+  #include "LuaExporter.h"
+  #include "BaseLuaExporter.h"
+
+  #include <vector>
+  #include <list>
 
 #ifdef __cplusplus
 extern "C" {
@@ -2648,6 +2672,27 @@ static int _wrap_Event_Any_get(lua_State* L) {
   
   result = (void *) ((arg1)->Any);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_void,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Event_UIDToString(lua_State* L) {
+  int SWIG_arg = 0;
+  unsigned char arg1 ;
+  std::string result;
+  
+  SWIG_check_num_args("Pixy::Event::_uid_to_string",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Pixy::Event::_uid_to_string",1,"unsigned char");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  arg1 = (unsigned char)lua_tonumber(L, 1);
+  result = Pixy::Event::_uid_to_string(arg1);
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3650,32 +3695,6 @@ fail:
 }
 
 
-static int _wrap_BaseEntity__setRace(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
-  int arg2 ;
-  
-  SWIG_check_num_args("Pixy::BaseEntity::_setRace",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::BaseEntity::_setRace",1,"Pixy::BaseEntity *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Pixy::BaseEntity::_setRace",2,"int");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__BaseEntity,0))){
-    SWIG_fail_ptr("BaseEntity__setRace",1,SWIGTYPE_p_Pixy__BaseEntity);
-  }
-  
-  arg2 = (int)lua_tonumber(L, 2);
-  (arg1)->_setRace(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_BaseEntity_getRace(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
@@ -3690,36 +3709,6 @@ static int _wrap_BaseEntity_getRace(lua_State* L) {
   
   result = (int)((Pixy::BaseEntity const *)arg1)->getRace();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_BaseEntity__setOwner(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
-  Pixy::Entity *arg2 = (Pixy::Entity *) 0 ;
-  
-  SWIG_check_num_args("Pixy::BaseEntity::_setOwner",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::BaseEntity::_setOwner",1,"Pixy::BaseEntity *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::BaseEntity::_setOwner",2,"Pixy::Entity *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__BaseEntity,0))){
-    SWIG_fail_ptr("BaseEntity__setOwner",1,SWIGTYPE_p_Pixy__BaseEntity);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Pixy__Entity,0))){
-    SWIG_fail_ptr("BaseEntity__setOwner",2,SWIGTYPE_p_Pixy__Entity);
-  }
-  
-  (arg1)->_setOwner(arg2);
-  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3826,90 +3815,6 @@ fail:
 }
 
 
-static int _wrap_BaseEntity_serialize(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
-  Pixy::Event *arg2 = 0 ;
-  
-  SWIG_check_num_args("Pixy::BaseEntity::serialize",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::BaseEntity::serialize",1,"Pixy::BaseEntity *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::BaseEntity::serialize",2,"Pixy::Event &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__BaseEntity,0))){
-    SWIG_fail_ptr("BaseEntity_serialize",1,SWIGTYPE_p_Pixy__BaseEntity);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Pixy__Event,0))){
-    SWIG_fail_ptr("BaseEntity_serialize",2,SWIGTYPE_p_Pixy__Event);
-  }
-  
-  (arg1)->serialize(*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_BaseEntity_deserialize(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
-  Pixy::Event *arg2 = 0 ;
-  
-  SWIG_check_num_args("Pixy::BaseEntity::deserialize",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::BaseEntity::deserialize",1,"Pixy::BaseEntity *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::BaseEntity::deserialize",2,"Pixy::Event const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__BaseEntity,0))){
-    SWIG_fail_ptr("BaseEntity_deserialize",1,SWIGTYPE_p_Pixy__BaseEntity);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Pixy__Event,0))){
-    SWIG_fail_ptr("BaseEntity_deserialize",2,SWIGTYPE_p_Pixy__Event);
-  }
-  
-  (arg1)->deserialize((Pixy::Event const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_BaseEntity_toCaster(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
-  Pixy::BaseCaster *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::BaseEntity::toCaster",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::BaseEntity::toCaster",1,"Pixy::BaseEntity const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__BaseEntity,0))){
-    SWIG_fail_ptr("BaseEntity_toCaster",1,SWIGTYPE_p_Pixy__BaseEntity);
-  }
-  
-  result = (Pixy::BaseCaster *)((Pixy::BaseEntity const *)arg1)->toCaster();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__BaseCaster,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_BaseEntity_dump(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::BaseEntity *arg1 = (Pixy::BaseEntity *) 0 ;
@@ -3943,16 +3848,11 @@ static swig_lua_method swig_Pixy_BaseEntity_methods[] = {
     {"die", _wrap_BaseEntity_die}, 
     {"setHP", _wrap_BaseEntity_setHP}, 
     {"getHP", _wrap_BaseEntity_getHP}, 
-    {"_setRace", _wrap_BaseEntity__setRace}, 
     {"getRace", _wrap_BaseEntity_getRace}, 
-    {"_setOwner", _wrap_BaseEntity__setOwner}, 
     {"getOwner", _wrap_BaseEntity_getOwner}, 
     {"isDead", _wrap_BaseEntity_isDead}, 
     {"isPuppet", _wrap_BaseEntity_isPuppet}, 
     {"isUnit", _wrap_BaseEntity_isUnit}, 
-    {"serialize", _wrap_BaseEntity_serialize}, 
-    {"deserialize", _wrap_BaseEntity_deserialize}, 
-    {"toCaster", _wrap_BaseEntity_toCaster}, 
     {"dump", _wrap_BaseEntity_dump}, 
     {0,0}
 };
@@ -4377,8 +4277,8 @@ static int _wrap_BasePuppet_attachTalent(lua_State* L) {
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Talent,0))){
-    SWIG_fail_ptr("BasePuppet_attachTalent",2,SWIGTYPE_p_Talent);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Pixy__Talent,0))){
+    SWIG_fail_ptr("BasePuppet_attachTalent",2,SWIGTYPE_p_Pixy__Talent);
   }
   
   (arg1)->attachTalent((Pixy::BasePuppet::talent_t const *)arg2);
@@ -4433,7 +4333,7 @@ static int _wrap_BasePuppet_getTalents(lua_State* L) {
   }
   
   result = (Pixy::BasePuppet::talents_t *) &((Pixy::BasePuppet const *)arg1)->getTalents();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__listT_Talent_const_p_t,0); SWIG_arg++; 
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__listT_Pixy__Talent_const_p_t,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4834,30 +4734,6 @@ fail:
 }
 
 
-static int _wrap_BasePuppet_toEntity(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::BasePuppet *arg1 = (Pixy::BasePuppet *) 0 ;
-  Pixy::BaseEntity *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::BasePuppet::toEntity",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::BasePuppet::toEntity",1,"Pixy::BasePuppet const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__BasePuppet,0))){
-    SWIG_fail_ptr("BasePuppet_toEntity",1,SWIGTYPE_p_Pixy__BasePuppet);
-  }
-  
-  result = (Pixy::BaseEntity *)((Pixy::BasePuppet const *)arg1)->toEntity();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__BaseEntity,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static void swig_delete_BasePuppet(void *obj) {
 Pixy::BasePuppet *arg1 = (Pixy::BasePuppet *) obj;
 delete arg1;
@@ -4893,7 +4769,6 @@ static swig_lua_method swig_Pixy_BasePuppet_methods[] = {
     {"detachUnit", _wrap_BasePuppet_detachUnit}, 
     {"getUnit", _wrap_BasePuppet_getUnit}, 
     {"hasUnitWithName", _wrap_BasePuppet_hasUnitWithName}, 
-    {"toEntity", _wrap_BasePuppet_toEntity}, 
     {0,0}
 };
 static swig_lua_attribute swig_Pixy_BasePuppet_attributes[] = {
@@ -6922,7 +6797,7 @@ fail:
 }
 
 
-static int _wrap_Combat___setIsDebugging(lua_State* L) {
+static int _wrap_Combat_setIsDebugging(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::Combat *arg1 = (Pixy::Combat *) 0 ;
   bool arg2 ;
@@ -6932,7 +6807,7 @@ static int _wrap_Combat___setIsDebugging(lua_State* L) {
   if(!lua_isboolean(L,2)) SWIG_fail_arg("Pixy::Combat::__setIsDebugging",2,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Combat,0))){
-    SWIG_fail_ptr("Combat___setIsDebugging",1,SWIGTYPE_p_Pixy__Combat);
+    SWIG_fail_ptr("Combat_setIsDebugging",1,SWIGTYPE_p_Pixy__Combat);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
@@ -6948,7 +6823,7 @@ fail:
 }
 
 
-static int _wrap_Combat___isDebugging(lua_State* L) {
+static int _wrap_Combat_isDebugging(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::Combat *arg1 = (Pixy::Combat *) 0 ;
   bool result;
@@ -6957,7 +6832,7 @@ static int _wrap_Combat___isDebugging(lua_State* L) {
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Combat::__isDebugging",1,"Pixy::Combat const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Combat,0))){
-    SWIG_fail_ptr("Combat___isDebugging",1,SWIGTYPE_p_Pixy__Combat);
+    SWIG_fail_ptr("Combat_isDebugging",1,SWIGTYPE_p_Pixy__Combat);
   }
   
   result = (bool)((Pixy::Combat const *)arg1)->__isDebugging();
@@ -6982,8 +6857,8 @@ static swig_lua_method swig_Pixy_Combat_methods[] = {
     {"getPuppet", _wrap_Combat_getPuppet}, 
     {"getActivePuppet", _wrap_Combat_getActivePuppet}, 
     {"getUnit", _wrap_Combat_getUnit}, 
-    {"__setIsDebugging", _wrap_Combat___setIsDebugging}, 
-    {"__isDebugging", _wrap_Combat___isDebugging}, 
+    {"setIsDebugging", _wrap_Combat_setIsDebugging}, 
+    {"isDebugging", _wrap_Combat_isDebugging}, 
     {0,0}
 };
 static swig_lua_attribute swig_Pixy_Combat_attributes[] = {
@@ -7921,6 +7796,345 @@ static swig_lua_class *swig_Pixy_Mobile_bases[] = {0};
 static const char *swig_Pixy_Mobile_base_names[] = {0};
 static swig_lua_class _wrap_class_Pixy_Mobile = { "Mobile", &SWIGTYPE_p_Pixy__Mobile,_wrap_new_Mobile, swig_delete_Mobile, swig_Pixy_Mobile_methods, swig_Pixy_Mobile_attributes, swig_Pixy_Mobile_bases, swig_Pixy_Mobile_base_names };
 
+static int _wrap_new_Renderable__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::Renderable",0,0)
+  result = (Pixy::Renderable *)new Pixy::Renderable();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Renderable,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Renderable__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = 0 ;
+  Pixy::Renderable *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::Renderable",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Pixy::Renderable::Renderable",1,"Pixy::Renderable const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("new_Renderable",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  result = (Pixy::Renderable *)new Pixy::Renderable((Pixy::Renderable const &)*arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Renderable,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Renderable(lua_State* L) {
+  int argc;
+  int argv[2]={
+    1,2
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 0) {
+    return _wrap_new_Renderable__SWIG_0(L);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Pixy__Renderable, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_new_Renderable__SWIG_1(L);
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'new_Renderable'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Pixy::Renderable::Renderable()\n"
+    "    Pixy::Renderable::Renderable(Pixy::Renderable const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_Renderable_attachSceneNode(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  Ogre::SceneNode *arg2 = (Ogre::SceneNode *) 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::attachSceneNode",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::attachSceneNode",1,"Pixy::Renderable *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::Renderable::attachSceneNode",2,"Ogre::SceneNode *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_attachSceneNode",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__SceneNode,0))){
+    SWIG_fail_ptr("Renderable_attachSceneNode",2,SWIGTYPE_p_Ogre__SceneNode);
+  }
+  
+  (arg1)->attachSceneNode(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_getSceneNode(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  Ogre::SceneNode *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::getSceneNode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getSceneNode",1,"Pixy::Renderable const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_getSceneNode",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  result = (Ogre::SceneNode *)((Pixy::Renderable const *)arg1)->getSceneNode();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__SceneNode,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_attachSceneObject(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  Ogre::Entity *arg2 = (Ogre::Entity *) 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::attachSceneObject",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::attachSceneObject",1,"Pixy::Renderable *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::Renderable::attachSceneObject",2,"Ogre::Entity *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_attachSceneObject",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__Entity,0))){
+    SWIG_fail_ptr("Renderable_attachSceneObject",2,SWIGTYPE_p_Ogre__Entity);
+  }
+  
+  (arg1)->attachSceneObject(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_getSceneObject(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  Ogre::Entity *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::getSceneObject",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getSceneObject",1,"Pixy::Renderable const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_getSceneObject",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  result = (Ogre::Entity *)((Pixy::Renderable const *)arg1)->getSceneObject();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__Entity,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_attachExtension(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  Ogre::Entity *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::attachExtension",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::attachExtension",1,"Pixy::Renderable *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::Renderable::attachExtension",2,"std::string const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("Pixy::Renderable::attachExtension",3,"std::string const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_attachExtension",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (Ogre::Entity *)(arg1)->attachExtension((std::string const &)*arg2,(std::string const &)*arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__Entity,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_getMesh(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  std::string *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::getMesh",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getMesh",1,"Pixy::Renderable const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_getMesh",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  result = (std::string *) &((Pixy::Renderable const *)arg1)->getMesh();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_getMaterial(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  std::string *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::getMaterial",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getMaterial",1,"Pixy::Renderable const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_getMaterial",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  result = (std::string *) &((Pixy::Renderable const *)arg1)->getMaterial();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_setMaterial(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  std::string *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::setMaterial",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::setMaterial",1,"Pixy::Renderable *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::Renderable::setMaterial",2,"std::string const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_setMaterial",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->setMaterial((std::string const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Renderable_setMesh(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
+  std::string *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("Pixy::Renderable::setMesh",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::setMesh",1,"Pixy::Renderable *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::Renderable::setMesh",2,"std::string const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
+    SWIG_fail_ptr("Renderable_setMesh",1,SWIGTYPE_p_Pixy__Renderable);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->setMesh((std::string const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_Renderable(void *obj) {
+Pixy::Renderable *arg1 = (Pixy::Renderable *) obj;
+delete arg1;
+}
+static swig_lua_method swig_Pixy_Renderable_methods[] = {
+    {"attachSceneNode", _wrap_Renderable_attachSceneNode}, 
+    {"getSceneNode", _wrap_Renderable_getSceneNode}, 
+    {"attachSceneObject", _wrap_Renderable_attachSceneObject}, 
+    {"getSceneObject", _wrap_Renderable_getSceneObject}, 
+    {"attachExtension", _wrap_Renderable_attachExtension}, 
+    {"getMesh", _wrap_Renderable_getMesh}, 
+    {"getMaterial", _wrap_Renderable_getMaterial}, 
+    {"setMaterial", _wrap_Renderable_setMaterial}, 
+    {"setMesh", _wrap_Renderable_setMesh}, 
+    {0,0}
+};
+static swig_lua_attribute swig_Pixy_Renderable_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_Pixy_Renderable_bases[] = {0};
+static const char *swig_Pixy_Renderable_base_names[] = {0};
+static swig_lua_class _wrap_class_Pixy_Renderable = { "Renderable", &SWIGTYPE_p_Pixy__Renderable,_wrap_new_Renderable, swig_delete_Renderable, swig_Pixy_Renderable_methods, swig_Pixy_Renderable_attributes, swig_Pixy_Renderable_bases, swig_Pixy_Renderable_base_names };
+
 static int _wrap_new_Caster__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::Caster *result = 0 ;
@@ -8514,345 +8728,6 @@ static swig_lua_class *swig_Pixy_Caster_bases[] = {0,0};
 static const char *swig_Pixy_Caster_base_names[] = {"Pixy::BaseCaster *",0};
 static swig_lua_class _wrap_class_Pixy_Caster = { "Caster", &SWIGTYPE_p_Pixy__Caster,_wrap_new_Caster, swig_delete_Caster, swig_Pixy_Caster_methods, swig_Pixy_Caster_attributes, swig_Pixy_Caster_bases, swig_Pixy_Caster_base_names };
 
-static int _wrap_new_Renderable__SWIG_0(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::Renderable",0,0)
-  result = (Pixy::Renderable *)new Pixy::Renderable();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Renderable,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_Renderable__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = 0 ;
-  Pixy::Renderable *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::Renderable",1,1)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Pixy::Renderable::Renderable",1,"Pixy::Renderable const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("new_Renderable",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  result = (Pixy::Renderable *)new Pixy::Renderable((Pixy::Renderable const &)*arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Renderable,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_Renderable(lua_State* L) {
-  int argc;
-  int argv[2]={
-    1,2
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 0) {
-    return _wrap_new_Renderable__SWIG_0(L);
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
-      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Pixy__Renderable, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_Renderable__SWIG_1(L);
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'new_Renderable'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    Pixy::Renderable::Renderable()\n"
-    "    Pixy::Renderable::Renderable(Pixy::Renderable const &)\n");
-  lua_error(L);return 0;
-}
-
-
-static int _wrap_Renderable_attachSceneNode(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  Ogre::SceneNode *arg2 = (Ogre::SceneNode *) 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::attachSceneNode",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::attachSceneNode",1,"Pixy::Renderable *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::Renderable::attachSceneNode",2,"Ogre::SceneNode *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_attachSceneNode",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__SceneNode,0))){
-    SWIG_fail_ptr("Renderable_attachSceneNode",2,SWIGTYPE_p_Ogre__SceneNode);
-  }
-  
-  (arg1)->attachSceneNode(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_getSceneNode(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  Ogre::SceneNode *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::getSceneNode",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getSceneNode",1,"Pixy::Renderable const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_getSceneNode",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  result = (Ogre::SceneNode *)((Pixy::Renderable const *)arg1)->getSceneNode();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__SceneNode,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_attachSceneObject(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  Ogre::Entity *arg2 = (Ogre::Entity *) 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::attachSceneObject",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::attachSceneObject",1,"Pixy::Renderable *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::Renderable::attachSceneObject",2,"Ogre::Entity *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_attachSceneObject",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__Entity,0))){
-    SWIG_fail_ptr("Renderable_attachSceneObject",2,SWIGTYPE_p_Ogre__Entity);
-  }
-  
-  (arg1)->attachSceneObject(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_getSceneObject(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  Ogre::Entity *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::getSceneObject",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getSceneObject",1,"Pixy::Renderable const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_getSceneObject",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  result = (Ogre::Entity *)((Pixy::Renderable const *)arg1)->getSceneObject();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__Entity,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_attachExtension(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  std::string *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::string temp2 ;
-  std::string temp3 ;
-  Ogre::Entity *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::attachExtension",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::attachExtension",1,"Pixy::Renderable *");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::Renderable::attachExtension",2,"std::string const &");
-  if(!lua_isstring(L,3)) SWIG_fail_arg("Pixy::Renderable::attachExtension",3,"std::string const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_attachExtension",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
-  result = (Ogre::Entity *)(arg1)->attachExtension((std::string const &)*arg2,(std::string const &)*arg3);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__Entity,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_getMesh(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  std::string *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::getMesh",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getMesh",1,"Pixy::Renderable const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_getMesh",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  result = (std::string *) &((Pixy::Renderable const *)arg1)->getMesh();
-  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_getMaterial(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  std::string *result = 0 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::getMaterial",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::getMaterial",1,"Pixy::Renderable const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_getMaterial",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  result = (std::string *) &((Pixy::Renderable const *)arg1)->getMaterial();
-  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_setMaterial(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  std::string *arg2 = 0 ;
-  std::string temp2 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::setMaterial",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::setMaterial",1,"Pixy::Renderable *");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::Renderable::setMaterial",2,"std::string const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_setMaterial",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  (arg1)->setMaterial((std::string const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Renderable_setMesh(lua_State* L) {
-  int SWIG_arg = 0;
-  Pixy::Renderable *arg1 = (Pixy::Renderable *) 0 ;
-  std::string *arg2 = 0 ;
-  std::string temp2 ;
-  
-  SWIG_check_num_args("Pixy::Renderable::setMesh",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::Renderable::setMesh",1,"Pixy::Renderable *");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::Renderable::setMesh",2,"std::string const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Renderable,0))){
-    SWIG_fail_ptr("Renderable_setMesh",1,SWIGTYPE_p_Pixy__Renderable);
-  }
-  
-  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  (arg1)->setMesh((std::string const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static void swig_delete_Renderable(void *obj) {
-Pixy::Renderable *arg1 = (Pixy::Renderable *) obj;
-delete arg1;
-}
-static swig_lua_method swig_Pixy_Renderable_methods[] = {
-    {"attachSceneNode", _wrap_Renderable_attachSceneNode}, 
-    {"getSceneNode", _wrap_Renderable_getSceneNode}, 
-    {"attachSceneObject", _wrap_Renderable_attachSceneObject}, 
-    {"getSceneObject", _wrap_Renderable_getSceneObject}, 
-    {"attachExtension", _wrap_Renderable_attachExtension}, 
-    {"getMesh", _wrap_Renderable_getMesh}, 
-    {"getMaterial", _wrap_Renderable_getMaterial}, 
-    {"setMaterial", _wrap_Renderable_setMaterial}, 
-    {"setMesh", _wrap_Renderable_setMesh}, 
-    {0,0}
-};
-static swig_lua_attribute swig_Pixy_Renderable_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_class *swig_Pixy_Renderable_bases[] = {0};
-static const char *swig_Pixy_Renderable_base_names[] = {0};
-static swig_lua_class _wrap_class_Pixy_Renderable = { "Renderable", &SWIGTYPE_p_Pixy__Renderable,_wrap_new_Renderable, swig_delete_Renderable, swig_Pixy_Renderable_methods, swig_Pixy_Renderable_attributes, swig_Pixy_Renderable_bases, swig_Pixy_Renderable_base_names };
-
 static int _wrap_new_Deck(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::Deck::caster_t *arg1 = (Pixy::Deck::caster_t *) 0 ;
@@ -9257,6 +9132,23 @@ static swig_lua_attribute swig_Pixy_Entity_attributes[] = {
 static swig_lua_class *swig_Pixy_Entity_bases[] = {0,0,0,0,0};
 static const char *swig_Pixy_Entity_base_names[] = {"Pixy::BaseEntity *","Pixy::Caster *","Pixy::Animable *","Pixy::Renderable *",0};
 static swig_lua_class _wrap_class_Pixy_Entity = { "Entity", &SWIGTYPE_p_Pixy__Entity,0, swig_delete_Entity, swig_Pixy_Entity_methods, swig_Pixy_Entity_attributes, swig_Pixy_Entity_bases, swig_Pixy_Entity_base_names };
+
+static int _wrap_new_Puppet(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Puppet *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Puppet::Puppet",0,0)
+  result = (Pixy::Puppet *)new Pixy::Puppet();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Puppet,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
 
 static int _wrap_Puppet_live(lua_State* L) {
   int SWIG_arg = 0;
@@ -9741,7 +9633,7 @@ static swig_lua_attribute swig_Pixy_Puppet_attributes[] = {
 };
 static swig_lua_class *swig_Pixy_Puppet_bases[] = {0,0,0};
 static const char *swig_Pixy_Puppet_base_names[] = {"Pixy::Entity *","Pixy::BasePuppet *",0};
-static swig_lua_class _wrap_class_Pixy_Puppet = { "Puppet", &SWIGTYPE_p_Pixy__Puppet,0, swig_delete_Puppet, swig_Pixy_Puppet_methods, swig_Pixy_Puppet_attributes, swig_Pixy_Puppet_bases, swig_Pixy_Puppet_base_names };
+static swig_lua_class _wrap_class_Pixy_Puppet = { "Puppet", &SWIGTYPE_p_Pixy__Puppet,_wrap_new_Puppet, swig_delete_Puppet, swig_Pixy_Puppet_methods, swig_Pixy_Puppet_attributes, swig_Pixy_Puppet_bases, swig_Pixy_Puppet_base_names };
 
 static int _wrap_new_Spell__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
@@ -10039,6 +9931,80 @@ static swig_lua_attribute swig_Pixy_Spell_attributes[] = {
 static swig_lua_class *swig_Pixy_Spell_bases[] = {0,0};
 static const char *swig_Pixy_Spell_base_names[] = {"Pixy::BaseSpell *",0};
 static swig_lua_class _wrap_class_Pixy_Spell = { "Spell", &SWIGTYPE_p_Pixy__Spell,_wrap_new_Spell, swig_delete_Spell, swig_Pixy_Spell_methods, swig_Pixy_Spell_attributes, swig_Pixy_Spell_bases, swig_Pixy_Spell_base_names };
+
+static int _wrap_new_Unit__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Unit *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Unit::Unit",0,0)
+  result = (Pixy::Unit *)new Pixy::Unit();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Unit,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Unit__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::Unit *arg1 = 0 ;
+  Pixy::Unit *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::Unit::Unit",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Pixy::Unit::Unit",1,"Pixy::Unit const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__Unit,0))){
+    SWIG_fail_ptr("new_Unit",1,SWIGTYPE_p_Pixy__Unit);
+  }
+  
+  result = (Pixy::Unit *)new Pixy::Unit((Pixy::Unit const &)*arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__Unit,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Unit(lua_State* L) {
+  int argc;
+  int argv[2]={
+    1,2
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 0) {
+    return _wrap_new_Unit__SWIG_0(L);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Pixy__Unit, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_new_Unit__SWIG_1(L);
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'new_Unit'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Pixy::Unit::Unit()\n"
+    "    Pixy::Unit::Unit(Pixy::Unit const &)\n");
+  lua_error(L);return 0;
+}
+
 
 static int _wrap_Unit_live(lua_State* L) {
   int SWIG_arg = 0;
@@ -10656,7 +10622,7 @@ static swig_lua_attribute swig_Pixy_Unit_attributes[] = {
 };
 static swig_lua_class *swig_Pixy_Unit_bases[] = {0,0,0,0};
 static const char *swig_Pixy_Unit_base_names[] = {"Pixy::Entity *","Pixy::BaseUnit *","Pixy::Mobile *",0};
-static swig_lua_class _wrap_class_Pixy_Unit = { "Unit", &SWIGTYPE_p_Pixy__Unit,0, swig_delete_Unit, swig_Pixy_Unit_methods, swig_Pixy_Unit_attributes, swig_Pixy_Unit_bases, swig_Pixy_Unit_base_names };
+static swig_lua_class _wrap_class_Pixy_Unit = { "Unit", &SWIGTYPE_p_Pixy__Unit,_wrap_new_Unit, swig_delete_Unit, swig_Pixy_Unit_methods, swig_Pixy_Unit_attributes, swig_Pixy_Unit_bases, swig_Pixy_Unit_base_names };
 
 static int _wrap_GameManager_getSingleton(lua_State* L) {
   int SWIG_arg = 0;
@@ -11016,24 +10982,22 @@ fail:
 static int _wrap_GfxEngine_mMTOFontColor_set(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::ColourValue arg2 ;
-  Ogre::ColourValue *argp2 ;
+  Ogre::ColourValue *arg2 = (Ogre::ColourValue *) 0 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::mMTOFontColor",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontColor",1,"Pixy::GfxEngine *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontColor",2,"Ogre::ColourValue");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontColor",2,"Ogre::ColourValue *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__GfxEngine,0))){
     SWIG_fail_ptr("GfxEngine_mMTOFontColor_set",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_Ogre__ColourValue,0))){
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__ColourValue,0))){
     SWIG_fail_ptr("GfxEngine_mMTOFontColor_set",2,SWIGTYPE_p_Ogre__ColourValue);
   }
-  arg2 = *argp2;
   
-  if (arg1) (arg1)->mMTOFontColor = arg2;
+  if (arg1) (arg1)->mMTOFontColor = *arg2;
   
   return SWIG_arg;
   
@@ -11048,7 +11012,7 @@ fail:
 static int _wrap_GfxEngine_mMTOFontColor_get(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::ColourValue result;
+  Ogre::ColourValue *result = 0 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::mMTOFontColor",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontColor",1,"Pixy::GfxEngine *");
@@ -11057,11 +11021,8 @@ static int _wrap_GfxEngine_mMTOFontColor_get(lua_State* L) {
     SWIG_fail_ptr("GfxEngine_mMTOFontColor_get",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
-  result =  ((arg1)->mMTOFontColor);
-  {
-    Ogre::ColourValue * resultptr = new Ogre::ColourValue((const Ogre::ColourValue &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Ogre__ColourValue,1); SWIG_arg++;
-  }
+  result = (Ogre::ColourValue *)& ((arg1)->mMTOFontColor);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Ogre__ColourValue,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11075,24 +11036,19 @@ fail:
 static int _wrap_GfxEngine_mMTOFontName_set(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::String arg2 ;
-  Ogre::String *argp2 ;
+  Ogre::String *arg2 = 0 ;
+  std::string temp2 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::mMTOFontName",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontName",1,"Pixy::GfxEngine *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontName",2,"Ogre::String");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontName",2,"Ogre::String const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__GfxEngine,0))){
     SWIG_fail_ptr("GfxEngine_mMTOFontName_set",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_Ogre__String,0))){
-    SWIG_fail_ptr("GfxEngine_mMTOFontName_set",2,SWIGTYPE_p_Ogre__String);
-  }
-  arg2 = *argp2;
-  
-  if (arg1) (arg1)->mMTOFontName = arg2;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  if (arg1) (arg1)->mMTOFontName = *arg2;
   
   return SWIG_arg;
   
@@ -11107,7 +11063,7 @@ fail:
 static int _wrap_GfxEngine_mMTOFontName_get(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::String result;
+  Ogre::String *result = 0 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::mMTOFontName",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::mMTOFontName",1,"Pixy::GfxEngine *");
@@ -11116,11 +11072,8 @@ static int _wrap_GfxEngine_mMTOFontName_get(lua_State* L) {
     SWIG_fail_ptr("GfxEngine_mMTOFontName_get",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
-  result =  ((arg1)->mMTOFontName);
-  {
-    Ogre::String * resultptr = new Ogre::String((const Ogre::String &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Ogre__String,1); SWIG_arg++;
-  }
+  result = (Ogre::String *) & ((arg1)->mMTOFontName);
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11184,24 +11137,19 @@ fail:
 static int _wrap_GfxEngine_mMTOMaterialName_set(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::String arg2 ;
-  Ogre::String *argp2 ;
+  Ogre::String *arg2 = 0 ;
+  std::string temp2 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::mMTOMaterialName",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::mMTOMaterialName",1,"Pixy::GfxEngine *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::GfxEngine::mMTOMaterialName",2,"Ogre::String");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::GfxEngine::mMTOMaterialName",2,"Ogre::String const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__GfxEngine,0))){
     SWIG_fail_ptr("GfxEngine_mMTOMaterialName_set",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_Ogre__String,0))){
-    SWIG_fail_ptr("GfxEngine_mMTOMaterialName_set",2,SWIGTYPE_p_Ogre__String);
-  }
-  arg2 = *argp2;
-  
-  if (arg1) (arg1)->mMTOMaterialName = arg2;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  if (arg1) (arg1)->mMTOMaterialName = *arg2;
   
   return SWIG_arg;
   
@@ -11216,7 +11164,7 @@ fail:
 static int _wrap_GfxEngine_mMTOMaterialName_get(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::String result;
+  Ogre::String *result = 0 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::mMTOMaterialName",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::mMTOMaterialName",1,"Pixy::GfxEngine *");
@@ -11225,11 +11173,8 @@ static int _wrap_GfxEngine_mMTOMaterialName_get(lua_State* L) {
     SWIG_fail_ptr("GfxEngine_mMTOMaterialName_get",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
-  result =  ((arg1)->mMTOMaterialName);
-  {
-    Ogre::String * resultptr = new Ogre::String((const Ogre::String &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Ogre__String,1); SWIG_arg++;
-  }
+  result = (Ogre::String *) & ((arg1)->mMTOMaterialName);
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11676,20 +11621,17 @@ static int _wrap_GfxEngine_setCamera(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
   Ogre::String *arg2 = 0 ;
+  std::string temp2 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::setCamera",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::setCamera",1,"Pixy::GfxEngine *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::GfxEngine::setCamera",2,"Ogre::String const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Pixy::GfxEngine::setCamera",2,"Ogre::String const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__GfxEngine,0))){
     SWIG_fail_ptr("GfxEngine_setCamera",1,SWIGTYPE_p_Pixy__GfxEngine);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__String,0))){
-    SWIG_fail_ptr("GfxEngine_setCamera",2,SWIGTYPE_p_Ogre__String);
-  }
-  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
   (arg1)->setCamera((Ogre::String const &)*arg2);
   
   return SWIG_arg;
@@ -12410,7 +12352,7 @@ static int _wrap_GfxEngine_getScreenCoords(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
   Ogre::MovableObject *arg2 = (Ogre::MovableObject *) 0 ;
-  Ogre::Vector2 result;
+  SwigValueWrapper< Ogre::Vector2 > result;
   
   SWIG_check_num_args("Pixy::GfxEngine::getScreenCoords",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::GfxEngine::getScreenCoords",1,"Pixy::GfxEngine *");
@@ -12443,7 +12385,7 @@ fail:
 static int _wrap_GfxEngine_setYawPitchDist(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::GfxEngine *arg1 = (Pixy::GfxEngine *) 0 ;
-  Ogre::Vector3 arg2 ;
+  SwigValueWrapper< Ogre::Vector3 > arg2 ;
   Ogre::Vector3 *argp2 ;
   
   SWIG_check_num_args("Pixy::GfxEngine::setYawPitchDist",2,2)
@@ -12823,7 +12765,7 @@ static int _wrap_FxEngine_playEffect__SWIG_3(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::FxEngine *arg1 = (Pixy::FxEngine *) 0 ;
   std::string arg2 ;
-  Ogre::Vector3 arg3 ;
+  SwigValueWrapper< Ogre::Vector3 > arg3 ;
   bool arg4 ;
   Ogre::Vector3 *argp3 ;
   ParticleUniverse::ParticleSystem *result = 0 ;
@@ -12862,7 +12804,7 @@ static int _wrap_FxEngine_playEffect__SWIG_4(lua_State* L) {
   int SWIG_arg = 0;
   Pixy::FxEngine *arg1 = (Pixy::FxEngine *) 0 ;
   std::string arg2 ;
-  Ogre::Vector3 arg3 ;
+  SwigValueWrapper< Ogre::Vector3 > arg3 ;
   Ogre::Vector3 *argp3 ;
   ParticleUniverse::ParticleSystem *result = 0 ;
   
@@ -13112,6 +13054,26 @@ static swig_lua_attribute swig_Pixy_FxEngine_attributes[] = {
 static swig_lua_class *swig_Pixy_FxEngine_bases[] = {0};
 static const char *swig_Pixy_FxEngine_base_names[] = {0};
 static swig_lua_class _wrap_class_Pixy_FxEngine = { "FxEngine", &SWIGTYPE_p_Pixy__FxEngine,0, swig_delete_FxEngine, swig_Pixy_FxEngine_methods, swig_Pixy_FxEngine_attributes, swig_Pixy_FxEngine_bases, swig_Pixy_FxEngine_base_names };
+
+static swig_lua_method swig_CEGUI_Window_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_CEGUI_Window_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_CEGUI_Window_bases[] = {0};
+static const char *swig_CEGUI_Window_base_names[] = {0};
+static swig_lua_class _wrap_class_CEGUI_Window = { "Window", &SWIGTYPE_p_CEGUI__Window,0,0, swig_CEGUI_Window_methods, swig_CEGUI_Window_attributes, swig_CEGUI_Window_bases, swig_CEGUI_Window_base_names };
+
+static swig_lua_method swig_CEGUI_UBox_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_CEGUI_UBox_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_CEGUI_UBox_bases[] = {0};
+static const char *swig_CEGUI_UBox_base_names[] = {0};
+static swig_lua_class _wrap_class_CEGUI_UBox = { "UBox", &SWIGTYPE_p_CEGUI__UBox,0,0, swig_CEGUI_UBox_methods, swig_CEGUI_UBox_attributes, swig_CEGUI_UBox_bases, swig_CEGUI_UBox_base_names };
 
 static int _wrap_UIEngine_getSingletonPtr(lua_State* L) {
   int SWIG_arg = 0;
@@ -13552,11 +13514,517 @@ static swig_lua_class *swig_Pixy_ScriptEngine_bases[] = {0};
 static const char *swig_Pixy_ScriptEngine_base_names[] = {0};
 static swig_lua_class _wrap_class_Pixy_ScriptEngine = { "ScriptEngine", &SWIGTYPE_p_Pixy__ScriptEngine,0, swig_delete_ScriptEngine, swig_Pixy_ScriptEngine_methods, swig_Pixy_ScriptEngine_attributes, swig_Pixy_ScriptEngine_bases, swig_Pixy_ScriptEngine_base_names };
 
+static int _wrap_new_OgreRTT(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::OgreRTT",0,0)
+  result = (Pixy::OgreRTT *)new Pixy::OgreRTT();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__OgreRTT,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_setup(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  Ogre::SceneManager *arg2 = (Ogre::SceneManager *) 0 ;
+  Ogre::RenderWindow *arg3 = (Ogre::RenderWindow *) 0 ;
+  Ogre::Camera *arg4 = (Ogre::Camera *) 0 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::setup",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::setup",1,"Pixy::OgreRTT *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pixy::OgreRTT::setup",2,"Ogre::SceneManager *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Pixy::OgreRTT::setup",3,"Ogre::RenderWindow *");
+  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("Pixy::OgreRTT::setup",4,"Ogre::Camera *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_setup",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Ogre__SceneManager,0))){
+    SWIG_fail_ptr("OgreRTT_setup",2,SWIGTYPE_p_Ogre__SceneManager);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Ogre__RenderWindow,0))){
+    SWIG_fail_ptr("OgreRTT_setup",3,SWIGTYPE_p_Ogre__RenderWindow);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_Ogre__Camera,0))){
+    SWIG_fail_ptr("OgreRTT_setup",4,SWIGTYPE_p_Ogre__Camera);
+  }
+  
+  (arg1)->setup(arg2,arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_setCorners(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  Ogre::Real arg2 ;
+  Ogre::Real arg3 ;
+  Ogre::Real arg4 ;
+  Ogre::Real arg5 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::setCorners",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::setCorners",1,"Pixy::OgreRTT *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Pixy::OgreRTT::setCorners",2,"Ogre::Real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Pixy::OgreRTT::setCorners",3,"Ogre::Real");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Pixy::OgreRTT::setCorners",4,"Ogre::Real");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("Pixy::OgreRTT::setCorners",5,"Ogre::Real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_setCorners",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  arg2 = (Ogre::Real)lua_tonumber(L, 2);
+  arg3 = (Ogre::Real)lua_tonumber(L, 3);
+  arg4 = (Ogre::Real)lua_tonumber(L, 4);
+  arg5 = (Ogre::Real)lua_tonumber(L, 5);
+  (arg1)->setCorners(arg2,arg3,arg4,arg5);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_enable(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::enable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::enable",1,"Pixy::OgreRTT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_enable",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  (arg1)->enable();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_disable(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::disable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::disable",1,"Pixy::OgreRTT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_disable",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  (arg1)->disable();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_isEnabled(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::isEnabled",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::isEnabled",1,"Pixy::OgreRTT const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_isEnabled",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  result = (bool)((Pixy::OgreRTT const *)arg1)->isEnabled();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_hide(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::hide",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::hide",1,"Pixy::OgreRTT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_hide",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  (arg1)->hide();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OgreRTT_show(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) 0 ;
+  
+  SWIG_check_num_args("Pixy::OgreRTT::show",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::OgreRTT::show",1,"Pixy::OgreRTT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__OgreRTT,0))){
+    SWIG_fail_ptr("OgreRTT_show",1,SWIGTYPE_p_Pixy__OgreRTT);
+  }
+  
+  (arg1)->show();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_OgreRTT(void *obj) {
+Pixy::OgreRTT *arg1 = (Pixy::OgreRTT *) obj;
+delete arg1;
+}
+static swig_lua_method swig_Pixy_OgreRTT_methods[] = {
+    {"setup", _wrap_OgreRTT_setup}, 
+    {"setCorners", _wrap_OgreRTT_setCorners}, 
+    {"enable", _wrap_OgreRTT_enable}, 
+    {"disable", _wrap_OgreRTT_disable}, 
+    {"isEnabled", _wrap_OgreRTT_isEnabled}, 
+    {"hide", _wrap_OgreRTT_hide}, 
+    {"show", _wrap_OgreRTT_show}, 
+    {0,0}
+};
+static swig_lua_attribute swig_Pixy_OgreRTT_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_Pixy_OgreRTT_bases[] = {0};
+static const char *swig_Pixy_OgreRTT_base_names[] = {0};
+static swig_lua_class _wrap_class_Pixy_OgreRTT = { "OgreRTT", &SWIGTYPE_p_Pixy__OgreRTT,_wrap_new_OgreRTT, swig_delete_OgreRTT, swig_Pixy_OgreRTT_methods, swig_Pixy_OgreRTT_attributes, swig_Pixy_OgreRTT_bases, swig_Pixy_OgreRTT_base_names };
+
+static int _wrap_new_SpellListExporter(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Spell * > > *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Spell * > >::LuaExporter",0,0)
+  result = (Pixy::LuaExporter< std::list< Pixy::Spell * > > *)new Pixy::LuaExporter< std::list< Pixy::Spell * > >();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SpellListExporter_export(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Spell * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Spell * > > *) 0 ;
+  std::list< Pixy::Spell * > *arg2 = 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Spell * > >::__export",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Spell * > >::__export",1,"Pixy::LuaExporter< std::list< Pixy::Spell * > > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Spell * > >::__export",2,"std::list< Pixy::Spell * > const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Spell * > >::__export",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Spell * > >::__export",4,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t,0))){
+    SWIG_fail_ptr("SpellListExporter_export",1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__listT_Pixy__Spell_p_t,0))){
+    SWIG_fail_ptr("SpellListExporter_export",2,SWIGTYPE_p_std__listT_Pixy__Spell_p_t);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  (arg1)->__export((std::list< Pixy::Spell * > const &)*arg2,(char const *)arg3,(char const *)arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_SpellListExporter(void *obj) {
+Pixy::LuaExporter< std::list< Pixy::Spell * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Spell * > > *) obj;
+delete arg1;
+}
+static swig_lua_method swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__methods[] = {
+    {"export", _wrap_SpellListExporter_export}, 
+    {0,0}
+};
+static swig_lua_attribute swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__bases[] = {0};
+static const char *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__base_names[] = {0};
+static swig_lua_class _wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg_ = { "SpellListExporter", &SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t,_wrap_new_SpellListExporter, swig_delete_SpellListExporter, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__methods, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__attributes, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__bases, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg__base_names };
+
+static int _wrap_new_UnitListExporter(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Unit * > > *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Unit * > >::LuaExporter",0,0)
+  result = (Pixy::LuaExporter< std::list< Pixy::Unit * > > *)new Pixy::LuaExporter< std::list< Pixy::Unit * > >();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_UnitListExporter_export(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Unit * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Unit * > > *) 0 ;
+  std::list< Pixy::Unit * > *arg2 = 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Unit * > >::__export",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Unit * > >::__export",1,"Pixy::LuaExporter< std::list< Pixy::Unit * > > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Unit * > >::__export",2,"std::list< Pixy::Unit * > const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Unit * > >::__export",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Unit * > >::__export",4,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t,0))){
+    SWIG_fail_ptr("UnitListExporter_export",1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__listT_Pixy__Unit_p_t,0))){
+    SWIG_fail_ptr("UnitListExporter_export",2,SWIGTYPE_p_std__listT_Pixy__Unit_p_t);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  (arg1)->__export((std::list< Pixy::Unit * > const &)*arg2,(char const *)arg3,(char const *)arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_UnitListExporter(void *obj) {
+Pixy::LuaExporter< std::list< Pixy::Unit * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Unit * > > *) obj;
+delete arg1;
+}
+static swig_lua_method swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__methods[] = {
+    {"export", _wrap_UnitListExporter_export}, 
+    {0,0}
+};
+static swig_lua_attribute swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__bases[] = {0};
+static const char *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__base_names[] = {0};
+static swig_lua_class _wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg_ = { "UnitListExporter", &SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t,_wrap_new_UnitListExporter, swig_delete_UnitListExporter, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__methods, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__attributes, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__bases, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg__base_names };
+
+static int _wrap_new_PuppetListExporter(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Puppet * > > *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Puppet * > >::LuaExporter",0,0)
+  result = (Pixy::LuaExporter< std::list< Pixy::Puppet * > > *)new Pixy::LuaExporter< std::list< Pixy::Puppet * > >();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PuppetListExporter_export(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Puppet * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Puppet * > > *) 0 ;
+  std::list< Pixy::Puppet * > *arg2 = 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Puppet * > >::__export",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Puppet * > >::__export",1,"Pixy::LuaExporter< std::list< Pixy::Puppet * > > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Puppet * > >::__export",2,"std::list< Pixy::Puppet * > const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Puppet * > >::__export",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Puppet * > >::__export",4,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t,0))){
+    SWIG_fail_ptr("PuppetListExporter_export",1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__listT_Pixy__Puppet_p_t,0))){
+    SWIG_fail_ptr("PuppetListExporter_export",2,SWIGTYPE_p_std__listT_Pixy__Puppet_p_t);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  (arg1)->__export((std::list< Pixy::Puppet * > const &)*arg2,(char const *)arg3,(char const *)arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PuppetListExporter(void *obj) {
+Pixy::LuaExporter< std::list< Pixy::Puppet * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Puppet * > > *) obj;
+delete arg1;
+}
+static swig_lua_method swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__methods[] = {
+    {"export", _wrap_PuppetListExporter_export}, 
+    {0,0}
+};
+static swig_lua_attribute swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__bases[] = {0};
+static const char *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__base_names[] = {0};
+static swig_lua_class _wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg_ = { "PuppetListExporter", &SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t,_wrap_new_PuppetListExporter, swig_delete_PuppetListExporter, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__methods, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__attributes, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__bases, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg__base_names };
+
+static int _wrap_new_DeckListExporter(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Deck * > > *result = 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Deck * > >::LuaExporter",0,0)
+  result = (Pixy::LuaExporter< std::list< Pixy::Deck * > > *)new Pixy::LuaExporter< std::list< Pixy::Deck * > >();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_DeckListExporter_export(lua_State* L) {
+  int SWIG_arg = 0;
+  Pixy::LuaExporter< std::list< Pixy::Deck * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Deck * > > *) 0 ;
+  std::list< Pixy::Deck * > *arg2 = 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  
+  SWIG_check_num_args("Pixy::LuaExporter< std::list< Pixy::Deck * > >::__export",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Deck * > >::__export",1,"Pixy::LuaExporter< std::list< Pixy::Deck * > > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Deck * > >::__export",2,"std::list< Pixy::Deck * > const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Deck * > >::__export",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Pixy::LuaExporter< std::list< Pixy::Deck * > >::__export",4,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t,0))){
+    SWIG_fail_ptr("DeckListExporter_export",1,SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__listT_Pixy__Deck_p_t,0))){
+    SWIG_fail_ptr("DeckListExporter_export",2,SWIGTYPE_p_std__listT_Pixy__Deck_p_t);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  (arg1)->__export((std::list< Pixy::Deck * > const &)*arg2,(char const *)arg3,(char const *)arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_DeckListExporter(void *obj) {
+Pixy::LuaExporter< std::list< Pixy::Deck * > > *arg1 = (Pixy::LuaExporter< std::list< Pixy::Deck * > > *) obj;
+delete arg1;
+}
+static swig_lua_method swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__methods[] = {
+    {"export", _wrap_DeckListExporter_export}, 
+    {0,0}
+};
+static swig_lua_attribute swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__bases[] = {0};
+static const char *swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__base_names[] = {0};
+static swig_lua_class _wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg_ = { "DeckListExporter", &SWIGTYPE_p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t,_wrap_new_DeckListExporter, swig_delete_DeckListExporter, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__methods, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__attributes, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__bases, swig_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg__base_names };
+
 #ifdef __cplusplus
 }
 #endif
 
 static const struct luaL_reg swig_commands[] = {
+    { "Event_UIDToString", _wrap_Event_UIDToString},
     { "EventManager_getSingletonPtr", _wrap_EventManager_getSingletonPtr},
     { "EventManager_getSingleton", _wrap_EventManager_getSingleton},
     { "Combat_getSingletonPtr", _wrap_Combat_getSingletonPtr},
@@ -13672,6 +14140,15 @@ static void *_p_Pixy__UnitTo_p_Pixy__Entity(void *x, int *SWIGUNUSEDPARM(newmemo
 static void *_p_Pixy__PuppetTo_p_Pixy__BasePuppet(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Pixy::BasePuppet *)  ((Pixy::Puppet *) x));
 }
+static void *_p_Ogre__EntityTo_p_Ogre__MovableObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Ogre::MovableObject *)  ((Ogre::Entity *) x));
+}
+static void *_p_Ogre__LightTo_p_Ogre__MovableObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Ogre::MovableObject *)  ((Ogre::Light *) x));
+}
+static void *_p_Ogre__BillboardSetTo_p_Ogre__MovableObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Ogre::MovableObject *)  ((Ogre::BillboardSet *) x));
+}
 static void *_p_Pixy__SpellTo_p_Pixy__Loggable(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Pixy::Loggable *) (Pixy::BaseSpell *) ((Pixy::Spell *) x));
 }
@@ -13720,8 +14197,9 @@ static void *_p_Pixy__UnitTo_p_Pixy__BaseEntity(void *x, int *SWIGUNUSEDPARM(new
 static void *_p_Pixy__UnitTo_p_Pixy__Mobile(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Pixy::Mobile *)  ((Pixy::Unit *) x));
 }
-static swig_type_info _swigt__p_CEGUI__UBox = {"_p_CEGUI__UBox", "CEGUI::UBox *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_CEGUI__Window = {"_p_CEGUI__Window", "CEGUI::Window *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_CEGUI__UBox = {"_p_CEGUI__UBox", "CEGUI::UBox *", 0, 0, (void*)&_wrap_class_CEGUI_UBox, 0};
+static swig_type_info _swigt__p_CEGUI__Window = {"_p_CEGUI__Window", "CEGUI::Window *", 0, 0, (void*)&_wrap_class_CEGUI_Window, 0};
+static swig_type_info _swigt__p_CornerEnum = {"_p_CornerEnum", "CornerEnum *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MovableTextOverlay = {"_p_MovableTextOverlay", "MovableTextOverlay *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OIS__Keyboard = {"_p_OIS__Keyboard", "OIS::Keyboard *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OIS__Mouse = {"_p_OIS__Mouse", "OIS::Mouse *", 0, 0, (void*)0, 0};
@@ -13731,11 +14209,13 @@ static swig_type_info _swigt__p_Ogre__Camera = {"_p_Ogre__Camera", "Ogre::Camera
 static swig_type_info _swigt__p_Ogre__ColourValue = {"_p_Ogre__ColourValue", "Ogre::ColourValue *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__Entity = {"_p_Ogre__Entity", "Ogre::Entity *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__MovableObject = {"_p_Ogre__MovableObject", "Ogre::MovableObject *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Ogre__Light = {"_p_Ogre__Light", 0, 0, 0, 0, 0};
+static swig_type_info _swigt__p_Ogre__BillboardSet = {"_p_Ogre__BillboardSet", 0, 0, 0, 0, 0};
 static swig_type_info _swigt__p_Ogre__RenderWindow = {"_p_Ogre__RenderWindow", "Ogre::RenderWindow *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__Root = {"_p_Ogre__Root", "Ogre::Root *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__SceneManager = {"_p_Ogre__SceneManager", "Ogre::SceneManager *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__SceneNode = {"_p_Ogre__SceneNode", "Ogre::SceneNode *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Ogre__String = {"_p_Ogre__String", "Ogre::String *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Ogre__SharedPtrT_Ogre__Resource_t = {"_p_Ogre__SharedPtrT_Ogre__Resource_t", "Ogre::SharedPtr< Ogre::Resource > *|Ogre::ResourcePtr *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__Vector2 = {"_p_Ogre__Vector2", "Ogre::Vector2 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__Vector3 = {"_p_Ogre__Vector3", "Ogre::Vector3 *|Vector3 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Ogre__Viewport = {"_p_Ogre__Viewport", "Ogre::Viewport *", 0, 0, (void*)0, 0};
@@ -13761,19 +14241,26 @@ static swig_type_info _swigt__p_Pixy__Identifiable = {"_p_Pixy__Identifiable", "
 static swig_type_info _swigt__p_Pixy__InputManager = {"_p_Pixy__InputManager", "Pixy::InputManager *", 0, 0, (void*)&_wrap_class_Pixy_InputManager, 0};
 static swig_type_info _swigt__p_Pixy__Intro = {"_p_Pixy__Intro", "Pixy::Intro *", 0, 0, (void*)&_wrap_class_Pixy_Intro, 0};
 static swig_type_info _swigt__p_Pixy__Loggable = {"_p_Pixy__Loggable", "Pixy::Loggable *", 0, 0, (void*)&_wrap_class_Pixy_Loggable, 0};
+static swig_type_info _swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t = {"_p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t", "Pixy::LuaExporter< std::list< Pixy::Deck * > > *", 0, 0, (void*)&_wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Deck_Sm__Sg__Sg_, 0};
+static swig_type_info _swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t = {"_p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t", "Pixy::LuaExporter< std::list< Pixy::Puppet * > > *", 0, 0, (void*)&_wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Puppet_Sm__Sg__Sg_, 0};
+static swig_type_info _swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t = {"_p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t", "Pixy::LuaExporter< std::list< Pixy::Spell * > > *", 0, 0, (void*)&_wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Spell_Sm__Sg__Sg_, 0};
+static swig_type_info _swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t = {"_p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t", "Pixy::LuaExporter< std::list< Pixy::Unit * > > *", 0, 0, (void*)&_wrap_class_Pixy_LuaExporter_Sl_std_list_Sl_Pixy_Unit_Sm__Sg__Sg_, 0};
 static swig_type_info _swigt__p_Pixy__Mobile = {"_p_Pixy__Mobile", "Pixy::Mobile *", 0, 0, (void*)&_wrap_class_Pixy_Mobile, 0};
 static swig_type_info _swigt__p_Pixy__NetworkManager = {"_p_Pixy__NetworkManager", "Pixy::NetworkManager *", 0, 0, (void*)&_wrap_class_Pixy_NetworkManager, 0};
-static swig_type_info _swigt__p_Pixy__OgreRTT = {"_p_Pixy__OgreRTT", "Pixy::OgreRTT *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Pixy__OgreRTT = {"_p_Pixy__OgreRTT", "Pixy::OgreRTT *", 0, 0, (void*)&_wrap_class_Pixy_OgreRTT, 0};
 static swig_type_info _swigt__p_Pixy__Puppet = {"_p_Pixy__Puppet", "Pixy::Puppet *", 0, 0, (void*)&_wrap_class_Pixy_Puppet, 0};
 static swig_type_info _swigt__p_Pixy__Renderable = {"_p_Pixy__Renderable", "Pixy::Renderable *", 0, 0, (void*)&_wrap_class_Pixy_Renderable, 0};
 static swig_type_info _swigt__p_Pixy__ScriptEngine = {"_p_Pixy__ScriptEngine", "Pixy::ScriptEngine *", 0, 0, (void*)&_wrap_class_Pixy_ScriptEngine, 0};
 static swig_type_info _swigt__p_Pixy__Spell = {"_p_Pixy__Spell", "Pixy::Caster::spell_t *|Pixy::Spell *", 0, 0, (void*)&_wrap_class_Pixy_Spell, 0};
+static swig_type_info _swigt__p_Pixy__Talent = {"_p_Pixy__Talent", "Pixy::Talent *|Pixy::BasePuppet::talent_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Pixy__UIEngine = {"_p_Pixy__UIEngine", "Pixy::UIEngine *", 0, 0, (void*)&_wrap_class_Pixy_UIEngine, 0};
 static swig_type_info _swigt__p_Pixy__Unit = {"_p_Pixy__Unit", "Pixy::BasePuppet::unit_t *|Pixy::Puppet::unit_t *|Pixy::Unit *", 0, 0, (void*)&_wrap_class_Pixy_Unit, 0};
-static swig_type_info _swigt__p_Talent = {"_p_Talent", "Talent *|Pixy::BasePuppet::talent_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_caster_t = {"_p_caster_t", "caster_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_deck_t = {"_p_deck_t", "deck_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_decks_t = {"_p_decks_t", "decks_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_float = {"_p_float", "float *|Ogre::Real *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_int = {"_p_int", "int *|Ogre::uint8 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_mapT_std__string_std__string_t = {"_p_mapT_std__string_std__string_t", "Ogre::NameValuePairList *|map< std::string,std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_owner_t = {"_p_owner_t", "owner_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_property_t = {"_p_property_t", "property_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_puppets_t = {"_p_puppets_t", "puppets_t *", 0, 0, (void*)0, 0};
@@ -13782,34 +14269,43 @@ static swig_type_info _swigt__p_spells_t = {"_p_spells_t", "spells_t *", 0, 0, (
 static swig_type_info _swigt__p_std__listT_Pixy__Deck_p_t = {"_p_std__listT_Pixy__Deck_p_t", "std::list< Pixy::Deck * > *|Pixy::Puppet::decks_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__listT_Pixy__Puppet_p_t = {"_p_std__listT_Pixy__Puppet_p_t", "Pixy::Combat::puppets_t *|Pixy::Intro::puppets_t *|std::list< Pixy::Puppet * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__listT_Pixy__Spell_p_t = {"_p_std__listT_Pixy__Spell_p_t", "Pixy::Caster::spells_t *|std::list< Pixy::Spell * > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__listT_Pixy__Talent_const_p_t = {"_p_std__listT_Pixy__Talent_const_p_t", "Pixy::BasePuppet::talents_t *|std::list< Pixy::Talent const * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__listT_Pixy__Unit_p_t = {"_p_std__listT_Pixy__Unit_p_t", "Pixy::Puppet::units_t *|std::list< Pixy::Unit * > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__listT_Talent_const_p_t = {"_p_std__listT_Talent_const_p_t", "Pixy::BasePuppet::talents_t *|std::list< Talent const * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__ostream = {"_p_std__ostream", "std::ostream *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, (void*)&_wrap_class_std_string, 0};
+static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *|Ogre::String *", 0, 0, (void*)&_wrap_class_std_string, 0};
 static swig_type_info _swigt__p_std__vectorT_Pixy__Spell_const_p_t = {"_p_std__vectorT_Pixy__Spell_const_p_t", "Pixy::Deck::spells_t *|std::vector< Pixy::Spell const * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_talent_t = {"_p_talent_t", "talent_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_talents_t = {"_p_talents_t", "talents_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_uint32 = {"_p_uint32", "Ogre::RGBA *|uint32 *|Ogre::ARGB *|Ogre::BGRA *|Ogre::ABGR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unit_t = {"_p_unit_t", "unit_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_units_t = {"_p_units_t", "units_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "Ogre::uchar *|unsigned char *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|Ogre::uint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_long = {"_p_unsigned_long", "Ogre::ulong *|unsigned long *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned short *|Ogre::ushort *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_vectorT_Ogre__PixelFormat_t__type = {"_p_vectorT_Ogre__PixelFormat_t__type", "vector< Ogre::PixelFormat >::type *|Ogre::PixelFormatList *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_CEGUI__UBox,
   &_swigt__p_CEGUI__Window,
+  &_swigt__p_CornerEnum,
   &_swigt__p_MovableTextOverlay,
   &_swigt__p_OIS__Keyboard,
   &_swigt__p_OIS__Mouse,
   &_swigt__p_OgreBites__SdkCameraMan,
   &_swigt__p_OgreMax__OgreMaxScene,
+  &_swigt__p_Ogre__BillboardSet,
   &_swigt__p_Ogre__Camera,
   &_swigt__p_Ogre__ColourValue,
   &_swigt__p_Ogre__Entity,
+  &_swigt__p_Ogre__Light,
   &_swigt__p_Ogre__MovableObject,
   &_swigt__p_Ogre__RenderWindow,
   &_swigt__p_Ogre__Root,
   &_swigt__p_Ogre__SceneManager,
   &_swigt__p_Ogre__SceneNode,
-  &_swigt__p_Ogre__String,
+  &_swigt__p_Ogre__SharedPtrT_Ogre__Resource_t,
   &_swigt__p_Ogre__Vector2,
   &_swigt__p_Ogre__Vector3,
   &_swigt__p_Ogre__Viewport,
@@ -13835,6 +14331,10 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Pixy__InputManager,
   &_swigt__p_Pixy__Intro,
   &_swigt__p_Pixy__Loggable,
+  &_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t,
+  &_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t,
+  &_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t,
+  &_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t,
   &_swigt__p_Pixy__Mobile,
   &_swigt__p_Pixy__NetworkManager,
   &_swigt__p_Pixy__OgreRTT,
@@ -13842,12 +14342,15 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Pixy__Renderable,
   &_swigt__p_Pixy__ScriptEngine,
   &_swigt__p_Pixy__Spell,
+  &_swigt__p_Pixy__Talent,
   &_swigt__p_Pixy__UIEngine,
   &_swigt__p_Pixy__Unit,
-  &_swigt__p_Talent,
   &_swigt__p_caster_t,
   &_swigt__p_deck_t,
   &_swigt__p_decks_t,
+  &_swigt__p_float,
+  &_swigt__p_int,
+  &_swigt__p_mapT_std__string_std__string_t,
   &_swigt__p_owner_t,
   &_swigt__p_property_t,
   &_swigt__p_puppets_t,
@@ -13856,20 +14359,27 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__listT_Pixy__Deck_p_t,
   &_swigt__p_std__listT_Pixy__Puppet_p_t,
   &_swigt__p_std__listT_Pixy__Spell_p_t,
+  &_swigt__p_std__listT_Pixy__Talent_const_p_t,
   &_swigt__p_std__listT_Pixy__Unit_p_t,
-  &_swigt__p_std__listT_Talent_const_p_t,
   &_swigt__p_std__ostream,
   &_swigt__p_std__string,
   &_swigt__p_std__vectorT_Pixy__Spell_const_p_t,
   &_swigt__p_talent_t,
   &_swigt__p_talents_t,
+  &_swigt__p_uint32,
   &_swigt__p_unit_t,
   &_swigt__p_units_t,
+  &_swigt__p_unsigned_char,
+  &_swigt__p_unsigned_int,
+  &_swigt__p_unsigned_long,
+  &_swigt__p_unsigned_short,
+  &_swigt__p_vectorT_Ogre__PixelFormat_t__type,
   &_swigt__p_void,
 };
 
 static swig_cast_info _swigc__p_CEGUI__UBox[] = {  {&_swigt__p_CEGUI__UBox, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_CEGUI__Window[] = {  {&_swigt__p_CEGUI__Window, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_CornerEnum[] = {  {&_swigt__p_CornerEnum, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MovableTextOverlay[] = {  {&_swigt__p_MovableTextOverlay, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OIS__Keyboard[] = {  {&_swigt__p_OIS__Keyboard, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OIS__Mouse[] = {  {&_swigt__p_OIS__Mouse, 0, 0, 0},{0, 0, 0, 0}};
@@ -13878,12 +14388,14 @@ static swig_cast_info _swigc__p_OgreMax__OgreMaxScene[] = {  {&_swigt__p_OgreMax
 static swig_cast_info _swigc__p_Ogre__Camera[] = {  {&_swigt__p_Ogre__Camera, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__ColourValue[] = {  {&_swigt__p_Ogre__ColourValue, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__Entity[] = {  {&_swigt__p_Ogre__Entity, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Ogre__MovableObject[] = {  {&_swigt__p_Ogre__MovableObject, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Ogre__Light[] = {{&_swigt__p_Ogre__Light, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Ogre__BillboardSet[] = {{&_swigt__p_Ogre__BillboardSet, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Ogre__MovableObject[] = {  {&_swigt__p_Ogre__MovableObject, 0, 0, 0},  {&_swigt__p_Ogre__Entity, _p_Ogre__EntityTo_p_Ogre__MovableObject, 0, 0},  {&_swigt__p_Ogre__Light, _p_Ogre__LightTo_p_Ogre__MovableObject, 0, 0},  {&_swigt__p_Ogre__BillboardSet, _p_Ogre__BillboardSetTo_p_Ogre__MovableObject, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__RenderWindow[] = {  {&_swigt__p_Ogre__RenderWindow, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__Root[] = {  {&_swigt__p_Ogre__Root, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__SceneManager[] = {  {&_swigt__p_Ogre__SceneManager, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__SceneNode[] = {  {&_swigt__p_Ogre__SceneNode, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Ogre__String[] = {  {&_swigt__p_Ogre__String, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Ogre__SharedPtrT_Ogre__Resource_t[] = {  {&_swigt__p_Ogre__SharedPtrT_Ogre__Resource_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__Vector2[] = {  {&_swigt__p_Ogre__Vector2, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__Vector3[] = {  {&_swigt__p_Ogre__Vector3, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Ogre__Viewport[] = {  {&_swigt__p_Ogre__Viewport, 0, 0, 0},{0, 0, 0, 0}};
@@ -13909,6 +14421,10 @@ static swig_cast_info _swigc__p_Pixy__Identifiable[] = {  {&_swigt__p_Pixy__Spel
 static swig_cast_info _swigc__p_Pixy__InputManager[] = {  {&_swigt__p_Pixy__InputManager, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__Intro[] = {  {&_swigt__p_Pixy__Intro, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__Loggable[] = {  {&_swigt__p_Pixy__Spell, _p_Pixy__SpellTo_p_Pixy__Loggable, 0, 0},  {&_swigt__p_Pixy__Unit, _p_Pixy__UnitTo_p_Pixy__Loggable, 0, 0},  {&_swigt__p_Pixy__Entity, _p_Pixy__EntityTo_p_Pixy__Loggable, 0, 0},  {&_swigt__p_Pixy__BaseEntity, _p_Pixy__BaseEntityTo_p_Pixy__Loggable, 0, 0},  {&_swigt__p_Pixy__Loggable, 0, 0, 0},  {&_swigt__p_Pixy__Puppet, _p_Pixy__PuppetTo_p_Pixy__Loggable, 0, 0},  {&_swigt__p_Pixy__BaseSpell, _p_Pixy__BaseSpellTo_p_Pixy__Loggable, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t[] = {  {&_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t[] = {  {&_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t[] = {  {&_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t[] = {  {&_swigt__p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__Mobile[] = {  {&_swigt__p_Pixy__Unit, _p_Pixy__UnitTo_p_Pixy__Mobile, 0, 0},  {&_swigt__p_Pixy__Mobile, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__NetworkManager[] = {  {&_swigt__p_Pixy__NetworkManager, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__OgreRTT[] = {  {&_swigt__p_Pixy__OgreRTT, 0, 0, 0},{0, 0, 0, 0}};
@@ -13916,12 +14432,15 @@ static swig_cast_info _swigc__p_Pixy__Puppet[] = {  {&_swigt__p_Pixy__Puppet, 0,
 static swig_cast_info _swigc__p_Pixy__Renderable[] = {  {&_swigt__p_Pixy__Unit, _p_Pixy__UnitTo_p_Pixy__Renderable, 0, 0},  {&_swigt__p_Pixy__Entity, _p_Pixy__EntityTo_p_Pixy__Renderable, 0, 0},  {&_swigt__p_Pixy__Renderable, 0, 0, 0},  {&_swigt__p_Pixy__Puppet, _p_Pixy__PuppetTo_p_Pixy__Renderable, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__ScriptEngine[] = {  {&_swigt__p_Pixy__ScriptEngine, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__Spell[] = {  {&_swigt__p_Pixy__Spell, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Pixy__Talent[] = {  {&_swigt__p_Pixy__Talent, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__UIEngine[] = {  {&_swigt__p_Pixy__UIEngine, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Pixy__Unit[] = {  {&_swigt__p_Pixy__Unit, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Talent[] = {  {&_swigt__p_Talent, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_caster_t[] = {  {&_swigt__p_caster_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_deck_t[] = {  {&_swigt__p_deck_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_decks_t[] = {  {&_swigt__p_decks_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_mapT_std__string_std__string_t[] = {  {&_swigt__p_mapT_std__string_std__string_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_owner_t[] = {  {&_swigt__p_owner_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_property_t[] = {  {&_swigt__p_property_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_puppets_t[] = {  {&_swigt__p_puppets_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -13930,34 +14449,43 @@ static swig_cast_info _swigc__p_spells_t[] = {  {&_swigt__p_spells_t, 0, 0, 0},{
 static swig_cast_info _swigc__p_std__listT_Pixy__Deck_p_t[] = {  {&_swigt__p_std__listT_Pixy__Deck_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__listT_Pixy__Puppet_p_t[] = {  {&_swigt__p_std__listT_Pixy__Puppet_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__listT_Pixy__Spell_p_t[] = {  {&_swigt__p_std__listT_Pixy__Spell_p_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__listT_Pixy__Talent_const_p_t[] = {  {&_swigt__p_std__listT_Pixy__Talent_const_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__listT_Pixy__Unit_p_t[] = {  {&_swigt__p_std__listT_Pixy__Unit_p_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__listT_Talent_const_p_t[] = {  {&_swigt__p_std__listT_Talent_const_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__ostream[] = {  {&_swigt__p_std__ostream, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Pixy__Spell_const_p_t[] = {  {&_swigt__p_std__vectorT_Pixy__Spell_const_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_talent_t[] = {  {&_swigt__p_talent_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_talents_t[] = {  {&_swigt__p_talents_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uint32[] = {  {&_swigt__p_uint32, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unit_t[] = {  {&_swigt__p_unit_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_units_t[] = {  {&_swigt__p_units_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned_long[] = {  {&_swigt__p_unsigned_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_vectorT_Ogre__PixelFormat_t__type[] = {  {&_swigt__p_vectorT_Ogre__PixelFormat_t__type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_void[] = {  {&_swigt__p_void, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_CEGUI__UBox,
   _swigc__p_CEGUI__Window,
+  _swigc__p_CornerEnum,
   _swigc__p_MovableTextOverlay,
   _swigc__p_OIS__Keyboard,
   _swigc__p_OIS__Mouse,
   _swigc__p_OgreBites__SdkCameraMan,
   _swigc__p_OgreMax__OgreMaxScene,
+  _swigc__p_Ogre__BillboardSet,
   _swigc__p_Ogre__Camera,
   _swigc__p_Ogre__ColourValue,
   _swigc__p_Ogre__Entity,
+  _swigc__p_Ogre__Light,
   _swigc__p_Ogre__MovableObject,
   _swigc__p_Ogre__RenderWindow,
   _swigc__p_Ogre__Root,
   _swigc__p_Ogre__SceneManager,
   _swigc__p_Ogre__SceneNode,
-  _swigc__p_Ogre__String,
+  _swigc__p_Ogre__SharedPtrT_Ogre__Resource_t,
   _swigc__p_Ogre__Vector2,
   _swigc__p_Ogre__Vector3,
   _swigc__p_Ogre__Viewport,
@@ -13983,6 +14511,10 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Pixy__InputManager,
   _swigc__p_Pixy__Intro,
   _swigc__p_Pixy__Loggable,
+  _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Deck_p_t_t,
+  _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Puppet_p_t_t,
+  _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Spell_p_t_t,
+  _swigc__p_Pixy__LuaExporterT_std__listT_Pixy__Unit_p_t_t,
   _swigc__p_Pixy__Mobile,
   _swigc__p_Pixy__NetworkManager,
   _swigc__p_Pixy__OgreRTT,
@@ -13990,12 +14522,15 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Pixy__Renderable,
   _swigc__p_Pixy__ScriptEngine,
   _swigc__p_Pixy__Spell,
+  _swigc__p_Pixy__Talent,
   _swigc__p_Pixy__UIEngine,
   _swigc__p_Pixy__Unit,
-  _swigc__p_Talent,
   _swigc__p_caster_t,
   _swigc__p_deck_t,
   _swigc__p_decks_t,
+  _swigc__p_float,
+  _swigc__p_int,
+  _swigc__p_mapT_std__string_std__string_t,
   _swigc__p_owner_t,
   _swigc__p_property_t,
   _swigc__p_puppets_t,
@@ -14004,15 +14539,21 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__listT_Pixy__Deck_p_t,
   _swigc__p_std__listT_Pixy__Puppet_p_t,
   _swigc__p_std__listT_Pixy__Spell_p_t,
+  _swigc__p_std__listT_Pixy__Talent_const_p_t,
   _swigc__p_std__listT_Pixy__Unit_p_t,
-  _swigc__p_std__listT_Talent_const_p_t,
   _swigc__p_std__ostream,
   _swigc__p_std__string,
   _swigc__p_std__vectorT_Pixy__Spell_const_p_t,
   _swigc__p_talent_t,
   _swigc__p_talents_t,
+  _swigc__p_uint32,
   _swigc__p_unit_t,
   _swigc__p_units_t,
+  _swigc__p_unsigned_char,
+  _swigc__p_unsigned_int,
+  _swigc__p_unsigned_long,
+  _swigc__p_unsigned_short,
+  _swigc__p_vectorT_Ogre__PixelFormat_t__type,
   _swigc__p_void,
 };
 
@@ -14318,13 +14859,21 @@ SWIGEXPORT int SWIG_init(lua_State* L)
 
 const char* SWIG_LUACODE=
   "\n"
+  "  print \"--\"\n"
   "  print \"Pixy SWIG module loaded ok\"\n"
+  "  print \"dumping Pixy table\"\n"
+  "  for k in pairs(Pixy) do print(\"# \" .. k) end\n"
+  "  print \"--\"\n"
   "\n"
   "\n"
   "  Pixy.Log = Pixy.ScriptEngine_Log\n"
   "\n"
   "\n"
-  "  print \"Elementum SWIG module loaded ok\"";
+  "  print \"--\"\n"
+  "  print \"Elementum SWIG module loaded ok\"\n"
+  "  print \"dumping Pixy table\"\n"
+  "  for k in pairs(Pixy) do print(\"# \" .. k) end\n"
+  "  print \"--\"";
 
 void SWIG_init_user(lua_State* L)
 {

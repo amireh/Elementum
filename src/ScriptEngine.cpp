@@ -36,6 +36,17 @@ extern "C" {
   int luaopen_Pixy_EventFeedback(lua_State* L);
   int luaopen_Pixy_EventUID(lua_State* L);
   int luaopen_Pixy_Race(lua_State* L);
+  int luaopen_Ogre(lua_State* L);
+  int luaopen_OIS(lua_State* L);
+  int luaopen_ParticleUniverse(lua_State* L);
+
+  #include "swigluaruntime.h"
+
+  struct swig_module_info;
+  struct swig_type_info;
+  swig_module_info *SWIG_Lua_GetModule(lua_State* L);
+  void SWIG_Lua_NewPointerObj(lua_State* L,void* ptr,swig_type_info *type, int own);
+  swig_type_info *SWIG_TypeQueryModule(swig_module_info *start,swig_module_info *end,const char *name);
 }
 namespace Pixy {
 	ScriptEngine* ScriptEngine::_myScriptEngine = NULL;
@@ -99,6 +110,9 @@ namespace Pixy {
     luaopen_Pixy_EventUID(mLuaState);
     luaopen_Pixy_EventFeedback(mLuaState);
     luaopen_Pixy_Race(mLuaState);
+    luaopen_Ogre(mLuaState);
+    luaopen_OIS(mLuaState);
+    luaopen_ParticleUniverse(mLuaState);
 
     //~ bind(EventUID::MatchFinished, boost::bind(&ScriptEngine::onMatchFinished, this, _1));
     bind(EventUID::Unassigned, boost::bind(&ScriptEngine::passToLua, this, _1));
@@ -270,6 +284,17 @@ namespace Pixy {
 		}
 	}
 
+  void ScriptEngine::pushUserData(void* inData, std::string inType)
+  {
+    SWIG_Lua_NewPointerObj(
+      mLuaState,
+      inData,
+      SWIG_TypeQueryModule(
+        SWIG_Lua_GetModule(mLuaState),
+        SWIG_Lua_GetModule(mLuaState),
+        (inType + " *").c_str()),0);
+  }
+
 	bool ScriptEngine::passToLua(const Event& inEvt) {
 
 		lua_getfield(mLuaState, LUA_GLOBALSINDEX, "processEvt");
@@ -282,7 +307,9 @@ namespace Pixy {
 			//return true;
 		}
 
-		tolua_pushusertype(mLuaState,(void*)&inEvt,"Pixy::Event");
+		//~ tolua_pushusertype(mLuaState,(void*)&inEvt,"Pixy::Event");
+		//~ lua_pushlightuserdata(mLuaState,(void*)&inEvt);
+    pushUserData((void*)&inEvt, "Pixy::Event");
 
     int ec = lua_pcall(mLuaState, 1, 1, 0);
     if (ec != 0)
@@ -321,7 +348,8 @@ namespace Pixy {
     for (int i=0; i < argc; ++i) {
       const char* argtype = (const char*)va_arg(argp, const char*);
       void* argv = (void*)va_arg(argp, void*);
-      tolua_pushusertype(mLuaState,argv,argtype);
+      //tolua_pushusertype(mLuaState,argv,argtype);
+      pushUserData(argv, argtype);
     }
 
     int ec = lua_pcall(mLuaState, argc+1, 1, 0);
@@ -416,7 +444,8 @@ namespace Pixy {
       for (spell = mSpells[i].begin(); spell != mSpells[i].end(); ++spell)
       {
         lua_pushinteger(mLuaState, count);
-        tolua_pushusertype(mLuaState, (void*)(*spell), "Pixy::Spell");
+        pushUserData(*spell, "Pixy::Spell");
+        //~ tolua_pushusertype(mLuaState, (void*)(*spell), "Pixy::Spell");
         lua_settable(mLuaState, -3);
 
         ++count;
@@ -444,7 +473,8 @@ namespace Pixy {
     for (puppet = mPuppets.begin(); puppet != mPuppets.end(); ++puppet)
     {
       lua_pushinteger(mLuaState, count);
-      tolua_pushusertype(mLuaState, (void*)(*puppet), "Pixy::Puppet");
+      //~ tolua_pushusertype(mLuaState, (void*)(*puppet), "Pixy::Puppet");
+      pushUserData(*puppet, "Pixy::Puppet");
       lua_settable(mLuaState, -3);
 
       ++count;
@@ -462,7 +492,8 @@ namespace Pixy {
   {
     Puppet* mPuppet = Intro::getSingleton().getPuppet();
 
-    tolua_pushusertype(mLuaState, (void*)mPuppet, "Pixy::Puppet");
+    //~ tolua_pushusertype(mLuaState, (void*)mPuppet, "Pixy::Puppet");
+    pushUserData(mPuppet, "Pixy::Puppet");
     lua_setglobal(mLuaState, "__PuppetTemp");
 
     Event e(EventUID::PuppetSynced);
@@ -482,7 +513,8 @@ namespace Pixy {
       {
         mLog->debugStream() << "exporting deck " << (*deck)->getName();
         lua_pushinteger(mLuaState, count);
-        tolua_pushusertype(mLuaState, (void*)(*deck), "Pixy::Deck");
+        //~ tolua_pushusertype(mLuaState, (void*)(*deck), "Pixy::Deck");
+        pushUserData(*deck, "Pixy::Deck");
         lua_settable(mLuaState, -3);
 
         ++count;

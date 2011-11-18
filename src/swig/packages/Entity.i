@@ -13,10 +13,13 @@
 %}
 
 %import(module="Pixy") "BaseEntity.i"
+%import(module="Pixy") "Caster.i"
+%import(module="Pixy") "Animable.i"
+%import(module="Pixy") "Renderable.i"
 
 namespace Pixy
 {
-  %nodefaultctor Entity;
+  //%nodefaultctor Entity;
 
   class Unit;
   class Entity : public BaseEntity, public Caster, public Animable, public Renderable

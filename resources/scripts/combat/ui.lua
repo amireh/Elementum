@@ -136,8 +136,8 @@ function UI:attach()
   GfxEngine:disableMouseCaptureOverUIElement("Spell")
   --GfxEngine:disableMouseCaptureOverUIElement(UI.ChatInput:getName())
 
-  UIEngine:connectAnimation(UI.Containers["Message"], "Fade")
-  UIEngine:connectAnimation(UI.Containers["Error"], "LongFadeOut")
+  --UIEngine:connectAnimation(UI.Containers["Message"], "Fade")
+  --UIEngine:connectAnimation(UI.Containers["Error"], "LongFadeOut")
 
   --~ UI.Animes.ShowTooltip = CEGUI.AnimationManager:getSingleton():instantiateAnimation("ShowTooltip")
   --~ UI.Animes.HideTooltip = CEGUI.AnimationManager:getSingleton():instantiateAnimation("HideTooltip")

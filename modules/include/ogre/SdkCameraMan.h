@@ -315,7 +315,7 @@ namespace OgreBites
 				else if (evt.state.Z.rel != 0)  // move the camera toward or away from the target
 				{
 
-          Vector3 pos = mCamera->getPosition();
+          Ogre::Vector3 pos = mCamera->getPosition();
           //~ std::cout << "Camera now at : " << pos.x << "," << pos.y << "," << pos.z << "\n";
 					// the further the camera is, the faster it moves
           if (mCamera->getPosition().y >= MAX_Y && evt.state.Z.rel < 0)
